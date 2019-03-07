@@ -11,7 +11,7 @@
 
 ?>
 
-	</div><!-- #content -->
+	</div><!-- #content .container-fluid -->
 
 	<footer id="colophon" class="site-footer">
 		<div class="">
