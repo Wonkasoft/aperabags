@@ -25,8 +25,16 @@
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'apera-bags' ); ?></a>
 
 	<header id="masthead" class="container-fluid site-header">
-		<div class="row">
-			<div class="col col-12">
+		<?php
+		if ( get_theme_mod( 'enable_topbar', false ) ) : ?>
+			<div class="row topbar-notice" style="background:<?php echo get_theme_mod( 'topbar_color', '#000' ); ?>;">
+				<div class="col col-12">
+					<span class="topbar-message-text"><?php echo get_theme_mod( 'topbar_message', 'Please set notice in customizer.' ); ?> </span>
+				</div><!-- col col-12 -->
+			</div><!-- topbar-notice -->
+		<?php endif; ?>
+		<div class="row brand-nav-bar">
+			<div class="col col-2">
 				<div class="site-branding">
 					<?php
 					the_custom_logo();
@@ -45,6 +53,8 @@
 						<p class="site-description"><?php echo $apera_bags_description; /* WPCS: xss ok. */ ?></p>
 					<?php endif; ?>
 				</div><!-- .site-branding -->
+			</div> <!-- .col-4 -->
+			<div class="col col-8">
 
 				<nav id="site-navigation" class="main-navigation">
 					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'apera-bags' ); ?></button>
@@ -55,7 +65,7 @@
 					) );
 					?>
 				</nav><!-- #site-navigation -->
-			</div> <!-- .col-12 -->
+			</div> <!-- .col-8 -->
 		</div> <!-- .row -->
 	</header><!-- #masthead -->
 
