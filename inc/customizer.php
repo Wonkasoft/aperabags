@@ -39,7 +39,7 @@ function apera_bags_customize_register( $wp_customize ) {
 	) );
 
 		/**	
-		 * Top bar message  settings Section
+		 * Top bar message settings Section
 		 * @since  1.0.0
 		 */
 		$wp_customize->add_section( 'topbar_messgae_section' , array(
@@ -669,7 +669,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		 * Footer social links settings Section
 		 * @since  1.0.0
 		 */
-		$wp_customize->add_setting( 'footer_social_ig' , array(
+		$wp_customize->add_setting( 'footer_social_instagram' , array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -677,11 +677,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Footer social Instagram Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'footer_social_ig', 
+			'footer_social_instagram', 
 			array(
 			'label'      	=> __( 'Instagram Icon Link', 'apera' ),
 			'section'    	=> 'footer_section',
-			'setting'   	=> 'footer_social_ig',
+			'setting'   	=> 'footer_social_instagram',
 			'type'			=> 'text',
 			'description'	=> 'Example: https://instagram.com/user',
 		) ) );
@@ -774,6 +774,27 @@ function apera_bags_customize_register( $wp_customize ) {
 			'setting'   	=> 'footer_contact_support_email',
 			'type'			=> 'text',
 			'description'	=> 'Example: support@domain.com',
+		) ) );
+
+		/**
+		 * Footer logo settings Section
+		 * @since  1.0.0
+		 */
+		$wp_customize->add_setting( 'footer_logo' , array(
+			'default'   				=> '',
+			'transport' 				=> 'refresh',
+		) );
+
+		// Footer form shortcode Setting Control
+		$wp_customize->add_control( new WP_Customize_Media_Control( 
+			$wp_customize, 
+			'footer_logo', 
+			array(
+			'label'      	=> __( 'Footer Logo', 'apera' ),
+			'section'    	=> 'footer_section',
+			'setting'   	=> 'footer_logo',
+			'type'			=> 'image',
+			'description'	=> 'Footer Logo',
 		) ) );
 
 		/**
