@@ -39,6 +39,83 @@ function apera_bags_customize_register( $wp_customize ) {
 	) );
 
 		/**	
+		 * Top bar message  settings Section
+		 * @since  1.0.0
+		 */
+		$wp_customize->add_section( 'topbar_messgae_section' , array(
+			'capability'     => 'edit_theme_options',
+			'theme_supports' => '',
+			'priority'		 => 10,
+			'title'			 => __( 'Topbar Message Section', 'apera' ),
+			'description'	 => __( 'Topbar Options version 1.0.0', 'apera' ),
+			'panel'  		 => 'ft_theme_options',
+		) );
+
+		/**
+		 * Enable topbar message settings Section
+		 * @since  1.0.0
+		 */
+		$wp_customize->add_setting( 'enable_topbar' , array(
+			'default'   				=> '',
+			'transport' 				=> 'refresh',
+		) );
+
+		// Enable topbar message Setting Control
+		$wp_customize->add_control( new WP_Customize_Control( 
+			$wp_customize, 
+			'enable_topbar', 
+			array(
+			'label'      	=> __( 'Topbar Message Option', 'apera' ),
+			'section'    	=> 'topbar_messgae_section',
+			'setting'   	=> 'enable_topbar',
+			'type'				=> 'checkbox',
+			'description'	=> 'Enable Topbar',
+		) ) );
+
+		/**
+		 * Topbar color settings Section
+		 * @since  1.0.0
+		 */
+		$wp_customize->add_setting( 'topbar_color' , array(
+			'default'   				=> '',
+			'transport' 				=> 'refresh',
+		) );
+
+		// Topbar color Setting Control
+		$wp_customize->add_control( new WP_Customize_Control( 
+			$wp_customize, 
+			'topbar_color', 
+			array(
+			'label'      	=> __( 'Topbar Color Option', 'apera' ),
+			'section'    	=> 'topbar_messgae_section',
+			'setting'   	=> 'topbar_color',
+			'type'				=> 'color',
+			'description'	=> 'Topbar color',
+		) ) );
+
+		/**
+		 * Topbar message settings Section
+		 * @since  1.0.0
+		 */
+		$wp_customize->add_setting( 'topbar_message' , array(
+			'default'   				=> '',
+			'transport' 				=> 'refresh',
+		) );
+
+		// Topbar color Setting Control
+		$wp_customize->add_control( new WP_Customize_Control( 
+			$wp_customize, 
+			'topbar_message', 
+			array(
+			'label'      	=> __( 'Topbar Message Option', 'apera' ),
+			'section'    	=> 'topbar_messgae_section',
+			'setting'   	=> 'topbar_message',
+			'type'				=> 'text',
+			'description'	=> 'Topbar message',
+		) ) );
+
+
+		/**	
 		 * Slider settings Section
 		 * @since  1.0.0
 		 */

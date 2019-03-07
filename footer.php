@@ -14,7 +14,44 @@
 	</div><!-- #content .container-fluid -->
 
 	<footer id="colophon" class="site-footer">
-		<div class="">
+		<div class="container-fluid">
+			<div class="row">
+
+				<div class="col">
+					<?php
+						wp_nav_menu( array(
+						    'theme_location'   => 'menu2'
+						) );
+					?>
+				</div>
+				<div class="col">
+					<?php
+						wp_nav_menu( array(
+						    'theme_location'   => 'menu2'
+						) );
+					?>
+				</div>
+				<div class="col">
+					<?php
+						wp_nav_menu( array(
+						    'theme_location'   => 'menu3'
+						) );
+					?>
+				</div>
+				<div class="col">
+					<?php
+						wp_nav_menu( array(
+						    'theme_location'   => 'menu4'
+						) );
+					?>
+				</div>
+				<div class="col">
+					<?php
+						wp_nav_menu( array(
+						    'theme_location'   => 'menu5'
+						) );
+					?>
+				</div>
 		<div class="site-info">
 			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'apera-bags' ) ); ?>">
 				<?php

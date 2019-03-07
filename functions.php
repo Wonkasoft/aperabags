@@ -44,12 +44,12 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
-			'menu-1' => esc_html__( 'Primary', 'apera-bags' ),
-			'menu-2' => esc_html__( 'Footer Shop', 'apera-bags' ),
-			'menu-3' => esc_html__( 'Footer Contact', 'apera-bags' ),
-			'menu-4' => esc_html__( 'Footer My Account', 'apera-bags' ),
-			'menu-5' => esc_html__( 'Footer Company', 'apera-bags' ),
-			'menu-6' => esc_html__( 'Footer Programs', 'apera-bags' ),
+			'menu1' => esc_html__( 'Primary', 'apera-bags' ),
+			'menu2' => esc_html__( 'Footer Shop', 'apera-bags' ),
+			'menu3' => esc_html__( 'Footer Contact', 'apera-bags' ),
+			'menu4' => esc_html__( 'Footer My Account', 'apera-bags' ),
+			'menu5' => esc_html__( 'Footer Company', 'apera-bags' ),
+			'menu6' => esc_html__( 'Footer Programs', 'apera-bags' ),
 		) );
 
 		/*
