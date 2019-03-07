@@ -98,24 +98,45 @@ function apera_bags_customize_register( $wp_customize ) {
 			) ) );
 			
 			/**
-			 * Slider message settings Section
+			 * Slider header message settings Section
 			 * @since  1.0.0
 			 */
-			$wp_customize->add_setting( 'slider_text_'.$i , array(
+			$wp_customize->add_setting( 'slider_header_'.$i , array(
 				'default'   				=> '',
 				'transport' 				=> 'refresh',
 			) );
 
-			// Slider message Setting Control
+			// Slider header message Setting Control
 			$wp_customize->add_control( new WP_Customize_Control( 
 				$wp_customize, 
-				'slider_text_'.$i, 
+				'slider_header_'.$i, 
 				array(
-				'label'      	=> __( 'Slider message '.$i, 'apera' ),
+				'label'      	=> __( 'Slider header message '.$i, 'apera' ),
 				'section'    	=> 'slider_section',
-				'setting'   	=> 'slider_text_'.$i,
+				'setting'   	=> 'slider_header_'.$i,
 				'type'			=> 'text',
 				'description'	=> 'Add message for slider '.$i,
+			) ) );
+
+			/**
+			 * Slider subheader message settings Section
+			 * @since  1.0.0
+			 */
+			$wp_customize->add_setting( 'slider_subheader_'.$i , array(
+				'default'   				=> '',
+				'transport' 				=> 'refresh',
+			) );
+
+			// Slider subheader message Setting Control
+			$wp_customize->add_control( new WP_Customize_Control( 
+				$wp_customize, 
+				'slider_subheader_'.$i, 
+				array(
+				'label'      	=> __( 'Slider subheader '.$i, 'apera' ),
+				'section'    	=> 'slider_section',
+				'setting'   	=> 'slider_subheader_'.$i,
+				'type'			=> 'text',
+				'description'	=> 'Add subheader for slider '.$i,
 			) ) );
 		}
 
