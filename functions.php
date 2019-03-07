@@ -125,7 +125,17 @@ add_action( 'widgets_init', 'apera_bags_widgets_init' );
  * Enqueue scripts and styles.
  */
 function apera_bags_scripts() {
+
+	wp_enqueue_style( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' );
+
+	wp_enqueue_style( 'fontawesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' );
+
 	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri() );
+
+	/**
+	 * For enqueues of scripts
+	 */
+	wp_enqueue_script( 'bootstrapjs', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array( 'jquery' ), 'all', true );
 
 	wp_enqueue_script( 'apera-bags-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
 
