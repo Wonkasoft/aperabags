@@ -102,7 +102,7 @@
 				<?php
 					$footerlogo = ( get_theme_mod( 'footer_logo' ) ) ? get_theme_mod( 'footer_logo' ) : ''; 
 					if ( ! $footerlogo == '' ) {
-						echo "<img src='$footerlogo' />";
+						echo "<img src='$footerlogo' alt='Apera logo' />";
 					}
 				?>
 			</div> <!-- .col -->
