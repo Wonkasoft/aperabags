@@ -17,3 +17,13 @@ wp-content/plugins/hello.php
 /sitemap.xml
 /sitemap.xml.gz
 
+package-lock.json
+package.json
+gulpfile.js
+.sass-cache
+node_modules
+npm-debug.log
+.DS_Store
+.phpintel
+~.*
+.phpintel/
