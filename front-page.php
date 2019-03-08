@@ -18,10 +18,10 @@ get_header();
 		<?php 
 
 		/* This can be used to filter slide object */
-		do_action( 'get_slides_before_slider', 'top' );
+		do_action( 'get_mods_before_section', 'top' );
 		
 		/* This gets the slides as an object */
-		$top_slider = get_these_slides();
+		$top_slider = get_section_mods( 'top' );
 
 		/* This checks for slider object in order to parse slider section */
 		if ( !empty( $top_slider ) ) : ?>
@@ -79,8 +79,8 @@ get_header();
 				</div>
 			</section><!-- .shop-section -->
 		<?php endif; ?>
-		<?php do_action( 'get_slides_before_slider', 'cta' );
-			$cta_slider = get_these_slides();
+		<?php do_action( 'get_mods_before_section', 'cta' );
+			$cta_slider = get_section_mods( 'cta' );
 			if ( !empty( $cta_slider ) ) : ?>
 				<section class="row desirable-slider-section">
 					<?php 
@@ -101,7 +101,7 @@ get_header();
 												<?php
 												/* Checks for an subheader set in the slide object */
 												if ( !empty( $slide->slide_link ) ) : ?>
-													<a href="<?php echo $slide->slide_link; ?>" class="img-cta-link text-center"></a>
+													<a href="<?php echo $slide->slide_link; ?>" class="btn btn-primary img-cta-link text-center"><?php echo $slide->slide_link_btn; ?></a>
 												<?php endif; ?>
 											</div><!-- .text-box -->
 										</div><!-- .img-header-text-container -->
@@ -116,11 +116,18 @@ get_header();
 
 				</section><!-- .desirable-slider-section -->
 		<?php endif; ?>
-		<?php if ( get_theme_mod( 'cause_option_1' ) ) : ?>
+		<?php do_action( 'get_mods_before_section', 'cause' );
+		$cause_section = get_section_mods( 'cause' );
+
+		/* Check for Cause object */
+		if ( !empty( $cause_section ) ) : ?>
 			<section class="row our-cause-section">
-				<div class="col text-center">
-					<h3 class="our-cause-title">Our Cause</h3>
+				<div class="row title-row">
+					<div class="col col-12 text-center">
+						<h3 class="our-cause-title">Our Cause</h3>
+					</div>
 				</div>
+				
 			</section><!-- .our-cause-section -->
 		<?php endif; ?>
 		<?php if ( get_theme_mod( 'social_shortcode' ) ) : ?>

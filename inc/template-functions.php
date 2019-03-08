@@ -36,23 +36,23 @@ function apera_bags_pingback_header() {
 }
 add_action( 'wp_head', 'apera_bags_pingback_header' );
 
-function get_these_slides() {
-	global $slides_class;
-	if ( !empty( $slides_class ) ) :
-		return $slides_class;
-	endif;
-	return false;
+/**
+ * This will return an object of the section mods
+ * @param  string $section pass in the section for the mods desired
+ * @return object          returns an object of the mods for the passed section
+ */
+function get_section_mods( $section ) {
+	return the_mods_for_section( $section );
 }
 /**
  * This grabs all slides that are set in the customizer for the section that is passed in. 
- * @param  string $slider should be a section reference example: top, cta
+ * @param  string $section should be a section reference example: top, cta, cause
  * @return bool/object    returns false if no slides are set in customizer
  */
-function get_slides_for_slider( $slider ) {
-	global $slides_class;
-	$slides_class = new stdClass();
-	$slides_class->slides = new stdClass();
-	if ( $slider == 'top' ) :
+function the_mods_for_section( $section ) {
+	$mods_class = new stdClass();
+	if ( $section == 'top' ) :
+		$mods_class->slides = new stdClass();
 		for ($i=1; $i <= 5; $i++) { 
 			$slide 												=	new stdClass();
 			$slide->slider_name  								=	"slide_{$i}";
@@ -61,27 +61,45 @@ function get_slides_for_slider( $slider ) {
 			$slide->slide_header_message						=	get_theme_mod( 'slider_header_'.$i );
 			$slide->slide_subheader								=	get_theme_mod( 'slider_subheader_'.$i );
 
-			$slides_class->slides->{$slide->slider_name} = $slide;
+			$mods_class->slides->{$slide->slider_name} = $slide;
 		}
 		
-		return $slides_class;
+		return $mods_class;
 	endif;
 
-	if ( $slider == 'cta' ) :
+	if ( $section == 'cta' ) :
+		$mods_class->slides = new stdClass();
 		for ($i=1; $i <= 5; $i++) { 
 			$slide 												=	new stdClass();
 			$slide->slider_name  								=	"slide_{$i}";
 			$slide->slide_img									=	get_theme_mod( 'cta_slider_'.$i );
 			$slide->slide_text_position 						=	get_theme_mod( 'cta_slider_text_position_'.$i );
 			$slide->slide_text_message							=	get_theme_mod( 'cta_slider_text_'.$i );
+			$slide->slide_link_btn								=	get_theme_mod( 'btn_slider_text_'.$i  );
 			$slide->slide_link									=	get_theme_mod( 'btn_slider_link_'.$i );
 
-			$slides_class->slides->{$slide->slider_name} = $slide;
+			$mods_class->slides->{$slide->slider_name} = $slide;
 		}
 		
-		return $slides_class;
+		return $mods_class;
+	endif;
+
+	if ( $section == 'cause' ) :
+		$mods_class->mods = new stdClass();
+		for ($i=1; $i <= 5; $i++) { 
+			$cause 											=	new stdClass();
+			$cause->cause_name  							=	"cause_option_{$i}";
+			$cause->cause_img								=	get_theme_mod( 'cause_option_'.$i );
+			$cause->cause_message_position 					=	get_theme_mod( 'cause_message_position_'.$i );
+			$cause->cause_header							=	get_theme_mod( 'cause_header_'.$i );
+			$cause->cause_message							=	get_theme_mod( 'cause_message_'.$i );
+
+			$mods_class->mods->{$cause->cause_name} = $cause;
+		}
+		
+		return $mods_class;
 	endif;
 
 	return false;
 }
-add_action( 'get_slides_before_slider', 'get_slides_for_slider', 10, 1 );
+add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
