@@ -372,6 +372,27 @@ function apera_bags_customize_register( $wp_customize ) {
 			) ) );
 
 			/**
+			 * CTA Slider button text settings Section
+			 * @since  1.0.0
+			 */
+			$wp_customize->add_setting( 'btn_slider_text_'.$i , array(
+				'default'   				=> '',
+				'transport' 				=> 'refresh',
+			) );
+
+			// Slider button text Setting Control
+			$wp_customize->add_control( new WP_Customize_Control( 
+				$wp_customize, 
+				'btn_slider_text_'.$i.'_control', 
+				array(
+				'label'      	=> __( 'Button Link '.$i, 'apera' ),
+				'section'    	=> 'lg_cta_section',
+				'settings'   	=> 'btn_slider_text_'.$i,
+				'type'			=> 'text',
+				'description'	=> 'Button Text '.$i,
+			) ) );
+
+			/**
 			 * Slider message settings Section
 			 * @since  1.0.0
 			 */
