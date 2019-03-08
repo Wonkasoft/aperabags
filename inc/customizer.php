@@ -63,11 +63,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Enable topbar message Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'enable_topbar', 
+			'enable_topbar_control', 
 			array(
 			'label'      	=> __( 'Topbar Message Option', 'apera' ),
 			'section'    	=> 'topbar_messgae_section',
-			'setting'   	=> 'enable_topbar',
+			'settings'   	=> 'enable_topbar',
 			'type'				=> 'checkbox',
 			'description'	=> 'Enable Topbar',
 		) ) );
@@ -84,11 +84,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Topbar color Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'topbar_color', 
+			'topbar_color_control', 
 			array(
 			'label'      	=> __( 'Topbar Color Option', 'apera' ),
 			'section'    	=> 'topbar_messgae_section',
-			'setting'   	=> 'topbar_color',
+			'settings'   	=> 'topbar_color',
 			'type'				=> 'color',
 			'description'	=> 'Topbar color',
 		) ) );
@@ -105,11 +105,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Topbar color Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'topbar_message', 
+			'topbar_message_control', 
 			array(
 			'label'      	=> __( 'Topbar Message Option', 'apera' ),
 			'section'    	=> 'topbar_messgae_section',
-			'setting'   	=> 'topbar_message',
+			'settings'   	=> 'topbar_message',
 			'type'				=> 'text',
 			'description'	=> 'Topbar message',
 		) ) );
@@ -128,10 +128,31 @@ function apera_bags_customize_register( $wp_customize ) {
 			'panel'  		 => 'ft_theme_options',
 		) );
 
-		for ( $i=1; $i < 6; $i++ ) { 
+		/**
+		 * Slider header message settings Section
+		 * @since  1.0.0
+		 */
+		$wp_customize->add_setting( 'top_slider_class', array(
+			'default'   				=> 'Name this sliders class',
+			'transport' 				=> 'refresh',
+		) );
+
+		// Slider header message Setting Control
+		$wp_customize->add_control( new WP_Customize_Control( 
+			$wp_customize, 
+			'top_slider_class_control', 
+			array(
+			'label'      	=> __( 'Sliders class', 'apera' ),
+			'section'    	=> 'slider_section',
+			'settings'   	=> 'top_slider_class',
+			'type'			=> 'text',
+			'description'	=> 'Name this sliders class for the top slider',
+		) ) );
+
+		for ( $i=1; $i < 6; $i++ ) : 
 
 			// Slider Setting
-			$wp_customize->add_setting( 'slider_'.$i , array(
+			$wp_customize->add_setting( 'slider_'.$i, array(
 				'default'   				=> '',
 				'transport' 				=> 'refresh',
 			) );
@@ -139,11 +160,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Slider Setting Control
 			$wp_customize->add_control( new WP_Customize_Media_Control( 
 				$wp_customize, 
-				'slider_'.$i, 
+				'slider_'.$i.'_control', 
 				array(
 				'label'      	=> __( 'Slider Image '.$i, 'apera' ),
 				'section'    	=> 'slider_section',
-				'setting'   	=> 'slider_'.$i,
+				'settings'   	=> 'slider_'.$i,
 				'type'			=> 'image',
 				'description'	=> 'Add image for slider '.$i,
 			) ) );
@@ -152,7 +173,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			 * Slider message position settings Section
 			 * @since  1.0.0
 			 */
-			$wp_customize->add_setting( 'slider_text_position_'.$i , array(
+			$wp_customize->add_setting( 'slider_text_position_'.$i, array(
 				'default'   				=> '',
 				'transport' 				=> 'refresh',
 			) );
@@ -160,11 +181,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Slider message position Setting Control
 			$wp_customize->add_control( new WP_Customize_Control( 
 				$wp_customize, 
-				'slider_text_position_'.$i, 
+				'slider_text_position_'.$i.'_control', 
 				array(
-				'label'      	=> __( 'Slider message position '.$i, 'apera' ),
+				'label'      	=> __( 'Slider message position', 'apera' ),
 				'section'    	=> 'slider_section',
-				'setting'   	=> 'slider_text_position_'.$i,
+				'settings'   	=> 'slider_text_position_'.$i,
 				'description'	=> 'Text alignment '.$i,
 				'type'			=> 'select',
 				'choices' => array(
@@ -178,7 +199,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			 * Slider header message settings Section
 			 * @since  1.0.0
 			 */
-			$wp_customize->add_setting( 'slider_header_'.$i , array(
+			$wp_customize->add_setting( 'slider_header_'.$i, array(
 				'default'   				=> '',
 				'transport' 				=> 'refresh',
 			) );
@@ -186,11 +207,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Slider header message Setting Control
 			$wp_customize->add_control( new WP_Customize_Control( 
 				$wp_customize, 
-				'slider_header_'.$i, 
+				'slider_header_'.$i.'_control', 
 				array(
-				'label'      	=> __( 'Slider header message '.$i, 'apera' ),
+				'label'      	=> __( 'Slider header message', 'apera' ),
 				'section'    	=> 'slider_section',
-				'setting'   	=> 'slider_header_'.$i,
+				'settings'   	=> 'slider_header_'.$i,
 				'type'			=> 'text',
 				'description'	=> 'Add message for slider '.$i,
 			) ) );
@@ -199,7 +220,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			 * Slider subheader message settings Section
 			 * @since  1.0.0
 			 */
-			$wp_customize->add_setting( 'slider_subheader_'.$i , array(
+			$wp_customize->add_setting( 'slider_subheader_'.$i, array(
 				'default'   				=> '',
 				'transport' 				=> 'refresh',
 			) );
@@ -207,15 +228,15 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Slider subheader message Setting Control
 			$wp_customize->add_control( new WP_Customize_Control( 
 				$wp_customize, 
-				'slider_subheader_'.$i, 
+				'slider_subheader_'.$i.'_control', 
 				array(
-				'label'      	=> __( 'Slider subheader '.$i, 'apera' ),
+				'label'      	=> __( 'Slider subheader', 'apera' ),
 				'section'    	=> 'slider_section',
-				'setting'   	=> 'slider_subheader_'.$i,
+				'settings'   	=> 'slider_subheader_'.$i,
 				'type'			=> 'text',
 				'description'	=> 'Add subheader for slider '.$i,
 			) ) );
-		}
+		endfor;
 
 		/**
 		 * Shop settings Section
@@ -242,11 +263,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Shop option Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'shop_product_per_row', 
+			'shop_product_per_row_control', 
 			array(
 			'label'      	=> __( 'Product per row', 'apera' ),
 			'section'    	=> 'shop_section',
-			'setting'   	=> 'shop_product_per_row',
+			'settings'   	=> 'shop_product_per_row',
 			'description'	=> 'How many products per row?',
 			'type'			=> 'select',
 			'choices' => array(
@@ -269,11 +290,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Shop for number of products option Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'shop_num_of_products', 
+			'shop_num_of_products_control', 
 			array(
 			'label'      	=> __( 'Total products to show', 'apera' ),
 			'section'    	=> 'shop_section',
-			'setting'   	=> 'shop_num_of_products',
+			'settings'   	=> 'shop_num_of_products',
 			'description'	=> 'How many products to show?',
 			'type'			=> 'select',
 			'choices' => array(
@@ -304,7 +325,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		 * Loop for all sliders and options
 		 * @since 1.0.0
 		 */
-		for ( $i=1; $i < 6; $i++ ) { 
+		for ( $i=1; $i < 6; $i++ ) : 
 
 			// Slider Setting
 			$wp_customize->add_setting( 'cta_slider_'.$i , array(
@@ -315,11 +336,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Slider Setting Control
 			$wp_customize->add_control( new WP_Customize_Media_Control( 
 				$wp_customize, 
-				'cta_slider_'.$i, 
+				'cta_slider_'.$i.'_control', 
 				array(
 				'label'      	=> __( 'Slider Image '.$i, 'apera' ),
 				'section'    	=> 'lg_cta_section',
-				'setting'   	=> 'cta_slider_'.$i,
+				'settings'   	=> 'cta_slider_'.$i,
 				'type'			=> 'image',
 				'description'	=> 'Add image for slider '.$i,
 			) ) );
@@ -336,11 +357,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Slider message position Setting Control
 			$wp_customize->add_control( new WP_Customize_Control( 
 				$wp_customize, 
-				'cta_slider_text_position_'.$i, 
+				'cta_slider_text_position_'.$i.'_control', 
 				array(
 				'label'      	=> __( 'Slider message position '.$i, 'apera' ),
 				'section'    	=> 'lg_cta_section',
-				'setting'   	=> 'cta_slider_text_position_'.$i,
+				'settings'   	=> 'cta_slider_text_position_'.$i,
 				'description'	=> 'Text alignment '.$i,
 				'type'			=> 'select',
 				'choices' => array(
@@ -362,11 +383,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Slider message Setting Control
 			$wp_customize->add_control( new WP_Customize_Control( 
 				$wp_customize, 
-				'cta_slider_text_'.$i, 
+				'cta_slider_text_'.$i.'_control', 
 				array(
 				'label'      	=> __( 'Slider message '.$i, 'apera' ),
 				'section'    	=> 'lg_cta_section',
-				'setting'   	=> 'cta_slider_text_'.$i,
+				'settings'   	=> 'cta_slider_text_'.$i,
 				'type'			=> 'text',
 				'description'	=> 'Add message for slider '.$i,
 			) ) );
@@ -383,15 +404,15 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Slider message Setting Control
 			$wp_customize->add_control( new WP_Customize_Control( 
 				$wp_customize, 
-				'btn_slider_link_'.$i, 
+				'btn_slider_link_'.$i.'_control', 
 				array(
 				'label'      	=> __( 'Button Link '.$i, 'apera' ),
 				'section'    	=> 'lg_cta_section',
-				'setting'   	=> 'btn_slider_link_'.$i,
+				'settings'   	=> 'btn_slider_link_'.$i,
 				'type'			=> 'text',
 				'description'	=> 'Button Link '.$i,
 			) ) );
-		}
+		endfor;
 
 		/**
 		 * Our Cause / About Us settings Section
@@ -421,11 +442,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Slider Setting Control
 			$wp_customize->add_control( new WP_Customize_Media_Control( 
 				$wp_customize, 
-				'cause_option_'.$i, 
+				'cause_option_'.$i.'_control', 
 				array(
 				'label'      	=> __( 'Image for cause '.$i, 'apera' ),
 				'section'    	=> 'cause_section',
-				'setting'   	=> 'cause_option_'.$i,
+				'settings'   	=> 'cause_option_'.$i,
 				'type'			=> 'image',
 				'description'	=> 'Add image for cause '.$i,
 			) ) );
@@ -442,11 +463,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Cause message position Setting Control
 			$wp_customize->add_control( new WP_Customize_Control( 
 				$wp_customize, 
-				'cause_message_position_'.$i, 
+				'cause_message_position_'.$i.'_control', 
 				array(
 				'label'      	=> __( 'Cause message position '.$i, 'apera' ),
 				'section'    	=> 'cause_section',
-				'setting'   	=> 'cause_message_position_'.$i,
+				'settings'   	=> 'cause_message_position_'.$i,
 				'description'	=> 'Text alignment '.$i,
 				'type'			=> 'select',
 				'choices' => array(
@@ -468,11 +489,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Cause message Setting Control
 			$wp_customize->add_control( new WP_Customize_Control( 
 				$wp_customize, 
-				'cause_header_'.$i, 
+				'cause_header_'.$i.'_control', 
 				array(
 				'label'      	=> __( 'Cause header '.$i, 'apera' ),
 				'section'    	=> 'cause_section',
-				'setting'   	=> 'cause_header_'.$i,
+				'settings'   	=> 'cause_header_'.$i,
 				'type'			=> 'text',
 				'description'	=> 'Add header for cause '.$i,
 			) ) );
@@ -489,11 +510,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Cause message Setting Control
 			$wp_customize->add_control( new WP_Customize_Control( 
 				$wp_customize, 
-				'cause_message_'.$i, 
+				'cause_message_'.$i.'_control', 
 				array(
 				'label'      	=> __( 'Cause message '.$i, 'apera' ),
 				'section'    	=> 'cause_section',
-				'setting'   	=> 'cause_message_'.$i,
+				'settings'   	=> 'cause_message_'.$i,
 				'type'			=> 'textarea',
 				'description'	=> 'Add message for cause '.$i,
 			) ) );
@@ -524,11 +545,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// About the brand header Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'about_the_brand_header', 
+			'about_the_brand_header_control', 
 			array(
 			'label'      	=> __( 'About the brand header', 'apera' ),
 			'section'    	=> 'about_section',
-			'setting'   	=> 'about_the_brand_header',
+			'settings'   	=> 'about_the_brand_header',
 			'type'			=> 'text',
 			'description'	=> 'About the brand header',
 		) ) );
@@ -545,11 +566,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// About the brand subheader Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'about_the_brand_subheader', 
+			'about_the_brand_subheader_control', 
 			array(
 			'label'      	=> __( 'About the brand subheader', 'apera' ),
 			'section'    	=> 'about_section',
-			'setting'   	=> 'about_the_brand_subheader',
+			'settings'   	=> 'about_the_brand_subheader',
 			'type'			=> 'text',
 			'description'	=> 'About the brand subheader',
 		) ) );
@@ -566,11 +587,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// About the brand message Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'about_the_brand_message', 
+			'about_the_brand_message_control', 
 			array(
 			'label'      	=> __( 'About the brand message', 'apera' ),
 			'section'    	=> 'about_section',
-			'setting'   	=> 'about_the_brand_message',
+			'settings'   	=> 'about_the_brand_message',
 			'type'			=> 'textarea',
 			'description'	=> 'About the brand message',
 		) ) );
@@ -587,11 +608,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// About the brand button Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'about_the_brand_button', 
+			'about_the_brand_button_control', 
 			array(
 			'label'      	=> __( 'About the brand button', 'apera' ),
 			'section'    	=> 'about_section',
-			'setting'   	=> 'about_the_brand_button',
+			'settings'   	=> 'about_the_brand_button',
 			'type'			=> 'dropdown-pages',
 			'description'	=> 'About the brand button',
 		) ) );
@@ -622,11 +643,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Social shortcode Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'social_shortcode', 
+			'social_shortcode_control', 
 			array(
 			'label'      	=> __( 'Social Shortcode', 'apera' ),
 			'section'    	=> 'social_section',
-			'setting'   	=> 'social_shortcode',
+			'settings'   	=> 'social_shortcode',
 			'type'			=> 'text',
 			'description'	=> 'Shortcode Example: [instagram]',
 		) ) );
@@ -643,11 +664,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Social shop button Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'social_shop_button', 
+			'social_shop_button_control', 
 			array(
 			'label'      	=> __( 'Social Shop Button', 'apera' ),
 			'section'    	=> 'social_section',
-			'setting'   	=> 'social_shop_button',
+			'settings'   	=> 'social_shop_button',
 			'type'			=> 'dropdown-pages',
 			'description'	=> 'Social Shop Button choose the destination page',
 		) ) );
@@ -677,11 +698,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Footer social Instagram Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'footer_social_instagram', 
+			'footer_social_instagram_control', 
 			array(
 			'label'      	=> __( 'Instagram Icon Link', 'apera' ),
 			'section'    	=> 'footer_section',
-			'setting'   	=> 'footer_social_instagram',
+			'settings'   	=> 'footer_social_instagram',
 			'type'			=> 'text',
 			'description'	=> 'Example: https://instagram.com/user',
 		) ) );
@@ -695,11 +716,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Footer social Twitter Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'footer_social_twitter', 
+			'footer_social_twitter_control', 
 			array(
 			'label'      	=> __( 'Twitter Icon Link', 'apera' ),
 			'section'    	=> 'footer_section',
-			'setting'   	=> 'footer_social_twitter',
+			'settings'   	=> 'footer_social_twitter',
 			'type'			=> 'text',
 			'description'	=> 'Example: https://twitter.com/user',
 		) ) );
@@ -713,11 +734,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Footer social Facebook Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'footer_social_facebook', 
+			'footer_social_facebook_control', 
 			array(
 			'label'      	=> __( 'Facebook Icon Link', 'apera' ),
 			'section'    	=> 'footer_section',
-			'setting'   	=> 'footer_social_facebook',
+			'settings'   	=> 'footer_social_facebook',
 			'type'			=> 'text',
 			'description'	=> 'Example: https://facebook.com/user',
 		) ) );
@@ -731,11 +752,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Footer social Pinterest Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'footer_social_pinterest', 
+			'footer_social_pinterest_control', 
 			array(
 			'label'      	=> __( 'Pinterest Icon Link', 'apera' ),
 			'section'    	=> 'footer_section',
-			'setting'   	=> 'footer_social_pinterest',
+			'settings'   	=> 'footer_social_pinterest',
 			'type'			=> 'text',
 			'description'	=> 'Example: https://pinterest.com/user',
 		) ) );
@@ -749,11 +770,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Footer contact message Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'footer_contact_message', 
+			'footer_contact_message_control', 
 			array(
 			'label'      	=> __( 'Contact message', 'apera' ),
 			'section'    	=> 'footer_section',
-			'setting'   	=> 'footer_contact_message',
+			'settings'   	=> 'footer_contact_message',
 			'type'			=> 'text',
 			'description'	=> 'Example: Contact Customer Service',
 		) ) );
@@ -767,11 +788,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Footer support email Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'footer_contact_support_email', 
+			'footer_contact_support_email_control', 
 			array(
 			'label'      	=> __( 'Contact support email', 'apera' ),
 			'section'    	=> 'footer_section',
-			'setting'   	=> 'footer_contact_support_email',
+			'settings'   	=> 'footer_contact_support_email',
 			'type'			=> 'text',
 			'description'	=> 'Example: support@domain.com',
 		) ) );
@@ -788,11 +809,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Footer form shortcode Setting Control
 		$wp_customize->add_control( new WP_Customize_Media_Control( 
 			$wp_customize, 
-			'footer_logo', 
+			'footer_logo_control', 
 			array(
 			'label'      	=> __( 'Footer Logo', 'apera' ),
 			'section'    	=> 'footer_section',
-			'setting'   	=> 'footer_logo',
+			'settings'   	=> 'footer_logo',
 			'type'			=> 'image',
 			'description'	=> 'Footer Logo',
 		) ) );
@@ -809,11 +830,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Footer form shortcode Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'footer_form_shortcode', 
+			'footer_form_shortcode_control', 
 			array(
 			'label'      	=> __( 'Footer Form Shortcode', 'apera' ),
 			'section'    	=> 'footer_section',
-			'setting'   	=> 'footer_form_shortcode',
+			'settings'   	=> 'footer_form_shortcode',
 			'type'			=> 'text',
 			'description'	=> 'Shortcode Example: [signupform]',
 		) ) );

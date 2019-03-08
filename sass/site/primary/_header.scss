@@ -1,0 +1,42 @@
+/*=====================================
+=            Topbar styles            =
+=====================================*/
+.topbar-notice {
+	position: relative;
+	color: #ffffff;
+	height: 30px;
+	@include prefix( box-shadow, 0 1px 6px 0 rgba( 0, 0, 0, 0.6 ), o moz webkit );
+
+	> div {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		span.topbar-message-text {
+			@include font-size( .8 );
+		}
+	}
+}
+/*=====  End of Topbar styles  ======*/
+
+/*==================================================
+=            header branding and navbar            =
+==================================================*/
+.site-header {
+	position: absolute;
+	height: 105px;
+
+	.brand-nav-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+
+		nav {
+
+			a {
+				color: #ffffff;
+			}
+		}
+	}
+}
+/*=====  End of header branding and navbar  ======*/

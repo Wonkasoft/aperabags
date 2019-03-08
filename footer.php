@@ -16,7 +16,7 @@
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col">
+				<div class="col col-3">
 					<?php 
 						$instagram_link = ( get_theme_mod( 'footer_social_instagram' ) ) ? get_theme_mod( 'footer_social_instagram' ) : '';
 						if ( ! $instagram_link == '' ) {
@@ -25,55 +25,59 @@
 
 						$twitter_link = ( get_theme_mod( 'footer_social_twitter' ) ) ? get_theme_mod( 'footer_social_twitter' ) : '';
 						if ( ! $twitter_link == '' ) {
-							echo '<a href="' . $twitter_link . '" target="_blank"><i class="fa fa-twitter-square"></i></a>';
+							echo '<a href="' . $twitter_link . '" target="_blank"><i class="fa fa-twitter"></i></a>';
 						}
 						$facebook_link = ( get_theme_mod( 'footer_social_facebook' ) ) ? get_theme_mod( 'footer_social_facebook' ) : '';
 						if ( ! $facebook_link == '' ) {
-							echo '<a href="' . $facebook_link . '" target="_blank"><i class="fa fa-facebook-square"></i></a>';
+							echo '<a href="' . $facebook_link . '" target="_blank"><i class="fa fa-facebook"></i></a>';
 						}
 						$pinterest_link = ( get_theme_mod( 'footer_social_pinterest' ) ) ? get_theme_mod( 'footer_social_pinterest' ) : '';
 						if ( ! $pinterest_link == '' ) {
-							echo '<a href="' . $pinterest_link . '" target="_blank"><i class="fa fa-pinterest-square"></i></a>';
+							echo '<a href="' . $pinterest_link . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
 						}
 					?>
-				</div> <!-- .col -->
-				<div class="col">
-					<?php
-						wp_nav_menu( array(
-						    'theme_location'   => 'menu2'
-						) );
-					?>
-				</div> <!-- .col -->
-				<div class="col">
-					<?php
-						wp_nav_menu( array(
-						    'theme_location'   => 'menu2'
-						) );
-					?>
-				</div> <!-- .col -->
-				<div class="col">
-					<?php
-						wp_nav_menu( array(
-						    'theme_location'   => 'menu3'
-						) );
-					?>
-				</div> <!-- .col -->
-				<div class="col">
-					<?php
-						wp_nav_menu( array(
-						    'theme_location'   => 'menu4'
-						) );
-					?>
-				</div> <!-- .col -->
-				<div class="col">
-					<?php
-						wp_nav_menu( array(
-						    'theme_location'   => 'menu5'
-						) );
-					?>
-				</div> <!-- .col -->
+				</div><!-- .col -->
+				<div class="col col-9">
+					<div class="row">
+						<div class="col">
+							<?php
+								wp_nav_menu( array(
+								    'theme_location'   => 'menu2'
+								) );
+							?>
+						</div><!-- .col -->
+						<div class="col">
+							<?php
+								wp_nav_menu( array(
+								    'theme_location'   => 'menu2'
+								) );
+							?>
+						</div><!-- .col -->
+						<div class="col">
+							<?php
+								wp_nav_menu( array(
+								    'theme_location'   => 'menu3'
+								) );
+							?>
+						</div><!-- .col -->
+						<div class="col">
+							<?php
+								wp_nav_menu( array(
+								    'theme_location'   => 'menu4'
+								) );
+							?>
+						</div><!-- .col -->
+						<div class="col">
+							<?php
+								wp_nav_menu( array(
+								    'theme_location'   => 'menu5'
+								) );
+							?>
+						</div><!-- .col -->
+					</div><!-- .row -->
+				</div><!-- .col-9 -->
 		</div> <!-- .row -->
-		<div class="row">
+		<div class="row align-items-center">
 			<div class="col">
 				<?php echo get_theme_mod( 'footer_contact_message' ); ?>
 			</div> <!-- .col -->
@@ -97,30 +101,31 @@
 			</div> <!-- .col -->
 		</div> <!-- .row -->
 
-		<div class="site-info row">
-			<div class="col">
+		<div class="site-info row align-items-center">
+			<!-- This column is still parsed in order to hold spacing for formating -->
+			<div class="col col-2">
 				<?php
 					$footerlogo = ( get_theme_mod( 'footer_logo' ) ) ? get_theme_mod( 'footer_logo' ) : ''; 
 					if ( ! $footerlogo == '' ) {
-						echo "<img src='$footerlogo' alt='Apera logo' />";
+						echo sprintf( esc_html__( '%1$s', 'apera-bags' ), "<img src='$footerlogo' alt='Apera logo' />" );
 					}
 				?>
 			</div> <!-- .col -->
+			<!-- End logo spacing column -->
 			<div class="col">
 				<?php
-					echo date('Y') . " &copy; Apera LLC, All Rights Reserved";
+					/* Printing copyright date */
+					echo sprintf( esc_html__( "%s %s Apera LLC, All Rights Reserved", 'apera-bags' ), date('Y'), '&copy;' );
 				?>
 			<span class="sep"> | </span>
 				<?php
-				/* translators: 1: Theme name, 2: Theme author. */
-				printf( esc_html__( 'Designed: by %1$s.', 'apera-bags' ), '<a href="https://wonkasoft.com">Wonkasoft</a>' );
+					/* translators: 1: Theme name, 2: Theme author. */
+					echo sprintf( esc_html__( 'Designed by %1$s.', 'apera-bags' ), '<a href="https://wonkasoft.com">Wonkasoft</a>' );
 				?>
-			</div> <!-- .col -->
+			</div><!-- .col -->
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->
-
 <?php wp_footer(); ?>
-
 </body>
 </html>
