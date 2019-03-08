@@ -158,7 +158,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			) );
 
 			// Slider Setting Control
-			$wp_customize->add_control( new WP_Customize_Media_Control( 
+			$wp_customize->add_control( new WP_Customize_Image_Control( 
 				$wp_customize, 
 				'slider_'.$i.'_control', 
 				array(
@@ -271,10 +271,10 @@ function apera_bags_customize_register( $wp_customize ) {
 			'description'	=> 'How many products per row?',
 			'type'			=> 'select',
 			'choices' => array(
-			        '2' => 2,
-			        '3' => 3,
-			        '4' => 4,
-			        '5' => 5,
+			        '2' => '2',
+			        '3' => '3',
+			        '4' => '4',
+			        '5' => '5',
 			    )
 		) ) );
 
@@ -298,13 +298,13 @@ function apera_bags_customize_register( $wp_customize ) {
 			'description'	=> 'How many products to show?',
 			'type'			=> 'select',
 			'choices' => array(
-			        '3' => 3,
-			        '4' => 4,
-			        '5' => 5,
-			        '6' => 6,
-			        '7' => 7,
-			        '8' => 8,
-			        '9' => 9,
+			        '3' => '3',
+			        '4' => '4',
+			        '5' => '5',
+			        '6' => '6',
+			        '7' => '7',
+			        '8' => '8',
+			        '9' => '9',
 			    )
 		) ) );
 
@@ -334,7 +334,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			) );
 
 			// Slider Setting Control
-			$wp_customize->add_control( new WP_Customize_Media_Control( 
+			$wp_customize->add_control( new WP_Customize_Image_Control( 
 				$wp_customize, 
 				'cta_slider_'.$i.'_control', 
 				array(

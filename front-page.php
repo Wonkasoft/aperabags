@@ -17,28 +17,46 @@ get_header();
 	<?php if ( is_home() ) : ?>
 		<?php if ( get_theme_mod( 'top_slider_class' ) ) : ?>
 			<section class="row header-slider-section">
-				<div class="<?php echo get_theme_mod( 'top_slider_class' ); ?>" style="background:url(<?php echo get_theme_mod( 'slider_1' ); ?>);">
+				<div class="<?php echo get_theme_mod( 'top_slider_class' ); ?>" style="background:url('<?php echo get_theme_mod( 'slider_1' ); ?>');">
+					<?php echo get_theme_mod( 'slider_text_position_1' ); ?>
 				</div><!-- .col-12 -->
 			</section><!-- .header-slider-section -->
 		<?php endif; ?>
-		<?php if ( get_theme_mod( 'shop_product_per_row' ) ) : ?>
+		<?php if ( get_theme_mod( 'shop_num_of_products' ) && get_theme_mod( 'shop_product_per_row' ) ) : ?>
 			<section class="row shop-section">
-				
+				<div class="col text-center">
+					<h3 class="shop-title">SHOP</h3>
+					<div class="product-grid">
+					<?php 
+						$numofproducts = get_theme_mod( 'shop_num_of_products' );
+						$productsperrow = get_theme_mod( 'shop_product_per_row' );
+						$proshortcode = "[recent_products per_page='$numofproducts' columns='$productsperrow']";
+						echo do_shortcode( $proshortcode ); 
+					?>
+					</div> <!-- .product-grid -->
+				</div>
 			</section><!-- .shop-section -->
 		<?php endif; ?>
-		<?php if ( get_theme_mod( 'shop_product_per_row' ) ) : ?>
-			<section class="row desirable-slider-section">
-				
+		<?php if ( get_theme_mod( 'cta_slider_1' ) ) : ?>
+			<section class="row desirable-slider-section text-<?php echo get_theme_mod( 'cta_slider_text_position_1' );?>" style="background:url('<?php echo get_theme_mod( 'cta_slider_1' ); ?>');">
+				<div class="desirable-section-message">
+					<?php echo get_theme_mod( 'cta_slider_text_1' ); ?>
 			</section><!-- .desirable-slider-section -->
 		<?php endif; ?>
-		<?php if ( get_theme_mod( 'shop_product_per_row' ) ) : ?>
+		<?php if ( get_theme_mod( 'cause_option_1' ) ) : ?>
 			<section class="row our-cause-section">
-				
+				<div class="col text-center">
+					<h3 class="our-cause-title">Our Cause</h3>
+				</div>
 			</section><!-- .our-cause-section -->
 		<?php endif; ?>
-		<?php if ( get_theme_mod( 'shop_product_per_row' ) ) : ?>
+		<?php if ( get_theme_mod( 'social_shortcode' ) ) : ?>
 			<section class="row instagram-section">
-				
+				<div class="col">
+					<?php 
+					$social_short = get_theme_mod( 'social_shortcode' );
+					echo do_shortcode( $social_short ); ?>
+				</div>
 			</section><!-- .instagram-section -->
 		<?php endif; ?>
 	<?php else: ?>
