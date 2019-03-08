@@ -32,14 +32,14 @@ get_header();
 					
 					/* Checks for an img set in the slide object */
 					if ( !empty( $slide->slide_img ) ) : ?>
-						<div class="top-page-slider" style="background:url('<?php echo $slide->slide_img; ?>');">
+						<div class="top-page-slider" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 
 							<?php 
 							/* Checks for an message set in the slide object */
 							if ( !empty( $slide->slide_header_message ) ) : ?>
 								<div class="row img-header-text-wrap">
 									<div class="col col-12 img-header-text-container">
-										<div class="text-box text-center<?php $set_text_align = ( !empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position: ''; echo $set_text_align; ?>">
+										<div class="text-box text-center<?php $set_text_align = ( !empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position: ' set-align-center'; echo $set_text_align; ?>">
 											<h2 class="img-header-text text-center"><?php echo $slide->slide_header_message; ?></h2>
 											<?php
 											/* Checks for an subheader set in the slide object */
@@ -89,14 +89,14 @@ get_header();
 						
 						/* Checks for an img set in the slide object */
 						if ( !empty( $slide->slide_img ) ) : ?>
-							<div class="cta-section-slider" style="background:url('<?php echo $slide->slide_img; ?>');">
+							<div class="cta-section-slider" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 
 								<?php 
 								/* Checks for an message set in the slide object */
 								if ( !empty( $slide->slide_text_message ) ) : ?>
 									<div class="row img-header-text-wrap">
 										<div class="col col-12 img-header-text-container">
-											<div class="text-box text-center<?php $set_text_align = ( !empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position: ''; echo $set_text_align; ?>">
+											<div class="text-box text-center<?php $set_text_align = ( !empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position: ' set-align-center'; echo $set_text_align; ?>">
 												<h2 class="img-header-text text-center"><?php echo $slide->slide_text_message; ?></h2>
 												<?php
 												/* Checks for an subheader set in the slide object */
