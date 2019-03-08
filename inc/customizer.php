@@ -128,27 +128,6 @@ function apera_bags_customize_register( $wp_customize ) {
 			'panel'  		 => 'ft_theme_options',
 		) );
 
-		/**
-		 * Slider header message settings Section
-		 * @since  1.0.0
-		 */
-		$wp_customize->add_setting( 'top_slider_class', array(
-			'default'   				=> 'Name this sliders class',
-			'transport' 				=> 'refresh',
-		) );
-
-		// Slider header message Setting Control
-		$wp_customize->add_control( new WP_Customize_Control( 
-			$wp_customize, 
-			'top_slider_class_control', 
-			array(
-			'label'      	=> __( 'Sliders class', 'apera' ),
-			'section'    	=> 'slider_section',
-			'settings'   	=> 'top_slider_class',
-			'type'			=> 'text',
-			'description'	=> 'Name this sliders class for the top slider',
-		) ) );
-
 		for ( $i=1; $i < 6; $i++ ) : 
 
 			// Slider Setting
