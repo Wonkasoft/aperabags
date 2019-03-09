@@ -29,18 +29,16 @@ footer {
 			}
 		}
 
-		.menu {
-
-			ul {
-				padding: 0;
-				list-style: none;
-			}
+		ul {
+			padding: 0;
+			list-style: none;
 		}
 	}
 
 	.site-info {
 		background: $footer__background_sec;
 		color: $footer__background;
+		padding-bottom: 15px;
 		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 		.footer-logo {

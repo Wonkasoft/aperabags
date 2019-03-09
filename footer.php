@@ -50,7 +50,7 @@
 							<h5 class="footer-title menu-title-shop">Shop</h5>
 							<?php
 								wp_nav_menu( array(
-								    'theme_location'   => 'menu2'
+								    'theme_location'   => 'menu-shop'
 								) );
 							?>
 						</div><!-- .col -->
@@ -58,7 +58,7 @@
 							<h5 class="footer-title menu-title-contact-us">Contact Us</h5>
 							<?php
 								wp_nav_menu( array(
-								    'theme_location'   => 'menu2'
+								    'theme_location'   => 'menu-contact'
 								) );
 							?>
 						</div><!-- .col -->
@@ -66,7 +66,7 @@
 							<h5 class="footer-title menu-title-account">My Account</h5>
 							<?php
 								wp_nav_menu( array(
-								    'theme_location'   => 'menu3'
+								    'theme_location'   => 'menu-account'
 								) );
 							?>
 						</div><!-- .col -->
@@ -74,7 +74,7 @@
 							<h5 class="footer-title menu-title-company">Company</h5>
 							<?php
 								wp_nav_menu( array(
-								    'theme_location'   => 'menu4'
+								    'theme_location'   => 'menu-company'
 								) );
 							?>
 						</div><!-- .col -->
@@ -82,7 +82,7 @@
 							<h5 class="footer-title menu-title-programs">Apera Programs</h5>
 							<?php
 								wp_nav_menu( array(
-								    'theme_location'   => 'menu5'
+								    'theme_location'   => 'menu-programs'
 								) );
 							?>
 						</div><!-- .col -->
