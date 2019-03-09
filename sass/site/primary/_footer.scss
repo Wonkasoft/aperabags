@@ -1,0 +1,55 @@
+footer {
+	padding-top: 15px;
+	background: $footer__background;
+	color: #bfc0c2;
+	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+
+	a {
+		color: #bfc0c2;
+	}
+
+	.upper-footer {
+		padding: 15px 0;
+
+		.footer-title {
+			color: #bfc0c2;
+			@include font-size( 1.2 );
+			@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
+		}
+
+		.social-components-wrap {
+			margin: auto;
+			width: 175px;
+
+			.social-icons-btns {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				@include font-size( 1.8 );
+			}
+		}
+
+		.menu {
+
+			ul {
+				padding: 0;
+				list-style: none;
+			}
+		}
+	}
+
+	.site-info {
+		background: $footer__background_sec;
+		color: $footer__background;
+		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+
+		.footer-logo {
+			position: relative;
+			top: -30px;
+		}
+
+		a {
+			color: #ffffff;
+		}
+	}
+}

@@ -15,31 +15,39 @@
 
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col col-3">
-					<?php 
-						$instagram_link = ( get_theme_mod( 'footer_social_instagram' ) ) ? get_theme_mod( 'footer_social_instagram' ) : '';
-						if ( ! $instagram_link == '' ) {
-							echo '<a href="' . $instagram_link . '" target="_blank"><i class="fa fa-instagram"></i></a>';
-						}
+			<div class="row upper-footer">
+				<div class="col col-12 col-md-3">
+					<div class="social-components-wrap">
+						<h4 class="footer-title">Follow</h4>
+						<div class="social-icons-btns">
+							<?php 
+								$instagram_link = ( get_theme_mod( 'footer_social_instagram' ) ) ? get_theme_mod( 'footer_social_instagram' ) : '';
+								if ( ! $instagram_link == '' ) {
+									echo '<a href="' . $instagram_link . '" target="_blank"><i class="fa fa-instagram"></i></a>';
+								}
 
-						$twitter_link = ( get_theme_mod( 'footer_social_twitter' ) ) ? get_theme_mod( 'footer_social_twitter' ) : '';
-						if ( ! $twitter_link == '' ) {
-							echo '<a href="' . $twitter_link . '" target="_blank"><i class="fa fa-twitter"></i></a>';
-						}
-						$facebook_link = ( get_theme_mod( 'footer_social_facebook' ) ) ? get_theme_mod( 'footer_social_facebook' ) : '';
-						if ( ! $facebook_link == '' ) {
-							echo '<a href="' . $facebook_link . '" target="_blank"><i class="fa fa-facebook"></i></a>';
-						}
-						$pinterest_link = ( get_theme_mod( 'footer_social_pinterest' ) ) ? get_theme_mod( 'footer_social_pinterest' ) : '';
-						if ( ! $pinterest_link == '' ) {
-							echo '<a href="' . $pinterest_link . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
-						}
-					?>
+								$twitter_link = ( get_theme_mod( 'footer_social_twitter' ) ) ? get_theme_mod( 'footer_social_twitter' ) : '';
+								if ( ! $twitter_link == '' ) {
+									echo '<a href="' . $twitter_link . '" target="_blank"><i class="fa fa-twitter"></i></a>';
+								}
+
+								$facebook_link = ( get_theme_mod( 'footer_social_facebook' ) ) ? get_theme_mod( 'footer_social_facebook' ) : '';
+								if ( ! $facebook_link == '' ) {
+									echo '<a href="' . $facebook_link . '" target="_blank"><i class="fa fa-facebook"></i></a>';
+								}
+
+								$pinterest_link = ( get_theme_mod( 'footer_social_pinterest' ) ) ? get_theme_mod( 'footer_social_pinterest' ) : '';
+								if ( ! $pinterest_link == '' ) {
+									echo '<a href="' . $pinterest_link . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
+								}
+							?>
+						</div><!-- .social-icons-btns -->
+					</div><!-- .social-components-wrap -->
 				</div><!-- .col -->
-				<div class="col col-9">
+				<div class="col col-12 col-md-9">
 					<div class="row">
 						<div class="col">
+							<h5 class="footer-title menu-title-shop">Shop</h5>
 							<?php
 								wp_nav_menu( array(
 								    'theme_location'   => 'menu2'
@@ -47,6 +55,7 @@
 							?>
 						</div><!-- .col -->
 						<div class="col">
+							<h5 class="footer-title menu-title-contact-us">Contact Us</h5>
 							<?php
 								wp_nav_menu( array(
 								    'theme_location'   => 'menu2'
@@ -54,6 +63,7 @@
 							?>
 						</div><!-- .col -->
 						<div class="col">
+							<h5 class="footer-title menu-title-account">My Account</h5>
 							<?php
 								wp_nav_menu( array(
 								    'theme_location'   => 'menu3'
@@ -61,6 +71,7 @@
 							?>
 						</div><!-- .col -->
 						<div class="col">
+							<h5 class="footer-title menu-title-company">Company</h5>
 							<?php
 								wp_nav_menu( array(
 								    'theme_location'   => 'menu4'
@@ -68,6 +79,7 @@
 							?>
 						</div><!-- .col -->
 						<div class="col">
+							<h5 class="footer-title menu-title-programs">Apera Programs</h5>
 							<?php
 								wp_nav_menu( array(
 								    'theme_location'   => 'menu5'
@@ -103,7 +115,7 @@
 
 		<div class="site-info row align-items-center">
 			<!-- This column is still parsed in order to hold spacing for formating -->
-			<div class="col col-2">
+			<div class="col col-12 col-md-2 offset-md-1 footer-logo">
 				<?php
 					$footerlogo = ( get_theme_mod( 'footer_logo' ) ) ? get_theme_mod( 'footer_logo' ) : ''; 
 					if ( ! $footerlogo == '' ) {
@@ -112,7 +124,7 @@
 				?>
 			</div> <!-- .col -->
 			<!-- End logo spacing column -->
-			<div class="col">
+			<div class="col col-12 col-md-8 text-right">
 				<?php
 					/* Printing copyright date */
 					echo sprintf( esc_html__( "%s %s Apera LLC, All Rights Reserved", 'apera-bags' ), date('Y'), '&copy;' );
