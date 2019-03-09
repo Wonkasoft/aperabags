@@ -26,7 +26,7 @@
 
 	<header id="masthead" class="container-fluid site-header">
 		<?php
-		if ( get_theme_mod( 'enable_topbar', false ) ) : ?>
+		if ( get_theme_mod( 'enable_topbar' ) ) : ?>
 			<div class="row topbar-notice" style="background:<?php echo get_theme_mod( 'topbar_color', '#000' ); ?>;">
 				<div class="col col-12">
 					<span class="topbar-message-text"><?php echo get_theme_mod( 'topbar_message', 'Please set notice in customizer.' ); ?> </span>
@@ -60,7 +60,7 @@
 					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'apera-bags' ); ?></button>
 					<?php
 					wp_nav_menu( array(
-						'theme_location' => 'menu1',
+						'theme_location' => 'menu-primary',
 						'menu_id'        => 'primary-menu',
 						'menu_class'        => 'nav-menu',
 					) );

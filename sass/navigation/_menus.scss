@@ -1,32 +1,106 @@
+.row-w-nav {
+	position: relative;
+	margin-top: 0;
+	.menu-bar {
+		margin-left: -15px;
+		#site-navigation {
+		}
+	}
+	@include media-breakpoint-up( md ) {
+		margin-top: 3px;
+		.menu-bar {
+			display: flex;
+			margin-left: -15px;
+			align-items: center;
+			justify-content: center;
+			background: linear-gradient(180deg, #FCFC0D 20%, #B2B20F 70%);
+			@include prefix(transform, skew(-25deg), webkit moz o );
+			#site-navigation {
+				@include prefix(transform, skew(25deg), webkit moz o );
+			}
+		}
+	}
+}
+
+
 .main-navigation {
 	clear: both;
-	display: block;
-	float: left;
+	display: inline-block;
 	width: 100%;
-
-	ul {
-		display: none;
+	@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0.7), webkit moz o );
+	button {
+		position: absolute;
+		top: -1.2rem;
+    	margin-top: -2.2rem;
+		height: 2.2rem;
+		background: transparent;
+		border: none;
+		z-index: 100;
+		.hang-a-bur {
+			position: relative;
+			display: block;
+			width: 24px;
+			height: 3px;
+			margin: 5px 0;
+			opacity: 1;
+			background: #FCFC0D;
+			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
+			&-top {
+				top: 0;
+			}
+			&-bottom {
+				bottom: 0;
+			}
+		}
+		&[aria-expanded="true"] {
+			.hang-a-bur-top {
+				top: 0.5rem;
+				@include prefix( transform, rotate(220deg), webkit moz o );
+			}
+			.hang-a-bur-mid {
+				opacity: 0;
+			}
+			.hang-a-bur-bottom {
+				bottom: 0.5rem;
+				@include prefix( transform, rotate(-220deg), webkit moz o );
+			}
+		}
+		&:focus {
+			outline: 0;
+		}
+	}
+	> div > ul {
+		display: block;
 		list-style: none;
 		margin: 0;
-		padding-left: 0;
-
+		padding: 0;
+		height: 0;
+		top: 0;
+		overflow: hidden;
+		background: #f8f856;
+		@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 		ul {
-			box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-			float: left;
-			position: absolute;
+			@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0.7), webkit moz o );
+			position: relative;
+			list-style: none;
 			top: 100%;
-			left: -999em;
+			left: auto;
 			z-index: 99999;
+			background: #B2B20F;
+			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 
 			ul {
 				left: -999em;
 				top: 0;
+				list-style: none;
+				@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 			}
 
 			li {
+				margin: 8px 0;
 				&:hover > ul,
 				&.focus > ul {
-					left: 100%;
+					left: auto;
 				}
 			}
 
@@ -36,52 +110,191 @@
 
 			:hover > a,
 			.focus > a {
+				text-decoration: none;
+				&:after {
+					content: "";
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					height: 3px;
+					width: 100%;
+					background: #000;
+				}
+			}
+
+			li {
+				padding: 1rem 1rem;
+				@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 			}
 
 			a:hover,
 			a.focus {
+				text-decoration: none;
+				&:after {
+					content: "";
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					height: 3px;
+					width: 100%;
+					background: #000;
+				}
 			}
 		}
 
 		li:hover > ul,
 		li.focus > ul {
 			left: auto;
+			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 		}
+		
+		>li {
+			position: relative;
+			bottom: 0;
+			padding: 15px;
+			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
+			&:nth-child(2n) {
+				background: #f6f60d;
+			}
+			&:hover > a,
+			&.focus > a {
+				text-decoration: none;
+				&:after {
+					content: "";
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					height: 3px;
+					width: 100%;
+					background: #000;
+				}
+			}
+			>a {
+				margin-left: 15px;
+				@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
+			}
+		}
+
 	}
 
-	li {
-		float: left;
-		position: relative;
-
-		&:hover > a,
-		&.focus > a {
-		}
-	}
 
 	a {
-		display: block;
+		position: relative;
 		text-decoration: none;
+		@include font-size(1);
+		padding: 0.2rem 0;
+		text-transform: uppercase;
+		box-sizing: border-box;
+		@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
+		&:after {
+			content: "";
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			height: 0;
+			width: 100%;
+			background: #000;
+			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
+		}
+		@media only screen and ( min-width: 576px ) and ( -webkit-min-device-pixel-ratio: 2 ),
+		(min-resolution: 192dpi) and ( min-width: 576px ) {
+			padding: 0.2rem 0;
+		}
 	}
 
 	.current_page_item > a,
-	.current-menu-item > a,
-	.current_page_ancestor > a,
-	.current-menu-ancestor > a {
+	.current-menu-item > a {
+		&:after {
+			content: "";
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			height: 3px;
+			width: 100%;
+			background: #000;
+		}
+	}
+	@include media-breakpoint-up( sm ) {
+		button {
+	    top: -2.2rem;
+		}
+	}
+	@include media-breakpoint-up( md ) {
+		width: 100%;
+		box-shadow: none;
+		> div > ul {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			width: 100%;
+			height: inherit;
+			overflow: visible;
+			background: none;
+			> li {
+				padding: 0;
+				&:nth-child(2n) {
+					background: transparent;
+				}
+				&:hover > a,
+				&.focus > a {
+				}
+				ul {
+					position: absolute;
+					left: -999em;
+				}
+				li {
+					padding: 0 1rem;
+				}
+			}
+		}
+
+
+		a {
+			font-family: $font__main;
+			@include font-size(.9);
+			padding: 0.5rem 0;
+			@media only screen and ( min-width: 768px ) and ( -webkit-min-device-pixel-ratio: 2 ),
+			(min-resolution: 192dpi) and ( min-width: 768px ) {
+				padding: 0.5rem 0;
+			}
+		}
+	}
+	@include media-breakpoint-up( lg ) {
+		width: 100%;
+		> div > ul {
+			>li {
+			}
+		}
+		a {
+			@include font-size(1.2);
+			padding: 0.3rem 0;
+			@media only screen and ( min-width: 992px ) and ( -webkit-min-device-pixel-ratio: 2 ),
+			(min-resolution: 192dpi) and ( min-width: 992px ) {
+				padding: 0.3rem 0;
+			}
+		}
+	}
+	@include media-breakpoint-up( xl ) {
+
+		ul {
+		}
+		a {
+			@include font-size(1.5);
+			padding: .1rem 0;
+		}
 	}
 }
 
 /* Small menu. */
 .menu-toggle,
 .main-navigation.toggled ul {
-	display: block;
+	height: initial;
+	overflow: visible;
 }
 
-@media screen and (min-width: 37.5em) {
+@include media-breakpoint-up( md ) {
 	.menu-toggle {
 		display: none;
-	}
-	.main-navigation ul {
-		display: block;
 	}
 }
 
@@ -103,5 +316,103 @@
 		float: right;
 		text-align: right;
 		width: 50%;
+	}
+}
+
+.search-col {
+	position: absolute;
+	display: flex;
+	width:50%;
+	right: 0;
+	justify-content: flex-end;
+	@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+	.search-form {
+		display: flex;
+		width: 100%;
+		justify-content: flex-end;
+		@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+		label {
+			display: flex;
+			justify-content: flex-end;
+			margin: 0 10px;
+			padding: 0;
+			float: right;
+			width: 100%;
+			.search-field {
+				width: 0%;
+				padding: 5px 10px;
+				background: rgba( #fff, 0.6);
+				border-radius: 25px 0 0 25px;
+				border: 1px solid rgba(#000, 0.3);
+				opacity: 0;
+				@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+
+				&:focus {
+					opacity: 1;
+					outline: 0;
+					width: 100%;
+				}
+				&:focus + i {
+					color: #000;
+					text-shadow: none;
+				}
+			}
+			i {
+				position: absolute;
+				right: 1rem;
+				top: -2.5rem;
+				float: right;
+				color: #fff;
+				@include font-size(1.2);
+				font-weight: 200;
+				line-height: 1;
+				@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+				@include prefix( text-shadow, 1px 1px 2px rgba( #000, 0.9 ), webkit moz o );
+
+				&:hover {
+					color: #f2ff44;
+				}
+			}
+		}
+	}
+	@include media-breakpoint-up( sm ) {
+		.search-form {
+			width: 100%;
+			label {
+				i {
+					top: -3.5rem;
+				}
+			}
+		}
+	}
+	@include media-breakpoint-up( md ) {
+		position: relative;
+		.search-form {
+			width: 100%;
+			label {
+				display: flex;
+				align-items: center;
+				i {
+					top: initial;
+					right: 2.5rem;
+				}
+			}
+		}
+	}
+	@include media-breakpoint-up( lg ) {
+		.search-form {
+			label {
+				.search-field {
+				}
+			}
+		}
+	}
+	@include media-breakpoint-up( xl ) {
+		.search-form {
+			label {
+				.search-field {
+				}
+			}
+		}
 	}
 }

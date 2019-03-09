@@ -44,12 +44,12 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
-			'menu1' => esc_html__( 'Primary', 'apera-bags' ),
-			'menu2' => esc_html__( 'Footer Shop', 'apera-bags' ),
-			'menu3' => esc_html__( 'Footer Contact', 'apera-bags' ),
-			'menu4' => esc_html__( 'Footer My Account', 'apera-bags' ),
-			'menu5' => esc_html__( 'Footer Company', 'apera-bags' ),
-			'menu6' => esc_html__( 'Footer Programs', 'apera-bags' ),
+			'menu-primary' => esc_html__( 'Primary', 'apera-bags' ),
+			'menu-shop' => esc_html__( 'Footer Shop', 'apera-bags' ),
+			'menu-contact' => esc_html__( 'Footer Contact', 'apera-bags' ),
+			'menu-account' => esc_html__( 'Footer My Account', 'apera-bags' ),
+			'menu-company' => esc_html__( 'Footer Company', 'apera-bags' ),
+			'menu-programs' => esc_html__( 'Footer Programs', 'apera-bags' ),
 		) );
 
 		/*
@@ -159,6 +159,10 @@ function apera_bags_scripts() {
 
 	wp_enqueue_style( 'fontawesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' );
 
+	wp_enqueue_style( 'slick-js-style', get_template_directory_uri() . '/slick/slick.css' );
+
+	wp_enqueue_style( 'slick-js-theme-style', get_template_directory_uri() . '/slick/slick-theme.css' );
+
 	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri() );
 
 	/**
@@ -170,7 +174,9 @@ function apera_bags_scripts() {
 
 	wp_enqueue_script( 'apera-bags-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 
-	wp_enqueue_script( 'apera-bags-wonkamizer-js', get_template_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery' ), 'all', true );
+	wp_enqueue_script( 'apera-bags-slick-js', get_template_directory_uri() . '/slick/slick.min.js', array( 'jquery' ), 'all', true );
+
+	wp_enqueue_script( 'apera-bags-wonkamizer-js', get_template_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'apera-bags-slick-js' ), 'all', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
