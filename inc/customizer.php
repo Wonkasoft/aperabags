@@ -546,7 +546,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			'label'      	=> __( 'Section background image', 'apera-bags' ),
 			'section'    	=> 'cause_section',
 			'settings'   	=> 'cause_section_background',
-			'type'			=> 'text',
+			'type'			=> 'image',
 			'description'	=> 'Add section background image for cause',
 		) ) );
 
