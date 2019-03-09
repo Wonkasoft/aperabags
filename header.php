@@ -54,7 +54,7 @@
 					<?php endif; ?>
 				</div><!-- .site-branding -->
 			</div> <!-- .col-4 -->
-			<div class="col col-12 col-md-8">
+			<div class="col col-8 col-md-6">
 
 				<nav id="site-navigation" class="main-navigation">
 					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
@@ -71,6 +71,9 @@
 					?>
 				</nav><!-- #site-navigation -->
 			</div> <!-- .col-8 -->
+			<div class="col col-4 col-md-2 cart-column">
+
+			</div>
 		</div> <!-- .row -->
 	</header><!-- #masthead -->
 

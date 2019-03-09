@@ -28,13 +28,16 @@
 		if ( document.querySelector( '.header-slider-section' ) ) 
 		{
 			var header_slider_section = document.querySelector( '.header-slider-section' ),
+			top_slide = document.querySelector( '.top-page-slide' ),
 			cta_slider = document.querySelector( '.header-slider-section' ),
 			cta_slider_section = document.querySelector( '.desirable-slider-section' ),
 			header_topbar = document.querySelector( '.topbar-notice' ),
 			adjustment = document.querySelector( '.topbar-notice' ).offsetHeight + document.querySelector( '.topbar-notice' ).offsetTop;
 			header_slider_section.style.height = (window.innerHeight - adjustment) + 'px';
 			cta_slider_section.style.height = (window.innerHeight - adjustment) + 'px';
-			
+			top_slide.style.height = header_slider_section.offsetHeight;
+			top_slide.style.width = header_slider_section.offsetWidth;
+
 			// $( '.top-page-slider' ).slick({
 			//   dots: true,
 			//   infinite: true,

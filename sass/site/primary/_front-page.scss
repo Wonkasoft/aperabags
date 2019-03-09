@@ -6,6 +6,10 @@
 	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
+	.slider-slide {
+		width: 100%;
+		height: 100%;
+	}
 	.top-page-slider {
 		height: 100%;
 		width: 100%;
@@ -78,7 +82,7 @@
 					left: 0;
 					width: 50%;
 					z-index: 50;
-					@include prefix( transform, matrix(1.5,-.9,0.5,1.3,-15,5), o moz webkit );
+					@include prefix( transform, matrix(1.5,-.9,0.5,1.3,-20,10), o moz webkit );
 					@include prefix( box-shadow, $box_shadow_3, o moz webkit );
 				}
 
