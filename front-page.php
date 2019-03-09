@@ -33,6 +33,7 @@ get_header();
 					
 					/* Checks for an img set in the slide object */
 					if ( !empty( $slide->slide_img ) ) : ?>
+						<div class="slider-slide">
 						<div class="top-page-slide" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 
 							<?php 
@@ -55,6 +56,7 @@ get_header();
 							<?php endif; ?>
 
 						</div><!-- .top-page-slide -->
+					</div><!-- .slider-slide -->
 					<?php endif; ?>
 
 				<?php endforeach; ?>
