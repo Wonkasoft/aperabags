@@ -34,7 +34,7 @@
 			</div><!-- topbar-notice -->
 		<?php endif; ?>
 		<div class="row brand-nav-bar">
-			<div class="col col-2">
+			<div class="col col-8 col-md-2">
 				<div class="site-branding">
 					<?php
 					the_custom_logo();
@@ -54,10 +54,14 @@
 					<?php endif; ?>
 				</div><!-- .site-branding -->
 			</div> <!-- .col-4 -->
-			<div class="col col-8">
+			<div class="col col-12 col-md-8">
 
 				<nav id="site-navigation" class="main-navigation">
-					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'apera-bags' ); ?></button>
+					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+						<span class="hang-a-bur hang-a-bur-top"></span>
+						<span class="hang-a-bur hang-a-bur-mid"></span>
+						<span class="hang-a-bur hang-a-bur-bottom"></span>
+					</button>
 					<?php
 					wp_nav_menu( array(
 						'theme_location' => 'menu-primary',

@@ -558,7 +558,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		 * About subheader settings Section
 		 * @since  1.0.0
 		 */
-		$wp_customize->add_setting( 'about_the_brand_subheader' , array(
+		$wp_customize->add_setting( 'about_the_brand_subheader', array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -579,7 +579,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		 * About the brand message settings Section
 		 * @since  1.0.0
 		 */
-		$wp_customize->add_setting( 'about_the_brand_message' , array(
+		$wp_customize->add_setting( 'about_the_brand_message', array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -600,7 +600,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		 * About the brand button settings Section
 		 * @since  1.0.0
 		 */
-		$wp_customize->add_setting( 'about_the_brand_button' , array(
+		$wp_customize->add_setting( 'about_the_brand_button', array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );

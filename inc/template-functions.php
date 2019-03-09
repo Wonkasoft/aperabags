@@ -119,6 +119,25 @@ function the_mods_for_section( $section ) {
 		return $mods_class;
 	endif;
 
+	if ( $section == 'about' ) :
+		if ( !empty( get_theme_mod( 'about_the_brand_header' ) ) ) :
+			$count++;
+			$about 											=	new stdClass();
+			$about->about_name  							=	"about_the_brand";
+			$about->about_header							=	get_theme_mod( 'about_the_brand_header' );
+			$about->about_subheader							=	get_theme_mod( 'about_the_brand_subheader' );
+			$about->about_message 							=	get_theme_mod( 'about_the_brand_message' );
+			$about->about_brand_btn							=	get_theme_mod( 'about_the_brand_button' );
+			$about->about_brand_btn_text					=	get_theme_mod( 'about_the_brand_button' );
+
+			$mods_class->{$about->about_name} = $about;
+		endif;
+
+		$mods_class->count = $count;
+
+		return $mods_class;
+	endif;
+
 	return false;
 }
 add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );

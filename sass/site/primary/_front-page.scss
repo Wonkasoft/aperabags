@@ -73,6 +73,7 @@
 					display: inline-block;
 					margin-bottom: 15px;
 					background: #eee;
+					color: #e81409;
 					top: 15px;
 					left: 0;
 					width: 50%;
@@ -83,6 +84,14 @@
 
 				img {
 					margin-bottom: 15px;
+				}
+
+				.price {
+					color: #e81409;
+
+					ins {
+						background: transparent;
+					}
 				}
 			}
 

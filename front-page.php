@@ -56,7 +56,7 @@ get_header();
 
 						</div><!-- .top-page-slide -->
 					<?php endif; ?>
-					
+
 				<?php endforeach; ?>
 
 			</div><!-- .top-page-slider -->
@@ -146,6 +146,22 @@ get_header();
 				<?php endforeach; ?>
 
 			</section><!-- .our-cause-section -->
+		<?php endif; ?>
+		<?php do_action( 'get_mods_before_section', 'about' );
+		$about_section = get_section_mods( 'about' );
+
+		if ( !empty( $about_section ) ) : ?>
+			<section class="row about-brand-section">
+				<div class="col col-12 col-md-6">
+					<h2 class="about-brand-header"><?php _e( $about_section->about_the_brand->about_header ); ?></h2>
+					<h4 class="about-brand-subheader"><?php _e( $about_section->about_the_brand->about_subheader ); ?></h4>
+					<p class="about-brand-message"><?php _e( $about_section->about_the_brand->about_message ); ?></p>
+					<div class="about-brand-img"></div>
+					<a class="btn btn-primary" href="<?php _e( $about_section->about_the_brand->about_brand_btn ); ?>"><?php _e( $about_section->about_the_brand->about_brand_btn_text ); ?></a>
+				</div>
+				<div class="col col-12 col-md-6">
+				</div>
+			</section>
 		<?php endif; ?>
 		<?php if ( get_theme_mod( 'social_shortcode' ) ) : ?>
 			<section class="row instagram-section">
