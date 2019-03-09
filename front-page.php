@@ -162,6 +162,7 @@ get_header();
 					<a class="btn btn-primary" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
 				</div>
 				<div class="col col-12 col-md-6">
+					<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>
 				</div>
 			</section>
 		<?php endif; ?>
