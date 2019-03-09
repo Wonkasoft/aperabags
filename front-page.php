@@ -159,7 +159,7 @@ get_header();
 					<h4 class="about-brand-subheader"><?php _e( $about_section->about_the_brand->about_subheader ); ?></h4>
 					<p class="about-brand-message"><?php _e( $about_section->about_the_brand->about_message ); ?></p>
 					<div class="about-brand-img"></div>
-					<a class="btn btn-primary" href="<?php _e( $about_section->about_the_brand->about_brand_btn ); ?>"><?php _e( $about_section->about_the_brand->about_brand_btn_text ); ?></a>
+					<a class="btn btn-primary" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
 				</div>
 				<div class="col col-12 col-md-6">
 				</div>
