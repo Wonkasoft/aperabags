@@ -37,24 +37,6 @@
 				padding: 15px;
 			}
 		}
-
-		nav {
-
-			#primary-menu {
-
-				.nav-menu {
-					display: flex;
-					align-items: center;
-					justify-content: space-around;
-					
-					a {
-						color: #ffffff;
-						@include font-size( 1.5 );
-						@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
-					}
-				}
-			}
-		}
 	}
 }
 /*=====  End of header branding and navbar  ======*/
