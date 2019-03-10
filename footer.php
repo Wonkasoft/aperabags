@@ -9,6 +9,8 @@
  * @package Apera_Bags
  */
 
+do_action( 'get_mods_before_section', 'footer' );
+$footer_section = get_section_mods( 'footer' );
 ?>
 
 	</div><!-- #content .container-fluid -->
@@ -18,110 +20,115 @@
 			<div class="row upper-footer">
 				<div class="col col-12 col-md-3">
 					<div class="social-components-wrap">
-						<h4 class="footer-title">Follow</h4>
+						<h4 class="footer-title"><?php echo $footer_section->footer_mods->footer_social_title; ?></h4>
 						<div class="social-icons-btns">
 							<?php 
-								$instagram_link = ( get_theme_mod( 'footer_social_instagram' ) ) ? get_theme_mod( 'footer_social_instagram' ) : '';
-								if ( ! $instagram_link == '' ) {
-									echo '<a href="' . $instagram_link . '" target="_blank"><i class="fa fa-instagram"></i></a>';
+								if ( !empty( $footer_section->footer_mods->footer_social_instagram ) ) {
+									echo '<a href="' . $footer_section->footer_mods->footer_social_instagram . '" target="_blank"><i class="fa fa-instagram"></i></a>';
 								}
 
-								$twitter_link = ( get_theme_mod( 'footer_social_twitter' ) ) ? get_theme_mod( 'footer_social_twitter' ) : '';
-								if ( ! $twitter_link == '' ) {
-									echo '<a href="' . $twitter_link . '" target="_blank"><i class="fa fa-twitter"></i></a>';
+								if ( !empty( $footer_section->footer_mods->footer_social_twitter ) ) {
+									echo '<a href="' . $footer_section->footer_mods->footer_social_twitter . '" target="_blank"><i class="fa fa-twitter"></i></a>';
 								}
 
-								$facebook_link = ( get_theme_mod( 'footer_social_facebook' ) ) ? get_theme_mod( 'footer_social_facebook' ) : '';
-								if ( ! $facebook_link == '' ) {
-									echo '<a href="' . $facebook_link . '" target="_blank"><i class="fa fa-facebook"></i></a>';
+								if ( !empty( $footer_section->footer_mods->footer_social_facebook ) ) {
+									echo '<a href="' . $footer_section->footer_mods->footer_social_facebook . '" target="_blank"><i class="fa fa-facebook"></i></a>';
 								}
 
-								$pinterest_link = ( get_theme_mod( 'footer_social_pinterest' ) ) ? get_theme_mod( 'footer_social_pinterest' ) : '';
-								if ( ! $pinterest_link == '' ) {
-									echo '<a href="' . $pinterest_link . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
+								if ( !empty( $footer_section->footer_mods->footer_social_pinterest ) ) {
+									echo '<a href="' . $footer_section->footer_mods->footer_social_pinterest . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
 								}
 							?>
 						</div><!-- .social-icons-btns -->
+						<?php if ( !empty( $footer_section->footer_mods->footer_contact_message ) ) : ?>
+							<div class="footer-contact-message">
+								<?php echo $footer_section->footer_mods->footer_contact_message; ?>
+							</div> <!-- .col -->
+						<?php endif; ?>
+						<?php if ( !empty( $footer_section->footer_mods->footer_contact_support_email ) ) : ?>
+							<div class="footer-contact-email">
+								<?php echo $footer_section->footer_mods->footer_contact_support_email; ?>
+							</div> <!-- .col -->
+						<?php endif; ?>
 					</div><!-- .social-components-wrap -->
 				</div><!-- .col -->
 				<div class="col col-12 col-md-9">
 					<div class="row">
+						<?php if ( !empty( $footer_section->footer_titles->footer_title_1 ) ) : ?>
+							<div class="col">
+								<h5 class="footer-title menu-title-shop"><?php echo $footer_section->footer_titles->footer_title_1; ?></h5>
+								<?php
+									wp_nav_menu( array(
+									    'theme_location'   => 'menu-shop',
+									    'menu_class'		=> 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_1 ),
+									) );
+								?>
+							</div><!-- .col -->
+						<?php endif; ?>
+						<?php if ( !empty( $footer_section->footer_titles->footer_title_2 ) ) : ?>
+							<div class="col">
+								<h5 class="footer-title menu-title-contact-us"><?php echo $footer_section->footer_titles->footer_title_2; ?></h5>
+								<?php
+									wp_nav_menu( array(
+									    'theme_location'   => 'menu-contact',
+									    'menu_class'		=> 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_2 ),
+									) );
+								?>
+							</div><!-- .col -->
+						<?php endif; ?>
+						<?php if ( !empty( $footer_section->footer_titles->footer_title_3 ) ) : ?>
+							<div class="col">
+								<h5 class="footer-title menu-title-account"><?php echo $footer_section->footer_titles->footer_title_3; ?></h5>
+								<?php
+									wp_nav_menu( array(
+									    'theme_location'   => 'menu-account',
+									    'menu_class'		=> 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_3 ),
+									) );
+								?>
+							</div><!-- .col -->
+						<?php endif; ?>
+						<?php if ( !empty( $footer_section->footer_titles->footer_title_4 ) ) : ?>
 						<div class="col">
-							<h5 class="footer-title menu-title-shop">Shop</h5>
+							<h5 class="footer-title menu-title-company"><?php echo $footer_section->footer_titles->footer_title_4; ?></h5>
 							<?php
 								wp_nav_menu( array(
-								    'theme_location'   => 'menu-shop'
+								    'theme_location'   => 'menu-company',
+								    'menu_class'		=> 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_4 ),
 								) );
 							?>
 						</div><!-- .col -->
+						<?php endif; ?>
+						<?php if ( !empty( $footer_section->footer_titles->footer_title_5 ) ) : ?>
 						<div class="col">
-							<h5 class="footer-title menu-title-contact-us">Contact Us</h5>
+							<h5 class="footer-title menu-title-programs"><?php echo $footer_section->footer_titles->footer_title_5; ?></h5>
 							<?php
 								wp_nav_menu( array(
-								    'theme_location'   => 'menu-contact'
+								    'theme_location'   => 'menu-programs',
+								    'menu_class'		=> 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_5 ),
 								) );
 							?>
 						</div><!-- .col -->
-						<div class="col">
-							<h5 class="footer-title menu-title-account">My Account</h5>
-							<?php
-								wp_nav_menu( array(
-								    'theme_location'   => 'menu-account'
-								) );
-							?>
-						</div><!-- .col -->
-						<div class="col">
-							<h5 class="footer-title menu-title-company">Company</h5>
-							<?php
-								wp_nav_menu( array(
-								    'theme_location'   => 'menu-company'
-								) );
-							?>
-						</div><!-- .col -->
-						<div class="col">
-							<h5 class="footer-title menu-title-programs">Apera Programs</h5>
-							<?php
-								wp_nav_menu( array(
-								    'theme_location'   => 'menu-programs'
-								) );
-							?>
-						</div><!-- .col -->
+						<?php endif; ?>
 					</div><!-- .row -->
+					<div class="row">
+						<?php if ( !empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
+							<div class="col">
+								<?php
+									echo "<small>Sign up to get the latest on sales, new releases and more...</small><br />";
+									echo $footer_section->footer_mods->footer_form_shortcode;
+								?>
+							</div> <!-- .col -->
+						<?php endif; ?>
+					</div> <!-- .row -->
 				</div><!-- .col-9 -->
-		</div> <!-- .row -->
-		<div class="row align-items-center">
-			<div class="col">
-				<?php echo get_theme_mod( 'footer_contact_message' ); ?>
-			</div> <!-- .col -->
-		</div> <!-- .row -->
-		<div class="row">
-			<div class="col">
-				<?php echo get_theme_mod( 'footer_contact_support_email' ); ?>
-			</div> <!-- .col -->
-		</div> <!-- .row -->
-
-		<div class="row">
-			<div class="col">
-				<?php 
-				$signupform = ( get_theme_mod( 'footer_form_shortcode' ) ) ? get_theme_mod( 'footer_form_shortcode' ) : ''; 
-				if ( ! $signupform == '' ) {
-					echo "<small>Sign up to get the latest on sales, new releases and more...</small><br />";
-					echo do_shortcode( $signupform, $ignore_html = false );
-				}
-
-				?>
-			</div> <!-- .col -->
 		</div> <!-- .row -->
 
 		<div class="site-info row align-items-center">
 			<!-- This column is still parsed in order to hold spacing for formating -->
 			<div class="col col-12 col-md-2 offset-md-1 footer-logo">
-				<?php
-					$footerlogo = ( get_theme_mod( 'footer_logo' ) ) ? get_theme_mod( 'footer_logo' ) : ''; 
-					if ( ! $footerlogo == '' ) {
-						echo sprintf( esc_html__( '%1$s', 'apera-bags' ), "<img src='$footerlogo' alt='Apera logo' />" );
-					}
-				?>
+				<?php if ( !empty( $footer_section->footer_mods->footer_logo ) ) : ?>
+				<?php echo sprintf( __( '<img src="%1$s" alt="Apera logo" />', 'apera-bags' ), $footer_section->footer_mods->footer_logo ); ?>
+				<?php endif; ?>
 			</div> <!-- .col -->
 			<!-- End logo spacing column -->
 			<div class="col col-12 col-md-8 text-right">

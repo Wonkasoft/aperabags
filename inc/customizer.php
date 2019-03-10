@@ -822,7 +822,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		 * Social shortcode settings Section
 		 * @since  1.0.0
 		 */
-		$wp_customize->add_setting( 'social_shortcode' , array(
+		$wp_customize->add_setting( 'social_shortcode', array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -843,7 +843,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		 * Social button text settings Section
 		 * @since  1.0.0
 		 */
-		$wp_customize->add_setting( 'social_btn_text' , array(
+		$wp_customize->add_setting( 'social_btn_text', array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -864,7 +864,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		 * Social shop button  settings Section
 		 * @since  1.0.0
 		 */
-		$wp_customize->add_setting( 'social_shop_button' , array(
+		$wp_customize->add_setting( 'social_shop_button', array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -885,7 +885,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		 * Footer settings Section
 		 * @since  1.0.0
 		 */
-		$wp_customize->add_section( 'footer_section' , array(
+		$wp_customize->add_section( 'footer_section', array(
 			'capability'     => 'edit_theme_options',
 			'theme_supports' => '',
 			'priority'		 => 10,
@@ -898,7 +898,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		 * Footer social links settings Section
 		 * @since  1.0.0
 		 */
-		$wp_customize->add_setting( 'footer_social_instagram' , array(
+		$wp_customize->add_setting( 'footer_social_instagram', array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -916,7 +916,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		) ) );
 
 		// Footer social Twitter link Setting
-		$wp_customize->add_setting( 'footer_social_twitter' , array(
+		$wp_customize->add_setting( 'footer_social_twitter', array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -934,7 +934,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		) ) );
 
 		// Footer social Facebook link Setting
-		$wp_customize->add_setting( 'footer_social_facebook' , array(
+		$wp_customize->add_setting( 'footer_social_facebook', array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -952,7 +952,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		) ) );
 
 		// Footer social Pinterest link Setting
-		$wp_customize->add_setting( 'footer_social_pinterest' , array(
+		$wp_customize->add_setting( 'footer_social_pinterest', array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -970,7 +970,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		) ) );
 
 		// Footer contact message Setting
-		$wp_customize->add_setting( 'footer_contact_message' , array(
+		$wp_customize->add_setting( 'footer_contact_message', array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -1007,7 +1007,7 @@ function apera_bags_customize_register( $wp_customize ) {
 
 	for ( $i=1; $i <= 5; $i++ ) : 
 		// Footer menu header Setting
-		$wp_customize->add_setting( 'footer_menu_header_'.$i , array(
+		$wp_customize->add_setting( 'footer_menu_header_'.$i, array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
