@@ -575,7 +575,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		for ( $i=1; $i <= 3; $i++ ) : 
 
 			// Cause Option Setting
-			$wp_customize->add_setting( 'cause_option_'.$i , array(
+			$wp_customize->add_setting( 'cause_image_'.$i , array(
 				'default'   				=> '',
 				'transport' 				=> 'refresh',
 			) );
@@ -583,11 +583,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			// Cause Option Control
 			$wp_customize->add_control( new WP_Customize_Image_Control( 
 				$wp_customize, 
-				'cause_option_'.$i.'_control', 
+				'cause_image_'.$i.'_control', 
 				array(
 				'label'      	=> __( 'Image for cause '.$i, 'apera' ),
 				'section'    	=> 'cause_section',
-				'settings'   	=> 'cause_option_'.$i,
+				'settings'   	=> 'cause_image_'.$i,
 				'type'			=> 'image',
 				'description'	=> 'Add image for cause '.$i,
 			) ) );
