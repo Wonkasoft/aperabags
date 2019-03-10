@@ -272,6 +272,24 @@ function apera_bags_customize_register( $wp_customize ) {
 			'panel'  		 => 'ft_theme_options',
 		) );
 
+		// Shop Title for Section Setting
+		$wp_customize->add_setting( 'shop_title', array(
+			'default'   				=> '',
+			'transport' 				=> 'refresh',
+		) );
+
+		// Shop Title for Section Setting Control
+		$wp_customize->add_control( new WP_Customize_Control( 
+			$wp_customize, 
+			'shop_title_control', 
+			array(
+			'label'      	=> __( 'Shop Title', 'apera' ),
+			'section'    	=> 'shop_section',
+			'settings'   	=> 'shop_background_image',
+			'type'			=> 'text',
+			'description'	=> 'Shop Title for Section',
+		) ) );
+
 		// Shop background image Setting
 		$wp_customize->add_setting( 'shop_background_image', array(
 			'default'   				=> '',
@@ -893,6 +911,27 @@ function apera_bags_customize_register( $wp_customize ) {
 			'description'	 => __( 'Footer Section Options version 1.0.0', 'apera-bags' ),
 			'panel'  		 => 'ft_theme_options',
 		) );
+
+		/**
+		 * Footer social title settings Section
+		 * @since  1.0.0
+		 */
+		$wp_customize->add_setting( 'footer_social_title' , array(
+			'default'   				=> '',
+			'transport' 				=> 'refresh',
+		) );
+
+		// Footer social Instagram Setting Control
+		$wp_customize->add_control( new WP_Customize_Control( 
+			$wp_customize, 
+			'footer_social_title_control', 
+			array(
+			'label'      	=> __( 'Footer Social Title', 'apera-bags' ),
+			'section'    	=> 'footer_section',
+			'settings'   	=> 'footer_social_title',
+			'type'			=> 'text',
+			'description'	=> 'Footer Social Title',
+		) ) );
 
 		/**
 		 * Footer social links settings Section
