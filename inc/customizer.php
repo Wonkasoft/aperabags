@@ -285,7 +285,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			array(
 			'label'      	=> __( 'Shop Title', 'apera' ),
 			'section'    	=> 'shop_section',
-			'settings'   	=> 'shop_background_image',
+			'settings'   	=> 'shop_title',
 			'type'			=> 'text',
 			'description'	=> 'Shop Title for Section',
 		) ) );
