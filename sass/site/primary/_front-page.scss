@@ -1,6 +1,8 @@
 /*=========================================
 =            front page styles            =
 =========================================*/
+
+/*----------  Header Slider  ----------*/
 .header-slider-section {
 	height: 25px;
 	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
@@ -55,8 +57,13 @@
 		}
 	}
 }
+/*----------  End Header Slider  ----------*/
 
+/*----------  Shop Section  ----------*/
 .shop-section {
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
 
 	.woocommerce {
 		margin: 30px auto;
@@ -103,7 +110,9 @@
 		}
 	}
 }
+/*----------  End Shop Section  ----------*/
 
+/*----------  CTA Section  ----------*/
 .desirable-slider-section {
 	height: 25px;
 	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
@@ -153,7 +162,9 @@
 		}
 	}
 }
+/*----------  End CTA Section  ----------*/
 
+/*----------  Our Cause Section  ----------*/
 .our-cause-section {
 
 	.cause-section-module {
@@ -179,4 +190,5 @@
 		}
 	}
 }
+/*----------  End Our Cause Section  ----------*/
 /*=====  End of front page styles  ======*/

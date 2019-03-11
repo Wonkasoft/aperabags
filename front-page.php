@@ -74,7 +74,7 @@ get_header();
 			if ( !empty( $shop_section->shop_mods->shop_title ) ) : 
 		?>
 
-			<section class="row shop-section align-items-center justify-content-center" style="background-image:url(<?php echo $shop_section->shop_mods->shop_background_image;?>);">
+			<section class="row shop-section align-items-center justify-content-center" style="background-image:url(<?php echo $shop_section->shop_mods->shop_background_image;?>), rgba( 255, 255, 255, 0.7 );">
 				<div class="col col-12">
 					<div class="row">
 						<div class="col col-12 text-center">
