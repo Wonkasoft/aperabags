@@ -530,7 +530,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		 * Cause section header settings Section
 		 * @since  1.0.0
 		 */
-		$wp_customize->add_setting( 'cause_section_header', array(
+		$wp_customize->add_setting( 'cause_section_title', array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -538,11 +538,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Cause section header Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'cause_section_header_control', 
+			'cause_section_title_control', 
 			array(
-			'label'      	=> __( 'Section header', 'apera-bags' ),
+			'label'      	=> __( 'Section Title', 'apera-bags' ),
 			'section'    	=> 'cause_section',
-			'settings'   	=> 'cause_section_header',
+			'settings'   	=> 'cause_section_title',
 			'type'			=> 'text',
 			'description'	=> 'Add section header for cause',
 		) ) );
@@ -819,7 +819,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		 * Social section header settings Section
 		 * @since  1.0.0
 		 */
-		$wp_customize->add_setting( 'social_section_header' , array(
+		$wp_customize->add_setting( 'social_section_title' , array(
 			'default'   				=> '',
 			'transport' 				=> 'refresh',
 		) );
@@ -827,13 +827,13 @@ function apera_bags_customize_register( $wp_customize ) {
 		// Social section header Setting Control
 		$wp_customize->add_control( new WP_Customize_Control( 
 			$wp_customize, 
-			'social_section_header_control', 
+			'social_section_title_control', 
 			array(
-			'label'      	=> __( 'Social Section Header', 'apera-bags' ),
+			'label'      	=> __( 'Social Section Title', 'apera-bags' ),
 			'section'    	=> 'social_section',
-			'settings'   	=> 'social_section_header',
+			'settings'   	=> 'social_section_title',
 			'type'			=> 'text',
-			'description'	=> 'Social Section Header',
+			'description'	=> 'Social Section Title',
 		) ) );
 
 		/**

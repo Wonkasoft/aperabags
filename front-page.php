@@ -65,21 +65,26 @@ get_header();
 
 			</section><!-- .header-slider-section -->
 		<?php endif; ?>
-		<?php if ( get_theme_mod( 'shop_num_of_products' ) && get_theme_mod( 'shop_product_per_row' ) ) : ?>
-					<?php 
-						$numofproducts = get_theme_mod( 'shop_num_of_products' );
-						$productsperrow = get_theme_mod( 'shop_product_per_row' );
-						$proshortcode = "[recent_products per_page='$numofproducts' columns='$productsperrow']"; ?>
-			<section class="row shop-section align-items-center justify-content-center">
+
+		<?php 
+
+			do_action( 'get_mods_before_section', 'shop' );
+
+			$shop_section = get_section_mods( 'shop' );
+			if ( !empty( $shop_section->shop_mods->shop_title ) ) : 
+		?>
+
+			<section class="row shop-section align-items-center justify-content-center" style="background-image:url(<?php echo $shop_section->shop_mods->shop_background_image;?>);">
 				<div class="col col-12">
 					<div class="row">
 						<div class="col col-12 text-center">
-							<h3 class="shop-title">SHOP</h3>
+							<h3 class="section-title shop-title"><?php echo $shop_section->shop_mods->shop_title; ?></h3>
 						</div>
 					</div>
 					<div class="row align-items-center justify-content-center">
 						<?php
-							echo do_shortcode( $proshortcode ); 
+							$shop_shortcode = '[recent_products per_page="$shop_section->shop_mods->shop_num_of_products" columns="$shop_section->shop_mods->shop_product_per_row"]';
+							echo do_shortcode( $shop_shortcode ); 
 						?>
 					</div>
 				</div>
@@ -129,18 +134,18 @@ get_header();
 		if ( !empty( $cause_section ) ) : ?>
 			<section class="row our-cause-section">
 				<div class="col col-12 text-center title-wrap">
-					<h3 class="our-cause-title">Our Cause</h3>
+					<h3 class="section-title our-cause-title"><?php echo $cause_section->cause_mods->cause_section_title; ?></h3>
 				</div>
 				<?php
 				foreach ( $cause_section->causes as $cause ) :
-				if ( !empty( $cause->cause_img ) ) :
+				if ( !empty( $cause->img ) ) :
 				?>
 					<div class="col">
 						<div class="cause-section-module">
 							<div class="module-component-wrap">
-								<img class="cause-img" src="<?php _e( $cause->cause_img ); ?>" />
-								<h3 class="cause-title text-<?php _e( $cause->cause_message_position ); ?>"><?php _e( $cause->cause_header ); ?></h3>
-								<p class="cause-message text-<?php _e( $cause->cause_message_position ); ?>"><?php _e( $cause->cause_message ); ?></p>
+								<img class="cause-img" src="<?php _e( $cause->img ); ?>" />
+								<h3 class="cause-title text-<?php _e( $cause->position ); ?>"><?php _e( $cause->header ); ?></h3>
+								<p class="cause-message text-<?php _e( $cause->position ); ?>"><?php _e( $cause->message ); ?></p>
 							</div><!-- .module-component-wrap -->
 						</div><!-- .cause-section-module -->
 					</div>
@@ -161,18 +166,26 @@ get_header();
 					<div class="about-brand-img"></div>
 					<a class="btn btn-primary" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
 				</div>
-				<div class="col col-12 col-md-6">
-					<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>
+				<div class="col col-12 col-md-5">
+					<img class="about-second-image" src="<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />
 				</div>
 			</section>
 		<?php endif; ?>
-		<?php if ( get_theme_mod( 'social_shortcode' ) ) : ?>
+
+		<?php do_action( 'get_mods_before_section', 'social' );
+		$social_section = get_section_mods( 'social' );
+
+		if ( !empty( $social_section->social_mods->social_title ) ) : ?>
 			<section class="row instagram-section">
-				<div class="col">
-					<?php 
-					$social_short = get_theme_mod( 'social_shortcode' );
-					echo do_shortcode( $social_short ); ?>
+				<div class="col col-12 text-center">
+					<h3 class="section-title social-title"><?php _e( $social_section->social_mods->social_title ); ?></h3>
+				</div> <!-- .col -->
+				<div class="col col-12">
+					<?php _e( do_shortcode( $social_section->social_mods->social_shortcode ) ); ?>
 				</div>
+				<div class="col col-12 shop-social-btn text-center">
+					<a class="btn btn-lg btn-primary" href="<?php _e( $social_section->social_mods->social_shop_button);?>"><?php _e($social_section->social_mods->social_btn_text); ?></a>
+				</div> <!-- .col -->
 			</section><!-- .instagram-section -->
 		<?php endif; ?>
 	<?php else: ?>
