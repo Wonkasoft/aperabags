@@ -45,6 +45,7 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
 			'menu-primary' => esc_html__( 'Primary', 'apera-bags' ),
+			'menu-cart' => esc_html__( 'Cart', 'apera-bags' ),
 			'menu-shop' => esc_html__( 'Footer Shop', 'apera-bags' ),
 			'menu-contact' => esc_html__( 'Footer Contact', 'apera-bags' ),
 			'menu-account' => esc_html__( 'Footer My Account', 'apera-bags' ),
