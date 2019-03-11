@@ -127,6 +127,7 @@
 		li.focus > ul {
 			margin-left: 0;
 			padding: 0;
+			opacity: 1;
 			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 		}
 		
