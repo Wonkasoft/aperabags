@@ -60,7 +60,8 @@
 			position: relative;
 			list-style: none;
 			margin: 0;
-			top: 150%;
+			padding: 0;
+			top: 30px;
 			bottom: 150%;
 			overflow: hidden;
 			z-index: 99999;
@@ -69,7 +70,6 @@
 			@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0.7), webkit moz o );
 
 			ul {
-				top: 30px;
 				bottom: 150%;
 				list-style: none;
 				@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
