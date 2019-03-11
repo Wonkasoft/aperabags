@@ -405,8 +405,12 @@
 =            Cart Menu Styles            =
 ========================================*/
 .cart-column {
-
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
 	.wonka-badge {
+		background: #fbf2b9;
 		@include font-size( .9 );
 	}
 
