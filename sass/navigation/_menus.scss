@@ -153,6 +153,8 @@
 				}
 			}
 			>a {
+				color: #fbf2b9;
+				@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
 			}
 		}
 
@@ -408,9 +410,10 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	
+
 	.wonka-badge {
 		background: #fbf2b9;
+		margin-right: 8px;
 		@include font-size( .9 );
 	}
 
