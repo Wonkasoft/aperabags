@@ -82,6 +82,7 @@
 			}
 
 			a {
+				color: #fbf2b9;
 				width: 200px;
 			}
 
@@ -428,6 +429,7 @@
 		    @include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 
 		    a {
+		    	color: #fbf2b9;
 				@include font-size(.9);
 				padding: 0.5rem 0;
 				@media only screen and ( min-width: 768px ) and ( -webkit-min-device-pixel-ratio: 2 ),
@@ -455,9 +457,11 @@
 	    	background: none;
 
 	    	li {
+	    		margin: 0;
 	    		padding: 0;
 
 	    		a {
+	    			padding: 0;
     				@include font-size( 1 );
 				    line-height: 1.5;
 
