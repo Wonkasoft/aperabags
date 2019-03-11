@@ -447,9 +447,11 @@
 
 	    		a {
     				@include font-size( 1 );
+				    line-height: 1.5;
 
     				i {
     					@include font-size( 1 );
+				    	line-height: 1.5;
     				}
 	    		}
 	    	}
