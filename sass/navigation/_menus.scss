@@ -395,39 +395,61 @@
 /*========================================
 =            Cart Menu Styles            =
 ========================================*/
-#cart-menu {
-	display: block;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    height: 0;
-    top: 0;
-    overflow: hidden;
+.cart-column {
 
-    li {
-    	position: relative;
-	    margin: 8px 0;
-	    padding: 1rem 1rem;
-	    @include prefix( transition, all 0.2s ease-in-out, webkit moz o);
+	.wonka-badge {
+		@include font-size( .9 );
+	}
 
-	    a {
-			@include font-size(.9);
-			padding: 0.5rem 0;
-			@media only screen and ( min-width: 768px ) and ( -webkit-min-device-pixel-ratio: 2 ),
-			(min-resolution: 192dpi) and ( min-width: 768px ) {
+	#cart-menu {
+		display: block;
+	    list-style: none;
+	    margin: 0;
+	    padding: 0;
+	    height: 0;
+	    top: 0;
+	    overflow: hidden;
+
+	    li {
+	    	position: relative;
+		    margin: 8px 0;
+		    padding: 1rem 1rem;
+		    @include prefix( transition, all 0.2s ease-in-out, webkit moz o);
+
+		    a {
+				@include font-size(.9);
 				padding: 0.5rem 0;
-			}
+				@media only screen and ( min-width: 768px ) and ( -webkit-min-device-pixel-ratio: 2 ),
+				(min-resolution: 192dpi) and ( min-width: 768px ) {
+					padding: 0.5rem 0;
+				}
+		    }
 	    }
-    }
+
+	}
 
     @include media-breakpoint-up( md ) {
-    	display: flex;
-    	align-items: center;
-    	justify-content: space-between;
-    	width: 100%;
-    	height: inherit;
-    	overflow: visible;
-    	background: none;
+
+    	.wonka-badge {
+    		@include font-size( 1 );
+    	}
+
+    	#cart-menu {
+	    	display: flex;
+	    	align-items: center;
+	    	justify-content: space-between;
+	    	width: 100%;
+	    	height: inherit;
+	    	overflow: visible;
+	    	background: none;
+
+	    	li {
+
+	    		a {
+    				@include font-size( 1 );
+	    		}
+	    	}
+    	}
     }
 }
 /*=====  End of Cart Menu Styles  ======*/

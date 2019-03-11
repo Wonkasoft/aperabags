@@ -4,7 +4,7 @@
 
 /*----------  Header Slider  ----------*/
 .header-slider-section {
-	height: 250px;
+	height: 450px;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
 	.slider-slide {
@@ -75,7 +75,7 @@
 
 			a {
 				color: #333333;
-				
+
 				.onsale {
 					position: absolute;
 					display: none;
@@ -114,7 +114,7 @@
 
 /*----------  CTA Section  ----------*/
 .desirable-slider-section {
-	height: 250px;
+	height: 450px;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
 	.cta-section-slider {

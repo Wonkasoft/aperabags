@@ -73,6 +73,12 @@
 			</div> <!-- .col-8 -->
 			<div class="col col-4 col-md-2 cart-column">
 				<?php
+				$count = WC()->cart->cart_contents_count;
+				if ( $count > 0 ) {
+				        ?>
+				        <span class="cart-contents-count wonka-badge badge"><?php echo esc_html( $count ); ?></span>
+				        <?php
+				    }
 				wp_nav_menu( array(
 						'theme_location' => 'menu-cart',
 						'menu_id'        => 'cart-menu',
