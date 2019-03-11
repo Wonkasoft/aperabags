@@ -419,5 +419,15 @@
 			}
 	    }
     }
+
+    @include media-breakpoint-up( md ) {
+    	display: flex;
+    	align-items: center;
+    	justify-content: space-between;
+    	width: 100%;
+    	height: inherit;
+    	overflow: visible;
+    	background: none;
+    }
 }
 /*=====  End of Cart Menu Styles  ======*/
