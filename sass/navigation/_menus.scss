@@ -147,8 +147,6 @@
 				}
 			}
 			>a {
-				margin-left: 15px;
-				@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 			}
 		}
 
@@ -162,7 +160,6 @@
 		padding: 0.2rem 0;
 		text-transform: uppercase;
 		box-sizing: border-box;
-		@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 		&:after {
 			content: "";
 			position: absolute;
@@ -228,7 +225,7 @@
 
 
 		a {
-			font-family: $font__main;
+			font-family: $font__main_jose;
 			@include font-size(.9);
 			padding: 0.5rem 0;
 			@media only screen and ( min-width: 768px ) and ( -webkit-min-device-pixel-ratio: 2 ),
@@ -395,3 +392,31 @@
 	}
 }
 
+/*========================================
+=            Cart Menu Styles            =
+========================================*/
+#cart-menu {
+	display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 0;
+    top: 0;
+    overflow: hidden;
+
+    li {
+    	position: relative;
+	    bottom: 0;
+	    padding: 15px;
+
+	    a {
+			@include font-size(.9);
+			padding: 0.5rem 0;
+			@media only screen and ( min-width: 768px ) and ( -webkit-min-device-pixel-ratio: 2 ),
+			(min-resolution: 192dpi) and ( min-width: 768px ) {
+				padding: 0.5rem 0;
+			}
+	    }
+    }
+}
+/*=====  End of Cart Menu Styles  ======*/
