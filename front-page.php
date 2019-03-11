@@ -93,7 +93,7 @@ get_header();
 								'cat_operator' => 'IN',
 							);
 							$shop_shortcode = new WC_Shortcode_Products( $atts, 'recent_products' );
-							echo do_shortcode( $shop_shortcode ); 
+							echo $shop_shortcode; 
 						?>
 					</div>
 				</div>
