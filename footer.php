@@ -114,8 +114,8 @@ $footer_section = get_section_mods( 'footer' );
 						<?php if ( !empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
 							<div class="col">
 								<?php
-									echo "<small>Sign up to get the latest on sales, new releases and more...</small><br />";
-									echo $footer_section->footer_mods->footer_form_shortcode;
+									_e( "<small>Sign up to get the latest on sales, new releases and more...</small><br />" );
+									_e( do_shortcode( $footer_section->footer_mods->footer_form_shortcode ) );
 								?>
 							</div> <!-- .col -->
 						<?php endif; ?>
