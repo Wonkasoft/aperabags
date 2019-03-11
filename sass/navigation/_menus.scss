@@ -420,6 +420,7 @@
 		background: #fbf2b9;
 		margin-right: 8px;
 		@include font-size( .9 );
+		@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
 	}
 
 	#cart-menu {
@@ -444,6 +445,7 @@
 		    	color: #fbf2b9;
 				@include font-size(.9);
 				padding: 0.5rem 0;
+				@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
 
 				@media only screen and ( min-width: 768px ) and ( -webkit-min-device-pixel-ratio: 2 ),
 				(min-resolution: 192dpi) and ( min-width: 768px ) {
