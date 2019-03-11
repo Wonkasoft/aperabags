@@ -121,6 +121,7 @@
 
 		li:hover > ul,
 		li.focus > ul {
+			margin-left: 0;
 			left: auto;
 			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 		}
@@ -206,6 +207,9 @@
 			overflow: visible;
 			background: none;
 			> li {
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				padding: 0;
 				&:nth-child(2n) {
 					background: transparent;
@@ -412,6 +416,9 @@
 
 	    li {
 	    	position: relative;
+	    	display: flex;
+	    	align-items: center;
+	    	justify-content: center;
 		    margin: 8px 0;
 		    padding: 1rem 1rem;
 		    @include prefix( transition, all 0.2s ease-in-out, webkit moz o);
@@ -444,13 +451,14 @@
 	    	background: none;
 
 	    	li {
+	    		padding: 0;
 
 	    		a {
     				@include font-size( 1 );
 				    line-height: 1.5;
 
     				i {
-    					@include font-size( 1 );
+    					@include font-size( 1.5 );
 				    	line-height: 1.5;
     				}
 	    		}
