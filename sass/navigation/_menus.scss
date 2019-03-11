@@ -67,8 +67,8 @@
 			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 
 			ul {
-				left: -999em;
-				top: 0;
+				top: 15px;
+				bottom: 150%;
 				list-style: none;
 				@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 			}
@@ -124,7 +124,7 @@
 		li.focus > ul {
 			margin-left: 0;
 			padding: 0;
-			left: auto;
+			bottom: auto;
 			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 		}
 		
@@ -484,11 +484,11 @@
 	    		a {
 	    			padding: 0;
     				@include font-size( 1 );
-				    line-height: 1.5;
+				    line-height: 1.2;
 
     				i {
-    					@include font-size( 1.5 );
-				    	line-height: 1.5;
+    					@include font-size( 1 );
+				    	line-height: 1.2;
     				}
 	    		}
 	    	}
