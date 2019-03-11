@@ -61,7 +61,7 @@
 			list-style: none;
 			margin: 0;
 			padding: 0;
-			top: 30px;
+			top: 60px;
 			bottom: 150%;
 			overflow: hidden;
 			z-index: 99999;
@@ -220,7 +220,7 @@
 			justify-content: space-between;
 			width: 100%;
 			height: inherit;
-			overflow: hidden;
+			overflow: visible;
 			background: none;
 			> li {
 				display: flex;
