@@ -447,6 +447,10 @@
 
 	    		a {
     				@include font-size( 1 );
+
+    				i {
+    					@include font-size( 1 );
+    				}
 	    		}
 	    	}
     	}
