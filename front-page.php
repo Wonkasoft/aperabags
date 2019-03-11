@@ -88,7 +88,10 @@ get_header();
 
 							);
 							$shop_shortcode = apply_filters( 'recent_products_shortcode_tag');
-							echo do_shortcode( $shop_shortcode ); 
+							echo "<pre>\n";
+							print_r( $shop_shortcode );
+							echo "</pre>\n";
+							// echo do_shortcode( $shop_shortcode ); 
 						?>
 					</div>
 				</div>
