@@ -406,8 +406,9 @@
 
     li {
     	position: relative;
-	    bottom: 0;
-	    padding: 15px;
+	    margin: 8px 0;
+	    padding: 1rem 1rem;
+	    @include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 
 	    a {
 			@include font-size(.9);
