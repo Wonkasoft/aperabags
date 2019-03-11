@@ -84,16 +84,11 @@ get_header();
 					<div class="row align-items-center justify-content-center">
 						<?php
 							// $shop_shortcode = '[recent_products per_page="$shop_section->shop_mods->shop_num_of_products" columns="$shop_section->shop_mods->shop_product_per_row"]';
-							$atts = array(
-								'limit'        => $shop_section->shop_mods->shop_num_of_products,
-								'columns'      => $shop_section->shop_mods->shop_product_per_row,
-								'orderby'      => 'date',
-								'order'        => 'DESC',
-								'category'     => '',
-								'cat_operator' => 'IN',
+							$args = array(
+
 							);
-							$shop_shortcode = new WC_Shortcode_Products( $atts, 'recent_products' );
-							echo $shop_shortcode; 
+							$shop_shortcode = apply_filters( 'recent_products_shortcode_tag');
+							echo do_shortcode( $shop_shortcode ); 
 						?>
 					</div>
 				</div>
