@@ -4,8 +4,7 @@
 
 /*----------  Header Slider  ----------*/
 .header-slider-section {
-	height: 25px;
-	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+	height: 250px;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
 	.slider-slide {
@@ -115,8 +114,7 @@
 
 /*----------  CTA Section  ----------*/
 .desirable-slider-section {
-	height: 25px;
-	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+	height: 250px;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
 	.cta-section-slider {
