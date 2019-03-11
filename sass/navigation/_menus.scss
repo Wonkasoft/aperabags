@@ -122,12 +122,16 @@
 		li:hover > ul,
 		li.focus > ul {
 			margin-left: 0;
+			padding: 0;
 			left: auto;
 			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 		}
 		
 		>li {
 			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			bottom: 0;
 			padding: 15px;
 			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
