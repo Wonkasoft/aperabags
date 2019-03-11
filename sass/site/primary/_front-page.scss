@@ -64,10 +64,8 @@
 
 		li {
 			position: relative;
-			background: #deeeef;
 			padding: 0;
 			overflow: hidden;
-			@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 			a {
 				@include prefix( text-shadow, 1px 1px 2px rgba( #000, .8 ), o moz webkit );
@@ -144,8 +142,12 @@
 
 				.text-box {
 					color: #ffffff;
-					max-width: 350px;
+					max-width: 580px;
 					@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
+
+					h2 {
+						font-weight: 800;
+					}
 				}
 			}	
 		}
