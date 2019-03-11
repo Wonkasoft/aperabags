@@ -95,7 +95,7 @@
 				}
 
 				img {
-					margin-bottom: 15px;
+					margin: 0 auto 15px;
 					@include prefix( box-shadow, $box_shadow_3, o moz webkit );
 				}
 

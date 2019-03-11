@@ -126,7 +126,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_product_columns_wrapper' ) ) {
 	 */
 	function apera_bags_woocommerce_product_columns_wrapper() {
 		$columns = apera_bags_woocommerce_loop_columns();
-		echo '<div class="columns-' . absint( $columns ) . '">';
+		echo '<div class="test columns-' . absint( $columns ) . '">';
 	}
 }
 add_action( 'woocommerce_before_shop_loop', 'apera_bags_woocommerce_product_columns_wrapper', 40 );
