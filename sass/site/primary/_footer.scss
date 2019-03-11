@@ -39,6 +39,7 @@ footer {
 		background: $footer__background_sec;
 		color: $footer__background;
 		padding-bottom: 15px;
+		max-height: 175px;
 		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 		.footer-logo {

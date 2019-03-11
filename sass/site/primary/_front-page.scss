@@ -79,7 +79,7 @@
 
 				.onsale {
 					position: absolute;
-					display: inline-block;
+					display: none;
 					margin-bottom: 15px;
 					background: #eee;
 					color: #e81409;
@@ -105,6 +105,7 @@
 			}
 
 			.add_to_cart_button {
+				display: none;
 				margin-bottom: 15px;
 			}
 		}

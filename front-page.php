@@ -131,7 +131,7 @@ get_header();
 		$cause_section = get_section_mods( 'cause' );
 
 		/* Check for Cause object */
-		if ( !empty( $cause_section ) ) : ?>
+		if ( !empty( $cause_section->cause_mods->cause_section_title ) ) : ?>
 			<section class="row our-cause-section">
 				<div class="col col-12 text-center title-wrap">
 					<h3 class="section-title our-cause-title"><?php echo $cause_section->cause_mods->cause_section_title; ?></h3>
