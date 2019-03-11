@@ -53,12 +53,13 @@
 		padding: 0;
 		height: 0;
 		top: 0;
-		overflow: hidden;
+		overflow: visible;
 		background: rgba( #1e73be, .7 );
 		@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 		ul {
 			position: relative;
 			list-style: none;
+			margin: 0;
 			top: 150%;
 			bottom: 150%;
 			overflow: hidden;
@@ -372,7 +373,6 @@
     @include media-breakpoint-up( md ) {
 
     	.wonka-badge {
-    		@include font-size( 1 );
     	}
 
     	#cart-menu {
