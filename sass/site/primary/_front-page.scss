@@ -51,6 +51,10 @@
 					color: #ffffff;
 					max-width: 350px;
 					@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
+					
+					h2 {
+						font-weight: 800;
+					}
 				}
 			}	
 		}
