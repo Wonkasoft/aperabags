@@ -34,7 +34,7 @@
 			</div><!-- topbar-notice -->
 		<?php endif; ?>
 		<div class="row brand-nav-bar">
-			<div class="col col-8 col-md-2">
+			<div class="col col-8 col-md-2 offset-md-2">
 				<div class="site-branding">
 					<?php
 					the_custom_logo();
@@ -54,7 +54,7 @@
 					<?php endif; ?>
 				</div><!-- .site-branding -->
 			</div> <!-- .col-4 -->
-			<div class="col col-8 col-md-6">
+			<div class="col col-6 col-md-5 offset-1">
 
 				<nav id="site-navigation" class="main-navigation">
 					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
@@ -66,13 +66,19 @@
 					wp_nav_menu( array(
 						'theme_location' => 'menu-primary',
 						'menu_id'        => 'primary-menu',
-						'menu_class'        => 'nav-menu',
+						'menu_class'        => 'nav-menu header-menu',
 					) );
 					?>
 				</nav><!-- #site-navigation -->
 			</div> <!-- .col-8 -->
 			<div class="col col-4 col-md-2 cart-column">
-
+				<?php
+				wp_nav_menu( array(
+						'theme_location' => 'menu-cart',
+						'menu_id'        => 'cart-menu',
+						'menu_class'        => 'wonka-cart-menu header-cart-menu',
+					) );
+					?>
 			</div>
 		</div> <!-- .row -->
 	</header><!-- #masthead -->
