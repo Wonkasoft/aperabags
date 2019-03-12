@@ -170,10 +170,11 @@ get_header();
 							$videocode = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
 							if ( !empty( $videocode ) ) :
 								?>
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 							<?php
 						endif;
 						?>
+						</div>
 						<a class="btn btn-primary" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
 					</div><!-- .about-components-wrap -->
 				</div>
