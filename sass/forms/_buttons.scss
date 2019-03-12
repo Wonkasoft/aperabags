@@ -1,22 +1,30 @@
+a.btn.btn-primary,
 button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-	border: 1px solid;
-	border-color: $color__border-button;
-	border-radius: 3px;
+	border: none;
+	border-radius: 2px;
 	background: $color__background-button;
 	color: rgba(0, 0, 0, .8);
-	@include font-size(0.75);
-	line-height: 1;
-	padding: .6em 1em .4em;
+	text-transform: uppercase;
+	font-weight: 700;
+	line-height: 1.2;
+	padding: 15px 25px;
+	@include font-size( 1 );
+	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+	@include prefix( text-shadow, 1px 1px 4px rgba(#000, 0 ), o moz webkit );
+	@include prefix( transition, $trans_25, webkit moz o);
 
 	&:hover {
-		border-color: $color__border-button-hover;
+		background: #238cfe;
+		color: rgba(255, 255, 255, .8);
+		@include prefix( text-shadow, 1px 1px 4px rgba(#000, .6 ), o moz webkit );
 	}
 
 	&:active,
 	&:focus {
-		border-color: $color__border-button-focus;
+		outline: 0;
+		border: none;
 	}
 }

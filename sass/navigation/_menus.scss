@@ -76,7 +76,7 @@
 					display: block;
 					list-style: none;
 					margin: 0;
-					top: 50px;
+					top: 20px;
 					padding: 0;
 					opacity: 0;
 					overflow: hidden;
@@ -102,7 +102,7 @@
 				&:hover {
 
 					ul {
-						top: 50px;
+						top: 55px;
 						opacity: 1;
 						z-index: 999;
 					}
@@ -159,6 +159,23 @@
 					height: 3px;
 					width: 100%;
 					background: #1e73be;
+				}
+			}
+
+			.menu-item-has-children {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				&:after {
+					content: "\f107";
+					position: relative;
+					font-family: "FontAwesome";
+					color: #ffffff;
+					@include font-size( 2 );
+					line-height: 1;
+					padding: 0 8px 4px;
+					right: 0;
 				}
 			}
 		}

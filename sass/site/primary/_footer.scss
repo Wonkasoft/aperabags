@@ -22,7 +22,7 @@ footer#colophon {
 
 		.social-components-wrap {
 			margin: auto;
-			width: 175px;
+			width: 225px;
 
 			.social-icons-btns {
 				display: flex;
@@ -67,11 +67,13 @@ footer#colophon {
 					font-weight: 600;
 					width: 100%;
 					border-radius: 2px;
-					height: 42px;
+					height: 49px;
+					letter-spacing: 1px;
 					@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
 
 					&::placeholder {
 						font-style: italic;
+						font-weight: 400;
 					}
 				}
 			}
@@ -84,17 +86,8 @@ footer#colophon {
 				align-items: center;
 				justify-content: center;
 				font-family: $font__main;
-				padding-left: 15px;
-				padding-right: 15px;
 				font-weight: 800;
-				height: 42px;
-				background: #5e8bbc;
 				margin-left: -3px;
-				border: none;
-				@include font-size( 1 );
-				@include prefix( box-shadow, $box_shadow_4, o moz webkit );
-				@include prefix( text-shadow, 1px 1px 4px rgba(#000, 0 ), o moz webkit );
-				@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
 
 				&:hover {
 					color: #eeeeee;
