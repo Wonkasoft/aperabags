@@ -166,7 +166,7 @@ get_header();
 
 		if ( !empty( $about_section ) ) : ?>
 			<section class="row about-brand-section">
-				<div class="col col-12 col-md-6">
+				<div class="col col-6 col-sm-12">
 					<h2 class="about-brand-header"><?php _e( $about_section->about_the_brand->about_header ); ?></h2>
 					<h4 class="about-brand-subheader"><?php _e( $about_section->about_the_brand->about_subheader ); ?></h4>
 					<p class="about-brand-message"><?php _e( $about_section->about_the_brand->about_message ); ?></p>
