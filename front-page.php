@@ -165,7 +165,16 @@ get_header();
 						<h2 class="about-brand-header"><?php _e( $about_section->about_the_brand->about_header ); ?></h2>
 						<h4 class="about-brand-subheader"><?php _e( $about_section->about_the_brand->about_subheader ); ?></h4>
 						<p class="about-brand-message"><?php _e( $about_section->about_the_brand->about_message ); ?></p>
-						<div class="about-brand-img"></div>
+						<div class="about-brand-video">
+							<?php
+							$videocode = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
+							if ( !empty( $videocode ) ) :
+								?>
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<?php
+						endif;
+						?>
+						</div>
 						<a class="btn btn-primary" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
 					</div><!-- .about-components-wrap -->
 				</div>
