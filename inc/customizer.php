@@ -738,6 +738,27 @@ function apera_bags_customize_register( $wp_customize ) {
 		) ) );
 
 		/**
+		 * About the brand embeded video settings Section
+		 * @since  1.0.0
+		 */
+		$wp_customize->add_setting( 'about_the_brand_video', array(
+			'default'   				=> '',
+			'transport' 				=> 'refresh',
+		) );
+
+		// About the brand embeded video Setting Control
+		$wp_customize->add_control( new WP_Customize_Control( 
+			$wp_customize, 
+			'about_the_brand_video_control', 
+			array(
+			'label'      	=> __( 'About the brand video', 'apera-bags' ),
+			'section'    	=> 'about_section',
+			'settings'   	=> 'about_the_brand_video',
+			'type'			=> 'text',
+			'description'	=> 'Add only the video id from YouTube: Example lifw9kAbMic',
+		) ) );
+
+		/**
 		 * About the brand button text settings Section
 		 * @since  1.0.0
 		 */
