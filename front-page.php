@@ -140,7 +140,7 @@ get_header();
 					foreach ( $cause_section->causes as $cause ) :
 					if ( !empty( $cause->img ) ) :
 					?>
-						<div class="col col-4">
+						<div class="col col-12 col-md-4">
 							<div class="cause-section-module">
 								<div class="module-component-wrap">
 									<div class="img-container">
