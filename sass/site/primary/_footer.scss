@@ -123,4 +123,18 @@ footer#colophon {
 			color: #ffffff;
 		}
 	}
+
+	@include media-breakpoint-up( md ) {
+		form.wonka-form {
+
+			.gform_body {
+				width: 75%;
+			}
+
+			.gform_footer {
+				width: 15%;
+				margin-left: -3px;
+			}
+		}
+	}
 }

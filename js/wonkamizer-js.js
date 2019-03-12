@@ -38,6 +38,7 @@
 		if ( document.querySelector( '.header-slider-section' ) ) 
 		{
 			slide_adjustment();
+			
 			// $( '.top-page-slider' ).slick({
 			//   dots: true,
 			//   infinite: true,
