@@ -104,6 +104,10 @@ footer#colophon {
 		}
 	}
 
+	.email-form {
+		margin: 25px 0;
+	}
+
 	.site-info {
 		background: $footer__background_sec;
 		color: $footer__background;
@@ -113,7 +117,7 @@ footer#colophon {
 
 			img {
 				position: relative;
-				top: -30px;	
+				top: -20px;	
 			}
 		}
 

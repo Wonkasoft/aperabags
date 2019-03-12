@@ -194,15 +194,24 @@
 .our-cause-section {
 
 	.cause-section-module {
-		max-width: 350px;
+		max-width: 380px;
 		margin: 15px auto;
 		padding: 0 0 8px;
 
 		.module-component-wrap {
 
-			img {
+			.img-container {
 				margin-bottom: 15px;
+				display: flex;
+				align-items: center;
+				max-width: 380px;
+				height: 570px;
 				@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+
+				img {
+					height: 100%;
+					width: auto;
+				}
 			}
 
 			.cause-title {
@@ -228,9 +237,17 @@
 		max-width: 450px;
 	}
 
-	.about-second-image {
+	.img-container {
 		margin: 15px auto;
+		display: flex;
+		align-items: center;
+		max-width: 380px;
+		height: 570px;
 		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+		
+		.about-second-image {
+			
+		}
 
 	}
 }

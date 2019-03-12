@@ -110,9 +110,9 @@ $footer_section = get_section_mods( 'footer' );
 						</div><!-- .col -->
 						<?php endif; ?>
 					</div><!-- .row -->
-					<div class="row align-items-center justify-content-center">
+					<div class="row align-items-center justify-content-end email-form">
 						<?php if ( !empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
-							<div class="col">
+							<div class="col col-12 col-md-8">
 								<?php
 									_e( "<small>Sign up to get the latest on sales, new releases and more...</small><br />" );
 									_e( do_shortcode( $footer_section->footer_mods->footer_form_shortcode ) );

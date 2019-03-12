@@ -136,22 +136,23 @@ get_header();
 				<div class="col col-12 text-center title-wrap">
 					<h3 class="section-title our-cause-title"><?php echo $cause_section->cause_mods->cause_section_title; ?></h3>
 				</div>
-				<?php
-				foreach ( $cause_section->causes as $cause ) :
-				if ( !empty( $cause->img ) ) :
-				?>
-					<div class="col">
-						<div class="cause-section-module">
-							<div class="module-component-wrap">
-								<img class="cause-img" src="<?php _e( $cause->img ); ?>" />
-								<h3 class="cause-title text-<?php _e( $cause->position ); ?>"><?php _e( $cause->header ); ?></h3>
-								<p class="cause-message text-<?php _e( $cause->position ); ?>"><?php _e( $cause->message ); ?></p>
-							</div><!-- .module-component-wrap -->
-						</div><!-- .cause-section-module -->
-					</div>
-				<?php endif; ?>
-				<?php endforeach; ?>
-
+					<?php
+					foreach ( $cause_section->causes as $cause ) :
+					if ( !empty( $cause->img ) ) :
+					?>
+						<div class="col col-4">
+							<div class="cause-section-module">
+								<div class="module-component-wrap">
+									<div class="img-container">
+										<img class="cause-img" src="<?php _e( $cause->img ); ?>" />
+									</div>
+									<h3 class="cause-title text-<?php _e( $cause->position ); ?>"><?php _e( $cause->header ); ?></h3>
+									<p class="cause-message text-<?php _e( $cause->position ); ?>"><?php _e( $cause->message ); ?></p>
+								</div><!-- .module-component-wrap -->
+							</div><!-- .cause-section-module -->
+						</div>
+					<?php endif; ?>
+					<?php endforeach; ?>
 			</section><!-- .our-cause-section -->
 		<?php endif; ?>
 		<?php do_action( 'get_mods_before_section', 'about' );
@@ -169,7 +170,9 @@ get_header();
 					</div><!-- .about-components-wrap -->
 				</div>
 				<div class="col col-12 col-md-5 text-center">
-					<img class="about-second-image" src="<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />
+					<div class="img-container">
+						<img class="about-second-image" src="<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />
+					</div>
 				</div>
 			</section>
 		<?php endif; ?>
