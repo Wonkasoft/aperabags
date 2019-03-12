@@ -121,29 +121,8 @@
 				@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
 				@include prefix( transition, $trans_25, webkit moz o);
 
-				&:after {
-					content: "";
-					position: absolute;
-					left: 0;
-					bottom: 0;
-					height: 0;
-					width: 100%;
-					background: #1e73be;
-					@include prefix( transition, $trans_25, webkit moz o);
-				}
-
 				&:hover {
 					color: #dad3a2;
-
-					&:after {
-						content: "";
-						position: absolute;
-						left: 0;
-						bottom: 0;
-						height: 5px;
-						width: 100%;
-						background: #1e73be;
-					}
 				}
 			}
 			
