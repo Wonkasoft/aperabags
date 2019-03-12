@@ -83,15 +83,8 @@ get_header();
 					</div>
 					<div class="row align-items-center justify-content-center">
 						<?php
-							// $shop_shortcode = '[recent_products per_page="$shop_section->shop_mods->shop_num_of_products" columns="$shop_section->shop_mods->shop_product_per_row"]';
-							$args = array(
-
-							);
-							$shop_shortcode = apply_filters( 'recent_products_shortcode_tag');
-							echo "<pre>\n";
-							print_r( $shop_shortcode );
-							echo "</pre>\n";
-							// echo do_shortcode( $shop_shortcode ); 
+							$shop_shortcode = '[recent_products per_page="$shop_section->shop_mods->shop_num_of_products" columns="$shop_section->shop_mods->shop_product_per_row" class="wonka-columns"]';
+							echo do_shortcode( $shop_shortcode ); 
 						?>
 					</div>
 				</div>
@@ -165,15 +158,17 @@ get_header();
 		$about_section = get_section_mods( 'about' );
 
 		if ( !empty( $about_section ) ) : ?>
-			<section class="row about-brand-section">
-				<div class="col col-12 col-md-6">
-					<h2 class="about-brand-header"><?php _e( $about_section->about_the_brand->about_header ); ?></h2>
-					<h4 class="about-brand-subheader"><?php _e( $about_section->about_the_brand->about_subheader ); ?></h4>
-					<p class="about-brand-message"><?php _e( $about_section->about_the_brand->about_message ); ?></p>
-					<div class="about-brand-img"></div>
-					<a class="btn btn-primary" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
+			<section class="row about-brand-section align-items-center justify-content-around">
+				<div class="col col-12 col-md-6 text-center">
+					<div class="about-components-wrap">
+						<h2 class="about-brand-header"><?php _e( $about_section->about_the_brand->about_header ); ?></h2>
+						<h4 class="about-brand-subheader"><?php _e( $about_section->about_the_brand->about_subheader ); ?></h4>
+						<p class="about-brand-message"><?php _e( $about_section->about_the_brand->about_message ); ?></p>
+						<div class="about-brand-img"></div>
+						<a class="btn btn-primary" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
+					</div><!-- .about-components-wrap -->
 				</div>
-				<div class="col col-12 col-md-5">
+				<div class="col col-12 col-md-5 text-center">
 					<img class="about-second-image" src="<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />
 				</div>
 			</section>

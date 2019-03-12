@@ -21,7 +21,7 @@
 			background: #000;
 			border: 1px solid rgba( #fff, .8 );
 			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
-			@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0.3), webkit moz o );
+			@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0.4), webkit moz o );
 			&-top {
 				top: 0;
 			}
@@ -46,107 +46,110 @@
 			outline: 0;
 		}
 	}
-	> div > ul {
-		display: block;
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		height: 0;
-		top: 0;
-		overflow: visible;
-		background: rgba( #1e73be, .7 );
-		@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
-		
-		ul {
+	> div {
+
+		> ul#primary-menu {
 			position: relative;
+			display: block;
 			list-style: none;
 			margin: 0;
 			padding: 0;
-			top: 60px;
-			overflow: hidden;
-			opacity: 0;
-			z-index: 99999;
+			height: 0;
+			top: 0;
+			overflow: visible;
 			background: rgba( #1e73be, .7 );
-			@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0.7), webkit moz o );
-			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
+			@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
 
-			ul {
-				list-style: none;
-				@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
+			> li {
+				position: relative;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 4px 15px;
+				@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+
+				a {
+				}
+
+				ul {
+					position: absolute;
+					display: block;
+					list-style: none;
+					margin: 0;
+					padding: 0;
+					opacity: 0;
+					overflow: hidden;
+					border-radius: 4px;
+					top: -15em;
+					z-index: -1;
+					@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+					@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0.4), webkit moz o );
+
+					li {
+						padding: 8px;
+						background: rgba( #1e73be, .8 );
+
+						a {
+
+						}
+					}
+				}
 			}
 
 			li {
-				margin: 8px 0;
+				position: relative;
+				
+				&:hover {
 
-
-				&:hover > ul,
-				&.focus > ul {
-					margin-left: 0;
-					padding: 0;
-					opacity: 1;
+					ul {
+						top: 50px;
+						opacity: 1;
+						z-index: 999;
+					}
 				}
 			}
 
 			a {
+				text-transform: uppercase;
 				color: #fbf2b9;
-				width: 200px;
-			}
-
-			:hover > a,
-			.focus > a {
-				text-decoration: none;
-				&:after {
-					content: "";
-					position: absolute;
-					left: 0;
-					bottom: 0;
-					height: 3px;
-					width: 100%;
-					background: #1e73be;
-				}
-			}
-
-			li {
-				padding: 1rem 1rem;
-				@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
-			}
-
-			a:hover,
-			a.focus {
-				text-decoration: none;
+				font-family: $font__main_jose;
+				line-height: 1.5;
+				font-weight: 800;
+				padding: 8px;
+				white-space: nowrap;
+				@include font-size( 1.1 );
+				@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
+				@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
 
 				&:after {
 					content: "";
 					position: absolute;
 					left: 0;
 					bottom: 0;
-					height: 3px;
+					height: 0;
 					width: 100%;
 					background: #1e73be;
+					@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+				}
+
+				&:hover {
+					color: #dad3a2;
+
+					&:after {
+						content: "";
+						position: absolute;
+						left: 0;
+						bottom: 0;
+						height: 5px;
+						width: 100%;
+						background: #1e73be;
+					}
 				}
 			}
-		}
-
-		li:hover > ul,
-		li.focus > ul {
-
 			
-		}
-		
-		>li {
-			position: relative;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 15px;
-			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
-			&:nth-child(2n) {
-				background: rgba( #fff, .1 );
-			}
-			&:hover > a,
-			&.focus > a {
-				color: #ded492;
-				text-decoration: none;
+			.current_page_item > a,
+			.current-menu-item > a {
+				color: #ded492; 
 
 				&:after {
 					content: "";
@@ -158,126 +161,17 @@
 					background: #1e73be;
 				}
 			}
-			>a {
-			}
 		}
 
-	}
-
-
-	a {
-		color: #fbf2b9;
-		position: relative;
-		text-decoration: none;
-		padding: 0.2rem 0;
-		text-transform: uppercase;
-		box-sizing: border-box;
-		@include font-size(1);
-		@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
-
-		&:after {
-			content: "";
-			position: absolute;
-			left: 0;
-			bottom: 0;
-			height: 0;
-			width: 100%;
-			background: #1e73be;
-			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
-		}
-
-		@media only screen and ( min-width: 576px ) and ( -webkit-min-device-pixel-ratio: 2 ),
-		(min-resolution: 192dpi) and ( min-width: 576px ) {
-			padding: 0.2rem 0;
-		}
-	}
-
-	.current_page_item > a,
-	.current-menu-item > a {
-		color: #ded492; 
-
-		&:after {
-			content: "";
-			position: absolute;
-			left: 0;
-			bottom: 0;
-			height: 3px;
-			width: 100%;
-			background: #1e73be;
-		}
-	}
-	@include media-breakpoint-up( sm ) {
-		button {
-	    top: -5rem;
-	    left: -15px;
-		}
-	}
-	@include media-breakpoint-up( md ) {
-		width: 100%;
-		box-shadow: none;
-		> div > ul {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			width: 100%;
-			height: inherit;
-			overflow: visible;
-			background: none;
-			> li {
+		@include media-breakpoint-up( md ) {
+			> ul#primary-menu {
 				display: flex;
 				align-items: center;
-				justify-content: center;
-				padding: 0;
-				&:nth-child(2n) {
-					background: transparent;
-				}
-				&:hover > a,
-				&.focus > a {
-				}
-				ul {
-					position: absolute;
-				}
-				li {
-					padding: 0 1rem;
-				}
+				justify-content: space-around;
+				background: transparent;
+
+
 			}
-		}
-
-
-		a {
-			font-family: $font__main_jose;
-			padding: 0.5rem 0;
-			@include font-size(.9);
-
-			@media only screen and ( min-width: 768px ) and ( -webkit-min-device-pixel-ratio: 2 ),
-			(min-resolution: 192dpi) and ( min-width: 768px ) {
-				padding: 0.5rem 0;
-			}
-		}
-	}
-	@include media-breakpoint-up( lg ) {
-		width: 100%;
-		> div > ul {
-			>li {
-			}
-		}
-		a {
-			padding: 0.3rem 0;
-			@include font-size(1.2);
-
-			@media only screen and ( min-width: 992px ) and ( -webkit-min-device-pixel-ratio: 2 ),
-			(min-resolution: 192dpi) and ( min-width: 992px ) {
-				padding: 0.3rem 0;
-			}
-		}
-	}
-	@include media-breakpoint-up( xl ) {
-
-		ul {
-		}
-		a {
-			@include font-size(1.5);
-			padding: .1rem 0;
 		}
 	}
 }

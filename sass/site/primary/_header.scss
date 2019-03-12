@@ -24,7 +24,7 @@
 ==================================================*/
 .site-header {
 	position: absolute;
-	height: 105px;
+	height: 130px;
 
 	.brand-nav-bar {
 		display: flex;
@@ -39,6 +39,15 @@
 				padding: 15px;
 			}
 		}
+	}
+}
+
+.single-product {
+
+	.site-header {
+		position: relative;
+		background: #646371;
+		margin-bottom: 15px;
 	}
 }
 /*=====  End of header branding and navbar  ======*/

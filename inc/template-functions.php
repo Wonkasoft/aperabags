@@ -224,10 +224,9 @@ add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
 /**
  * customize gravity forms
  */
-function add_bootstrap_container_class( $field_container, $field, $form, $css_class, $style, $field_content ) {
-	$id = $field->id;
-	$field_id = is_admin() || empty( $form ) ? "field_{$id}" : 'field_' . $form['id'] . "_$id";
+function add_bootstrap_container_class( $form, $ajax, $field_values ) {
+	$form['cssClass'] = 'form-inline wonka-form';
 	
-	return '<li id="' . $field_id . '" class="' . $css_class . ' form-group">{FIELD_CONTENT}</li>';
+	return $form;
 }
-add_filter( 'gform_field_container', 'add_bootstrap_container_class', 10, 6 );
+add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );

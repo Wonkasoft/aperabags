@@ -2,6 +2,15 @@
 	display: block;
 }
 
+#page {
+	position: relative;
+	min-height: 100%;
+}
+
+#content {
+	padding-bottom: 450px;
+}
+
 .post,
 .page {
 	margin: 0 0 1.5em;

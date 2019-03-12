@@ -1,4 +1,7 @@
 footer#colophon {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 	padding-top: 15px;
 	background: $footer__background;
 	color: #bfc0c2;
@@ -33,18 +36,74 @@ footer#colophon {
 			padding: 0;
 			list-style: none;
 		}
+
+		small {
+			padding-left: 4px;
+		}
+	}
+
+	form.wonka-form {
+
+		.gform_heading {
+			display: none;
+		}
+
+		.gform_body {
+			width: 65%;
+			
+			ul {
+				margin: 0;
+				padding: 0;
+
+				label {
+					display: none;
+				}
+
+				input[type=email] {
+					color: #bfc0c2;
+					background: transparent;
+					padding: 8px 15px;
+					font-weight: 600;
+					width: 100%;
+					height: 42px;
+					@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+				}
+			}
+		}
+
+		.gform_footer {
+
+			input[type=submit] {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-family: $font__main;
+				font-weight: 800;
+				height: 42px;
+				background: #5e8bbc;
+				margin-left: -3px;
+				border: none;
+				@include font-size( 1 );
+				@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+				@include prefix( text-shadow, 1px 1px 4px rgba(#000, 0 ), o moz webkit );
+				@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+
+				&:hover {
+					color: #eeeeee;
+					@include prefix( text-shadow, 1px 1px 3px rgba(#000, 0.8 ), o moz webkit );
+				}
+			}
+		}
 	}
 
 	.site-info {
 		background: $footer__background_sec;
 		color: $footer__background;
 		padding-bottom: 15px;
-		max-height: 175px;
 		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 		.footer-logo {
 			position: relative;
-			top: -30px;
 		}
 
 		a {

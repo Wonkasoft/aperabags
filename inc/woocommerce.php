@@ -238,33 +238,14 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 	}
 }
 
-if ( ! function_exists( 'apera_bags_woocommerce_header_cart' ) ) {
-	/**
-	 * Display Header Cart.
-	 *
-	 * @return void
-	 */
-	function apera_bags_woocommerce_header_cart() {
-		if ( is_cart() ) {
-			$class = 'current-menu-item';
-		} else {
-			$class = '';
-		}
-		?>
-		<ul id="site-header-cart" class="site-header-cart">
-			<li class="<?php echo esc_attr( $class ); ?>">
-				<?php apera_bags_woocommerce_cart_link(); ?>
-			</li>
-			<li>
-				<?php
-				$instance = array(
-					'title' => '',
-				);
-
-				the_widget( 'WC_Widget_Cart', $instance );
-				?>
-			</li>
-		</ul>
-		<?php
-	}
-}
+// define the woocommerce_product_thumbnails callback 
+function action_woocommerce_product_thumbnails() { 
+    global $products;
+    echo "<pre>\n";
+    print_r( $products );
+    echo "</pre>\n";
+    // _e( '<img src="" />' );
+}; 
+         
+// add the action 
+add_action( 'woocommerce_template_loop_product_thumbnail', 'action_woocommerce_product_thumbnails', 10 ); 
