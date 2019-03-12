@@ -88,5 +88,6 @@
 			</div>
 		</div> <!-- .row -->
 	</header><!-- #masthead -->
-
+	<!-- Return to Top -->
+	<a href="javascript:" id="return-to-top"><i class="icon-chevron-up"></i></a>
 	<div id="content" class="site-content container-fluid">
