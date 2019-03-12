@@ -111,7 +111,7 @@
 
 			a {
 				text-transform: uppercase;
-				color: #fbf2b9;
+				color: #ffffff;
 				font-family: $font__main_jose;
 				line-height: 1.5;
 				font-weight: 800;
@@ -219,7 +219,7 @@
 	justify-content: center;
 
 	.wonka-badge {
-		background: #fbf2b9;
+		background: #ffffff;
 		margin-right: 8px;
 		@include font-size( .9 );
 		@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
@@ -244,7 +244,7 @@
 		    @include prefix( transition, all 0.2s ease-in-out, webkit moz o);
 
 		    a {
-		    	color: #fbf2b9;
+		    	color: #ffffff;
 				@include font-size(.9);
 				padding: 0.5rem 0;
 				@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
