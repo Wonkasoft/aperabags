@@ -56,7 +56,7 @@ $footer_section = get_section_mods( 'footer' );
 					<div class="row">
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_1 ) ) : ?>
 							<div class="col">
-								<h5 class="footer-title menu-title-shop text-center"><?php echo $footer_section->footer_titles->footer_title_1; ?></h5>
+								<h5 class="footer-title menu-title-shop"><?php echo $footer_section->footer_titles->footer_title_1; ?></h5>
 								<?php
 									wp_nav_menu( array(
 									    'theme_location'   => 'menu-shop',
@@ -67,7 +67,7 @@ $footer_section = get_section_mods( 'footer' );
 						<?php endif; ?>
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_2 ) ) : ?>
 							<div class="col">
-								<h5 class="footer-title menu-title-contact-us text-center"><?php echo $footer_section->footer_titles->footer_title_2; ?></h5>
+								<h5 class="footer-title menu-title-contact-us"><?php echo $footer_section->footer_titles->footer_title_2; ?></h5>
 								<?php
 									wp_nav_menu( array(
 									    'theme_location'   => 'menu-contact',
@@ -78,7 +78,7 @@ $footer_section = get_section_mods( 'footer' );
 						<?php endif; ?>
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_3 ) ) : ?>
 							<div class="col">
-								<h5 class="footer-title menu-title-account text-center"><?php echo $footer_section->footer_titles->footer_title_3; ?></h5>
+								<h5 class="footer-title menu-title-account"><?php echo $footer_section->footer_titles->footer_title_3; ?></h5>
 								<?php
 									wp_nav_menu( array(
 									    'theme_location'   => 'menu-account',
@@ -89,7 +89,7 @@ $footer_section = get_section_mods( 'footer' );
 						<?php endif; ?>
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_4 ) ) : ?>
 						<div class="col">
-							<h5 class="footer-title menu-title-company text-center"><?php echo $footer_section->footer_titles->footer_title_4; ?></h5>
+							<h5 class="footer-title menu-title-company"><?php echo $footer_section->footer_titles->footer_title_4; ?></h5>
 							<?php
 								wp_nav_menu( array(
 								    'theme_location'   => 'menu-company',
@@ -100,7 +100,7 @@ $footer_section = get_section_mods( 'footer' );
 						<?php endif; ?>
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_5 ) ) : ?>
 						<div class="col">
-							<h5 class="footer-title menu-title-programs text-center"><?php echo $footer_section->footer_titles->footer_title_5; ?></h5>
+							<h5 class="footer-title menu-title-programs"><?php echo $footer_section->footer_titles->footer_title_5; ?></h5>
 							<?php
 								wp_nav_menu( array(
 								    'theme_location'   => 'menu-programs',
