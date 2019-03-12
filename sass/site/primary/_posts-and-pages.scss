@@ -8,7 +8,11 @@
 }
 
 #content {
-	padding-bottom: 450px;
+	padding-bottom: 1000px;
+
+	@include media-breakpoint-up( md ) {
+		padding-bottom: 450px;
+	}
 }
 
 .post,

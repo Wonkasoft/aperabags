@@ -50,7 +50,7 @@ footer#colophon {
 		}
 
 		.gform_body {
-			width: 85%;
+			width: 100%;
 			
 			ul {
 				margin: 0;
@@ -69,6 +69,7 @@ footer#colophon {
 					border-radius: 2px;
 					height: 49px;
 					letter-spacing: 1px;
+					width: 100%;
 					@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
 
 					&::placeholder {
@@ -80,6 +81,7 @@ footer#colophon {
 		}
 
 		.gform_footer {
+			width: 100%;
 
 			input[type=submit] {
 				display: flex;
@@ -87,7 +89,9 @@ footer#colophon {
 				justify-content: center;
 				font-family: $font__main;
 				font-weight: 800;
-				margin-left: -3px;
+				margin-left: 0;
+				width: 100%;
+				@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
 
 				&:hover {
 					color: #eeeeee;
@@ -102,6 +106,7 @@ footer#colophon {
 	}
 
 	.site-info {
+		padding-bottom: 15px;
 		background: $footer__background_sec;
 		color: $footer__background;
 		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
