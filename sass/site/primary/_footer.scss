@@ -33,6 +33,7 @@ footer#colophon {
 		}
 
 		ul {
+			margin: 0;
 			padding: 0;
 			list-style: none;
 		}
@@ -49,7 +50,7 @@ footer#colophon {
 		}
 
 		.gform_body {
-			width: 65%;
+			width: 85%;
 			
 			ul {
 				margin: 0;
@@ -78,6 +79,8 @@ footer#colophon {
 				align-items: center;
 				justify-content: center;
 				font-family: $font__main;
+				padding-left: 15px;
+				padding-right: 15px;
 				font-weight: 800;
 				height: 42px;
 				background: #5e8bbc;
