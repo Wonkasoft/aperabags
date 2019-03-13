@@ -163,7 +163,8 @@ form.woocommerce-ordering {
 
 .pif-has-gallery .wp-post-image--secondary {
 	position: absolute;
-	top: 0; left: 0;
+	top: 0; 
+	left: 0;
 	opacity: 0;
 }
 
@@ -202,6 +203,9 @@ ul.products li.pif-has-gallery a.woocommerce-loop-product__link:hover .wp-post-i
 =========================================*/
 #return-to-top {
    position: fixed;
+   display: flex;
+   align-items: center;
+   justify-content: center;
    bottom: 20px;
    right: 20px;
    background: rgb(0, 0, 0);
@@ -224,10 +228,12 @@ ul.products li.pif-has-gallery a.woocommerce-loop-product__link:hover .wp-post-i
 #return-to-top i {
    color: #fff;
    margin: 0;
+   top: 5px;
    position: relative;
-   left: 16px;
-   top: 13px;
-   font-size: 19px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   @include font-size( 2 );
  	z-index:9999;
    -webkit-transition: all 0.3s ease;
    -moz-transition: all 0.3s ease;
@@ -240,6 +246,6 @@ ul.products li.pif-has-gallery a.woocommerce-loop-product__link:hover .wp-post-i
 }
 #return-to-top:hover i {
    color: #fff;
-   top: 5px;
+   top: 0;
 }
 /*=====  End of Back to top style  ======*/
