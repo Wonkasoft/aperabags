@@ -221,12 +221,30 @@ function the_mods_for_section( $section ) {
 }
 add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
 
+
+/*====================================================
+=            Customizing of Gravity forms            =
+====================================================*/
 /**
  * customize gravity forms
  */
 function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	$form['cssClass'] = 'form-inline wonka-form';
-	
+
 	return $form;
 }
 add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );
+
+function wonka_add_classes_to_button( $button, $form ) {
+	$dom = new DOMDocument();
+    $dom->loadHTML( $button );
+    $input = $dom->getElementsByTagName( 'input' )->item(0);
+    $classes = $input->getAttribute( 'class' );
+    $classes .= " wonka-btn";
+    $input->setAttribute( 'class', $classes );
+
+    return $dom->saveHtml( $input );
+}
+
+add_filter( 'gform_submit_button', 'wonka_add_classes_to_button', 8, 2 );
+/*=====  End of Customizing of Gravity forms  ======*/

@@ -19,6 +19,17 @@
 		top_slide.style.height = header_slider_section.offsetHeight;
 		top_slide.style.width = header_slider_section.offsetWidth;
 	}
+
+	function footer_adjustment()
+	{
+		var footer_height = document.querySelector( 'footer#colophon' ).offsetHeight,
+		content_el = document.querySelector( '#content'),
+		new_space = document.createElement( 'DIV' );
+
+		content_el.appendChild( new_space );
+		new_space.style.width = '100%';
+		new_space.style.height = footer_height + 'px';
+	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -26,7 +37,8 @@
 	====================================================================*/
 	window.onresize = function()
 	{
-
+		slide_adjustment();
+		footer_adjustment();
 	};
 	/*=====  End of This is for loading calls on window resizing  ======*/
 	
@@ -48,6 +60,8 @@
 			//   slidesToScroll: 1,
 			// });
 		}
+
+		footer_adjustment();
 
 		// ===== Scroll to Top ==== 
 		$(window).scroll(function() {

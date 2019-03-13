@@ -1,15 +1,19 @@
 .main-navigation {
+	position: relative;
 	clear: both;
 	display: inline-block;
 	width: 100%;
+	z-index: 100;
+	@include prefix( transition, $trans_25, webkit moz o);
 
 	button {
 		position: absolute;
 		top: -4.5rem;
-		left: -61px;
+		left: -26px;
 		background: transparent;
 		border: none;
-		z-index: 100;
+		@include prefix( transition, $trans_25, webkit moz o);
+
 		.hang-a-bur {
 			position: relative;
 			display: block;
@@ -19,7 +23,7 @@
 			opacity: 1;
 			background: #000;
 			border: 1px solid rgba( #fff, .8 );
-			@include prefix( transition, all 0.2s ease-in-out, webkit moz o);
+			@include prefix( transition, $trans_25, webkit moz o);
 
 			&-top {
 				top: 0;
@@ -30,14 +34,14 @@
 		}
 		&[aria-expanded="true"] {
 			.hang-a-bur-top {
-				top: 0.6rem;
+				top: 1.6rem;
 				@include prefix( transform, rotate(220deg), webkit moz o );
 			}
 			.hang-a-bur-mid {
 				opacity: 0;
 			}
 			.hang-a-bur-bottom {
-				bottom: 0.6rem;
+				bottom: -0.4rem;
 				@include prefix( transform, rotate(-220deg), webkit moz o );
 			}
 		}
@@ -45,37 +49,48 @@
 			outline: 0;
 		}
 	}
+
 	> div {
 
-		> ul#primary-menu {
+		> ul {
 			position: relative;
 			display: block;
 			list-style: none;
 			margin: 0;
 			padding: 0;
 			height: 0;
-			top: 0;
+			top: -30px;
+			opacity: 0;
 			overflow: hidden;
-			background: rgba( #1e73be, .7 );
+			background: rgba( #1e73be, .9 );
 			@include prefix( transition, $trans_25, webkit moz o);
+			@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0.4), webkit moz o );
 
 			> li {
 				position: relative;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				padding: 4px 15px;
+				flex-wrap: wrap;
+				padding: 4px 0;
+				height: auto;
 				@include prefix( transition, $trans_25, webkit moz o);
 
 				a {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: 100%;
 				}
 
 				ul {
-					position: absolute;
+					position: relative;
 					display: block;
 					list-style: none;
 					margin: 0;
-					top: 20px;
+					top: -30px;
+					height: 0;
+					width: 100%;
 					padding: 0;
 					opacity: 0;
 					overflow: hidden;
@@ -99,9 +114,11 @@
 				position: relative;
 				
 				&:hover {
+					height: auto;
 
 					ul {
-						top: 53px;
+						top: 0;
+						height: auto;
 						opacity: 1;
 						z-index: 999;
 					}
@@ -109,6 +126,7 @@
 			}
 
 			a {
+				position: relative;
 				text-transform: uppercase;
 				color: #ffffff;
 				font-family: $font__main_jose;
@@ -128,22 +146,9 @@
 			.current_page_item > a,
 			.current-menu-item > a {
 				color: #ded492; 
-
-				&:after {
-					content: "";
-					position: absolute;
-					left: 0;
-					bottom: 0;
-					height: 3px;
-					width: 100%;
-					background: #1e73be;
-				}
 			}
 
-			.menu-item-has-children {
-				display: flex;
-				align-items: center;
-				justify-content: center;
+			.menu-item-has-children > a {
 
 				&:after {
 					content: "\f107";
@@ -151,31 +156,59 @@
 					font-family: "FontAwesome";
 					color: #ffffff;
 					@include font-size( 2 );
-					line-height: 1;
+					line-height: 0.5;
 					padding: 0 8px 4px;
 					right: 0;
+					@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
+					@include prefix( transition, $trans_25, webkit moz o);
+				}
+
+				&:hover {
+
+					&:after {
+						color: #dad3a2;
+					}
 				}
 			}
 		}
 
 		@include media-breakpoint-up( md ) {
-			> ul#primary-menu {
+			> ul {
 				display: flex;
-				align-items: center;
+				align-items: flex-start;
 				justify-content: space-around;
 				background: transparent;
 				overflow: visible;
+				top: 0;
+				opacity: 1;
+				@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0), webkit moz o );
 
+				li {
+
+					> ul {
+
+						a {
+							justify-content: flex-start;
+							left: 0;
+
+							&:hover {
+								left: 15%;
+							}
+						}
+					}
+				}
 			}
 		}
 	}
 }
 
 /* Small menu. */
-.menu-toggle,
-.main-navigation.toggled ul {
-	height: initial;
+// .menu-toggle,
+.main-navigation.toggled ul:not(.sub-menu) {
+	top: 0;
+	height: auto;
 	overflow: visible;
+	opacity: 1;
 }
 
 @include media-breakpoint-up( md ) {
@@ -213,9 +246,21 @@
 	align-items: center;
 	justify-content: center;
 
+	span.top-menu-s-btn {
+		color: $color__main-menu;
+		@include prefix( transition, $trans_25, webkit moz o);
+
+		&:hover {
+
+			i {
+				color: $color__main-menu-hover;
+			}
+		}
+	}
+
 	.wonka-badge {
 		background: #ffffff;
-		margin-right: 8px;
+		margin-left: 8px;
 		@include font-size( .9 );
 		@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
 	}
@@ -236,7 +281,7 @@
 	    	justify-content: center;
 		    margin: 8px 0;
 		    padding: 1rem 1rem;
-		    @include prefix( transition, all 0.2s ease-in-out, webkit moz o);
+		    @include prefix( transition, $trans_25, webkit moz o);
 
 		    a {
 		    	color: #ffffff;

@@ -14,6 +14,10 @@ footer#colophon {
 	.upper-footer {
 		padding: 15px 0;
 
+		div.col {
+			margin-bottom: 15px;
+		}
+
 		.footer-title {
 			color: #bfc0c2;
 			@include font-size( 1.2 );
@@ -102,7 +106,7 @@ footer#colophon {
 	}
 
 	.email-form {
-		margin: 25px 0;
+		margin: 15px 0;
 	}
 
 	.site-info {

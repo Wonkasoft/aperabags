@@ -70,66 +70,6 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
-
-
-	.woocommerce {
-		margin: 30px auto;
-		text-align: center;
-
-		&.wonka-columns {
-
-			ul {
-				max-width: 1180px;
-
-				li {
-					position: relative;
-					padding: 0;
-					overflow: hidden;
-
-					a.woocommerce-LoopProduct-link {
-						color: #333333;
-						@include prefix( box-shadow, $box_shadow_4, o moz webkit );
-
-						.onsale {
-							position: absolute;
-							display: none;
-							margin-bottom: 15px;
-							background: #eee;
-							color: #e81409;
-							top: 15px;
-							left: 0;
-							width: 50%;
-							z-index: 50;
-							@include prefix( transform, matrix(1.5,-.9,0.5,1.3,-20,10), o moz webkit );
-						}
-
-						img {
-							margin: 0 auto 15px;
-						}
-
-						.woocommerce-loop-product__title {
-							@include font-size( 1.3 );
-							
-						}
-
-						.price {
-							color: #e81409;
-							@include font-size( 1.3 );
-
-							ins {
-								background: transparent;
-							}
-						}
-					}
-
-					a.add_to_cart_button {
-						display: none;
-						margin-bottom: 15px;
-					}
-				}
-			}
-		}
-	}
 }
 /*----------  End Shop Section  ----------*/
 
@@ -175,6 +115,7 @@
 					@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
 
 					h2 {
+						color: #ffffff;
 						white-space: wrap;
 						font-weight: 800;
 					}
@@ -211,12 +152,16 @@
 				@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 				img {
-					height: 100%;
+					height: auto;
 					width: auto;
 				}
 
 				@include media-breakpoint-up( md ) {
 					height: 570px;
+
+					img {
+						height: 100%;
+					}
 				}
 			}
 

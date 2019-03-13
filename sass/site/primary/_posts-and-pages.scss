@@ -8,11 +8,7 @@
 }
 
 #content {
-	padding-bottom: 1000px;
-
-	@include media-breakpoint-up( md ) {
-		padding-bottom: 450px;
-	}
+	@include prefix( transition, $trans_25, o moz webkit );
 }
 
 .post,

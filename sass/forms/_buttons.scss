@@ -1,16 +1,14 @@
 a.btn.btn-primary,
-button,
+button:not(.menu-toggle),
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
 	border: none;
-	border-radius: 2px;
 	background: $color__background-button;
 	color: rgba(0, 0, 0, .8);
 	text-transform: uppercase;
 	font-weight: 700;
 	line-height: 1.2;
-	padding: 15px 25px;
 	@include font-size( 1 );
 	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 	@include prefix( text-shadow, 1px 1px 4px rgba(#000, 0 ), o moz webkit );
@@ -26,5 +24,22 @@ input[type="submit"] {
 	&:focus {
 		outline: 0;
 		border: none;
+	}
+}
+
+a.wonka-btn,
+button.wonka-btn,
+input[type="button"].wonka-btn,
+input[type="reset"].wonka-btn,
+input[type="submit"].wonka-btn {
+	border-radius: 2px;
+	padding: 15px 25px;
+}
+
+
+.search-form {
+
+	input[type="submit"] {
+		margin-left: -5px;
 	}
 }

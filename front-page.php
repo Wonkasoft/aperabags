@@ -74,20 +74,22 @@ get_header();
 			if ( !empty( $shop_section->shop_mods->shop_title ) ) : 
 		?>
 
-			<section class="row shop-section align-items-center justify-content-center" style="background-image:url(<?php echo $shop_section->shop_mods->shop_background_image;?>);">
+			<section class="row shop-section align-items-center justify-content-center" style="background-image:url(<?php echo esc_url( $shop_section->shop_mods->shop_background_image );?>);">
 				<div class="col col-12">
 					<div class="row">
 						<div class="col col-12 text-center">
-							<h3 class="section-title shop-title"><?php echo $shop_section->shop_mods->shop_title; ?></h3>
+							<h3 class="section-title shop-title"><?php _e( $shop_section->shop_mods->shop_title ); ?></h3>
 						</div>
 					</div>
-					<div class="row align-items-center justify-content-center">
-						<?php
-							$shop_shortcode = '[recent_products per_page="$shop_section->shop_mods->shop_num_of_products" columns="$shop_section->shop_mods->shop_product_per_row" class="wonka-columns"]';
-							echo do_shortcode( $shop_shortcode ); 
-						?>
-					</div>
-				</div>
+					<div class="row">
+						<div class="col col-12">
+							<?php
+								$shop_shortcode = '[recent_products per_page="$shop_section->shop_mods->shop_num_of_products" columns="$shop_section->shop_mods->shop_product_per_row"]';
+								echo do_shortcode( $shop_shortcode );
+							?>
+						</div><!-- .col-12 -->
+					</div><!-- .row -->
+				</div><!-- .col-12 -->
 			</section><!-- .shop-section -->
 		<?php endif; ?>
 		<?php do_action( 'get_mods_before_section', 'cta' );
@@ -112,7 +114,7 @@ get_header();
 												<?php
 												/* Checks for an subheader set in the slide object */
 												if ( !empty( $slide->slide_link ) ) : ?>
-													<a href="<?php echo $slide->slide_link; ?>" class="btn btn-primary img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
+													<a href="<?php echo $slide->slide_link; ?>" class="btn btn-primary wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
 												<?php endif; ?>
 											</div><!-- .text-box -->
 										</div><!-- .img-header-text-container -->
@@ -144,7 +146,7 @@ get_header();
 							<div class="cause-section-module">
 								<div class="module-component-wrap">
 									<div class="img-container">
-										<img class="cause-img" src="<?php _e( $cause->img ); ?>" />
+										<img class="cause-img img-fluid" src="<?php _e( $cause->img ); ?>" />
 									</div>
 									<h3 class="cause-title text-<?php _e( $cause->position ); ?>"><?php _e( $cause->header ); ?></h3>
 									<p class="cause-message text-<?php _e( $cause->position ); ?>"><?php _e( $cause->message ); ?></p>
@@ -175,7 +177,7 @@ get_header();
 						endif;
 						?>
 						</div>
-						<a class="btn btn-primary" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
+						<a class="btn btn-primary wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
 					</div><!-- .about-components-wrap -->
 				</div>
 				<div class="col col-12 col-md-5 text-center">
@@ -198,7 +200,7 @@ get_header();
 					<?php _e( do_shortcode( $social_section->social_mods->social_shortcode ) ); ?>
 				</div>
 				<div class="col col-12 shop-social-btn text-center">
-					<a class="btn btn-lg btn-primary" href="<?php _e( $social_section->social_mods->social_shop_button);?>"><?php _e($social_section->social_mods->social_btn_text); ?></a>
+					<a class="btn btn-lg btn-primary wonka-btn" href="<?php _e( $social_section->social_mods->social_shop_button);?>"><?php _e($social_section->social_mods->social_btn_text); ?></a>
 				</div> <!-- .col -->
 			</section><!-- .instagram-section -->
 		<?php endif; ?>

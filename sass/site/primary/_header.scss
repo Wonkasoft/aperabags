@@ -23,8 +23,9 @@
 =            header branding and navbar            =
 ==================================================*/
 .site-header {
-	position: absolute;
-	height: 130px;
+	position: relative;
+	background: #646371;
+	margin-bottom: 15px;
 
 	.brand-nav-bar {
 		display: flex;
@@ -42,12 +43,12 @@
 	}
 }
 
-.single-product {
+.home {
 
 	.site-header {
-		position: relative;
-		background: #646371;
-		margin-bottom: 15px;
+		position: absolute;
+		height: 130px;
+		background: transparent;
 	}
 }
 /*=====  End of header branding and navbar  ======*/

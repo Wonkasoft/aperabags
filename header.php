@@ -54,7 +54,7 @@
 					<?php endif; ?>
 				</div><!-- .site-branding -->
 			</div> <!-- .col-4 -->
-			<div class="col col-6 col-md-5 offset-1">
+			<div class="col col-12 col-md-5 offset-md-1">
 
 				<nav id="site-navigation" class="main-navigation">
 					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
@@ -72,18 +72,19 @@
 				</nav><!-- #site-navigation -->
 			</div> <!-- .col-8 -->
 			<div class="col col-4 col-md-2 cart-column">
+				<span class="top-menu-s-btn"><i class="fa fa-search"></i></span>
 				<?php
+				wp_nav_menu( array(
+						'theme_location' => 'menu-cart',
+						'menu_id'        => 'cart-menu',
+						'menu_class'        => 'wonka-cart-menu header-cart-menu',
+					) );
 				$count = WC()->cart->cart_contents_count;
 				if ( $count > 0 ) {
 				        ?>
 				        <span class="cart-contents-count wonka-badge badge"><?php echo esc_html( $count ); ?></span>
 				        <?php
 				    }
-				wp_nav_menu( array(
-						'theme_location' => 'menu-cart',
-						'menu_id'        => 'cart-menu',
-						'menu_class'        => 'wonka-cart-menu header-cart-menu',
-					) );
 					?>
 			</div>
 		</div> <!-- .row -->
