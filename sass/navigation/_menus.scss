@@ -246,20 +246,6 @@
 	align-items: center;
 	justify-content: center;
 
-	span.top-menu-s-btn {
-		margin-right: 8px;
-		color: $color__main-menu;
-		@include prefix( transition, $trans_25, webkit moz o);
-
-		&:hover {
-
-			i {
-
-				color: $color__main-menu-hover;
-			}
-		}
-	}
-
 	.wonka-badge {
 		background: #ffffff;
 		margin-left: 8px;
@@ -272,7 +258,7 @@
 	    list-style: none;
 	    margin: 0;
 	    padding: 0;
-	    height: 0;
+	    height: 30px;
 	    top: 0;
 	    overflow: hidden;
 
@@ -284,6 +270,20 @@
 		    margin: 8px 0;
 		    padding: 1rem 1rem;
 		    @include prefix( transition, $trans_25, webkit moz o);
+
+		    &.top-menu-s-btn {
+		    	margin-right: 8px;
+		    	color: $color__main-menu;
+		    	@include prefix( transition, $trans_25, webkit moz o);
+
+		    	&:hover {
+
+		    		i {
+
+		    			color: $color__main-menu-hover;
+		    		}
+		    	}
+		    }
 
 		    a {
 		    	color: #ffffff;

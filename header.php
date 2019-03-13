@@ -72,7 +72,6 @@
 				</nav><!-- #site-navigation -->
 			</div> <!-- .col-8 -->
 			<div class="col col-4 col-md-2 cart-column">
-				<span class="top-menu-s-btn"><i class="fa fa-search"></i></span>
 				<?php
 				wp_nav_menu( array(
 						'theme_location' => 'menu-cart',
