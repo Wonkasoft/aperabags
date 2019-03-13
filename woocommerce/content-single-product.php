@@ -43,6 +43,19 @@ if ( post_password_required() ) {
 
 	<div class="summary entry-summary">
 		<?php
+
+			/* Just changing the order of loading */
+			/* Removing filters */
+			remove_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10);
+			remove_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10);
+			remove_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
+
+			/* adding them back in different order */
+			add_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 10);
+			add_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 20);
+			add_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 21);
+
+			
 			/**
 			 * Hook: woocommerce_single_product_summary.
 			 *
