@@ -249,6 +249,21 @@ function wonka_customized_shop_loop() {
 	========================================================*/
 	global $product;
 
+	add_filter( 'post_class', function( $classes ) {
+		global $product;
+		$post_type = get_post_type( get_the_ID() );
+			if ( ! is_admin() ) {
+				if ( $post_type == 'product' ) {
+					$attachment_ids = $product->get_gallery_image_ids( $product );
+					if ( $attachment_ids ) {
+						$classes[] = 'pif-has-gallery';
+					}
+				}
+			}
+			return $classes;
+
+	}, 8 );
+	
 	if ( ! is_a( $product, 'WC_Product' ) ) {
 				return;
 	}
@@ -264,20 +279,6 @@ function wonka_customized_shop_loop() {
 		$secondary_image_title = get_the_title($secondary_image_id);
 	endif;
 
-	add_filter( 'post_class', function( $classes ) {
-		global $product;
-		$post_type = get_post_type( get_the_ID() );
-			if ( ! is_admin() ) {
-				if ( $post_type == 'product' ) {
-					$attachment_ids = $product->get_gallery_image_ids( $product );
-					if ( $attachment_ids ) {
-						$classes[] = 'pif-has-gallery';
-					}
-				}
-			}
-			return $classes;
-
-	}, 8 );
 	/*=====  End of For setting up the image flipper  ======*/
 	
 	$output = '';
