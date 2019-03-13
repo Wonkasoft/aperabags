@@ -339,7 +339,16 @@ function wonka_customized_shop_loop() {
 	$output .= '<div class="wonka-shop-img-wrap">';
 	$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ) . '" class="img-fluid wonka-img-fluid" />';
 	if ( $attachment_ids ) :
-		$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( $secondary_image_id, 'full' ) ) . '" title="' . $secondary_image_title . '" alt="' . $secondary_image_alt . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" />';
+		$output .= echo wp_get_attachment_image(
+					$secondary_image_id,
+					'shop_catalog',
+					'',
+					array(
+						'class' => 'secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary',
+						'alt' => $secondary_image_alt,
+						'title' => $secondary_image_title
+					)
+				);
 	endif;
 	$output .= '</div><!-- .wonka-shop-img-wrap -->';
 	ob_end_clean();
