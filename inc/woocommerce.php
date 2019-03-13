@@ -331,4 +331,4 @@ if ( !get_theme_mod( 'enable_sale_banner' ) ) :
 	remove_filter( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
 endif;
 remove_filter( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
-add_filter( 'woocommerce_before_shop_loop_item_title', 'wonka_customized_shop_loop', 15 );
+add_filter( 'woocommerce_before_shop_loop_item_title', 'wonka_customized_shop_loop', 5 );
