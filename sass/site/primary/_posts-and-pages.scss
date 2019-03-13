@@ -47,8 +47,10 @@ section {
   z-index: 1;
   top: 0;
   left: 0;
+  opacity: 0;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0, 0.9); /* Black with a little bit see-through */
+  @include prefix( transition, $trans_25, o moz webkit );
 }
 
 /* The content */
@@ -59,6 +61,7 @@ section {
   text-align: center;
   margin-top: 30px;
   margin: auto;
+  @include prefix( transition, $trans_25, o moz webkit );
 }
 
 /* Close button */
@@ -69,6 +72,7 @@ section {
   font-size: 60px;
   cursor: pointer;
   color: white;
+  @include prefix( transition, $trans_25, o moz webkit );
 }
 
 .overlay .closebtn:hover {
@@ -83,6 +87,7 @@ section {
   float: left;
   width: 80%;
   background: white;
+  @include prefix( transition, $trans_25, o moz webkit );
 }
 
 .overlay input[type=text]:hover {
@@ -98,6 +103,7 @@ section {
   font-size: 17px;
   border: none;
   cursor: pointer;
+  @include prefix( transition, $trans_25, o moz webkit );
 }
 
 .overlay button:hover {
