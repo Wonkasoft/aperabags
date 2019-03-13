@@ -39,12 +39,12 @@
 
 	// Open the full screen search box 
 	function openSearch() {
-	  document.getElementById("search_overlay").style.display = "block";
+	  document.getElementById( "search_overlay" ).style.display = "block";
 	}
 
 	// Close the full screen search box 
 	function closeSearch() {
-	  document.getElementById("search_overlay").style.display = "none";
+	  document.getElementById( "search_overlay" ).style.display = "none";
 	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
@@ -70,7 +70,7 @@
 		/*==========================================
 		=            Search btn actions            =
 		==========================================*/
-		var search_btn = document.querySelector( 'span.top-menu-s-btn' ),
+		var search_btn = document.querySelector( 'span.top-menu-s-btn i' ),
 		close_btn = document.querySelector( 'span.closebtn' );
 		
 		search_btn.addEventListener( 'click', openSearch() );
