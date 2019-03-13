@@ -238,18 +238,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 	}
 }
 
-
-/**
- * This function is to override the parsing of the images during a shop loop
- * 
- */
-function wonka_customized_shop_loop() {
-	/*========================================================
-	=            For setting up the image flipper            =
-	========================================================*/
-	global $product;
-
-	add_filter( 'post_class', function( $classes ) {
+add_filter( 'post_class', function( $classes ) {
 		global $product;
 		$post_type = get_post_type( get_the_ID() );
 			if ( ! is_admin() ) {
@@ -263,7 +252,16 @@ function wonka_customized_shop_loop() {
 			return $classes;
 
 	}, 8 );
-	
+/**
+ * This function is to override the parsing of the images during a shop loop
+ * 
+ */
+function wonka_customized_shop_loop() {
+	/*========================================================
+	=            For setting up the image flipper            =
+	========================================================*/
+	global $product;
+
 	if ( ! is_a( $product, 'WC_Product' ) ) {
 				return;
 	}
