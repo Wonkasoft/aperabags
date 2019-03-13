@@ -277,7 +277,7 @@ function wonka_customized_shop_loop() {
 			}
 			return $classes;
 
-	} );
+	}, 8 );
 	/*=====  End of For setting up the image flipper  ======*/
 	
 	$output = '';
