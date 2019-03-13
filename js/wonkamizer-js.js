@@ -38,12 +38,14 @@
 	}
 
 	// Open the full screen search box 
-	function openSearch() {
+	function openSearch(e) {
+		console.log( e );
 	  document.getElementById( "search_overlay" ).style.display = "block";
 	}
 
 	// Close the full screen search box 
-	function closeSearch() {
+	function closeSearch(e) {
+		console.log( e );
 	  document.getElementById( "search_overlay" ).style.display = "none";
 	}
 	/*=====  End of This is area for writing callable functions  ======*/
@@ -73,8 +75,8 @@
 		var search_btn = document.querySelector( 'span.top-menu-s-btn i' ),
 		close_btn = document.querySelector( 'span.closebtn' );
 		
-		search_btn.addEventListener( 'click', openSearch() );
-		close_btn.addEventListener( 'click', closeSearch() );
+		search_btn.addEventListener( 'click', openSearch );
+		close_btn.addEventListener( 'click', closeSearch );
 		/*=====  End of Search btn actions  ======*/
 		
 
