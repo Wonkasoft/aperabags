@@ -55,14 +55,7 @@
 		}, 300);
 	}
 
-	// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-	function stickyStatus() {
-		 if (window.pageYOffset > sticky) {
-		   	header.classList.add("sticky");
-		 } else {
-		   	header.classList.remove("sticky");
-		 }
-	}
+	
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -131,15 +124,24 @@
 		/*=========================================
 		=            For Sticky Header            =
 		=========================================*/
-		// When the user scrolls the page, execute stickyStatus 
-		window.onscroll = function() {stickyStatus();};
-
 		// Get the header
 		var header = document.querySelector('.brand-nav-bar');
 		var shop_section = document.querySelector( '.shop-section' );
 
 		// Get the offset position of the navbar
 		var sticky = shop_section.offsetTop;
+
+		// When the user scrolls the page, execute stickyStatus 
+		window.onscroll = function() { stickyStatus(); };
+
+		// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+		function stickyStatus() {
+			 if (window.pageYOffset > sticky) {
+			   	header.classList.add("sticky");
+			 } else {
+			   	header.classList.remove("sticky");
+			 }
+		}
 		/*=====  End of For Sticky Header  ======*/
 		
 
