@@ -305,3 +305,6 @@ if ( !get_theme_mod( 'enable_sale_banner' ) ) :
 endif;
 remove_filter( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
 add_filter( 'woocommerce_before_shop_loop_item_title', 'wonka_customized_shop_loop', 11 );
+
+/* removing the side bar */
+remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );

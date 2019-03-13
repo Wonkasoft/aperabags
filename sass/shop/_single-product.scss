@@ -135,12 +135,22 @@
 
 		div.summary {
 			flex: .5 0 100%;
+			display: flex;
+			align-items: flex-start;
+			flex-direction: column;
 
+			p.price {
+				flex: .5 40%;
+				width: 40%;
+			}
+			
 			form.cart {
+				flex: 1 100%;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				flex-wrap: wrap;
+				width: 100%;
 
 				table.variations {
 					flex: 1 100%;
