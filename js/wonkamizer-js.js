@@ -39,6 +39,7 @@
 
 	// Open the full screen search box 
 	function openSearch(e) {
+		e.preventDefault();
 	  document.getElementById( "search_overlay" ).style.display = "block";
 
 	  setTimeout( function() {
@@ -48,7 +49,9 @@
 
 	// Close the full screen search box 
 	function closeSearch(e) {
+		e.preventDefault();
   		document.querySelector( '#search_overlay' ).style.opacity = 0;
+  		
 		setTimeout( function() {
 			document.getElementById( "search_overlay" ).style.display = "none";
 			document.getElementById( "search_overlay" ).removeAttribute( 'style' );

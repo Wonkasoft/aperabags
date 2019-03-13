@@ -258,7 +258,7 @@ function setting_up_image_flipper_class( $classes ) {
 
 }
 
-add_filter( 'post_class', 'setting_up_image_flipper_class', 8 );
+// add_filter( 'post_class', 'setting_up_image_flipper_class', 8 );
 
 /**
  * This function is to override the parsing of the images during a shop loop
