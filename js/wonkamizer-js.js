@@ -39,14 +39,20 @@
 
 	// Open the full screen search box 
 	function openSearch(e) {
-		console.log( e );
 	  document.getElementById( "search_overlay" ).style.display = "block";
+
+	  setTimeout( function() {
+	  	document.querySelector( '#search_overlay' ).style.opacity = 1;
+	  }, 300);
 	}
 
 	// Close the full screen search box 
 	function closeSearch(e) {
-		console.log( e );
-	  document.getElementById( "search_overlay" ).style.display = "none";
+  		document.querySelector( '#search_overlay' ).style.opacity = 0;
+		setTimeout( function() {
+			document.getElementById( "search_overlay" ).style.display = "none";
+			document.getElementById( "search_overlay" ).removeAttribute( 'style' );
+		}, 300);
 	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
