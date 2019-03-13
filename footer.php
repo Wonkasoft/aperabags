@@ -148,7 +148,7 @@ $footer_section = get_section_mods( 'footer' );
 <!-- Return to Top -->
 <a href="javascript:" id="return-to-top"><i class="fa fa-angle-up"></i></a>
 <div id="search_overlay" class="overlay">
-  <span class="closebtn" onclick="closeSearch()" title="Close Overlay">x</span>
+  <span class="closebtn" title="Close Overlay">x</span>
   <div class="overlay-content">
     <?php get_search_form(); ?>
   </div>
