@@ -51,7 +51,7 @@
 	function closeSearch(e) {
 		e.preventDefault();
   		document.querySelector( '#search_overlay' ).style.opacity = 0;
-  		
+
 		setTimeout( function() {
 			document.getElementById( "search_overlay" ).style.display = "none";
 			document.getElementById( "search_overlay" ).removeAttribute( 'style' );
@@ -68,7 +68,7 @@
 		// Get the offset position of the navbar
 		var sticky = shop_section.offsetTop;
 		
-		 if (window.pageYOffset > sticky) {
+		 if (window.pageYOffset > sticky && window.innerWidth > 782 ) {
 		   	header.classList.add("sticky");
 		   	if ( document.querySelector( '#wpadminbar' ) ) {
 		   		var admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
