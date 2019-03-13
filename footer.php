@@ -145,6 +145,8 @@ $footer_section = get_section_mods( 'footer' );
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->
+<!-- Return to Top -->
+<a href="javascript:" id="return-to-top"><i class="fa fa-angle-up"></i></a>
 <?php wp_footer(); ?>
 </body>
 </html>

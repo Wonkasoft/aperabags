@@ -89,6 +89,5 @@
 			</div>
 		</div> <!-- .row -->
 	</header><!-- #masthead -->
-	<!-- Return to Top -->
-	<a href="javascript:" id="return-to-top"><i class="fa fa-angle-up"></i></a>
+	
 	<div id="content" class="site-content container-fluid">
