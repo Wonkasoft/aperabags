@@ -147,6 +147,12 @@ $footer_section = get_section_mods( 'footer' );
 </div><!-- #page -->
 <!-- Return to Top -->
 <a href="javascript:" id="return-to-top"><i class="fa fa-angle-up"></i></a>
+<div id="search_overlay" class="overlay">
+  <span class="closebtn" onclick="closeSearch()" title="Close Overlay">x</span>
+  <div class="overlay-content">
+    <?php get_search_form(); ?>
+  </div>
+</div>
 <?php wp_footer(); ?>
 </body>
 </html>
