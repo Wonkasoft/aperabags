@@ -170,6 +170,7 @@
 			display: flex;
 			align-items: flex-start;
 			flex-direction: column;
+			padding: 0 15px;
 
 			div.price-reviews-container {
 				flex: 1 100%;
@@ -242,7 +243,10 @@
 		@media screen and ( min-width: 768px ) {
 
 			div.woocommerce-product-gallery {
-				flex: 1 0 70%;
+				position: relative;
+				flex: 0.3 0 50%;
+				margin-left: 0;
+				left: 0;
 
 				.woocommerce-product-gallery__wrapper {
 					display: flex;
@@ -258,11 +262,19 @@
 						width: auto;
 						height: auto;
 					}
+
 				}
 			}
 
 			div.summary {
-				flex: 1 0 25%;
+				position: relative;
+				flex: 0.1 0 20%;
+				
+				&.scrolling {
+					position: fixed;
+					right: 15px;
+					width: 22.6%;
+				}
 			}
 
 			div.woocommerce-tabs {
