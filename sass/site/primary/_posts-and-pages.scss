@@ -70,10 +70,12 @@ section {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 60%;
+		flex-wrap: wrap;
+		width: 100%;
 
 		/* Style the search field */
 		input[type=text] {
+			width: 100%;
 			padding: 13px;
 			@include font-size( 1.1 );
 			@include prefix( transition, $trans_25, o moz webkit );
@@ -84,7 +86,23 @@ section {
 		}
 
 		button {
-			margin-left: -2px;
+			width: 100%;
+			margin-top: -2px;
+			margin-left: 0;
+			@include prefix( transition, $trans_25, o moz webkit );
+		}
+
+		@include media-breakpoint-up( md ) {
+			width: 65%;
+
+			input[type=text] {
+					width: 50%;
+				}
+			button {
+						width: auto;
+						margin-top: 0;
+						margin-left: -2px;
+					}
 		}
 	}
 }

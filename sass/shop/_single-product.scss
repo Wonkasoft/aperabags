@@ -101,17 +101,20 @@
 			flex-flow: row-reverse;
 
 			.woocommerce-product-gallery__trigger {
+				width: 30px !important;
+				height: 30px !important;
 
 				img {
-					width: 20px !important;
-					height: 20px !important;
-
+					display: block !important;
+					width: 30px !important;
+					height: 30px !important;
 				}
 			}
 
 			.woocommerce-product-gallery__wrapper {
 				margin: 0;
 				display: flex;
+				align-items: center;
 
 				div.woocommerce-product-gallery__image {
 					display: flex !important;
@@ -123,7 +126,7 @@
 			}
 
 			ol.flex-control-thumbs {
-				flex: .5 95%;
+				flex: .5 auto;
 				@include clearfix;
 				margin: 0;
 				padding: 0;
