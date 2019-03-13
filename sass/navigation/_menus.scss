@@ -244,16 +244,17 @@
 .cart-column {
 	display: flex;
 	align-items: center;
-	justify-content: space-around;
+	justify-content: center;
 
 	span.top-menu-s-btn {
+		margin-right: 8px;
 		color: $color__main-menu;
 		@include prefix( transition, $trans_25, webkit moz o);
 
 		&:hover {
 
 			i {
-				
+
 				color: $color__main-menu-hover;
 			}
 		}

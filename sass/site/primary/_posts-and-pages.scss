@@ -93,20 +93,4 @@ section {
 .overlay input[type=text]:hover {
   background: #f1f1f1;
 }
-
-/* Style the submit button */
-.overlay button {
-  float: left;
-  width: 20%;
-  padding: 15px;
-  background: #ddd;
-  font-size: 17px;
-  border: none;
-  cursor: pointer;
-  @include prefix( transition, $trans_25, o moz webkit );
-}
-
-.overlay button:hover {
-  background: #bbb;
-}
 /*=====  End of Search styles  ======*/
