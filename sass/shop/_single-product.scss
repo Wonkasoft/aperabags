@@ -8,6 +8,8 @@
 
 		.woocommerce-product-gallery {
 			position: relative;
+			overflow: hidden;
+			
 
 			.woocommerce-product-gallery__trigger {
 				position: absolute;
@@ -19,12 +21,20 @@
 
 			.flex-viewport {
 				margin-bottom: 1em;
+				max-height: 100%;
+
+				figure.woocommerce-product-gallery__wrapper {
+					flex-flow: row-reverse;
+				}
 			}
 
 			.flex-control-thumbs {
 				@include clearfix;
 				margin: 0;
 				padding: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
 
 				li {
 					list-style: none;
@@ -129,6 +139,14 @@
 
 		div.woocommerce-tabs {
 			flex: 1 0 100%;
+		}
+
+		div#reviews {
+
+			#submit {
+				border-radius: 2px;
+				padding: 15px 25px;
+			}
 		}
 
 		section.products {

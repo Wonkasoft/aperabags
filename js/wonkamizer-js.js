@@ -22,17 +22,29 @@
 
 	function footer_adjustment()
 	{
+		var footer_height = document.querySelector( 'footer#colophon' ).offsetHeight,
+		content_el = document.querySelector( '#content'),
+		new_space;
+
 		if ( !document.getElementById( 'footer-spacer' ) ) {
-			var footer_height = document.querySelector( 'footer#colophon' ).offsetHeight,
-			content_el = document.querySelector( '#content'),
 			new_space = document.createElement( 'DIV' );
-
 			new_space.id = 'footer-spacer';
-
 			content_el.appendChild( new_space );
-			new_space.style.width = '100%';
-			new_space.style.height = footer_height + 'px';
 		}
+
+		new_space = document.getElementById( 'footer-spacer' );
+		new_space.style.width = '100%';
+		new_space.style.height = footer_height + 'px';
+	}
+
+	// Open the full screen search box 
+	function openSearch() {
+	  document.getElementById("search_overlay").style.display = "block";
+	}
+
+	// Close the full screen search box 
+	function closeSearch() {
+	  document.getElementById("search_overlay").style.display = "none";
 	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
@@ -41,7 +53,11 @@
 	====================================================================*/
 	window.onresize = function()
 	{
-		slide_adjustment();
+		if ( document.querySelector( '.header-slider-section' ) ) 
+		{
+			slide_adjustment();
+		}
+
 		footer_adjustment();
 	};
 	/*=====  End of This is for loading calls on window resizing  ======*/
@@ -51,6 +67,17 @@
 	===================================================================*/
 	window.onload = function()
 	{
+		/*==========================================
+		=            Search btn actions            =
+		==========================================*/
+		var search_btn = document.querySelector( 'span.top-menu-s-btn' ),
+		close_btn = document.querySelector( 'span.closebtn' );
+		
+		search_btn.addEventListener( 'click', openSearch() );
+		close_btn.addEventListener( 'click', closeSearch() );
+		/*=====  End of Search btn actions  ======*/
+		
+
 		if ( document.querySelector( '.header-slider-section' ) ) 
 		{
 			slide_adjustment();
@@ -67,6 +94,8 @@
 
 		footer_adjustment();
 
+
+
 		// ===== Scroll to Top ==== 
 		$(window).scroll(function() {
 		   if ($(this).scrollTop() >= 50) {        // If page is scrolled more than 50px
@@ -75,11 +104,14 @@
 		       $('#return-to-top').fadeOut(200);   // Else fade out the arrow
 		   }
 		});
+
 		$('#return-to-top').click(function() {      // When arrow is clicked
 		   $('body,html').animate({
 		       scrollTop : 0                       // Scroll to top of body
 		   }, 500);
 		});
+
+
 	};
 	/*=====  End of This is for running after document is ready  ======*/
 
