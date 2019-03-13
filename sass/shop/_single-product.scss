@@ -127,6 +127,14 @@
 			justify-content: flex-start;
 			flex-flow: row-reverse;
 
+			.woocommerce-product-gallery__trigger {
+
+				img {
+					width: 20px !important;
+					height: 20px !important;
+				}
+			}
+
 			.woocommerce-product-gallery__wrapper {
 				margin: 0;
 

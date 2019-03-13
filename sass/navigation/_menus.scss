@@ -22,7 +22,6 @@
 			margin: 5px 0;
 			opacity: 1;
 			background: #000;
-			border: 1px solid rgba( #fff, .8 );
 			@include prefix( transition, $trans_25, webkit moz o);
 
 			&-top {
