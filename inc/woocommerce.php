@@ -238,20 +238,28 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 	}
 }
 
-add_filter( 'post_class', function( $classes ) {
-		global $product;
-		$post_type = get_post_type( get_the_ID() );
-			if ( ! is_admin() ) {
-				if ( $post_type == 'product' ) {
-					$attachment_ids = $product->get_gallery_image_ids( $product );
-					if ( $attachment_ids ) {
-						$classes[] = 'pif-has-gallery';
-					}
+/**
+ * This sets up the image flipper class
+ * @param  array $classes contains all the classes for the current product
+ * @return array $classes posts all classes to the current product.
+ */
+function setting_up_image_flipper_class( $classes ) {
+	global $product;
+	$post_type = get_post_type( get_the_ID() );
+		if ( ! is_admin() ) {
+			if ( $post_type == 'product' ) {
+				$attachment_ids = $product->get_gallery_image_ids( $product );
+				if ( $attachment_ids ) {
+					$classes[] = 'pif-has-gallery';
 				}
 			}
-			return $classes;
+		}
+		return $classes;
 
-	}, 8 );
+}
+
+add_filter( 'post_class', 'setting_up_image_flipper_class', 8 );
+
 /**
  * This function is to override the parsing of the images during a shop loop
  * 
