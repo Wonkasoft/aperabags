@@ -80,7 +80,7 @@
 		/*==========================================
 		=            Search btn actions            =
 		==========================================*/
-		var search_btn = document.querySelector( 'span.top-menu-s-btn i' ),
+		var search_btn = document.querySelector( 'li.top-menu-s-btn i' ),
 		close_btn = document.querySelector( 'span.closebtn' );
 		
 		search_btn.addEventListener( 'click', openSearch );

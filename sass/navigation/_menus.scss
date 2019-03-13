@@ -242,9 +242,13 @@
 =            Cart Menu Styles            =
 ========================================*/
 .cart-column {
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	top: -75px;
+	right: -33%;
+    @include prefix( transition, $trans_25, webkit moz o);
 
 	.wonka-badge {
 		background: #ffffff;
@@ -256,11 +260,11 @@
 	ul#cart-menu {
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		justify-content: flex-end;
 	    list-style: none;
 	    margin: 0;
 	    padding: 0;
-	    height: 30px;
+	    height: 36px;
 	    top: 0;
 	    overflow: hidden;
 
@@ -270,7 +274,7 @@
 	    	align-items: center;
 	    	justify-content: center;
 		    margin: 8px 0;
-		    padding: 1rem 1rem;
+		    padding: 0;
 		    @include prefix( transition, $trans_25, webkit moz o);
 
 		    &.top-menu-s-btn {
@@ -309,6 +313,8 @@
 	}
 
     @include media-breakpoint-up( md ) {
+    	top: 0;
+    	right: 0;
 
     	.wonka-badge {
     	}
