@@ -309,7 +309,7 @@ if ( ! class_exists( 'WC_pif' ) ) {
 
 	
 	/* This is the init for this class */
-	$WC_pif = new WC_pif();
+	// $WC_pif = new WC_pif();
 }
 
 /**
@@ -317,10 +317,30 @@ if ( ! class_exists( 'WC_pif' ) ) {
  * 
  */
 function wonka_customized_shop_loop() {
+	global $product, $woocommerce;
+
+	if ( ! is_a( $product, 'WC_Product' ) ) {
+				return;
+	}
+	if ( is_callable( 'WC_Product::get_gallery_image_ids' ) ) {
+		$attachment_ids = $product->get_gallery_image_ids();
+	} else {
+		$attachment_ids = $product->get_gallery_attachment_ids();
+	}
+	if ( $attachment_ids ) :
+		$attachment_ids     = array_values( $attachment_ids );
+		$secondary_image_id = $attachment_ids['0'];
+		$secondary_image_alt = get_post_meta( $secondary_image_id, '_wp_attachment_image_alt', true );
+		$secondary_image_title = get_the_title($secondary_image_id);
+	endif;
+
 	$output = '';
 	ob_start();
 	$output .= '<div class="wonka-shop-img-wrap">';
 	$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ) . '" class="img-fluid wonka-img-fluid" />';
+	if ( $attachment_ids ) :
+		$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( $secondary_image_id, 'full' ) ) . '" title="' . $secondary_image_title . '" alt="' . $secondary_image_alt . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" />';
+	endif;
 	$output .= '</div><!-- .wonka-shop-img-wrap -->';
 	ob_end_clean();
 
