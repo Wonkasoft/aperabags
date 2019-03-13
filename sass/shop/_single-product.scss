@@ -139,11 +139,21 @@
 			align-items: flex-start;
 			flex-direction: column;
 
-			p.price {
-				flex: .5 40%;
-				width: 40%;
+			div.price-reviews-container {
+				flex: 1 100%;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				p.price {
+
+				}
+
+				div.woocommerce-product-rating {
+
+				}
 			}
-			
+
 			form.cart {
 				flex: 1 100%;
 				display: flex;

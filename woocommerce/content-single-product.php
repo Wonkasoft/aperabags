@@ -54,7 +54,6 @@ if ( post_password_required() ) {
 			add_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 10);
 			add_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 20);
 			add_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 21);
-
 			
 			/**
 			 * Hook: woocommerce_single_product_summary.
