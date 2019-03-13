@@ -69,7 +69,7 @@
 		   	header.classList.add("sticky");
 		   	if ( document.querySelector( '#wpadminbar' ) ) {
 		   		var admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
-		   		document.querySelector( '.sticky' ).offsetTop = admin_height + 'px';
+		   		document.querySelector( '.sticky' ).style.top = admin_height + 'px';
 		   	}
 		 } else {
 		   	header.classList.remove("sticky");
