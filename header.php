@@ -90,5 +90,5 @@
 		</div> <!-- .row -->
 	</header><!-- #masthead -->
 	<!-- Return to Top -->
-	<a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up"></i></a>
+	<a href="javascript:" id="return-to-top"><i class="fa fa-angle-up"></i></a>
 	<div id="content" class="site-content container-fluid">
