@@ -95,11 +95,12 @@
 		target_scrolling = img_area.offsetTop + img_area.offsetHeight - summary_section.offsetHeight,
 		win_y = window.pageYOffset;
 		console.log(target_scrolling);
+		console.log(summary_section.offsetTop);
 
 		if ( window.innerWidth > 792 && win_y > target_scrolling ) 
 		{
 			summary_section.style.position = 'relative';
-			summary_section.style.top = target_scrolling + 'px';
+			summary_section.style.top = target_scrolling - img_area.offsetTop + 'px';
 		}
 		else
 		{
