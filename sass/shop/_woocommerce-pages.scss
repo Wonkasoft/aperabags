@@ -6,6 +6,7 @@
 
 		.woocommerce-notice,
 		.woocommerce-info {
+			margin: 15px 0;
 			padding: 4px 15px;
 			color: #333333;
 
@@ -13,6 +14,26 @@
 				color: rgba( 0, 0, 0, .8 );
 			}
 		}
+
+		/*=====================================================
+		=            This is for the checkout page            =
+		=====================================================*/
+		#payment {
+
+			ul {
+				list-style: none;
+				margin: 0;
+				padding: 0 8px;
+			}
+
+			input[type=checkbox] {
+				margin-right: 8px;
+			}
+		}
+		
+		
+		/*=====  End of This is for the checkout page  ======*/
+		
 		/*===========================================================
 		=            This is the totals on the cart page            =
 		===========================================================*/

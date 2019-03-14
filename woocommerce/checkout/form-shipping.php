@@ -39,6 +39,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$fields = $checkout->get_checkout_fields( 'shipping' );
 
 					foreach ( $fields as $key => $field ) {
+
+						if ( isset( $field['class'] ) ) :
+							$field['class'] .= ' wonka-form-control form-control';
+						else:
+							$field['class'] .= 'wonka-form-control form-control';
+						endif;
+						
 						if ( isset( $field['country_field'], $fields[ $field['country_field'] ] ) ) {
 							$field['country'] = $checkout->get_value( $field['country_field'] );
 						}
@@ -57,7 +64,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php do_action( 'woocommerce_before_order_notes', $checkout ); ?>
 
 	<?php if ( apply_filters( 'woocommerce_enable_order_notes_field', 'yes' === get_option( 'woocommerce_enable_order_comments', 'yes' ) ) ) : ?>
-
+		
+		<div class="row wonka-row">
+			<div class="col col-12">
 		<?php if ( ! WC()->cart->needs_shipping() || wc_ship_to_billing_address_only() ) : ?>
 
 			<h3><?php _e( 'Additional information', 'woocommerce' ); ?></h3>
@@ -69,7 +78,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
 			<?php endforeach; ?>
 		</div>
-
+		</div><!-- .col-12 -->
+	</div><!-- .wonka-row -->
 	<?php endif; ?>
 
 	<?php do_action( 'woocommerce_after_order_notes', $checkout ); ?>

@@ -307,4 +307,4 @@ remove_filter( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_
 add_filter( 'woocommerce_before_shop_loop_item_title', 'wonka_customized_shop_loop', 11 );
 
 /* removing the side bar */
-remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );

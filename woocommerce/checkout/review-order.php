@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<table class="shop_table woocommerce-checkout-review-order-table table">
+<table class="shop_table woocommerce-checkout-review-order-table table table-striped table-hover">
 	<thead>
 		<tr>
 			<th scope="col" class="product-name"><?php _e( 'Product', 'woocommerce' ); ?></th>

@@ -41,6 +41,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$fields = $checkout->get_checkout_fields( 'billing' );
 
 			foreach ( $fields as $key => $field ) {
+				
+				if ( isset( $field['class'] ) ) :
+					$field['class'] .= ' wonka-form-control form-control';
+				else:
+					$field['class'] .= 'wonka-form-control form-control';
+				endif;
+
 				if ( isset( $field['country_field'], $fields[ $field['country_field'] ] ) ) {
 					$field['country'] = $checkout->get_value( $field['country_field'] );
 				}
