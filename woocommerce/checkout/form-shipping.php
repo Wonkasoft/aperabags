@@ -40,9 +40,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 					foreach ( $fields as $key => $field ) {
 						if ( !isset($field['placeholder'] ) ) :
-							$field['placeholder'] = $field['label']
+							$field['placeholder'] = $field['label'];
 						endif;
-						
+
 						if ( isset( $field['class'] ) ) :
 							array_push( $fields[$key]['class'], 'wonka-form-group', 'form-group' ) ;
 						else:
