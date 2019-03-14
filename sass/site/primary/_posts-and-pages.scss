@@ -28,6 +28,14 @@
 
 section {
 	margin: 30px auto;
+
+	&.error-404 {
+		max-width: 1180px;
+	}
+}
+
+#searchform.wonka-form-inline {
+	margin: 15px auto;
 }
 
 /*=====================================
