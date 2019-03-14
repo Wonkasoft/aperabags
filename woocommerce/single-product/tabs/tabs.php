@@ -32,11 +32,19 @@ if ( ! empty( $tabs ) ) : ?>
 
 	<div class="wonka-tabs wonka-tabs-wrapper">
 		<?php foreach ( $tabs as $key => $tab ) : ?>
-			<section class="wonka-section wonka-section-<?php echo esc_attr( $key[$tab]['title'] ); ?>">
-				<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key[$tab]['title'] ); ?>" aria-data="tab-title-<?php echo esc_attr( $key[$tab]['title'] ); ?>">
-					<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
-				</div>
-			</section>
+			<?php if ( $key === 'reviews' ) : ?>
+				<section class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
+					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key ); ?>" aria-data="tab-title-<?php echo esc_attr( $key ); ?>">
+						<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
+					</div>
+				</section>
+			<?php else: ?>
+				<section class="wonka-section wonka-section-<?php echo esc_attr( $key['title'] ); ?>">
+					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key['title'] ); ?>" aria-data="tab-title-<?php echo esc_attr( $key['title'] ); ?>">
+						<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
+					</div>
+				</section>
+			<?php endif; ?>
 		<?php endforeach; ?>
 	</div>
 
