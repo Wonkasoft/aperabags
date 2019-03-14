@@ -1,6 +1,6 @@
 .woocommerce-cart,
 .woocommerce-checkout,
-.woocommerce-page {
+.woocommerce-page:not(.single-product) {
 	#main {
 		margin: 15px auto;
 		max-width: 1180px;
