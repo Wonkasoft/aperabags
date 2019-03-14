@@ -43,12 +43,23 @@ table.shop_table_responsive {
 			&.product-quantity {
 
 				input {
+					padding-right: 4px;
 					width: 70px;
 				}
 			}
 
 			&.actions,
 			&.download-actions {
+
+				.coupon {
+					float: left;
+					width: 50%;
+				}
+
+				a.wonka-btn {
+					float: right;
+				}
+
 				&:before {
 					display: none;
 				}
