@@ -43,7 +43,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			foreach ( $fields as $key => $field ) {
 
 				if ( !isset($field['placeholder'] ) ) :
-					$field['placeholder'] = $field['label'];
+					if ( $field['type'] !== 'select' ) :
+						$field['placeholder'] = $field['label'];
+					endif;
 				endif;
 				
 				if ( isset( $field['class'] ) ) :
