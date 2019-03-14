@@ -94,8 +94,9 @@
 		img_area = document.querySelector( '.wonka-single-product-img' ),
 		target_scrolling = img_area.offsetTop + img_area.offsetHeight - summary_section.offsetHeight,
 		win_y = window.pageYOffset;
-		console.log(target_scrolling);
-		console.log(summary_section.offsetTop);
+		console.log('scrolling: ' + target_scrolling);
+		console.log('summary top: ' + summary_section.offsetTop);
+		console.log('windowPageY: ' + win_y);
 
 		if ( window.innerWidth > 792 && win_y > target_scrolling ) 
 		{
