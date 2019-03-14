@@ -18,6 +18,7 @@ table.shop_table_responsive {
 			display: block;
 			text-align: right;
 			clear: both;
+			vertical-align: middle;
 
 			&:before {
 				content: attr(data-title) ': ';
@@ -57,7 +58,7 @@ table.shop_table_responsive {
 					width: 50%;
 				}
 
-				a.wonka-btn {
+				button.wonka-btn {
 					float: right;
 				}
 

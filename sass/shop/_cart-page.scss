@@ -2,5 +2,14 @@
 	#main {
 		margin: 15px auto;
 		max-width: 1180px;
+
+		div.cart-collaterals {
+			max-width: 400px;
+
+			a.wonka-btn {
+				position:relative;
+				float: right;
+			}
+		}
 	}
 }
