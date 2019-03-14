@@ -1,11 +1,11 @@
 a.btn.btn-primary,
+a.wonka-btn,
 button:not(.menu-toggle),
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
 	border: none;
 	background: $color__background-button;
-	color: rgba(0, 0, 0, .8);
 	text-transform: uppercase;
 	font-weight: 700;
 	line-height: 1.2;
