@@ -4,7 +4,25 @@
 		max-width: 1180px;
 
 		div.cart-collaterals {
+			position: relative;
+			text-align: right;
+			float: right;
 			max-width: 400px;
+
+			table {
+				padding: 0 15px;
+
+				tr {
+
+					th {
+						text-align: right;
+					}
+
+					td {
+						text-align: right;
+					}
+				}
+			}
 
 			a.wonka-btn {
 				position:relative;
