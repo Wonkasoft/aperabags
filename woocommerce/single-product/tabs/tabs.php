@@ -39,8 +39,8 @@ if ( ! empty( $tabs ) ) : ?>
 					</div>
 				</section>
 			<?php else: ?>
-				<section class="wonka-section wonka-section-<?php echo esc_attr( $key['title'] ); ?>">
-					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key['title'] ); ?>" aria-data="tab-title-<?php echo esc_attr( $key['title'] ); ?>">
+				<section class="wonka-section wonka-section-<?php echo esc_attr( $tab['title'] ); ?>">
+					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $tab['title'] ); ?> panel entry-content" id="tab-<?php echo esc_attr( $tab['title'] ); ?>" aria-data="tab-title-<?php echo esc_attr( $tab['title'] ); ?>">
 						<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
 					</div>
 				</section>
