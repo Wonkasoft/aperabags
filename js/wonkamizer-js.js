@@ -38,18 +38,22 @@
 	}
 
 	// Open the full screen search box 
-	function openSearch(e) {
+	function openSearch(e) 
+	{
 		e.preventDefault();
-	  document.getElementById( "search_overlay" ).style.display = "block";
+	  	document.getElementById( "search_overlay" ).style.display = "block";
 
-	  setTimeout( function() {
-	  	document.querySelector( '#search_overlay' ).style.opacity = 1;
-	  }, 300);
+	  	setTimeout( function() {
+	  		document.querySelector( '#search_overlay' ).style.opacity = 1;
+	  		document.querySelector( '#search_overlay' ).style.left = 0;
+	  	}, 300);
 	}
 
 	// Close the full screen search box 
-	function closeSearch(e) {
+	function closeSearch(e) 
+	{
 		e.preventDefault();
+  		document.querySelector( '#search_overlay' ).style.left = '100%';
   		document.querySelector( '#search_overlay' ).style.opacity = 0;
 
 		setTimeout( function() {
@@ -59,8 +63,8 @@
 	}
 
 	// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-	function stickyStatus() {
-		
+	function stickyStatus() 
+	{	
 		// Get the header
 		var header = document.querySelector('.brand-nav-bar');
 		var shop_section = document.querySelector( '.shop-section' );
@@ -78,6 +82,8 @@
 		   	header.classList.remove("sticky");
 		 }
 	}
+
+	
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -119,6 +125,7 @@
 			window.onscroll = function() { stickyStatus(); };
 		}
 		/*=====  End of For Sticky Header  ======*/
+	
 
 		if ( document.querySelector( '.header-slider-section' ) ) 
 		{
