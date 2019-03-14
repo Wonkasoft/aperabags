@@ -14,6 +14,10 @@ input[type="submit"] {
 	@include prefix( text-shadow, 1px 1px 4px rgba(#000, 0 ), o moz webkit );
 	@include prefix( transition, $trans_25, webkit moz o);
 
+	&:visited {
+		background: $color__background-button;
+	}
+
 	&:hover {
 		background: #238cfe;
 		color: rgba(255, 255, 255, .8);
@@ -22,7 +26,6 @@ input[type="submit"] {
 
 	&:active,
 	&:focus {
-		background: $color__background-button;
 		outline: 0;
 		border: none;
 	}
