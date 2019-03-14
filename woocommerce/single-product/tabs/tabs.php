@@ -38,7 +38,9 @@ if ( ! empty( $tabs ) ) : ?>
 						<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
 					</div>
 				</section>
-			<?php else: ?>
+			<?php else: 
+				$serial_title = str_replace(' ', '-', strtolower( $tab['title'] ) );
+				?>
 				<section class="wonka-section wonka-section-<?php echo esc_attr( $tab['title'] ); ?>">
 					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $tab['title'] ); ?> panel entry-content" id="tab-<?php echo esc_attr( $tab['title'] ); ?>" aria-data="tab-title-<?php echo esc_attr( $tab['title'] ); ?>">
 						<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
