@@ -7,6 +7,7 @@ input[type="submit"] {
 	border: none;
 	background: $color__background-button;
 	text-transform: uppercase;
+	color: rgba(0, 0, 0, .8);
 	font-weight: 700;
 	line-height: 1.2;
 	@include font-size( 1 );
@@ -14,8 +15,9 @@ input[type="submit"] {
 	@include prefix( text-shadow, 1px 1px 4px rgba(#000, 0 ), o moz webkit );
 	@include prefix( transition, $trans_25, webkit moz o);
 
+
 	&:visited {
-		background: $color__background-button;
+		color: rgba(0, 0, 0, .8);
 	}
 
 	&:hover {
@@ -38,6 +40,7 @@ input[type="reset"].wonka-btn,
 input[type="submit"].wonka-btn {
 	border-radius: 2px;
 	padding: 15px 25px;
+	background: $color__background-button;
 }
 
 
