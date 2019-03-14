@@ -1,5 +1,6 @@
 .woocommerce-cart,
-.woocommerce-checkout {
+.woocommerce-checkout,
+.woocommerce-page {
 	#main {
 		margin: 15px auto;
 		max-width: 1180px;
@@ -20,6 +21,14 @@
 			}
 		}
 
+		/*====================================================
+		=            This is for the archive page            =
+		====================================================*/
+		form.wonka-form-inline {
+			float: right;
+		}
+		/*=====  End of This is for the archive page  ======*/
+		
 		/*=====================================================
 		=            This is for the checkout page            =
 		=====================================================*/

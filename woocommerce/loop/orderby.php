@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<form class="woocommerce-ordering" method="get">
+<form class="woocommerce-ordering form-inline wonka-form-inline" method="get">
 	<div class="form-group wonka-form-group">
 	<select name="orderby" class="orderby form-control wonka-form-control">
 		<?php foreach ( $catalog_orderby_options as $id => $name ) : ?>
