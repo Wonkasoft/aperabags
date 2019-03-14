@@ -31,6 +31,20 @@
 			}
 		}
 
+		.select2-selection--single {
+			border-radius: 2px;
+
+			span.select2-selection__rendered {
+				padding: 12px 15px;
+			}
+			span.select2-selection__arrow {
+
+				b {
+					margin-top: 8px;
+				}
+			}
+		}
+
 		#payment {
 
 			ul {
@@ -41,6 +55,10 @@
 
 			input[type=checkbox] {
 				margin-right: 8px;
+			}
+
+			.woocommerce-terms-and-conditions-wrapper {
+				padding: 0 8px;
 			}
 		}
 		
