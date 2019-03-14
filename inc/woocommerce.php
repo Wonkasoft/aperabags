@@ -306,3 +306,16 @@ add_filter( 'woocommerce_before_shop_loop_item_title', 'wonka_customized_shop_lo
 
 /* removing the side bar */
 remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+
+/**
+ * Changes the description tab title
+ * @param  array $tabs setting up the changed titles
+ * @return 
+ */
+function wonka_product_tabs_retitle( $tabs ) {
+	$tabs['description']['title'] = __( 'Product Overview' );
+
+	return $tabs;
+}
+
+add_filter( 'woocommerce_product_tabs', 'wonka_product_tabs_retitle', 50 );

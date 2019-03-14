@@ -291,6 +291,12 @@
 /*====================================
 =            Tabs section            =
 ====================================*/
+section.wonka-section-reviews {
+
+	ol {
+		list-style: none;
+	}
+}
 form#commentform {
 	position: relative;
 	opacity: 0;
