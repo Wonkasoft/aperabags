@@ -87,7 +87,7 @@
 	{
 		var summary_section = document.querySelector( '.summary.entry-summary' ),
 		img_area = document.querySelector( '.wonka-single-product-img' ),
-		target_scrolling = img_area.offsetTop + img_area.offsetHeight - summary_section.offsetHeight;
+		target_scrolling = img_area.offsetTop + img_area.offsetHeight - summary_section.offsetHeight,
 		win_y = window.pageYOffset;
 		console.log(target_scrolling);
 		// if ( window.innerWidth > 792 &&  ) 
