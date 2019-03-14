@@ -313,6 +313,9 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
  * @return 
  */
 function wonka_product_tabs_retitle( $tabs ) {
+	$tabs['reviews']['priority'] = 5;			// Reviews first
+	$tabs['description']['priority'] = 10;			// Description second
+	$tabs['additional_information']['priority'] = 15;	// Additional information third
 	$tabs['description']['title'] = __( 'Product Overview' );
 
 	return $tabs;
