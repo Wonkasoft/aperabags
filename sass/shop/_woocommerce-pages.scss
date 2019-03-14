@@ -4,6 +4,13 @@
 		margin: 15px auto;
 		max-width: 1180px;
 
+		.woocommerce-notice {
+			padding: 4px 15px;
+			color: #333333;
+		}
+		/*===========================================================
+		=            This is the totals on the cart page            =
+		===========================================================*/
 		div.cart-collaterals {
 			position: relative;
 			text-align: right;
@@ -30,5 +37,6 @@
 				float: right;
 			}
 		}
+		/*=====  End of This is the totals on the cart page  ======*/
 	}
 }
