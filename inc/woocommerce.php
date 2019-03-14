@@ -321,4 +321,4 @@ function wonka_product_tabs_retitle( $tabs ) {
 	return $tabs;
 }
 
-add_filter( 'woocommerce_product_tabs', 'wonka_product_tabs_retitle', 50 );
+add_filter( 'woocommerce_product_tabs', 'wonka_product_tabs_retitle', 98 );
