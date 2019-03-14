@@ -4,9 +4,14 @@
 		margin: 15px auto;
 		max-width: 1180px;
 
-		.woocommerce-notice {
+		.woocommerce-notice,
+		.woocommerce-info {
 			padding: 4px 15px;
 			color: #333333;
+
+			a {
+				color: rgba( 0, 0, 0, .8 );
+			}
 		}
 		/*===========================================================
 		=            This is the totals on the cart page            =
