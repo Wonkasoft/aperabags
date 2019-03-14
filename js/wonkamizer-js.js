@@ -96,7 +96,7 @@
 		win_y = window.pageYOffset;
 		console.log('scrolling: ' + target_scrolling);
 		console.log('img height: ' + img_area.offsetHeight);
-		console.log('summary top: ' + summary_section.offsetTop);
+		console.log('summary top: ' + summary_section.innerHTML.offsetTop);
 		console.log('windowPageY: ' + win_y);
 
 		if ( window.innerWidth > 792 && win_y - summary_section.parentElement.offsetTop > target_scrolling ) 
