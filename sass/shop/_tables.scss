@@ -33,6 +33,13 @@ table.shop_table_responsive {
 				}
 			}
 
+			&.product-thumbnail {
+				img {
+					width: auto;
+					height: 100px;
+				}
+			}
+
 			&.actions,
 			&.download-actions {
 				&:before {
