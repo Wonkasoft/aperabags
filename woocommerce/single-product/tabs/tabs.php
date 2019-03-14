@@ -30,12 +30,16 @@ $tabs = apply_filters( 'woocommerce_product_tabs', array() );
 
 if ( ! empty( $tabs ) ) : ?>
 
-	<div class="woocommerce-tabs wc-tabs-wrapper">
-		
-		<?php foreach ( $tabs as $key => $tab ) : ?>
-			<div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content wc-tab" id="tab-<?php echo esc_attr( $key ); ?>" role="tabpanel" aria-labelledby="tab-title-<?php echo esc_attr( $key ); ?>">
-				<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
-			</div>
+	<div class="wonka-tabs wonka-tabs-wrapper">
+		<?php 
+			$new_tabs_order = array( $tabs['reviews'], $tabs['description'], $tabs['additional_information'] );
+		?>
+		<?php foreach ( $new_tabs_order as $key => $tab ) : ?>
+			<section class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
+				<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key ); ?>" aria-data="tab-title-<?php echo esc_attr( $key ); ?>">
+					<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
+				</div>
+			</section>
 		<?php endforeach; ?>
 	</div>
 
