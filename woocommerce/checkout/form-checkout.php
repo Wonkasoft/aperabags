@@ -52,7 +52,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 	<?php /* Added row and col */ ?>
 	
 	<div class="row wonka-row align-items-center justify-content-center">
-		<div class="col col-6">
+		<div class="col col-12">
 			<h3 id="order_review_heading"><?php esc_html_e( 'Your order', 'woocommerce' ); ?></h3>
 
 			<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>

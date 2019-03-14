@@ -83,7 +83,18 @@
 		 }
 	}
 
-	
+	function stickySummary() 
+	{
+		var summary_section = document.querySelector( '.summary.entry-summary' ),
+		img_area = document.querySelector( '.wonka-single-product-img' ),
+		target_scrolling = img_area.offsetTop + img_area.offsetHeight - summary_section.offsetHeight;
+		win_y = window.pageYOffset;
+		console.log(target_scrolling);
+		// if ( window.innerWidth > 792 &&  ) 
+		// {
+
+		// }
+	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -125,7 +136,16 @@
 			window.onscroll = function() { stickyStatus(); };
 		}
 		/*=====  End of For Sticky Header  ======*/
-	
+		
+		/*============================================
+		=            For product summmary            =
+		============================================*/
+		if ( document.querySelector( '.single-product .summary' ) ) 
+		{
+			// When the user scrolls the page, execute stickyStatus 
+			window.onscroll = function() { stickySummary(); };
+		}
+		/*=====  End of For product summmary  ======*/
 
 		if ( document.querySelector( '.header-slider-section' ) ) 
 		{
