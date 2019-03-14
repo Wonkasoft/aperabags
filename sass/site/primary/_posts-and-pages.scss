@@ -11,11 +11,6 @@
 	@include prefix( transition, $trans_25, o moz webkit );
 }
 
-.post,
-.page {
-	margin: 0 0 1.5em;
-}
-
 .updated:not(.published) {
 	display: none;
 }
