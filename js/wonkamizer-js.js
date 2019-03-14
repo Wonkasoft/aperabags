@@ -90,6 +90,7 @@
 		target_scrolling = img_area.offsetTop + img_area.offsetHeight - summary_section.offsetHeight,
 		win_y = window.pageYOffset;
 		console.log(target_scrolling);
+		
 		// if ( window.innerWidth > 792 &&  ) 
 		// {
 
