@@ -92,16 +92,18 @@
 	{
 		var summary_section = document.querySelector( '.summary.entry-summary' ),
 		img_area = document.querySelector( '.wonka-single-product-img' ),
-		target_scrolling = img_area.offsetTop + img_area.offsetHeight - summary_section.offsetHeight,
+		site_header = document.querySelector( '.site-header' ),
+		target_scrolling = img_area.offsetHeight - summary_section.offsetHeight,
 		win_y = window.pageYOffset;
 		console.log('scrolling: ' + target_scrolling);
+		console.log('img height: ' + img_area.offsetHeight);
 		console.log('summary top: ' + summary_section.offsetTop);
 		console.log('windowPageY: ' + win_y);
 
-		if ( window.innerWidth > 792 && win_y > target_scrolling ) 
+		if ( window.innerWidth > 792 && win_y - site_header.offsetHeight > target_scrolling ) 
 		{
 			summary_section.style.position = 'relative';
-			summary_section.style.top = target_scrolling - img_area.offsetTop + 'px';
+			summary_section.style.top = target_scrolling + 'px';
 		}
 		else
 		{
