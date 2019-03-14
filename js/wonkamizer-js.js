@@ -72,17 +72,22 @@
 		// Get the offset position of the navbar
 		var sticky = shop_section.offsetTop;
 		
-		 if (window.pageYOffset > sticky && window.innerWidth > 782 ) {
+		 if (window.pageYOffset > sticky && window.innerWidth > 782 ) 
+		 {
 		   	header.classList.add("sticky");
-		   	if ( document.querySelector( '#wpadminbar' ) ) {
+		   	if ( document.querySelector( '#wpadminbar' ) ) 
+		   	{
 		   		var admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
 		   		document.querySelector( '.sticky' ).style.top = admin_height + 'px';
 		   	}
-		 } else {
+		 } 
+		 else 
+		 {
 		   	header.classList.remove("sticky");
 		 }
 	}
 
+	var allowed = true;
 	function stickySummary() 
 	{
 		var summary_section = document.querySelector( '.summary.entry-summary' ),
@@ -90,11 +95,17 @@
 		target_scrolling = img_area.offsetTop + img_area.offsetHeight - summary_section.offsetHeight,
 		win_y = window.pageYOffset;
 		console.log(target_scrolling);
-		
-		// if ( window.innerWidth > 792 &&  ) 
-		// {
 
-		// }
+		if ( window.innerWidth > 792 && win_y > target_scrolling ) 
+		{
+			summary_section.style.position = 'relative';
+			summary_section.style.top = target_scrolling + 'px';
+		}
+		else
+		{
+			summary_section.style.position = 'sticky';
+			summary_section.style.top = 15 + 'px';
+		}
 	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
