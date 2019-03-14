@@ -32,7 +32,7 @@ if ( ! empty( $tabs ) ) : ?>
 
 	<div class="wonka-tabs wonka-tabs-wrapper">
 		<?php 
-			$new_tabs_order = array( $tabs['reviews'], $tabs['description'], $tabs['additional_information'] );
+			$new_tabs_order = array( 'reviews' => $tabs['reviews'], 'description' => $tabs['description'], 'additional_information' => $tabs['additional_information'] );
 		?>
 		<?php foreach ( $new_tabs_order as $key => $tab ) : ?>
 			<section class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
