@@ -46,3 +46,8 @@ $woocommerce__color-info: #3D9CD2;
  * WooCommerce widgets
  */
 @import "shop/widgets";
+
+/**
+ * WooCommerce cart page
+ */
+@import "shop/cart-page";
