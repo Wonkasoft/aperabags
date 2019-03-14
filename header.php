@@ -34,7 +34,7 @@
 			</div><!-- topbar-notice -->
 		<?php endif; ?>
 		<div class="row brand-nav-bar">
-			<div class="col col-8 col-md-2 offset-md-2">
+			<div class="col col-8 col-md-2 offset-lg-2 align-self-start align-self-lg-center">
 				<div class="site-branding">
 					<?php
 					the_custom_logo();
@@ -54,7 +54,7 @@
 					<?php endif; ?>
 				</div><!-- .site-branding -->
 			</div> <!-- .col-4 -->
-			<div class="col col-12 col-md-5 offset-md-1">
+			<div class="col col-12 col-md-5 offset-lg-1 align-self-end align-self-lg-center">
 
 				<nav id="site-navigation" class="main-navigation">
 					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
@@ -71,7 +71,7 @@
 					?>
 				</nav><!-- #site-navigation -->
 			</div> <!-- .col-8 -->
-			<div class="col col-4 col-md-2 cart-column">
+			<div class="col col-4 col-md-2 cart-column align-self-start align-self-lg-center">
 				<?php
 				wp_nav_menu( array(
 						'theme_location' => 'menu-cart',
