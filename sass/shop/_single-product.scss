@@ -269,8 +269,11 @@
 			}
 
 			div.summary {
-				position: relative;
 				flex: 0.1 0 25%;
+				position: sticky;
+				position: -webkit-sticky;    
+				top: 15px;
+				background: #fff;
 				
 				&.scrolling {
 					position: fixed;

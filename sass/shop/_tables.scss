@@ -28,6 +28,7 @@ table.shop_table_responsive {
 			&.product-remove {
 				a {
 					text-align: left;
+					@include font-size( 2.5 );
 				}
 
 				&:before {
