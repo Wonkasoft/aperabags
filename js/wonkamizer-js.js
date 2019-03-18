@@ -130,10 +130,13 @@
 		/*==========================================
 		=            Search btn actions            =
 		==========================================*/
-		var search_btn = document.querySelector( 'li.top-menu-s-btn i' ),
+		var search_btn = document.querySelectorAll( 'li.top-menu-s-btn i' ),
 		close_btn = document.querySelector( 'span.closebtn' );
 		
-		search_btn.addEventListener( 'click', openSearch );
+
+		search_btn.forEach( function( item, i ) {
+			item.addEventListener( 'click', openSearch );
+		} );
 		close_btn.addEventListener( 'click', closeSearch );
 		/*=====  End of Search btn actions  ======*/
 		
