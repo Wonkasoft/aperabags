@@ -200,16 +200,16 @@
 		margin: 15px auto;
 		display: flex;
 		align-items: center;
-		max-width: 380px;
+		max-width: 450px;
 		height: auto;
 		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 		.about-second-image {
-
+			width: 450px;
 		}
 
 		@include media-breakpoint-up( md ) {
-			height: 570px;
+			height: 525px;
 		}
 	}
 
