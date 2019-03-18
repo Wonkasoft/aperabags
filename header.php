@@ -65,7 +65,7 @@
 					) );
 				?>
 			</div><!-- .cart-mobile-col -->
-			<div class="col col-12 col-md-9 align-self-end align-self-lg-center">
+			<div class="col col-12 col-md-9">
 
 				<nav id="site-navigation" class="main-navigation">
 					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">

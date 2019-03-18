@@ -66,7 +66,7 @@
 	function stickyStatus() 
 	{	
 		// Get the header
-		var header = document.querySelector('.brand-nav-bar');
+		var header = document.querySelector('.site-header');
 		var shop_section = document.querySelector( '.shop-section' );
 
 		// Get the offset position of the navbar
