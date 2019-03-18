@@ -196,12 +196,13 @@
 		max-width: 450px;
 	}
 
-	.img-container {
+	div.img-container {
 		margin: 15px auto;
 		display: flex;
 		align-items: center;
 		max-width: 450px;
 		height: auto;
+		overflow: hidden;
 		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 		.about-second-image {
