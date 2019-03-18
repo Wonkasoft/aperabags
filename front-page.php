@@ -91,7 +91,7 @@ get_header();
 					</div><!-- .row -->
 					<div class="row">
 						<div class="col col-12 text-center">
-							<a href="/product-category/all-bags/" class="wonka-btn" target="_self"></a>
+							<a href="/product-category/all-bags/" class="wonka-btn" target="_self"><?php _e( __( 'Shop More' ) ) ?></a>
 						</div><!-- .col -->
 					</div><!-- .row -->
 				</div><!-- .col-12 -->
