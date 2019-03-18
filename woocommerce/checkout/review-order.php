@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <table class="shop_table woocommerce-checkout-review-order-table table table-striped table-hover">
-	<thead>
+	<thead class="thead-dark">
 		<tr>
 			<th scope="col" class="product-name"><?php _e( 'Product', 'woocommerce' ); ?></th>
 			<th scope="col" class="product-total"><?php _e( 'Total', 'woocommerce' ); ?></th>
