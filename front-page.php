@@ -89,6 +89,11 @@ get_header();
 							?>
 						</div><!-- .col-12 -->
 					</div><!-- .row -->
+					<div class="row">
+						<div class="col col-12 text-center">
+							<a href="/product-category/all-bags/" class="wonka-btn" target="_self"></a>
+						</div><!-- .col -->
+					</div><!-- .row -->
 				</div><!-- .col-12 -->
 			</section><!-- .shop-section -->
 		<?php endif; ?>
