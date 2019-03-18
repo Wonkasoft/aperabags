@@ -25,7 +25,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 	<?php do_action( 'woocommerce_before_cart_table' ); ?>
 
 	<table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents table table-striped table-hover" cellspacing="0">
-		<thead>
+		<thead class="thead-dark">
 			<tr>
 				<th scope="col" class="product-name" colspan="3"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
 				<th scope="col" class="product-price"><?php esc_html_e( 'Price', 'woocommerce' ); ?></th>
