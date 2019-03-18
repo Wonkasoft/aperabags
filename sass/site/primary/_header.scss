@@ -59,7 +59,7 @@
 }
 
 /* The sticky class is added to the header with JS when it reaches its scroll position */
-.sticky {
+.home .sticky {
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -70,7 +70,7 @@
 }
 
 /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
-.sticky + .content {
+.home .sticky + .content {
   	padding-top: 102px;
 }
 /*=====  End of header branding and navbar  ======*/
