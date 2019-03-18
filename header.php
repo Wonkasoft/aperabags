@@ -34,10 +34,10 @@
 			</div><!-- topbar-notice -->
 		<?php endif; ?>
 		<div class="row brand-nav-bar">
-			<div class="col col-8 col-md-2 offset-lg-2 align-self-start align-self-lg-center">
+			<div class="col col-6 col-md-3">
 				<div class="site-branding">
 					<?php
-					the_custom_logo();
+						the_custom_logo();
 					if ( is_front_page() && is_home() ) :
 						?>
 						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
@@ -54,7 +54,18 @@
 					<?php endif; ?>
 				</div><!-- .site-branding -->
 			</div> <!-- .col-4 -->
-			<div class="col col-12 col-md-5 offset-lg-1 align-self-end align-self-lg-center">
+			<div class="col col-5 d-md-none cart-mobile-col">
+				<?php
+					$count = WC()->cart->cart_contents_count;
+					wp_nav_menu( array(
+						'theme_location' 	=> 'menu-cart',
+						'menu_id'        	=> 'cart-menu-mobile',
+						'menu_class'        => 'wonka-cart-menu header-cart-menu',
+						'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s<span class="cart-contents-count wonka-badge badge">' . esc_html( $count ) . '</span></ul>',
+					) );
+				?>
+			</div><!-- .cart-mobile-col -->
+			<div class="col col-12 col-md-9 align-self-end align-self-lg-center">
 
 				<nav id="site-navigation" class="main-navigation">
 					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
@@ -64,28 +75,19 @@
 					</button>
 					<?php
 					wp_nav_menu( array(
-						'theme_location' => 'menu-primary',
-						'menu_id'        => 'primary-menu',
-						'menu_class'        => 'nav-menu header-menu',
+						'theme_location' 		=> 'menu-primary',
+						'menu_id'        		=> 'primary-menu',
+						'menu_class'        	=> 'nav-menu header-menu',
+					) );
+					wp_nav_menu( array(
+						'theme_location' 	=> 'menu-cart',
+						'menu_id'        	=> 'cart-menu-desktop',
+						'menu_class'        => 'wonka-cart-menu header-cart-menu d-none d-md-flex',
+						'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s<span class="cart-contents-count wonka-badge badge">' . esc_html( $count ) . '</span></ul>',
 					) );
 					?>
 				</nav><!-- #site-navigation -->
 			</div> <!-- .col-8 -->
-			<div class="col col-4 col-md-2 cart-column align-self-start align-self-lg-center">
-				<?php
-				wp_nav_menu( array(
-						'theme_location' => 'menu-cart',
-						'menu_id'        => 'cart-menu',
-						'menu_class'        => 'wonka-cart-menu header-cart-menu',
-					) );
-				$count = WC()->cart->cart_contents_count;
-				if ( $count > 0 ) {
-				        ?>
-				        <span class="cart-contents-count wonka-badge badge"><?php echo esc_html( $count ); ?></span>
-				        <?php
-				    }
-					?>
-			</div>
 		</div> <!-- .row -->
 	</header><!-- #masthead -->
 	

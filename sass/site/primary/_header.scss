@@ -28,10 +28,13 @@
 	margin-bottom: 15px;
 	height: 140px;
 
+
 	.brand-nav-bar {
+		margin: auto;
 		display: flex;
 		align-items: center;
-		justify-content: space-around;
+		justify-content: center;
+		max-width: 1200px;
 
 		.site-branding {
 
@@ -39,6 +42,8 @@
 				-webkit-filter: drop-shadow( 1px 1px 2px rgba(#000, .6 ));
 				filter: drop-shadow( 1px 1px 2px rgba(#000, .6 ) );
 				padding: 15px;
+				max-height: 105px;
+				width: auto;
 			}
 		}
 	}

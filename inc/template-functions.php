@@ -221,7 +221,6 @@ function the_mods_for_section( $section ) {
 }
 add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
 
-
 /*====================================================
 =            Customizing of Gravity forms            =
 ====================================================*/

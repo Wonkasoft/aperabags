@@ -19,6 +19,8 @@ defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_before_cart' ); ?>
 
+<div class="row wonka-cart-row">
+	<div class="col col-12 col-md-7">
 <form class="woocommerce-cart-form form-inline" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
 	<?php do_action( 'woocommerce_before_cart_table' ); ?>
 
@@ -150,7 +152,8 @@ do_action( 'woocommerce_before_cart' ); ?>
 	</table>
 	<?php do_action( 'woocommerce_after_cart_table' ); ?>
 </form>
-
+</div>
+<div class="col col-12 col-md-5">
 <div class="cart-collaterals">
 	<?php
 		/**
@@ -161,6 +164,8 @@ do_action( 'woocommerce_before_cart' ); ?>
 		 */
 		do_action( 'woocommerce_cart_collaterals' );
 	?>
-</div>
+</div><!-- .cart-collaterals -->
+</div><!-- .col -->
+</div><!-- .row -->
 
 <?php do_action( 'woocommerce_after_cart' ); ?>

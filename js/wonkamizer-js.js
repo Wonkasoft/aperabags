@@ -162,12 +162,10 @@
 			slide_adjustment();
 			
 			// $( '.top-page-slider' ).slick({
-			//   dots: true,
-			//   infinite: true,
-			//   adaptiveHeight: false,
-			//   speed: 300,
 			//   slidesToShow: 1,
 			//   slidesToScroll: 1,
+			//   autoplay: true,
+			//   autoplaySpeed: 2000,
 			// });
 		}
 
