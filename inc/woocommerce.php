@@ -334,7 +334,7 @@ function wonka_cart_cross_sells() {
 	add_filter( 'woocommerce_cross_sells_total', function() {
 		return 3;
 	} );
-	add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
 }
 
-add_action( 'woocommerce_after_cart', 'wonka_cart_cross_sells', 15 );
+add_action( 'woocommerce_after_cart', 'wonka_cart_cross_sells', 10 );
+add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
