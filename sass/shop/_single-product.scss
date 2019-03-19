@@ -213,7 +213,6 @@
 					width: 100%;
 				}
 
-
 				table.variations {
 					flex: 1 100%;
 				}
@@ -241,6 +240,13 @@
 			div.wcppec-checkout-buttons {
 				width: 100%;
 			}
+		}
+
+		div.woocommerce-variation-add-to-cart {
+			display: flex;
+			align-items: flex-start;
+			flex-direction: column;
+
 		}
 
 		div.woocommerce-tabs {
