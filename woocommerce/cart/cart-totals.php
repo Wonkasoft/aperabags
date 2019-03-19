@@ -93,7 +93,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php if ( wc_coupons_enabled() ) : ?>
 			<tr>
-				<td colspan="2">
+				<th colspan="2">
 					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 						<div class="panel panel-default">
 							<div class="panel-heading" role="tab" id="headingOne">
@@ -105,7 +105,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 							</div>
 							<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-								<div class="panel-body"><div class="coupon form-group form-inline">
+								<div class="panel-body"><div class="coupon form-group">
 									<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
 									<?php do_action( 'woocommerce_cart_coupon' ); ?>
 								</div>
@@ -113,7 +113,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 					</div>
 				</div>
-			</td>
+			</th>
 		</tr>
 	<?php endif; ?>
 		<?php do_action( 'woocommerce_cart_totals_before_order_total' ); ?>
