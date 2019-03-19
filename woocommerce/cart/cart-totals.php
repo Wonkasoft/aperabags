@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<thead class="thead-dark">
 			<tr>
 				<th scope="col" colspan="2">
-					<?php _e( 'Cart totals', 'woocommerce' ); ?>
+					<?php _e( 'Order Summary', 'woocommerce' ); ?>
 				</th>
 			</tr>
 		</thead>

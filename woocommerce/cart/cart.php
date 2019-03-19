@@ -17,6 +17,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+$count = WC()->cart->cart_contents_count;
+
 do_action( 'woocommerce_before_cart' ); ?>
 
 <div class="row wonka-cart-row">
@@ -27,13 +29,16 @@ do_action( 'woocommerce_before_cart' ); ?>
 	<table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents table table-striped table-hover" cellspacing="0">
 		<thead class="thead-dark">
 			<tr>
+				<th colspan="6"><?php _e('Your Cart' . $count , 'woocommerce'); ?></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
 				<th scope="col" class="product-name" colspan="3"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
 				<th scope="col" class="product-price"><?php esc_html_e( 'Price', 'woocommerce' ); ?></th>
 				<th scope="col" class="product-quantity"><?php esc_html_e( 'Quantity', 'woocommerce' ); ?></th>
 				<th scope="col" class="product-subtotal"><?php esc_html_e( 'Total', 'woocommerce' ); ?></th>
 			</tr>
-		</thead>
-		<tbody>
 			<?php do_action( 'woocommerce_before_cart_contents' ); ?>
 
 			<?php

@@ -102,7 +102,7 @@
 					tr {
 
 						th {
-							text-align: right;
+							text-align: left;
 						}
 
 						td {
@@ -126,5 +126,12 @@
 			}
 		}
 		/*=====  End of This is the totals on the cart page  ======*/
+	}
+}
+
+.woocommerce-cart {
+
+	.entry-title {
+		display: none;
 	}
 }
