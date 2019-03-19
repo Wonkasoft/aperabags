@@ -101,7 +101,15 @@
 
 			a.wonka-btn {
 				position:relative;
-				float: right;
+				display: inline-block;
+				margin: 5px auto;
+				width: 100%;
+				text-align: center;
+			}
+
+			#pay_with_amazon {
+				margin: 8px auto;
+				text-align: center;
 			}
 		}
 		/*=====  End of This is the totals on the cart page  ======*/

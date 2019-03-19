@@ -67,24 +67,62 @@
 	{	
 		// Get the header
 		var header = document.querySelector('.site-header');
+		var header_notice = document.querySelector('.topbar-notice');
 		var shop_section = document.querySelector( '.shop-section' );
+		var admin_height;
 
 		// Get the offset position of the navbar
 		var sticky = shop_section.offsetTop;
-		
-		 if (window.pageYOffset > sticky && window.innerWidth > 782 ) 
-		 {
-		   	header.classList.add("sticky");
-		   	if ( document.querySelector( '#wpadminbar' ) ) 
-		   	{
-		   		var admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
-		   		document.querySelector( '.sticky' ).style.top = admin_height + 'px';
-		   	}
-		 } 
-		 else 
-		 {
-		   	header.classList.remove("sticky");
-		 }
+
+	   	if ( document.querySelector( '#wpadminbar' ) ) 
+	   	{
+	   		admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+	   		header_notice.style.position = 'fixed';
+	   		header_notice.style.top = admin_height + 'px';
+	   	}
+
+		if ( window.pageYOffset > header.offsetHeight - header_notice.offsetHeight && window.innerWidth > 782 && window.pageYOffset < sticky ) 
+		{
+			header.style.height = header_notice.offsetHeight + 'px';
+		}
+
+		if ( window.pageYOffset > sticky && window.innerWidth > 782 ) 
+		{
+			header.classList.add( 'sticky' );
+			header_notice.style.position = 'absolute';
+	   		header_notice.style.top = 0;
+			document.querySelector( '.sticky' ).style.top = admin_height + 'px';
+			if ( window.pageYOffset > sticky && header.offsetHeight == header_notice.offsetHeight ) 
+			{
+				setTimeout( function( header ) 
+				{
+					header.style.height = '120px';
+					header.style.background = '#646371';
+				}, 120, header );
+			}
+		} 
+		else 
+		{
+
+			header.style.height = header_notice.offsetHeight + 'px';
+			header.style.background = 'transparent';
+			setTimeout( function( header, header_notice ) 
+			{
+				if ( document.querySelector( '#wpadminbar' ) ) 
+				{
+					admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+					header_notice.style.position = 'fixed';
+					header_notice.style.top = admin_height + 'px';
+				}
+				header.classList.remove( 'sticky' );
+			}, 120, header, header_notice );
+
+		}
+
+		if ( window.pageYOffset == 0 ) 
+		{
+			header.removeAttribute( 'style' );
+		}
 	}
 
 	function stickySummary() 
@@ -164,12 +202,12 @@
 		{
 			slide_adjustment();
 			
-			// $( '.top-page-slider' ).slick({
-			//   slidesToShow: 1,
-			//   slidesToScroll: 1,
-			//   autoplay: true,
-			//   autoplaySpeed: 2000,
-			// });
+			$( '.top-page-slider' ).slick({
+			  slidesToShow: 1,
+			  slidesToScroll: 1,
+			  autoplay: true,
+			  autoplaySpeed: 7000,
+			});
 		}
 
 		footer_adjustment();

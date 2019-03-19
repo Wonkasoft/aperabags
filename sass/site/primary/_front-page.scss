@@ -4,22 +4,14 @@
 
 /*----------  Header Slider  ----------*/
 .header-slider-section {
+	position: relative;
 	height: 650px;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-	.slider-slide {
-		width: 100%;
-		height: 100%;
-	}
-	.top-page-slider {
-		height: 100%;
-		width: 100%;
-	}
-
 	.top-page-slide {
-		background-position: center 0;
+		display: none;
+		background-position: center;
 		background-size: cover;
-		background-attachment: fixed;
 		background-repeat: no-repeat;
 		width: 100%;
 		height: 100%;
@@ -61,6 +53,35 @@
 			}	
 		}
 	}
+
+	.top-page-slider {
+		position: relative;
+		height: 100%;
+		width: 100%;
+
+		.slick-list {
+			position: relative;
+			height: 100%;
+
+			.slick-track {
+				height: 100%;
+				
+				.top-page-slide {
+					display: block;
+				}
+			}
+		}
+
+		.slider-slide {
+			position: relative;
+			width: 100%;
+			height: 100%;
+
+			&:first-child .top-page-slide {
+				display: block;
+			}
+		}
+	}
 }
 /*----------  End Header Slider  ----------*/
 
@@ -70,7 +91,7 @@
 	background-blend-mode: screen;
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: center center;
+	background-position: center;
 	padding: 15px 0;
 
 	.star-rating {
@@ -85,7 +106,7 @@
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
 	.cta-section-slider {
-		background-position: center 0;
+		background-position: center;
 		background-size: cover;
 		background-attachment: fixed;
 		background-repeat: no-repeat;
