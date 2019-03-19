@@ -218,11 +218,11 @@
 				}
 
 				div.single_variation_wrap {
-					flex: 1 100%;
 					margin: 15px auto;
 					display: flex;
-				    align-items: center;
-				    justify-content: flex-end;
+					flex-direction: column;
+				    align-items: flex-start;
+				    width: 100%;
 
 				    div.woocommerce-variation-availability {
 				    	flex: 1 100%;
@@ -231,8 +231,8 @@
 					div.woocommerce-variation-add-to-cart {
 						flex: 1 100%;
 						display: flex;
-						align-items: center;
-						justify-content: center;
+						flex-direction: column;
+						align-items: flex-start;
 					}
 				}
 			}
@@ -240,13 +240,6 @@
 			div.wcppec-checkout-buttons {
 				width: 100%;
 			}
-		}
-
-		div.woocommerce-variation-add-to-cart {
-			display: flex;
-			align-items: flex-start;
-			flex-direction: column;
-
 		}
 
 		div.woocommerce-tabs {
