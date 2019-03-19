@@ -8,7 +8,7 @@ form.cart {
 	justify-content: flex-end;
 
 	div.quantity {
-		width: 75px;
+		width: 60px;
 
 		input[type=number] {
 			padding-right: 3px;
@@ -17,6 +17,12 @@ form.cart {
 	}
 
 	button.wonka-btn {
-		margin-left: 5px;
+		margin: 8px auto;
+		text-align: center;
+		width: 100%;
+	}
+
+	div.wcppec-checkout-buttons {
+		width: 100%;
 	}
 }
