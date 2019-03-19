@@ -342,12 +342,26 @@ add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
 function wonka_cart_coupon_to_totals() {
 	ob_start();
 	if ( wc_coupons_enabled() ) : ?>
-		<div class="coupon form-group">
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		  <div class="panel panel-default">
+		      <div class="panel-heading" role="tab" id="headingOne">
+		           <h4 class="panel-title">
+		      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+		        Add Promo Code (Optional)
+		      </a>
+		    </h4>
+
+		      </div>
+		      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+		          <div class="panel-body"><div class="coupon form-group">
 			<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
 			<?php do_action( 'woocommerce_cart_coupon' ); ?>
 		</div>
+	</div>
+		      </div>
+		  </div>
 	<?php endif;
-
-	return ob_get_clean();
+	ob_get_clean();
+	return;
 }
 add_action( 'woocommerce_cart_totals_before_order_total', 'wonka_cart_coupon_to_totals', 15 );
