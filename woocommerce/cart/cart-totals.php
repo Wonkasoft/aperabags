@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<table cellspacing="0" class="shop_table shop_table_responsive table table-hover">
 		<thead class="thead-dark">
 			<tr>
-				<th scope="col">
+				<th scope="col" colspan="2">
 					<h2><?php _e( 'Cart totals', 'woocommerce' ); ?></h2>
 				</th>
 			</tr>

@@ -5,6 +5,7 @@ footer#colophon {
 	padding-top: 15px;
 	background: $footer__background;
 	color: #bfc0c2;
+	z-index: 999;
 	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 	a {
