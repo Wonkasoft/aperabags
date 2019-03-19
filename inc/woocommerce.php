@@ -338,3 +338,13 @@ function wonka_cart_cross_sells() {
 
 add_action( 'woocommerce_after_cart', 'wonka_cart_cross_sells', 10 );
 add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
+
+function wonka_cart_coupon_to_totals() {
+	if ( wc_coupons_enabled() ) : ?>
+		<div class="coupon form-group">
+			<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
+			<?php do_action( 'woocommerce_cart_coupon' ); ?>
+		</div>
+	<?php endif;
+}
+add_action( 'woocommerce_cart_totals_before_order_total', 'wonka_cart_coupon_to_totals', 10 );
