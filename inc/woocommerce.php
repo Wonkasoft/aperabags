@@ -328,13 +328,13 @@ add_action( 'woocommerce_checkout_after_order_review', 'woocommerce_checkout_cou
 
 function wonka_cart_cross_sells() {
 
-	add_action( 'woocommerce_after_cart_table', 'woocommerce_cross_sell_display' );
+	add_filter( 'woocommerce_cross_sells_columns', function() {
+		return 3;
+	} );
+	add_filter( 'woocommerce_cross_sells_total', function() {
+		return 3;
+	} );
+	add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
 }
-add_filter( 'woocommerce_cross_sells_columns', function() {
-	return 3;
-} );
-add_filter( 'woocommerce_cross_sells_total', function() {
-	return 3;
-} );
 
 add_action( 'woocommerce_after_cart', 'wonka_cart_cross_sells', 15 );
