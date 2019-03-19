@@ -1,28 +1,3 @@
 @import "buttons";
 
 @import "fields";
-
-form.cart {
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-
-	div.quantity {
-		width: 60px;
-
-		input[type=number] {
-			padding-right: 3px;
-		}
-
-	}
-
-	button.wonka-btn {
-		margin: 8px auto;
-		text-align: center;
-		width: 100%;
-	}
-
-	div.wcppec-checkout-buttons {
-		width: 100%;
-	}
-}

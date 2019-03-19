@@ -198,6 +198,22 @@
 				align-items: flex-start;
 				width: 100%;
 
+				div.quantity {
+					width: 60px;
+
+					input[type=number] {
+						padding-right: 3px;
+					}
+
+				}
+
+				button.wonka-btn {
+					margin: 8px auto;
+					text-align: center;
+					width: 100%;
+				}
+
+
 				table.variations {
 					flex: 1 100%;
 				}
@@ -220,6 +236,10 @@
 						justify-content: center;
 					}
 				}
+			}
+			
+			div.wcppec-checkout-buttons {
+				width: 100%;
 			}
 		}
 
