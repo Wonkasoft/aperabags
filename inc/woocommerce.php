@@ -345,6 +345,6 @@ add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
 
 
 function wonka_add_continue_shopping_notice_to_cart() {
-	echo sprintf( '<a href="%s" tabindex="1" class="button wc-forward">%s</a> %s', esc_url( '/shop' ), esc_html__( 'Continue shopping', 'woocommerce' ) );
+	echo sprintf( __( '<a href="%s" tabindex="1" class="button wc-forward">%s</a> %s', 'aperabags' ), esc_url( '/shop' ), esc_html__( 'Continue shopping', 'woocommerce' ) );
 }
 add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart', 10 );
