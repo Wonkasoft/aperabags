@@ -213,14 +213,14 @@ p.stars {
 .woocommerce-noreviews,
 p.no-comments {
 	@include clearfix;
-	background-color: #dddddd;
+	background-color: $woocommerce__color-success;
 	clear: both;
 }
 
 .woocommerce-info,
 .woocommerce-noreviews,
 p.no-comments {
-	background-color: $woocommerce__color-info;
+	background-color: #dddddd;
 }
 
 .woocommerce-error {
