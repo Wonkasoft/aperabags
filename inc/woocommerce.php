@@ -323,6 +323,9 @@ function wonka_product_tabs_retitle( $tabs ) {
 
 add_filter( 'woocommerce_product_tabs', 'wonka_product_tabs_retitle', 98 );
 
+remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+add_action( 'woocommerce_checkout_after_order_review', 'woocommerce_checkout_coupon_form' );
+
 function wonka_cart_cross_sells() {
 	add_filter( 'woocommerce_cross_sells_columns', function() {
 		return 3;
@@ -331,7 +334,7 @@ function wonka_cart_cross_sells() {
 		return 3;
 	} );
 
-	do_action( 'woocommerce_after_cart_table', 'woocommerce_cross_sell_display' );
+	add_action( 'woocommerce_after_cart_table', 'woocommerce_cross_sell_display' );
 }
 
-add_action( 'woocommerce_after_cart', 'wonka_cart_cross_sells', 10 );
+add_action( 'woocommerce_after_cart', 'wonka_cart_cross_sells', 15 );
