@@ -106,8 +106,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 					</div>
 				</th>
-			</tr>
-			<tr>
 				<td colspan="2">
 					<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 						<div class="panel-body">
