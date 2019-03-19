@@ -326,6 +326,10 @@ add_filter( 'woocommerce_product_tabs', 'wonka_product_tabs_retitle', 98 );
 remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
 add_action( 'woocommerce_checkout_after_order_review', 'woocommerce_checkout_coupon_form' );
 
+/**
+ * This is for moving the cross sells items on the cart page setting the display of how many items and columns to show
+ * 
+ */
 function wonka_cart_cross_sells() {
 
 	add_filter( 'woocommerce_cross_sells_columns', function() {
@@ -338,3 +342,9 @@ function wonka_cart_cross_sells() {
 
 add_action( 'woocommerce_after_cart', 'wonka_cart_cross_sells', 10 );
 add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
+
+
+function wonka_add_continue_shopping_notice_to_cart() {
+	_e( '<a href="%s" tabindex="1" class="button wc-forward">%s</a> %s', esc_url( $return_to ), esc_html__( 'Continue shopping', 'woocommerce' ) );
+}
+add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart', 10 );

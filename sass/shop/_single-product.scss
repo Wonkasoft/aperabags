@@ -244,12 +244,18 @@
 							border-radius: 100px;
 							width: 100%;
 						}
+
 					}
 				}
 			}
 			
 			div.wcppec-checkout-buttons {
 				width: 100%;
+
+				.paypal-button.paypal-button-number-0.paypal-button-layout-vertical.paypal-button-shape-rect.paypal-button-branding-branded.paypal-button-number-multiple.paypal-button-env-sandbox.paypal-should-focus.paypal-button-label-paypal.paypal-button-color-gold.paypal-button-logo-color-blue, 
+				.paypal-button.paypal-button-number-1.paypal-button-layout-vertical.paypal-button-shape-rect.paypal-button-branding-branded.paypal-button-number-multiple.paypal-button-env-sandbox.paypal-should-focus.paypal-button-label-credit.paypal-button-color-darkblue.paypal-button-logo-color-white {
+					border-radius: 100px;
+				}
 			}
 		}
 
