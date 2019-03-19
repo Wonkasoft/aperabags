@@ -93,7 +93,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php if ( wc_coupons_enabled() ) : ?>
 			<tr>
-				<th colspan="2">
+				<th>
 					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 						<div class="panel panel-default">
 							<div class="panel-heading" role="tab" id="headingOne">
@@ -106,7 +106,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 					</div>
 				</th>
-				<td colspan="2">
+				<td>
 					<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 						<div class="panel-body">
 							<div class="coupon form-group">
