@@ -29,7 +29,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 	<table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents table table-striped table-hover" cellspacing="0">
 		<thead class="thead-dark">
 			<tr>
-				<th colspan="6"><?php _e('Your Cart' . $count , 'woocommerce'); ?></th>
+				<th colspan="6"><?php _e('Your Cart (' . $count . ')' , 'woocommerce'); ?></th>
 			</tr>
 		</thead>
 		<tbody>

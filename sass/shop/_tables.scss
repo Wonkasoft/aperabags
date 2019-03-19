@@ -82,6 +82,13 @@ table.shop_table_responsive {
 	}
 }
 
+table {
+
+	th {
+		text-transform: uppercase;
+	}
+}
+
 @media screen and (min-width: 48em) {
 	table.shop_table_responsive {
 		thead {
