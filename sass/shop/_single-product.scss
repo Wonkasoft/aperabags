@@ -188,6 +188,10 @@
 				    align-items: center;
 				    justify-content: space-between;
 				    width: 58%;
+
+				    a.woocommerce-review-link {
+				    	display: none;
+				    }
 				}
 			}
 
@@ -233,6 +237,12 @@
 						display: flex;
 						flex-direction: column;
 						align-items: flex-start;
+
+						button.wonka-btn {
+							margin: 8px auto;
+							text-align: center;
+							width: 100%;
+						}
 					}
 				}
 			}
