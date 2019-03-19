@@ -95,7 +95,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<tr class="cart-promo">
 				<th colspan="2">
 					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-						<div class="panel panel-default" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="activate-panel">
+						<div class="panel panel-default activate-panel" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
 							<div class="panel-heading" role="tab" id="headingOne">
 								<span class="panel-title">
 										Add Promo Code (Optional)
