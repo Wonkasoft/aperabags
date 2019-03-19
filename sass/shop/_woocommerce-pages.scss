@@ -132,9 +132,8 @@
 									&:after {
 										content: "+";
 										display: inline-block;
-										height: 100%;
-										width: 25px;
 										@include font-size( 1.6 );
+										@include prefix( transition, all .3s ease-in-out, o moz webkit );
 									}
 								}
 
