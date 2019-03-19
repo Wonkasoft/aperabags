@@ -340,7 +340,7 @@ add_action( 'woocommerce_after_cart', 'wonka_cart_cross_sells', 10 );
 add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
 
 function wonka_cart_coupon_to_totals() {
-	ob_start();
+
 	if ( wc_coupons_enabled() ) : ?>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		  <div class="panel panel-default">
@@ -361,7 +361,6 @@ function wonka_cart_coupon_to_totals() {
 		      </div>
 		  </div>
 	<?php endif;
-	ob_get_clean();
 	return;
 }
 add_action( 'woocommerce_cart_totals_before_order_total', 'wonka_cart_coupon_to_totals', 15 );
