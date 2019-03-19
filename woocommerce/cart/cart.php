@@ -161,6 +161,10 @@ do_action( 'woocommerce_before_cart' ); ?>
 <div class="col col-12 col-md-4">
 <div class="cart-collaterals">
 	<?php
+
+		// Remove Cross Sells From Default Position 
+		// moving to after cart in woocommerce.php file
+		remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
 		/**
 		 * Cart collaterals hook.
 		 *
