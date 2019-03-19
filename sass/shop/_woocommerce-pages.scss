@@ -9,8 +9,9 @@
 		.woocommerce-notice,
 		.woocommerce-info {
 			margin: 15px 0;
-			padding: 4px 15px;
+			padding: 15px;
 			color: #333333;
+			@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 			a {
 				color: rgba( 0, 0, 0, .8 );

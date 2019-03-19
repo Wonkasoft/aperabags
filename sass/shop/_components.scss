@@ -213,7 +213,7 @@ p.stars {
 .woocommerce-noreviews,
 p.no-comments {
 	@include clearfix;
-	background-color: $woocommerce__color-success;
+	background-color: #dddddd;
 	clear: both;
 }
 
