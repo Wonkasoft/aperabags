@@ -97,16 +97,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 						<div class="panel panel-default">
 							<div class="panel-heading" role="tab" id="headingOne">
-								<h4 class="panel-title">
+								<span class="panel-title">
 									<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
 										Add Promo Code (Optional)
 									</a>
-								</h4>
+								</span>
 
 							</div>
 							<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 								<div class="panel-body"><div class="coupon form-group form-inline">
-									<label for="coupon_code" class="sr-only"><?php esc_html__( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr__( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr__( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr__( 'Apply coupon', 'woocommerce' ); ?></button>
+									<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
 									<?php do_action( 'woocommerce_cart_coupon' ); ?>
 								</div>
 							</div>
