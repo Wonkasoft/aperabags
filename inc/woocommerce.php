@@ -354,7 +354,7 @@ function wonka_cart_coupon_to_totals() {
 		      </div>
 		      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 		          <div class="panel-body"><div class="coupon form-group">
-			<label for="coupon_code" class="sr-only"><?php esc_html__( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr__( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr__( 'Apply coupon', 'woocommerce' ); ?></button>
+			<label for="coupon_code" class="sr-only"><?php esc_html__( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr__( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr__( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr__( 'Apply coupon', 'woocommerce' ); ?></button>
 			<?php do_action( 'woocommerce_cart_coupon' ); ?>
 		</div>
 	</div>
@@ -363,4 +363,4 @@ function wonka_cart_coupon_to_totals() {
 	<?php endif;
 	return;
 }
-add_action( 'woocommerce_cart_totals_before_order_total', 'wonka_cart_coupon_to_totals', 15 );
+add_action( 'woocommerce_cart_totals_before_order_total', 'wonka_cart_coupon_to_totals', 10 );
