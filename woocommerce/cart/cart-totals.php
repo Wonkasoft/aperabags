@@ -102,20 +102,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 										Add Promo Code (Optional)
 									</a>
 								</span>
-
-							</div>
-							<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-								<div class="panel-body"><div class="coupon form-group">
-									<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
-									<?php do_action( 'woocommerce_cart_coupon' ); ?>
-								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</th>
-		</tr>
-	<?php endif; ?>
+				</th>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+						<div class="panel-body">
+							<div class="coupon form-group">
+								<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
+								<?php do_action( 'woocommerce_cart_coupon' ); ?>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		<?php endif; ?>
 		<?php do_action( 'woocommerce_cart_totals_before_order_total' ); ?>
 
 		<tr class="order-total">
