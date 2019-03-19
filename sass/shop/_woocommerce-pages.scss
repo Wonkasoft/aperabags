@@ -140,8 +140,11 @@
 
 								&[aria-expanded=true] {
 
-									&:after {
-										content: "-";
+									.panel-title {
+
+										&:after {
+											content: "-";
+										}
 									}
 								}
 							}
