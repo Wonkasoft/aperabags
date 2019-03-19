@@ -87,14 +87,27 @@
 			table {
 				padding: 0 15px;
 
-				tr {
+				thead {
 
-					th {
-						text-align: right;
+					tr {
+
+						th {
+							text-align: center;
+						}
 					}
+				}
 
-					td {
-						text-align: right;
+				tbody {
+
+					tr {
+
+						th {
+							text-align: right;
+						}
+
+						td {
+							text-align: right;
+						}
 					}
 				}
 			}
