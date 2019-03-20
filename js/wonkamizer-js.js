@@ -80,6 +80,11 @@
 	   		header_notice.style.position = 'fixed';
 	   		header_notice.style.top = admin_height + 'px';
 	   	}
+	   	else
+	   	{
+	   		header_notice.style.position = 'fixed';
+	   		header_notice.style.top = 0;
+	   	}
 
 		if ( window.pageYOffset > header.offsetHeight - header_notice.offsetHeight && window.innerWidth > 782 && window.pageYOffset < sticky ) 
 		{
@@ -103,7 +108,6 @@
 		} 
 		else 
 		{
-
 			header.style.height = header_notice.offsetHeight + 'px';
 			header.style.background = 'transparent';
 			setTimeout( function( header, header_notice ) 
@@ -113,6 +117,11 @@
 					admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
 					header_notice.style.position = 'fixed';
 					header_notice.style.top = admin_height + 'px';
+				}
+				else
+				{
+					header_notice.style.position = 'fixed';
+					header_notice.style.top = 0;
 				}
 				header.classList.remove( 'sticky' );
 			}, 120, header, header_notice );
@@ -198,19 +207,51 @@
 		}
 		/*=====  End of For product summmary  ======*/
 
+		/*================================================================
+		=            For setting up sliders on the front page            =
+		================================================================*/
 		if ( document.querySelector( '.header-slider-section' ) ) 
 		{
 			slide_adjustment();
 			
-			$( '.top-page-slider' ).slick({
+			$( '.top-page-slider-wrap' ).slick({
 			  slidesToShow: 1,
 			  slidesToScroll: 1,
 			  autoplay: true,
 			  autoplaySpeed: 7000,
+			  fade: true,
+			  dots: true,
+			  appendArrows: document.querySelector( '.top-page-slider-wrap>.slick-list' ),
+			  appendDots: document.querySelector( '.top-page-slider-wrap>.slick-list' ),
+			  prevArrow: '<button class="slick-prev" type="button"></button>',
+			  nextArrow: '<button class="slick-next" type="button"></button>',
 			});
 		}
 
+		if ( document.querySelector( '.desirable-slider-section' ) ) 
+		{
+			
+			$( '.cta-section-slider-wrap' ).slick({
+			  slidesToShow: 1,
+			  slidesToScroll: 1,
+			  autoplay: true,
+			  autoplaySpeed: 7000,
+			  fade: true,
+			  dots: true,
+			  appendArrows: document.querySelector( '.cta-section-slider-wrap>.slick-list' ),
+			  appendDots: document.querySelector( '.cta-section-slider-wrap>.slick-list' ),
+			  prevArrow: '<button class="slick-prev" type="button"></button>',
+			  nextArrow: '<button class="slick-next" type="button"></button>',
+			});
+		}
+		/*=====  End of For setting up sliders on the front page  ======*/
+		
+		/*===========================================================================================
+		=            This makes the adjustment of space for the footer to show correctly            =
+		===========================================================================================*/
 		footer_adjustment();
+		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
+		
 
 
 

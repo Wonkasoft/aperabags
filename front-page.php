@@ -26,14 +26,13 @@ get_header();
 		/* This checks for slider object in order to parse slider section */
 		if ( !empty( $top_slider ) ) : ?>
 			<section class="row header-slider-section">
-				<div class="top-page-slider">
+				<div class="top-page-slider-wrap">
 				<?php 
 				/* Foreach loop to build slider according to slides entered in the customizer */
 				foreach ( $top_slider->slides as $slide ) :
 					
 					/* Checks for an img set in the slide object */
 					if ( !empty( $slide->slide_img ) ) : ?>
-						<div class="slider-slide">
 						<div class="top-page-slide" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 
 							<?php 
@@ -56,7 +55,6 @@ get_header();
 							<?php endif; ?>
 
 						</div><!-- .top-page-slide -->
-					</div><!-- .slider-slide -->
 					<?php endif; ?>
 
 				<?php endforeach; ?>
@@ -101,13 +99,14 @@ get_header();
 			$cta_slider = get_section_mods( 'cta' );
 			if ( !empty( $cta_slider ) ) : ?>
 				<section class="row desirable-slider-section">
+					<div class="cta-section-slider-wrap">
 					<?php 
 					/* Foreach loop to build slider according to slides entered in the customizer */
 					foreach ( $cta_slider->slides as $slide ) :
 						
 						/* Checks for an img set in the slide object */
 						if ( !empty( $slide->slide_img ) ) : ?>
-							<div class="cta-section-slider" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+							<div class="cta-section-slide" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 
 								<?php 
 								/* Checks for an message set in the slide object */
@@ -131,7 +130,7 @@ get_header();
 							</div><!-- .col-12 -->
 						<?php endif; ?>
 					<?php endforeach; ?>
-
+					</div><!-- .cta-section-slider-wrap -->
 				</section><!-- .desirable-slider-section -->
 		<?php endif; ?>
 		<?php do_action( 'get_mods_before_section', 'cause' );

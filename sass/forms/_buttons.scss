@@ -21,7 +21,7 @@ input[type="submit"] {
 	}
 
 	&:hover {
-		background: #238cfe;
+		background: #FFDE98;
 		color: rgba(255, 255, 255, .8);
 		@include prefix( text-shadow, 1px 1px 4px rgba(#000, .6 ), o moz webkit );
 	}
