@@ -30,13 +30,11 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 
 	<p><?php esc_html_e( 'If you have a coupon code, please apply it below.', 'woocommerce' ); ?></p>
 
-	<p class="form-row form-row-first form-inline">
+	<div class="form-row form-row-first form-inline form-group">
 		<input type="text" name="coupon_code" class="input-text form-control" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" id="coupon_code" value="" />
-	</p>
-
-	<p class="form-row form-row-last form-inline">
 		<button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_html_e( 'Apply coupon', 'woocommerce' ); ?></button>
-	</p>
+	</div>
+
 
 	<div class="clear"></div>
 </form>
