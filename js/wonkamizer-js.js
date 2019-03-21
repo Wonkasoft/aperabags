@@ -164,7 +164,6 @@
 
 	function thumbnail_scroll(e)
 	{
-		e.preventDefault();
 		var control_list = document.querySelector( '.flex-control-nav' ),
 		win_y = window.pageYOffset,
 		control_wrapper,
@@ -193,29 +192,33 @@
 			control_wrapper.appendChild( control_list );
 		}
 
-		if ( window.pageYOffset > img_area_top && scroll_direction == 'scrolled down' && flex_active.parentElement.nextElementSibling != null ) 
+		if ( window.pageYOffset > img_area_top && scroll_direction == 'scrolled down' ) 
 		{
 			this_body.scrollTop = img_area_top;
 			this_html.scrollTop = img_area_top;
 			if ( flex_active.parentElement.nextElementSibling != null && one_click ) 
 			{
 				one_click = false;
-				thumbnail_counter++;
-				flex_active.parentElement.nextElementSibling.firstElementChild.click();
-				one_click = true;
+				setTimeout( function() {
+					thumbnail_counter++;
+					flex_active.parentElement.nextElementSibling.firstElementChild.click();
+					one_click = true;
+				}, 500);
 			}
 		}
 
-		if ( window.pageYOffset < img_area_top && scroll_direction == 'scrolled up' && flex_active.parentElement.previousElementSibling != null )
+		if ( window.pageYOffset < img_area_top && scroll_direction == 'scrolled up' )
 		{
 			this_body.scrollTop = img_area_top;
 			this_html.scrollTop = img_area_top;
 			if ( flex_active.parentElement.previousElementSibling != null && one_click ) 
 			{
 				one_click = false;
-				thumbnail_counter--;
-				flex_active.parentElement.previousElementSibling.firstElementChild.click();
-				one_click = true;
+				setTimeout( function() {
+					thumbnail_counter--;
+					flex_active.parentElement.previousElementSibling.firstElementChild.click();
+					one_click = true;
+				}, 500);
 			}
 		}
 	}
