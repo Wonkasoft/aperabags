@@ -357,8 +357,20 @@ add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 11
 
 function wonka_checkout_wrap_after( $checkout ) {
 	echo '</div><!-- .col -->';
-	echo '<div class="col col-12 col-md-4">';
-	do_action( 'woocommerce_checkout_order_review' );
+	?>
+	<div class="col col-12 col-md-4">
+		<h3 id="order_review_heading"><?php esc_html_e( 'Your order', 'woocommerce' ); ?></h3>
+
+		<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
+
+		<div id="order_review" class="woocommerce-checkout-review-order">
+			<?php do_action( 'woocommerce_checkout_order_review' ); ?>
+		</div>
+
+		<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
+	</div><!-- .col-12 -->
+
+	<?php
 	echo '</div><!-- .col -->';
 	echo '</div><!-- .row -->';
 }
