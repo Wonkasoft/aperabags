@@ -359,7 +359,7 @@ function wonka_checkout_wrap_after( $checkout ) {
 	?>
 	</div><!-- .col -->
 	<div class="col col-12 col-md-4">
-		<table class="shop_table woocommerce-checkout-review-order-table table table-striped table-hover">
+		<table class="table table-striped table-hover">
 			<thead class="thead-dark">
 				<tr scope="row">
 					<th colspan="2"><?php _e( 'Order Details', 'woocommerce' ); ?></th>
