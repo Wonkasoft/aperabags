@@ -347,3 +347,9 @@ function wonka_add_continue_shopping_notice_to_cart() {
 	echo $shopping;
 }
 add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart' );
+
+function wonka_checkout_wrap( $checkout ) {
+	var_dump( 'Testng' );
+}
+
+add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap', 1, 1 );
