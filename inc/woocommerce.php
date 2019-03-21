@@ -369,8 +369,6 @@ function wonka_checkout_wrap_after( $checkout ) {
 
 		<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
 	</div><!-- .col-12 -->
-
-	</div><!-- .col -->
 	</div><!-- .row -->
 	<?php
 }
