@@ -164,6 +164,7 @@
 
 	function thumbnail_scroll(e)
 	{
+		e.preventDefault();
 		var control_list = document.querySelector( '.flex-control-nav' ),
 		win_y = window.pageYOffset,
 		control_wrapper,
