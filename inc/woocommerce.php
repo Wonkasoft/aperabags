@@ -349,18 +349,26 @@ function wonka_add_continue_shopping_notice_to_cart() {
 add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart' );
 
 function wonka_checkout_wrap_before( $checkout ) {
-	_e( '<div class="row wonka-checkout-row">');
-	_e( '<div class="col col-12 col-md-8">');
+	$output = '';
+	
+	$output .= '<div class="row wonka-checkout-row">';
+	$output .= '<div class="col col-12 col-md-8">';
+
+	echo $output;
 }
 
 add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_before', 11, 1 );
 
 function wonka_checkout_wrap_after( $checkout ) {
-	_e( '</div><!-- .col -->');
-	_e( '<div class="col col-12 col-md-4">');
+	$output = '';
+
+	$output .= '</div><!-- .col -->';
+	$output .= '<div class="col col-12 col-md-4">';
 	do_action( 'woocommerce_checkout_order_review' );
-	_e( '</div><!-- .col -->');
-	_e( '</div><!-- .row -->');
+	$output .= '</div><!-- .col -->';
+	$output .= '</div><!-- .row -->';
+
+	echo $output;
 }
 
 add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_after', 11, 1 );
