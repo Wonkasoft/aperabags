@@ -202,7 +202,7 @@
 				setTimeout( function() {
 					flex_active.parentElement.nextElementSibling.firstElementChild.click();
 					one_click = true;
-				}, 500);
+				}, 250);
 			}
 		}
 
@@ -210,14 +210,14 @@
 		{
 			this_body.scrollTop = img_area_top;
 			this_html.scrollTop = img_area_top;
-			
+
 			if ( flex_active.parentElement.previousElementSibling != null && one_click ) 
 			{
 				one_click = false;
 				setTimeout( function() {
 					flex_active.parentElement.previousElementSibling.firstElementChild.click();
 					one_click = true;
-				}, 500);
+				}, 250);
 			}
 		}
 	}
