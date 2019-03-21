@@ -195,6 +195,7 @@
 		{
 			this_body.scrollTop = img_area_top;
 			this_html.scrollTop = img_area_top;
+
 			if ( flex_active.parentElement.nextElementSibling != null && one_click ) 
 			{
 				one_click = false;
@@ -209,6 +210,7 @@
 		{
 			this_body.scrollTop = img_area_top;
 			this_html.scrollTop = img_area_top;
+			
 			if ( flex_active.parentElement.previousElementSibling != null && one_click ) 
 			{
 				one_click = false;
