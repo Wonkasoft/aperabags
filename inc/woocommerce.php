@@ -357,7 +357,7 @@ function wonka_checkout_wrap_before( $checkout ) {
 	echo $output;
 }
 
-add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_before', 11, 1 );
+add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 11, 1 );
 
 function wonka_checkout_wrap_after( $checkout ) {
 	$output = '';
