@@ -192,7 +192,7 @@
 			control_wrapper.appendChild( control_list );
 		}
 
-		if ( window.pageYOffset > img_area_top && scroll_direction == 'scrolled down' ) 
+		if ( window.pageYOffset > img_area_top && scroll_direction == 'scrolled down' && flex_active.parentElement.nextElementSibling != null ) 
 		{
 			this_body.scrollTop = img_area_top;
 			this_html.scrollTop = img_area_top;
@@ -207,7 +207,7 @@
 			}
 		}
 
-		if ( window.pageYOffset < img_area_top && scroll_direction == 'scrolled up' )
+		if ( window.pageYOffset < img_area_top && scroll_direction == 'scrolled up' && flex_active.parentElement.previousElementSibling != null )
 		{
 			this_body.scrollTop = img_area_top;
 			this_html.scrollTop = img_area_top;
