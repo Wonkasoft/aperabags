@@ -356,8 +356,8 @@ function wonka_checkout_wrap_before( $checkout ) {
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 11, 1 );
 
 function wonka_checkout_wrap_after( $checkout ) {
-	echo '</div><!-- .col -->';
 	?>
+	</div><!-- .col -->
 	<div class="col col-12 col-md-4">
 		<h3 id="order_review_heading"><?php esc_html_e( 'Your order', 'woocommerce' ); ?></h3>
 
@@ -370,9 +370,9 @@ function wonka_checkout_wrap_after( $checkout ) {
 		<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
 	</div><!-- .col-12 -->
 
+	</div><!-- .col -->;
+	</div><!-- .row -->;
 	<?php
-	echo '</div><!-- .col -->';
-	echo '</div><!-- .row -->';
 }
 
 add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_after', 12, 1 );
