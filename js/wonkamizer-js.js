@@ -154,7 +154,6 @@
 	}
 
 	var last_scroll_top = 0,
-	thumbnail_counter = 1,
 	one_click = true;
 	if ( document.querySelector( '.wonka-single-product-img' ) ) 
 	{
@@ -172,7 +171,6 @@
 		flex_active = document.querySelector( '.flex-active' ),
 		this_body = document.body,
 		this_html = document.documentElement;
-		thumbnail_counter = ( win_y < img_area_top ) ? 1: thumbnail_counter;
 
 		if ( window.pageYOffset > last_scroll_top ) {
 			scroll_direction = 'scrolled down';
@@ -201,7 +199,6 @@
 			{
 				one_click = false;
 				setTimeout( function() {
-					thumbnail_counter++;
 					flex_active.parentElement.nextElementSibling.firstElementChild.click();
 					one_click = true;
 				}, 500);
@@ -216,7 +213,6 @@
 			{
 				one_click = false;
 				setTimeout( function() {
-					thumbnail_counter--;
 					flex_active.parentElement.previousElementSibling.firstElementChild.click();
 					one_click = true;
 				}, 500);
