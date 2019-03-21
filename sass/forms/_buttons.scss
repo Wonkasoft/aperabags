@@ -12,7 +12,7 @@ input[type="submit"] {
 	line-height: 1.2;
 	@include font-size( 1 );
 	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
-	@include prefix( text-shadow, 1px 1px 4px rgba(#000, 0 ), o moz webkit );
+	@include prefix( text-shadow, 1px 1px 3px rgba(#000, 0 ), o moz webkit );
 	@include prefix( transition, $trans_25, webkit moz o);
 
 
@@ -23,7 +23,7 @@ input[type="submit"] {
 	&:hover {
 		background: #FFDE98;
 		color: rgba(255, 255, 255, .8);
-		@include prefix( text-shadow, 1px 1px 4px rgba(#000, .8 ), o moz webkit );
+		@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
 	}
 
 	&:active,

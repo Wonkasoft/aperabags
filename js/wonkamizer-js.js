@@ -152,6 +152,69 @@
 			summary_section.style.top = 15 + 'px';
 		}
 	}
+
+	var last_scroll_top = 0;
+	var thumbnail_counter = 1;
+	if ( document.querySelector( '.wonka-single-product-img' ) ) 
+	{
+		var img_area = document.querySelector( '.wonka-single-product-img' );
+		var img_area_top = img_area.parentElement.offsetTop;
+	}
+
+	function thumbnail_scroll(e)
+	{
+		var control_list = document.querySelector( '.flex-control-nav' ),
+		win_y = window.pageYOffset,
+		control_wrapper,
+		thumbnail_count = control_list.childElementCount,
+		scroll_direction,
+		flex_active = document.querySelector( '.flex-active' ),
+		this_body = document.body,
+		this_html = document.documentElement;
+		thumbnail_counter = ( win_y < img_area_top ) ? 1: thumbnail_counter;
+
+		if ( window.pageYOffset > last_scroll_top ) {
+			scroll_direction = 'scrolled down';
+		}
+		else
+		{
+			scroll_direction = 'scrolled up';
+		}
+
+		last_scroll_top = window.pageYOffset;
+
+		if ( !document.querySelector( 'div.flex-control-wrapper' ) ) 
+		{
+			control_wrapper = document.createElement( 'DIV' );
+			control_wrapper.setAttribute( 'class', 'flex-control-wrapper');
+			control_list.parentElement.insertBefore( control_wrapper, control_list );
+			control_wrapper.appendChild( control_list );
+		}
+
+		if ( window.pageYOffset > img_area_top && scroll_direction == 'scrolled down' ) 
+		{
+			if ( flex_active.parentElement.nextElementSibling != null ) 
+			{
+			console.log(scroll_direction);
+				thumbnail_counter++;
+				this_body.scrollTop = img_area_top;
+				this_html.scrollTop = img_area_top;
+				flex_active.parentElement.nextElementSibling.firstElementChild.click();
+			}
+		}
+
+		if ( window.pageYOffset < img_area_top && scroll_direction == 'scrolled up' )
+		{
+			if ( flex_active.parentElement.previousElementSibling != null ) 
+			{
+			console.log(scroll_direction);
+				thumbnail_counter--;
+				this_body.scrollTop = img_area_top;
+				this_html.scrollTop = img_area_top;
+				flex_active.parentElement.previousElementSibling.firstElementChild.click();
+			}
+		}
+	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -173,7 +236,12 @@
 	===================================================================*/
 	window.onload = function()
 	{
-		
+		/*===========================================================================================
+		=            This makes the adjustment of space for the footer to show correctly            =
+		===========================================================================================*/
+		footer_adjustment();
+		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
+
 		/*==========================================
 		=            Search btn actions            =
 		==========================================*/
@@ -197,15 +265,19 @@
 		}
 		/*=====  End of For Sticky Header  ======*/
 		
-		/*============================================
-		=            For product summmary            =
-		============================================*/
-		if ( document.querySelector( '.single-product .summary' ) ) 
+		/*===============================================
+		=            For single product page            =
+		===============================================*/
+		if ( document.querySelector( '.single-product' ) ) 
 		{
 			// When the user scrolls the page, execute stickyStatus 
-			window.onscroll = function() { stickySummary(); };
+			window.onscroll = function(e) 
+			{ 
+				thumbnail_scroll(e);
+				stickySummary(e); 
+			};
 		}
-		/*=====  End of For product summmary  ======*/
+		/*=====  End of For single product page  ======*/
 
 		/*================================================================
 		=            For setting up sliders on the front page            =
@@ -245,15 +317,6 @@
 			});
 		}
 		/*=====  End of For setting up sliders on the front page  ======*/
-		
-		/*===========================================================================================
-		=            This makes the adjustment of space for the footer to show correctly            =
-		===========================================================================================*/
-		footer_adjustment();
-		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
-		
-
-
 
 		// ===== Scroll to Top ==== 
 		$(window).scroll(function() {

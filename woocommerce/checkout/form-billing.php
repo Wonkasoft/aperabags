@@ -39,7 +39,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="woocommerce-billing-fields__field-wrapper">
 		<?php
 			$fields = $checkout->get_checkout_fields( 'billing' );
-
+			echo "<pre>\n";
+			print_r( $fields );
+			echo "</pre>\n";
 			foreach ( $fields as $key => $field ) {
 
 				if ( !isset($field['placeholder'] ) ) :

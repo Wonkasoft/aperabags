@@ -97,6 +97,10 @@
 			flex: 0.5 60%;
 			width: 60%;
 
+			div.flex-control-wrapper {
+				overflow: hidden;
+			}
+
 			div.woocommerce-product-gallery {
 				margin: 15px auto;
 				flex: .7 0 100%;
@@ -134,6 +138,11 @@
 				    align-items: flex-start;
 				    justify-content: space-around;
 				    flex-wrap: wrap;
+
+				    &::-webkit-scrollbar {
+				    	display: none;
+				    	background: transparent;
+				    }
 
 					li {
 						width: auto;
@@ -220,7 +229,14 @@
 				button.wonka-btn {
 					margin: 8px auto;
 					text-align: center;
+					border-radius: 100px;
 					width: 100%;
+					background: transparent;
+				    border: 3px solid #FFE6B2;
+
+				    &:hover {
+				    	background: #FFE6B2;
+				    }
 				}
 
 				table.variations {
@@ -262,17 +278,6 @@
 			
 			div.wcppec-checkout-buttons {
 				width: 100%;
-
-				iframe {
-
-					#document {
-
-						.paypal-button.paypal-button-number-0.paypal-button-layout-vertical.paypal-button-shape-rect.paypal-button-branding-branded.paypal-button-number-multiple.paypal-button-env-sandbox.paypal-should-focus.paypal-button-label-paypal.paypal-button-color-gold.paypal-button-logo-color-blue, 
-						.paypal-button.paypal-button-number-1.paypal-button-layout-vertical.paypal-button-shape-rect.paypal-button-branding-branded.paypal-button-number-multiple.paypal-button-env-sandbox.paypal-should-focus.paypal-button-label-credit.paypal-button-color-darkblue.paypal-button-logo-color-white {
-							border-radius: 100px;
-						}
-					}
-				}
 			}
 		}
 
