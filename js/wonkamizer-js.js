@@ -177,7 +177,8 @@
 		if ( window.pageYOffset > last_scroll_top ) {
 			scroll_direction = 'scrolled down';
 		}
-		else
+
+		if ( window.pageYOffset < last_scroll_top )
 		{
 			scroll_direction = 'scrolled up';
 		}
