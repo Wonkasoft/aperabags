@@ -348,11 +348,15 @@
 
 			div.summary {
 				flex: 0.1 0 40%;
-				position: -webkit-sticky;    
-				position: sticky;
+				position: relative;  
 				top: 15px;
 				background: #fff;
 				z-index: 20;
+
+				&.sticky-on {
+					position: -webkit-sticky;    
+					position: sticky;
+				}
 			}
 
 			div.woocommerce-tabs {
