@@ -14,50 +14,58 @@ section.header-slider-section {
 	    width: 100%;
 
 		.top-page-slide {
+			position: relative;
 			display: none;
-			background-position: center;
-			background-size: cover;
-			background-repeat: no-repeat;
 			width: 100%;
 			height: 100%;
 			@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-			.img-header-text-wrap {
-				margin: auto;
-				width: 75%;
+			div.top-slide-img-holder {
+				background-position: center 0;
+				background-attachment: fixed;
+				background-size: cover;
+				background-repeat: no-repeat;
+				width: 100%;
 				height: 100%;
-				align-items: center;
-			    max-width: 1200px;
+				@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-				.img-header-text-container {
-					display: flex;
-					flex-direction: column;
+				.img-header-text-wrap {
+					margin: auto;
+					width: 75%;
+					height: 100%;
+					align-items: center;
+				    max-width: 1200px;
 
-					.set-align-left {
-						align-self: flex-start;
-					}
+					.img-header-text-container {
+						display: flex;
+						flex-direction: column;
 
-					.set-align-center {
-						align-self: center;
-					}
-
-					.set-align-right {
-						align-self: flex-end;
-					}
-
-					.text-box {
-						color: #ffffff;
-						max-width: 425px;
-						@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
-
-						h2 {
-							margin: 0 auto;
-							font-weight: 800;
+						.set-align-left {
+							align-self: flex-start;
 						}
-					}
-				}	
+
+						.set-align-center {
+							align-self: center;
+						}
+
+						.set-align-right {
+							align-self: flex-end;
+						}
+
+						.text-box {
+							color: #ffffff;
+							max-width: 425px;
+							@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
+
+							h2 {
+								margin: 0 auto;
+								font-weight: 800;
+							}
+						}
+					}	
+				}
 			}
-			
+
 			&:first-child {
 				display: block;
 			}
@@ -106,56 +114,64 @@ section.desirable-slider-section {
 	    width: 100%;
 
 		.cta-section-slide {
+			position: relative;
 			display: none;
-			background-position: center;
-			background-size: cover;
-			background-repeat: no-repeat;
 			width: 100%;
 			height: 100%;
 			@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-			.img-header-text-wrap {
-				position: relative;
-				margin: auto;
-				width: 75%;
+			div.cta-slide-img-holder {
+				background-position: center 0;
+				background-attachment: fixed;
+				background-size: cover;
+				background-repeat: no-repeat;
+				width: 100%;
 				height: 100%;
-				align-items: flex-end;
+				@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-				.img-header-text-container {
+				.img-header-text-wrap {
+					position: relative;
 					margin: auto;
-					margin-bottom: 15%;
-					display: flex;
-					flex-direction: column;
+					width: 75%;
+					height: 100%;
+					align-items: flex-end;
 
-					.set-align-left {
-						align-self: flex-start;
-					}
+					.img-header-text-container {
+						margin: auto;
+						margin-bottom: 15%;
+						display: flex;
+						flex-direction: column;
 
-					.set-align-center {
-						align-self: center;
-					}
+						.set-align-left {
+							align-self: flex-start;
+						}
 
-					.set-align-right {
-						align-self: flex-end;
-					}
+						.set-align-center {
+							align-self: center;
+						}
 
-					.text-box {
-						color: #ffffff;
-						max-width: 100%;
-						@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
+						.set-align-right {
+							align-self: flex-end;
+						}
 
-						h2 {
+						.text-box {
 							color: #ffffff;
-							white-space: wrap;
-							font-weight: 800;
-						}
+							max-width: 100%;
+							@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
 
-						@include media-breakpoint-up( md ) {
-							max-width: 600px;
-							white-space: nowrap;
+							h2 {
+								color: #ffffff;
+								white-space: wrap;
+								font-weight: 800;
+							}
+
+							@include media-breakpoint-up( md ) {
+								max-width: 600px;
+								white-space: nowrap;
+							}
 						}
-					}
-				}	
+					}	
+				}
 			}
 
 			&:first-child {

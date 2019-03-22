@@ -2,6 +2,16 @@
 {
 	"use strict";
 
+	/*===============================================
+	=            vars set for script use            =
+	===============================================*/
+	var last_scroll_top = 0,
+	scroll_direction,
+	scroll_distance,
+	one_click = true;
+	/*=====  End of vars set for script use  ======*/
+	
+
 	/*===================================================================
 	=            This is area for writing callable functions            =
 	===================================================================*/
@@ -69,16 +79,86 @@
 		var header = document.querySelector('.site-header');
 		var header_notice = document.querySelector('.topbar-notice');
 		var shop_section = document.querySelector( '.shop-section' );
-		var admin_height;
+		var top_slider_section = document.querySelector( '.header-slider-section' );
+		var cta_section = document.querySelector( '.desirable-slider-section' );
+		var parallax_adjust, slide_imgs, admin_bar, admin_height;
 
 		// Get the offset position of the navbar
 		var sticky = shop_section.offsetTop;
 
+		if ( window.pageYOffset > last_scroll_top ) {
+			scroll_direction = 'scrolled down';
+			scroll_distance = window.pageYOffset - last_scroll_top;
+		}
+
+		if ( window.pageYOffset < last_scroll_top )
+		{
+			scroll_direction = 'scrolled up';
+			scroll_distance = last_scroll_top - window.pageYOffset;
+		}
+
+		last_scroll_top = window.pageYOffset;
+
+		/*=======================================================================
+		=            This is for the top slider section for parallax            =
+		=======================================================================*/
+		if ( window.pageYOffset > top_slider_section.offsetTop && window.pageYOffset < top_slider_section.offsetTop + top_slider_section.offsetHeight ) 
+		{
+			parallax_adjust = parseFloat( (window.pageYOffset - top_slider_section.offsetTop ) / ( top_slider_section.offsetHeight / 2 ) ).toFixed( 5 );
+			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
+			slide_imgs.forEach( function( el, i ) 
+				{
+					el.style.backgroundPosition = 'center ' + parallax_adjust + 'vh';
+				});
+		}
+
+		if ( window.pageYOffset < top_slider_section.offsetTop ) 
+		{
+			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
+			slide_imgs.forEach( function( el, i ) 
+				{
+					el.style.backgroundPosition = '';
+				});
+		}
+		/*=====  End of This is for the top slider section for parallax  ======*/
+
+		/*=======================================================================
+		=            This is for the cta slider section for parallax            =
+		=======================================================================*/
+		if ( window.pageYOffset > cta_section.offsetTop && window.pageYOffset < cta_section.offsetTop + cta_section.offsetHeight ) 
+		{
+			parallax_adjust = parseFloat( (window.pageYOffset - cta_section.offsetTop ) / ( cta_section.offsetHeight / 2 ) ).toFixed( 5 );
+			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
+			slide_imgs.forEach( function( el, i ) 
+				{
+					el.style.backgroundPosition = 'center ' + parallax_adjust + 'vh';
+				});
+		}
+
+		if ( window.pageYOffset < cta_section.offsetTop ) 
+		{
+			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
+			slide_imgs.forEach( function( el, i ) 
+				{
+					el.style.backgroundPosition = '';
+				});
+		}
+		/*=====  End of This is for the top slider section for parallax  ======*/
+		
 	   	if ( document.querySelector( '#wpadminbar' ) ) 
 	   	{
-	   		admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+	   		admin_bar = document.querySelector( '#wpadminbar' );
+	   		admin_height = admin_bar.offsetHeight;
 	   		header_notice.style.position = 'fixed';
-	   		header_notice.style.top = admin_height + 'px';
+
+	   		if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+	   		{
+	   			header_notice.style.top = 0;
+	   		}
+	   		else
+	   		{
+	   			header_notice.style.top = admin_height + 'px';
+	   		}
 	   	}
 	   	else
 	   	{
@@ -116,7 +196,15 @@
 				{
 					admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
 					header_notice.style.position = 'fixed';
-					header_notice.style.top = admin_height + 'px';
+					
+					if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+					{
+						header_notice.style.top = 0;
+					}
+					else
+					{
+						header_notice.style.top = admin_height + 'px';
+					}
 				}
 				else
 				{
@@ -153,8 +241,7 @@
 		}
 	}
 
-	var last_scroll_top = 0,
-	one_click = true;
+	
 	if ( document.querySelector( '.wonka-single-product-img' ) ) 
 	{
 		var img_area = document.querySelector( '.wonka-single-product-img' );
@@ -167,7 +254,6 @@
 		win_y = window.pageYOffset,
 		control_wrapper,
 		thumbnail_count = control_list.childElementCount,
-		scroll_direction,
 		flex_active = document.querySelector( '.flex-active' ),
 		this_body = document.body,
 		this_html = document.documentElement;
@@ -264,7 +350,7 @@
 		/*=========================================
 		=            For Sticky Header            =
 		=========================================*/
-		if ( document.querySelector( '.shop-section' ) ) 
+		if ( document.querySelector( '.home' ) ) 
 		{
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function() { stickyStatus(); };
@@ -299,8 +385,9 @@
 			  autoplaySpeed: 7000,
 			  fade: true,
 			  dots: true,
-			  appendArrows: document.querySelector( '.top-page-slider-wrap>.slick-list' ),
-			  appendDots: document.querySelector( '.top-page-slider-wrap>.slick-list' ),
+			  arrows: true,
+			  appendArrows: $( '.top-page-slider-wrap .slick-list' ),
+			  appendDots: $( '.top-page-slider-wrap .slick-list' ),
 			  prevArrow: '<button class="slick-prev" type="button"></button>',
 			  nextArrow: '<button class="slick-next" type="button"></button>',
 			});
@@ -316,8 +403,9 @@
 			  autoplaySpeed: 7000,
 			  fade: true,
 			  dots: true,
-			  appendArrows: document.querySelector( '.cta-section-slider-wrap>.slick-list' ),
-			  appendDots: document.querySelector( '.cta-section-slider-wrap>.slick-list' ),
+			  arrows: true,
+			  appendArrows: $( '.cta-section-slider-wrap .slick-list' ),
+			  appendDots: $( '.cta-section-slider-wrap .slick-list' ),
 			  prevArrow: '<button class="slick-prev" type="button"></button>',
 			  nextArrow: '<button class="slick-next" type="button"></button>',
 			});

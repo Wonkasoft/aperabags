@@ -33,8 +33,8 @@ get_header();
 					
 					/* Checks for an img set in the slide object */
 					if ( !empty( $slide->slide_img ) ) : ?>
-						<div class="top-page-slide" style="background-image:url('<?php echo $slide->slide_img; ?>');">
-
+						<div class="top-page-slide">
+							<div class="top-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 							<?php 
 							/* Checks for an message set in the slide object */
 							if ( !empty( $slide->slide_header_message ) ) : ?>
@@ -53,7 +53,7 @@ get_header();
 								</div><!-- .img-header-text-wrap -->
 								
 							<?php endif; ?>
-
+							</div><!-- .top-slide-img-holder -->
 						</div><!-- .top-page-slide -->
 					<?php endif; ?>
 
@@ -106,8 +106,8 @@ get_header();
 						
 						/* Checks for an img set in the slide object */
 						if ( !empty( $slide->slide_img ) ) : ?>
-							<div class="cta-section-slide" style="background-image:url('<?php echo $slide->slide_img; ?>');">
-
+							<div class="cta-section-slide">
+								<div class="cta-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 								<?php 
 								/* Checks for an message set in the slide object */
 								if ( !empty( $slide->slide_text_message ) ) : ?>
@@ -127,7 +127,8 @@ get_header();
 									
 								<?php endif; ?>
 
-							</div><!-- .col-12 -->
+								</div><!-- .cta-slide-img-holder -->
+							</div><!-- .cta-section-slide -->
 						<?php endif; ?>
 					<?php endforeach; ?>
 					</div><!-- .cta-section-slider-wrap -->
