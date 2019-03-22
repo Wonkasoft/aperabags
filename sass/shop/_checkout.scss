@@ -2,11 +2,12 @@
  * Checkout
  */
 .wc_payment_method.payment_method_stripe {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
 
 	label {
-		display: flex;
-		align-items: center;
-		justify-content: space-around;
+		margin-left: 8px;
 	}
 }
 
