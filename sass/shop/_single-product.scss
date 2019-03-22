@@ -293,6 +293,22 @@
 			}
 		}
 
+		div.product-statement-wrap {
+
+			ul {
+				margin: 0;
+				padding-left: 16px;
+			}
+
+			div.wonka-row-product-statement {
+
+				p {
+					margin: 0 auto;
+					max-width: 75%;
+				}
+			}
+		}
+
 		section.products {
 			flex: 1 0 100%;
 		}

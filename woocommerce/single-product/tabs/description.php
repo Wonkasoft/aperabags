@@ -22,12 +22,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $post;
 
-$heading = esc_html( apply_filters( 'woocommerce_product_description_heading', __( 'Product Overview', 'woocommerce' ) ) );
+$heading = esc_html( apply_filters( 'woocommerce_product_description_heading', __( 'Product Statement', 'woocommerce' ) ) );
 
 ?>
 
 <?php if ( $heading ) : ?>
-  <h2><?php echo $heading; ?></h2>
+	<div class="row wonka-product-statement-header">
+		<div class="col text-center">
+  			<h2><?php echo $heading; ?></h2>
+  		</div><!-- .col -->
+  	</div><!-- .row -->
 <?php endif; ?>
 
 <?php the_content(); ?>
