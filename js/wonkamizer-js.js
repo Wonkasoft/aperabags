@@ -224,12 +224,12 @@
 
 		if ( window.innerWidth > 792 && win_y - summary_section.parentElement.offsetTop > target_scrolling ) 
 		{
-			summary_section.style.position = 'relative';
+			summary_section.classList.remove( 'sticky-on' );
 			summary_section.style.top = target_scrolling - parseInt( window.getComputedStyle( summary_section ).marginTop ) + 'px';
 		}
-		else
+		else if ( window.innerWidth > 792 )
 		{
-			summary_section.style.position = 'sticky';
+			summary_section.classList.add( 'sticky-on' );
 			summary_section.style.top = 15 + 'px';
 		}
 	}
