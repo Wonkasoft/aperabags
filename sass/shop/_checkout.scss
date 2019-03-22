@@ -1,13 +1,18 @@
 /**
  * Checkout
  */
-.wc_payment_method.payment_method_stripe {
+.wc_payment_method {
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
 
 	label {
+		width: 100%;
 		margin-left: 8px;
+
+		a {
+			margin-left: 8px;
+		}
 	}
 }
 
