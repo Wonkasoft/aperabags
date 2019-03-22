@@ -1,5 +1,6 @@
 div#footer-spacer {
 	height: 400px;
+	@include prefix( transition, $trans_25, webkit moz o);
 }
 
 footer#colophon {
@@ -11,6 +12,7 @@ footer#colophon {
 	color: #bfc0c2;
 	z-index: 999;
 	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+	@include prefix( transition, $trans_25, webkit moz o);
 
 	a {
 		color: #bfc0c2;
@@ -79,7 +81,7 @@ footer#colophon {
 					height: 49px;
 					letter-spacing: 1px;
 					width: 100%;
-					@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+					@include prefix( transition, $trans_25, webkit moz o);
 
 					&::placeholder {
 						font-style: italic;
