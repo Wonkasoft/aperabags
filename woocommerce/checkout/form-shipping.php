@@ -41,25 +41,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 					foreach ( $fields as $key => $field ) {
 						
 						if ( !isset($field['placeholder'] ) ) :
-							if ( $field['type'] !== 'select' ) :
-								$field['placeholder'] = $field['label'];
-							endif;
+							$field['placeholder'] = $field['label'];
 						endif;
 
 						if ( isset( $field['class'] ) ) :
-							array_push( $fields[$key]['class'], 'wonka-form-group', 'form-group' ) ;
+							array_push( $field['class'], 'wonka-form-group', 'form-group' ) ;
 						else:
 							$field['class'] = array( 'wonka-form-group', 'form-group' );
 						endif;
 
 						if ( isset( $field['label_class'] ) ) :
-							array_push( $fields[$key]['label_class'], 'wonka-sr-only', 'sr-only' ) ;
+							array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
 						else:
 							$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
 						endif;
 
 						if ( isset( $field['input_class'] ) ) :
-							array_push( $fields[$key]['input_class'], 'wonka-form-control', 'form-control' ) ;
+							array_push( $field['input_class'], 'wonka-form-control', 'form-control' ) ;
 						else:
 							$field['input_class'] = array( 'wonka-form-control', 'form-control' );
 						endif;
@@ -93,20 +91,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="woocommerce-additional-fields__field-wrapper">
 			<?php foreach ( $checkout->get_checkout_fields( 'order' ) as $key => $field ) :
-				if ( isset( $field['class'] ) ) :
-					array_push( $fields[$key]['class'], 'wonka-form-group', 'form-group' ) ;
+				if ( isset( $field['class'] ) && is_array( $field['class'] ) ) :
+					array_push( $field['class'], 'wonka-form-group', 'form-group' );
 				else:
 					$field['class'] = array( 'wonka-form-group', 'form-group' );
 				endif;
 
 				if ( isset( $field['label_class'] ) ) :
-					array_push( $fields[$key]['label_class'], 'wonka-sr-only', 'sr-only' ) ;
+					array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
 				else:
 					$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
 				endif;
 
 				if ( isset( $field['input_class'] ) ) :
-					array_push( $fields[$key]['input_class'], 'wonka-form-control', 'form-control' ) ;
+					array_push( $field['input_class'], 'wonka-form-control', 'form-control' ) ;
 				else:
 					$field['input_class'] = array( 'wonka-form-control', 'form-control' );
 				endif;

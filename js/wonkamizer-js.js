@@ -33,14 +33,7 @@
 	function footer_adjustment()
 	{
 		var footer_height = document.querySelector( 'footer#colophon' ).offsetHeight,
-		content_el = document.querySelector( '#content'),
 		new_space;
-
-		if ( !document.getElementById( 'footer-spacer' ) ) {
-			new_space = document.createElement( 'DIV' );
-			new_space.id = 'footer-spacer';
-			content_el.appendChild( new_space );
-		}
 
 		new_space = document.getElementById( 'footer-spacer' );
 		new_space.style.width = '100%';

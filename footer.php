@@ -14,7 +14,7 @@ $footer_section = get_section_mods( 'footer' );
 ?>
 
 	</div><!-- #content .container-fluid -->
-
+	<div id="footer-spacer"></div>
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
 			<div class="row upper-footer">
