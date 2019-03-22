@@ -300,11 +300,18 @@
 				padding-left: 16px;
 			}
 
+			div.row {
+
+				col {
+					margin-bottom: 15px;
+				}
+			}
+
 			div.wonka-row-product-statement {
 
 				p {
 					margin: 0 auto;
-					max-width: 75%;
+					max-width: 50%;
 				}
 			}
 		}
