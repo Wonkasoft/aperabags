@@ -233,7 +233,6 @@
 			summary_section.style.top = 15 + 'px';
 		}
 	}
-
 	
 	if ( document.querySelector( '.wonka-single-product-img' ) ) 
 	{

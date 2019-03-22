@@ -304,7 +304,7 @@
 
 			div.row {
 
-				col {
+				.col {
 					margin-bottom: 15px;
 				}
 			}
@@ -314,6 +314,13 @@
 				p {
 					margin: 0 auto;
 					max-width: 50%;
+				}
+			}
+
+			div.wonka-row-product-specs {
+
+				.col:not(:last-of-type) {
+					border-right: 1px solid rgba(0,0,0,.4);
 				}
 			}
 		}
