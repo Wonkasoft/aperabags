@@ -160,9 +160,11 @@ if ( ! function_exists( 'apera_bags_woocommerce_wrapper_before' ) ) {
 	 * @return void
 	 */
 	function apera_bags_woocommerce_wrapper_before() {
+		global $post;
+		$post_slug = ( !empty( $post->post_name ) ) ? ' ' . $post->post_name: '';
 		?>
 		<div id="primary" class="content-area">
-			<main id="main" class="site-main" role="main">
+			<main id="main" class="site-main<?php _e( $post_slug ); ?>" role="main">
 				<?php
 			}
 		}

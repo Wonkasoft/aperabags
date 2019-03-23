@@ -182,14 +182,19 @@ get_header();
 						endif;
 						?>
 						</div>
-						<a class="btn btn-primary wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
+						<?php
+						if ( !empty( $about_section->about_the_brand->about_the_brand_button_link ) ) : ?>
+							<a class="btn btn-primary wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
+						<?php endif; ?>
 					</div><!-- .about-components-wrap -->
 				</div>
+				<?php if ( !empty( $about_section->about_the_brand->about_the_brand_second_image ) ) : ?>
 				<div class="col col-12 col-md-5 text-center">
 					<div class="img-container">
 						<img class="about-second-image" src="<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />
 					</div>
 				</div>
+				<?php endif; ?>
 			</section>
 		<?php endif; ?>
 
