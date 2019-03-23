@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $tabs = apply_filters( 'woocommerce_product_tabs', array() );
 
 if ( ! empty( $tabs ) ) : ?>
-
+	<section class="product-tags-section">
 	<div class="wonka-tabs wonka-tabs-wrapper">
 		<?php foreach ( $tabs as $key => $tab ) : ?>
 			<?php if ( $key === 'reviews' ) : ?>
@@ -47,7 +47,8 @@ if ( ! empty( $tabs ) ) : ?>
 					</div>
 				</section>
 			<?php endif; ?>
+			
 		<?php endforeach; ?>
 	</div>
-
+	</section>
 <?php endif; ?>

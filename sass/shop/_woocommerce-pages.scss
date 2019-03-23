@@ -4,7 +4,6 @@
 	
 	#main {
 		margin: 15px auto;
-		max-width: 1180px;
 
 		.woocommerce-notice,
 		.woocommerce-info {
@@ -182,6 +181,13 @@
 			}
 		}
 		/*=====  End of This is the totals on the cart page  ======*/
+
+		&.product {
+
+			section.product-img-section {
+				max-width: 1180px;
+			}
+		}
 	}
 
 	&.archive {
