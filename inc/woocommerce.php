@@ -161,7 +161,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_wrapper_before' ) ) {
 	 */
 	function apera_bags_woocommerce_wrapper_before() {
 		global $post;
-		$post_slug = ( !empty( $post->post_name ) ) ? ' ' . $post->post_name: '';
+		$post_slug = ( !empty( $post->post_type ) ) ? ' ' . $post->post_type: '';
 		?>
 		<div id="primary" class="content-area">
 			<main id="main" class="site-main<?php _e( $post_slug ); ?>" role="main">
