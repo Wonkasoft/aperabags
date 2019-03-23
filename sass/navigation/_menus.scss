@@ -77,7 +77,7 @@
 				justify-content: center;
 				flex-wrap: wrap;
 				padding: 4px 0;
-				height: auto;
+				height: 50px;
 				@include prefix( transition, $trans_25, webkit moz o);
 
 				a {
@@ -104,7 +104,7 @@
 					@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0.4), webkit moz o );
 
 					li {
-						padding: 8px;
+						padding: 4px;
 						background: rgba( #FFE6B2, .8 );
 
 					}
@@ -131,11 +131,11 @@
 				text-transform: uppercase;
 				color: #ffffff;
 				font-family: $font__main_jose;
-				line-height: 1.5;
+				line-height: 1.2;
 				font-weight: 800;
 				padding: 8px;
 				white-space: nowrap;
-				@include font-size( 1.1 );
+				@include font-size( 1 );
 				@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
 				@include prefix( transition, $trans_25, webkit moz o);
 
@@ -258,10 +258,14 @@
 =            Cart Menu Styles            =
 ========================================*/
 .wonka-badge {
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
 	font-family: $font__main_jose;
 	font-weight: 800;
 	background: #ffffff;
-    padding: 4px 5px 1px;
+	width: 20px;
+	height: 20px;
     line-height: 1;
 	@include font-size( .9 );
 	@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
@@ -326,10 +330,6 @@
 	}
 
 	@include media-breakpoint-up( md ) {
-
-		.wonka-badge {
-			margin-left: 8px;
-		}
 
 		ul#cart-menu {
 	    	display: flex;
