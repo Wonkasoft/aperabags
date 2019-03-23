@@ -213,6 +213,18 @@
 				}
 			}
 
+			table.variations {
+				margin: 0;
+
+				td {
+					padding: 8px 0;
+				}
+
+				td.label {
+					max-width: 45px;
+				}
+			}
+
 			form.cart {
 				flex: 1 100%;
 				display: flex;
