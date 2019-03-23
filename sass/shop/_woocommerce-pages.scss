@@ -29,6 +29,13 @@
 		form.wonka-form-inline {
 			justify-content: flex-end;
 		}
+
+		p.woocommerce-result-count {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			height: 38px;
+		}
 		/*=====  End of This is for the archive page  ======*/
 		
 		/*=====================================================
@@ -175,6 +182,19 @@
 			}
 		}
 		/*=====  End of This is the totals on the cart page  ======*/
+	}
+
+	&.archive {
+
+		div.wonka-row {
+
+			ul.products {
+
+				.star-rating {
+					display: none;
+				}
+			}
+		}
 	}
 }
 

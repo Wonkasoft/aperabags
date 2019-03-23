@@ -170,12 +170,14 @@
 			header_notice.style.position = 'absolute';
 	   		header_notice.style.top = 0;
 			document.querySelector( '.sticky' ).style.top = admin_height + 'px';
+
 			if ( window.pageYOffset > sticky && header.offsetHeight == header_notice.offsetHeight ) 
 			{
 				setTimeout( function( header ) 
 				{
 					header.style.height = '120px';
 					header.style.background = '#646371';
+					header.style.overflow = 'visible';
 				}, 120, header );
 			}
 		} 
@@ -203,6 +205,7 @@
 				{
 					header_notice.style.position = 'fixed';
 					header_notice.style.top = 0;
+					header.style.overflow = 'visible';
 				}
 				header.classList.remove( 'sticky' );
 			}, 120, header, header_notice );
