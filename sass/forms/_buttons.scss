@@ -42,6 +42,10 @@ input[type="submit"].wonka-btn {
 	border-radius: 100px;
 	background: rgba( #fff, .3 );
     border: 3px solid #FFE6B2;
+
+    &:hover {
+    	border: 3px solid #FFE6B2;
+    }
 }
 
 
