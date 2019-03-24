@@ -6,10 +6,12 @@
 		margin: 15px auto;
 
 		.woocommerce-notice,
-		.woocommerce-info {
+		.woocommerce-info,
+		.woocommerce-message {
 			margin: 15px 0;
 			padding: 15px;
 			color: #333333;
+			background-color: transparent;
 			@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 			a {
@@ -206,6 +208,14 @@
 				margin: 0;
 				padding: 15px;
 				border: 1px solid rgba( #000, .2 );
+			}
+		}
+
+		&.my-account {
+
+			label.woocommerce-form__label-for-checkbox {
+				margin: 15px 0;
+				width: 100%;
 			}
 		}
 	}
