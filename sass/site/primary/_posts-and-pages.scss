@@ -34,11 +34,31 @@ section {
 	}
 }
 
-#searchform.wonka-form-inline {
-	margin: 15px auto;
+#searchform {
 
-	.wonka-btn {
-		margin-left: -2px;
+	input#s {
+		border-radius: 100px 100px 0 0;
+
+		&::placeholder {
+			font-style: italic;
+		}
+	}
+
+	button.wonka-btn {
+		
+		height: 49px;
+		border-radius: 0 0 100px 100px;
+	}
+
+	@include media-breakpoint-up( md ) {
+
+		input#s {
+			border-radius: 100px 0 0 100px;
+		}
+
+		button.wonka-btn {
+			border-radius: 0 100px 100px 0;
+		}
 	}
 }
 
