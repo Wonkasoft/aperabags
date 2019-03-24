@@ -300,6 +300,9 @@
 		}
 
 		section.product-tags-section {
+			max-width: 1200px;
+			margin: 15px auto;
+			border: 1px solid rgba( #000, .2 );
 
 			div.wonka-tabs-wrapper {
 
@@ -350,6 +353,9 @@
 
 		section.related.products {
 			flex: 1 0 100%;
+			max-width: 1200px;
+			margin: 15px auto;
+			border: 1px solid rgba( #000, .2 );
 		}
 
 		@media screen and ( min-width: 768px ) {
