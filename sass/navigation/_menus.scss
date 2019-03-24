@@ -183,7 +183,7 @@
 			}
 		}
 
-		@include media-breakpoint-up( md ) {
+		@include media-breakpoint-up( lg ) {
 			flex: .2 10%;
 
 			> ul {
@@ -237,7 +237,7 @@
 	top: -5px;
 }
 
-@include media-breakpoint-up( md ) {
+@include media-breakpoint-up( lg ) {
 	.menu-toggle {
 		display: none;
 	}
