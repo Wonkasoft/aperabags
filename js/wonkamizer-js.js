@@ -2,6 +2,16 @@
 {
 	"use strict";
 
+	/*===============================================
+	=            vars set for script use            =
+	===============================================*/
+	var last_scroll_top = 0,
+	scroll_direction,
+	scroll_distance,
+	one_click = true;
+	/*=====  End of vars set for script use  ======*/
+	
+
 	/*===================================================================
 	=            This is area for writing callable functions            =
 	===================================================================*/
@@ -23,14 +33,7 @@
 	function footer_adjustment()
 	{
 		var footer_height = document.querySelector( 'footer#colophon' ).offsetHeight,
-		content_el = document.querySelector( '#content'),
 		new_space;
-
-		if ( !document.getElementById( 'footer-spacer' ) ) {
-			new_space = document.createElement( 'DIV' );
-			new_space.id = 'footer-spacer';
-			content_el.appendChild( new_space );
-		}
 
 		new_space = document.getElementById( 'footer-spacer' );
 		new_space.style.width = '100%';
@@ -66,25 +69,153 @@
 	function stickyStatus() 
 	{	
 		// Get the header
-		var header = document.querySelector('.brand-nav-bar');
+		var header = document.querySelector('.site-header');
+		var header_notice = document.querySelector('.topbar-notice');
 		var shop_section = document.querySelector( '.shop-section' );
+		var top_slider_section = document.querySelector( '.header-slider-section' );
+		var cta_section = document.querySelector( '.desirable-slider-section' );
+		var parallax_adjust, slide_imgs, admin_bar, admin_height;
 
 		// Get the offset position of the navbar
 		var sticky = shop_section.offsetTop;
+
+		if ( window.pageYOffset > last_scroll_top ) {
+			scroll_direction = 'scrolled down';
+			scroll_distance = window.pageYOffset - last_scroll_top;
+		}
+
+		if ( window.pageYOffset < last_scroll_top )
+		{
+			scroll_direction = 'scrolled up';
+			scroll_distance = last_scroll_top - window.pageYOffset;
+		}
+
+		last_scroll_top = window.pageYOffset;
+
+		/*=======================================================================
+		=            This is for the top slider section for parallax            =
+		=======================================================================*/
+		if ( window.pageYOffset > top_slider_section.offsetTop && window.pageYOffset < top_slider_section.offsetTop + top_slider_section.offsetHeight ) 
+		{
+			parallax_adjust = parseFloat( (window.pageYOffset - top_slider_section.offsetTop ) / ( top_slider_section.offsetHeight / 2 ) ).toFixed( 5 );
+			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
+			slide_imgs.forEach( function( el, i ) 
+				{
+					el.style.backgroundPosition = 'center ' + parallax_adjust + 'vh';
+				});
+		}
+
+		if ( window.pageYOffset < top_slider_section.offsetTop ) 
+		{
+			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
+			slide_imgs.forEach( function( el, i ) 
+				{
+					el.style.backgroundPosition = '';
+				});
+		}
+		/*=====  End of This is for the top slider section for parallax  ======*/
+
+		/*=======================================================================
+		=            This is for the cta slider section for parallax            =
+		=======================================================================*/
+		if ( window.pageYOffset > cta_section.offsetTop && window.pageYOffset < cta_section.offsetTop + cta_section.offsetHeight ) 
+		{
+			parallax_adjust = parseFloat( (window.pageYOffset - cta_section.offsetTop ) / ( cta_section.offsetHeight / 2 ) ).toFixed( 5 );
+			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
+			slide_imgs.forEach( function( el, i ) 
+				{
+					el.style.backgroundPosition = 'center ' + parallax_adjust + 'vh';
+				});
+		}
+
+		if ( window.pageYOffset < cta_section.offsetTop ) 
+		{
+			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
+			slide_imgs.forEach( function( el, i ) 
+				{
+					el.style.backgroundPosition = '';
+				});
+		}
+		/*=====  End of This is for the top slider section for parallax  ======*/
 		
-		 if (window.pageYOffset > sticky && window.innerWidth > 782 ) 
-		 {
-		   	header.classList.add("sticky");
-		   	if ( document.querySelector( '#wpadminbar' ) ) 
-		   	{
-		   		var admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
-		   		document.querySelector( '.sticky' ).style.top = admin_height + 'px';
-		   	}
-		 } 
-		 else 
-		 {
-		   	header.classList.remove("sticky");
-		 }
+	   	if ( document.querySelector( '#wpadminbar' ) ) 
+	   	{
+	   		admin_bar = document.querySelector( '#wpadminbar' );
+	   		admin_height = admin_bar.offsetHeight;
+	   		header_notice.style.position = 'fixed';
+
+	   		if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+	   		{
+	   			header_notice.style.top = 0;
+	   		}
+	   		else
+	   		{
+	   			header_notice.style.top = admin_height + 'px';
+	   		}
+	   	}
+	   	else
+	   	{
+	   		header_notice.style.position = 'fixed';
+	   		header_notice.style.top = 0;
+	   	}
+
+		if ( window.pageYOffset > header.offsetHeight - header_notice.offsetHeight && window.innerWidth > 782 && window.pageYOffset < sticky ) 
+		{
+			header.style.height = header_notice.offsetHeight + 'px';
+		}
+
+		if ( window.pageYOffset > sticky && window.innerWidth > 782 ) 
+		{
+			header.classList.add( 'sticky' );
+			header_notice.style.position = 'absolute';
+	   		header_notice.style.top = 0;
+			document.querySelector( '.sticky' ).style.top = admin_height + 'px';
+
+			if ( window.pageYOffset > sticky && header.offsetHeight == header_notice.offsetHeight ) 
+			{
+				setTimeout( function( header ) 
+				{
+					header.style.height = '120px';
+					header.style.background = '#646371';
+					header.style.overflow = 'visible';
+				}, 120, header );
+			}
+		} 
+		else 
+		{
+			header.style.height = header_notice.offsetHeight + 'px';
+			header.style.background = 'transparent';
+			setTimeout( function( header, header_notice ) 
+			{
+				if ( document.querySelector( '#wpadminbar' ) ) 
+				{
+					admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+					header_notice.style.position = 'fixed';
+					
+					if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+					{
+						header_notice.style.top = 0;
+					}
+					else
+					{
+						header_notice.style.top = admin_height + 'px';
+					}
+				}
+				else
+				{
+					header_notice.style.position = 'fixed';
+					header_notice.style.top = 0;
+					header.style.overflow = 'visible';
+				}
+				header.classList.remove( 'sticky' );
+			}, 120, header, header_notice );
+
+		}
+
+		if ( window.pageYOffset == 0 ) 
+		{
+			header.removeAttribute( 'style' );
+		}
 	}
 
 	function stickySummary() 
@@ -96,13 +227,82 @@
 
 		if ( window.innerWidth > 792 && win_y - summary_section.parentElement.offsetTop > target_scrolling ) 
 		{
-			summary_section.style.position = 'relative';
+			summary_section.classList.remove( 'sticky-on' );
 			summary_section.style.top = target_scrolling - parseInt( window.getComputedStyle( summary_section ).marginTop ) + 'px';
 		}
-		else
+		else if ( window.innerWidth > 792 )
 		{
-			summary_section.style.position = 'sticky';
+			summary_section.classList.add( 'sticky-on' );
 			summary_section.style.top = 15 + 'px';
+		}
+	}
+	
+	if ( document.querySelector( '.wonka-single-product-img' ) ) 
+	{
+		var img_area = document.querySelector( '.wonka-single-product-img' );
+		var img_area_top = img_area.parentElement.offsetTop;
+	}
+
+	function thumbnail_scroll(e)
+	{
+		if ( document.querySelector( '.flex-control-nav' ) ) 
+		{
+			var control_list = document.querySelector( '.flex-control-nav' ),
+			win_y = window.pageYOffset,
+			control_wrapper,
+			thumbnail_count = control_list.childElementCount,
+			flex_active = document.querySelector( '.flex-active' ),
+			this_body = document.body,
+			this_html = document.documentElement;
+
+			if ( window.pageYOffset > last_scroll_top ) {
+				scroll_direction = 'scrolled down';
+			}
+
+			if ( window.pageYOffset < last_scroll_top )
+			{
+				scroll_direction = 'scrolled up';
+			}
+
+			last_scroll_top = window.pageYOffset;
+
+			if ( !document.querySelector( 'div.flex-control-wrapper' ) ) 
+			{
+				control_wrapper = document.createElement( 'DIV' );
+				control_wrapper.setAttribute( 'class', 'flex-control-wrapper');
+				control_list.parentElement.insertBefore( control_wrapper, control_list );
+				control_wrapper.appendChild( control_list );
+			}
+
+			if ( window.pageYOffset > img_area_top && scroll_direction == 'scrolled down' && flex_active.parentElement.nextElementSibling != null ) 
+			{
+				this_body.scrollTop = img_area_top;
+				this_html.scrollTop = img_area_top;
+
+				if ( flex_active.parentElement.nextElementSibling != null && one_click ) 
+				{
+					one_click = false;
+					setTimeout( function() {
+						flex_active.parentElement.nextElementSibling.firstElementChild.click();
+						one_click = true;
+					}, 250);
+				}
+			}
+
+			if ( window.pageYOffset < img_area_top && scroll_direction == 'scrolled up' && flex_active.parentElement.previousElementSibling != null )
+			{
+				this_body.scrollTop = img_area_top;
+				this_html.scrollTop = img_area_top;
+
+				if ( flex_active.parentElement.previousElementSibling != null && one_click ) 
+				{
+					one_click = false;
+					setTimeout( function() {
+						flex_active.parentElement.previousElementSibling.firstElementChild.click();
+						one_click = true;
+					}, 250);
+				}
+			}
 		}
 	}
 	/*=====  End of This is area for writing callable functions  ======*/
@@ -126,54 +326,89 @@
 	===================================================================*/
 	window.onload = function()
 	{
-		
+		/*===========================================================================================
+		=            This makes the adjustment of space for the footer to show correctly            =
+		===========================================================================================*/
+		footer_adjustment();
+		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
+
 		/*==========================================
 		=            Search btn actions            =
 		==========================================*/
-		var search_btn = document.querySelector( 'li.top-menu-s-btn i' ),
+		var search_btn = document.querySelectorAll( 'li.top-menu-s-btn i' ),
 		close_btn = document.querySelector( 'span.closebtn' );
 		
-		search_btn.addEventListener( 'click', openSearch );
+
+		search_btn.forEach( function( item, i ) {
+			item.addEventListener( 'click', openSearch );
+		} );
 		close_btn.addEventListener( 'click', closeSearch );
 		/*=====  End of Search btn actions  ======*/
 		
 		/*=========================================
 		=            For Sticky Header            =
 		=========================================*/
-		if ( document.querySelector( '.shop-section' ) ) 
+		if ( document.querySelector( '.home' ) ) 
 		{
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function() { stickyStatus(); };
 		}
 		/*=====  End of For Sticky Header  ======*/
 		
-		/*============================================
-		=            For product summmary            =
-		============================================*/
-		if ( document.querySelector( '.single-product .summary' ) ) 
+		/*===============================================
+		=            For single product page            =
+		===============================================*/
+		if ( document.querySelector( '.single-product' ) ) 
 		{
 			// When the user scrolls the page, execute stickyStatus 
-			window.onscroll = function() { stickySummary(); };
+			window.onscroll = function(e) 
+			{ 
+				thumbnail_scroll(e);
+				stickySummary(e); 
+			};
 		}
-		/*=====  End of For product summmary  ======*/
+		/*=====  End of For single product page  ======*/
 
+		/*================================================================
+		=            For setting up sliders on the front page            =
+		================================================================*/
 		if ( document.querySelector( '.header-slider-section' ) ) 
 		{
 			slide_adjustment();
 			
-			// $( '.top-page-slider' ).slick({
-			//   dots: true,
-			//   infinite: true,
-			//   adaptiveHeight: false,
-			//   speed: 300,
-			//   slidesToShow: 1,
-			//   slidesToScroll: 1,
-			// });
+			$( '.top-page-slider-wrap' ).slick({
+			  slidesToShow: 1,
+			  slidesToScroll: 1,
+			  autoplay: true,
+			  autoplaySpeed: 7000,
+			  fade: true,
+			  dots: true,
+			  arrows: true,
+			  appendArrows: $( '.top-page-slider-wrap .slick-list' ),
+			  appendDots: $( '.top-page-slider-wrap .slick-list' ),
+			  prevArrow: '<button class="slick-prev" type="button"></button>',
+			  nextArrow: '<button class="slick-next" type="button"></button>',
+			});
 		}
 
-		footer_adjustment();
-
-
+		if ( document.querySelector( '.desirable-slider-section' ) ) 
+		{
+			
+			$( '.cta-section-slider-wrap' ).slick({
+			  slidesToShow: 1,
+			  slidesToScroll: 1,
+			  autoplay: true,
+			  autoplaySpeed: 7000,
+			  fade: true,
+			  dots: true,
+			  arrows: true,
+			  appendArrows: $( '.cta-section-slider-wrap .slick-list' ),
+			  appendDots: $( '.cta-section-slider-wrap .slick-list' ),
+			  prevArrow: '<button class="slick-prev" type="button"></button>',
+			  nextArrow: '<button class="slick-next" type="button"></button>',
+			});
+		}
+		/*=====  End of For setting up sliders on the front page  ======*/
 
 		// ===== Scroll to Top ==== 
 		$(window).scroll(function() {

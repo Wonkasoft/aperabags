@@ -17,21 +17,28 @@
 
 defined( 'ABSPATH' ) || exit;
 
+$count = WC()->cart->cart_contents_count;
+
 do_action( 'woocommerce_before_cart' ); ?>
 
+<div class="row wonka-cart-row">
+	<div class="col col-12 col-md-8">
 <form class="woocommerce-cart-form form-inline" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
 	<?php do_action( 'woocommerce_before_cart_table' ); ?>
 
 	<table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents table table-striped table-hover" cellspacing="0">
-		<thead>
+		<thead class="thead-dark">
+			<tr>
+				<th colspan="6"><?php _e('Your Cart (' . $count . ')' , 'woocommerce'); ?></th>
+			</tr>
+		</thead>
+		<tbody>
 			<tr>
 				<th scope="col" class="product-name" colspan="3"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
 				<th scope="col" class="product-price"><?php esc_html_e( 'Price', 'woocommerce' ); ?></th>
 				<th scope="col" class="product-quantity"><?php esc_html_e( 'Quantity', 'woocommerce' ); ?></th>
 				<th scope="col" class="product-subtotal"><?php esc_html_e( 'Total', 'woocommerce' ); ?></th>
 			</tr>
-		</thead>
-		<tbody>
 			<?php do_action( 'woocommerce_before_cart_contents' ); ?>
 
 			<?php
@@ -130,13 +137,6 @@ do_action( 'woocommerce_before_cart' ); ?>
 			<tr>
 				<td colspan="6" class="actions">
 
-					<?php if ( wc_coupons_enabled() ) { ?>
-						<div class="coupon form-group">
-							<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
-							<?php do_action( 'woocommerce_cart_coupon' ); ?>
-						</div>
-					<?php } ?>
-
 					<button type="submit" class="button wonka-btn" name="update_cart" value="<?php esc_attr_e( 'Update cart', 'woocommerce' ); ?>"><?php esc_html_e( 'Update cart', 'woocommerce' ); ?></button>
 
 					<?php do_action( 'woocommerce_cart_actions' ); ?>
@@ -150,9 +150,14 @@ do_action( 'woocommerce_before_cart' ); ?>
 	</table>
 	<?php do_action( 'woocommerce_after_cart_table' ); ?>
 </form>
-
+</div>
+<div class="col col-12 col-md-4">
 <div class="cart-collaterals">
 	<?php
+
+		// Remove Cross Sells From Default Position 
+		// moving to after cart in woocommerce.php file
+		remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
 		/**
 		 * Cart collaterals hook.
 		 *
@@ -161,6 +166,8 @@ do_action( 'woocommerce_before_cart' ); ?>
 		 */
 		do_action( 'woocommerce_cart_collaterals' );
 	?>
-</div>
+</div><!-- .cart-collaterals -->
+</div><!-- .col -->
+</div><!-- .row -->
 
 <?php do_action( 'woocommerce_after_cart' ); ?>

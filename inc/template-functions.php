@@ -115,7 +115,7 @@ function the_mods_for_section( $section ) {
 
 	if ( $section == 'cause' ) :
 		
-		if ( !empty( get_theme_mod( 'cause_section_header' ) ) ) :
+		if ( !empty( get_theme_mod( 'cause_section_title' ) ) ) :
 
 			$count++;
 			$cause 									=	new stdClass();
@@ -220,7 +220,6 @@ function the_mods_for_section( $section ) {
 	return false;
 }
 add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
-
 
 /*====================================================
 =            Customizing of Gravity forms            =

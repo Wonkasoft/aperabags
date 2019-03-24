@@ -26,16 +26,15 @@ get_header();
 		/* This checks for slider object in order to parse slider section */
 		if ( !empty( $top_slider ) ) : ?>
 			<section class="row header-slider-section">
-				<div class="top-page-slider">
+				<div class="top-page-slider-wrap">
 				<?php 
 				/* Foreach loop to build slider according to slides entered in the customizer */
 				foreach ( $top_slider->slides as $slide ) :
 					
 					/* Checks for an img set in the slide object */
 					if ( !empty( $slide->slide_img ) ) : ?>
-						<div class="slider-slide">
-						<div class="top-page-slide" style="background-image:url('<?php echo $slide->slide_img; ?>');">
-
+						<div class="top-page-slide">
+							<div class="top-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 							<?php 
 							/* Checks for an message set in the slide object */
 							if ( !empty( $slide->slide_header_message ) ) : ?>
@@ -54,9 +53,8 @@ get_header();
 								</div><!-- .img-header-text-wrap -->
 								
 							<?php endif; ?>
-
+							</div><!-- .top-slide-img-holder -->
 						</div><!-- .top-page-slide -->
-					</div><!-- .slider-slide -->
 					<?php endif; ?>
 
 				<?php endforeach; ?>
@@ -84,10 +82,15 @@ get_header();
 					<div class="row">
 						<div class="col col-12">
 							<?php
-								$shop_shortcode = '[recent_products per_page="$shop_section->shop_mods->shop_num_of_products" columns="$shop_section->shop_mods->shop_product_per_row"]';
+								$shop_shortcode = '[recent_products per_page="' . $shop_section->shop_mods->shop_num_of_products . '" columns="' . $shop_section->shop_mods->shop_product_per_row . '"]';
 								echo do_shortcode( $shop_shortcode );
 							?>
 						</div><!-- .col-12 -->
+					</div><!-- .row -->
+					<div class="row">
+						<div class="col col-12 text-center">
+							<a href="/product-category/all-bags/" class="wonka-btn" target="_self"><?php _e( __( 'Shop More' ) ) ?></a>
+						</div><!-- .col -->
 					</div><!-- .row -->
 				</div><!-- .col-12 -->
 			</section><!-- .shop-section -->
@@ -96,14 +99,15 @@ get_header();
 			$cta_slider = get_section_mods( 'cta' );
 			if ( !empty( $cta_slider ) ) : ?>
 				<section class="row desirable-slider-section">
+					<div class="cta-section-slider-wrap">
 					<?php 
 					/* Foreach loop to build slider according to slides entered in the customizer */
 					foreach ( $cta_slider->slides as $slide ) :
 						
 						/* Checks for an img set in the slide object */
 						if ( !empty( $slide->slide_img ) ) : ?>
-							<div class="cta-section-slider" style="background-image:url('<?php echo $slide->slide_img; ?>');">
-
+							<div class="cta-section-slide">
+								<div class="cta-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 								<?php 
 								/* Checks for an message set in the slide object */
 								if ( !empty( $slide->slide_text_message ) ) : ?>
@@ -123,10 +127,11 @@ get_header();
 									
 								<?php endif; ?>
 
-							</div><!-- .col-12 -->
+								</div><!-- .cta-slide-img-holder -->
+							</div><!-- .cta-section-slide -->
 						<?php endif; ?>
 					<?php endforeach; ?>
-
+					</div><!-- .cta-section-slider-wrap -->
 				</section><!-- .desirable-slider-section -->
 		<?php endif; ?>
 		<?php do_action( 'get_mods_before_section', 'cause' );
@@ -177,14 +182,19 @@ get_header();
 						endif;
 						?>
 						</div>
-						<a class="btn btn-primary wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
+						<?php
+						if ( !empty( $about_section->about_the_brand->about_the_brand_button_link ) ) : ?>
+							<a class="btn btn-primary wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
+						<?php endif; ?>
 					</div><!-- .about-components-wrap -->
 				</div>
+				<?php if ( !empty( $about_section->about_the_brand->about_the_brand_second_image ) ) : ?>
 				<div class="col col-12 col-md-5 text-center">
 					<div class="img-container">
 						<img class="about-second-image" src="<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />
 					</div>
 				</div>
+				<?php endif; ?>
 			</section>
 		<?php endif; ?>
 

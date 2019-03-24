@@ -56,7 +56,7 @@ table.shop_table_responsive {
 
 				.coupon {
 					float: left;
-					width: 50%;
+					width: 60%;
 
 					.wonka-btn {
 						margin-left: -3px;
@@ -79,6 +79,13 @@ table.shop_table_responsive {
 				}
 			}
 		}
+	}
+}
+
+table {
+
+	th {
+		text-transform: uppercase;
 	}
 }
 

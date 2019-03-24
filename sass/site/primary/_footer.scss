@@ -1,3 +1,8 @@
+div#footer-spacer {
+	height: 400px;
+	@include prefix( transition, $trans_25, webkit moz o);
+}
+
 footer#colophon {
 	position: absolute;
 	bottom: 0;
@@ -5,7 +10,9 @@ footer#colophon {
 	padding-top: 15px;
 	background: $footer__background;
 	color: #bfc0c2;
+	z-index: 999;
 	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+	@include prefix( transition, $trans_25, webkit moz o);
 
 	a {
 		color: #bfc0c2;
@@ -70,11 +77,11 @@ footer#colophon {
 					padding: 8px 15px;
 					font-weight: 600;
 					width: 100%;
-					border-radius: 2px;
+					border-radius: 100px 0 0 100px;
 					height: 49px;
 					letter-spacing: 1px;
 					width: 100%;
-					@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+					@include prefix( transition, $trans_25, webkit moz o);
 
 					&::placeholder {
 						font-style: italic;
@@ -87,18 +94,22 @@ footer#colophon {
 		.gform_footer {
 			width: 100%;
 
-			input[type=submit] {
+			input[type=submit].wonka-btn {
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				font-family: $font__main;
 				font-weight: 800;
+				color: #bfc0c2;
 				margin-left: 0;
 				width: 100%;
+				height: 49px;
+				border-radius: 0 100px 100px 0;
 				@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
 
 				&:hover {
 					color: #eeeeee;
+					background: #ffe6b2;
 					@include prefix( text-shadow, 1px 1px 3px rgba(#000, 0.8 ), o moz webkit );
 				}
 			}

@@ -54,6 +54,8 @@ ul.products {
 					height: 100%;
 					max-height: 570px;
 					width: auto;
+					-webkit-filter: drop-shadow( 1px 1px 2px rgba(#000, .6 ));
+					filter: drop-shadow( 1px 1px 2px rgba(#000, .6 ) );
 				}
 			}
 
@@ -70,10 +72,11 @@ ul.products {
 				display: inline-block;
 				width: 100%;
 				text-align: center;
-				color: #e81409;
+				color: #333333;
 				@include font-size( 1.3 );
 
 				ins {
+					color: #e81409;
 					background: transparent;
 				}
 			}

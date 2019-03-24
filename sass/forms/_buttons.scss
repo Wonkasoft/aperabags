@@ -4,15 +4,15 @@ button:not(.menu-toggle),
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-	border: none;
-	background: $color__background-button;
 	text-transform: uppercase;
 	color: rgba(0, 0, 0, .8);
 	font-weight: 700;
 	line-height: 1.2;
+	text-align: center;
+	background: rgba( #fff, .3 );
 	@include font-size( 1 );
 	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
-	@include prefix( text-shadow, 1px 1px 4px rgba(#000, 0 ), o moz webkit );
+	@include prefix( text-shadow, 1px 1px 3px rgba(#000, 0 ), o moz webkit );
 	@include prefix( transition, $trans_25, webkit moz o);
 
 
@@ -21,15 +21,14 @@ input[type="submit"] {
 	}
 
 	&:hover {
-		background: #238cfe;
+		background: #FFE6B2;
 		color: rgba(255, 255, 255, .8);
-		@include prefix( text-shadow, 1px 1px 4px rgba(#000, .6 ), o moz webkit );
+		@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
 	}
 
 	&:active,
 	&:focus {
 		outline: 0;
-		border: none;
 	}
 }
 
@@ -38,9 +37,11 @@ button.wonka-btn,
 input[type="button"].wonka-btn,
 input[type="reset"].wonka-btn,
 input[type="submit"].wonka-btn {
-	border-radius: 2px;
-	padding: 15px 25px;
-	background: $color__background-button;
+	padding: .5rem 1rem;
+	text-align: center;
+	border-radius: 100px;
+	background: rgba( #fff, .3 );
+    border: 3px solid #FFE6B2;
 }
 
 

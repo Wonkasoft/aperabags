@@ -1,15 +1,18 @@
 .woocommerce-cart,
 .woocommerce-checkout,
-.woocommerce-page:not(.single-product) {
+.woocommerce-page {
+	
 	#main {
 		margin: 15px auto;
-		max-width: 1180px;
 
 		.woocommerce-notice,
-		.woocommerce-info {
+		.woocommerce-info,
+		.woocommerce-message {
 			margin: 15px 0;
-			padding: 4px 15px;
+			padding: 15px;
 			color: #333333;
+			background-color: transparent;
+			@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 			a {
 				color: rgba( 0, 0, 0, .8 );
@@ -26,6 +29,13 @@
 		====================================================*/
 		form.wonka-form-inline {
 			justify-content: flex-end;
+		}
+
+		p.woocommerce-result-count {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			height: 38px;
 		}
 		/*=====  End of This is for the archive page  ======*/
 		
@@ -71,6 +81,14 @@
 			.woocommerce-terms-and-conditions-wrapper {
 				padding: 0 8px;
 			}
+
+			ul.payment_methods .stripe-card-group {
+				width: 100%;
+			}
+
+			.wc-stripe-elements-field {
+				width: 100%;
+			}
 		}
 		
 		
@@ -79,32 +97,143 @@
 		/*===========================================================
 		=            This is the totals on the cart page            =
 		===========================================================*/
+		a.continue-shopping {
+			margin: 15px 0;	
+			display: inline-block;
+		}
+
 		div.cart-collaterals {
 			position: relative;
 			text-align: right;
-			float: right;
-			max-width: 400px;
 
 			table {
 				padding: 0 15px;
 
-				tr {
+				thead {
 
-					th {
-						text-align: right;
+					tr {
+
+						th {
+							text-align: left;
+						}
 					}
+				}
 
-					td {
-						text-align: right;
+				tbody {
+
+					tr {
+
+						th {
+							text-align: left;
+						}
+
+						td {
+							text-align: right;
+						}
+
+						&.cart-promo {
+
+							div.activate-panel {
+								cursor: pointer;
+
+								.panel-title {
+									position: relative;
+									display: flex;
+									align-items: center;
+									justify-content: space-between;
+
+									&:after {
+										content: "+";
+										display: inline-block;
+										@include font-size( 1.6 );
+										@include prefix( transition, all .3s ease-in-out, o moz webkit );
+									}
+								}
+
+								&[aria-expanded=true] {
+
+									.panel-title {
+
+										&:after {
+											content: "-";
+										}
+									}
+								}
+							}
+
+							input {
+								width: 50%;
+							}
+						}
 					}
 				}
 			}
 
 			a.wonka-btn {
 				position:relative;
-				float: right;
+				display: inline-block;
+				margin: 5px auto;
+				width: 100%;
+				text-align: center;
+			}
+
+			#pay_with_amazon {
+				margin: 8px auto;
+				text-align: center;
 			}
 		}
 		/*=====  End of This is the totals on the cart page  ======*/
+
+		&.page {
+			max-width: 1180px;
+
+			ul {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			header.entry-header {
+				padding: 15px;
+			}
+
+			div.entry-content {
+				margin: 0;
+				padding: 15px;
+				border: 1px solid rgba( #000, .2 );
+			}
+		}
+
+		&.my-account {
+
+			label.woocommerce-form__label-for-checkbox {
+				margin: 15px 0;
+				width: 100%;
+			}
+		}
+	}
+
+	&.archive {
+
+		main.product {
+			max-width: 1180px;
+		}
+
+		div.wonka-row {
+
+			ul.products {
+
+				.star-rating {
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+.woocommerce-cart {
+
+	.entry-title {
+		display: none;
 	}
 }

@@ -1,6 +1,22 @@
 /**
  * Checkout
  */
+.wc_payment_method {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+
+	label {
+		width: 90%;
+		margin-left: 8px;
+
+		a {
+			margin-left: 8px;
+		}
+	}
+}
+
 @media screen and (min-width: 768px) {
 	.col2-set {
 		.form-row-first {

@@ -3,73 +3,98 @@
 =========================================*/
 
 /*----------  Header Slider  ----------*/
-.header-slider-section {
+section.header-slider-section {
+	position: relative;
 	height: 650px;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-	.slider-slide {
-		width: 100%;
-		height: 100%;
-	}
-	.top-page-slider {
-		height: 100%;
-		width: 100%;
-	}
+	.top-page-slider-wrap {
+		position: relative;
+	    height: 100%;
+	    width: 100%;
 
-	.top-page-slide {
-		background-position: center 0;
-		background-size: cover;
-		background-attachment: fixed;
-		background-repeat: no-repeat;
-		width: 100%;
-		height: 100%;
-		@include prefix( transition, all .3s ease-in-out, o moz webkit );
-
-		.img-header-text-wrap {
-			margin: auto;
-			width: 75%;
+		.top-page-slide {
+			position: relative;
+			display: none;
+			width: 100%;
 			height: 100%;
-			align-items: center;
+			@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-			.img-header-text-container {
-				display: flex;
-				flex-direction: column;
+			div.top-slide-img-holder {
+				background-position: center 0;
+				background-attachment: fixed;
+				background-size: cover;
+				background-repeat: no-repeat;
+				width: 100%;
+				height: 100%;
+				@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-				.set-align-left {
-					align-self: flex-start;
+				.img-header-text-wrap {
+					margin: auto;
+					width: 75%;
+					height: 100%;
+					align-items: center;
+				    max-width: 1200px;
+
+					.img-header-text-container {
+						display: flex;
+						flex-direction: column;
+
+						.set-align-left {
+							align-self: flex-start;
+						}
+
+						.set-align-center {
+							align-self: center;
+						}
+
+						.set-align-right {
+							align-self: flex-end;
+						}
+
+						.text-box {
+							color: #ffffff;
+							max-width: 425px;
+							@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
+
+							h2 {
+								margin: 0 auto;
+								font-weight: 800;
+							}
+						}
+					}	
 				}
+			}
 
-				.set-align-center {
-					align-self: center;
+			&:first-child {
+				display: block;
+			}
+		}
+
+		.slick-list {
+			position: relative;
+			height: 100%;
+
+			.slick-track {
+				height: 100%;
+				
+				.top-page-slide {
+					display: block;
 				}
-
-				.set-align-right {
-					align-self: flex-end;
-				}
-
-				.text-box {
-					color: #ffffff;
-					max-width: 425px;
-					@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
-
-					h2 {
-						margin: 0 auto;
-						font-weight: 800;
-					}
-				}
-			}	
+			}
 		}
 	}
 }
 /*----------  End Header Slider  ----------*/
 
 /*----------  Shop Section  ----------*/
-.shop-section {
+section.shop-section {
 	background: rgba( 255, 255, 255, .9 );
 	background-blend-mode: screen;
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: center center;
+	background-position: center;
+	padding: 15px 0;
 
 	.star-rating {
 		display: none;
@@ -78,65 +103,100 @@
 /*----------  End Shop Section  ----------*/
 
 /*----------  CTA Section  ----------*/
-.desirable-slider-section {
+section.desirable-slider-section {
+	position: relative;
 	height: 650px;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-	.cta-section-slider {
-		background-position: center 0;
-		background-size: cover;
-		background-attachment: fixed;
-		background-repeat: no-repeat;
-		width: 100%;
-		height: 100%;
-		@include prefix( transition, all .3s ease-in-out, o moz webkit );
+	.cta-section-slider-wrap {
+		position: relative;
+	    height: 100%;
+	    width: 100%;
 
-		.img-header-text-wrap {
-			margin: 11.6% auto 0;
-			width: 75%;
-			height: 75%;
-			align-items: center;
+		.cta-section-slide {
+			position: relative;
+			display: none;
+			width: 100%;
+			height: 100%;
+			@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-			.img-header-text-container {
-				display: flex;
-				flex-direction: column;
+			div.cta-slide-img-holder {
+				background-position: center 0;
+				background-attachment: fixed;
+				background-size: cover;
+				background-repeat: no-repeat;
+				width: 100%;
+				height: 100%;
+				@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-				.set-align-left {
-					align-self: flex-start;
+				.img-header-text-wrap {
+					position: relative;
+					margin: auto;
+					width: 75%;
+					height: 100%;
+					align-items: flex-end;
+
+					.img-header-text-container {
+						margin: auto;
+						margin-bottom: 15%;
+						display: flex;
+						flex-direction: column;
+
+						.set-align-left {
+							align-self: flex-start;
+						}
+
+						.set-align-center {
+							align-self: center;
+						}
+
+						.set-align-right {
+							align-self: flex-end;
+						}
+
+						.text-box {
+							color: #ffffff;
+							max-width: 100%;
+							@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
+
+							h2 {
+								color: #ffffff;
+								white-space: wrap;
+								font-weight: 800;
+							}
+
+							@include media-breakpoint-up( md ) {
+								max-width: 600px;
+								white-space: nowrap;
+							}
+						}
+					}	
 				}
+			}
 
-				.set-align-center {
-					align-self: center;
+			&:first-child {
+				display: block;
+			}
+		}
+
+		.slick-list {
+			position: relative;
+			height: 100%;
+
+			.slick-track {
+				height: 100%;
+				
+				.top-page-slide {
+					display: block;
 				}
-
-				.set-align-right {
-					align-self: flex-end;
-				}
-
-				.text-box {
-					color: #ffffff;
-					max-width: 100%;
-					@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
-
-					h2 {
-						color: #ffffff;
-						white-space: wrap;
-						font-weight: 800;
-					}
-
-					@include media-breakpoint-up( md ) {
-						max-width: 600px;
-						white-space: nowrap;
-					}
-				}
-			}	
+			}
 		}
 	}
 }
 /*----------  End CTA Section  ----------*/
 
 /*----------  Our Cause Section  ----------*/
-.our-cause-section {
+section.our-cause-section {
 	max-width: 1180px;
 	margin: 15px auto;
 
@@ -185,7 +245,7 @@
 /*===============================================
 =            About the Brand section            =
 ===============================================*/
-.about-brand-section {
+section.about-brand-section {
 	max-width: 1180px;
 	margin: 15px auto;
 
@@ -194,20 +254,29 @@
 		max-width: 450px;
 	}
 
-	.img-container {
+	div.img-container {
 		margin: 15px auto;
 		display: flex;
 		align-items: center;
-		max-width: 380px;
+		max-width: 450px;
 		height: auto;
+		overflow: hidden;
 		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 		.about-second-image {
-
+			width: 450px;
 		}
 
 		@include media-breakpoint-up( md ) {
-			height: 570px;
+			height: 525px;
+		}
+	}
+
+	.about-brand-video {
+
+		iframe {
+			width: 560px;
+			height: 250px;
 		}
 	}
 }
@@ -216,7 +285,7 @@
 /*======================================
 =            Social section            =
 ======================================*/
-.social-section {
+section.social-section {
 	margin: 15px auto;
 }
 /*=====  End of Social section  ======*/

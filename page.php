@@ -12,11 +12,15 @@
  * @package Apera_Bags
  */
 
+global $post;
+$post_type = ( !empty( $post->post_type ) ) ? ' ' . $post->post_type: '';
+$post_slug = ( !empty( $post->post_name ) ) ? ' ' . $post->post_name: '';
+
 get_header();
 ?>
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
+		<main id="main" class="site-main<?php _e( $post_slug ); _e( $post_type ); ?>">
 
 		<?php
 		while ( have_posts() ) :
