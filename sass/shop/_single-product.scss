@@ -365,7 +365,10 @@
 					}
 					table.shop_attributes {
 						border: 1px solid rgba( #000, .2 );
-						padding: 8px;
+						th,
+						td {
+							padding: 8px;
+						}
 					}
 				}
 			}
