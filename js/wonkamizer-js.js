@@ -245,60 +245,63 @@
 
 	function thumbnail_scroll(e)
 	{
-		var control_list = document.querySelector( '.flex-control-nav' ),
-		win_y = window.pageYOffset,
-		control_wrapper,
-		thumbnail_count = control_list.childElementCount,
-		flex_active = document.querySelector( '.flex-active' ),
-		this_body = document.body,
-		this_html = document.documentElement;
-
-		if ( window.pageYOffset > last_scroll_top ) {
-			scroll_direction = 'scrolled down';
-		}
-
-		if ( window.pageYOffset < last_scroll_top )
+		if ( document.querySelector( '.flex-control-nav' ) ) 
 		{
-			scroll_direction = 'scrolled up';
-		}
+			var control_list = document.querySelector( '.flex-control-nav' ),
+			win_y = window.pageYOffset,
+			control_wrapper,
+			thumbnail_count = control_list.childElementCount,
+			flex_active = document.querySelector( '.flex-active' ),
+			this_body = document.body,
+			this_html = document.documentElement;
 
-		last_scroll_top = window.pageYOffset;
-
-		if ( !document.querySelector( 'div.flex-control-wrapper' ) ) 
-		{
-			control_wrapper = document.createElement( 'DIV' );
-			control_wrapper.setAttribute( 'class', 'flex-control-wrapper');
-			control_list.parentElement.insertBefore( control_wrapper, control_list );
-			control_wrapper.appendChild( control_list );
-		}
-
-		if ( window.pageYOffset > img_area_top && scroll_direction == 'scrolled down' && flex_active.parentElement.nextElementSibling != null ) 
-		{
-			this_body.scrollTop = img_area_top;
-			this_html.scrollTop = img_area_top;
-
-			if ( flex_active.parentElement.nextElementSibling != null && one_click ) 
-			{
-				one_click = false;
-				setTimeout( function() {
-					flex_active.parentElement.nextElementSibling.firstElementChild.click();
-					one_click = true;
-				}, 250);
+			if ( window.pageYOffset > last_scroll_top ) {
+				scroll_direction = 'scrolled down';
 			}
-		}
 
-		if ( window.pageYOffset < img_area_top && scroll_direction == 'scrolled up' && flex_active.parentElement.previousElementSibling != null )
-		{
-			this_body.scrollTop = img_area_top;
-			this_html.scrollTop = img_area_top;
-
-			if ( flex_active.parentElement.previousElementSibling != null && one_click ) 
+			if ( window.pageYOffset < last_scroll_top )
 			{
-				one_click = false;
-				setTimeout( function() {
-					flex_active.parentElement.previousElementSibling.firstElementChild.click();
-					one_click = true;
-				}, 250);
+				scroll_direction = 'scrolled up';
+			}
+
+			last_scroll_top = window.pageYOffset;
+
+			if ( !document.querySelector( 'div.flex-control-wrapper' ) ) 
+			{
+				control_wrapper = document.createElement( 'DIV' );
+				control_wrapper.setAttribute( 'class', 'flex-control-wrapper');
+				control_list.parentElement.insertBefore( control_wrapper, control_list );
+				control_wrapper.appendChild( control_list );
+			}
+
+			if ( window.pageYOffset > img_area_top && scroll_direction == 'scrolled down' && flex_active.parentElement.nextElementSibling != null ) 
+			{
+				this_body.scrollTop = img_area_top;
+				this_html.scrollTop = img_area_top;
+
+				if ( flex_active.parentElement.nextElementSibling != null && one_click ) 
+				{
+					one_click = false;
+					setTimeout( function() {
+						flex_active.parentElement.nextElementSibling.firstElementChild.click();
+						one_click = true;
+					}, 250);
+				}
+			}
+
+			if ( window.pageYOffset < img_area_top && scroll_direction == 'scrolled up' && flex_active.parentElement.previousElementSibling != null )
+			{
+				this_body.scrollTop = img_area_top;
+				this_html.scrollTop = img_area_top;
+
+				if ( flex_active.parentElement.previousElementSibling != null && one_click ) 
+				{
+					one_click = false;
+					setTimeout( function() {
+						flex_active.parentElement.previousElementSibling.firstElementChild.click();
+						one_click = true;
+					}, 250);
+				}
 			}
 		}
 	}
