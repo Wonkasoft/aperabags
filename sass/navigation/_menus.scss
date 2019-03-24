@@ -267,6 +267,7 @@
 	width: 20px;
 	height: 20px;
     line-height: 1;
+    text-shadow: none;
 	@include font-size( .9 );
 	@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
 }
