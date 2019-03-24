@@ -302,52 +302,59 @@
 		section.product-tags-section {
 			max-width: 1200px;
 			margin: 15px auto;
-			border: 1px solid rgba( #000, .2 );
+			padding: 15px;
 
 			div.wonka-tabs-wrapper {
 
-			}
+				section.wonka-section-reviews {
+					padding: 15px;
+					border: 1px solid rgba( #000, .2 );
 
-			section.wonka-section-reviews {
-
-				#submit {
-					border-radius: 2px;
-					padding: 15px 25px;
-				}
-			}
-
-			section.wonka-section-product-statement {
-
-				ul {
-					margin: 0;
-					padding-left: 16px;
-				}
-
-				div.row {
-
-					.col {
-						margin-bottom: 15px;
+					#submit {
+						border-radius: 2px;
+						padding: 15px 25px;
 					}
 				}
 
-				div.wonka-row-product-statement {
+				section.wonka-section-product-statement {
+					padding: 15px;
+					border: 1px solid rgba( #000, .2 );
 
-					p {
-						margin: 0 auto;
-						max-width: 50%;
+					ul {
+						margin: 0;
+						padding-left: 16px;
+					}
+
+					div.row {
+
+						.col {
+							margin-bottom: 15px;
+						}
+					}
+
+					div.wonka-row-product-statement {
+						padding: 15px;
+
+						p {
+							margin: 0 auto;
+							max-width: 50%;
+						}
+					}
+
+					div.wonka-row-product-specs {
+						padding: 15px;
+
+						.col:not(:last-of-type) {
+							border-right: 1px solid rgba(0,0,0,.2);
+						}
 					}
 				}
 
-				div.wonka-row-product-specs {
+				section.wonka-section-additional-information {
+					border: 1px solid rgba( #000, .2 );
+					padding: 15px;
 
-					.col:not(:last-of-type) {
-						border-right: 1px solid rgba(0,0,0,.2);
-					}
 				}
-			}
-
-			section.wonka-section-additional-information {
-
 			}
 		}
 
@@ -355,6 +362,7 @@
 			flex: 1 0 100%;
 			max-width: 1200px;
 			margin: 15px auto;
+			padding: 15px;
 			border: 1px solid rgba( #000, .2 );
 		}
 

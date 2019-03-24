@@ -321,7 +321,7 @@ function wonka_product_tabs_retitle( $tabs ) {
 	$tabs['reviews']['priority'] = 10;			// Reviews first
 	$tabs['description']['priority'] = 20;			// Description second
 	$tabs['additional_information']['priority'] = 30;	// Additional information third
-	$tabs['description']['title'] = __( 'Product Overview' );
+	$tabs['description']['title'] = __( 'Product Statement' );
 
 	return $tabs;
 }
