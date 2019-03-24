@@ -10,7 +10,7 @@ input[type="submit"] {
 	line-height: 1.2;
 	text-align: center;
 	border-radius: 100px;
-	background: transparent;
+	background: rgba( #fff, .2 );
     border: 3px solid #FFE6B2;
 	@include font-size( 1 );
 	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
