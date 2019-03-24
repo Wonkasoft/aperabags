@@ -12,7 +12,7 @@
 
 	button {
 		position: absolute;
-		top: -35%;
+		top: -3.2rem;
 		left: -39px;
 		background: transparent;
 		border: none;
@@ -59,9 +59,8 @@
 		}
 
 		@include media-breakpoint-up( sm ) {
-			top: 50%;
+			top: -4.2rem;
 		}
-
 	}
 
 	> div {
