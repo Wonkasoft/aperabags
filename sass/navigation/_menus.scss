@@ -257,21 +257,6 @@
 /*========================================
 =            Cart Menu Styles            =
 ========================================*/
-.wonka-badge {
-	display: flex;
-	align-items: flex-start;
-	justify-content: center;
-	font-family: $font__main_jose;
-	font-weight: 800;
-	background: #ffffff;
-	width: 20px;
-	height: 20px;
-    line-height: 1;
-    text-shadow: none;
-	@include font-size( .9 );
-	@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
-}
-
 .menu-cart-menu-container {
 	z-index: 99;
 
@@ -317,6 +302,22 @@
 				@media only screen and ( min-width: 768px ) and ( -webkit-min-device-pixel-ratio: 2 ),
 				(min-resolution: 192dpi) and ( min-width: 768px ) {
 					padding: 0.5rem 0;
+				}
+
+				.wonka-badge {
+					display: flex;
+					align-items: flex-start;
+					justify-content: center;
+					font-family: $font__main_jose;
+					font-weight: 800;
+					background: #ffffff;
+					width: 20px;
+					height: 20px;
+				    line-height: 1;
+				    text-shadow: none;
+				    color: #333333;
+					@include font-size( .9 );
+					@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
 				}
 		    }
 
