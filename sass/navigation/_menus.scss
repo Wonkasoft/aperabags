@@ -12,7 +12,7 @@
 
 	button {
 		position: absolute;
-		top: -3.0rem;
+		top: -35%;
 		left: -39px;
 		background: transparent;
 		border: none;
@@ -31,26 +31,37 @@
 			&-top {
 				top: 0;
 			}
+		
 			&-bottom {
 				bottom: 0;
 			}
 		}
+		
 		&[aria-expanded="true"] {
+		
 			.hang-a-bur-top {
 				top: 0.6rem;
 				@include prefix( transform, rotate(220deg), webkit moz o );
 			}
+		
 			.hang-a-bur-mid {
 				opacity: 0;
 			}
+		
 			.hang-a-bur-bottom {
 				bottom: 0.6rem;
 				@include prefix( transform, rotate(-220deg), webkit moz o );
 			}
 		}
+		
 		&:focus {
 			outline: 0;
 		}
+
+		@include media-breakpoint-up( sm ) {
+			top: 50%;
+		}
+
 	}
 
 	> div {
