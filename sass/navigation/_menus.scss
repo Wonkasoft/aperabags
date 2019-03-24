@@ -273,7 +273,7 @@
 	ul#cart-menu-mobile {
 		display: flex;
 		align-items: center;
-		justify-content: space-around;
+		justify-content: center;
 	    list-style: none;
 	    margin: 0;
 	    padding: 0;
@@ -285,7 +285,7 @@
 	    	align-items: center;
 	    	justify-content: center;
 		    margin: 8px 0;
-		    padding: 0;
+		    padding: 8px;
 		    @include prefix( transition, $trans_25, webkit moz o);
 
 	    	i {
