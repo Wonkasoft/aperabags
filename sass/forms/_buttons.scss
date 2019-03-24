@@ -10,9 +10,6 @@ input[type="submit"] {
 	line-height: 1.2;
 	text-align: center;
 	background: rgba( #fff, .3 );
-	@include font-size( 1 );
-	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
-	@include prefix( text-shadow, 1px 1px 3px rgba(#000, 0 ), o moz webkit );
 	@include prefix( transition, $trans_25, webkit moz o);
 
 
@@ -42,6 +39,9 @@ input[type="submit"].wonka-btn {
 	border-radius: 100px;
 	background: rgba( #fff, .3 );
     border: 3px solid #FFE6B2;
+    @include font-size( 1 );
+    @include prefix( box-shadow, $box_shadow_4, o moz webkit );
+    @include prefix( text-shadow, 1px 1px 3px rgba(#000, 0 ), o moz webkit );
 
     &:hover {
     	border: 3px solid #FFE6B2;
