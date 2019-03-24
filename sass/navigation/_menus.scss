@@ -5,6 +5,7 @@
 	align-items: center;
 	justify-content: flex-end;
 	flex-wrap: wrap;
+	height: 100%;
 	width: 100%;
 	z-index: 100;
 	@include prefix( transition, $trans_25, webkit moz o);
@@ -54,6 +55,7 @@
 
 	> div {
 		flex: 1 100%;
+		height: 100%;
 
 		> ul {
 			position: relative;
@@ -76,8 +78,8 @@
 				align-items: center;
 				justify-content: center;
 				flex-wrap: wrap;
-				padding: 4px 0;
-				height: 50px;
+				padding: 4px;
+				height: 60px;
 				@include prefix( transition, $trans_25, webkit moz o);
 
 				a {
@@ -106,7 +108,6 @@
 					li {
 						padding: 4px;
 						background: rgba( #FFE6B2, .8 );
-
 					}
 				}
 			}
@@ -115,7 +116,6 @@
 				position: relative;
 				
 				&:hover {
-					height: auto;
 
 					ul {
 						top: 0;
@@ -131,12 +131,12 @@
 				text-transform: uppercase;
 				color: #ffffff;
 				font-family: $font__main_jose;
-				line-height: 1.2;
-				font-weight: 800;
-				padding: 8px;
+				font-weight: 600;
+				padding: 4px;
 				white-space: nowrap;
+				width: 50px;
 				@include font-size( 1 );
-				@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
+				@include prefix( text-shadow, 1px 1px 2px rgba(#000, .8 ), o moz webkit );
 				@include prefix( transition, $trans_25, webkit moz o);
 
 				&:hover {
@@ -156,7 +156,7 @@
 					position: relative;
 					font-family: "FontAwesome";
 					color: #ffffff;
-					@include font-size( 2 );
+					@include font-size( 1.2 );
 					line-height: 0.5;
 					padding: 0 8px 4px;
 					right: 0;
