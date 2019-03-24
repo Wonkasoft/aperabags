@@ -10,7 +10,6 @@ input[type="submit"] {
 	line-height: 1.2;
 	text-align: center;
 	border-radius: 100px;
-	width: 100%;
 	background: transparent;
     border: 3px solid #FFE6B2;
 	@include font-size( 1 );
@@ -32,7 +31,6 @@ input[type="submit"] {
 	&:active,
 	&:focus {
 		outline: 0;
-		border: none;
 	}
 }
 
@@ -42,10 +40,9 @@ input[type="button"].wonka-btn,
 input[type="reset"].wonka-btn,
 input[type="submit"].wonka-btn {
 	border-radius: 2px;
-	padding: 15px 25px;
+	padding: .5rem 1rem;
 	text-align: center;
 	border-radius: 100px;
-	width: 100%;
 	background: transparent;
     border: 3px solid #FFE6B2;
 }
