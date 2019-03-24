@@ -310,6 +310,11 @@
 					padding: 15px;
 					border: 1px solid rgba( #000, .2 );
 
+					ol {
+						margin: 8px;
+						padding: 8px;
+					}
+
 					#submit {
 						border-radius: 2px;
 						padding: 15px 25px;
@@ -351,9 +356,15 @@
 				}
 
 				section.wonka-section-additional-information {
-					border: 1px solid rgba( #000, .2 );
-					padding: 15px;
 
+					h2 {
+						padding: 8px;
+						border: 1px solid rgba( #000, .2 );
+					}
+					table.shop_attributes {
+						border: 1px solid rgba( #000, .2 );
+						padding: 8px;
+					}
 				}
 			}
 		}
