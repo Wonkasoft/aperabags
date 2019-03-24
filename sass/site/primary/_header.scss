@@ -29,7 +29,7 @@
 	position: relative;
 	background: #646371;
 	margin-bottom: 15px;
-	height: 130px;
+	height: 100px;
 	z-index: 100;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
@@ -52,6 +52,10 @@
 				width: auto;
 			}
 		}
+	}
+
+	@include media-breakpoint-up( md ) {
+		height: 130px;
 	}
 }
 
