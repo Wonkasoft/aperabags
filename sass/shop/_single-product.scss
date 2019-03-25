@@ -152,7 +152,7 @@
 						height: auto;
 						display: flex;
 					    align-items: flex-start;
-					    justify-content: space-around;
+					    flex-direction: column;
 					    flex-wrap: wrap;
 
 					    &::-webkit-scrollbar {
