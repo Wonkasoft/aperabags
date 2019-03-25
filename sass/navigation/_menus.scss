@@ -12,7 +12,7 @@
 
 	button {
 		position: absolute;
-		top: -3.2rem;
+		top: -3.6rem;
 		left: -39px;
 		background: transparent;
 		border: none;
@@ -93,9 +93,6 @@
 				@include prefix( transition, $trans_25, webkit moz o);
 
 				a {
-					display: flex;
-					align-items: center;
-					justify-content: center;
 					width: 100%;
 				}
 
@@ -148,6 +145,22 @@
 				@include font-size( 1 );
 				@include prefix( text-shadow, 1px 1px 2px rgba(#000, .8 ), o moz webkit );
 				@include prefix( transition, $trans_25, webkit moz o);
+
+				.wonka-badge {
+					display: flex;
+					align-items: flex-start;
+					justify-content: center;
+					font-family: $font__main_jose;
+					font-weight: 800;
+					background: #ffffff;
+					width: 20px;
+					height: 20px;
+				    line-height: 1;
+				    text-shadow: none;
+				    color: #333333;
+					@include font-size( .9 );
+					@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
+				}
 
 				&:hover {
 					color: #dad3a2;
@@ -312,22 +325,6 @@
 				@media only screen and ( min-width: 768px ) and ( -webkit-min-device-pixel-ratio: 2 ),
 				(min-resolution: 192dpi) and ( min-width: 768px ) {
 					padding: 0.5rem 0;
-				}
-
-				.wonka-badge {
-					display: flex;
-					align-items: flex-start;
-					justify-content: center;
-					font-family: $font__main_jose;
-					font-weight: 800;
-					background: #ffffff;
-					width: 20px;
-					height: 20px;
-				    line-height: 1;
-				    text-shadow: none;
-				    color: #333333;
-					@include font-size( .9 );
-					@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
 				}
 		    }
 
