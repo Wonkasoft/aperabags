@@ -183,6 +183,17 @@
 			}
 		}
 		/*=====  End of This is the totals on the cart page  ======*/
+		&.checkout {
+
+			.entry-header {
+				display: none;
+			}
+
+			div.express-checkout-btns {
+				border-radius: 4px;
+				border: 1px solid rgba( #000, .3 );
+			}
+		}
 
 		&.page {
 			max-width: 1180px;
@@ -200,7 +211,6 @@
 			div.entry-content {
 				margin: 0;
 				padding: 15px;
-				border: 1px solid rgba( #000, .2 );
 			}
 		}
 

@@ -353,11 +353,25 @@ function wonka_add_continue_shopping_notice_to_cart() {
 }
 add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart' );
 
+
+remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
 function wonka_checkout_wrap_before( $checkout ) {
-	echo '<div class="row wonka-checkout-row">';
-	echo '<div class="col col-12">';
+	$output = '';
+
+	$output .= '<div class="row wonka-checkout-row">';
+	$output .= '<div class="col col-12">';
+	$output .= '<div class="col col-12 col-md-6">';
+	$output .= '<div class="express-checkout-btns"><span class="express-btns-text">' . __( 'Express checkout', 'aperabags') . '</span></div>';
+	$output .= '</div>';
 }
 
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 11, 1 );
 
-remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+function wonka_checkout_wrap_after( $checkout ) {
+	?>
+	</div><!-- .col -->
+	</div><!-- .row -->
+	<?php
+}
+
+add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_after', 50, 1 );
