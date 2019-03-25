@@ -274,6 +274,21 @@
 		footer_adjustment();
 		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
 
+		/*============================================================================
+		=            This removes the title attribute from product images            =
+		============================================================================*/
+		if ( document.querySelector( '.products img' ) ) 
+		{
+			var img_w_title = document.querySelectorAll( '.products img' );
+			img_w_title.forEach( function( el, i ) 
+				{
+					el.removeAttribute( 'title' );
+				});
+		}
+		
+		/*=====  End of This removes the title attribute from product images  ======*/
+		
+
 		/*==========================================
 		=            Search btn actions            =
 		==========================================*/
