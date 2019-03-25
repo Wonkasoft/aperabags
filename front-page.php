@@ -174,21 +174,40 @@ get_header();
 						<p class="about-brand-message"><?php _e( $about_section->about_the_brand->about_message ); ?></p>
 						<div class="about-brand-video">
 							<?php
+							$videoplaceholder = ( get_theme_mod( 'about_the_brand_video_placeholder' ) ) ? get_theme_mod( 'about_the_brand_video_placeholder' ) : '';
 							$videocode = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
-							if ( !empty( $videocode ) ) :
-								?>
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							if ( ! empty( $videoplaceholder ) ) :
+							?>
+							<a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" data-target="#videoModal">
+								<img src="<?php _e( $videoplaceholder ); ?>" />
+							</a>
+							<!-- Modal -->
+							<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-body">
+							       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>        
+							        <!-- 16:9 aspect ratio -->
+									<div class="embed-responsive embed-responsive-16by9">
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									</div>
+							      </div>
+							    </div>
+							  </div>
+							</div> 
 							<?php
 						endif;
 						?>
 						</div>
 						<?php
-						if ( !empty( $about_section->about_the_brand->about_the_brand_button_link ) ) : ?>
+						if ( ! empty( $about_section->about_the_brand->about_the_brand_button_link ) ) : ?>
 							<a class="btn btn-primary wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
 						<?php endif; ?>
 					</div><!-- .about-components-wrap -->
 				</div>
-				<?php if ( !empty( $about_section->about_the_brand->about_the_brand_second_image ) ) : ?>
+				<?php if ( ! empty( $about_section->about_the_brand->about_the_brand_second_image ) ) : ?>
 				<div class="col col-12 col-md-5 text-center">
 					<div class="img-container">
 						<img class="about-second-image" src="<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />
