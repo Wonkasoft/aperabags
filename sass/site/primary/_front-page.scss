@@ -278,6 +278,10 @@ section.about-brand-section {
 	}
 
 	.about-brand-video {
+		max-height: 250px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
 		iframe {
 			width: 560px;
