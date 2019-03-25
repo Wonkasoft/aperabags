@@ -38,11 +38,11 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 		<div class="row wonka-checkout-row">
 		<div class="col col-12 col-md-6" id="customer_details">
 			<div class="col">
-				<?php do_action( 'woocommerce_checkout_shipping' ); ?>
+				<?php do_action( 'woocommerce_checkout_billing' ); ?>
 			</div>
 
 			<div class="col">
-				<?php do_action( 'woocommerce_checkout_billing' ); ?>
+				<?php do_action( 'woocommerce_checkout_shipping' ); ?>
 			</div>
 		</div>
 		
