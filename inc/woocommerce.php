@@ -381,8 +381,9 @@ add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_after', 50, 
  * 
  */
 function wonka_single_product_display() {
-
+	$output = '';
+	
 }
 
 remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
-add_action( 'woocommerce_before_single_product_summary', 'wonka_single_product_display', 10 );
+add_action( 'woocommerce_before_single_product_summary', 'wonka_single_product_display', 20 );
