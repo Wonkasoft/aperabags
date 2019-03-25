@@ -180,7 +180,7 @@ get_header();
 							?>
 							<a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" data-target="#videoModal" class="video-img-link">
 								<img src="<?php _e( $videoplaceholder ); ?>" />
-								<span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="far fa-play-circle"></i></span>
+								<span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="fa fa-play-circle"></i></span>
 							</a>
 							<!-- Modal -->
 							<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
