@@ -380,15 +380,9 @@ add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_after', 50, 
  * This filters the display of the single product page image parse.
  * 
  */
-function wonka_filter_woocommerce_single_product_image_thumbnail_html( $sprintf, $post_id ) { 
-    
-    $output = '';
-    $output .= '<div class="main-img">';
-    $output .= $sprintf;
-    $output .= '</div>';
+function wonka_single_product_display() {
 
-    return $output;
-}; 
-         
-// add the filter 
-// add_filter( 'woocommerce_single_product_image_thumbnail_html', 'wonka_filter_woocommerce_single_product_image_thumbnail_html', 10, 2 );
+}
+
+remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
+add_action( 'woocommerce_before_single_product_summary', 'wonka_single_product_display', 10 );

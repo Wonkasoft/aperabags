@@ -284,13 +284,17 @@ section.about-brand-section {
 		justify-content: center;
 
 		a {
+			position: relative;
 			max-width: 100%;
-			max-height: 100%;
-		}
-
-		iframe {
-			width: 560px;
 			height: 250px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			a {
+				position: absolute;
+				
+			}
 		}
 	}
 }

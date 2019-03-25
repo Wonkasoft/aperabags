@@ -178,8 +178,9 @@ get_header();
 							$videocode = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
 							if ( ! empty( $videoplaceholder ) ) :
 							?>
-							<a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" data-target="#videoModal">
+							<a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" data-target="#videoModal" class="video-img-link">
 								<img src="<?php _e( $videoplaceholder ); ?>" />
+								<a href="#" data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="far fa-play-circle"></i></a>
 							</a>
 							<!-- Modal -->
 							<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
