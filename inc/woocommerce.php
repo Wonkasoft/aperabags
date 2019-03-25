@@ -381,14 +381,14 @@ add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_after', 50, 
  * 
  */
 function wonka_filter_woocommerce_single_product_image_thumbnail_html( $sprintf, $post_id ) { 
-    echo "<pre>\n";
-    print_r( $sprintf );
-    echo "</pre>\n";
+    
     $output = '';
     $output .= '<div class="main-img">';
+    $output .= $sprintf;
+    $output .= '</div>';
 
-    return $sprintf;
+    return $output;
 }; 
          
 // add the filter 
-add_filter( 'woocommerce_single_product_image_thumbnail_html', 'wonka_filter_woocommerce_single_product_image_thumbnail_html', 10, 2 );
+// add_filter( 'woocommerce_single_product_image_thumbnail_html', 'wonka_filter_woocommerce_single_product_image_thumbnail_html', 10, 2 );
