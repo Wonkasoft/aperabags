@@ -238,6 +238,7 @@ function wonka_add_classes_to_button( $button, $form ) {
 	$dom = new DOMDocument();
     $dom->loadHTML( $button );
     $input = $dom->getElementsByTagName( 'input' )->item(0);
+    var_dump($input);
     $classes = $input->getAttribute( 'class' );
     $classes .= " wonka-btn";
     $input->setAttribute( 'class', $classes );
