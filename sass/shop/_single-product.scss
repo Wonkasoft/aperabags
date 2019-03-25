@@ -112,6 +112,10 @@
 			div.wonka-single-product-img {
 				position: relative;
 				flex: 1 100%;
+				display: flex;
+				align-items: flex-start;
+				justify-content: flex-start;
+				flex-wrap: wrap;
 
 				div.flex-control-wrapper {
 					overflow: hidden;
@@ -299,6 +303,7 @@
 				}
 			}
 
+			/* This media query is on section.product-img-section */
 			@media screen and ( min-width: 768px ) {
 
 				div.wonka-single-product-img {
