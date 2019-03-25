@@ -283,7 +283,7 @@ section.about-brand-section {
 		align-items: center;
 		justify-content: center;
 
-		a {
+		a.video-img-link {
 			position: relative;
 			max-width: 100%;
 			height: 250px;
@@ -291,8 +291,13 @@ section.about-brand-section {
 			align-items: center;
 			justify-content: center;
 
-			a {
+			img {
+				max-height: 100%;
+			}
+
+			span.video-img-symbol-link {
 				position: absolute;
+				@include font-size( 2 );
 			}
 		}
 	}
