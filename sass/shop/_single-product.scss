@@ -318,8 +318,17 @@
 							height: 100%;
 						}
 
+						div.flex-viewport {
+							display: flex;
+							align-items: flex-start;
+							flex-direction: column;
+						}
+
 						ol.flex-control-thumbs {
 							flex: 1 25%;
+							display: flex;
+							align-items: center;
+							flex-direction: column;
 
 							li {
 								width: auto;
@@ -329,7 +338,7 @@
 						}
 					}
 				}
-
+ 
 				div.summary {
 					flex: 0.1 40%;
 					position: relative;
