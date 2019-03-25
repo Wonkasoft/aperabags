@@ -190,8 +190,22 @@
 			}
 
 			div.express-checkout-btns {
+				position: relative;
 				border-radius: 4px;
 				border: 1px solid rgba( #000, .3 );
+				margin: 15px 0;
+				min-height: 50px;
+				text-align: center;
+
+				span.express-btns-text {
+					position: relative;
+					width: 165px;
+					margin: auto;
+					top: -25px;
+					display: inline-block;
+					padding: 8px 15px;
+					background: #ffffff;
+				}
 			}
 		}
 

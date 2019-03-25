@@ -363,15 +363,15 @@ function wonka_checkout_wrap_before( $checkout ) {
 	$output .= '<div class="col col-12 col-md-6">';
 	$output .= '<div class="express-checkout-btns"><span class="express-btns-text">' . __( 'Express checkout', 'aperabags') . '</span></div>';
 	$output .= '</div>';
+
+	_e( $output );
 }
 
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 11, 1 );
 
 function wonka_checkout_wrap_after( $checkout ) {
-	?>
-	</div><!-- .col -->
-	</div><!-- .row -->
-	<?php
+	echo '</div><!-- .col -->';
+	echo '</div><!-- .row -->';
 }
 
 add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_after', 50, 1 );
