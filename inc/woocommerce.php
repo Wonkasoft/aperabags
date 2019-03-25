@@ -463,4 +463,4 @@ function wonka_checkout_wrap_after( $checkout ) {
 	<?php
 }
 
-add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_after', 50, 1 );
+// add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_after', 50, 1 );
