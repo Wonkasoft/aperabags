@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php do_action( 'woocommerce_before_cart_totals' ); ?>
 
 	<table cellspacing="0" class="shop_table shop_table_responsive table table-hover">
-		<thead class="thead-dark">
+		<thead>
 			<tr>
 				<th scope="col" colspan="2">
 					<?php _e( 'Order Summary', 'woocommerce' ); ?>

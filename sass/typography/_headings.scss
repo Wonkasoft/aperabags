@@ -1,7 +1,31 @@
 body {
-	h1, h2, h3, h4, h5, h6 {
+	h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 		font-family: $font__main_jose;
 		text-transform: uppercase;
 		clear: both;
+	}
+
+	h1, .h1 {
+		@include font-size( 1.75 );
+	}
+
+	h2, .h2 {
+		@include font-size( 1.5 );
+	}
+
+	h3, .h3 {
+		@include font-size( 1.45 );
+	}
+
+	h4, .h4 {
+		@include font-size( 1.4 );
+	}
+
+	h5, .h5 {
+		@include font-size( 1.3 );
+	}
+
+	h6, .h6 {
+		@include font-size( 1.2 );
 	}
 }
