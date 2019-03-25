@@ -283,6 +283,11 @@ section.about-brand-section {
 		align-items: center;
 		justify-content: center;
 
+		a {
+			max-width: 100%;
+			max-height: 100%;
+		}
+
 		iframe {
 			width: 560px;
 			height: 250px;
