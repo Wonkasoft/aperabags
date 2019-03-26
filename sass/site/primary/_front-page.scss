@@ -297,13 +297,44 @@ section.about-brand-section {
 
 			span.video-img-symbol-link {
 				position: absolute;
-				color: $color__text-screen;
+				color: #FFE6B2;
 				@include font-size( 5 );
 				@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
 				@include prefix( transition, $trans_25, o moz webkit );
 
 				&:hover {
 					color: rgba(255, 255, 255, .8);
+				}
+			}
+		}
+
+		div#videoModal {
+			background: rgba( #ffffff, .4 );
+
+			div.modal-dialog {
+				height: 90%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				div.modal-content {
+					position: relative;
+					margin: auto;
+					padding: 0;
+					background-color: transparent;
+					overflow: hidden;
+					@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+					
+					div.modal-body {
+
+					}
+
+					button.close {
+						position: absolute;
+						top: 8px;
+						right: 8px;
+						z-index: 9999;
+					}
 				}
 			}
 		}
