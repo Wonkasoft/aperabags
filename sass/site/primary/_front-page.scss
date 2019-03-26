@@ -345,7 +345,7 @@ section.about-brand-section {
 				div.modal-body {
 					padding: 0;
 					width: 1200px;
-					overflow: hidden;
+					overflow: visible;
 					@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 					button.close {

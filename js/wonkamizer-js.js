@@ -277,13 +277,20 @@
 		/*===================================================================
 		=            This is to kill the about us video on close            =
 		===================================================================*/
-		if ( document.querySelector( 'div#videoModal button.close' ) ) 
+		if ( document.querySelector( 'div#videoModal' ) ) 
 		{
+			var about_vid_modal = document.querySelector( 'div#videoModal' );
 			var about_vid_close = document.querySelector( 'div#videoModal button.close' );
 			var about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
 			var about_vid_iframe_link = document.querySelector( 'div#videoModal iframe' ).src;
 
 			about_vid_close.onclick = function()
+			{
+				about_vid_iframe.src = '';
+				about_vid_iframe.src = about_vid_iframe_link;
+			};
+
+			about_vid_modal.onclick = function() 
 			{
 				about_vid_iframe.src = '';
 				about_vid_iframe.src = about_vid_iframe_link;
