@@ -315,6 +315,7 @@ section.about-brand-section {
 		justify-content: center;
 		width: 1200px;
 		max-width: 100%;
+		margin: 0 auto;
 		z-index: -500;
 		@include prefix( transition, $trans_25, o moz webkit );
 
@@ -360,6 +361,7 @@ section.about-brand-section {
 
 					span {
 						line-height: 1;
+						@include font-size( 1.3 );
 					}
 				}
 			}
