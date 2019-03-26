@@ -325,7 +325,7 @@ section.about-brand-section {
 					margin: auto;
 					padding: 0;
 					background-color: transparent;
-					overflow: hidden;
+					overflow: visible;
 					@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 					
 					div.modal-body {
