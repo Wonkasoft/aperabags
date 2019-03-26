@@ -310,17 +310,15 @@ section.about-brand-section {
 	}
 
 	div#videoModal {
-		display: flex !important;
 		align-items: center;
 		justify-content: center;
 		width: 1200px;
 		max-width: 100%;
 		margin: 0 auto;
-		z-index: -500;
 		@include prefix( transition, $trans_25, o moz webkit );
 
 		&.show {
-			z-index: 1050;
+			display: flex !important;
 		}
 
 		div.modal-dialog {
