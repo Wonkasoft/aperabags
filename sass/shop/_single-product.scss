@@ -118,6 +118,10 @@
 				justify-content: flex-start;
 				flex-wrap: wrap;
 
+				span.onsale {
+					flex: 1 100%;
+				}
+
 				div.flex-control-wrapper {
 					overflow: hidden;
 				}
@@ -125,6 +129,7 @@
 				div.woocommerce-product-gallery {
 					margin: 15px auto;
 					flex: .7 70%;
+					max-width: 600px;
 					display: flex;
 					align-items: flex-start;
 					justify-content: flex-start;
