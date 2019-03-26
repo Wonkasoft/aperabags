@@ -178,7 +178,7 @@ get_header();
 							$videocode = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
 							if ( ! empty( $videoplaceholder ) ) :
 							?>
-							<a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" data-target="#videoModal" class="video-img-link">
+							<a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" data-target="#videoModal" class="video-img-link">
 								<img src="<?php _e( $videoplaceholder ); ?>" />
 								<span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="fa fa-play-circle"></i></span>
 							</a>
