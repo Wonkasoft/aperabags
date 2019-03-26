@@ -360,10 +360,12 @@ section.about-brand-section {
 						border-radius: 50%;
 						height: 25px;
 						width: 25px;
-						border: 2px solid rgba( #fff, .7 );
+						border: 2px solid rgba( #fff, 1);
 						@include prefix( transition, $trans_25, o moz webkit );
+						@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
 
 						span {
+							color: #ffffff;
 							line-height: 1;
 							@include font-size( 1.3 );
 						}
