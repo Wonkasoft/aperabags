@@ -319,6 +319,7 @@ section.about-brand-section {
 		width: 100%;
 		max-width: 100%;
 		margin: 0 auto;
+		padding-right: 0 !important;
 		@include prefix( transition, $trans_25, o moz webkit );
 
 		&.show {
@@ -349,7 +350,7 @@ section.about-brand-section {
 					button.close {
 						position: absolute;
 						top: 8px;
-						right: 8px;
+						right: -25px;
 						z-index: 9999;
 						display: flex;
 						align-items: center;
