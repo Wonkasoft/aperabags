@@ -314,7 +314,7 @@ section.about-brand-section {
 			justify-content: center;
 			z-index: -500;
 
-			&[aria-hidden="false"] {
+			&.show {
 				z-index: 50;
 			}
 
