@@ -182,14 +182,22 @@ get_header();
 								<img src="<?php _e( $videoplaceholder ); ?>" />
 								<span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="fa fa-play-circle"></i></span>
 							</a>
-							<!-- Modal -->
-							<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							
+							<?php
+								endif;
+								?>
+						</div>
+						<?php
+						if ( ! empty( $videoplaceholder ) ) : ?>
+							
+						<!-- Modal -->
+							<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="aboutAperaModal" aria-hidden="true">
 							  <div class="modal-dialog" role="document">
 							    <div class="modal-content">
 							      <div class="modal-body">
 							        <!-- 16:9 aspect ratio -->
 									<div class="embed-responsive embed-responsive-16by9">
-									<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen></iframe>
 								       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								          <span aria-hidden="true">&times;</span>
 								        </button>        
@@ -198,10 +206,7 @@ get_header();
 							    </div>
 							  </div>
 							</div> 
-							<?php
-						endif;
-						?>
-						</div>
+						<?php endif; ?>
 						<?php
 						if ( ! empty( $about_section->about_the_brand->about_the_brand_button_link ) ) : ?>
 							<a class="btn btn-primary wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
