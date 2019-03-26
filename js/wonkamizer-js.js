@@ -274,6 +274,23 @@
 		footer_adjustment();
 		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
 
+		/*===================================================================
+		=            This is to kill the about us video on close            =
+		===================================================================*/
+		if ( document.querySelector( 'div#videoModal button.close' ) ) 
+		{
+			var about_vid_close = document.querySelector( 'div#videoModal button.close' );
+			var about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
+			var about_vid_iframe_link = document.querySelector( 'div#videoModal iframe' ).src;
+
+			about_vid_close.onclick = function()
+			{
+				about_vid_iframe.src = '';
+				about_vid_iframe.src = about_vid_iframe_link;
+			};
+		}
+		/*=====  End of This is to kill the about us video on close  ======*/
+		
 		/*============================================================================
 		=            This removes the title attribute from product images            =
 		============================================================================*/
