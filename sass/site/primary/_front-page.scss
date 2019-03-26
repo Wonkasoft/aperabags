@@ -312,6 +312,11 @@ section.about-brand-section {
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			z-index: -500;
+
+			&[aria-hidden="false"] {
+				z-index: 50;
+			}
 
 			div.modal-dialog {
 				height: 100%;
