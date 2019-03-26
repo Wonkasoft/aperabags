@@ -250,6 +250,14 @@ section.our-cause-section {
 /*===============================================
 =            About the Brand section            =
 ===============================================*/
+/* The animation code */
+@keyframes wiggle {
+  0%   {transform: rotate(-15deg);}
+  25%  {transform: rotate(15deg);}
+  50%  {transform: rotate(-15deg);}
+  100% {transform: rotate(0deg);}
+}
+
 div.modal-backdrop {
 	background-color: rgba( #fff, 1 );
 
@@ -365,12 +373,16 @@ section.about-brand-section {
 						height: 25px;
 						width: 25px;
 						border: 2px solid rgba( #fff, 1);
+						box-sizing: border-box;
+						animation-name: wiggle;
+					  	animation-duration: .3s;
 						@include prefix( transition, $trans_25, o moz webkit );
-						@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
+						@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 						span {
 							color: #ffffff;
 							line-height: 1;
+							@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
 							@include font-size( 1.3 );
 						}
 					}
