@@ -409,18 +409,24 @@ function wonka_single_product_display() {
 remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
 add_action( 'woocommerce_before_single_product_summary', 'wonka_single_product_display', 20 );
 
+	/**
+	 * Remove Sku info only for users. Sku will still show for admins
+	 *
+	 * @since  1.0.0
+	 * 
+	 */
+
+	function ws_remove_product_page_skus( $enabled ) {
+	    if ( ! is_admin() && is_product() ) {
+	        return false;
+	    }
+
+	    return $enabled;
+	}
+	add_filter( 'wc_product_sku_enabled', 'ws_remove_product_page_skus' );
 /**
- * Remove Sku info only for users. Sku will still show for admins
+ * Remove Meta information on single product page
  *
  * @since  1.0.0
- * 
  */
-
-function ws_remove_product_page_skus( $enabled ) {
-    if ( ! is_admin() && is_product() ) {
-        return false;
-    }
-
-    return $enabled;
-}
-add_filter( 'wc_product_sku_enabled', 'ws_remove_product_page_skus' );
+	remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
