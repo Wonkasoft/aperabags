@@ -251,7 +251,11 @@ section.our-cause-section {
 =            About the Brand section            =
 ===============================================*/
 div.modal-backdrop {
-	background-color: rgba( #fff, .7 );
+	background-color: rgba( #fff, 1 );
+
+	&.show {
+		opacity: .7;
+	}
 }
 
 section.about-brand-section {
@@ -350,8 +354,8 @@ section.about-brand-section {
 
 					button.close {
 						position: absolute;
-						top: -25px;
-						right: -25px;
+						top: -15px;
+						right: -15px;
 						z-index: 9999;
 						display: flex;
 						align-items: center;
