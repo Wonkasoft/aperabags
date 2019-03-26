@@ -326,7 +326,8 @@ section.about-brand-section {
 					@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 					
 					div.modal-body {
-
+						padding: 0;
+						width: 960px;
 					}
 
 					button.close {
@@ -334,6 +335,12 @@ section.about-brand-section {
 						top: 8px;
 						right: 8px;
 						z-index: 9999;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						border-radius: 50%;
+						height: 20px;
+						width: 20px;
 					}
 				}
 			}
