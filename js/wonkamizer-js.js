@@ -221,11 +221,11 @@
 	function stickySummary() 
 	{
 		var summary_section = document.querySelector( '.summary.entry-summary' ),
-		img_area = document.querySelector( '.wonka-single-product-img' ),
+		img_area = document.querySelector( '.product-img-section' ),
 		target_scrolling = img_area.offsetHeight - summary_section.offsetHeight,
 		win_y = window.pageYOffset;
 
-		if ( window.innerWidth > 792 && win_y - summary_section.parentElement.offsetTop > target_scrolling ) 
+		if ( window.innerWidth > 792 && win_y - img_area.offsetTop > target_scrolling ) 
 		{
 			summary_section.classList.remove( 'sticky-on' );
 			summary_section.style.top = target_scrolling - parseInt( window.getComputedStyle( summary_section ).marginTop ) + 'px';
