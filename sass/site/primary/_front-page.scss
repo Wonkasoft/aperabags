@@ -316,7 +316,7 @@ section.about-brand-section {
 	div#videoModal {
 		align-items: center;
 		justify-content: center;
-		width: 1200px;
+		width: 100%;
 		max-width: 100%;
 		margin: 0 auto;
 		@include prefix( transition, $trans_25, o moz webkit );
@@ -339,12 +339,12 @@ section.about-brand-section {
 				width: 100%;
 				padding: 0;
 				background-color: transparent;
-				overflow: hidden;
-				@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 				
 				div.modal-body {
 					padding: 0;
 					width: 1200px;
+					overflow: hidden;
+					@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 					button.close {
 						position: absolute;
