@@ -388,13 +388,9 @@ function wonka_single_product_display() {
 		return;
 	}
 
-	global $product;
-
-
 	$output = '';
-	$output .= wc_get_gallery_image_html( $product->get_image_id(), true );
+	$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( $product->get_data()['id'], 'full' ) ) . '" class="img-fluid wonka-img-fluid" />';
 
-	_e( $output );
 	$attachment_ids = $product->get_gallery_image_ids();
 
 	if ( $attachment_ids && $product->get_image_id() ) {
@@ -403,8 +399,9 @@ function wonka_single_product_display() {
 		}
 	}
 
+	_e( $output );
 
 }
 
-remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
-add_action( 'woocommerce_before_single_product_summary', 'wonka_single_product_display', 20 );
+// remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
+// add_action( 'woocommerce_before_single_product_summary', 'wonka_single_product_display', 20 );
