@@ -198,10 +198,10 @@ get_header();
 							        <!-- 16:9 aspect ratio -->
 									<div class="embed-responsive embed-responsive-16by9">
 									<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
-								       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								          <span aria-hidden="true">X</span>
-								        </button>        
 									</div>
+							       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">X</span>
+							        </button>        
 							      </div>
 							    </div>
 							  </div>
