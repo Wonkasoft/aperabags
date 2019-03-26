@@ -374,8 +374,6 @@ section.about-brand-section {
 						width: 25px;
 						border: 2px solid rgba( #fff, 1);
 						box-sizing: border-box;
-						animation-name: wiggle;
-					  	animation-duration: .3s;
 						@include prefix( transition, $trans_25, o moz webkit );
 						@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
@@ -384,6 +382,11 @@ section.about-brand-section {
 							line-height: 1;
 							@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
 							@include font-size( 1.3 );
+						}
+
+						&:hover {
+							animation-name: wiggle;
+						  	animation-duration: .3s;
 						}
 					}
 				}
