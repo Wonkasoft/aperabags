@@ -303,8 +303,17 @@
 		============================================================================*/
 		if ( document.querySelector( '.products img' ) ) 
 		{
-			var img_w_title = document.querySelectorAll( '.products img' );
-			img_w_title.forEach( function( el, i ) 
+			var imgs_w_title = document.querySelectorAll( '.products img' );
+			imgs_w_title.forEach( function( el, i ) 
+				{
+					el.removeAttribute( 'title' );
+				});
+		}
+
+		if ( document.querySelector( '.product-img-section img' ) ) 
+		{
+			var product_page_imgs_w_title = document.querySelectorAll( '.product-img-section img' );
+			product_page_imgs_w_title.forEach( function( el, i ) 
 				{
 					el.removeAttribute( 'title' );
 				});
