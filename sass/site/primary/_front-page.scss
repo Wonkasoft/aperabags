@@ -307,54 +307,55 @@ section.about-brand-section {
 				}
 			}
 		}
+	}
 
-		div#videoModal {
+	div#videoModal {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: -500;
+
+		&.show {
+			z-index: 1050;
+		}
+
+		div.modal-dialog {
+			height: 100%;
+			margin: auto;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			z-index: -500;
 
-			&.show {
-				z-index: 1050;
-			}
-
-			div.modal-dialog {
-				height: 100%;
+			div.modal-content {
+				position: relative;
 				margin: auto;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-
-				div.modal-content {
-					position: relative;
-					margin: auto;
+				width: 100%;
+				padding: 0;
+				background-color: transparent;
+				overflow: visible;
+				@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+				
+				div.modal-body {
 					padding: 0;
-					background-color: transparent;
-					overflow: visible;
-					@include prefix( box-shadow, $box_shadow_4, o moz webkit );
-					
-					div.modal-body {
-						padding: 0;
-						width: 960px;
-					}
+					width: 960px;
+				}
 
-					button.close {
-						position: absolute;
-						top: 8px;
-						right: 8px;
-						z-index: 9999;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						background: transparent;
-						border-radius: 50%;
-						height: 23px;
-						width: 23px;
-						border: 1px solid rgba( #fff, .3 );
+				button.close {
+					position: absolute;
+					top: 8px;
+					right: 8px;
+					z-index: 9999;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					background: transparent;
+					border-radius: 50%;
+					height: 23px;
+					width: 23px;
+					border: 1px solid rgba( #fff, .3 );
 
-						span {
-							line-height: 1;
-						}
+					span {
+						line-height: 1;
 					}
 				}
 			}
