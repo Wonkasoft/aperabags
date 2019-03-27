@@ -428,3 +428,18 @@ add_filter( 'wc_product_sku_enabled', 'ws_remove_product_page_skus' );
  * @since  1.0.0
  */
 remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
+
+/**
+ * This is for making the flexslider of woocommerce to slide vertical instead of horizontal
+ * @param  array $options Contains options that are being passed to the slider
+ * @return [type]          [description]
+ */
+function wonka_product_carousel_options($options) {
+  $options['animation'] = 'slide';
+  $options['useCSS'] = true;
+  $options['easing'] = 'swing';
+  $options['direction'] = 'vertical';
+  return $options;
+}
+
+add_filter("woocommerce_single_product_carousel_options", "wonka_product_carousel_options", 10);
