@@ -178,10 +178,10 @@ get_header();
 							$videocode = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
 							if ( ! empty( $videoplaceholder ) ) :
 							?>
-							<!-- <a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" data-target="#videoModal" class="video-img-link">
+							<a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" data-target="#videoModal" class="video-img-link">
 								<img src="<?php _e( $videoplaceholder ); ?>" />
 								<span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="fa fa-play-circle"></i></span>
-							</a> -->
+							</a>
 							
 							<?php
 								endif;
@@ -191,21 +191,21 @@ get_header();
 						if ( ! empty( $videoplaceholder ) ) : ?>
 							
 						<!-- Modal -->
-							<!-- <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="aboutAperaModal" aria-hidden="true">
+							<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="aboutAperaModal" aria-hidden="true">
 							  <div class="modal-dialog" role="document">
 							    <div class="modal-content">
-							      <div class="modal-body"> -->
+							      <div class="modal-body">
 							        <!-- 16:9 aspect ratio -->
-									<!-- <div class="embed-responsive embed-responsive-16by9">
+									<div class="embed-responsive embed-responsive-16by9">
 									<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
 									</div>
 							       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">X</span> -->
-							        <!-- </button>         -->
-							      <!-- </div>
+							          <span aria-hidden="true">X</span>
+							        </button>        
+							      </div>
 							    </div>
 							  </div>
-							</div>  -->
+							</div> 
 						<?php endif; ?>
 						<?php
 						if ( ! empty( $about_section->about_the_brand->about_the_brand_button_link ) ) : ?>
