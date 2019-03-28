@@ -7,14 +7,32 @@
 	===============================================*/
 	var last_scroll_top = 0,
 	scroll_direction,
-	scroll_distance,
-	one_click = true;
+	scroll_distance;
+
+
+	/* vars set for single product page */
+	if ( document.querySelector( '.product-img-section' ) ) 
+	{
+		var product_img_section, wonka_single_product_img, thumbnail_controls, summary_section, slide_view_box, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop;
+	}
 	/*=====  End of vars set for script use  ======*/
 	
 
 	/*===================================================================
 	=            This is area for writing callable functions            =
 	===================================================================*/
+	function load_page_vars() {
+		if ( document.querySelector( '.product-img-section' ) ) 
+		{
+			product_img_section = document.querySelector( '.product-img-section' );
+			wonka_single_product_img = document.querySelector( '.wonka-single-product-img' );
+			thumbnail_controls = document.querySelector( '.flex-control-nav' );
+			summary_section = document.querySelector( '.summary.entry-summary' );
+			slide_view_box = document.querySelector( '.flex-viewport' );
+			win_y = window.pageYOffset;
+		}
+	}
+
 	function slide_adjustment()
 	{
 		var header_slider_section = document.querySelector( '.header-slider-section' ),
@@ -79,7 +97,8 @@
 		// Get the offset position of the navbar
 		var sticky = shop_section.offsetTop;
 
-		if ( window.pageYOffset > last_scroll_top ) {
+		if ( window.pageYOffset > last_scroll_top ) 
+		{
 			scroll_direction = 'scrolled down';
 			scroll_distance = window.pageYOffset - last_scroll_top;
 		}
@@ -218,14 +237,12 @@
 		}
 	}
 
-	function stickySummary() 
+	function stickySummary(e) 
 	{
-		var summary_section = document.querySelector( '.summary.entry-summary' ),
-		img_area = document.querySelector( '.product-img-section' ),
-		target_scrolling = img_area.offsetHeight - summary_section.offsetHeight,
+		target_stop = product_img_section.offsetHeight - summary_section.offsetHeight;
 		win_y = window.pageYOffset;
 
-		if ( window.innerWidth > 792 && win_y - img_area.offsetTop > target_scrolling ) 
+		if ( window.innerWidth > 792 && win_y - product_img_section.parentElement.offsetTop - summary_section.offsetTop > target_stop ) 
 		{
 			summary_section.classList.remove( 'sticky-on' );
 			summary_section.style.top = target_scrolling - parseInt( window.getComputedStyle( summary_section ).marginTop ) + 'px';
@@ -235,17 +252,113 @@
 			summary_section.classList.add( 'sticky-on' );
 			summary_section.style.top = 15 + 'px';
 		}
+
+		if ( window.innerWidth > 792 && win_y < product_img_section.parentElement.offsetTop - summary_section.offsetTop ) 
+		{
+			summary_section.classList.remove( 'sticky-on' );
+			summary_section.removeAttribute( 'style' );
+		}
 	}
 	
-	if ( document.querySelector( '.wonka-single-product-img' ) ) 
-	{
-		var img_area = document.querySelector( '.wonka-single-product-img' );
-		var img_area_top = img_area.parentElement.offsetTop;
-	}
 
 	function thumbnail_scroll(e)
 	{
-		
+
+		if ( document.querySelector( '.wonka-single-product-img' ) ) 
+		{
+			slide_control = document.querySelector( '.flex-control-nav .flex-active'); 
+			active_slide = document.querySelector( '.flex-viewport .flex-active-slide'); 
+			active_slide_img = document.querySelector( '.flex-viewport .flex-active-slide img');
+			win_y = window.pageYOffset;
+			img_area_top = wonka_single_product_img.offsetTop + wonka_single_product_img.parentElement.parentElement.offsetTop;
+			target_stop = thumbnail_controls.offsetHeight - slide_view_box.offsetHeight;
+
+			console.log(active_slide_img.offsetHeight);
+			if ( window.innerWidth > 792 && win_y < img_area_top ) 
+			{
+				slide_view_box.classList.remove( 'sticky-on' );
+				slide_view_box.style.top = '';
+				// slide_view_box.style.height = '';
+			}
+			else
+			{
+				slide_view_box.classList.add( 'sticky-on' );
+				slide_view_box.style.top = 15 + 'px';
+				
+				/* slide_view_box adjustment */
+				if ( active_slide_img.offsetHeight > 760 ) 
+				{
+					slide_view_box.style.height = 760 + 'px';
+				}
+				else
+				{
+					slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
+				}
+			}
+
+			if ( window.innerWidth > 792 && win_y - img_area_top > target_stop ) 
+			{
+				slide_view_box.classList.remove( 'sticky-on' );
+				slide_view_box.style.top = target_stop - parseInt( window.getComputedStyle( slide_view_box ).marginTop ) + 'px';
+			}
+
+		}
+	}
+
+	function imageZoom(imgID, resultID) {
+	  var img, lens, result, cx, cy;
+	  img = document.getElementById(imgID);
+	  result = document.getElementById(resultID);
+	  /*create lens:*/
+	  lens = document.createElement("DIV");
+	  lens.setAttribute("class", "img-zoom-lens");
+	  /*insert lens:*/
+	  img.parentElement.insertBefore(lens, img);
+	  /*calculate the ratio between result DIV and lens:*/
+	  cx = result.offsetWidth / lens.offsetWidth;
+	  cy = result.offsetHeight / lens.offsetHeight;
+	  /*set background properties for the result DIV:*/
+	  result.style.backgroundImage = "url('" + img.src + "')";
+	  result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
+	  /*execute a function when someone moves the cursor over the image, or the lens:*/
+	  lens.addEventListener("mousemove", moveLens);
+	  img.addEventListener("mousemove", moveLens);
+	  /*and also for touch screens:*/
+	  lens.addEventListener("touchmove", moveLens);
+	  img.addEventListener("touchmove", moveLens);
+	  function moveLens(e) {
+	    var pos, x, y;
+	    /*prevent any other actions that may occur when moving over the image:*/
+	    e.preventDefault();
+	    /*get the cursor's x and y positions:*/
+	    pos = getCursorPos(e);
+	    /*calculate the position of the lens:*/
+	    x = pos.x - (lens.offsetWidth / 2);
+	    y = pos.y - (lens.offsetHeight / 2);
+	    /*prevent the lens from being positioned outside the image:*/
+	    if (x > img.width - lens.offsetWidth) {x = img.width - lens.offsetWidth;}
+	    if (x < 0) {x = 0;}
+	    if (y > img.height - lens.offsetHeight) {y = img.height - lens.offsetHeight;}
+	    if (y < 0) {y = 0;}
+	    /*set the position of the lens:*/
+	    lens.style.left = x + "px";
+	    lens.style.top = y + "px";
+	    /*display what the lens "sees":*/
+	    result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
+	  }
+	  function getCursorPos(e) {
+	    var a, x = 0, y = 0;
+	    e = e || window.event;
+	    /*get the x and y positions of the image:*/
+	    a = img.getBoundingClientRect();
+	    /*calculate the cursor's x and y coordinates, relative to the image:*/
+	    x = e.pageX - a.left;
+	    y = e.pageY - a.top;
+	    /*consider any page scrolling:*/
+	    x = x - window.pageXOffset;
+	    y = y - window.pageYOffset;
+	    return {x : x, y : y};
+	  }
 	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
@@ -268,6 +381,12 @@
 	===================================================================*/
 	window.onload = function()
 	{
+		/*========================================================
+		=            This loads the vars for the page            =
+		========================================================*/
+		load_page_vars();
+		/*=====  End of This loads the vars for the page  ======*/
+		
 		/*===========================================================================================
 		=            This makes the adjustment of space for the footer to show correctly            =
 		===========================================================================================*/

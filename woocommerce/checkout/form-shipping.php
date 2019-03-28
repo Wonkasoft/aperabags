@@ -22,15 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <div class="woocommerce-shipping-fields">
-	<?php if ( true === WC()->cart->needs_shipping_address() ) : ?>
+	<?php if ( wc_ship_to_billing_address_only() && WC()->cart->needs_shipping() ) : ?>
 
-		<h3 id="ship-to-different-address">
-			<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
-				<input id="ship-to-different-address-checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> type="checkbox" name="ship_to_different_address" value="1" /> <span><?php _e( 'Ship to a different address?', 'woocommerce' ); ?></span>
-			</label>
-		</h3>
+		<h3><?php _e( 'Shipping &amp; Billing', 'woocommerce' ); ?></h3>
 
-		<div class="shipping_address">
+	<?php else : ?>
+
+		<h3><?php _e( 'Shipping details', 'woocommerce' ); ?></h3>
+
+	<?php endif; ?>
 
 			<?php do_action( 'woocommerce_before_checkout_shipping_form', $checkout ); ?>
 
@@ -38,7 +38,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php
 					$fields = $checkout->get_checkout_fields( 'shipping' );
 
+					$new_fields = array(
+						'shipping_phone'	=> array(
+							'label'			=> 'Phone',
+							'required'		=> 1,
+							'placeholder'	=> 'Phone',
+							'class'			=> array(
+								'form-row-wide',
+								'phone-field'
+							),
+							'validate'		=> array(
+								'number'
+							),
+							'autocomplete'	=>	'phone-number',
+							'priority'		=>	100
+						),
+						'shipping_email'	=> array(
+							'label'			=> 'Email address',
+							'required'		=> 1,
+							'placeholder'	=> 'Email address',
+							'class'			=> array(
+								'form-row-wide',
+								'phone-field'
+							),
+							'validate'		=> array(
+								'number'
+							),
+							'autocomplete'	=>	'email',
+							'priority'		=>	110
+						),
+					);
+
+					$fields = array_merge( $fields, $new_fields );
+
 					foreach ( $fields as $key => $field ) {
+
+						if ( $key === 'shipping_country' ) :
+							$field['priority'] = 95;
+						endif;
 						
 						if ( !isset($field['placeholder'] ) ) :
 							$field['placeholder'] = $field['label'];
@@ -72,9 +109,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<?php do_action( 'woocommerce_after_checkout_shipping_form', $checkout ); ?>
 
-		</div>
-
-	<?php endif; ?>
 </div>
 <div class="woocommerce-additional-fields">
 	<?php do_action( 'woocommerce_before_order_notes', $checkout ); ?>
@@ -117,3 +151,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php do_action( 'woocommerce_after_order_notes', $checkout ); ?>
 </div>
+<?php if ( ! is_user_logged_in() && $checkout->is_registration_enabled() ) : ?>
+	<div class="woocommerce-account-fields">
+		<?php if ( ! $checkout->is_registration_required() ) : ?>
+
+			<p class="form-row form-row-wide create-account">
+				<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
+					<input class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" id="createaccount" <?php checked( ( true === $checkout->get_value( 'createaccount' ) || ( true === apply_filters( 'woocommerce_create_account_default_checked', false ) ) ), true ) ?> type="checkbox" name="createaccount" value="1" /> <span><?php _e( 'Create an account?', 'woocommerce' ); ?></span>
+				</label>
+			</p>
+
+		<?php endif; ?>
+
+		<?php do_action( 'woocommerce_before_checkout_registration_form', $checkout ); ?>
+
+		<?php if ( $checkout->get_checkout_fields( 'account' ) ) : ?>
+
+			<div class="create-account">
+				<?php foreach ( $checkout->get_checkout_fields( 'account' ) as $key => $field ) : ?>
+					<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+				<?php endforeach; ?>
+				<div class="clear"></div>
+			</div>
+
+		<?php endif; ?>
+
+		<?php do_action( 'woocommerce_after_checkout_registration_form', $checkout ); ?>
+	</div>
+<?php endif; ?>

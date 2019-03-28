@@ -17,6 +17,91 @@
 	}
 }
 
+div.wonka-checkout-row {
+
+	div.checkout-form-left-side {
+		margin-bottom: 30px;
+	}
+}
+
+.woocommerce-shipping-fields__field-wrapper,
+.woocommerce-billing-fields__field-wrapper {
+
+	p {
+		clear: both;
+	}
+
+	p#shipping_first_name_field,
+	p#billing_first_name_field {
+		width: 49%;
+		float: left;
+		clear: none;
+	}
+
+	p#shipping_last_name_field,
+	p#billing_last_name_field {
+		width: 49%;
+		float: right;
+		clear: none;
+	}
+
+	p#shipping_city_field,
+	p#billing_city_field {
+		width: 49%;
+		float: left;
+		clear: none;
+	}
+
+	p#shipping_state_field,
+	p#billing_state_field {
+		width: 24%;
+		margin-left: 15px;
+		float: left;
+		clear: none;
+		
+		span.select2.select2-container.select2-container--default {
+
+			span.select2-selection--single {
+				height: 37px;
+
+				span.select2-selection__rendered {
+					padding: 8px;
+					line-height: 1.2;
+				}
+
+				span.select2-selection__arrow {
+					height: 10px;
+				}
+			} 
+		}
+	}
+
+	p#shipping_postcode_field,
+	p#billing_postcode_field {
+		width: 25%;
+		float: right;
+		clear: none;
+	}
+
+	p#shipping_phone_field,
+	p#billing_phone_field {
+		width: 49%;
+		float: left;
+		clear: none;
+	}
+
+	p#shipping_email_field,
+	p#billing_email_field {
+		width: 49%;
+		float: right;
+		clear: none;
+	}
+}
+
+div.woocommerce-additional-fields {
+	clear: both;
+}
+
 @media screen and (min-width: 768px) {
 	.col2-set {
 		.form-row-first {
