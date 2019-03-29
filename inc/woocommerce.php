@@ -360,7 +360,7 @@ function wonka_checkout_wrap_before( $checkout ) {
 	$output = '';
 
 	$output .= '<div class="row wonka-checkout-row">';
-	$output .= '<div class="col col-12 col-md-8 checkout-form-left-side">';
+	$output .= '<div class="col col-12 col-md-7 checkout-form-left-side">';
 	$output .= '<div class="col col-12">';
 	$output .= '<div class="express-checkout-btns"><span class="express-btns-text">' . __( 'Express checkout', 'aperabags') . '</span></div>';
 	$output .= '</div>';
@@ -373,18 +373,9 @@ add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 11
 function wonka_checkout_wrap_after( $checkout ) {
 	?>
 		</div><!-- .col -->
-		<div class="col col-12 col-md-4">
+		<div class="col col-12 col-md-5 checkout-order-details">
 			<table class="table table-hover">
-				<thead>
-					<tr scope="row">
-						<th colspan="2"><?php _e( 'Order Details', 'woocommerce' ); ?></th>
-					</tr>
-				</thead>
 				<tbody>
-					<tr>
-						<th scope="col" class="product-name"><?php _e( 'Product', 'woocommerce' ); ?></th>
-						<th scope="col" class="product-total"><?php _e( 'Total', 'woocommerce' ); ?></th>
-					</tr>
 					<?php
 						do_action( 'woocommerce_review_order_before_cart_contents' );
 						foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
@@ -392,9 +383,21 @@ function wonka_checkout_wrap_after( $checkout ) {
 							if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
 								?>
 								<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
+									<td class="product-thumbnail">
+									<?php
+									$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
+
+									if ( ! $product_permalink ) {
+										echo $thumbnail; // PHPCS: XSS ok.
+										echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity badge wonka-badge">' . sprintf( '%s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key );
+									} else {
+										printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail ); // PHPCS: XSS ok.
+									}
+									?>
+									</td>
 									<td class="product-name">
 										<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;'; ?>
-										<?php echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity">' . sprintf( '&times; %s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key ); ?>
+										
 										<?php echo wc_get_formatted_cart_item_data( $cart_item ); ?>
 									</td>
 									<td class="product-total">
@@ -411,7 +414,7 @@ function wonka_checkout_wrap_after( $checkout ) {
 
 					<tr class="cart-subtotal">
 						<th><?php _e( 'Subtotal', 'woocommerce' ); ?></th>
-						<td><?php wc_cart_totals_subtotal_html(); ?></td>
+						<td colspan="2"><?php wc_cart_totals_subtotal_html(); ?></td>
 					</tr>
 
 					<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
@@ -434,7 +437,7 @@ function wonka_checkout_wrap_after( $checkout ) {
 					<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
 						<tr class="fee">
 							<th><?php echo esc_html( $fee->name ); ?></th>
-							<td><?php wc_cart_totals_fee_html( $fee ); ?></td>
+							<td colspan="2"><?php wc_cart_totals_fee_html( $fee ); ?></td>
 						</tr>
 					<?php endforeach; ?>
 
@@ -449,7 +452,7 @@ function wonka_checkout_wrap_after( $checkout ) {
 						<?php else : ?>
 							<tr class="tax-total">
 								<th><?php echo esc_html( WC()->countries->tax_or_vat() ); ?></th>
-								<td><?php wc_cart_totals_taxes_total_html(); ?></td>
+								<td colspan="2"><?php wc_cart_totals_taxes_total_html(); ?></td>
 							</tr>
 						<?php endif; ?>
 					<?php endif; ?>
@@ -458,7 +461,7 @@ function wonka_checkout_wrap_after( $checkout ) {
 
 					<tr class="order-total">
 						<th><?php _e( 'Total', 'woocommerce' ); ?></th>
-						<td><?php wc_cart_totals_order_total_html(); ?></td>
+						<td colspan="2"><?php wc_cart_totals_order_total_html(); ?></td>
 					</tr>
 
 					<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>

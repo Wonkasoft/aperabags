@@ -13,7 +13,7 @@
 	/* vars set for single product page */
 	if ( document.querySelector( '.product-img-section' ) ) 
 	{
-		var product_img_section, wonka_single_product_img, thumbnail_controls, summary_section, slide_view_box, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop;
+		var product_img_section, wonka_single_product_img, thumbnail_controls, summary_section, slide_view_box, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop, one_click = true;
 	}
 	/*=====  End of vars set for script use  ======*/
 	
@@ -263,6 +263,19 @@
 
 	function thumbnail_scroll(e)
 	{
+		if ( window.pageYOffset > last_scroll_top ) 
+		{
+			scroll_direction = 'scrolled down';
+			scroll_distance = window.pageYOffset - last_scroll_top;
+		}
+
+		if ( window.pageYOffset < last_scroll_top )
+		{
+			scroll_direction = 'scrolled up';
+			scroll_distance = last_scroll_top - window.pageYOffset;
+		}
+
+		last_scroll_top = window.pageYOffset;
 
 		if ( document.querySelector( '.wonka-single-product-img' ) ) 
 		{
@@ -273,12 +286,10 @@
 			img_area_top = wonka_single_product_img.offsetTop + wonka_single_product_img.parentElement.parentElement.offsetTop;
 			target_stop = thumbnail_controls.offsetHeight - slide_view_box.offsetHeight;
 
-			console.log(active_slide_img.offsetHeight);
 			if ( window.innerWidth > 792 && win_y < img_area_top ) 
 			{
 				slide_view_box.classList.remove( 'sticky-on' );
-				slide_view_box.style.top = '';
-				// slide_view_box.style.height = '';
+				slide_view_box.style.top = '';                                          
 			}
 			else
 			{
@@ -293,6 +304,24 @@
 				else
 				{
 					slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
+				}
+				console.log(scroll_direction);
+				if ( slide_control.parentElement.nextElementSibling != null && one_click && scroll_direction === 'scrolled down' ) 
+				{
+					one_click = false;
+					setTimeout( function() {
+						slide_control.parentElement.nextElementSibling.firstElementChild.click();
+						one_click = true;
+					}, 250);
+				}
+
+				if ( slide_control.parentElement.previousElementSibling != null && one_click && scroll_direction === 'scrolled up' ) 
+				{
+					one_click = false;
+					setTimeout( function() {
+						slide_control.parentElement.previousElementSibling.firstElementChild.click();
+						one_click = true;
+					}, 250);
 				}
 			}
 

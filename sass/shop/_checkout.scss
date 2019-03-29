@@ -102,6 +102,41 @@ div.woocommerce-additional-fields {
 	clear: both;
 }
 
+div.checkout-order-details {
+	padding: 30px;
+	background: $color__background_alt;
+
+	tr.cart_item:first-child {
+
+		td {
+			border: none;
+		}
+	}
+
+	td.product-thumbnail {
+		position: relative;
+
+		strong.wonka-badge {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			background: #fff;
+			border-radius: 50%;
+			border: 1px solid rgba( #000, .4 );
+		}
+	}
+
+	.cart-subtotal,
+	.fee,
+	.tax-rate,
+	.order-total {
+		
+		td {
+			text-align: right;
+		}
+	}
+}
+
 @media screen and (min-width: 768px) {
 	.col2-set {
 		.form-row-first {
