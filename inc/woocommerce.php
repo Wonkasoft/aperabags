@@ -320,7 +320,7 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
  */
 function wonka_product_tabs_retitle( $tabs ) {
 	
-	$new_title = get_post_meta( get_the_ID(), 'product_statement', true )[0];
+	$new_title = get_post_meta( get_the_ID(), 'product_statement', true );
 	$tabs['reviews']['priority'] = 10;			// Reviews first
 	$tabs['description']['priority'] = 20;			// Description second
 	$tabs['additional_information']['priority'] = 30;	// Additional information third
@@ -547,7 +547,7 @@ add_filter("woocommerce_single_product_carousel_options", "wonka_product_carouse
 
 function wonka_product_meta_add( $post_id ) {
 
-	$current_value = ( get_post_meta( $post_id, 'product_statement' ) ) ? get_post_meta( $post_id, 'product_statement', true )[0]: '';
+	$current_value = ( get_post_meta( $post_id, 'product_statement' ) ) ? get_post_meta( $post_id, 'product_statement', true ): '';
 	
 	if ( ! add_post_meta( $post_id, 'product_statement', '', true ) ) { 
 	   update_post_meta( $post_id, 'product_statement', $current_value );
