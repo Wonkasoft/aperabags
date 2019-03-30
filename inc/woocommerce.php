@@ -319,10 +319,12 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
  * @return 
  */
 function wonka_product_tabs_retitle( $tabs ) {
+	
+	$new_title = get_post_meta( get_the_ID(), 'product_statement', true )[0];
 	$tabs['reviews']['priority'] = 10;			// Reviews first
 	$tabs['description']['priority'] = 20;			// Description second
 	$tabs['additional_information']['priority'] = 30;	// Additional information third
-	$tabs['description']['title'] = __( 'Product Statement' );
+	$tabs['description']['title'] = __( $new_title );
 
 	return $tabs;
 }
@@ -542,3 +544,13 @@ function wonka_product_carousel_options($options) {
 }
 
 add_filter("woocommerce_single_product_carousel_options", "wonka_product_carousel_options", 10);
+
+function wonka_product_meta_add( $post_id ) {
+
+	$current_value = ( get_post_meta( $post_id, 'product_statement' ) ) ? get_post_meta( $post_id, 'product_statement', true )[0]: '';
+	
+	if ( ! add_post_meta( $post_id, 'product_statement', '', true ) ) { 
+	   update_post_meta( $post_id, 'product_statement', $current_value );
+	}
+}
+add_action( 'woocommerce_process_product_meta', 'wonka_product_meta_add', 10 );

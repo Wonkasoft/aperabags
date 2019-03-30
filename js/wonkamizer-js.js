@@ -305,7 +305,7 @@
 				{
 					slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
 				}
-				console.log(scroll_direction);
+				
 				if ( slide_control.parentElement.nextElementSibling != null && one_click && scroll_direction === 'scrolled down' ) 
 				{
 					one_click = false;
