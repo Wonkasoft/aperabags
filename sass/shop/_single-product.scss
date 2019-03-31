@@ -459,41 +459,59 @@ section.product-tags-section {
 			padding: 15px;
 			border: 1px solid rgba( #000, .2 );
 
-			ul {
-				list-style: none;
-				margin: 0;
-				padding-left: 16px;
+			hr {
+				margin-top: 8px;
+				margin-bottom: 8px;
 			}
 
-			div.row {
+			div.wonka-product-statement-wrap {
 
-				.col {
-					margin-bottom: 15px;
+				ul {
+					list-style: none;
+					margin: 0;
+					padding-left: 16px;
 				}
-			}
 
-			div.wonka-row-product-statement {
-				padding: 15px;
+				div.row {
 
-				p {
-					margin: 0 auto;
-					max-width: 50%;
+					.col {
+						margin-bottom: 15px;
+					}
 				}
-			}
 
-			div.wonka-row-product-specs {
-				padding: 15px;
+				.table {
 
-				.col:not(:last-of-type) {
-					border-right: 1px solid rgba(0,0,0,.2);
+					thead {
+						
+						th {
+							border-top: none;
+						}
+					}
+				} 
+
+				div.wonka-row-product-statement {
+					padding: 15px;
+
+					p {
+						margin: 0 auto;
+						max-width: 70%;
+					}
 				}
-			}
 
-			div.wonka-row-product-built {
+				div.wonka-row-product-specs {
+					padding: 15px;
 
-				.col:not(:last-of-type) {
-					border-right: 1px solid rgba(0,0,0,.2);
-				}	
+					.col:not(:last-of-type) {
+						border-right: 1px solid rgba(0,0,0,.2);
+					}
+				}
+
+				div.wonka-row-product-built {
+
+					.col:not(:last-of-type) {
+						border-right: 1px solid rgba(0,0,0,.2);
+					}	
+				}
 			}
 		}
 

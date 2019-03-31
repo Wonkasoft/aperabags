@@ -6,6 +6,15 @@
 	section {
 		margin-top: 30px;
 		margin-bottom: 30px;
+
+		p.price,
+		span.price {
+			font-family: $font__main_jose;
+		}
+
+		a.button.product_type_variable {
+			display: none;
+		}
 	}
 }
 /*----------  Header Slider  ----------*/

@@ -250,7 +250,7 @@
 		else if ( window.innerWidth > 792 )
 		{
 			summary_section.classList.add( 'sticky-on' );
-			summary_section.style.top = 15 + 'px';
+			summary_section.style.top = 25 + 'px';
 		}
 
 		if ( window.innerWidth > 792 && win_y < product_img_section.parentElement.offsetTop - summary_section.offsetTop ) 
@@ -294,7 +294,7 @@
 			else
 			{
 				slide_view_box.classList.add( 'sticky-on' );
-				slide_view_box.style.top = 15 + 'px';
+				slide_view_box.style.top = 50 + 'px';
 				
 				/* slide_view_box adjustment */
 				if ( active_slide_img.offsetHeight > 760 ) 

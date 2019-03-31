@@ -5,6 +5,11 @@
 	#main {
 		margin: 15px auto;
 
+		p.price,
+		span.price {
+			font-family: $font__main_jose;
+		}
+
 		.woocommerce-notice,
 		.woocommerce-info,
 		.woocommerce-message {
