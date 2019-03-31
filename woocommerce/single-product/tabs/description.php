@@ -25,7 +25,7 @@ global $post;
 $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', __( get_post_meta( get_the_ID(), 'product_statement', true ), 'woocommerce' ) ) );
 
 ?>
-<section class="wonka-section-product-statement">
+<section id="product-statement" class="wonka-section-product-statement">
 	<?php if ( $heading ) : ?>
 		<div class="row wonka-product-statement-header">
 			<div class="col text-center">
@@ -48,7 +48,7 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 			$post_id = get_the_ID();
 			$product_specs_data = json_decode( get_post_meta( $post_id, 'product_specs', true ) ); 
 			if ( !empty( $product_specs_data ) ) : ?>
-				<div class="col">
+				<div id="product-specification" class="col">
 					<table class="table table-hover wonka-product-specs-table">
 						<thead>
 							<tr>
