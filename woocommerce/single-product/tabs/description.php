@@ -52,97 +52,65 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 					<table class="table table-hover wonka-product-specs-table">
 						<thead>
 							<tr>
-								<th colspan="3">
+								<th colspan="2">
 									<h4 id="product-spec">Product Specs</h4>
 								</th>
 							</tr>
 						</thead>
 						<tbody>
-							<?php if ( $product_specs_data->sub_header1 ) : ?>
-								<tr>
-									<th>
-										<?php _e( $product_specs_data->sub_header1 ); ?>
-									</th>
-									<?php if ( $product_specs_data->options1 ) : 
-										foreach ( $product_specs_data->options1 as $option ) : ?>
-											<td>
-												<?php _e( $option ); ?>
+							<?php 
+							foreach ( $product_specs_data as $spec ) : ?>
+								<?php if ( is_string( $spec ) ) : ?>
+									<tr>
+										<th colspan="2">
+											<?php _e( $spec ); ?>
+										</th>
+									</tr>
+								<?php endif; ?>
+
+								<?php if ( is_object( $spec ) ) : ?>
+									<?php if ( !empty( $spec ) ) : ?>
+										<tr>
+											<th>
+												<?php _e( $spec->spec_header ); ?>
+											</th>
+											<?php if ( !empty( $spec->points ) && is_array( $spec->points ) ) : ?>
+												<td>
+													<ul class="product-spec-points">
+												<?php $spec_count = 0;
+												foreach ( $spec->points as $point ) : $spec_count++; ?>
+														<li class="spec-point-<?php _e( $spec_count ); ?>">
+															<?php _e( $point ); ?>
+														</li>
+												<?php endforeach; ?>
+													</ul>
+												</td>
+											<?php endif; ?>
+											<?php if ( !empty( $spec->points ) && is_string( $spec->points ) ) : ?>
+												<td>
+													<?php _e( $spec->points ); ?>
+												</td>
+											<?php endif; ?>
+										</tr>
+									<?php endif; ?>
+									<?php if ( !empty( $feature->feature_options ) && is_array( $feature->feature_options ) ) :
+										$feature_options_count = 0; ?>
+										<tr>
+											<td colspan="3">
+												<ul class="key-feature-points">
+												<?php foreach ( $feature->feature_options as $option ) : $feature_options_count++; ?>
+													<li>
+														<div class="feature-option-<?php _e( $feature_options_count ); ?>">
+															<?php _e( $option ); ?>
+														</div>
+													</li>
+												<?php endforeach; ?>
+												</ul>
 											</td>
-										<?php endforeach; ?>
-
+										</tr>
 									<?php endif; ?>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $product_specs_data->sub_header2 ) : ?>
-								<tr>
-									<th>
-										<?php _e( $product_specs_data->sub_header2 ); ?>
-									</th>
-									<?php if ( $product_specs_data->options2 ) : ?>
-										<td colspan="2">
-											<?php _e( $product_specs_data->options2 ); ?>
-										</td>
-									<?php endif; ?>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $product_specs_data->sub_header3 ) : ?>
-								<tr>
-									<th>
-										<?php _e( $product_specs_data->sub_header3 ); ?>
-									</th>
-									<?php if ( $product_specs_data->options3 ) : ?>
-										<td colspan="2">
-											<?php _e( $product_specs_data->options3 ); ?>
-										</td>
-									<?php endif; ?>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $product_specs_data->sub_header4 ) : ?>
-								<tr>
-									<th>
-										<?php _e( $product_specs_data->sub_header4 ); ?>
-									</th>
-									<?php if ( $product_specs_data->options4 ) : ?>
-										<td colspan="2">
-											<?php _e( $product_specs_data->options4 ); ?>
-										</td>
-									<?php endif; ?>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $product_specs_data->sub_header5 ) : ?>
-								<tr>
-									<th>
-										<?php _e( $product_specs_data->sub_header5 ); ?>
-									</th>
-									<?php if ( $product_specs_data->options5 ) : ?>
-										<td colspan="2">
-											<?php _e( $product_specs_data->options5 ); ?>
-										</td>
-									<?php endif; ?>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $product_specs_data->sub_header6 ) : ?>
-								<tr>
-									<th>
-										<?php _e( $product_specs_data->sub_header6 ); ?>
-									</th>
-									<?php if ( $product_specs_data->options6 ) : ?>
-										<td colspan="2">
-											<div class="option1">
-												<?php _e( $product_specs_data->options6[0] ); ?>
-											</div>
-											<div class="option2">
-												<?php _e( $product_specs_data->options6[1] ); ?>
-											</div>
-										</td>
-									<?php endif; ?>
-								</tr>
-							<?php endif; ?>
+								<?php endif; ?>
+							<?php endforeach; ?>
 						</tbody>
 					</table>
 				</div>
@@ -159,117 +127,49 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 							</tr>
 						</thead>
 						<tbody>
-							<?php if ( $key_feature_data->features_1 ) : ?>
-								<tr>
-									<th colspan="3">
-										<?php _e( $key_feature_data->features_1 ); ?>
-									</th>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $key_feature_data->features_2 ) : ?>
-								<tr>
-									<th colspan="3">
-										<?php _e( $key_feature_data->features_2 ); ?>
-									</th>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $key_feature_data->features_3 ) : ?>
-								<tr>
-									<th colspan="3">
-										<?php _e( $key_feature_data->features_3 ); ?>
-									</th>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $key_feature_data->features_4 ) : ?>
-								<tr>
-									<th colspan="3">
-										<?php _e( $key_feature_data->features_4 ); ?>
-									</th>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $key_feature_data->features_5 ) : ?>
-								<tr>
-									<th colspan="3">
-										<?php _e( $key_feature_data->features_5 ); ?>
-									</th>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $key_feature_data->features_6->feature_header ) : ?>
-								<tr>
-									<th>
-										<?php _e( $key_feature_data->features_6->feature_header ); ?>
-									</th>
-								</tr>
-								<tr>
-									<?php if ( $key_feature_data->features_6->feature_options ) : ?>
-										<td colspan="2">
-											<ul class="key-feature-points">
-												<li>
-													<div class="feature-1">
-														<?php _e( $key_feature_data->features_6->feature_options[0] ); ?>
-													</div>
-												</li>
-												<li>
-													<div class="feature-2">
-														<?php _e( $key_feature_data->features_6->feature_options[1] ); ?>
-													</div>
-												</li>
-												<li>
-													<div class="feature-3">
-														<?php _e( $key_feature_data->features_6->feature_options[2] ); ?>
-													</div>
-												</li>
-											</ul>
-										</td>
+							<?php 
+							foreach ( $key_feature_data as $feature ) : 
+								if ( is_object( $feature ) ) : ?>
+									<?php if ( !empty( $feature->feature_header ) ) : ?>
+										<tr>
+											<th colspan="3">
+												<?php _e( $feature->feature_header ); ?>
+											</th>
+										</tr>
 									<?php endif; ?>
-								</tr>
-							<?php endif; ?>
+									<?php if ( !empty( $feature->feature_options ) && is_array( $feature->feature_options ) ) :
+										$feature_options_count = 0; ?>
+										<tr>
+											<td colspan="3">
+												<ul class="key-feature-points">
+												<?php foreach ( $feature->feature_options as $option ) : $feature_options_count++ ?>
+													<li>
+														<div class="feature-option-<?php _e( $feature_options_count ); ?>">
+															<?php _e( $option ); ?>
+														</div>
+													</li>
+												<?php endforeach; ?>
+												</ul>
+											</td>
+										</tr>
+									<?php endif; ?>
+									<?php if ( !empty( $feature->feature_options ) && is_string( $feature->feature_options ) ) : ?>
+										<tr>
+											<td colspan="3">
+												<?php _e( $option ); ?>
+											</td>
+										</tr>
+									<?php endif; ?>
+								<?php endif; ?>
 
-							<?php if ( $key_feature_data->features_7 ) : ?>
-								<tr>
-									<th colspan="3">
-										<?php _e( $key_feature_data->features_7 ); ?>
-									</th>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $key_feature_data->features_8 ) : ?>
-								<tr>
-									<th colspan="3">
-										<?php _e( $key_feature_data->features_8 ); ?>
-									</th>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $key_feature_data->features_9 ) : ?>
-								<tr>
-									<th colspan="3">
-										<?php _e( $key_feature_data->features_9 ); ?>
-									</th>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $key_feature_data->features_10 ) : ?>
-								<tr>
-									<th colspan="3">
-										<?php _e( $key_feature_data->features_10 ); ?>
-									</th>
-								</tr>
-							<?php endif; ?>
-
-							<?php if ( $key_feature_data->features_11 ) : ?>
-								<tr>
-									<th colspan="3">
-										<?php _e( $key_feature_data->features_11 ); ?>
-									</th>
-								</tr>
-							<?php endif; ?>
-
+								<?php if ( is_string( $feature ) ) : ?>
+									<tr>
+										<th colspan="3">
+											<?php _e( $feature ); ?>
+										</th>
+									</tr>
+								<?php endif; ?>
+							<?php endforeach; ?>
 						</tbody>
 					</table>
 				</div>

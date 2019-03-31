@@ -363,15 +363,29 @@ function wonka_checkout_wrap_before( $checkout ) {
 
 	$output .= '<div class="row wonka-checkout-row">';
 	$output .= '<div class="col col-12 col-md-7 checkout-form-left-side">';
-	$output .= '<div class="col col-12">';
-	$output .= '<div class="express-checkout-btns"><span class="express-btns-text">' . __( 'Express checkout', 'aperabags') . '</span></div>';
-	$output .= '</div>';
 
 	_e( $output );
 }
 
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 11, 1 );
 
+function wonka_checkout_before_shipping_form() {
+
+	$output .= '<div class="wonka-row-express-checkout-btns">';
+	$output .= '<div class="col col-12">';
+	$output .= '<div class="express-checkout-btns"><span class="express-btns-text">' . __( 'Express checkout', 'aperabags') . '</span></div>';
+	$output .= '</div>';
+	$output .= '</div>';
+
+	_e( $output );
+}
+add_action( 'woocommerce_checkout_shipping', 'wonka_checkout_before_shipping_form', 5 );
+
+/**
+ * This builds a custom table of order details on the checkout page.
+ * @param  [type] $checkout [description]
+ * 
+ */
 function wonka_checkout_wrap_after( $checkout ) {
 	?>
 		</div><!-- .col -->
@@ -513,7 +527,6 @@ function wonka_single_product_display() {
  * @since  1.0.0
  * 
  */
-
 function ws_remove_product_page_skus( $enabled ) {
     if ( ! is_admin() && is_product() ) {
         return false;
@@ -546,6 +559,11 @@ function wonka_product_carousel_options($options) {
 
 add_filter("woocommerce_single_product_carousel_options", "wonka_product_carousel_options", 10);
 
+/**
+ * This adds custom meta fields to the product edit interface
+ * @param  int $post_id contains the post id for current product
+ * 
+ */
 function wonka_product_meta_add( $post_id ) {
 
 	$product_statement = ( get_metadata( 'product', $post_id, 'product_statement' ) ) ? get_metadata( 'product', $post_id, 'product_statement', true ): '';
@@ -553,6 +571,8 @@ function wonka_product_meta_add( $post_id ) {
 	$product_specs = ( get_metadata( 'product', $post_id, 'product_specs' ) ) ? get_metadata( 'product', $post_id, 'product_specs', true ): '';
 
 	$key_features = ( get_metadata( 'product', $post_id, 'key_features' ) ) ? get_metadata( 'product', $post_id, 'key_features', true ): '';
+
+	$_enable_wonka_express_button = ( get_metadata( 'product', $post_id, '_enable_wonka_express_button' ) ) ? get_metadata( 'product', $post_id, '_enable_wonka_express_button', true ): '';
 	
 	if ( ! add_post_meta( $post_id, 'product_statement', '', true ) ) { 
 	   update_metadata( 'product', $post_id, 'product_statement', $product_statement );
@@ -565,14 +585,79 @@ function wonka_product_meta_add( $post_id ) {
 	if ( ! add_post_meta( $post_id, 'key_features', '', true ) ) { 
 	   update_metadata( 'product', $post_id, 'key_features', $key_features );
 	}
-}
-add_action( 'woocommerce_process_product_meta', 'wonka_product_meta_add', 10 );
 
+	if ( ! add_post_meta( $post_id, '_enable_wonka_express_button', '', true ) ) { 
+	   update_metadata( 'product', $post_id, '_enable_wonka_express_button', $_enable_wonka_express_button );
+	}
+}
+add_action( 'woocommerce_process_product_meta', 'wonka_product_meta_add', 10, 1 );
+
+function wonka_woo_add_custom_general_fields( $product_type ) {
+	if( isset($product_type) && !empty($product_type) ) {
+	    $product_type['enable_wonka_express_button'] = array(
+	            'id'            => '_enable_wonka_express_button',
+	            'wrapper_class' => '',
+	            'label'         => __( 'Enable Wonka Express Checkout Button', 'aperabags' ),
+	            'description'   => __( 'Adds the Wonka Express Checkout button to the product page allowing buyers to go directly to the checkout directly from the product page.', 'aperabags' ),
+	            'default'       => 'yes'
+	    );
+	    return $product_type;
+	} else {
+	        return $product_type;
+	}
+	
+}
+add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
+
+/**
+ * This adds a custom express checkout button to the product page
+ * @return [type] [description]
+ */
 function wonka_express_checkout_add() {
+	global $post;
+	$post_id = get_the_ID();
+	if ( get_post_meta( $post_id, '_enable_wonka_express_button', true ) === 'yes' ) :
 	?>
 	<div class="wonka-express-checkout-wrap">
 		<a href="#" class="wonka-btn">Express Checkout</a>
 	</div>
 	<?php
+	endif;
 }
+	
 add_action( 'woocommerce_after_add_to_cart_button', 'wonka_express_checkout_add', 10 );
+
+/**
+ * This is for adding the opening tags for a wrap around the reviews meta data
+ * @param  object $comment contains review data
+ * @return [type]          [description]
+ */
+function wonka_before_comment_meta_add( $comment ) {
+	?>
+		<div class="wonka-rating-and-meta-wrap col-4">
+		<?php
+		/**
+		 * The woocommerce_review_before hook
+		 *
+		 * @hooked woocommerce_review_display_gravatar - 10
+		 */
+		do_action( 'woocommerce_review_before', $comment );
+		?>
+	<?php
+}
+add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta_add', 5 );
+
+function wonka_before_comment_text_add( $comment ) {
+	?>
+		</div><!-- .wonka-rating-and-meta-wrap -->
+		<div class="wonka-review-text-wrap col-7">
+	<?php
+}
+add_action( 'woocommerce_review_before_comment_text', 'wonka_before_comment_text_add', 5 );
+
+function wonka_after_comment_text_add( $comment ) {
+	?>
+		</div><!-- .wonka-review-text-wrap -->
+	<?php
+}
+add_action( 'woocommerce_review_after_comment_text', 'wonka_after_comment_text_add', 5 );

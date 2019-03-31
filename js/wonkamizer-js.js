@@ -7,7 +7,9 @@
 	===============================================*/
 	var last_scroll_top = 0,
 	scroll_direction,
-	scroll_distance;
+	scroll_distance,
+	admin_bar,
+	admin_height;
 
 
 	/* vars set for single product page */
@@ -92,7 +94,7 @@
 		var shop_section = document.querySelector( '.shop-section' );
 		var top_slider_section = document.querySelector( '.header-slider-section' );
 		var cta_section = document.querySelector( '.desirable-slider-section' );
-		var parallax_adjust, slide_imgs, admin_bar, admin_height;
+		var parallax_adjust, slide_imgs;
 
 		// Get the offset position of the navbar
 		var sticky = shop_section.offsetTop;
@@ -249,8 +251,27 @@
 		}
 		else if ( window.innerWidth > 792 )
 		{
-			summary_section.classList.add( 'sticky-on' );
-			summary_section.style.top = 25 + 'px';
+			if ( document.querySelector( '#wpadminbar' ) ) 
+			{
+				admin_bar = document.querySelector( '#wpadminbar' );
+				admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+				
+				if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+				{
+					summary_section.classList.add( 'sticky-on' );
+					summary_section.style.top = 30 + 'px';
+				}
+				else
+				{
+					summary_section.classList.add( 'sticky-on' );
+					summary_section.style.top = admin_height + 30 + 'px';
+				}
+			}
+			else
+			{
+				summary_section.classList.add( 'sticky-on' );
+				summary_section.style.top = 30 + 'px';
+			}
 		}
 
 		if ( window.innerWidth > 792 && win_y < product_img_section.parentElement.offsetTop - summary_section.offsetTop ) 
@@ -293,8 +314,28 @@
 			}
 			else
 			{
-				slide_view_box.classList.add( 'sticky-on' );
-				slide_view_box.style.top = 50 + 'px';
+				if ( document.querySelector( '#wpadminbar' ) ) 
+				{
+					admin_bar = document.querySelector( '#wpadminbar' );
+					admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+					
+					if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+					{
+						slide_view_box.classList.add( 'sticky-on' );
+						slide_view_box.style.top = 30 + 'px';
+					}
+					else
+					{
+						slide_view_box.classList.add( 'sticky-on' );
+						slide_view_box.style.top = admin_height + 30 + 'px';
+					}
+				}
+				else
+				{
+					slide_view_box.classList.add( 'sticky-on' );
+					slide_view_box.style.top = 30 + 'px';
+				}
+				
 				
 				/* slide_view_box adjustment */
 				if ( active_slide_img.offsetHeight > 760 ) 
@@ -427,6 +468,7 @@
 		============================================================================================*/
 		if ( document.querySelector( '.summary.entry-summary' ) ) 
 		{
+			var entry_summary = document.querySelector( '.summary.entry-summary' );
 			var table = document.querySelector( '.variations' );
 			var table_body = document.querySelector( '.variations tbody' );
 			var color_label_row = document.querySelector( '.variations .label' ).parentElement;
@@ -443,7 +485,6 @@
 			var clear_li = document.createElement( 'LI' );
 			var clear_btn = document.querySelector( '.variations .value .reset_variations' );
 
-			table.classList.add( 'table' );
 			color_label_cell.className = "label";
 			qty_label.className = "qty-label";
 			qty_cell.className = "qty-cell";
@@ -459,9 +500,29 @@
 			table_body.appendChild( color_new_swatches_row );
 			colors_ul.appendChild( clear_li );
 			clear_li.appendChild( clear_btn );
+			table.classList.add( 'table' );
+			entry_summary.classList.add( 'loaded' );
 
 		}
 		/*=====  End of This is for reordering the placement of elements in add to cart area  ======*/
+
+		/*========================================================================================
+		=            This will move paypal checkout buttons into express checkout box            =
+		========================================================================================*/
+		if ( document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' ) ) 
+		{
+			// document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' ).onload = function() 
+			// {
+			// 	var iframe_btns = document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' );
+			// 	var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
+
+			// 	express_box.appendChild( iframe_btns );
+			// };
+		}
+		
+		
+		/*=====  End of This will move paypal checkout buttons into express checkout box  ======*/
+		
 		
 		/*===================================================================
 		=            This is to kill the about us video on close            =
