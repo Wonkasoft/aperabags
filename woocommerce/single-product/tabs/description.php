@@ -261,7 +261,15 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 									</th>
 								</tr>
 							<?php endif; ?>
-							
+
+							<?php if ( $key_feature_data->features_11 ) : ?>
+								<tr>
+									<th colspan="3">
+										<?php _e( $key_feature_data->features_11 ); ?>
+									</th>
+								</tr>
+							<?php endif; ?>
+
 						</tbody>
 					</table>
 				</div>
