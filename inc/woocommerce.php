@@ -572,7 +572,7 @@ function wonka_product_meta_add( $post_id ) {
 
 	$key_features = ( get_metadata( 'product', $post_id, 'key_features' ) ) ? get_metadata( 'product', $post_id, 'key_features', true ): '';
 
-	$_enable_wonka_express_button = ( get_metadata( 'product', $post_id, '_enable_wonka_express_button' ) ) ? get_metadata( 'product', $post_id, '_enable_wonka_express_button', true ): '';
+	$_enable_wonka_express_button = ( get_post_meta( $post_id, '_enable_wonka_express_button' ) ) ? get_post_meta( $post_id, '_enable_wonka_express_button', true ): '';
 	
 	if ( ! add_post_meta( $post_id, 'product_statement', '', true ) ) { 
 	   update_metadata( 'product', $post_id, 'product_statement', $product_statement );
