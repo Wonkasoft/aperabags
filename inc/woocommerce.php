@@ -323,7 +323,7 @@ function wonka_product_tabs_retitle( $tabs ) {
 	$new_title = get_post_meta( get_the_ID(), 'product_statement', true );
 	$tabs['reviews']['priority'] = 10;			// Reviews first
 	$tabs['description']['priority'] = 20;			// Description second
-	$tabs['additional_information']['priority'] = 30;	// Additional information third
+	unset( $tabs['additional_information'] );	// Additional information third
 	$tabs['description']['title'] = __( $new_title );
 
 	return $tabs;
@@ -537,6 +537,7 @@ remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_singl
  */
 function wonka_product_carousel_options($options) {
   $options['animation'] = 'slide';
+  $options['animationSpeed'] = 1200;
   $options['useCSS'] = true;
   $options['easing'] = 'swing';
   $options['direction'] = 'vertical';
@@ -547,10 +548,31 @@ add_filter("woocommerce_single_product_carousel_options", "wonka_product_carouse
 
 function wonka_product_meta_add( $post_id ) {
 
-	$current_value = ( get_post_meta( $post_id, 'product_statement' ) ) ? get_post_meta( $post_id, 'product_statement', true ): '';
+	$product_statement = ( get_metadata( 'product', $post_id, 'product_statement' ) ) ? get_metadata( 'product', $post_id, 'product_statement', true ): '';
+
+	$product_specs = ( get_metadata( 'product', $post_id, 'product_specs' ) ) ? get_metadata( 'product', $post_id, 'product_specs', true ): '';
+
+	$key_features = ( get_metadata( 'product', $post_id, 'key_features' ) ) ? get_metadata( 'product', $post_id, 'key_features', true ): '';
 	
 	if ( ! add_post_meta( $post_id, 'product_statement', '', true ) ) { 
-	   update_post_meta( $post_id, 'product_statement', $current_value );
+	   update_metadata( 'product', $post_id, 'product_statement', $product_statement );
+	}
+
+	if ( ! add_post_meta( $post_id, 'product_specs', '', true ) ) { 
+	   update_metadata( 'product', $post_id, 'product_specs', $product_specs );
+	}
+
+	if ( ! add_post_meta( $post_id, 'key_features', '', true ) ) { 
+	   update_metadata( 'product', $post_id, 'key_features', $key_features );
 	}
 }
 add_action( 'woocommerce_process_product_meta', 'wonka_product_meta_add', 10 );
+
+function wonka_express_checkout_add() {
+	?>
+	<div class="wonka-express-checkout-wrap">
+		<a href="#" class="wonka-btn">Express Checkout</a>
+	</div>
+	<?php
+}
+add_action( 'woocommerce_after_add_to_cart_button', 'wonka_express_checkout_add', 10 );

@@ -201,8 +201,13 @@
 				display: flex;
 				align-items: flex-start;
 				flex-direction: column;
+				margin: 15px auto;
 				padding: 0 15px;
 				background: $color__background_alt;
+
+				hr {
+					width: 100%;
+				}
 
 				div.price-reviews-container {
 					flex: 1 100%;
@@ -239,18 +244,6 @@
 					}
 				}
 
-				table.variations {
-					margin: 0;
-
-					td {
-						padding: 8px 0;
-					}
-
-					td.label {
-						max-width: 10px;
-					}
-				}
-
 				form.cart {
 					flex: 1 100%;
 					display: flex;
@@ -259,10 +252,11 @@
 					width: 100%;
 
 					div.quantity {
-						width: 45px;
+						width: 75px;
 
 						input[type=number] {
 							padding-right: 3px;
+							font-weight: 700;
 						}
 
 					}
@@ -277,6 +271,37 @@
 
 					table.variations {
 						flex: 1 100%;
+						opacity: 1;
+						@include prefix( transition, $trans_25, o moz webkit );
+
+						&.table {
+							opacity: 1;
+						}
+
+						th.label {
+
+							label {
+								display: flex;
+								align-items: center;
+								margin: 0;
+							}
+						}
+
+						th {
+							vertical-align: middle;
+						}
+
+						td {
+							padding: 8px 18px;
+						}
+
+						ul.color-variable-wrapper {
+
+							li {
+								display: flex;
+								align-items: center;
+							}
+						}
 					}
 
 					div.single_variation_wrap {
@@ -312,10 +337,24 @@
 							align-items: flex-start;
 							width: 100%;
 
+							div.quantity {
+								display: none !important;
+							}
+
 							button.wonka-btn {
 								margin: 8px auto;
 								width: 100%;
 
+							}
+
+							div.wonka-express-checkout-wrap {
+								margin: 15px 0;
+								width: 100%;
+
+								.wonka-btn {
+									display: inline-block;
+									width: 100%;
+								}
 							}
 						}
 					}
@@ -364,9 +403,7 @@
 				div.summary {
 					flex: 0.1 40%;
 					position: relative;
-					background: #fff;
 					z-index: 20;
-					margin: 0;
 
 					&.sticky-on {
 						position: -webkit-sticky;    
