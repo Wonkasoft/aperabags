@@ -572,7 +572,8 @@ function wonka_product_meta_add( $post_id ) {
 
 	$key_features = ( get_metadata( 'product', $post_id, 'key_features' ) ) ? get_metadata( 'product', $post_id, 'key_features', true ): '';
 
-	$_enable_wonka_express_button = ( get_post_meta( $post_id, '_enable_wonka_express_button' ) ) ? get_post_meta( $post_id, '_enable_wonka_express_button', true ): '';
+	$_enable_wonka_express_button = isset( $_POST['_enable_wonka_express_button'] ) ? 'yes' : 'no';
+            update_post_meta( $post_id, '_enable_wonka_express_button', $_enable_wonka_express_button );
 	
 	if ( ! add_post_meta( $post_id, 'product_statement', '', true ) ) { 
 	   update_metadata( 'product', $post_id, 'product_statement', $product_statement );
@@ -585,12 +586,8 @@ function wonka_product_meta_add( $post_id ) {
 	if ( ! add_post_meta( $post_id, 'key_features', '', true ) ) { 
 	   update_metadata( 'product', $post_id, 'key_features', $key_features );
 	}
-
-	if ( ! add_post_meta( $post_id, '_enable_wonka_express_button', '', true ) ) { 
-	   update_metadata( 'product', $post_id, '_enable_wonka_express_button', $_enable_wonka_express_button );
-	}
 }
-add_action( 'woocommerce_process_product_meta', 'wonka_product_meta_add', 10, 1 );
+add_action( 'woocommerce_process_product_meta', 'wonka_product_meta_add', 11, 1 );
 
 function wonka_woo_add_custom_general_fields( $product_type ) {
 	if( isset($product_type) && !empty($product_type) ) {
