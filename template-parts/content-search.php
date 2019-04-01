@@ -30,8 +30,9 @@
 	</div><!-- .entry-summary -->
 
 	<footer class="entry-footer">
+		<a href="<?php esc_url( get_permalink() ); ?>"> See Details</a>
+		<!-- commented out comments area --> 
 		<!-- <?php apera_bags_entry_footer(); ?> -->
-		Here
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->
 </div> <!-- .col -->
