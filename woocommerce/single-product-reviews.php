@@ -46,8 +46,8 @@ if ( ! comments_open() ) {
 			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
 				echo '<nav class="woocommerce-pagination">';
 				paginate_comments_links( apply_filters( 'woocommerce_comment_pagination_args', array(
-					'prev_text' => '&larr;',
-					'next_text' => '&rarr;',
+					'next_text' => 'Show More',
+					'show_all'  => true,
 					'type'      => 'list',
 				) ) );
 				echo '</nav>';
@@ -68,7 +68,7 @@ if ( ! comments_open() ) {
 					$commenter = wp_get_current_commenter();
 
 					$comment_form = array(
-						'title_reply'          => have_comments() ? __( 'Add a review', 'woocommerce' ) : sprintf( __( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
+						'title_reply'          => have_comments() ? __( 'Write a review', 'woocommerce' ) : sprintf( __( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
 						'title_reply_to'       => __( 'Leave a Reply to %s', 'woocommerce' ),
 						'title_reply_before'   => '<span id="reply-title" class="comment-reply-title">',
 						'title_reply_after'    => '</span>',
