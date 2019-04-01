@@ -230,9 +230,9 @@ add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
 function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	$inline_forms = array( 2 );
 	if ( !empty( $form['cssClass'] ) ) :
-		$form['cssClass'] .= ' form-group wonka-gform-' . $form['id'];
+		$form['cssClass'] .= ' form-group wonka-gform wonka-gform-' . $form['id'];
 	else:
-		$form['cssClass'] = 'form-group wonka-gform-' . $form['id'];
+		$form['cssClass'] = 'form-group wonka-gform wonka-gform-' . $form['id'];
 	endif;
 
 	if ( in_array( $form['id'], $inline_forms ) ) :

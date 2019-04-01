@@ -521,6 +521,7 @@
 		========================================================================================*/
 		if ( document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' ) ) 
 		{
+			console.log('first check');
 			document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' ).onload = function() 
 			{
 				var iframe_btns = document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' );
