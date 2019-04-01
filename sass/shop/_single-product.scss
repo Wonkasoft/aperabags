@@ -278,7 +278,7 @@
 					table.variations {
 						flex: 1 100%;
 						opacity: 0;
-						@include prefix( transition, $trans_25, o moz webkit );
+						@include prefix( transition, $trans_3, o moz webkit );
 
 						&.table {
 							opacity: 1;
@@ -490,6 +490,7 @@ section.product-tags-section {
 		section.wonka-section-product-statement {
 			padding: 15px;
 			border: 1px solid rgba( #000, .2 );
+			background: #fafafa;
 
 			hr {
 				margin-top: 8px;
