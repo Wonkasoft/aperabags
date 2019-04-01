@@ -23,7 +23,14 @@
 	/*===================================================================
 	=            This is area for writing callable functions            =
 	===================================================================*/
-	function load_page_vars() {
+	/*===== This is for Keyfeatures | Product Specs links on shor description ====*/
+	function scrollToSection() 
+	{
+  		document.querySelector('#product-statement').scrollIntoView({behavior: 'smooth'});
+	}
+
+	function load_page_vars() 
+	{
 		if ( document.querySelector( '.product-img-section' ) ) 
 		{
 			product_img_section = document.querySelector( '.product-img-section' );
@@ -375,7 +382,8 @@
 		}
 	}
 
-	function imageZoom(imgID, resultID) {
+	function imageZoom(imgID, resultID) 
+	{
 	  var img, lens, result, cx, cy;
 	  img = document.getElementById(imgID);
 	  result = document.getElementById(resultID);
@@ -396,7 +404,8 @@
 	  /*and also for touch screens:*/
 	  lens.addEventListener("touchmove", moveLens);
 	  img.addEventListener("touchmove", moveLens);
-	  function moveLens(e) {
+	  function moveLens(e) 
+	  {
 	    var pos, x, y;
 	    /*prevent any other actions that may occur when moving over the image:*/
 	    e.preventDefault();
@@ -406,17 +415,18 @@
 	    x = pos.x - (lens.offsetWidth / 2);
 	    y = pos.y - (lens.offsetHeight / 2);
 	    /*prevent the lens from being positioned outside the image:*/
-	    if (x > img.width - lens.offsetWidth) {x = img.width - lens.offsetWidth;}
-	    if (x < 0) {x = 0;}
-	    if (y > img.height - lens.offsetHeight) {y = img.height - lens.offsetHeight;}
-	    if (y < 0) {y = 0;}
+	    if (x > img.width - lens.offsetWidth) { x = img.width - lens.offsetWidth; }
+	    if (x < 0) { x = 0; }
+	    if (y > img.height - lens.offsetHeight) { y = img.height - lens.offsetHeight; }
+	    if (y < 0) { y = 0; }
 	    /*set the position of the lens:*/
 	    lens.style.left = x + "px";
 	    lens.style.top = y + "px";
 	    /*display what the lens "sees":*/
 	    result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
 	  }
-	  function getCursorPos(e) {
+	  function getCursorPos(e) 
+	  {
 	    var a, x = 0, y = 0;
 	    e = e || window.event;
 	    /*get the x and y positions of the image:*/
@@ -669,10 +679,4 @@
 
 	};
 	/*=====  End of This is for running after document is ready  ======*/
-
-	/*===== This is for Keyfeatures | Product Specs links on shor description ====*/
-	function scrollToSection() {
-  	document.querySelector('#product-statement').scrollIntoView({behavior: 'smooth'});
-	}
-
 })(jQuery);
