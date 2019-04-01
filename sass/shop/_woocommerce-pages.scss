@@ -9,8 +9,12 @@
 		span.price {
 			font-family: $font__main_jose;
 		}
-		.woocommerce-error {
-			padding: 4px 8px;
+
+		ul.woocommerce-error {
+			list-style: none;
+			li {
+				padding: 4px 8px;
+			}
 		}
 
 		.woocommerce-notice,
@@ -99,7 +103,10 @@
 			}
 		}
 		
-		
+		div.wonka-row-express-checkout-btns {
+			margin-top: 15px;
+			
+		}
 		/*=====  End of This is for the checkout page  ======*/
 		
 		/*===========================================================
@@ -191,7 +198,7 @@
 			}
 		}
 		/*=====  End of This is the totals on the cart page  ======*/
-		&.checkout {
+		&.main-checkout {
 
 			.entry-header {
 				display: none;
@@ -217,7 +224,7 @@
 			}
 		}
 
-		&.page {
+		&.main-page {
 			max-width: 1180px;
 
 			ul {
@@ -236,7 +243,7 @@
 			}
 		}
 
-		&.my-account {
+		&.main-my-account {
 
 			label.woocommerce-form__label-for-checkbox {
 				margin: 15px 0;
@@ -247,7 +254,7 @@
 
 	&.archive {
 
-		main.product {
+		main.main-product {
 			max-width: 1180px;
 		}
 

@@ -228,7 +228,13 @@ add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
  * customize gravity forms
  */
 function add_bootstrap_container_class( $form, $ajax, $field_values ) {
-	$form['cssClass'] = 'form-inline wonka-newsletter-form';
+	$inline_forms = array( 2 );
+	$form['cssClass'] .= 'wonka-gform';
+
+	if ( in_array( $form['id'], $inline_forms ) ) :
+		$form['cssClass'] .= ' form-inline wonka-newsletter-form';
+		
+	endif;
 
 	return $form;
 }

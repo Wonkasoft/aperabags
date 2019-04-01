@@ -521,13 +521,14 @@
 		========================================================================================*/
 		if ( document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' ) ) 
 		{
-			// document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' ).onload = function() 
-			// {
-			// 	var iframe_btns = document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' );
-			// 	var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
+			document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' ).onload = function() 
+			{
+				var iframe_btns = document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' );
+				var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
+				var cln = iframe_btns.cloneNode( true );
 
-			// 	express_box.appendChild( iframe_btns );
-			// };
+				express_box.appendChild( cln );
+			};
 		}
 		
 		
@@ -675,7 +676,33 @@
 		   }, 500);
 		});
 
-		
+		if ( document.getElementById( 'key-features-link' ) ) 
+		{
+			var key_fea_jump = document.getElementById( 'key-features-link' );
+
+			key_fea_jump.addEventListener( 'click', function( e ) 
+				{
+					e.preventDefault();
+					if ( e.target.tagName.toLowerCase() === 'a') 
+					{
+						scrollToSection();
+					}
+				} );
+		}
+
+		if ( document.getElementById( 'product-specs-link' ) ) 
+		{
+			var spec_jump = document.getElementById( 'product-specs-link' );
+
+			spec_jump.addEventListener( 'click', function( e ) 
+				{
+					e.preventDefault();
+					if ( e.target.tagName.toLowerCase() === 'a') 
+					{
+						scrollToSection();
+					}
+				} );
+		}
 
 	};
 	/*=====  End of This is for running after document is ready  ======*/
