@@ -10,7 +10,8 @@
 #content {
 	@include prefix( transition, $trans_25, o moz webkit );
 
-	.contact-us {
+	.main-contact-us {
+		max-width: 1180px;
 
 		.entry-title {
 			display: none;
@@ -152,5 +153,14 @@ section {
 
 .overlay .closebtn:hover {
 	color: #ccc;
+}
+
+div.wonka-gform_wrapper {
+
+	ul.gform_fields {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
 }
 /*=====  End of Search styles  ======*/
