@@ -671,7 +671,7 @@
 	/*=====  End of This is for running after document is ready  ======*/
 
 	/*===== This is for Keyfeatures | Product Specs links on shor description ====*/
-	function scrollToForm() {
+	function scrollToSection() {
   	document.querySelector('#product-statement').scrollIntoView({behavior: 'smooth'});
 	}
 
