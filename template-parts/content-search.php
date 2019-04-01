@@ -30,7 +30,7 @@
 	</div><!-- .entry-summary -->
 
 	<footer class="entry-footer">
-		<a href="<?php esc_url( get_permalink() ); ?>" class="btn wonka-btn"> See Details</a>
+		<a class="btn wonka-btn" href="<?php esc_url( get_permalink() ); ?>" rel="bookmark">See Details</a>
 		<!-- commented out comments area --> 
 		<!-- <?php apera_bags_entry_footer(); ?> -->
 	</footer><!-- .entry-footer -->
