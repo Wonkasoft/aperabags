@@ -30,7 +30,8 @@
 	</div><!-- .entry-summary -->
 
 	<footer class="entry-footer">
-		<?php apera_bags_entry_footer(); ?>
+		<!-- <?php apera_bags_entry_footer(); ?> -->
+		Here
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->
 </div> <!-- .col -->

@@ -51,7 +51,7 @@ get_header();
 
 		endif;
 		?>
-	</div> <!-- .row -->
+			</div> <!-- .row -->
 		</main><!-- #main -->
 	</section><!-- #primary -->
 
