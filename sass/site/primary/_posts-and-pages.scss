@@ -8,8 +8,11 @@
 }
 
 #content {
-	max-width: 1200px;
 	@include prefix( transition, $trans_25, o moz webkit );
+
+	main#main {
+		max-width: 1200px;
+	}
 
 	.main-contact-us {
 		margin: 15px auto;

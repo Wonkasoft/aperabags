@@ -17,7 +17,7 @@ $footer_section = get_section_mods( 'footer' );
 	<div id="footer-spacer"></div>
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
-			<div class="row upper-footer">
+			<div class="row upper-footer wonka-row-footer">
 				<div class="col col-12 col-md-3">
 					<div class="social-components-wrap">
 						<h4 class="footer-title"><?php echo $footer_section->footer_mods->footer_social_title; ?></h4>
@@ -53,7 +53,7 @@ $footer_section = get_section_mods( 'footer' );
 					</div><!-- .social-components-wrap -->
 				</div><!-- .col -->
 				<div class="col col-12 col-md-9">
-					<div class="row">
+					<div class="row wonka-row-footer">
 						<?php if ( ! empty( $footer_section->footer_titles->footer_title_1 ) ) : ?>
 							<div class="col-6 col-md">
 								<h5 class="footer-title menu-title-shop"><?php echo $footer_section->footer_titles->footer_title_1; ?></h5>
