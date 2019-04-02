@@ -98,13 +98,13 @@ if ( ! comments_open() ) {
 			</ol>
 
 			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
-				echo '<nav class="woocommerce-pagination">';
-				paginate_comments_links( apply_filters( 'woocommerce_comment_pagination_args', array(
-					'prev_text' => '&larr;',
-					'next_text' => '&rarr;',
-					'type'      => 'list',
-				) ) );
-				echo '</nav>';
+				// echo '<nav class="woocommerce-pagination">';
+				// paginate_comments_links( apply_filters( 'woocommerce_comment_pagination_args', array(
+				// 	'prev_text' => '&larr;',
+				// 	'next_text' => '&rarr;',
+				// 	'type'      => 'list',
+				// ) ) );
+				// echo '</nav>';
 			endif; ?>
 
 		<?php else : ?>
