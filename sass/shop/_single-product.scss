@@ -450,14 +450,36 @@ section.product-tags-section {
 			padding: 15px;
 			border: 1px solid rgba( #000, .2 );
 
-			ol {
+			div.wonka-review-title {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+
+			ol.commentlist {
 				margin: 0;
 				padding: 8px;
+				height: 100%;
+				list-style: none;
+				overflow: hidden;
+				@include prefix( transition, $trans_35, o moz webkit );
 
 				li:not(:last-child) {
 					border-bottom: 1px solid rgba( #333, .2 ); 
 				}
 			}
+
+			form#commentform {
+				position: relative;
+				opacity: 0;
+				height: 0;
+				@include prefix( transition, $trans_35, o moz webkit );
+
+				.wonka-btn {
+					border-radius: 100px;
+				}
+			}
+
 			div.wonka-row-comment-text {
 				margin: 15px auto;
 			}
@@ -581,18 +603,5 @@ section.related.products {
 		display: none;
 	}
 }
-section.wonka-section-reviews {
-
-	ol {
-		list-style: none;
-	}
-}
-form#commentform {
-	position: relative;
-	opacity: 0;
-	display: none;
-}
-
-
 /*=====  End of Tabs section  ======*/
 

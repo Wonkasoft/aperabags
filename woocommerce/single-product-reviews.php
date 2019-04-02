@@ -47,7 +47,7 @@ if ( ! comments_open() ) {
 					$commenter = wp_get_current_commenter();
 
 					$comment_form = array(
-						'title_reply'          => have_comments() ? __( 'Write a review', 'woocommerce' ) : sprintf( __( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
+						'title_reply'          => have_comments() ? __( 'Write your review', 'woocommerce' ) : sprintf( __( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
 						'title_reply_to'       => __( 'Leave a Reply to %s', 'woocommerce' ),
 						'title_reply_before'   => '<span id="reply-title" class="comment-reply-title">',
 						'title_reply_after'    => '</span>',
@@ -58,9 +58,11 @@ if ( ! comments_open() ) {
 							'email'  => '<p class="comment-form-email"><label for="email">' . esc_html__( 'Email', 'woocommerce' ) . '&nbsp;<span class="required">*</span></label> ' .
 										'<input id="email" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30" required /></p>',
 						),
-						'label_submit'  => __( 'Submit', 'woocommerce' ),
+						'label_submit'  => __( 'Send', 'woocommerce' ),
 						'logged_in_as'  => '',
 						'comment_field' => '',
+						'class_submit' => 'wonka-btn',
+						'id_submit' => 'wonka-submit',
 					);
 
 					if ( $account_page_url = wc_get_page_permalink( 'myaccount' ) ) {
@@ -112,6 +114,12 @@ if ( ! comments_open() ) {
 			<p class="woocommerce-noreviews"><?php _e( 'There are no reviews yet.', 'woocommerce' ); ?></p>
 
 		<?php endif; ?>
+		<div class="row wonka-row">
+			<div class="col-12 text-center">
+				<a id="more-reviews" href="#" class="btn wonka-btn">More reviews</a>
+			</div>
+		</div>
+
 	</div>
 
 

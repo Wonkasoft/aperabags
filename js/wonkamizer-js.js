@@ -440,6 +440,20 @@
 	    return {x : x, y : y};
 	  }
 	}
+
+	function setup_for_reviews( comment_list )
+	{
+		var first_three_height = 0;
+		for (var i = 0; i < comment_list.children.length; i++) 
+		{
+			first_three_height += comment_list.children[i].offsetHeight + 15;
+			if ( i === 2 ) 
+			{
+				comment_list.style.height = first_three_height + 'px';
+				break;
+			}
+		}
+	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -472,6 +486,53 @@
 		===========================================================================================*/
 		footer_adjustment();
 		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
+		/*==========================================================
+		=            This is for setting up the reviews            =
+		==========================================================*/
+		if ( document.querySelector( 'ol.commentlist' ) ) 
+		{
+			var comment_list = document.querySelector( 'ol.commentlist' );
+			var more_reviews = document.querySelector( '#more-reviews' );
+			var write_review = document.querySelector( '#write-review' );
+			var comment_form = document.querySelector( '#commentform' );
+
+			setup_for_reviews( comment_list, more_reviews );
+
+			more_reviews.addEventListener( 'click', function(e) 
+				{
+					e.preventDefault();
+					if ( getComputedStyle( comment_list ).height === '100%' || comment_list.style.height === 100 ) 
+					{
+						setup_for_reviews( comment_list );
+						setTimeout( function( comment_list ) 
+							{
+								comment_list.scrollIntoView({behavior: 'smooth'});
+							}, 500, comment_list );
+					}
+					else
+					{
+						comment_list.style.height = 100 + '%';
+					}
+				});
+
+			write_review.addEventListener( 'click', function(e) 
+				{
+					e.preventDefault();
+
+					if ( getComputedStyle( comment_form ).height === '0px' || comment_form.style.height === 100 + 'px' ) 
+					{
+						comment_form.style.height = 100 + '%';
+						comment_form.style.opacity = 1;
+					}
+					else
+					{
+						comment_form.style.height = 0;
+						comment_form.style.opacity = 0;
+					}
+				});
+		}
+		/*=====  End of This is for setting up the reviews  ======*/
+		
 
 		/*============================================================================================
 		=            This is for reordering the placement of elements in add to cart area            =
