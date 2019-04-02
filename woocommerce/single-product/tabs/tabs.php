@@ -35,8 +35,9 @@ if ( ! empty( $tabs ) ) : ?>
 			<?php if ( $key === 'reviews' ) : ?>
 				<section class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
 					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key ); ?>" aria-data="tab-title-<?php echo esc_attr( $key ); ?>">
+						<a id="write-review" href="#" class="btn wonka-btn">Write a review</a>
 						<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
-						<a href="#" class="btn wonka-btn">Write a review</a>
+						<a id="more-reviews" href="#" class="btn wonka-btn">More reviews</a>
 					</div>
 				</section>
 			<?php else: 
