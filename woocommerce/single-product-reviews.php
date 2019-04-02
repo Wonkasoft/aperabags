@@ -46,8 +46,8 @@ if ( ! comments_open() ) {
 			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
 				echo '<nav class="woocommerce-pagination">';
 				paginate_comments_links( apply_filters( 'woocommerce_comment_pagination_args', array(
-					'next_text' => 'Show More',
-					'show_all'  => true,
+					'prev_text' => '&larr;',
+					'next_text' => '&rarr;',
 					'type'      => 'list',
 				) ) );
 				echo '</nav>';
