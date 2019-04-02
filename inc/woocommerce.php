@@ -661,8 +661,8 @@ add_action( 'woocommerce_review_after_comment_text', 'wonka_after_comment_text_a
 
 // define the woocommerce_review_before callback 
 function action_woocommerce_review_before( $comment ) { 
-    echo "$comment";
+    echo "heyeyeyeyeyeyey";
 }; 
          
 // add the action 
-add_action( 'woocommerce_review_before', 'action_woocommerce_review_before', 10, 1 ); 
+add_action( 'woocommerce_review_before_comment_text', 'action_woocommerce_review_before', 10, 1 ); 
