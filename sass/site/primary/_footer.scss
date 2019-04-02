@@ -71,7 +71,15 @@ footer#colophon {
 					display: none;
 				}
 
-				input[type=email] {
+				li.wonka-form-group {
+					margin-bottom: 0;
+				}
+
+				div.ginput_container_email {
+					width: 100%;
+				}
+
+				input[type=email].wonka-form-control {
 					color: #bfc0c2;
 					background: transparent;
 					padding: 8px 15px;
@@ -149,7 +157,8 @@ footer#colophon {
 
 					li {
 
-						input[type=email] {
+						input[type=email].wonka-form-control {
+							flex: 1 100%;
 							border-radius: 100px 0  0 100px;
 
 							&:active,
