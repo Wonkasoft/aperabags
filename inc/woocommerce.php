@@ -356,8 +356,18 @@ function wonka_add_continue_shopping_notice_to_cart() {
 }
 add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart' );
 
+function wonka_checkout_remove_actions( $checkout ) {
+	// add_action( 'wonka_checkout_express_btns', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'angelleye_display_custom_message_review_page' ), 5 );
+	// add_action('wonka_checkout_express_btns', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'checkout_message' ), 5 );
+	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
+	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+	add_action( 'wonka_checkout_login_form', 'woocommerce_checkout_login_form', 10 );
+}
+remove_action( 'woocommerce_before_checkout_form',  array( 'Angelleye_PayPal_Express_Checkout_Helper', 'angelleye_display_custom_message_review_page' ), 5 );
+remove_action( 'woocommerce_before_checkout_form', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'checkout_message' ), 5 );
 
-remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_remove_actions', 2, 1 );
+
 function wonka_checkout_wrap_before( $checkout ) {
 	$output = '';
 
@@ -370,16 +380,29 @@ function wonka_checkout_wrap_before( $checkout ) {
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 11, 1 );
 
 function wonka_checkout_before_shipping_form() {
+	$output = '';
+	$output2 = '';
 
-	$output .= '<div class="wonka-row-express-checkout-btns">';
+	$output .= '<div class="row wonka-row-express-checkout-btns">';
 	$output .= '<div class="col col-12">';
-	$output .= '<div class="express-checkout-btns"><span class="express-btns-text">' . __( 'Express checkout', 'aperabags') . '</span></div>';
-	$output .= '</div>';
-	$output .= '</div>';
+	$output .= '<div class="express-checkout-btns"><span class="express-btns-text">' . __( 'Express checkout', 'aperabags') . '</span>';
 
 	_e( $output );
+
+	do_action( 'wonka_checkout_express_btns' );
+
+	$output2 .= '</div>';
+	$output2 .= '</div>';
+	$output2 .= '<div class="col col-12">';
+	$output2 .= '<div class="row below-express-checkout-btns no-gutters"><div class="col"><hr /></div><div class="col"><span class="continue-past-btns-text">' . __( 'Or continue below to pay with a credit card', 'aperabags') . '</span></div><div class="col"><hr /></div></div>';
+	$output2 .= '</div>';
+	$output2 .= '</div>';
+
+	_e( $output2 );
+
+	do_action( 'wonka_checkout_login_form' );
 }
-add_action( 'woocommerce_checkout_shipping', 'wonka_checkout_before_shipping_form', 5 );
+add_action( 'woocommerce_checkout_shipping', 'wonka_checkout_before_shipping_form', 4 );
 
 /**
  * This builds a custom table of order details on the checkout page.

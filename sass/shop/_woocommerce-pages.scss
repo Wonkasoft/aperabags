@@ -24,7 +24,6 @@
 			padding: 15px;
 			color: #333333;
 			background-color: transparent;
-			@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 			a {
 				color: rgba( 0, 0, 0, .8 );
@@ -54,6 +53,43 @@
 		/*=====================================================
 		=            This is for the checkout page            =
 		=====================================================*/
+		div.wonka-checkout-row {
+
+			div.checkout-form-left-side {
+				margin-bottom: 30px;
+
+				.woocommerce-form-login-toggle {
+					position: relative;
+					display: flex;
+					align-items: center;
+					justify-content: flex-end;
+					font-weight: 700;
+					color: #444444;
+
+					a {
+						border-radius: 100px;
+						border: 2px solid #FFE6B2;
+						padding: 4px 8px;
+
+					    &:hover {
+					    	border: 2px solid #FFE6B2;
+					    	background: #FFE6B2;
+							color: rgba(255, 255, 255, .8);
+							@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
+					    }
+					}
+				}
+
+				.thwmsc-buttons {
+					padding: 0 15px;
+
+					.wonka-btn {
+						margin-left: 15px;
+					}
+				}
+			}
+		}
+
 		span.woocommerce-input-wrapper {
 			width: 100%;
 
@@ -105,7 +141,42 @@
 		
 		div.wonka-row-express-checkout-btns {
 			margin-top: 15px;
-			
+
+			div#checkout_paypal_message {
+				display: flex;
+				align-items: center;
+				justify-content: space-evenly;
+
+
+				div.woocommerce_paypal_ec_checkout_message {
+					display: none;
+				}
+			}
+		}
+
+
+
+		div.below-express-checkout-btns {
+			align-items: center;
+			text-align: center;
+			margin: 15px auto;
+
+			hr {
+				margin: 8px auto;
+				height: 2px;
+				background: rgba( #333, .5 );
+			}
+
+			> div {
+				flex: 1 1 20%;
+			}
+
+			span.continue-past-btns-text {
+				color: #444444;
+				white-space: nowrap;
+				font-weight: 700;
+				padding: 4px 15px;
+			}
 		}
 		/*=====  End of This is for the checkout page  ======*/
 		

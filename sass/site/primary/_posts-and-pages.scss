@@ -158,10 +158,18 @@ section {
 
 div.wonka-gform_wrapper {
 
+	label.gfield_label {
+		display: none;
+	}
+
 	ul.gform_fields {
 		list-style: none;
 		margin: 0;
 		padding: 0;
+
+		li.wonka-form-control {
+			border: none;
+		}
 	}
 }
 /*=====  End of Search styles  ======*/

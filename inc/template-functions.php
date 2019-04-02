@@ -239,12 +239,14 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] .= ' form-inline wonka-newsletter-form';
 	endif;
 
-	if ( !in_array( $form['id'], $inline_forms ) ) :
-		foreach ( $form['fields'] as $field ) :
-			$field['cssClass'] = 'form-control wonka-form-control';
-		endforeach;
-	endif;
+	foreach ( $form['fields'] as $field ) :
+		$field['size'] = 'form-control wonka-form-control';
 
+		if ( empty( $field['placeholder'] ) ) :
+			$field['placeholder'] = $field['label'];
+		endif;
+	endforeach;
+	
 	return $form;
 }
 add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );

@@ -519,20 +519,13 @@
 		/*========================================================================================
 		=            This will move paypal checkout buttons into express checkout box            =
 		========================================================================================*/
-		if ( document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' ) ) 
+		if ( document.querySelector( '#checkout_paypal_message' ) ) 
 		{
-			console.log('first check');
-			document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' ).onload = function() 
-			{
-				var iframe_btns = document.querySelector( '#paypal_box_button .angelleye_smart_button_checkout_top' );
-				var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
-				var cln = iframe_btns.cloneNode( true );
+			// var iframe_btns = document.querySelector( '#checkout_paypal_message' );
+			// var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
 
-				express_box.appendChild( cln );
-			};
+			// express_box.appendChild( iframe_btns );	
 		}
-		
-		
 		/*=====  End of This will move paypal checkout buttons into express checkout box  ======*/
 		
 		

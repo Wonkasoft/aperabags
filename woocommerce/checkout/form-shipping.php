@@ -65,13 +65,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 								'number'
 							),
 							'autocomplete'	=>	'email',
-							'priority'		=>	110
+							'priority'		=>	1
 						),
 					);
 
 					$fields = array_merge( $fields, $new_fields );
 
 					foreach ( $fields as $key => $field ) {
+
+						if ( $key === 'shipping_first_name' ) :
+							$field['priority'] = 5;
+						endif;
 
 						if ( $key === 'shipping_country' ) :
 							$field['priority'] = 95;

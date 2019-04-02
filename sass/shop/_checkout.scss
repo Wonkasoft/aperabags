@@ -17,13 +17,6 @@
 	}
 }
 
-div.wonka-checkout-row {
-
-	div.checkout-form-left-side {
-		margin-bottom: 30px;
-	}
-}
-
 .woocommerce-shipping-fields__field-wrapper,
 .woocommerce-billing-fields__field-wrapper {
 
@@ -90,11 +83,15 @@ div.wonka-checkout-row {
 		clear: none;
 	}
 
-	p#shipping_email_field,
 	p#billing_email_field {
 		width: 49%;
 		float: right;
 		clear: none;
+	}
+
+	p#shipping_email_field {
+		width: auto;
+		float: none;
 	}
 }
 
@@ -135,6 +132,10 @@ div.checkout-order-details {
 			text-align: right;
 		}
 	}
+}
+
+.woocommerce-Price-amount {
+	font-family: $font__main_jose;
 }
 
 @media screen and (min-width: 768px) {

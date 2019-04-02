@@ -44,77 +44,8 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 		</div>
 		<hr />
 		<div class="row wonka-row-product-specs">
-			<?php 
-			$post_id = get_the_ID();
-			$product_specs_data = json_decode( get_post_meta( $post_id, 'product_specs', true ) ); 
-			if ( !empty( $product_specs_data ) ) : ?>
-				<div id="product-specification" class="col">
-					<table class="table table-hover wonka-product-specs-table">
-						<thead>
-							<tr>
-								<th colspan="2">
-									<h4 id="product-spec">Product Specs</h4>
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php 
-							foreach ( $product_specs_data as $spec ) : ?>
-								<?php if ( is_string( $spec ) ) : ?>
-									<tr>
-										<th colspan="2">
-											<?php _e( $spec ); ?>
-										</th>
-									</tr>
-								<?php endif; ?>
-
-								<?php if ( is_object( $spec ) ) : ?>
-									<?php if ( !empty( $spec ) ) : ?>
-										<tr>
-											<th>
-												<?php _e( $spec->spec_header ); ?>
-											</th>
-											<?php if ( !empty( $spec->points ) && is_array( $spec->points ) ) : ?>
-												<td>
-													<ul class="product-spec-points">
-												<?php $spec_count = 0;
-												foreach ( $spec->points as $point ) : $spec_count++; ?>
-														<li class="spec-point-<?php _e( $spec_count ); ?>">
-															<?php _e( $point ); ?>
-														</li>
-												<?php endforeach; ?>
-													</ul>
-												</td>
-											<?php endif; ?>
-											<?php if ( !empty( $spec->points ) && is_string( $spec->points ) ) : ?>
-												<td>
-													<?php _e( $spec->points ); ?>
-												</td>
-											<?php endif; ?>
-										</tr>
-									<?php endif; ?>
-									<?php if ( !empty( $feature->feature_options ) && is_array( $feature->feature_options ) ) :
-										$feature_options_count = 0; ?>
-										<tr>
-											<td colspan="3">
-												<ul class="key-feature-points">
-												<?php foreach ( $feature->feature_options as $option ) : $feature_options_count++; ?>
-													<li>
-														<div class="feature-option-<?php _e( $feature_options_count ); ?>">
-															<?php _e( $option ); ?>
-														</div>
-													</li>
-												<?php endforeach; ?>
-												</ul>
-											</td>
-										</tr>
-									<?php endif; ?>
-								<?php endif; ?>
-							<?php endforeach; ?>
-						</tbody>
-					</table>
-				</div>
-			<?php endif; ?>
+			<?php $post_id = get_the_ID(); ?>
+			
 			<?php $key_feature_data = json_decode( get_post_meta( $post_id, 'key_features', true ) );
 			if ( !empty( $key_feature_data ) ) : ?>
 				<div id="keyfeatures" class="col">
@@ -168,6 +99,60 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 											<?php _e( $feature ); ?>
 										</th>
 									</tr>
+								<?php endif; ?>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
+			<?php endif; ?>
+
+			<?php $product_specs_data = json_decode( get_post_meta( $post_id, 'product_specs', true ) ); 
+			if ( !empty( $product_specs_data ) ) : ?>
+				<div id="product-specification" class="col">
+					<table class="table table-hover wonka-product-specs-table">
+						<thead>
+							<tr>
+								<th colspan="2">
+									<h4 id="product-spec">Product Specs</h4>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+							foreach ( $product_specs_data as $spec ) : ?>
+								<?php if ( is_string( $spec ) ) : ?>
+									<tr>
+										<th colspan="2">
+											<?php _e( $spec ); ?>
+										</th>
+									</tr>
+								<?php endif; ?>
+
+								<?php if ( is_object( $spec ) ) : ?>
+									<?php if ( !empty( $spec ) ) : ?>
+										<tr>
+											<th>
+												<?php _e( $spec->spec_header ); ?>
+											</th>
+											<?php if ( !empty( $spec->points ) && is_array( $spec->points ) ) : ?>
+												<td>
+													<ul class="product-spec-points">
+												<?php $spec_count = 0;
+												foreach ( $spec->points as $point ) : $spec_count++; ?>
+														<li class="spec-point-<?php _e( $spec_count ); ?>">
+															<?php _e( $point ); ?>
+														</li>
+												<?php endforeach; ?>
+													</ul>
+												</td>
+											<?php endif; ?>
+											<?php if ( !empty( $spec->points ) && is_string( $spec->points ) ) : ?>
+												<td>
+													<?php _e( $spec->points ); ?>
+												</td>
+											<?php endif; ?>
+										</tr>
+									<?php endif; ?>
 								<?php endif; ?>
 							<?php endforeach; ?>
 						</tbody>
