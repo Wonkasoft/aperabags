@@ -150,6 +150,21 @@ if ( class_exists( 'WooCommerce' ) ) {
 }
 
 /**
+ * Search for only products
+ *
+ * @since  1.0.0
+ */
+
+	add_action( 'pre_get_posts', 'ws_apera_search_woocommerce_only' );
+
+	function ws_apera_search_woocommerce_only( $query ) {
+	  if( ! is_admin() && is_search() && $query->is_main_query() ) {
+	    $query->set( 'post_type', 'product' );
+	  }
+	}
+
+
+/**
  * Enqueue scripts and styles.
  */
 function apera_bags_scripts() {

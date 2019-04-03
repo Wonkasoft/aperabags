@@ -1,12 +1,27 @@
 /*=========================================
 =            front page styles            =
 =========================================*/
+.home {
 
+	section {
+		margin-top: 30px;
+		margin-bottom: 30px;
+
+		p.price,
+		span.price {
+			font-family: $font__main_jose;
+		}
+
+		a.button.product_type_variable {
+			display: none;
+		}
+	}
+}
 /*----------  Header Slider  ----------*/
 section.header-slider-section {
 	position: relative;
 	height: 650px;
-	@include prefix( transition, all .3s ease-in-out, o moz webkit );
+	@include prefix( transition, $trans_25, o moz webkit );
 
 	.top-page-slider-wrap {
 		position: relative;
@@ -18,7 +33,7 @@ section.header-slider-section {
 			display: none;
 			width: 100%;
 			height: 100%;
-			@include prefix( transition, all .3s ease-in-out, o moz webkit );
+			@include prefix( transition, $trans_25, o moz webkit );
 
 			div.top-slide-img-holder {
 				background-position: center 0;
@@ -27,7 +42,7 @@ section.header-slider-section {
 				background-repeat: no-repeat;
 				width: 100%;
 				height: 100%;
-				@include prefix( transition, all .3s ease-in-out, o moz webkit );
+				@include prefix( transition, $trans_25, o moz webkit );
 
 				.img-header-text-wrap {
 					margin: auto;
@@ -106,7 +121,7 @@ section.shop-section {
 section.desirable-slider-section {
 	position: relative;
 	height: 650px;
-	@include prefix( transition, all .3s ease-in-out, o moz webkit );
+	@include prefix( transition, $trans_25, o moz webkit );
 
 	.cta-section-slider-wrap {
 		position: relative;
@@ -118,7 +133,7 @@ section.desirable-slider-section {
 			display: none;
 			width: 100%;
 			height: 100%;
-			@include prefix( transition, all .3s ease-in-out, o moz webkit );
+			@include prefix( transition, $trans_25, o moz webkit );
 
 			div.cta-slide-img-holder {
 				background-position: center 0;
@@ -127,7 +142,7 @@ section.desirable-slider-section {
 				background-repeat: no-repeat;
 				width: 100%;
 				height: 100%;
-				@include prefix( transition, all .3s ease-in-out, o moz webkit );
+				@include prefix( transition, $trans_25, o moz webkit );
 
 				.img-header-text-wrap {
 					position: relative;
@@ -245,6 +260,22 @@ section.our-cause-section {
 /*===============================================
 =            About the Brand section            =
 ===============================================*/
+/* The animation code */
+@keyframes wiggle {
+  0%   {transform: rotate(-15deg);}
+  25%  {transform: rotate(15deg);}
+  50%  {transform: rotate(-15deg);}
+  100% {transform: rotate(0deg);}
+}
+
+div.modal-backdrop {
+	background-color: rgba( #fff, 1 );
+
+	&.show {
+		opacity: .7;
+	}
+}
+
 section.about-brand-section {
 	max-width: 1180px;
 	margin: 15px auto;
@@ -264,7 +295,7 @@ section.about-brand-section {
 		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 		.about-second-image {
-			width: 450px;
+			width: 580px;
 		}
 
 		@include media-breakpoint-up( md ) {
@@ -273,10 +304,109 @@ section.about-brand-section {
 	}
 
 	.about-brand-video {
+		max-height: 250px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
-		iframe {
-			width: 560px;
+		a.video-img-link {
+			position: relative;
+			max-width: 100%;
 			height: 250px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			img {
+				max-height: 100%;
+			}
+
+			span.video-img-symbol-link {
+				position: absolute;
+				color: #FFE6B2;
+				@include font-size( 5 );
+				@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
+				@include prefix( transition, $trans_25, o moz webkit );
+
+				&:hover {
+					color: rgba(255, 255, 255, .8);
+					animation-name: wiggle;
+				  	animation-duration: .4s;
+				}
+			}
+		}
+	}
+
+	div#videoModal {
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		max-width: 100%;
+		margin: 0 auto;
+		padding-right: 0 !important;
+		z-index: 99999;
+		overflow-y: scroll;
+		@include prefix( transition, $trans_25, o moz webkit );
+
+		&.show {
+			display: flex !important;
+		}
+
+		div.modal-dialog {
+			height: 100%;
+			max-width: 100%;
+			margin: auto;
+			padding: 25px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			div.modal-content {
+				position: relative;
+				margin: auto;
+				width: 100%;
+				max-width: 100%;
+				padding: 0;
+				background-color: transparent;
+				
+				div.modal-body {
+					padding: 0;
+					width: 1200px;
+					max-width: 100%;
+					overflow: visible;
+					@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+
+					button.close {
+						position: absolute;
+						top: -15px;
+						right: -15px;
+						z-index: 9999;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						background: transparent;
+						border-radius: 50%;
+						height: 25px;
+						width: 25px;
+						border: 2px solid rgba( #fff, 1);
+						box-sizing: border-box;
+						@include prefix( transition, $trans_25, o moz webkit );
+						@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+
+						span {
+							color: #ffffff;
+							line-height: 1;
+							@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
+							@include font-size( 1.3 );
+						}
+
+						&:hover {
+							animation-name: wiggle;
+						  	animation-duration: .4s;
+						}
+					}
+				}
+			}
 		}
 	}
 }
@@ -290,4 +420,10 @@ section.social-section {
 }
 /*=====  End of Social section  ======*/
 
+body.home {
+
+	a.wonka-btn {
+		margin: 15px auto;
+	}
+}
 /*=====  End of front page styles  ======*/

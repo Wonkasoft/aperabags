@@ -161,8 +161,8 @@ if ( ! function_exists( 'apera_bags_woocommerce_wrapper_before' ) ) {
 	 */
 	function apera_bags_woocommerce_wrapper_before() {
 		global $post;
-		$post_type = ( !empty( $post->post_type ) ) ? ' ' . $post->post_type: '';
-		$post_slug = ( !empty( $post->post_name ) ) ? ' ' . $post->post_name: '';
+		$post_type = ( !empty( $post->post_type ) ) ? ' main-' . $post->post_type: '';
+		$post_slug = ( !empty( $post->post_name ) ) ? ' main-' . $post->post_name: '';
 		?>
 		<div id="primary" class="content-area">
 			<main id="main" class="site-main<?php _e( $post_slug ); _e( $post_type ); ?>" role="main">
@@ -217,6 +217,7 @@ add_action( 'woocommerce_after_main_content', 'apera_bags_woocommerce_wrapper_af
 		return $fragments;
 	}
 }
+
 add_filter( 'woocommerce_add_to_cart_fragments', 'apera_bags_woocommerce_cart_link_fragment' );
 
 if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
@@ -318,10 +319,12 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
  * @return 
  */
 function wonka_product_tabs_retitle( $tabs ) {
+	
+	$new_title = get_post_meta( get_the_ID(), 'product_statement', true );
 	$tabs['reviews']['priority'] = 10;			// Reviews first
 	$tabs['description']['priority'] = 20;			// Description second
-	$tabs['additional_information']['priority'] = 30;	// Additional information third
-	$tabs['description']['title'] = __( 'Product Statement' );
+	unset( $tabs['additional_information'] );	// Additional information third
+	$tabs['description']['title'] = __( $new_title );
 
 	return $tabs;
 }
@@ -353,114 +356,385 @@ function wonka_add_continue_shopping_notice_to_cart() {
 }
 add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart' );
 
-function wonka_checkout_wrap_before( $checkout ) {
-	echo '<div class="row wonka-checkout-row">';
-	echo '<div class="col col-12 col-md-8">';
+function wonka_checkout_remove_actions() {
+	$class_int = new Angelleye_PayPal_Express_Checkout_Helper();
+	remove_action( 'woocommerce_before_checkout_form',  array( $class_int, 'angelleye_display_custom_message_review_page' ), 5 );
+	remove_action( 'woocommerce_before_checkout_form', array( $class_int, 'checkout_message' ), 5 );
+	// add_action( 'wonka_checkout_express_btns', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'angelleye_display_custom_message_review_page' ), 5 );
+	// add_action('wonka_checkout_express_btns', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'checkout_message' ), 5 );
+	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
+	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+	add_action( 'wonka_checkout_login_form', 'woocommerce_checkout_login_form', 10 );
 }
 
-add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 11, 1 );
+add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_remove_actions', 1 );
 
+function wonka_checkout_wrap_before( $checkout ) {
+	$output = '';
+
+	$output .= '<div class="row wonka-checkout-row">';
+	$output .= '<div class="col col-12 col-md-7 checkout-form-left-side">';
+
+	_e( $output );
+}
+
+add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25, 1 );
+
+function wonka_thwmsc_multi_step_before_tab_panels( $checkout ) {
+
+	$output = '';
+	$output2 = '';
+
+	$output .= '<div class="row wonka-row-express-checkout-btns">';
+	$output .= '<div class="col col-12">';
+	$output .= '<div class="express-checkout-btns"><span class="express-btns-text">' . __( 'Express checkout', 'aperabags') . '</span>';
+
+	_e( $output );
+
+	do_action( 'wonka_checkout_express_btns' );
+
+	$output2 .= '</div>';
+	$output2 .= '</div>';
+	$output2 .= '<div class="col col-12">';
+	$output2 .= '<div class="row below-express-checkout-btns no-gutters"><div class="col"><hr /></div><div class="col"><span class="continue-past-btns-text">' . __( 'Or continue below to pay with a credit card', 'aperabags') . '</span></div><div class="col"><hr /></div></div>';
+	$output2 .= '</div>';
+	$output2 .= '</div>';
+
+	_e( $output2 ); 
+	do_action( 'wonka_checkout_login_form' );
+
+}
+add_action( 'thwmsc_multi_step_before_tab_panels', 'wonka_thwmsc_multi_step_before_tab_panels', 4 );
+
+function wonka_before_checkout_shipping_form( $checkout ) {
+
+	$fields = $checkout->get_checkout_fields( 'shipping' );
+	$new_fields = array(
+		'shipping_email'	=> array(
+			'label'			=> 'Email',
+			'required'		=> 1,
+			'placeholder'	=> 'Email address...',
+			'class'			=> array(
+				'form-row-wide',
+				'email-field'
+			),
+			'validate'		=> array(
+				'number'
+			),
+			'autocomplete'	=>	'email',
+			'priority'		=>	3
+		),
+	);
+	$fields = array_merge( $fields, $new_fields );
+
+	foreach ( $fields as $key => $field ) :
+		if ( strtolower( $field['label'] ) === 'email' ) :
+			if ( !isset($field['placeholder'] ) ) :
+				$field['placeholder'] = $field['label'];
+			endif;
+
+			if ( isset( $field['class'] ) ) :
+				array_push( $field['class'], 'wonka-form-group', 'form-group' ) ;
+			else:
+				$field['class'] = array( 'wonka-form-group', 'form-group' );
+			endif;
+
+			if ( isset( $field['label_class'] ) ) :
+				array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
+			else:
+				$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
+			endif;
+
+		woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+		endif;
+	endforeach;
+}
+add_action( 'woocommerce_before_checkout_shipping_form', 'wonka_before_checkout_shipping_form', 15 );
+
+/**
+ * This builds a custom table of order details on the checkout page.
+ * @param  [type] $checkout [description]
+ * 
+ */
 function wonka_checkout_wrap_after( $checkout ) {
 	?>
-	</div><!-- .col -->
-	<div class="col col-12 col-md-4">
-		<table class="table table-striped table-hover">
-			<thead class="thead-dark">
-				<tr scope="row">
-					<th colspan="2"><?php _e( 'Order Details', 'woocommerce' ); ?></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="col" class="product-name"><?php _e( 'Product', 'woocommerce' ); ?></th>
-					<th scope="col" class="product-total"><?php _e( 'Total', 'woocommerce' ); ?></th>
-				</tr>
-				<?php
-					do_action( 'woocommerce_review_order_before_cart_contents' );
+		</div><!-- .col -->
+		<div class="col col-12 col-md-5 checkout-order-details">
+			<table class="table table-hover">
+				<tbody>
+					<?php
+						do_action( 'woocommerce_review_order_before_cart_contents' );
+						foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+							$_product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+							if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
+								?>
+								<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
+									<td class="product-thumbnail">
+									<?php
+									$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
 
-					foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-						$_product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-
-						if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
-							?>
-							<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
-								<td class="product-name">
-									<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;'; ?>
-									<?php echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity">' . sprintf( '&times; %s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key ); ?>
-									<?php echo wc_get_formatted_cart_item_data( $cart_item ); ?>
-								</td>
-								<td class="product-total">
-									<?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); ?>
-								</td>
-							</tr>
-							<?php
+									if ( ! $product_permalink ) {
+										echo $thumbnail; // PHPCS: XSS ok.
+										echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity badge wonka-badge">' . sprintf( '%s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key );
+									} else {
+										printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail ); // PHPCS: XSS ok.
+									}
+									?>
+									</td>
+									<td class="product-name">
+										<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;'; ?>
+										
+										<?php echo wc_get_formatted_cart_item_data( $cart_item ); ?>
+									</td>
+									<td class="product-total">
+										<?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); ?>
+									</td>
+								</tr>
+								<?php
+							}
 						}
-					}
+						do_action( 'woocommerce_review_order_after_cart_contents' );
+					?>
+				</tbody>
+				<tfoot>
 
-					do_action( 'woocommerce_review_order_after_cart_contents' );
-				?>
-			</tbody>
-			<tfoot>
-
-				<tr class="cart-subtotal">
-					<th><?php _e( 'Subtotal', 'woocommerce' ); ?></th>
-					<td><?php wc_cart_totals_subtotal_html(); ?></td>
-				</tr>
-
-				<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
-					<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
-						<th><?php wc_cart_totals_coupon_label( $coupon ); ?></th>
-						<td><?php wc_cart_totals_coupon_html( $coupon ); ?></td>
+					<tr class="cart-subtotal">
+						<th><?php _e( 'Subtotal', 'woocommerce' ); ?></th>
+						<td colspan="2"><?php wc_cart_totals_subtotal_html(); ?></td>
 					</tr>
-				<?php endforeach; ?>
 
-				<?php if ( WC()->cart->needs_shipping() && WC()->cart->show_shipping() ) : ?>
-
-					<?php do_action( 'woocommerce_review_order_before_shipping' ); ?>
-
-					<?php wc_cart_totals_shipping_html(); ?>
-
-					<?php do_action( 'woocommerce_review_order_after_shipping' ); ?>
-
-				<?php endif; ?>
-
-				<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
-					<tr class="fee">
-						<th><?php echo esc_html( $fee->name ); ?></th>
-						<td><?php wc_cart_totals_fee_html( $fee ); ?></td>
-					</tr>
-				<?php endforeach; ?>
-
-				<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
-					<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
-						<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
-							<tr class="tax-rate tax-rate-<?php echo sanitize_title( $code ); ?>">
-								<th><?php echo esc_html( $tax->label ); ?></th>
-								<td><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
-							</tr>
-						<?php endforeach; ?>
-					<?php else : ?>
-						<tr class="tax-total">
-							<th><?php echo esc_html( WC()->countries->tax_or_vat() ); ?></th>
-							<td><?php wc_cart_totals_taxes_total_html(); ?></td>
+					<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
+						<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
+							<th><?php wc_cart_totals_coupon_label( $coupon ); ?></th>
+							<td><?php wc_cart_totals_coupon_html( $coupon ); ?></td>
 						</tr>
+					<?php endforeach; ?>
+
+					<?php if ( WC()->cart->needs_shipping() && WC()->cart->show_shipping() ) : ?>
+
+						<?php do_action( 'woocommerce_cart_totals_before_shipping' ); ?>
+
+						<?php wc_cart_totals_shipping_html(); ?>
+
+						<?php do_action( 'woocommerce_cart_totals_after_shipping' ); ?>
+
+					<?php elseif ( WC()->cart->needs_shipping() && 'yes' === get_option( 'woocommerce_enable_shipping_calc' ) ) : ?>
+
+						<tr class="shipping">
+							<th scope="row" colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?></th>
+						</tr>
+						<tr class="shipping-methods">
+							<td></td>
+							<td colspan="2" data-title="<?php esc_attr_e( 'Shipping', 'woocommerce' ); ?>"><?php woocommerce_shipping_calculator(); ?></td>
+						</tr>
+
 					<?php endif; ?>
-				<?php endif; ?>
 
-				<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
+					<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
+						<tr class="fee">
+							<th><?php echo esc_html( $fee->name ); ?></th>
+							<td colspan="2"><?php wc_cart_totals_fee_html( $fee ); ?></td>
+						</tr>
+					<?php endforeach; ?>
 
-				<tr class="order-total">
-					<th><?php _e( 'Total', 'woocommerce' ); ?></th>
-					<td><?php wc_cart_totals_order_total_html(); ?></td>
-				</tr>
+					<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
+						<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
+							<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
+								<tr class="tax-rate tax-rate-<?php echo sanitize_title( $code ); ?>">
+									<th><?php echo esc_html( $tax->label ); ?></th>
+									<td><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
+								</tr>
+							<?php endforeach; ?>
+						<?php else : ?>
+							<tr class="tax-total">
+								<th><?php echo esc_html( WC()->countries->tax_or_vat() ); ?></th>
+								<td colspan="2"><?php wc_cart_totals_taxes_total_html(); ?></td>
+							</tr>
+						<?php endif; ?>
+					<?php endif; ?>
 
-				<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
+					<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
 
-			</tfoot>
-		</table>
-	</div><!-- .col-12 -->
-	</div><!-- .row -->
-	<?php
+					<tr class="order-total">
+						<th><?php _e( 'Total', 'woocommerce' ); ?></th>
+						<td colspan="2"><?php wc_cart_totals_order_total_html(); ?></td>
+					</tr>
+
+					<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
+
+				</tfoot>
+			</table>
+		</div><!-- .col-12 -->
+		</div><!-- .row -->
+		<?php
 }
 
 add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_after', 50, 1 );
+
+/**
+ * This filters the display of the single product page image parse.
+ * 
+ */
+function wonka_single_product_display() {
+	global $product;
+
+	// Note: `wc_get_gallery_image_html` was added in WC 3.3.2 and did not exist prior. This check protects against theme overrides being used on older versions of WC.
+	if ( ! function_exists( 'wc_get_gallery_image_html' ) ) {
+		return;
+	}
+
+	$output = '';
+	$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( $product->get_data()['id'], 'full' ) ) . '" class="img-fluid wonka-img-fluid" />';
+
+	$attachment_ids = $product->get_gallery_image_ids();
+
+	if ( $attachment_ids && $product->get_image_id() ) {
+		foreach ( $attachment_ids as $attachment_id ) {
+			echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', wc_get_gallery_image_html( $attachment_id ), $attachment_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
+		}
+	}
+
+	_e( $output );
+
+}
+
+// remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
+// add_action( 'woocommerce_before_single_product_summary', 'wonka_single_product_display', 20 );
+
+/**
+ * Remove Sku info only for users. Sku will still show for admins
+ *
+ * @since  1.0.0
+ * 
+ */
+function ws_remove_product_page_skus( $enabled ) {
+    if ( ! is_admin() && is_product() ) {
+        return false;
+    }
+
+    return $enabled;
+}
+add_filter( 'wc_product_sku_enabled', 'ws_remove_product_page_skus' );
+
+/**
+ * Remove Meta information on single product page
+ *
+ * @since  1.0.0
+ */
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
+
+/**
+ * This is for making the flexslider of woocommerce to slide vertical instead of horizontal
+ * @param  array $options Contains options that are being passed to the slider
+ * @return [type]          [description]
+ */
+function wonka_product_carousel_options($options) {
+  $options['animation'] = 'slide';
+  $options['animationSpeed'] = 1200;
+  $options['useCSS'] = true;
+  $options['easing'] = 'swing';
+  $options['direction'] = 'vertical';
+  return $options;
+}
+
+add_filter("woocommerce_single_product_carousel_options", "wonka_product_carousel_options", 10);
+
+/**
+ * This adds custom meta fields to the product edit interface
+ * @param  int $post_id contains the post id for current product
+ * 
+ */
+function wonka_product_meta_add( $post_id ) {
+
+	$product_statement = ( get_metadata( 'product', $post_id, 'product_statement' ) ) ? get_metadata( 'product', $post_id, 'product_statement', true ): '';
+
+	$product_specs = ( get_metadata( 'product', $post_id, 'product_specs' ) ) ? get_metadata( 'product', $post_id, 'product_specs', true ): '';
+
+	$key_features = ( get_metadata( 'product', $post_id, 'key_features' ) ) ? get_metadata( 'product', $post_id, 'key_features', true ): '';
+
+	$_enable_wonka_express_button = isset( $_POST['_enable_wonka_express_button'] ) ? 'yes' : 'no';
+            update_post_meta( $post_id, '_enable_wonka_express_button', $_enable_wonka_express_button );
+	
+	if ( ! add_post_meta( $post_id, 'product_statement', '', true ) ) { 
+	   update_metadata( 'product', $post_id, 'product_statement', $product_statement );
+	}
+
+	if ( ! add_post_meta( $post_id, 'product_specs', '', true ) ) { 
+	   update_metadata( 'product', $post_id, 'product_specs', $product_specs );
+	}
+
+	if ( ! add_post_meta( $post_id, 'key_features', '', true ) ) { 
+	   update_metadata( 'product', $post_id, 'key_features', $key_features );
+	}
+}
+add_action( 'woocommerce_process_product_meta', 'wonka_product_meta_add', 11, 1 );
+
+function wonka_woo_add_custom_general_fields( $product_type ) {
+	if( isset($product_type) && !empty($product_type) ) {
+	    $product_type['enable_wonka_express_button'] = array(
+	            'id'            => '_enable_wonka_express_button',
+	            'wrapper_class' => '',
+	            'label'         => __( 'Enable Wonka Express Checkout Button', 'aperabags' ),
+	            'description'   => __( 'Adds the Wonka Express Checkout button to the product page allowing buyers to go directly to the checkout directly from the product page.', 'aperabags' ),
+	            'default'       => 'yes'
+	    );
+	    return $product_type;
+	} else {
+	        return $product_type;
+	}
+	
+}
+add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
+
+/**
+ * This adds a custom express checkout button to the product page
+ * @return [type] [description]
+ */
+function wonka_express_checkout_add() {
+	global $post;
+	$post_id = get_the_ID();
+	if ( get_post_meta( $post_id, '_enable_wonka_express_button', true ) === 'yes' ) :
+	?>
+	<div class="wonka-express-checkout-wrap">
+		<a href="#" class="wonka-btn">Express Checkout</a>
+	</div>
+	<?php
+	endif;
+}
+	
+add_action( 'woocommerce_after_add_to_cart_button', 'wonka_express_checkout_add', 10 );
+
+/**
+ * This is for adding the opening tags for a wrap around the reviews meta data
+ * @param  object $comment contains review data
+ * @return [type]          [description]
+ */
+function wonka_before_comment_meta_add( $comment ) {
+	?>
+		<div class="wonka-rating-and-meta-wrap col-4">
+		<?php
+		/**
+		 * The woocommerce_review_before hook
+		 *
+		 * @hooked woocommerce_review_display_gravatar - 10
+		 */
+		do_action( 'woocommerce_review_before', $comment );
+		?>
+	<?php
+}
+add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta_add', 5 );
+
+function wonka_before_comment_text_add( $comment ) {
+	?>
+		</div><!-- .wonka-rating-and-meta-wrap -->
+		<div class="wonka-review-text-wrap col-7">
+	<?php
+}
+add_action( 'woocommerce_review_before_comment_text', 'wonka_before_comment_text_add', 5 );
+
+function wonka_after_comment_text_add( $comment ) {
+	?>
+		</div><!-- .wonka-review-text-wrap -->
+	<?php
+}
+add_action( 'woocommerce_review_after_comment_text', 'wonka_after_comment_text_add', 5 );

@@ -13,8 +13,8 @@
  */
 
 global $post;
-$post_type = ( !empty( $post->post_type ) ) ? ' ' . $post->post_type: '';
-$post_slug = ( !empty( $post->post_name ) ) ? ' ' . $post->post_name: '';
+$post_type = ( !empty( $post->post_type ) ) ? ' main-' . $post->post_type: '';
+$post_slug = ( !empty( $post->post_name ) ) ? ' main-' . $post->post_name: '';
 
 get_header();
 ?>

@@ -28,6 +28,7 @@ if ( ! comments_open() ) {
 ?>
 <div id="reviews" class="woocommerce-Reviews">
 	<div id="comments">
+		<div class="wonka-review-title">
 		<h2 class="woocommerce-Reviews-title"><?php
 			if ( get_option( 'woocommerce_enable_review_rating' ) === 'yes' && ( $count = $product->get_review_count() ) ) {
 				/* translators: 1: reviews count 2: product name */
@@ -36,30 +37,8 @@ if ( ! comments_open() ) {
 				_e( 'Reviews', 'woocommerce' );
 			}
 		?></h2>
-
-		<?php if ( have_comments() ) : ?>
-
-			<ol class="commentlist">
-				<?php wp_list_comments( apply_filters( 'woocommerce_product_review_list_args', array( 'callback' => 'woocommerce_comments' ) ) ); ?>
-			</ol>
-
-			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
-				echo '<nav class="woocommerce-pagination">';
-				paginate_comments_links( apply_filters( 'woocommerce_comment_pagination_args', array(
-					'prev_text' => '&larr;',
-					'next_text' => '&rarr;',
-					'type'      => 'list',
-				) ) );
-				echo '</nav>';
-			endif; ?>
-
-		<?php else : ?>
-
-			<p class="woocommerce-noreviews"><?php _e( 'There are no reviews yet.', 'woocommerce' ); ?></p>
-
-		<?php endif; ?>
+		<a id="write-review" href="#" class="btn wonka-btn">Write a review</a>
 	</div>
-
 	<?php if ( get_option( 'woocommerce_review_rating_verification_required' ) === 'no' || wc_customer_bought_product( '', get_current_user_id(), $product->get_id() ) ) : ?>
 
 		<div id="review_form_wrapper">
@@ -68,7 +47,7 @@ if ( ! comments_open() ) {
 					$commenter = wp_get_current_commenter();
 
 					$comment_form = array(
-						'title_reply'          => have_comments() ? __( 'Add a review', 'woocommerce' ) : sprintf( __( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
+						'title_reply'          => have_comments() ? __( 'Write your review', 'woocommerce' ) : sprintf( __( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
 						'title_reply_to'       => __( 'Leave a Reply to %s', 'woocommerce' ),
 						'title_reply_before'   => '<span id="reply-title" class="comment-reply-title">',
 						'title_reply_after'    => '</span>',
@@ -79,9 +58,11 @@ if ( ! comments_open() ) {
 							'email'  => '<p class="comment-form-email"><label for="email">' . esc_html__( 'Email', 'woocommerce' ) . '&nbsp;<span class="required">*</span></label> ' .
 										'<input id="email" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30" required /></p>',
 						),
-						'label_submit'  => __( 'Submit', 'woocommerce' ),
+						'label_submit'  => __( 'Send', 'woocommerce' ),
 						'logged_in_as'  => '',
 						'comment_field' => '',
+						'class_submit' => 'wonka-btn',
+						'id_submit' => 'wonka-submit',
 					);
 
 					if ( $account_page_url = wc_get_page_permalink( 'myaccount' ) ) {
@@ -111,6 +92,36 @@ if ( ! comments_open() ) {
 		<p class="woocommerce-verification-required"><?php _e( 'Only logged in customers who have purchased this product may leave a review.', 'woocommerce' ); ?></p>
 
 	<?php endif; ?>
+
+		<?php if ( have_comments() ) : ?>
+
+			<ol class="commentlist">
+				<?php wp_list_comments( apply_filters( 'woocommerce_product_review_list_args', array( 'callback' => 'woocommerce_comments' ) ) ); ?>
+			</ol>
+
+			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
+				echo '<nav class="woocommerce-pagination">';
+				paginate_comments_links( apply_filters( 'woocommerce_comment_pagination_args', array(
+					'prev_text' => '&larr;',
+					'next_text' => '&rarr;',
+					'type'      => 'list',
+				) ) );
+				echo '</nav>';
+			endif; ?>
+
+		<?php else : ?>
+
+			<p class="woocommerce-noreviews"><?php _e( 'There are no reviews yet.', 'woocommerce' ); ?></p>
+
+		<?php endif; ?>
+		<div class="row wonka-row">
+			<div class="col-12 text-center">
+				<a id="more-reviews" href="#" class="btn wonka-btn">More reviews</a>
+			</div>
+		</div>
+
+	</div>
+
 
 	<div class="clear"></div>
 </div>

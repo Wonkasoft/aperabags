@@ -31,7 +31,13 @@ if ( post_password_required() ) {
 ?>
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class(); ?>>
 	<section class="product-img-section">
+		<div class="product-on-sale">
+		<?php remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 ); ?>
+		<?php do_action( 'woocommerce_before_single_product_summary' ); ?>
+		</div>
 	<div class="wonka-single-product-img">
+		<?php remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10 ); ?>
+		<?php add_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 ); ?>
 		<?php
 			/**
 			 * Hook: woocommerce_before_single_product_summary.
@@ -47,14 +53,14 @@ if ( post_password_required() ) {
 
 			/* Just changing the order of loading */
 			/* Removing filters */
-			remove_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10);
-			remove_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10);
-			remove_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10);
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10);
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
 
 			/* adding them back in different order */
-			add_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 10);
-			add_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 20);
-			add_filter( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 21);
+			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 10);
+			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 11);
+			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 20);
 			
 			/**
 			 * Hook: woocommerce_single_product_summary.

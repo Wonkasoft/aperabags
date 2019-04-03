@@ -49,12 +49,16 @@ footer#colophon {
 			list-style: none;
 		}
 
+		.wonka-footer-menu {
+			margin-bottom: 15px;
+		}
+
 		small {
 			padding-left: 4px;
 		}
 	}
 
-	form.wonka-form {
+	form.wonka-newsletter-form {
 
 		.gform_heading {
 			display: none;
@@ -71,13 +75,21 @@ footer#colophon {
 					display: none;
 				}
 
-				input[type=email] {
+				li.wonka-form-group {
+					margin-bottom: 0;
+				}
+
+				div.ginput_container_email {
+					width: 100%;
+				}
+
+				input[type=email].wonka-form-control {
 					color: #bfc0c2;
 					background: transparent;
 					padding: 8px 15px;
 					font-weight: 600;
 					width: 100%;
-					border-radius: 100px 0 0 100px;
+					border-radius: 100px 100px 0 0;
 					height: 49px;
 					letter-spacing: 1px;
 					width: 100%;
@@ -104,7 +116,7 @@ footer#colophon {
 				margin-left: 0;
 				width: 100%;
 				height: 49px;
-				border-radius: 0 100px 100px 0;
+				border-radius: 0 0 100px 100px;
 				@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
 
 				&:hover {
@@ -140,15 +152,53 @@ footer#colophon {
 	}
 
 	@include media-breakpoint-up( md ) {
-		form.wonka-form {
+		form.wonka-newsletter-form {
 
 			.gform_body {
 				width: 75%;
+
+				ul {
+
+					li {
+
+						input[type=email].wonka-form-control {
+							flex: 1 100%;
+							border-radius: 100px 0  0 100px;
+
+							&:active,
+							&:focus {
+								outline: 0;
+							}
+						}
+
+						div {
+
+							&:active,
+							&:focus {
+								outline: 0;
+							}
+						}
+
+						&:active,
+						&:focus {
+							outline: 0;
+						}
+					}
+				}
 			}
 
 			.gform_footer {
 				width: 15%;
 				margin-left: -3px;
+
+				input[type=submit].wonka-btn {
+					border-radius: 0 100px 100px 0;
+
+					&:active,
+					&:focus {
+						outline: 0;
+					}
+				}
 			}
 		}
 	}

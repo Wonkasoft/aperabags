@@ -228,8 +228,26 @@ add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
  * customize gravity forms
  */
 function add_bootstrap_container_class( $form, $ajax, $field_values ) {
-	$form['cssClass'] = 'form-inline wonka-form';
+	$inline_forms = array( 2 );
+	if ( !empty( $form['cssClass'] ) ) :
+		$form['cssClass'] .= ' wonka-gform wonka-gform-' . $form['id'];
+	else:
+		$form['cssClass'] = 'wonka-gform wonka-gform-' . $form['id'];
+	endif;
 
+	if ( in_array( $form['id'], $inline_forms ) ) :
+		$form['cssClass'] .= ' form-inline wonka-newsletter-form';
+	endif;
+
+	foreach ( $form['fields'] as $field ) :
+		$field['cssClass'] = 'form-group wonka-form-group';
+		$field['size'] = 'form-control wonka-form-control';
+
+		if ( empty( $field['placeholder'] ) ) :
+			$field['placeholder'] = $field['label'];
+		endif;
+	endforeach;
+	
 	return $form;
 }
 add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );

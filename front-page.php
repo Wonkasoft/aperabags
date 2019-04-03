@@ -82,14 +82,14 @@ get_header();
 					<div class="row">
 						<div class="col col-12">
 							<?php
-								$shop_shortcode = '[recent_products per_page="' . $shop_section->shop_mods->shop_num_of_products . '" columns="' . $shop_section->shop_mods->shop_product_per_row . '"]';
+								$shop_shortcode = '[products limit="' . $shop_section->shop_mods->shop_num_of_products . '" columns="' . $shop_section->shop_mods->shop_product_per_row . '" visibility="featured"]';
 								echo do_shortcode( $shop_shortcode );
 							?>
 						</div><!-- .col-12 -->
 					</div><!-- .row -->
 					<div class="row">
 						<div class="col col-12 text-center">
-							<a href="/product-category/all-bags/" class="wonka-btn" target="_self"><?php _e( __( 'Shop More' ) ) ?></a>
+							<a href="/shop" class="wonka-btn" target="_self"><?php _e( __( 'Shop All' ) ) ?></a>
 						</div><!-- .col -->
 					</div><!-- .row -->
 				</div><!-- .col-12 -->
@@ -174,21 +174,46 @@ get_header();
 						<p class="about-brand-message"><?php _e( $about_section->about_the_brand->about_message ); ?></p>
 						<div class="about-brand-video">
 							<?php
+							$videoplaceholder = ( get_theme_mod( 'about_the_brand_video_placeholder' ) ) ? get_theme_mod( 'about_the_brand_video_placeholder' ) : '';
 							$videocode = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
-							if ( !empty( $videocode ) ) :
-								?>
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							if ( ! empty( $videoplaceholder ) ) :
+							?>
+							<a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" data-target="#videoModal" class="video-img-link">
+								<img src="<?php _e( $videoplaceholder ); ?>" />
+								<span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="fa fa-play-circle"></i></span>
+							</a>
+							
 							<?php
-						endif;
-						?>
+								endif;
+								?>
 						</div>
 						<?php
-						if ( !empty( $about_section->about_the_brand->about_the_brand_button_link ) ) : ?>
+						if ( ! empty( $videoplaceholder ) ) : ?>
+							
+						<!-- Modal -->
+							<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="aboutAperaModal" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-body">
+							        <!-- 16:9 aspect ratio -->
+									<div class="embed-responsive embed-responsive-16by9">
+									<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
+									</div>
+							       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">X</span>
+							        </button>        
+							      </div>
+							    </div>
+							  </div>
+							</div> 
+						<?php endif; ?>
+						<?php
+						if ( ! empty( $about_section->about_the_brand->about_the_brand_button_link ) ) : ?>
 							<a class="btn btn-primary wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
 						<?php endif; ?>
 					</div><!-- .about-components-wrap -->
 				</div>
-				<?php if ( !empty( $about_section->about_the_brand->about_the_brand_second_image ) ) : ?>
+				<?php if ( ! empty( $about_section->about_the_brand->about_the_brand_second_image ) ) : ?>
 				<div class="col col-12 col-md-5 text-center">
 					<div class="img-container">
 						<img class="about-second-image" src="<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />

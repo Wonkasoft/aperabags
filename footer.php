@@ -17,7 +17,7 @@ $footer_section = get_section_mods( 'footer' );
 	<div id="footer-spacer"></div>
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
-			<div class="row upper-footer">
+			<div class="row upper-footer wonka-row-footer">
 				<div class="col col-12 col-md-3">
 					<div class="social-components-wrap">
 						<h4 class="footer-title"><?php echo $footer_section->footer_mods->footer_social_title; ?></h4>
@@ -40,22 +40,22 @@ $footer_section = get_section_mods( 'footer' );
 								}
 							?>
 						</div><!-- .social-icons-btns -->
-						<?php if ( !empty( $footer_section->footer_mods->footer_contact_message ) ) : ?>
+						<?php if ( ! empty( $footer_section->footer_mods->footer_contact_message ) ) : ?>
 							<div class="footer-contact-message">
 								<?php echo $footer_section->footer_mods->footer_contact_message; ?>
 							</div> <!-- .col -->
 						<?php endif; ?>
-						<?php if ( !empty( $footer_section->footer_mods->footer_contact_support_email ) ) : ?>
+						<?php if ( ! empty( $footer_section->footer_mods->footer_contact_support_email ) ) : ?>
 							<div class="footer-contact-email">
-								<?php echo $footer_section->footer_mods->footer_contact_support_email; ?>
+								<?php echo "<a href='mailto:" . $footer_section->footer_mods->footer_contact_support_email ."'>" . $footer_section->footer_mods->footer_contact_support_email . "</a>"; ?>
 							</div> <!-- .col -->
 						<?php endif; ?>
 					</div><!-- .social-components-wrap -->
 				</div><!-- .col -->
 				<div class="col col-12 col-md-9">
-					<div class="row">
-						<?php if ( !empty( $footer_section->footer_titles->footer_title_1 ) ) : ?>
-							<div class="col">
+					<div class="row wonka-row-footer">
+						<?php if ( ! empty( $footer_section->footer_titles->footer_title_1 ) ) : ?>
+							<div class="col-6 col-md">
 								<h5 class="footer-title menu-title-shop"><?php echo $footer_section->footer_titles->footer_title_1; ?></h5>
 								<?php
 									wp_nav_menu( array(
@@ -66,7 +66,7 @@ $footer_section = get_section_mods( 'footer' );
 							</div><!-- .col -->
 						<?php endif; ?>
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_2 ) ) : ?>
-							<div class="col">
+							<div class="col-6 col-md">
 								<h5 class="footer-title menu-title-contact-us"><?php echo $footer_section->footer_titles->footer_title_2; ?></h5>
 								<?php
 									wp_nav_menu( array(
@@ -77,7 +77,7 @@ $footer_section = get_section_mods( 'footer' );
 							</div><!-- .col -->
 						<?php endif; ?>
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_3 ) ) : ?>
-							<div class="col">
+							<div class="col-6 col-md">
 								<h5 class="footer-title menu-title-account"><?php echo $footer_section->footer_titles->footer_title_3; ?></h5>
 								<?php
 									wp_nav_menu( array(
@@ -88,7 +88,7 @@ $footer_section = get_section_mods( 'footer' );
 							</div><!-- .col -->
 						<?php endif; ?>
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_4 ) ) : ?>
-						<div class="col">
+						<div class="col-6 col-md">
 							<h5 class="footer-title menu-title-company"><?php echo $footer_section->footer_titles->footer_title_4; ?></h5>
 							<?php
 								wp_nav_menu( array(
@@ -99,7 +99,7 @@ $footer_section = get_section_mods( 'footer' );
 						</div><!-- .col -->
 						<?php endif; ?>
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_5 ) ) : ?>
-						<div class="col">
+						<div class="col-6 col-md">
 							<h5 class="footer-title menu-title-programs"><?php echo $footer_section->footer_titles->footer_title_5; ?></h5>
 							<?php
 								wp_nav_menu( array(
@@ -139,7 +139,7 @@ $footer_section = get_section_mods( 'footer' );
 			<span class="sep"> | </span>
 				<?php
 					/* translators: 1: Theme name, 2: Theme author. */
-					echo sprintf( esc_html__( 'Designed by %1$s.', 'apera-bags' ), '<a href="https://wonkasoft.com">Wonkasoft</a>' );
+					echo sprintf( esc_html__( 'Designed by %1$s.', 'apera-bags' ), '<a href="https://wonkasoft.com" target="_blank">Wonkasoft</a>' );
 				?>
 			</div><!-- .col -->
 		</div><!-- .site-info -->

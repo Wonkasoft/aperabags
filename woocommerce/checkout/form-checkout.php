@@ -26,7 +26,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 	echo esc_html( apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'woocommerce' ) ) );
 	return;
 }
-
+	do_action( 'wonka_checkout_before_checkout_form_custom', $checkout );
 ?>
 
 <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
@@ -37,13 +37,15 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 		<div class="row wonka-checkout-row">
 		<div class="col col-12 col-md-6" id="customer_details">
-			<div class="col">
-				<?php do_action( 'woocommerce_checkout_billing' ); ?>
-			</div>
-
+			<div class="row">
 			<div class="col">
 				<?php do_action( 'woocommerce_checkout_shipping' ); ?>
 			</div>
+
+			<div class="col">
+				<?php do_action( 'woocommerce_checkout_billing' ); ?>
+			</div>
+		</div>
 		</div>
 		
 				<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>

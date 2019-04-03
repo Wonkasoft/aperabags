@@ -12,7 +12,7 @@
 
 	button {
 		position: absolute;
-		top: -3.0rem;
+		top: -3.6rem;
 		left: -39px;
 		background: transparent;
 		border: none;
@@ -31,25 +31,35 @@
 			&-top {
 				top: 0;
 			}
+		
 			&-bottom {
 				bottom: 0;
 			}
 		}
+		
 		&[aria-expanded="true"] {
+		
 			.hang-a-bur-top {
 				top: 0.6rem;
 				@include prefix( transform, rotate(220deg), webkit moz o );
 			}
+		
 			.hang-a-bur-mid {
 				opacity: 0;
 			}
+		
 			.hang-a-bur-bottom {
 				bottom: 0.6rem;
 				@include prefix( transform, rotate(-220deg), webkit moz o );
 			}
 		}
+		
 		&:focus {
 			outline: 0;
+		}
+
+		@include media-breakpoint-up( sm ) {
+			top: -4.2rem;
 		}
 	}
 
@@ -83,9 +93,6 @@
 				@include prefix( transition, $trans_25, webkit moz o);
 
 				a {
-					display: flex;
-					align-items: center;
-					justify-content: center;
 					width: 100%;
 				}
 
@@ -139,6 +146,22 @@
 				@include prefix( text-shadow, 1px 1px 2px rgba(#000, .8 ), o moz webkit );
 				@include prefix( transition, $trans_25, webkit moz o);
 
+				.wonka-badge {
+					display: flex;
+					align-items: flex-start;
+					justify-content: center;
+					font-family: $font__main_jose;
+					font-weight: 800;
+					background: #ffffff;
+					width: 20px;
+					height: 20px;
+				    line-height: 1;
+				    text-shadow: none;
+				    color: #333333;
+					@include font-size( .9 );
+					@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
+				}
+
 				&:hover {
 					color: #dad3a2;
 				}
@@ -173,7 +196,7 @@
 			}
 		}
 
-		@include media-breakpoint-up( md ) {
+		@include media-breakpoint-up( lg ) {
 			flex: .2 10%;
 
 			> ul {
@@ -227,7 +250,7 @@
 	top: -5px;
 }
 
-@include media-breakpoint-up( md ) {
+@include media-breakpoint-up( lg ) {
 	.menu-toggle {
 		display: none;
 	}
@@ -257,28 +280,13 @@
 /*========================================
 =            Cart Menu Styles            =
 ========================================*/
-.wonka-badge {
-	display: flex;
-	align-items: flex-start;
-	justify-content: center;
-	font-family: $font__main_jose;
-	font-weight: 800;
-	background: #ffffff;
-	width: 20px;
-	height: 20px;
-    line-height: 1;
-    text-shadow: none;
-	@include font-size( .9 );
-	@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
-}
-
 .menu-cart-menu-container {
 	z-index: 99;
 
 	ul#cart-menu-mobile {
 		display: flex;
 		align-items: center;
-		justify-content: space-around;
+		justify-content: center;
 	    list-style: none;
 	    margin: 0;
 	    padding: 0;
@@ -290,7 +298,7 @@
 	    	align-items: center;
 	    	justify-content: center;
 		    margin: 8px 0;
-		    padding: 0;
+		    padding: 8px;
 		    @include prefix( transition, $trans_25, webkit moz o);
 
 	    	i {
@@ -314,6 +322,22 @@
 				padding: 0.5rem 0;
 				@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
 
+				.wonka-badge {
+					display: flex;
+					align-items: flex-start;
+					justify-content: center;
+					font-family: $font__main_jose;
+					font-weight: 800;
+					background: #ffffff;
+					width: 20px;
+					height: 20px;
+				    line-height: 1;
+				    text-shadow: none;
+				    color: #333333;
+					@include font-size( .9 );
+					@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
+				}
+
 				@media only screen and ( min-width: 768px ) and ( -webkit-min-device-pixel-ratio: 2 ),
 				(min-resolution: 192dpi) and ( min-width: 768px ) {
 					padding: 0.5rem 0;
@@ -332,7 +356,7 @@
 
 	@include media-breakpoint-up( md ) {
 
-		ul#cart-menu {
+		ul#cart-menu-mobile {
 	    	display: flex;
 	    	align-items: center;
 	    	justify-content: space-between;

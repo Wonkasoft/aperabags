@@ -34,7 +34,7 @@
 			</div><!-- topbar-notice -->
 		<?php endif; ?>
 		<div class="row brand-nav-bar">
-			<div class="col col-6 col-md-3">
+			<div class="col col-6 col-lg-3">
 				<div class="site-branding">
 					<?php
 						the_custom_logo();
@@ -54,7 +54,7 @@
 					<?php endif; ?>
 				</div><!-- .site-branding -->
 			</div> <!-- .col-4 -->
-			<div class="col col-5 d-md-none cart-mobile-col">
+			<div class="col col-5 d-lg-none cart-mobile-col">
 				<?php
 					$count = WC()->cart->cart_contents_count;
 					wp_nav_menu( array(
@@ -65,7 +65,7 @@
 					) );
 				?>
 			</div><!-- .cart-mobile-col -->
-			<div class="col col-12 col-md-9">
+			<div class="col col-12 col-lg-9">
 
 				<nav id="site-navigation" class="main-navigation">
 					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">

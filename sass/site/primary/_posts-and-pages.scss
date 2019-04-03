@@ -9,6 +9,20 @@
 
 #content {
 	@include prefix( transition, $trans_25, o moz webkit );
+
+	main#main {
+		max-width: 1200px;
+		margin: 15px auto;
+	}
+
+	.main-contact-us {
+		margin: 15px auto;
+		max-width: 1180px;
+
+		.entry-title {
+			display: none;
+		}
+	}
 }
 
 .updated:not(.published) {
@@ -27,18 +41,36 @@
 }
 
 section {
-	margin: 30px auto;
 
 	&.error-404 {
 		max-width: 1180px;
 	}
 }
 
-#searchform.wonka-form-inline {
-	margin: 15px auto;
+#searchform {
 
-	.wonka-btn {
-		margin-left: -2px;
+	input#s {
+		border-radius: 100px 100px 0 0;
+
+		&::placeholder {
+			font-style: italic;
+		}
+	}
+
+	button.wonka-btn {
+		height: 49px;
+		border-radius: 0 0 100px 100px;
+	}
+
+	@include media-breakpoint-up( md ) {
+
+		input#s {
+			border-radius: 100px 0 0 100px;
+		}
+
+		button.wonka-btn {
+			border-radius: 0 100px 100px 0;
+		}
 	}
 }
 
@@ -127,5 +159,22 @@ section {
 
 .overlay .closebtn:hover {
 	color: #ccc;
+}
+
+div.wonka-gform_wrapper {
+
+	label.gfield_label {
+		display: none;
+	}
+
+	ul.gform_fields {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		li.wonka-form-control {
+			border: none;
+		}
+	}
 }
 /*=====  End of Search styles  ======*/

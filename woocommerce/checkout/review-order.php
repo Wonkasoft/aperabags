@@ -20,8 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<table class="shop_table woocommerce-checkout-review-order-table table table-striped table-hover">
-	<thead class="thead-dark">
+<table class="shop_table woocommerce-checkout-review-order-table table table-hover">
+	<thead>
 		<tr>
 			<th scope="col" class="product-name"><?php _e( 'Product', 'woocommerce' ); ?></th>
 			<th scope="col" class="product-total"><?php _e( 'Total', 'woocommerce' ); ?></th>
