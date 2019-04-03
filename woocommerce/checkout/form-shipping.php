@@ -22,7 +22,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <div class="woocommerce-shipping-fields">
+
+	<?php do_action( 'woocommerce_before_checkout_shipping_form', $checkout ); ?>
+
 	<?php if ( wc_ship_to_billing_address_only() && WC()->cart->needs_shipping() ) : ?>
+
 
 		<h3><?php _e( 'Shipping &amp; Billing', 'woocommerce' ); ?></h3>
 
@@ -31,8 +35,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<h3><?php _e( 'Shipping details', 'woocommerce' ); ?></h3>
 
 	<?php endif; ?>
-
-			<?php do_action( 'woocommerce_before_checkout_shipping_form', $checkout ); ?>
 
 			<div class="woocommerce-shipping-fields__field-wrapper">
 				<?php
@@ -52,20 +54,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 							),
 							'autocomplete'	=>	'phone-number',
 							'priority'		=>	100
-						),
-						'shipping_email'	=> array(
-							'label'			=> 'Email address',
-							'required'		=> 1,
-							'placeholder'	=> 'Email address',
-							'class'			=> array(
-								'form-row-wide',
-								'phone-field'
-							),
-							'validate'		=> array(
-								'number'
-							),
-							'autocomplete'	=>	'email',
-							'priority'		=>	1
 						),
 					);
 

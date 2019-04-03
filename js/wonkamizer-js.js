@@ -317,7 +317,7 @@
 			if ( window.innerWidth > 792 && win_y < img_area_top ) 
 			{
 				slide_view_box.classList.remove( 'sticky-on' );
-				slide_view_box.style.top = '';                                          
+				slide_view_box.style.top = '';
 			}
 			else
 			{
@@ -444,13 +444,19 @@
 	function setup_for_reviews( comment_list )
 	{
 		var first_three_height = 0;
-		for (var i = 0; i < comment_list.children.length; i++) 
+		for (var i = 0; i <= comment_list.children.length; i++) 
 		{
 			first_three_height += comment_list.children[i].offsetHeight + 15;
 			if ( i === 2 ) 
 			{
 				comment_list.style.height = first_three_height + 'px';
-				break;
+				return first_three_height;
+			}
+
+			if ( i === comment_list.children.length ) 
+			{
+				comment_list.style.height = first_three_height + 'px';
+				return first_three_height;
 			}
 		}
 	}
@@ -495,18 +501,20 @@
 			var more_reviews = document.querySelector( '#more-reviews' );
 			var write_review = document.querySelector( '#write-review' );
 			var comment_form = document.querySelector( '#commentform' );
+			var reviews_top = document.querySelector( '.wonka-section-reviews' );
+			var get_custom_height;
 
-			setup_for_reviews( comment_list, more_reviews );
+			get_custom_height = setup_for_reviews( comment_list, more_reviews );
 
 			more_reviews.addEventListener( 'click', function(e) 
 				{
 					e.preventDefault();
-					if ( getComputedStyle( comment_list ).height === '100%' || comment_list.style.height === 100 ) 
+					if ( get_custom_height < comment_list.offsetHeight ) 
 					{
 						setup_for_reviews( comment_list );
 						setTimeout( function( comment_list ) 
 							{
-								comment_list.scrollIntoView({behavior: 'smooth'});
+								reviews_top.scrollIntoView({behavior: 'smooth'});
 							}, 500, comment_list );
 					}
 					else

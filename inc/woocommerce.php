@@ -377,9 +377,30 @@ function wonka_checkout_wrap_before( $checkout ) {
 	_e( $output );
 }
 
-add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 11, 1 );
+add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 50, 1 );
 
-function wonka_checkout_before_shipping_form() {
+function wonka_checkout_before_shipping_form( $checkout ) {
+do_action( 'wonka_checkout_login_form' );
+	$fields = $checkout->get_checkout_fields( 'shipping' );
+	$new_fields = array(
+		'shipping_email'	=> array(
+			'label'			=> 'Email',
+			'required'		=> 1,
+			'placeholder'	=> 'Email address...',
+			'class'			=> array(
+				'form-row-wide',
+				'email-field'
+			),
+			'validate'		=> array(
+				'number'
+			),
+			'autocomplete'	=>	'email',
+			'priority'		=>	1
+		),
+	);
+
+	$fields = array_merge( $fields, $new_fields );
+
 	$output = '';
 	$output2 = '';
 
@@ -398,11 +419,33 @@ function wonka_checkout_before_shipping_form() {
 	$output2 .= '</div>';
 	$output2 .= '</div>';
 
-	_e( $output2 );
+	_e( $output2 ); ?>
 
-	do_action( 'wonka_checkout_login_form' );
+	<?php
+	foreach ( $fields as $key => $field ) :
+		if ( strtolower( $field['label'] ) === 'email' ) :
+			if ( !isset($field['placeholder'] ) ) :
+				$field['placeholder'] = $field['label'];
+			endif;
+
+			if ( isset( $field['class'] ) ) :
+				array_push( $field['class'], 'wonka-form-group', 'form-group' ) ;
+			else:
+				$field['class'] = array( 'wonka-form-group', 'form-group' );
+			endif;
+
+			if ( isset( $field['label_class'] ) ) :
+				array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
+			else:
+				$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
+			endif;
+
+		woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+		endif;
+	endforeach;
+
 }
-add_action( 'woocommerce_checkout_shipping', 'wonka_checkout_before_shipping_form', 4 );
+add_action( 'woocommerce_before_checkout_shipping_form', 'wonka_checkout_before_shipping_form', 4 );
 
 /**
  * This builds a custom table of order details on the checkout page.
@@ -465,11 +508,21 @@ function wonka_checkout_wrap_after( $checkout ) {
 
 					<?php if ( WC()->cart->needs_shipping() && WC()->cart->show_shipping() ) : ?>
 
-						<?php do_action( 'woocommerce_review_order_before_shipping' ); ?>
+						<?php do_action( 'woocommerce_cart_totals_before_shipping' ); ?>
 
 						<?php wc_cart_totals_shipping_html(); ?>
 
-						<?php do_action( 'woocommerce_review_order_after_shipping' ); ?>
+						<?php do_action( 'woocommerce_cart_totals_after_shipping' ); ?>
+
+					<?php elseif ( WC()->cart->needs_shipping() && 'yes' === get_option( 'woocommerce_enable_shipping_calc' ) ) : ?>
+
+						<tr class="shipping">
+							<th scope="row" colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?></th>
+						</tr>
+						<tr class="shipping-methods">
+							<td></td>
+							<td colspan="2" data-title="<?php esc_attr_e( 'Shipping', 'woocommerce' ); ?>"><?php woocommerce_shipping_calculator(); ?></td>
+						</tr>
 
 					<?php endif; ?>
 
