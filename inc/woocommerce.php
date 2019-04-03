@@ -356,17 +356,18 @@ function wonka_add_continue_shopping_notice_to_cart() {
 }
 add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart' );
 
-function wonka_checkout_remove_actions( $checkout ) {
+function wonka_checkout_remove_actions() {
+	$class_int = new Angelleye_PayPal_Express_Checkout_Helper();
+	remove_action( 'woocommerce_before_checkout_form',  array( $class_int, 'angelleye_display_custom_message_review_page' ), 5 );
+	remove_action( 'woocommerce_before_checkout_form', array( $class_int, 'checkout_message' ), 5 );
 	// add_action( 'wonka_checkout_express_btns', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'angelleye_display_custom_message_review_page' ), 5 );
 	// add_action('wonka_checkout_express_btns', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'checkout_message' ), 5 );
 	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
 	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
 	add_action( 'wonka_checkout_login_form', 'woocommerce_checkout_login_form', 10 );
 }
-remove_action( 'woocommerce_before_checkout_form',  array( 'Angelleye_PayPal_Express_Checkout_Helper', 'angelleye_display_custom_message_review_page' ), 5 );
-remove_action( 'woocommerce_before_checkout_form', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'checkout_message' ), 5 );
 
-add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_remove_actions', 2, 1 );
+add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_remove_actions', 1 );
 
 function wonka_checkout_wrap_before( $checkout ) {
 	$output = '';
@@ -377,29 +378,9 @@ function wonka_checkout_wrap_before( $checkout ) {
 	_e( $output );
 }
 
-add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 50, 1 );
+add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25, 1 );
 
-function wonka_checkout_before_shipping_form( $checkout ) {
-do_action( 'wonka_checkout_login_form' );
-	$fields = $checkout->get_checkout_fields( 'shipping' );
-	$new_fields = array(
-		'shipping_email'	=> array(
-			'label'			=> 'Email',
-			'required'		=> 1,
-			'placeholder'	=> 'Email address...',
-			'class'			=> array(
-				'form-row-wide',
-				'email-field'
-			),
-			'validate'		=> array(
-				'number'
-			),
-			'autocomplete'	=>	'email',
-			'priority'		=>	1
-		),
-	);
-
-	$fields = array_merge( $fields, $new_fields );
+function wonka_thwmsc_multi_step_before_tab_panels( $checkout ) {
 
 	$output = '';
 	$output2 = '';
@@ -419,9 +400,33 @@ do_action( 'wonka_checkout_login_form' );
 	$output2 .= '</div>';
 	$output2 .= '</div>';
 
-	_e( $output2 ); ?>
+	_e( $output2 ); 
+	do_action( 'wonka_checkout_login_form' );
 
-	<?php
+}
+add_action( 'thwmsc_multi_step_before_tab_panels', 'wonka_thwmsc_multi_step_before_tab_panels', 4 );
+
+function wonka_before_checkout_shipping_form( $checkout ) {
+
+	$fields = $checkout->get_checkout_fields( 'shipping' );
+	$new_fields = array(
+		'shipping_email'	=> array(
+			'label'			=> 'Email',
+			'required'		=> 1,
+			'placeholder'	=> 'Email address...',
+			'class'			=> array(
+				'form-row-wide',
+				'email-field'
+			),
+			'validate'		=> array(
+				'number'
+			),
+			'autocomplete'	=>	'email',
+			'priority'		=>	3
+		),
+	);
+	$fields = array_merge( $fields, $new_fields );
+
 	foreach ( $fields as $key => $field ) :
 		if ( strtolower( $field['label'] ) === 'email' ) :
 			if ( !isset($field['placeholder'] ) ) :
@@ -443,9 +448,8 @@ do_action( 'wonka_checkout_login_form' );
 		woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 		endif;
 	endforeach;
-
 }
-add_action( 'woocommerce_before_checkout_shipping_form', 'wonka_checkout_before_shipping_form', 4 );
+add_action( 'woocommerce_before_checkout_shipping_form', 'wonka_before_checkout_shipping_form', 15 );
 
 /**
  * This builds a custom table of order details on the checkout page.
