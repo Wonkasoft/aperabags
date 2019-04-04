@@ -91,7 +91,7 @@ label.checkbox {
 }
 
 div.checkout-order-details {
-	padding: 30px;
+	padding: 0;
 	background: $color__background_alt;
 
 	tr.cart_item:first-child {
@@ -127,6 +127,11 @@ div.checkout-order-details {
 
 .woocommerce-Price-amount {
 	font-family: $font__main_jose;
+}
+
+.wonka-express-checkout-message {
+	opacity: 1;
+	@include prefix( transition, $trans_25, o moz webkit );
 }
 
 @media screen and (min-width: 768px) {

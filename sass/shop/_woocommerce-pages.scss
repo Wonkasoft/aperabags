@@ -23,7 +23,9 @@
 			margin: 15px 0;
 			padding: 15px;
 			color: #333333;
+			height: auto;
 			background-color: transparent;
+			@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
 			a {
 				color: rgba( 0, 0, 0, .8 );
@@ -156,9 +158,6 @@
 				display: flex;
 				align-items: center;
 				justify-content: space-evenly;
-
-
-				
 			}
 		}
 
@@ -176,12 +175,11 @@
 			}
 
 			> div {
-				flex: 1 1 20%;
+
 			}
 
 			span.continue-past-btns-text {
 				color: #444444;
-				white-space: nowrap;
 				font-weight: 700;
 				padding: 4px 15px;
 			}

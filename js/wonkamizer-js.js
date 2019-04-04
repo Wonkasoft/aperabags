@@ -9,6 +9,7 @@
 	scroll_direction,
 	scroll_distance,
 	admin_bar,
+	message_timer,
 	admin_height;
 
 
@@ -460,6 +461,22 @@
 			}
 		}
 	}
+
+	function set_message_timer( message, wrapper )
+	{
+		clearTimeout( message_timer );
+
+		wrapper.innerHTML = '<span class="wonka-express-checkout-message">' + message + '</span>';
+		document.querySelector( '.wonka-express-checkout-message' ).scrollIntoView( {behavior: 'smooth'} );
+		message_timer = setTimeout( function( wrapper ) 
+			{
+				document.querySelector( '.wonka-express-checkout-message' ).style.opacity = 0;
+				setTimeout( function( wrapper ) 
+					{
+						wrapper.innerHTML = '';
+					}, 2500, wrapper );
+			}, 3000, wrapper );
+	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -492,6 +509,97 @@
 		===========================================================================================*/
 		footer_adjustment();
 		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
+
+		/*===============================================================================
+		=            This is the setup for the Wonka Express Checkout Button            =
+		===============================================================================*/
+		/*----------  For variant products  ----------*/
+		if ( document.querySelector( 'div.wonka-express-checkout-wrap' ) ) 
+		{
+			/*----------  loading vars  ----------*/
+			var express_btn_wrap = document.querySelector( 'div.wonka-express-checkout-wrap' ),
+			express_btn = document.querySelector( 'a#express_checkout_btn' ),
+			express_attributes = JSON.parse( document.querySelector( '.variations_form.cart' ).getAttribute( 'data-product_variations' ) ),
+			express_variants = {},
+			express_variant_id = 0,
+			express_qty = document.querySelector( '.quantity input[type="number"]' ),
+			express_btn_notice_wrapper = document.querySelector( '.woocommerce-notices-wrapper' ),
+			express_notice_text = '',
+			express_btn_href = express_btn.href,
+			variant = [],
+			attribute_count = 0;
+			/*===================================================
+			=            setting up the variant list            =
+			===================================================*/
+			for (var i in express_attributes ) 
+			{
+				for ( var a in express_attributes[i].attributes ) 
+				{
+					if ( !( 'variants' in express_variants ) ) 
+					{
+						var variants_array = [];
+						if ( !variants_array.includes(a) ) 
+						{
+							attribute_count++;
+							variants_array.push( a );
+						}
+						express_variants.variants = variants_array;
+						express_variants.variant_count = attribute_count;
+					}
+				}
+			}
+			/*=====  End of setting up the variant list  ======*/
+			/*========================================================
+			=            This is the click event function            =
+			========================================================*/
+			express_btn.addEventListener( 'click', function(e)
+				{
+					e.preventDefault();
+					var target = e.target;
+					express_variants.variants.forEach( function( item, w ) 
+						{
+							variant[item] = document.querySelector( '[name="' + item + '"]');
+						});
+					
+					for ( var v in variant )
+					{
+						if ( !variant[v].value ) 
+						{
+							express_notice_text = 'Please select a product variation in order to checkout!';
+							
+							set_message_timer( express_notice_text, express_btn_notice_wrapper );
+
+						}
+						else
+						{
+							express_btn_notice_wrapper.innerHTML =  '';
+							for (var i in express_attributes )
+							{
+								if ( express_attributes[i].attributes[v] === variant[v].value ) 
+								{
+									express_variant_id = express_attributes[i].variation_id;
+									if ( express_attributes[i].is_in_stock ) 
+									{
+										express_btn.href = express_btn_href + express_variant_id + '&quantity=' + express_qty.value;
+										window.location = express_btn.href;
+									}
+									else
+									{
+										express_notice_text = 'Product variation is currently out of stock.';
+
+										set_message_timer( express_notice_text, express_btn_notice_wrapper );
+									}
+								}
+							}
+						}
+					}
+				});
+			/*=====  End of This is the click event function  ======*/
+			
+		}
+		/*=====  End of This is the setup for the Wonka Express Checkout Button  ======*/
+		
+
 		/*==========================================================
 		=            This is for setting up the reviews            =
 		==========================================================*/

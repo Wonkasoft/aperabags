@@ -386,7 +386,7 @@ function wonka_thwmsc_multi_step_before_tab_panels( $checkout ) {
 	$output .= '</div>';
 	$output .= '</div>';
 	$output .= '<div class="col col-12">';
-	$output .= '<div class="row below-express-checkout-btns no-gutters"><div class="col"><hr /></div><div class="col"><span class="continue-past-btns-text">' . __( 'Or continue below to pay with a credit card', 'aperabags') . '</span></div><div class="col"><hr /></div></div>';
+	$output .= '<div class="row below-express-checkout-btns no-gutters"><div class="col-12 col-md"><hr /></div><div class="col-12 col-md"><span class="continue-past-btns-text">' . __( 'Or continue below to pay with a credit card', 'aperabags') . '</span></div><div class="col-12 col-md"><hr /></div></div>';
 	$output .= '</div>';
 	$output .= '</div>';
 
@@ -669,7 +669,7 @@ add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
 
 /**
  * This adds a custom express checkout button to the product page
- * @return [type] [description]
+ * 
  */
 function wonka_express_checkout_add() {
 	global $post;
