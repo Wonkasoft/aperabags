@@ -679,7 +679,7 @@ function wonka_express_checkout_add() {
 	if ( get_post_meta( $post_id, '_enable_wonka_express_button', true ) === 'yes' ) :
 	?>
 	<div class="wonka-express-checkout-wrap">
-		<a href="<?php _e( get_site_url() . '/checkout/?add-to-cart='.$variation_id );?>" class="wonka-btn">Express Checkout</a>
+		<a href="#" id="express_checkout_btn" class="wonka-btn">Express Checkout</a>
 	</div>
 	<?php
 	endif;
