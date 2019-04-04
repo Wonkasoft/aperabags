@@ -15,9 +15,11 @@
 		margin: 15px auto;
 	}
 
+	.main-shop-instagram {
+		max-width: 1350px;
+	}
+
 	.main-contact-us {
-		margin: 15px auto;
-		max-width: 1180px;
 
 		.entry-title {
 			display: none;
@@ -48,9 +50,12 @@ section {
 }
 
 #searchform {
+	margin: 15px;
 
 	input#s {
+		margin-left: -3px;
 		border-radius: 100px 100px 0 0;
+		border-width: 3px;
 
 		&::placeholder {
 			font-style: italic;
@@ -58,7 +63,6 @@ section {
 	}
 
 	button.wonka-btn {
-		height: 49px;
 		border-radius: 0 0 100px 100px;
 	}
 

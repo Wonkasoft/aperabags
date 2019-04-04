@@ -28,36 +28,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php if ( wc_ship_to_billing_address_only() && WC()->cart->needs_shipping() ) : ?>
 
 
-		<h3><?php _e( 'Shipping &amp; Billing', 'woocommerce' ); ?></h3>
+		<h5><?php _e( 'Shipping &amp; Billing', 'woocommerce' ); ?></h5>
 
 	<?php else : ?>
 
-		<h3><?php _e( 'Shipping details', 'woocommerce' ); ?></h3>
+		<h5><?php _e( 'Shipping details', 'woocommerce' ); ?></h5>
 
 	<?php endif; ?>
 
 			<div class="woocommerce-shipping-fields__field-wrapper">
 				<?php
 					$fields = $checkout->get_checkout_fields( 'shipping' );
-
-					$new_fields = array(
-						'shipping_phone'	=> array(
-							'label'			=> 'Phone',
-							'required'		=> 1,
-							'placeholder'	=> 'Phone',
-							'class'			=> array(
-								'form-row-wide',
-								'phone-field'
-							),
-							'validate'		=> array(
-								'number'
-							),
-							'autocomplete'	=>	'phone-number',
-							'priority'		=>	100
-						),
-					);
-
-					$fields = array_merge( $fields, $new_fields );
 
 					foreach ( $fields as $key => $field ) {
 

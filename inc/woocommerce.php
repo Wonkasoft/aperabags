@@ -357,21 +357,17 @@ function wonka_add_continue_shopping_notice_to_cart() {
 add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart' );
 
 function wonka_checkout_remove_actions() {
-	$class_int = new Angelleye_PayPal_Express_Checkout_Helper();
-	remove_action( 'woocommerce_before_checkout_form',  array( $class_int, 'angelleye_display_custom_message_review_page' ), 5 );
-	remove_action( 'woocommerce_before_checkout_form', array( $class_int, 'checkout_message' ), 5 );
-	// add_action( 'wonka_checkout_express_btns', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'angelleye_display_custom_message_review_page' ), 5 );
-	// add_action('wonka_checkout_express_btns', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'checkout_message' ), 5 );
+	remove_action( 'woocommerce_before_checkout_form',  array( 'Angelleye_PayPal_Express_Checkout_Helper', 'angelleye_display_custom_message_review_page' ), 5 );
+	remove_action( 'woocommerce_before_checkout_form', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'checkout_message' ), 5 );
 	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
 	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
 	add_action( 'wonka_checkout_login_form', 'woocommerce_checkout_login_form', 10 );
 }
 
-add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_remove_actions', 1 );
+add_action( 'plugins_loaded', 'wonka_checkout_remove_actions', 99 );
 
 function wonka_checkout_wrap_before( $checkout ) {
 	$output = '';
-
 	$output .= '<div class="row wonka-checkout-row">';
 	$output .= '<div class="col col-12 col-md-7 checkout-form-left-side">';
 
@@ -381,62 +377,43 @@ function wonka_checkout_wrap_before( $checkout ) {
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25, 1 );
 
 function wonka_thwmsc_multi_step_before_tab_panels( $checkout ) {
-
+// 	add_action( 'wonka_checkout_express_btns', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'angelleye_display_custom_message_review_page' ), 5 );
+// add_action('wonka_checkout_express_btns', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'checkout_message' ), 5 );
+	ob_start();
 	$output = '';
-	$output2 = '';
 
 	$output .= '<div class="row wonka-row-express-checkout-btns">';
 	$output .= '<div class="col col-12">';
 	$output .= '<div class="express-checkout-btns"><span class="express-btns-text">' . __( 'Express checkout', 'aperabags') . '</span>';
+	$output .= do_action( 'wonka_checkout_express_btns' );
+	$output .= '</div>';
+	$output .= '</div>';
+	$output .= '<div class="col col-12">';
+	$output .= '<div class="row below-express-checkout-btns no-gutters"><div class="col"><hr /></div><div class="col"><span class="continue-past-btns-text">' . __( 'Or continue below to pay with a credit card', 'aperabags') . '</span></div><div class="col"><hr /></div></div>';
+	$output .= '</div>';
+	$output .= '</div>';
 
-	_e( $output );
-
-	do_action( 'wonka_checkout_express_btns' );
-
-	$output2 .= '</div>';
-	$output2 .= '</div>';
-	$output2 .= '<div class="col col-12">';
-	$output2 .= '<div class="row below-express-checkout-btns no-gutters"><div class="col"><hr /></div><div class="col"><span class="continue-past-btns-text">' . __( 'Or continue below to pay with a credit card', 'aperabags') . '</span></div><div class="col"><hr /></div></div>';
-	$output2 .= '</div>';
-	$output2 .= '</div>';
-
-	_e( $output2 ); 
+	$output .= ob_get_clean();
+	_e( $output ); 
 	do_action( 'wonka_checkout_login_form' );
 
 }
 add_action( 'thwmsc_multi_step_before_tab_panels', 'wonka_thwmsc_multi_step_before_tab_panels', 4 );
 
 function wonka_before_checkout_shipping_form( $checkout ) {
-
-	$fields = $checkout->get_checkout_fields( 'shipping' );
-	$new_fields = array(
-		'shipping_email'	=> array(
-			'label'			=> 'Email',
-			'required'		=> 1,
-			'placeholder'	=> 'Email address...',
-			'class'			=> array(
-				'form-row-wide',
-				'email-field'
-			),
-			'validate'		=> array(
-				'number'
-			),
-			'autocomplete'	=>	'email',
-			'priority'		=>	3
-		),
-	);
-	$fields = array_merge( $fields, $new_fields );
+	_e( '<h5 class="wonka-contact-information">Contact Information</h5>', 'aperabags' );
+	$fields = $checkout->get_checkout_fields( 'billing' );
 
 	foreach ( $fields as $key => $field ) :
-		if ( strtolower( $field['label'] ) === 'email' ) :
+		if ( strtolower( $key ) === 'billing_email' ) :
 			if ( !isset($field['placeholder'] ) ) :
 				$field['placeholder'] = $field['label'];
 			endif;
 
 			if ( isset( $field['class'] ) ) :
-				array_push( $field['class'], 'wonka-form-group', 'form-group' ) ;
+				$field['class'] = array( 'wonka-form-group' ) ;
 			else:
-				$field['class'] = array( 'wonka-form-group', 'form-group' );
+				$field['class'] = array( 'wonka-form-group' );
 			endif;
 
 			if ( isset( $field['label_class'] ) ) :
@@ -447,7 +424,13 @@ function wonka_before_checkout_shipping_form( $checkout ) {
 
 		woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 		endif;
-	endforeach;
+	endforeach; ?>
+	<p class="wonka-form-check checkbox">
+		<label for="mc4wp-subscribe">
+			<input type="checkbox" class="wonka-checkbox form-checkbox" name="mc4wp-subscribe" checked="checked" value="1" />
+			Keep me up to date on news and exclusive offers.	</label>
+	</p>
+<?php
 }
 add_action( 'woocommerce_before_checkout_shipping_form', 'wonka_before_checkout_shipping_form', 15 );
 
@@ -521,7 +504,8 @@ function wonka_checkout_wrap_after( $checkout ) {
 					<?php elseif ( WC()->cart->needs_shipping() && 'yes' === get_option( 'woocommerce_enable_shipping_calc' ) ) : ?>
 
 						<tr class="shipping">
-							<th scope="row" colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?></th>
+							<th scope="row" colspan="1"><?php _e( 'Shipping', 'woocommerce' ); ?></th>
+							<td colspan="2"><?php _e( '(Shipping only within the US)', 'woocommerce' ); ?></td>
 						</tr>
 						<tr class="shipping-methods">
 							<td></td>

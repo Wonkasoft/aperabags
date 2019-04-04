@@ -75,24 +75,10 @@
 		float: right;
 		clear: none;
 	}
+}
 
-	p#shipping_phone_field,
-	p#billing_phone_field {
-		width: 49%;
-		float: left;
-		clear: none;
-	}
-
-	p#billing_email_field {
-		width: 49%;
-		float: right;
-		clear: none;
-	}
-
-	p#shipping_email_field {
-		width: auto;
-		float: none;
-	}
+p#billing_email_field {
+	margin-bottom: 8px;
 }
 
 div.woocommerce-additional-fields {

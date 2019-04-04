@@ -49,6 +49,12 @@ input[type="submit"].wonka-btn {
 		color: rgba(255, 255, 255, .8);
 		@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
     }
+
+    &:active,
+    &:focus {
+    	outline: 0;
+    	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+    }
 }
 
 
