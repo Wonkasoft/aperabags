@@ -673,11 +673,13 @@ add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
  */
 function wonka_express_checkout_add() {
 	global $post;
+	global $product;
+	$product_id = $product->get_id();
 	$post_id = get_the_ID();
 	if ( get_post_meta( $post_id, '_enable_wonka_express_button', true ) === 'yes' ) :
 	?>
 	<div class="wonka-express-checkout-wrap">
-		<a href="#" class="wonka-btn">Express Checkout</a>
+		<a href="<?php _e( get_site_url() ). '/checkout/?add-to-cart='.$product_id;?>" class="wonka-btn">Express Checkout</a>
 	</div>
 	<?php
 	endif;
