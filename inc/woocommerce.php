@@ -357,14 +357,12 @@ function wonka_add_continue_shopping_notice_to_cart() {
 add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart' );
 
 function wonka_checkout_remove_actions() {
-	remove_action( 'woocommerce_before_checkout_form',  array( 'Angelleye_PayPal_Express_Checkout_Helper', 'angelleye_display_custom_message_review_page' ), 5 );
-	remove_action( 'woocommerce_before_checkout_form', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'checkout_message' ), 5 );
 	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
 	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
 	add_action( 'wonka_checkout_login_form', 'woocommerce_checkout_login_form', 10 );
 }
 
-add_action( 'plugins_loaded', 'wonka_checkout_remove_actions', 99 );
+add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_remove_actions', 1 );
 
 function wonka_checkout_wrap_before( $checkout ) {
 	$output = '';
@@ -377,8 +375,7 @@ function wonka_checkout_wrap_before( $checkout ) {
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25, 1 );
 
 function wonka_thwmsc_multi_step_before_tab_panels( $checkout ) {
-// 	add_action( 'wonka_checkout_express_btns', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'angelleye_display_custom_message_review_page' ), 5 );
-// add_action('wonka_checkout_express_btns', array( 'Angelleye_PayPal_Express_Checkout_Helper', 'checkout_message' ), 5 );
+
 	ob_start();
 	$output = '';
 
