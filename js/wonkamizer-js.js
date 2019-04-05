@@ -728,12 +728,25 @@
 		/*========================================================================================
 		=            This will move paypal checkout buttons into express checkout box            =
 		========================================================================================*/
+		if ( document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' ) ) 
+		{
+			var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
+		}
+		
 		if ( document.querySelector( '#checkout_paypal_message' ) ) 
 		{
 			// var iframe_btns = document.querySelector( '#checkout_paypal_message' );
 			// var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
 
 			// express_box.appendChild( iframe_btns );	
+		}
+
+		if ( document.querySelector( 'wc-amazon-payments-advanced-populated' ) ) 
+		{
+			var amazon_quick = document.querySelector( 'wc-amazon-payments-advanced-populated' );
+			var amazon_cln = document.cloneNode( amazon_quick );
+
+			express_box.appendChild( amazon_cln );
 		}
 		/*=====  End of This will move paypal checkout buttons into express checkout box  ======*/
 		

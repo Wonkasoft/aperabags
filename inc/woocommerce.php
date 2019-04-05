@@ -362,7 +362,7 @@ function wonka_checkout_remove_actions() {
 	add_action( 'wonka_checkout_login_form', 'woocommerce_checkout_login_form', 10 );
 }
 
-add_action( 'plugins_loaded', 'wonka_checkout_remove_actions', 1 );
+add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_remove_actions', 1 );
 
 function wonka_checkout_wrap_before( $checkout ) {
 	$output = '';
@@ -447,7 +447,6 @@ function wonka_before_checkout_shipping_form( $checkout ) {
 		woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 		endif;
 	endforeach; ?>
-
 	<p class="wonka-form-check checkbox">
 		<label for="mc4wp-subscribe">
 			<input type="checkbox" class="wonka-checkbox form-checkbox" name="mc4wp-subscribe" checked="checked" value="1" />
