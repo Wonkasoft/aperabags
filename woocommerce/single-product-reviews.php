@@ -87,6 +87,8 @@ if ( ! comments_open() ) {
 			</div>
 		</div>
 
+		
+
 	<?php else : ?>
 
 		<p class="woocommerce-verification-required"><?php _e( 'Only logged in customers who have purchased this product may leave a review.', 'woocommerce' ); ?></p>
@@ -109,16 +111,20 @@ if ( ! comments_open() ) {
 				echo '</nav>';
 			endif; ?>
 
+			<?php if ( $count > 3 ) : ?>
+				<div class="row wonka-row">
+					<div class="col-12 text-center">
+						<a id="more-reviews" href="#" class="btn wonka-btn">More reviews</a>
+					</div>
+				</div>
+			<?php endif; ?>
+
 		<?php else : ?>
 
 			<p class="woocommerce-noreviews"><?php _e( 'There are no reviews yet.', 'woocommerce' ); ?></p>
 
 		<?php endif; ?>
-		<div class="row wonka-row">
-			<div class="col-12 text-center">
-				<a id="more-reviews" href="#" class="btn wonka-btn">More reviews</a>
-			</div>
-		</div>
+		
 
 	</div>
 
