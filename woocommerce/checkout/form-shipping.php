@@ -41,6 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$fields = $checkout->get_checkout_fields( 'shipping' );
 
 					foreach ( $fields as $key => $field ) {
+						if ( $key !== 'shipping_email') :
 
 						if ( $key === 'shipping_first_name' ) :
 							$field['priority'] = 5;
@@ -76,6 +77,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							$field['country'] = $checkout->get_value( $field['country_field'] );
 						}
 						woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+						endif;
 					}
 				?>
 			</div>

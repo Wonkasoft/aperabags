@@ -514,6 +514,10 @@ section.product-tags-section {
 			border: 1px solid rgba( #000, .2 );
 			background: #fafafa;
 
+			h2 {
+				font-weight: 600;
+			}
+
 			hr {
 				margin-top: 8px;
 				margin-bottom: 8px;
@@ -540,10 +544,18 @@ section.product-tags-section {
 
 				.table {
 
+					th {
+						font-weight: 500;
+					}
+
 					thead {
 
 						th {
 							border-top: none;
+
+							h4 {
+								font-weight: 600;
+							}
 						}
 					}
 				} 

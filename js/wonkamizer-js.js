@@ -542,6 +542,14 @@
 									shipping_form_section.style.opacity = 1;
 								}, 800 );
 						}
+						else
+						{
+							shipping_form_section.style.opacity = 0;
+							setTimeout( function() 
+								{
+									shipping_form_section.style.display = 'none';
+								}, 800 );
+						}
 					});
 			}
 		}
@@ -731,22 +739,22 @@
 		if ( document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' ) ) 
 		{
 			var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
-		}
 		
-		if ( document.querySelector( '#checkout_paypal_message' ) ) 
-		{
-			// var iframe_btns = document.querySelector( '#checkout_paypal_message' );
-			// var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
+			if ( document.querySelector( '#checkout_paypal_message' ) ) 
+			{
+				// var iframe_btns = document.querySelector( '#checkout_paypal_message' );
+				// var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
 
-			// express_box.appendChild( iframe_btns );	
-		}
+				// express_box.appendChild( iframe_btns );	
+			}
 
-		if ( document.querySelector( 'wc-amazon-payments-advanced-populated' ) ) 
-		{
-			var amazon_quick = document.querySelector( 'wc-amazon-payments-advanced-populated' );
-			var amazon_cln = document.cloneNode( amazon_quick );
+			if ( document.querySelector( 'wc-amazon-payments-advanced-populated' ) ) 
+			{
+				var amazon_quick = document.querySelector( 'wc-amazon-payments-advanced-populated' );
+				var amazon_cln = document.cloneNode( amazon_quick );
 
-			express_box.appendChild( amazon_cln );
+				express_box.appendChild( amazon_cln );
+			}
 		}
 		/*=====  End of This will move paypal checkout buttons into express checkout box  ======*/
 		

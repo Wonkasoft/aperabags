@@ -410,6 +410,14 @@ function wonka_override_checkout_fields( $fields ) {
 	    'class'     	=> array('form-row-wide'),
 	    'clear'     	=> true
 	     );
+
+	$fields['shipping']['shipping_email'] = array(
+        'label'    	 	=> __('Email', 'woocommerce'),
+	    'placeholder'   => _x('Email Address', 'placeholder', 'woocommerce'),
+	    'required'  	=> true,
+	    'class'     	=> array('form-row-wide'),
+	    'clear'     	=> true
+	     );
 	
 	return $fields;
 }
@@ -418,10 +426,10 @@ add_filter( 'woocommerce_checkout_fields' , 'wonka_override_checkout_fields' );
 
 function wonka_before_checkout_shipping_form( $checkout ) {
 	_e( '<h5 class="wonka-contact-information">Contact Information</h5>', 'aperabags' );
-	$fields = $checkout->get_checkout_fields( 'billing' );
+	$fields = $checkout->get_checkout_fields( 'shipping' );
 
 	foreach ( $fields as $key => $field ) :
-		if ( strtolower( $key ) === 'billing_email' ) :
+		if ( strtolower( $key ) === 'shipping_email' ) :
 			if ( !isset($field['placeholder'] ) ) :
 				$field['placeholder'] = $field['label'];
 			endif;
