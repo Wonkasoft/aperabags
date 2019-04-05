@@ -898,6 +898,27 @@ $wp_customize->add_control( new WP_Customize_Control(
 ) ) );
 
 /**
+* Social section message settings Section
+* @since  1.0.0
+*/
+$wp_customize->add_setting( 'social_section_message' , array(
+  'default'           => '',
+  'transport'         => 'refresh',
+) );
+
+// Social section header Setting Control
+$wp_customize->add_control( new WP_Customize_Control( 
+  $wp_customize, 
+  'social_section_message_control', 
+  array(
+	'label'       => __( 'Social Section Title', 'apera-bags' ),
+	'section'     => 'social_section',
+	'settings'    => 'social_section_message',
+	'type'        => 'textarea',
+	'description' => 'Social Section Message',
+) ) );
+
+/**
 * Social shortcode settings Section
 * @since  1.0.0
 */

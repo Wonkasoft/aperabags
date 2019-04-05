@@ -172,6 +172,7 @@ function the_mods_for_section( $section ) {
 			$count++;
 			$social 									=	new stdClass();
 			$social->social_title						=	get_theme_mod( 'social_section_title' );
+			$social->social_message						=	get_theme_mod( 'social_section_message' );
 			$social->social_shortcode					=	get_theme_mod( 'social_shortcode' );
 			$social->social_btn_text 					=	get_theme_mod( 'social_btn_text' );
 			$social->social_shop_button					=	get_permalink( get_theme_mod( 'social_shop_button' ) );
