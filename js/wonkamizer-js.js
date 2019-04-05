@@ -769,4 +769,39 @@
 
 	};
 	/*=====  End of This is for running after document is ready  ======*/
+/*================================================================
+=            Copying Shipping info to Billing info           =
+================================================================*/
+
+$("#step-1").on("click", copy_to_billing);
+$("#action-next").on("click", copy_to_billing);
+
+function copy_to_billing() {
+	var email = document.getElementsByName("shipping_email")[0].value;
+	var first_name = document.getElementsByName("shipping_first_name")[0].value;
+	var last_name = document.getElementsByName("shipping_last_name")[0].value;
+	var company = document.getElementsByName("shipping_company")[0].value;
+	var address_1 = document.getElementsByName("shipping_address_1")[0].value;
+	var address_2 = document.getElementsByName("shipping_address_2")[0].value;
+	var city = document.getElementsByName("shipping_city")[0].value;
+	var state = document.getElementById("shipping_state");
+	var state1 = state.options[state.selectedIndex].text;
+	var postcode = document.getElementsByName("shipping_postcode")[0].value;
+	var phone = document.getElementsByName("shipping_phone")[0].value;
+
+	console.log(email, first_name, last_name, company, address_1, address_2, city, state1, postcode, phone);
+
+	document.getElementsByName("billing_email")[0].value = email;
+	document.getElementsByName("billing_first_name")[0].value = first_name;
+	document.getElementsByName("billing_last_name")[0].value = last_name;
+	document.getElementsByName("billing_company")[0].value = company;
+	document.getElementsByName("billing_address_1")[0].value = address_1;
+	document.getElementsByName("billing_address_2")[0].value = address_2;
+	document.getElementsByName("billing_city")[0].value = city;
+	document.getElementsByName("billing_state")[0].value = state1;
+	document.getElementsByName("billing_postcode")[0].value = postcode;
+	document.getElementsByName("billing_phone")[0].value = phone;
+} 
+
+/*=====  End of Copying Shipping info to Billing info  ======*/
 })(jQuery);
