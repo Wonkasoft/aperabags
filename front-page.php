@@ -231,7 +231,7 @@ get_header();
 				<div class="col col-12 text-center">
 					<h3 class="section-title social-title"><?php _e( $social_section->social_mods->social_title ); ?></h3>
 				</div> <!-- .col -->
-				<div class="col col-10 text-center">
+				<div class="col col-8 text-center">
 					<p class="section-title social-message"><?php _e( $social_section->social_mods->social_message ); ?></p>
 				</div> <!-- .col -->
 				<div class="col col-12">
