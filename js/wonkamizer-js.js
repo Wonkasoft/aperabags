@@ -742,18 +742,16 @@
 		
 			if ( document.querySelector( '#checkout_paypal_message' ) ) 
 			{
-				// var iframe_btns = document.querySelector( '#checkout_paypal_message' );
-				// var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
+				var iframe_btns = document.querySelector( '.angelleye_smart_button_checkout_top' );
 
-				// express_box.appendChild( iframe_btns );	
+				express_box.appendChild( iframe_btns );	
 			}
 
-			if ( document.querySelector( 'wc-amazon-payments-advanced-populated' ) ) 
+			if ( document.querySelector( '#pay_with_amazon' ) ) 
 			{
-				var amazon_quick = document.querySelector( 'wc-amazon-payments-advanced-populated' );
-				var amazon_cln = document.cloneNode( amazon_quick );
+				var amazon_quick = document.querySelector( '#pay_with_amazon' );
 
-				express_box.appendChild( amazon_cln );
+				express_box.appendChild( amazon_quick );
 			}
 		}
 		/*=====  End of This will move paypal checkout buttons into express checkout box  ======*/
