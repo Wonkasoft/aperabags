@@ -104,11 +104,6 @@
 					}
 				}
 			}
-
-			.wonka-form-control,
-			.select2-selection {
-				@include prefix( box-shadow, $box_shadow_2, o moz webkit );
-			}
 		}
 
 		span.woocommerce-input-wrapper {
