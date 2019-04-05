@@ -397,6 +397,27 @@ function wonka_thwmsc_multi_step_before_tab_panels( $checkout ) {
 }
 add_action( 'thwmsc_multi_step_before_tab_panels', 'wonka_thwmsc_multi_step_before_tab_panels', 4 );
 
+/**
+ * This is for adding custom fields to woocommerce shipping and billing fields
+ * @param  array $fields all woocommerce fields
+ * 
+ */
+function wonka_override_checkout_fields( $fields ) {
+	$fields['shipping']['shipping_phone'] = array(
+        'label'    	 	=> __('Phone', 'woocommerce'),
+	    'placeholder'   => _x('Phone', 'placeholder', 'woocommerce'),
+	    'required'  	=> true,
+	    'class'     	=> array('form-row-wide'),
+	    'clear'     	=> true
+	     );
+	echo "<pre>\n";
+	print_r( $fields );
+	echo "</pre>\n";
+	return $fields;
+}
+
+add_filter( 'woocommerce_checkout_fields' , 'wonka_override_checkout_fields' );
+
 function wonka_before_checkout_shipping_form( $checkout ) {
 	_e( '<h5 class="wonka-contact-information">Contact Information</h5>', 'aperabags' );
 	$fields = $checkout->get_checkout_fields( 'billing' );
@@ -408,8 +429,8 @@ function wonka_before_checkout_shipping_form( $checkout ) {
 			endif;
 
 			if ( isset( $field['class'] ) ) :
-				$field['class'] = array( 'wonka-form-group' ) ;
-			else:
+				$field['class'] = array( 'wonka-form-group' );
+			else :
 				$field['class'] = array( 'wonka-form-group' );
 			endif;
 
@@ -417,6 +438,12 @@ function wonka_before_checkout_shipping_form( $checkout ) {
 				array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
 			else:
 				$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
+			endif;
+
+			if ( isset( $field['input_class'] ) ) :
+				array_push( $field['input_class'], 'wonka-form-control', 'form-control' ) ;
+			else:
+				$field['input_class'] = array( 'wonka-form-control', 'form-control' );
 			endif;
 
 		woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );

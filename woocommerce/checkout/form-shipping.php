@@ -98,24 +98,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="woocommerce-additional-fields__field-wrapper">
 			<?php foreach ( $checkout->get_checkout_fields( 'order' ) as $key => $field ) :
-				if ( isset( $field['class'] ) && is_array( $field['class'] ) ) :
-					array_push( $field['class'], 'wonka-form-group', 'form-group' );
-				else:
-					$field['class'] = array( 'wonka-form-group', 'form-group' );
-				endif;
+				if ( $key === 'order_comments' ) :
+					
+					if ( isset( $field['class'] ) && is_array( $field['class'] ) ) :
+						array_push( $field['class'], 'wonka-form-group', 'form-group' );
+					else:
+						$field['class'] = array( 'wonka-form-group', 'form-group' );
+					endif;
 
-				if ( isset( $field['label_class'] ) ) :
-					array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
-				else:
-					$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
-				endif;
+					if ( isset( $field['label_class'] ) ) :
+						array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
+					else:
+						$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
+					endif;
 
-				if ( isset( $field['input_class'] ) ) :
-					array_push( $field['input_class'], 'wonka-form-control', 'form-control' ) ;
-				else:
-					$field['input_class'] = array( 'wonka-form-control', 'form-control' );
-				endif;
-				woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+					if ( isset( $field['input_class'] ) ) :
+						array_push( $field['input_class'], 'wonka-form-control', 'form-control' ) ;
+					else:
+						$field['input_class'] = array( 'wonka-form-control', 'form-control' );
+					endif;
+					woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+				<?php endif; ?>
+					
 			<?php endforeach; ?>
 		</div>
 		</div><!-- .col-12 -->

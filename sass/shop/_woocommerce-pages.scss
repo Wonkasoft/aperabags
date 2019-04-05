@@ -37,6 +37,22 @@
 			}
 		}
 
+		.select2-selection--single,
+		.select2-container--default {
+			border-radius: 2px;
+			height: 37px;
+
+			span.select2-selection__rendered {
+				padding: 12px 15px;
+			}
+			span.select2-selection__arrow {
+
+				b {
+					margin-top: 8px;
+				}
+			}
+		}
+
 		/*====================================================
 		=            This is for the archive page            =
 		====================================================*/
@@ -68,18 +84,6 @@
 					font-weight: 700;
 					color: #444444;
 
-					a {
-						border-radius: 100px;
-						border: 2px solid #FFE6B2;
-						padding: 4px 8px;
-
-					    &:hover {
-					    	border: 2px solid #FFE6B2;
-					    	background: #FFE6B2;
-							color: rgba(255, 255, 255, .8);
-							@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
-					    }
-					}
 				}
 
 				.thwmsc-buttons {
@@ -100,6 +104,11 @@
 					}
 				}
 			}
+
+			.wonka-form-control,
+			.select2-selection {
+				@include prefix( box-shadow, $box_shadow_2, o moz webkit );
+			}
 		}
 
 		span.woocommerce-input-wrapper {
@@ -108,21 +117,6 @@
 			input.wonka-form-control {
 				width: 100%;
 				border-radius: 2px;
-			}
-		}
-
-		.select2-selection--single {
-			border-radius: 2px;
-			height: 51px;
-
-			span.select2-selection__rendered {
-				padding: 12px 15px;
-			}
-			span.select2-selection__arrow {
-
-				b {
-					margin-top: 8px;
-				}
 			}
 		}
 
@@ -183,15 +177,39 @@
 				font-weight: 700;
 				padding: 4px 15px;
 			}
+
+			@include media-breakpoint-up( md ) {
+
+				span.continue-past-btns-text {
+					white-space: nowrap;
+				}
+			}
 		}
 		/*=====  End of This is for the checkout page  ======*/
 		
 		/*===========================================================
 		=            This is the totals on the cart page            =
 		===========================================================*/
+		span.dropdown-wrapper {
+			width: 100%;
+		}
+
 		a.continue-shopping {
 			margin: 15px 0;	
 			display: inline-block;
+		}
+
+		.woocommerce-cart-form {
+
+			table.table {
+
+				td.product-thumbnail {
+
+					&:before {
+						display: none;
+					}
+				}
+			}
 		}
 
 		div.cart-collaterals {

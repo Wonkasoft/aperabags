@@ -91,4 +91,4 @@
 		</div> <!-- .row -->
 	</header><!-- #masthead -->
 	
-	<div id="content" class="site-content container-fluid">
+	<div id="content" class="site-content">

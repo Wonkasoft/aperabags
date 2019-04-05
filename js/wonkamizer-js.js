@@ -445,7 +445,7 @@
 	function setup_for_reviews( comment_list )
 	{
 		var first_three_height = 0;
-		for (var i = 0; i <= comment_list.children.length; i++) 
+		for (var i = 0; i < comment_list.children.length; i++) 
 		{
 			first_three_height += comment_list.children[i].offsetHeight + 15;
 			if ( i === 2 ) 
@@ -454,7 +454,7 @@
 				return first_three_height;
 			}
 
-			if ( i === comment_list.children.length ) 
+			if ( i === comment_list.children.length - 1 ) 
 			{
 				comment_list.style.height = first_three_height + 'px';
 				return first_three_height;
@@ -513,6 +513,38 @@
 		/*===============================================================================
 		=            This is the setup for the Wonka Express Checkout Button            =
 		===============================================================================*/
+		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
+		{
+			var get_url = location.href;
+			if ( ~get_url.indexOf( '?' ) ) 
+			{
+				get_url = get_url.split( '?' );
+				console.log(get_url);
+				location.href = get_url[0];
+			}
+
+			if ( document.querySelector( '.shipping-calculator-button' ) ) 
+			{
+				var shipping_calc_btn = document.querySelector( '.shipping-calculator-button' ),
+				shipping_form = document.querySelector( '.shipping-calculator-button' ),
+				shipping_form_section = document.querySelector( 'section.shipping-calculator-form' );
+
+				shipping_calc_btn.addEventListener( 'click', function(e) 
+					{
+						e.preventDefault();
+						console.log( e );
+						if ( shipping_form_section.style.display === 'none' ) 
+						{
+							shipping_form_section.style.opacity = 0;
+							shipping_form_section.style.display = 'block';
+							setTimeout( function() 
+								{
+									shipping_form_section.style.opacity = 1;
+								}, 800 );
+						}
+					});
+			}
+		}
 		/*----------  For variant products  ----------*/
 		if ( document.querySelector( 'div.wonka-express-checkout-wrap' ) ) 
 		{

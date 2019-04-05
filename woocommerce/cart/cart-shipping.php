@@ -25,7 +25,8 @@ $show_shipping_calculator = ! empty( $show_shipping_calculator );
 $calculator_text          = '';
 ?>
 <tr class="woocommerce-shipping-totals shipping">
-	<th colspan="3"><?php echo wp_kses_post( $package_name ); ?></th>
+	<th colspan="1"><?php echo wp_kses_post( $package_name ); ?></th>
+	<td colspan="2"><?php _e( '(Shipping only within the US)', 'woocommerce' ); ?></td>
 </tr>
 <tr>
 	<td colspan="3" data-title="<?php echo esc_attr( $package_name ); ?>">

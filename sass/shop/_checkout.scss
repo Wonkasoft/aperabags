@@ -134,6 +134,14 @@ div.checkout-order-details {
 	@include prefix( transition, $trans_25, o moz webkit );
 }
 
+.woocommerce-shipping-calculator {
+	@include prefix( transition, $trans_25, o moz webkit );
+
+	.shipping-calculator-form {
+		@include prefix( transition, $trans_25, o moz webkit );
+	}
+}
+
 @media screen and (min-width: 768px) {
 	.col2-set {
 		.form-row-first {
