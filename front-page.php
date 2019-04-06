@@ -34,10 +34,18 @@ get_header();
 					/* Checks for an img set in the slide object */
 					if ( !empty( $slide->slide_img ) ) : ?>
 						<div class="top-page-slide">
+							<?php
+							if ( wp_is_mobile() ) :
+							?>
+							<div class="top-slide-img-holder" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
+								<?php
+							else:
+								?>
 							<div class="top-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 							<?php 
+							endif;
 							/* Checks for an message set in the slide object */
-							if ( !empty( $slide->slide_header_message ) ) : ?>
+							if ( ! empty( $slide->slide_header_message ) ) : ?>
 								<div class="row img-header-text-wrap">
 									<div class="col col-12 img-header-text-container">
 										<div class="text-box text-center<?php $set_text_align = ( !empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position: ' set-align-center'; echo $set_text_align; ?>">
@@ -107,8 +115,16 @@ get_header();
 						/* Checks for an img set in the slide object */
 						if ( !empty( $slide->slide_img ) ) : ?>
 							<div class="cta-section-slide">
+								<?php
+								if ( wp_is_mobile ) :
+								?>
 								<div class="cta-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
-								<?php 
+								<?php
+								else:
+								?>
+								<div class="cta-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+								<?php
+								endif;
 								/* Checks for an message set in the slide object */
 								if ( !empty( $slide->slide_text_message ) ) : ?>
 									<div class="row img-header-text-wrap">
