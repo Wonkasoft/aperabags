@@ -322,6 +322,7 @@
 			}
 			else
 			{
+
 				if ( document.querySelector( '#wpadminbar' ) ) 
 				{
 					admin_bar = document.querySelector( '#wpadminbar' );
@@ -562,7 +563,6 @@
 			if ( ~get_url.indexOf( '?' ) ) 
 			{
 				get_url = get_url.split( '?' );
-				console.log(get_url);
 				location.href = get_url[0];
 			}
 
@@ -719,38 +719,49 @@
 		/*==========================================================
 		=            This is for setting up the reviews            =
 		==========================================================*/
-		if ( document.querySelector( 'ol.commentlist' ) ) 
+		if ( document.querySelector( '#reviews' ) ) 
 		{
-			var comment_list = document.querySelector( 'ol.commentlist' );
-			var more_reviews = document.querySelector( '#more-reviews' );
-			var write_review = document.querySelector( '#write-review' );
-			var comment_form = document.querySelector( '#commentform' );
-			var reviews_top = document.querySelector( '.wonka-section-reviews' );
-			var get_custom_height;
 
-			get_custom_height = setup_for_reviews( comment_list, more_reviews );
+			var write_review = document.querySelector( '#write-review' ),
+			comment_form = document.querySelector( '#commentform' ),
+			reviews_top = document.querySelector( '.wonka-section-reviews' ),
+			more_reviews,
+			comment_list,
+			get_custom_height;
 
-			more_reviews.addEventListener( 'click', function(e) 
-				{
-					e.preventDefault();
-					if ( get_custom_height < comment_list.offsetHeight ) 
+			if ( document.querySelector( 'ol.commentlist' ) ) 
+			{
+				comment_list = document.querySelector( 'ol.commentlist' );
+				get_custom_height = setup_for_reviews( comment_list );
+			}
+
+			if ( document.querySelector( '#more-reviews' ) ) 
+			{
+				more_reviews = document.querySelector( '#more-reviews' );
+
+				more_reviews.addEventListener( 'click', function(e) 
 					{
-						setup_for_reviews( comment_list );
-						setTimeout( function( comment_list ) 
-							{
-								reviews_top.scrollIntoView({behavior: 'smooth'});
-							}, 500, comment_list );
-					}
-					else
-					{
-						comment_list.style.height = 100 + '%';
-					}
-				});
+						e.preventDefault();
+						if ( get_custom_height < comment_list.offsetHeight ) 
+						{
+							setup_for_reviews( comment_list );
+							setTimeout( function( comment_list ) 
+								{
+									reviews_top.scrollIntoView({behavior: 'smooth'});
+								}, 500, comment_list );
+						}
+						else
+						{
+							comment_list.style.height = 100 + '%';
+						}
+					});
+			}
+
+
 
 			write_review.addEventListener( 'click', function(e) 
 				{
 					e.preventDefault();
-
 					if ( getComputedStyle( comment_form ).height === '0px' || comment_form.style.height === 100 + 'px' ) 
 					{
 						comment_form.style.height = 100 + '%';
@@ -897,7 +908,7 @@
 		/*=========================================
 		=            For Sticky Header            =
 		=========================================*/
-		if ( document.querySelector( '.home' ) ) 
+		if ( document.querySelector( 'body.home' ) ) 
 		{
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function() { stickyStatus(); };
@@ -907,7 +918,7 @@
 		/*===============================================
 		=            For single product page            =
 		===============================================*/
-		if ( document.querySelector( '.single-product' ) ) 
+		if ( document.querySelector( 'body.single-product' ) ) 
 		{
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 

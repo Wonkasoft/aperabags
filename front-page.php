@@ -25,7 +25,7 @@ get_header();
 
 		/* This checks for slider object in order to parse slider section */
 		if ( !empty( $top_slider ) ) : ?>
-			<section class="row header-slider-section">
+			<section class="header-slider-section">
 				<div class="top-page-slider-wrap">
 				<?php 
 				/* Foreach loop to build slider according to slides entered in the customizer */
@@ -72,8 +72,8 @@ get_header();
 			if ( !empty( $shop_section->shop_mods->shop_title ) ) : 
 		?>
 
-			<section class="row shop-section align-items-center justify-content-center" style="background-image:url(<?php echo esc_url( $shop_section->shop_mods->shop_background_image );?>);">
-				<div class="col col-12">
+			<section class="shop-section align-items-center justify-content-center" style="background-image:url(<?php echo esc_url( $shop_section->shop_mods->shop_background_image );?>);">
+				<div class="container-fluid wonka-wrapper">
 					<div class="row">
 						<div class="col col-12 text-center">
 							<h3 class="section-title shop-title"><?php _e( $shop_section->shop_mods->shop_title ); ?></h3>
@@ -98,7 +98,7 @@ get_header();
 		<?php do_action( 'get_mods_before_section', 'cta' );
 			$cta_slider = get_section_mods( 'cta' );
 			if ( !empty( $cta_slider ) ) : ?>
-				<section class="row desirable-slider-section">
+				<section class="desirable-slider-section">
 					<div class="cta-section-slider-wrap">
 					<?php 
 					/* Foreach loop to build slider according to slides entered in the customizer */
@@ -139,10 +139,13 @@ get_header();
 
 		/* Check for Cause object */
 		if ( !empty( $cause_section->cause_mods->cause_section_title ) ) : ?>
-			<section class="row our-cause-section">
+			<section class="container-fluid our-cause-section">
+				<div class="row wonka-row">
 				<div class="col col-12 text-center title-wrap">
 					<h3 class="section-title our-cause-title"><?php echo $cause_section->cause_mods->cause_section_title; ?></h3>
 				</div>
+				</div>
+				<div class="row wonka-row">
 					<?php
 					foreach ( $cause_section->causes as $cause ) :
 					if ( !empty( $cause->img ) ) :
@@ -160,13 +163,15 @@ get_header();
 						</div>
 					<?php endif; ?>
 					<?php endforeach; ?>
+				</div>
 			</section><!-- .our-cause-section -->
 		<?php endif; ?>
 		<?php do_action( 'get_mods_before_section', 'about' );
 		$about_section = get_section_mods( 'about' );
 
 		if ( !empty( $about_section ) ) : ?>
-			<section class="row about-brand-section align-items-center justify-content-around">
+			<section class="container-fluid about-brand-section align-items-center justify-content-around">
+				<div class="row wonka-row">
 				<div class="col col-12 col-md-6 text-center">
 					<div class="about-components-wrap">
 						<h2 class="about-brand-header"><?php _e( $about_section->about_the_brand->about_header ); ?></h2>
@@ -220,6 +225,7 @@ get_header();
 					</div>
 				</div>
 				<?php endif; ?>
+				</div>
 			</section>
 		<?php endif; ?>
 
@@ -227,7 +233,8 @@ get_header();
 		$social_section = get_section_mods( 'social' );
 
 		if ( !empty( $social_section->social_mods->social_title ) ) : ?>
-			<section class="row instagram-section align-items-center justify-content-around">
+			<section class="container-fluid instagram-section align-items-center justify-content-around">
+				<div class="row wonka-row">
 				<div class="col col-12 text-center">
 					<h3 class="section-title social-title"><?php _e( $social_section->social_mods->social_title ); ?></h3>
 				</div> <!-- .col -->
@@ -240,6 +247,7 @@ get_header();
 				<div class="col col-12 shop-social-btn text-center">
 					<a class="btn btn-lg btn-primary wonka-btn" href="<?php _e( $social_section->social_mods->social_shop_button);?>"><?php _e($social_section->social_mods->social_btn_text); ?></a>
 				</div> <!-- .col -->
+				</div>
 			</section><!-- .instagram-section -->
 		<?php endif; ?>
 	<?php else: ?>
