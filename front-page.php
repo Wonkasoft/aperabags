@@ -183,7 +183,7 @@ get_header();
 		if ( ! empty( $cause->cause_modal_video ) ) : ?>
 			
 		<!-- Modal -->
-			<div class="modal fade" id="videoModal2" tabindex="-1" role="dialog" aria-labelledby="causeAperaModal" aria-hidden="true">
+			<div class="modal fade" id="videoModalpop" tabindex="-1" role="dialog" aria-labelledby="causeAperaModal" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-body">
