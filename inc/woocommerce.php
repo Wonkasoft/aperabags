@@ -704,6 +704,18 @@ function wonka_woo_add_custom_general_fields( $product_type ) {
 add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
 
 /**
+ * 
+ */
+function wonka_summary_links() {
+	?>
+	<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="comments" href="#">Reviews</a>
+	<?php
+}
+
+add_action( 'woocommerce_after_single_product_summary', 'wonka_summary_links', 10 );
+
+
+/**
  * This adds a custom express checkout button to the product page
  * 
  */
