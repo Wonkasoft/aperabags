@@ -15,28 +15,30 @@
 get_header();
 ?>
 	<?php if ( is_home() ) : ?>
-		<?php 
+		<?php
 
 		/* This can be used to filter slide object */
 		do_action( 'get_mods_before_section', 'top' );
-		
+
 		/* This gets the slides as an object */
 		$top_slider = get_section_mods( 'top' );
 
 		/* This checks for slider object in order to parse slider section */
-		if ( !empty( $top_slider ) ) : ?>
+		if ( ! empty( $top_slider ) ) :
+			?>
 			<section class="header-slider-section">
 				<div class="top-page-slider-wrap">
-				<?php 
+				<?php
 				/* Foreach loop to build slider according to slides entered in the customizer */
 				foreach ( $top_slider->slides as $slide ) :
-					
+
 					/* Checks for an img set in the slide object */
-					if ( !empty( $slide->slide_img ) ) : ?>
+					if ( ! empty( $slide->slide_img ) ) :
+						?>
 						<div class="top-page-slide">
 							<?php
 							if ( wp_is_mobile() ) :
-							?>
+								?>
 							<div class="top-slide-img-holder" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php
 							else:

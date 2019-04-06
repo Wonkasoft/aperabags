@@ -704,6 +704,19 @@ function wonka_woo_add_custom_general_fields( $product_type ) {
 add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
 
 /**
+ * 
+ */
+// define the woocommerce_short_description callback 
+function wonka_filter_woocommerce_short_description( $post_post_excerpt ) { 
+    $add_links ='<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>';
+    return $post_post_excerpt . $add_links; 
+}; 
+         
+// add the filter 
+add_filter( 'woocommerce_short_description', 'wonka_filter_woocommerce_short_description', 10, 1 ); 
+
+
+/**
  * This adds a custom express checkout button to the product page
  * 
  */
