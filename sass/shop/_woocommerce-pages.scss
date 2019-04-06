@@ -148,15 +148,16 @@
 		div.wonka-row-express-checkout-btns {
 			margin-top: 15px;
 
+			.express-btns-text {
+				flex: 1 100%;
+			}
+			
 			div.express-checkout-btns {
 				display: flex;
 				align-items: center;
 				justify-content: space-evenly;
 				flex-wrap: wrap;
 
-				.express-btns-text {
-					flex: 1 100%;
-				}
 			}
 		}
 

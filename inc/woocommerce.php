@@ -381,7 +381,10 @@ function wonka_thwmsc_multi_step_before_tab_panels( $checkout ) {
 
 	$output .= '<div class="row wonka-row-express-checkout-btns">';
 	$output .= '<div class="col col-12">';
-	$output .= '<div class="express-checkout-btns"><span class="express-btns-text">' . __( 'Express checkout', 'aperabags') . '</span>';
+	$output .= '<div class="col col-12">';
+	$output .= '<span class="express-btns-text">' . __( 'Express checkout', 'aperabags') . '</span>';
+	$output .= '</div>';
+	$output .= '<div class="express-checkout-btns">';
 	$output .= do_action( 'wonka_checkout_express_btns' );
 	$output .= '</div>';
 	$output .= '</div>';

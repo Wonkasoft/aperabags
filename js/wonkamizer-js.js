@@ -477,6 +477,49 @@
 					}, 2500, wrapper );
 			}, 3000, wrapper );
 	}
+
+
+	/*----------  Copying the shipping fields to billing  ----------*/
+	function copy_to_billing() {
+		var email = document.getElementsByName("shipping_email")[0].value;
+		var first_name = document.getElementsByName("shipping_first_name")[0].value;
+		var last_name = document.getElementsByName("shipping_last_name")[0].value;
+		var company = document.getElementsByName("shipping_company")[0].value;
+		var address_1 = document.getElementsByName("shipping_address_1")[0].value;
+		var address_2 = document.getElementsByName("shipping_address_2")[0].value;
+		var city = document.getElementsByName("shipping_city")[0].value;
+		var state = document.getElementById("shipping_state").value;
+		var postcode = document.getElementsByName("shipping_postcode")[0].value;
+		var phone = document.getElementsByName("shipping_phone")[0].value;
+
+		if ( document.getElementById( 'ship-to-different-address-checkbox' ).checked === true ) 
+		{
+			document.getElementsByName("billing_email")[0].value = '';
+			document.getElementsByName("billing_first_name")[0].value = '';
+			document.getElementsByName("billing_last_name")[0].value = '';
+			document.getElementsByName("billing_company")[0].value = '';
+			document.getElementsByName("billing_address_1")[0].value = '';
+			document.getElementsByName("billing_address_2")[0].value = '';
+			document.getElementsByName("billing_city")[0].value = '';
+			document.getElementById("billing_state").value = '';
+			document.getElementsByName("billing_postcode")[0].value = '';
+			document.getElementsByName("billing_phone")[0].value = '';
+		}
+		else
+		{
+			document.getElementsByName("billing_email")[0].value = email;
+			document.getElementsByName("billing_first_name")[0].value = first_name;
+			document.getElementsByName("billing_last_name")[0].value = last_name;
+			document.getElementsByName("billing_company")[0].value = company;
+			document.getElementsByName("billing_address_1")[0].value = address_1;
+			document.getElementsByName("billing_address_2")[0].value = address_2;
+			document.getElementsByName("billing_city")[0].value = city;
+			document.getElementById("billing_state").value = state;
+			document.getElementsByName("billing_postcode")[0].value = postcode;
+			document.getElementsByName("billing_phone")[0].value = phone;
+		}
+
+	} 
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -552,6 +595,40 @@
 						}
 					});
 			}
+
+			/*================================================================
+			=            Copying Shipping info to Billing info           =
+			================================================================*/
+			copy_to_billing();
+			var bill_to_check = document.getElementById( 'ship-to-different-address-checkbox' );
+
+			if ( document.querySelector( '#thwmsc_wrapper' ) ) 
+			{
+				var tab_links = document.querySelectorAll( '.thwmsc-tab a' );
+				var tab_btns = document.querySelectorAll( '#thwmsc_wrapper input[type=button]' );
+
+				bill_to_check.addEventListener( 'change', function(e) 
+					{
+						copy_to_billing();
+					});
+
+				tab_links.forEach( function ( item, i ) 
+					{
+						item.addEventListener( 'click', function(e) 
+							{
+								copy_to_billing();
+							});
+					});
+
+				tab_btns.forEach( function ( item, i ) 
+					{
+						item.addEventListener( 'click', function(e) 
+							{
+								copy_to_billing();
+							});
+					});
+			}
+			/*=====  End of Copying Shipping info to Billing info  ======*/
 		}
 		/*----------  For variant products  ----------*/
 		if ( document.querySelector( 'div.wonka-express-checkout-wrap' ) ) 
@@ -928,39 +1005,4 @@
 
 	};
 	/*=====  End of This is for running after document is ready  ======*/
-/*================================================================
-=            Copying Shipping info to Billing info           =
-================================================================*/
-
-$("#step-1").on("click", copy_to_billing);
-$("#action-next").on("click", copy_to_billing);
-
-function copy_to_billing() {
-	var email = document.getElementsByName("shipping_email")[0].value;
-	var first_name = document.getElementsByName("shipping_first_name")[0].value;
-	var last_name = document.getElementsByName("shipping_last_name")[0].value;
-	var company = document.getElementsByName("shipping_company")[0].value;
-	var address_1 = document.getElementsByName("shipping_address_1")[0].value;
-	var address_2 = document.getElementsByName("shipping_address_2")[0].value;
-	var city = document.getElementsByName("shipping_city")[0].value;
-	var state = document.getElementById("shipping_state");
-	var state1 = state.options[state.selectedIndex].text;
-	var postcode = document.getElementsByName("shipping_postcode")[0].value;
-	var phone = document.getElementsByName("shipping_phone")[0].value;
-
-	console.log(email, first_name, last_name, company, address_1, address_2, city, state1, postcode, phone);
-
-	document.getElementsByName("billing_email")[0].value = email;
-	document.getElementsByName("billing_first_name")[0].value = first_name;
-	document.getElementsByName("billing_last_name")[0].value = last_name;
-	document.getElementsByName("billing_company")[0].value = company;
-	document.getElementsByName("billing_address_1")[0].value = address_1;
-	document.getElementsByName("billing_address_2")[0].value = address_2;
-	document.getElementsByName("billing_city")[0].value = city;
-	document.getElementsByName("billing_state")[0].value = state1;
-	document.getElementsByName("billing_postcode")[0].value = postcode;
-	document.getElementsByName("billing_phone")[0].value = phone;
-} 
-
-/*=====  End of Copying Shipping info to Billing info  ======*/
 })(jQuery);
