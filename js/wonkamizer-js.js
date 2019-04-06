@@ -25,9 +25,9 @@
 	=            This is area for writing callable functions            =
 	===================================================================*/
 	/*===== This is for Keyfeatures | Product Specs links on shor description ====*/
-	function scrollToSection() 
+	function scrollToSection( scroll_to_id ) 
 	{
-  		document.querySelector('#product-statement').scrollIntoView({behavior: 'smooth'});
+  		document.querySelector( '#' + scroll_to_id ).scrollIntoView({behavior: 'smooth'});
 	}
 
 	function load_page_vars() 
@@ -320,6 +320,11 @@
 				slide_view_box.classList.remove( 'sticky-on' );
 				slide_view_box.style.top = '';
 			}
+			else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop ) 
+			{
+				slide_view_box.classList.remove( 'sticky-on' );
+				slide_view_box.style.top = target_stop - parseInt( window.getComputedStyle( slide_view_box ).marginTop ) + 'px';
+			}
 			else
 			{
 
@@ -346,15 +351,6 @@
 				}
 				
 				
-				/* slide_view_box adjustment */
-				if ( active_slide_img.offsetHeight > 760 ) 
-				{
-					slide_view_box.style.height = 760 + 'px';
-				}
-				else
-				{
-					slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
-				}
 				
 				if ( slide_control.parentElement.nextElementSibling != null && one_click && scroll_direction === 'scrolled down' ) 
 				{
@@ -362,6 +358,15 @@
 					setTimeout( function() {
 						slide_control.parentElement.nextElementSibling.firstElementChild.click();
 						one_click = true;
+						/* slide_view_box adjustment */
+						if ( active_slide_img.offsetHeight > 760 ) 
+						{
+							slide_view_box.style.height = 760 + 'px';
+						}
+						else
+						{
+							slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
+						}
 					}, 250);
 				}
 
@@ -371,14 +376,17 @@
 					setTimeout( function() {
 						slide_control.parentElement.previousElementSibling.firstElementChild.click();
 						one_click = true;
+						/* slide_view_box adjustment */
+						if ( active_slide_img.offsetHeight > 760 ) 
+						{
+							slide_view_box.style.height = 760 + 'px';
+						}
+						else
+						{
+							slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
+						}
 					}, 250);
 				}
-			}
-
-			if ( window.innerWidth > 792 && win_y - img_area_top > target_stop ) 
-			{
-				slide_view_box.classList.remove( 'sticky-on' );
-				slide_view_box.style.top = target_stop - parseInt( window.getComputedStyle( slide_view_box ).marginTop ) + 'px';
 			}
 
 		}
@@ -984,34 +992,52 @@
 		       scrollTop : 0                       // Scroll to top of body
 		   }, 500);
 		});
+		/*===================================================================================
+		=            This is for single product page short description scrolling            =
+		===================================================================================*/
+			if ( document.getElementById( 'key-features-link' ) ) 
+			{
+				var key_fea_jump = document.getElementById( 'key-features-link' );
 
-		if ( document.getElementById( 'key-features-link' ) ) 
-		{
-			var key_fea_jump = document.getElementById( 'key-features-link' );
-
-			key_fea_jump.addEventListener( 'click', function( e ) 
-				{
-					e.preventDefault();
-					if ( e.target.tagName.toLowerCase() === 'a') 
+				key_fea_jump.addEventListener( 'click', function( e ) 
 					{
-						scrollToSection();
-					}
-				} );
-		}
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							scrollToSection( 'product-statement' );
+						}
+					} );
+			}
 
-		if ( document.getElementById( 'product-specs-link' ) ) 
-		{
-			var spec_jump = document.getElementById( 'product-specs-link' );
+			if ( document.getElementById( 'product-specs-link' ) ) 
+			{
+				var spec_jump = document.getElementById( 'product-specs-link' );
 
-			spec_jump.addEventListener( 'click', function( e ) 
-				{
-					e.preventDefault();
-					if ( e.target.tagName.toLowerCase() === 'a') 
+				spec_jump.addEventListener( 'click', function( e ) 
 					{
-						scrollToSection();
-					}
-				} );
-		}
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							scrollToSection( 'product-statement' );
+						}
+					} );
+			}
+
+			if ( document.getElementById( 'review-link' ) ) 
+			{
+				var reviews_jump = document.getElementById( 'review-link' );
+
+				reviews_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							scrollToSection( 'reviews' );
+						}
+					} );
+			}
+		/*=====  End of This is for single product page short description scrolling  ======*/
+		
 
 	};
 	/*=====  End of This is for running after document is ready  ======*/
