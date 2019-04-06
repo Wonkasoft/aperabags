@@ -142,6 +142,13 @@ div.checkout-order-details {
 	}
 }
 
+.woocommerce-shipping-totals {
+
+	td {
+		text-align: right;
+	}
+}
+
 @media screen and (min-width: 768px) {
 	.col2-set {
 		.form-row-first {
