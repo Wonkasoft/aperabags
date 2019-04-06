@@ -273,8 +273,8 @@ get_header();
 		$social_section = get_section_mods( 'social' );
 
 		if ( !empty( $social_section->social_mods->social_title ) ) : ?>
-			<section class="container-fluid instagram-section align-items-center justify-content-around">
-				<div class="row wonka-row">
+			<section class="container-fluid instagram-section">
+				<div class="row wonka-row align-items-center justify-content-around">
 				<div class="col col-12 text-center">
 					<h3 class="section-title social-title"><?php _e( $social_section->social_mods->social_title ); ?></h3>
 				</div> <!-- .col -->
