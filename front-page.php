@@ -176,7 +176,6 @@ get_header();
 						</div>
 					<?php endif; ?>
 					<?php endforeach; ?>
-			</section><!-- .our-cause-section -->
 		<?php endif; ?>
 
 		<?php
@@ -199,6 +198,7 @@ get_header();
 			  </div>
 			</div> 
 		<?php endif; ?>
+			</section><!-- .our-cause-section -->
 
 
 		<?php do_action( 'get_mods_before_section', 'about' );
