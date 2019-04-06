@@ -706,13 +706,14 @@ add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
 /**
  * 
  */
-function wonka_summary_links() {
-	?>
-	<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="comments" href="#">Reviews</a>
-	<?php
-}
-
-add_action( 'woocommerce_after_single_product_summary', 'wonka_summary_links', 10 );
+// define the woocommerce_short_description callback 
+function wonka_filter_woocommerce_short_description( $post_post_excerpt ) { 
+    $add_links ='<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="comments" href="#">Reviews</a>';
+    return $post_post_excerpt . $add_links; 
+}; 
+         
+// add the filter 
+add_filter( 'woocommerce_short_description', 'wonka_filter_woocommerce_short_description', 10, 1 ); 
 
 
 /**
