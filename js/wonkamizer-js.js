@@ -575,7 +575,6 @@
 				shipping_calc_btn.addEventListener( 'click', function(e) 
 					{
 						e.preventDefault();
-						console.log( e );
 						if ( shipping_form_section.style.display === 'none' ) 
 						{
 							shipping_form_section.style.opacity = 0;
