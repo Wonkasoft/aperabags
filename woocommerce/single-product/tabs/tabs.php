@@ -29,24 +29,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 $tabs = apply_filters( 'woocommerce_product_tabs', array() );
 
 if ( ! empty( $tabs ) ) : ?>
-	<section class="product-tags-section">
+	<section class="product-tabs-section">
 	<div class="wonka-tabs wonka-tabs-wrapper">
 		<?php foreach ( $tabs as $key => $tab ) : ?>
-			<?php if ( $key === 'reviews' ) : ?>
-				<section class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
+			
+				<section id="<?php echo esc_attr( $key ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
 					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key ); ?>" aria-data="tab-title-<?php echo esc_attr( $key ); ?>">
 						<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
 					</div>
 				</section>
-			<?php else: 
-				$serial_title = str_replace(' ', '-', strtolower( $tab['title'] ) );
-				?>
-				<section class="wonka-section wonka-section-<?php echo esc_attr( $serial_title ); ?>">
-					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $serial_title ); ?> panel entry-content" id="tab-<?php echo esc_attr( $serial_title ); ?>" aria-data="tab-title-<?php echo esc_attr( $serial_title ); ?>">
-						<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
-					</div>
-				</section>
-			<?php endif; ?>
 			
 		<?php endforeach; ?>
 	</div>

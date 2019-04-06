@@ -647,7 +647,7 @@ remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_singl
  */
 function wonka_product_carousel_options($options) {
   $options['animation'] = 'slide';
-  $options['animationSpeed'] = 1200;
+  $options['animationSpeed'] = 1500;
   $options['useCSS'] = true;
   $options['easing'] = 'swing';
   $options['direction'] = 'vertical';

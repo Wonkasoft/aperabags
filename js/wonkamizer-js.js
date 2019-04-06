@@ -292,6 +292,9 @@
 
 	function thumbnail_scroll(e)
 	{
+		/*=========================================================================
+		=            This is for setting the vertical scroll direction            =
+		=========================================================================*/
 		if ( window.pageYOffset > last_scroll_top ) 
 		{
 			scroll_direction = 'scrolled down';
@@ -305,7 +308,11 @@
 		}
 
 		last_scroll_top = window.pageYOffset;
-
+		/*=====  End of This is for setting the vertical scroll direction  ======*/
+		
+		/*==================================================================================
+		=            This is setting up all the actions to the thumbnail scroll            =
+		==================================================================================*/
 		if ( document.querySelector( '.wonka-single-product-img' ) ) 
 		{
 			slide_control = document.querySelector( '.flex-control-nav .flex-active'); 
@@ -313,8 +320,11 @@
 			active_slide_img = document.querySelector( '.flex-viewport .flex-active-slide img');
 			win_y = window.pageYOffset;
 			img_area_top = wonka_single_product_img.offsetTop + wonka_single_product_img.parentElement.parentElement.offsetTop;
-			target_stop = thumbnail_controls.offsetHeight - slide_view_box.offsetHeight;
+			target_stop = wonka_single_product_img.parentElement.parentElement.offsetHeight - slide_view_box.offsetHeight;
 
+			/*=================================================
+			=            This initiates the scroll            =
+			=================================================*/
 			if ( window.innerWidth > 792 && win_y < img_area_top ) 
 			{
 				slide_view_box.classList.remove( 'sticky-on' );
@@ -327,7 +337,9 @@
 			}
 			else
 			{
-
+				/*===============================================
+				=            Adjustment for adminbar            =
+				===============================================*/
 				if ( document.querySelector( '#wpadminbar' ) ) 
 				{
 					admin_bar = document.querySelector( '#wpadminbar' );
@@ -349,9 +361,11 @@
 					slide_view_box.classList.add( 'sticky-on' );
 					slide_view_box.style.top = 30 + 'px';
 				}
-				
-				
-				
+				/*=====  End of Adjustment for adminbar  ======*/
+
+				/*==========================================================
+				=            This is for the image click events            =
+				==========================================================*/
 				if ( slide_control.parentElement.nextElementSibling != null && one_click && scroll_direction === 'scrolled down' ) 
 				{
 					one_click = false;
@@ -387,9 +401,11 @@
 						}
 					}, 250);
 				}
+				/*=====  End of This is for the image click events  ======*/
 			}
-
+			/*=====  End of This initiates the scroll  ======*/
 		}
+		/*=====  End of This is setting up all the actions to the thumbnail scroll  ======*/
 	}
 
 	function imageZoom(imgID, resultID) 
