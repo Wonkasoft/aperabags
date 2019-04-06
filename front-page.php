@@ -179,8 +179,8 @@ get_header();
 		<?php endif; ?>
 
 		<?php
-		if ( ! empty( $cause->cause_modal_video ) ) : ?>
-			
+			$cause_video = get_theme_mod( 'cause_modal_video');
+			if ( ! empty( $cause_video ) ) : ?> 
 		<!-- Modal -->
 			<div class="modal fade" id="videoModalpop" tabindex="-1" role="dialog" aria-labelledby="causeAperaModal" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
@@ -188,7 +188,7 @@ get_header();
 			      <div class="modal-body">
 			        <!-- 16:9 aspect ratio -->
 					<div class="embed-responsive embed-responsive-16by9">
-					<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php _e( $cause->cause_modal_video ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
+					<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php _e( $cause_video ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
 					</div>
 			       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">X</span>
@@ -197,7 +197,7 @@ get_header();
 			    </div>
 			  </div>
 			</div> 
-		<?php endif; ?>
+		<!-- <?php endif; ?> -->
 			</section><!-- .our-cause-section -->
 
 
