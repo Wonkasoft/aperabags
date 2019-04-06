@@ -180,7 +180,7 @@ get_header();
 		<?php endif; ?>
 
 		<?php
-		if ( ! empty( $cause->img ) ) : ?>
+		if ( ! empty( $cause->cause_modal_video ) ) : ?>
 			
 		<!-- Modal -->
 			<div class="modal fade" id="videoModal2" tabindex="-1" role="dialog" aria-labelledby="causeAperaModal" aria-hidden="true">
