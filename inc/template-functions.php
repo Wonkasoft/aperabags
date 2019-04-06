@@ -127,6 +127,7 @@ function the_mods_for_section( $section ) {
 			$cause 									=	new stdClass();
 			$cause->cause_section_title				=	get_theme_mod( 'cause_section_title');
 			$cause->cause_section_background		=	get_theme_mod( 'cause_section_background');
+			$cause->cause_modal_video		        =	get_theme_mod( 'cause_modal_video');
 
 			$mods_class->{"cause_mods"} = $cause;
 			$mods_class->{"cause_mods"}->count = $count;

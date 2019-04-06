@@ -560,11 +560,11 @@ $wp_customize->add_control( new WP_Customize_Control(
 	$wp_customize, 
 	'cta_slider_mobile_'.$i.'_control', 
 	array(
-	  'label'       => __( 'CTA Slider Image '.$i, 'apera' ),
+	  'label'       => __( 'CTA Slider Mobile Image '.$i, 'apera' ),
 	  'section'     => 'lg_cta_section',
 	  'settings'    => 'cta_slider_mobile_'.$i,
 	  'type'        => 'image',
-	  'description' => 'Add image for slider '.$i,
+	  'description' => 'Add image for mobile slider '.$i,
   ) ) );
 
 endfor;
@@ -644,7 +644,7 @@ for ( $i=1; $i <= 3; $i++ ) :
 	  'label'       => __( 'Image for cause '.$i, 'apera' ),
 	  'section'     => 'cause_section',
 	  'settings'    => 'cause_image_'.$i,
-	  'type'      => 'image',
+	  'type'        => 'image',
 	  'description' => 'Add image for cause '.$i,
   ) ) );
 
@@ -691,7 +691,7 @@ $wp_customize->add_control( new WP_Customize_Control(
 	'label'       => __( 'Cause header '.$i, 'apera-bags' ),
 	'section'     => 'cause_section',
 	'settings'    => 'cause_header_'.$i,
-	'type'      => 'text',
+	'type'        => 'text',
 	'description' => 'Add header for cause '.$i,
 ) ) );
 
@@ -712,10 +712,31 @@ $wp_customize->add_control( new WP_Customize_Control(
 	'label'       => __( 'Cause message '.$i, 'apera-bags' ),
 	'section'     => 'cause_section',
 	'settings'    => 'cause_message_'.$i,
-	'type'      => 'textarea',
+	'type'        => 'textarea',
 	'description' => 'Add message for cause '.$i,
 ) ) );
 endfor;
+
+/**
+* Cause video modal settings Section
+* @since  1.0.0
+*/
+$wp_customize->add_setting( 'cause_modal_video', array(
+  'default'		=> '',
+  'transport'   => 'refresh',
+) );
+
+// Cause video modal Setting Control
+$wp_customize->add_control( new WP_Customize_Control( 
+  $wp_customize, 
+  'cause_modal_video_control', 
+  array(
+	'label'       => __( 'Cause modal video', 'apera-bags' ),
+	'section'     => 'cause_section',
+	'settings'    => 'cause_modal_video',
+	'type'        => 'text',
+	'description' => 'Add video for cause modal',
+) ) );
 
 /**
 * About the brand settings Section
