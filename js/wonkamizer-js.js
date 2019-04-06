@@ -1025,7 +1025,7 @@
 
 			if ( document.getElementById( 'review-link' ) ) 
 			{
-				var reviews_jump = document.getElementById( 'review-link-link' );
+				var reviews_jump = document.getElementById( 'review-link' );
 
 				reviews_jump.addEventListener( 'click', function( e ) 
 					{
