@@ -177,6 +177,7 @@ get_header();
 					<?php endif; ?>
 					<?php endforeach; ?>
 		<?php endif; ?>
+			</section><!-- .our-cause-section -->
 
 		<?php
 			$cause_video = get_theme_mod( 'cause_modal_video');
@@ -198,7 +199,6 @@ get_header();
 			  </div>
 			</div> 
 		<!-- <?php endif; ?> -->
-			</section><!-- .our-cause-section -->
 
 
 		<?php do_action( 'get_mods_before_section', 'about' );
