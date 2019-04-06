@@ -63,6 +63,10 @@ function the_mods_for_section( $section ) {
 				$slide->slide_text_position 						=	get_theme_mod( 'slider_text_position_'.$i );
 				$slide->slide_header_message						=	get_theme_mod( 'slider_header_'.$i );
 				$slide->slide_subheader								=	get_theme_mod( 'slider_subheader_'.$i );
+				$slide->slider_btn_text								=	get_theme_mod( 'slider_btn_text_'.$i );
+				$slide->slider_btn_link								=	get_theme_mod( 'slider_btn_link_'.$i );
+				// Mobile theme mod
+				$slide->slide_mobile_img							=	get_theme_mod( 'slider_mobile_'.$i );
 
 				$mods_class->slides->{"slide_{$i}"} = $slide;
 			endif;
@@ -103,6 +107,8 @@ function the_mods_for_section( $section ) {
 				$slide->slide_text_message							=	get_theme_mod( 'cta_slider_text_'.$i );
 				$slide->slide_link_btn								=	get_theme_mod( 'btn_slider_text_'.$i  );
 				$slide->slide_link									=	get_theme_mod( 'btn_slider_link_'.$i );
+				// Mobile Theme mod
+				$slide->slide_mobile_img							=	get_theme_mod( 'cta_slider_mobile_'.$i );
 
 				$mods_class->slides->{"slide_{$i}"} = $slide;
 			endif;

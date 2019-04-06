@@ -34,10 +34,18 @@ get_header();
 					/* Checks for an img set in the slide object */
 					if ( !empty( $slide->slide_img ) ) : ?>
 						<div class="top-page-slide">
+							<?php
+							if ( wp_is_mobile() ) :
+							?>
+							<div class="top-slide-img-holder" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
+								<?php
+							else:
+								?>
 							<div class="top-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 							<?php 
+							endif;
 							/* Checks for an message set in the slide object */
-							if ( !empty( $slide->slide_header_message ) ) : ?>
+							if ( ! empty( $slide->slide_header_message ) ) : ?>
 								<div class="row img-header-text-wrap">
 									<div class="col col-12 img-header-text-container">
 										<div class="text-box text-center<?php $set_text_align = ( !empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position: ' set-align-center'; echo $set_text_align; ?>">
@@ -107,8 +115,16 @@ get_header();
 						/* Checks for an img set in the slide object */
 						if ( !empty( $slide->slide_img ) ) : ?>
 							<div class="cta-section-slide">
+								<?php
+								if ( wp_is_mobile ) :
+								?>
 								<div class="cta-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
-								<?php 
+								<?php
+								else:
+								?>
+								<div class="cta-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+								<?php
+								endif;
 								/* Checks for an message set in the slide object */
 								if ( !empty( $slide->slide_text_message ) ) : ?>
 									<div class="row img-header-text-wrap">
@@ -166,6 +182,30 @@ get_header();
 				</div>
 			</section><!-- .our-cause-section -->
 		<?php endif; ?>
+			</section><!-- .our-cause-section -->
+
+		<?php
+			$cause_video = get_theme_mod( 'cause_modal_video');
+			if ( ! empty( $cause_video ) ) : ?> 
+		<!-- Modal -->
+			<div class="modal fade" id="videoModalpop" tabindex="-1" role="dialog" aria-labelledby="causeAperaModal" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-body">
+			        <!-- 16:9 aspect ratio -->
+					<div class="embed-responsive embed-responsive-16by9">
+					<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php _e( $cause_video ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
+					</div>
+			       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">X</span>
+			        </button>        
+			      </div>
+			    </div>
+			  </div>
+			</div> 
+		<!-- <?php endif; ?> -->
+
+
 		<?php do_action( 'get_mods_before_section', 'about' );
 		$about_section = get_section_mods( 'about' );
 
@@ -241,7 +281,7 @@ get_header();
 				<div class="col col-8 text-center">
 					<p class="section-title social-message"><?php _e( $social_section->social_mods->social_message ); ?></p>
 				</div> <!-- .col -->
-				<div class="col col-12">
+				<div class="col col-10">
 					<?php _e( do_shortcode( $social_section->social_mods->social_shortcode ) ); ?>
 				</div>
 				<div class="col col-12 shop-social-btn text-center">

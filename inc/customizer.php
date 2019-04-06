@@ -209,7 +209,7 @@ $wp_customize->add_control( new WP_Customize_Control(
 	'label'       => __( 'Slider header message', 'apera' ),
 	'section'     => 'slider_section',
 	'settings'    => 'slider_header_'.$i,
-	'type'      => 'text',
+	'type'        => 'text',
 	'description' => 'Add message for slider '.$i,
 ) ) );
 
@@ -230,7 +230,7 @@ $wp_customize->add_control( new WP_Customize_Control(
 	'label'       => __( 'Slider subheader', 'apera' ),
 	'section'     => 'slider_section',
 	'settings'    => 'slider_subheader_'.$i,
-	'type'      => 'text',
+	'type'        => 'text',
 	'description' => 'Add subheader for slider '.$i,
 ) ) );
 
@@ -251,7 +251,7 @@ $wp_customize->add_control( new WP_Customize_Control(
 	'label'       => __( 'Slider button text', 'apera' ),
 	'section'     => 'slider_section',
 	'settings'    => 'slider_btn_text_'.$i,
-	'type'      => 'text',
+	'type'        => 'text',
 	'description' => 'Button text for slider'.$i,
 ) ) );
 
@@ -272,9 +272,28 @@ $wp_customize->add_control( new WP_Customize_Control(
 	'label'       => __( 'Slider Button Link', 'apera-bags' ),
 	'section'     => 'slider_section',
 	'settings'    => 'slider_btn_link_'.$i,
-	'type'      => 'dropdown-pages',
+	'type'        => 'dropdown-pages',
 	'description' => 'Slider button link',
 ) ) );
+
+// Slider Mobile Setting
+  $wp_customize->add_setting( 'slider_mobile_'.$i, array(
+	'default'           => '',
+	'transport'         => 'refresh',
+) );
+
+// Slider Mobile Setting Control
+  $wp_customize->add_control( new WP_Customize_Image_Control( 
+	$wp_customize, 
+	'slider_mobile_'.$i.'_control', 
+	array(
+	  'label'       => __( 'Slider Mobile Image '.$i, 'apera' ),
+	  'section'     => 'slider_section',
+	  'settings'    => 'slider_mobile_'.$i,
+	  'type'        => 'image',
+	  'description' => 'Add image for slider '.$i,
+  ) ) );
+
 endfor;
 
 /**
@@ -484,7 +503,7 @@ $wp_customize->add_control( new WP_Customize_Control(
 	'label'       => __( 'Slider message '.$i, 'apera' ),
 	'section'     => 'lg_cta_section',
 	'settings'    => 'cta_slider_text_'.$i,
-	'type'      => 'text',
+	'type'        => 'text',
 	'description' => 'Add message for slider '.$i,
 ) ) );
 
@@ -492,7 +511,7 @@ $wp_customize->add_control( new WP_Customize_Control(
 * CTA Slider button text settings Section
 * @since  1.0.0
 */
-$wp_customize->add_setting( 'btn_slider_text_'.$i , array(
+$wp_customize->add_setting( 'cta_slider_btn_text_'.$i , array(
   'default'           => '',
   'transport'         => 'refresh',
 ) );
@@ -500,35 +519,54 @@ $wp_customize->add_setting( 'btn_slider_text_'.$i , array(
 // Slider button text Setting Control
 $wp_customize->add_control( new WP_Customize_Control( 
   $wp_customize, 
-  'btn_slider_text_'.$i.'_control', 
+  'cta_slider_btn_text_'.$i.'_control', 
   array(
-	'label'       => __( 'Button Link '.$i, 'apera' ),
+	'label'       => __( 'CTA Button Text '.$i, 'apera' ),
 	'section'     => 'lg_cta_section',
-	'settings'    => 'btn_slider_text_'.$i,
-	'type'      => 'text',
-	'description' => 'Button Text '.$i,
+	'settings'    => 'cta_slider_btn_text_'.$i,
+	'type'        => 'text',
+	'description' => 'CTA Button Text '.$i,
 ) ) );
 
 /**
-* Slider message settings Section
+* CTA Slider link settings Section
 * @since  1.0.0
 */
-$wp_customize->add_setting( 'btn_slider_link_'.$i , array(
+$wp_customize->add_setting( 'cta_slider_btn_link_'.$i , array(
   'default'           => '',
   'transport'         => 'refresh',
 ) );
 
-// Slider message Setting Control
+// CTA Slider link Setting Control
 $wp_customize->add_control( new WP_Customize_Control( 
   $wp_customize, 
-  'btn_slider_link_'.$i.'_control', 
+  'cta_slider_btn_link_'.$i.'_control', 
   array(
-	'label'       => __( 'Button Link '.$i, 'apera' ),
+	'label'       => __( 'CTA Button Link '.$i, 'apera' ),
 	'section'     => 'lg_cta_section',
-	'settings'    => 'btn_slider_link_'.$i,
-	'type'      => 'text',
-	'description' => 'Button Link '.$i,
+	'settings'    => 'cta_slider_btn_link_'.$i,
+	'type'        => 'dropdown-pages',
+	'description' => 'CTA Button Link '.$i,
 ) ) );
+
+// CTA Slider mobile Setting
+  $wp_customize->add_setting( 'cta_slider_mobile_'.$i , array(
+	'default'           => '',
+	'transport'         => 'refresh',
+) );
+
+// CTA Slider mobile Setting Control
+  $wp_customize->add_control( new WP_Customize_Image_Control( 
+	$wp_customize, 
+	'cta_slider_mobile_'.$i.'_control', 
+	array(
+	  'label'       => __( 'CTA Slider Mobile Image '.$i, 'apera' ),
+	  'section'     => 'lg_cta_section',
+	  'settings'    => 'cta_slider_mobile_'.$i,
+	  'type'        => 'image',
+	  'description' => 'Add image for mobile slider '.$i,
+  ) ) );
+
 endfor;
 
 /**
@@ -606,7 +644,7 @@ for ( $i=1; $i <= 3; $i++ ) :
 	  'label'       => __( 'Image for cause '.$i, 'apera' ),
 	  'section'     => 'cause_section',
 	  'settings'    => 'cause_image_'.$i,
-	  'type'      => 'image',
+	  'type'        => 'image',
 	  'description' => 'Add image for cause '.$i,
   ) ) );
 
@@ -653,7 +691,7 @@ $wp_customize->add_control( new WP_Customize_Control(
 	'label'       => __( 'Cause header '.$i, 'apera-bags' ),
 	'section'     => 'cause_section',
 	'settings'    => 'cause_header_'.$i,
-	'type'      => 'text',
+	'type'        => 'text',
 	'description' => 'Add header for cause '.$i,
 ) ) );
 
@@ -674,10 +712,31 @@ $wp_customize->add_control( new WP_Customize_Control(
 	'label'       => __( 'Cause message '.$i, 'apera-bags' ),
 	'section'     => 'cause_section',
 	'settings'    => 'cause_message_'.$i,
-	'type'      => 'textarea',
+	'type'        => 'textarea',
 	'description' => 'Add message for cause '.$i,
 ) ) );
 endfor;
+
+/**
+* Cause video modal settings Section
+* @since  1.0.0
+*/
+$wp_customize->add_setting( 'cause_modal_video', array(
+  'default'		=> '',
+  'transport'   => 'refresh',
+) );
+
+// Cause video modal Setting Control
+$wp_customize->add_control( new WP_Customize_Control( 
+  $wp_customize, 
+  'cause_modal_video_control', 
+  array(
+	'label'       => __( 'Cause modal video', 'apera-bags' ),
+	'section'     => 'cause_section',
+	'settings'    => 'cause_modal_video',
+	'type'        => 'text',
+	'description' => 'Add video for cause modal',
+) ) );
 
 /**
 * About the brand settings Section
@@ -836,7 +895,7 @@ $wp_customize->add_control( new WP_Customize_Control(
 	'label'       => __( 'About the brand button', 'apera-bags' ),
 	'section'     => 'about_section',
 	'settings'    => 'about_the_brand_button_link',
-	'type'      => 'dropdown-pages',
+	'type'        => 'dropdown-pages',
 	'description' => 'About the brand button link',
 ) ) );
 
