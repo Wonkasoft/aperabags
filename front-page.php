@@ -270,13 +270,13 @@ get_header();
 				<div class="col col-12 text-center">
 					<h3 class="section-title social-title"><?php _e( $social_section->social_mods->social_title ); ?></h3>
 				</div> <!-- .col -->
-				<div class="col col-8 text-center">
+				<div class="col col-12 text-center">
 					<p class="section-title social-message"><?php _e( $social_section->social_mods->social_message ); ?></p>
 				</div> <!-- .col -->
-				<div class="col col-12">
+				<div class="col col-8">
 					<?php _e( do_shortcode( $social_section->social_mods->social_shortcode ) ); ?>
 				</div>
-				<div class="col col-12 shop-social-btn text-center">
+				<div class="col col-10 shop-social-btn text-center">
 					<a class="btn btn-lg btn-primary wonka-btn" href="<?php _e( $social_section->social_mods->social_shop_button);?>"><?php _e($social_section->social_mods->social_btn_text); ?></a>
 				</div> <!-- .col -->
 			</section><!-- .instagram-section -->
