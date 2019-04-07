@@ -319,12 +319,13 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
  * @return 
  */
 function wonka_product_tabs_retitle( $tabs ) {
-	
+
 	$new_title = get_post_meta( get_the_ID(), 'product_statement', true );
 	$tabs['reviews']['priority'] = 10;			// Reviews first
 	$tabs['description']['priority'] = 20;			// Description second
 	unset( $tabs['additional_information'] );	// Additional information third
 	$tabs['description']['title'] = __( $new_title );
+	$tabs['description']['section'] = __( 'Product Statement' );
 
 	return $tabs;
 }

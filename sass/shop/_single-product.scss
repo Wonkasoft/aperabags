@@ -23,6 +23,7 @@
 				height: 100%;
 				max-height: 100%;
 				cursor: zoom-in;
+				@include prefix( transition, height .35s ease-in-out, o moz webkit );
 
 				figure.woocommerce-product-gallery__wrapper {
 
@@ -101,6 +102,7 @@
 		section.product-img-section {
 			max-width: 1200px;
 			width: 100%;
+			margin: 15px auto;
 			display: flex;
 			align-items: flex-start;
 			justify-content: space-between;
@@ -108,10 +110,9 @@
 
 			div.product-on-sale {
 				flex: 1 100%;
-				
 			}
 
-			div.wonka-single-product-img {
+			div.wonka-single-product-img-area {
 				position: relative;
 				flex: 1 100%;
 
@@ -120,7 +121,6 @@
 				}
 
 				div.woocommerce-product-gallery {
-					margin: 15px auto;
 					flex: 1 100%;
 					display: flex;
 					align-items: flex-start;
@@ -150,11 +150,13 @@
 
 					div.flex-viewport {
 						flex: .8 10%;
+						top: 0;
 
 						&.sticky-on {
 							position: -webkit-sticky !important;    
 							position: sticky !important;
 							top: 25px;
+							@include prefix( transition, $trans_3, o moz webkit );
 						}
 					}
 
@@ -201,11 +203,10 @@
 				display: flex;
 				align-items: flex-start;
 				flex-direction: column;
-				margin: 15px auto;
+				margin: 0 auto;
 				padding: 0 15px;
 				opacity: 0;
 				background: $color__background_alt;
-				@include prefix( transition, $trans_25, o moz webkit );
 
 				&.loaded {
 					opacity: 1;
@@ -374,7 +375,7 @@
 			/* This media query is on section.product-img-section */
 			@media screen and ( min-width: 768px ) {
 
-				div.wonka-single-product-img {
+				div.wonka-single-product-img-area {
 					position: relative;
 					flex: 1 59%;
 
@@ -410,6 +411,7 @@
 					flex: 0.1 40%;
 					position: relative;
 					z-index: 20;
+					top: 0;
 
 					&.sticky-on {
 						position: -webkit-sticky;    
@@ -435,7 +437,7 @@
 /*====================================
 =            Tabs section            =
 ====================================*/
-section.product-tags-section {
+section.product-tabs-section {
 	max-width: 1200px;
 	margin: 15px auto;
 	padding: 15px;

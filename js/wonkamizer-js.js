@@ -16,7 +16,7 @@
 	/* vars set for single product page */
 	if ( document.querySelector( '.product-img-section' ) ) 
 	{
-		var product_img_section, wonka_single_product_img, thumbnail_controls, summary_section, slide_view_box, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop, one_click = true;
+		var product_img_section, wonka_single_product_img_area, thumbnail_controls, summary_section, slide_view_box, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop, scroll_stick, one_click = true;
 	}
 	/*=====  End of vars set for script use  ======*/
 	
@@ -35,7 +35,7 @@
 		if ( document.querySelector( '.product-img-section' ) ) 
 		{
 			product_img_section = document.querySelector( '.product-img-section' );
-			wonka_single_product_img = document.querySelector( '.wonka-single-product-img' );
+			wonka_single_product_img_area = document.querySelector( '.wonka-single-product-img-area' );
 			thumbnail_controls = document.querySelector( '.flex-control-nav' );
 			summary_section = document.querySelector( '.summary.entry-summary' );
 			slide_view_box = document.querySelector( '.flex-viewport' );
@@ -247,15 +247,21 @@
 		}
 	}
 
-	function stickySummary(e) 
+	function stickySummary() 
 	{
-		target_stop = product_img_section.offsetHeight - summary_section.offsetHeight;
+		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
+		target_stop = wonka_single_product_img_area.offsetHeight - summary_section.offsetHeight;
 		win_y = window.pageYOffset;
 
-		if ( window.innerWidth > 792 && win_y - product_img_section.parentElement.offsetTop - summary_section.offsetTop > target_stop ) 
+		if ( window.innerWidth > 792 && win_y < img_area_top ) 
 		{
 			summary_section.classList.remove( 'sticky-on' );
-			summary_section.style.top = target_stop - parseInt( window.getComputedStyle( summary_section ).marginTop ) + 'px';
+			summary_section.removeAttribute( 'style' );
+		}
+		else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop ) 
+		{
+			summary_section.style.top = target_stop + 'px';
+			summary_section.classList.remove( 'sticky-on' );
 		}
 		else if ( window.innerWidth > 792 )
 		{
@@ -282,15 +288,26 @@
 			}
 		}
 
-		if ( window.innerWidth > 792 && win_y < product_img_section.parentElement.offsetTop - summary_section.offsetTop ) 
-		{
-			summary_section.classList.remove( 'sticky-on' );
-			summary_section.removeAttribute( 'style' );
-		}
 	}
 	
+	function active_img_adjustment() 
+	{
+		setTimeout( function() 
+			{
+				active_slide_img = document.querySelector( '.flex-viewport .flex-active-slide img');
+				/* slide_view_box adjustment */
+				if ( active_slide_img.offsetHeight > 760 ) 
+				{
+					slide_view_box.style.height = 760 + 'px';
+				}
+				else
+				{
+					slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
+				}
+			}, 450);
+	}
 
-	function thumbnail_scroll(e)
+	function thumbnail_scroll()
 	{
 		/*=========================================================================
 		=            This is for setting the vertical scroll direction            =
@@ -308,104 +325,118 @@
 		}
 
 		last_scroll_top = window.pageYOffset;
-		/*=====  End of This is for setting the vertical scroll direction  ======*/
-		
-		/*==================================================================================
-		=            This is setting up all the actions to the thumbnail scroll            =
-		==================================================================================*/
-		if ( document.querySelector( '.wonka-single-product-img' ) ) 
-		{
-			slide_control = document.querySelector( '.flex-control-nav .flex-active'); 
-			active_slide = document.querySelector( '.flex-viewport .flex-active-slide'); 
-			active_slide_img = document.querySelector( '.flex-viewport .flex-active-slide img');
-			win_y = window.pageYOffset;
-			img_area_top = wonka_single_product_img.offsetTop + wonka_single_product_img.parentElement.parentElement.offsetTop;
-			target_stop = wonka_single_product_img.parentElement.parentElement.offsetHeight - slide_view_box.offsetHeight;
+			/*==================================================================================
+			=            This is setting up all the actions to the thumbnail scroll            =
+			==================================================================================*/
+			if ( document.querySelector( '.wonka-single-product-img-area' ) ) 
+			{
+				slide_control = document.querySelector( '.flex-control-nav .flex-active'); 
+				active_slide = document.querySelector( '.flex-viewport .flex-active-slide'); 
+				win_y = window.pageYOffset;
+				img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
+				target_stop = wonka_single_product_img_area.offsetHeight - slide_view_box.offsetHeight;
+				scroll_stick = slide_control.parentElement.offsetTop + img_area_top;
 
-			/*=================================================
-			=            This initiates the scroll            =
-			=================================================*/
-			if ( window.innerWidth > 792 && win_y < img_area_top ) 
-			{
-				slide_view_box.classList.remove( 'sticky-on' );
-				slide_view_box.style.top = '';
-			}
-			else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop ) 
-			{
-				slide_view_box.classList.remove( 'sticky-on' );
-				slide_view_box.style.top = target_stop - parseInt( window.getComputedStyle( slide_view_box ).marginTop ) + 'px';
-			}
-			else
-			{
-				/*===============================================
-				=            Adjustment for adminbar            =
-				===============================================*/
-				if ( document.querySelector( '#wpadminbar' ) ) 
+				/*=================================================
+				=            This initiates the scroll            =
+				=================================================*/
+				if ( window.innerWidth > 792 )
 				{
-					admin_bar = document.querySelector( '#wpadminbar' );
-					admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
-					
-					if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+					if ( win_y <= img_area_top ) 
 					{
-						slide_view_box.classList.add( 'sticky-on' );
-						slide_view_box.style.top = 30 + 'px';
+						slide_view_box.classList.remove( 'sticky-on' );
+						slide_view_box.style.top = '';
+
+						if ( slide_control.parentElement.previousElementSibling != null && scroll_direction === 'scrolled up' ) 
+						{
+							console.log("{img_area_top}{" + img_area_top + "}");
+							window.scrollTo( 0, img_area_top - 30 );
+						}
+
+						if ( slide_control.parentElement.previousElementSibling != null && one_click && scroll_direction === 'scrolled up' )
+						{
+							slide_control.parentElement.nextElementSibling.firstElementChild.click();
+						}
+					}
+
+					// if ( win_y - img_area_top < target_stop && win_y > img_area_top ) 
+					// {
+
+					// 	console.log(one_click);
+					// 	/*===============================================
+					// 	=            Adjustment for adminbar            =
+					// 	===============================================*/
+					// 	if ( document.querySelector( '#wpadminbar' ) ) 
+					// 	{
+					// 		admin_bar = document.querySelector( '#wpadminbar' );
+					// 		admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+							
+					// 		if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+					// 		{
+					// 			slide_view_box.classList.add( 'sticky-on' );
+					// 			slide_view_box.style.top = 30 + 'px';
+					// 		}
+					// 		else
+					// 		{
+					// 			slide_view_box.classList.add( 'sticky-on' );
+					// 			slide_view_box.style.top = admin_height + 30 + 'px';
+					// 		}
+					// 	}
+					// 	else
+					// 	{
+					// 		slide_view_box.classList.add( 'sticky-on' );
+					// 		slide_view_box.style.top = 30 + 'px';
+					// 	}
+					// 	=====  End of Adjustment for adminbar  ======
+						
+					// 	if ( slide_control.parentElement.nextElementSibling != null && one_click && scroll_direction === 'scrolled down' )
+					// 	{
+					// 		slide_control.parentElement.nextElementSibling.firstElementChild.click();
+					// 		scroll_stick = slide_control.parentElement.nextElementSibling.offsetTop + img_area_top;
+					// 		console.log("{scroll_stick}{scrolled down}{" + scroll_stick + "}");
+					// 		window.scrollTo({ left: 0, top: scroll_stick, behavior: 'smooth'});
+					// 	}
+					// 	if ( slide_control.parentElement.previousElementSibling != null && one_click && scroll_direction === 'scrolled up' ) 
+					// 	{
+					// 		slide_control.parentElement.previousElementSibling.firstElementChild.click();
+					// 		scroll_stick = slide_control.parentElement.previousElementSibling.offsetTop + img_area_top;
+					// 		console.log("{scroll_stick}{scrolled up}{" + scroll_stick + "}");
+					// 		window.scrollTo({ left: 0, top: scroll_stick, behavior: 'smooth'});
+					// 	}
+					// }
+
+					if ( win_y - img_area_top >= target_stop ) 
+					{
+						slide_view_box.style.top = target_stop + 'px';
+						slide_view_box.classList.remove( 'sticky-on' );
+
+						if ( slide_control.parentElement.nextElementSibling != null && scroll_direction === 'scrolled down' ) 
+						{
+							console.log("{target_stop}{" + target_stop + "}");
+							window.scrollTo( 0, target_stop - 30 );
+						}
+
+						if ( slide_control.parentElement.nextElementSibling != null && one_click && scroll_direction === 'scrolled down' ) 
+						{
+							slide_control.parentElement.nextElementSibling.firstElementChild.click();
+						}
+					}
+
+					if ( one_click === false ) 
+					{
+						setTimeout( function() {
+							one_click = true;
+						}, 850);
 					}
 					else
 					{
-						slide_view_box.classList.add( 'sticky-on' );
-						slide_view_box.style.top = admin_height + 30 + 'px';
+						one_click = false;
 					}
 				}
-				else
-				{
-					slide_view_box.classList.add( 'sticky-on' );
-					slide_view_box.style.top = 30 + 'px';
-				}
-				/*=====  End of Adjustment for adminbar  ======*/
-
-				/*==========================================================
-				=            This is for the image click events            =
-				==========================================================*/
-				if ( slide_control.parentElement.nextElementSibling != null && one_click && scroll_direction === 'scrolled down' ) 
-				{
-					one_click = false;
-					setTimeout( function() {
-						slide_control.parentElement.nextElementSibling.firstElementChild.click();
-						one_click = true;
-						/* slide_view_box adjustment */
-						if ( active_slide_img.offsetHeight > 760 ) 
-						{
-							slide_view_box.style.height = 760 + 'px';
-						}
-						else
-						{
-							slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
-						}
-					}, 250);
-				}
-
-				if ( slide_control.parentElement.previousElementSibling != null && one_click && scroll_direction === 'scrolled up' ) 
-				{
-					one_click = false;
-					setTimeout( function() {
-						slide_control.parentElement.previousElementSibling.firstElementChild.click();
-						one_click = true;
-						/* slide_view_box adjustment */
-						if ( active_slide_img.offsetHeight > 760 ) 
-						{
-							slide_view_box.style.height = 760 + 'px';
-						}
-						else
-						{
-							slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
-						}
-					}, 250);
-				}
-				/*=====  End of This is for the image click events  ======*/
+				/*=====  End of This initiates the scroll  ======*/
 			}
-			/*=====  End of This initiates the scroll  ======*/
-		}
-		/*=====  End of This is setting up all the actions to the thumbnail scroll  ======*/
+			/*=====  End of This is setting up all the actions to the thumbnail scroll  ======*/
+		/*=====  End of This is for setting the vertical scroll direction  ======*/
 	}
 
 	function imageZoom(imgID, resultID) 
@@ -944,11 +975,16 @@
 		===============================================*/
 		if ( document.querySelector( 'body.single-product' ) ) 
 		{
+			thumbnail_scroll();
+			stickySummary(); 
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
-				thumbnail_scroll(e);
-				stickySummary(e); 
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+				thumbnail_scroll();
+				stickySummary(); 
 			};
 		}
 		/*=====  End of For single product page  ======*/
@@ -964,7 +1000,7 @@
 			  slidesToShow: 1,
 			  slidesToScroll: 1,
 			  autoplay: true,
-			  autoplaySpeed: 7000,
+			  autoplaySpeed: 4000,
 			  fade: true,
 			  dots: true,
 			  arrows: true,
@@ -982,7 +1018,7 @@
 			  slidesToShow: 1,
 			  slidesToScroll: 1,
 			  autoplay: true,
-			  autoplaySpeed: 7000,
+			  autoplaySpeed: 4000,
 			  fade: true,
 			  dots: true,
 			  arrows: true,
