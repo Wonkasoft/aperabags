@@ -1010,15 +1010,15 @@
 				e.preventDefault();
 				e.stopImmediatePropagation();
 				e.stopPropagation();
-				if (one_click) 
-				{
-					thumbnail_scroll();
-					stickySummary(); 
-				}
-				else
-				{
-					window.scroll(0,0);
-				}
+				// if (one_click) 
+				// {
+				// 	thumbnail_scroll();
+				// 	stickySummary(); 
+				// }
+				// else
+				// {
+				// 	window.scroll(0,0);
+				// }
 			};
 		}
 		/*=====  End of For single product page  ======*/
