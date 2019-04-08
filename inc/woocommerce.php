@@ -711,7 +711,8 @@ add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
  */
 function wonka_filter_woocommerce_short_description( $post_post_excerpt ) { 
     $add_links ='<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>';
-    return $post_post_excerpt . $add_links; 
+    $post_post_excerpt = $post_post_excerpt . $add_links;
+    return $post_post_excerpt; 
 };
 
 
