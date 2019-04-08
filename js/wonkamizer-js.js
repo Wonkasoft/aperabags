@@ -646,12 +646,6 @@
 		===============================================================================*/
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 		{
-			var get_url = location.href;
-			if ( ~get_url.indexOf( '?add-to-cart' ) ) 
-			{
-				get_url = get_url.split( '?' );
-				location.href = get_url[0];
-			}
 
 			if ( document.querySelector( '.shipping-calculator-button' ) ) 
 			{
