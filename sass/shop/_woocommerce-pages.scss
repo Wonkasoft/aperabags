@@ -1,6 +1,7 @@
 .woocommerce-cart,
 .woocommerce-checkout,
-.woocommerce-page {
+.woocommerce-page,
+.woocommerce-order-received {
 	
 	#main {
 		margin: 15px auto;
@@ -161,7 +162,20 @@
 			}
 		}
 
+		table.woocommerce-table--order-details {
+			background: $color__background_alt;
 
+			.product-total {
+				text-align: right;
+			}
+
+			tfoot {
+				
+				td {
+					text-align: right;
+				}
+			}
+		}
 
 		div.below-express-checkout-btns {
 			align-items: center;

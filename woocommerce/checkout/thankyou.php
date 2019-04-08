@@ -67,22 +67,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<tbody>
 					<tr>
 						<td>
-							<strong><?php echo $order->get_order_number(); ?></strong>
+							<?php echo $order->get_order_number(); ?>
 						</td>
 						<td>
-							<strong><?php echo wc_format_datetime( $order->get_date_created() ); ?></strong>
+							<?php echo wc_format_datetime( $order->get_date_created() ); ?>	
 						</td>
 						<?php if ( is_user_logged_in() && $order->get_user_id() === get_current_user_id() && $order->get_billing_email() ) : ?>
 						<td>
-							<strong><?php echo $order->get_billing_email(); ?></strong>
+							<?php echo $order->get_billing_email(); ?>	
 						</td>
 						<?php endif; ?>
 						<td>
-							<strong><?php echo $order->get_formatted_order_total(); ?></strong>
+							<?php echo $order->get_formatted_order_total(); ?>	
 						</td>
 						<?php if ( $order->get_payment_method_title() ) : ?>
 						<td>
-							<strong><?php echo wp_kses_post( $order->get_payment_method_title() ); ?></strong>
+							<?php echo wp_kses_post( $order->get_payment_method_title() ); ?>	
 						</td>
 						<?php endif; ?>
 					</tr>
