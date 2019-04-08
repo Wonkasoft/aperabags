@@ -37,8 +37,8 @@ if ( $show_downloads ) {
 	<?php do_action( 'woocommerce_order_details_before_order_table', $order ); ?>
 
 	<h2 class="woocommerce-order-details__title"><?php _e( 'Order details', 'woocommerce' ); ?></h2>
-
-	<table class="woocommerce-table woocommerce-table--order-details shop_table order_details table table-responsive table-hover">
+	<div class="table-responsive">
+	<table class="woocommerce-table woocommerce-table--order-details shop_table order_details table table-hover">
 
 		<thead>
 			<tr>
@@ -87,7 +87,7 @@ if ( $show_downloads ) {
 			<?php endif; ?>
 		</tfoot>
 	</table>
-
+</div><!-- .table-responsive -->
 	<?php do_action( 'woocommerce_order_details_after_order_table', $order ); ?>
 </section>
 
