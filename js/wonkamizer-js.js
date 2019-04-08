@@ -1069,8 +1069,11 @@
 			  slidesToScroll: 1,
 			  autoplay: true,
 			  autoplaySpeed: 4000,
+			  fade: true,
 			  dots: true,
 			  arrows: true,
+			  appendArrows: $( 'body.home .instagram-wrap .slick-list' ),
+			  appendDots: $( 'body.home .instagram-wrap .slick-list' ),
 			  prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
 			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
 			});
