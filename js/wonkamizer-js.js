@@ -1069,7 +1069,6 @@
 			  slidesToScroll: 1,
 			  autoplay: true,
 			  autoplaySpeed: 4000,
-			  fade: true,
 			  dots: true,
 			  arrows: true,
 			  appendArrows: $( 'body.home .instagram-wrap .slick-list' ),
