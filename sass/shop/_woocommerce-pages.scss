@@ -175,16 +175,16 @@
 
 			li:not(:last-child) {
 				border-right: 1px dotted rgba( #444, .6 );
-
 			}
 
 			li {
-				padding: 4px 0;
+				padding: 4px 8px 4px 0;
 				margin: 8px 8px 8px 0;
 
 				.thankyou-label {
 					display: inline-block;
 					text-transform: uppercase;
+					font-family: $font__main_jose;
 					width: 100%;
 				}
 
@@ -196,6 +196,8 @@
 
 		table.woocommerce-table--order-details {
 			background: $color__background_alt;
+			border-left: 1px dotted rgba( #444, .6 );
+			border-right: 1px dotted rgba( #444, .6 ); 
 
 			.product-total {
 				text-align: right;
