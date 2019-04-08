@@ -28,6 +28,10 @@
 	function scrollToSection( scroll_to_id ) 
 	{
   		document.querySelector( '#' + scroll_to_id ).scrollIntoView({behavior: 'smooth'});
+  		setTimeout( function() 
+  			{
+  				window.scrollBy({ left: 0,top: -30, behavior: 'smooth'});
+  			}, 825 );
 	}
 
 	function load_page_vars() 
@@ -1001,9 +1005,12 @@
 		=            For single product page            =
 		===============================================*/
 		if ( document.querySelector( 'body.single-product' ) ) 
-		{
-			thumbnail_scroll();
-			stickySummary(); 
+		{	
+
+			if ( window.pageYOffset > document.querySelector( '#main' ).offsetTop ) 
+			{
+				scrollToSection( 'main' );
+			}
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
@@ -1071,6 +1078,29 @@
 			  dots: false,
 			  prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
 			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+			  responsive: [
+    			{
+			      breakpoint: 1024,
+			      settings: {
+			        slidesToShow: 3,
+			        slidesToScroll: 3,
+			      }
+			    },
+			    {
+			      breakpoint: 600,
+			      settings: {
+			        slidesToShow: 2,
+			        slidesToScroll: 2
+			      }
+			    },
+			    {
+			      breakpoint: 480,
+			      settings: {
+			        slidesToShow: 1,
+			        slidesToScroll: 1
+			      }
+		        }
+		      ],
 			});
 		}
 		/*=====  End of For setting up sliders on the front page  ======*/
