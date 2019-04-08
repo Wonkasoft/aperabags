@@ -175,8 +175,12 @@
 
 			li:not(:last-child) {
 				border-right: 1px dotted rgba( #444, .6 );
-				padding: 4px 8px;
-				margin: 8px auto;
+
+			}
+
+			li {
+				padding: 4px 0;
+				margin: 8px 8px 8px 0;
 
 				.thankyou-label {
 					display: inline-block;

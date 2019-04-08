@@ -679,11 +679,11 @@
 			/*================================================================
 			=            Copying Shipping info to Billing info           =
 			================================================================*/
-			copy_to_billing();
-			var bill_to_check = document.getElementById( 'ship-to-different-address-checkbox' );
 
 			if ( document.querySelector( '#thwmsc_wrapper' ) ) 
 			{
+				copy_to_billing();
+				var bill_to_check = document.getElementById( 'ship-to-different-address-checkbox' );
 				var tab_links = document.querySelectorAll( '.thwmsc-tab a' );
 				var tab_btns = document.querySelectorAll( '#thwmsc_wrapper input[type=button]' );
 
