@@ -171,9 +171,13 @@
 			align-items: center;
 			justify-content: flex-start;
 			flex-wrap: wrap;
+			margin: 15px auto;
 
 			li:not(:last-child) {
 				border-right: 1px dotted rgba( #444, .6 );
+				padding: 4px 8px;
+				margin: 8px auto;
+				
 				strong {
 					display: block;
 				}
