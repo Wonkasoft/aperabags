@@ -80,6 +80,9 @@ ul.products {
 
 			@include media-breakpoint-up( md ) {
 
+				div.wonka-shop-img-wrap {
+					max-height: 570px;
+				}
 			}
 		}
 
