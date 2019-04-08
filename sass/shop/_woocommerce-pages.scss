@@ -177,7 +177,13 @@
 				border-right: 1px dotted rgba( #444, .6 );
 				padding: 4px 8px;
 				margin: 8px auto;
-				
+
+				.thankyou-label {
+					display: inline-block;
+					text-transform: uppercase;
+					width: 100%;
+				}
+
 				strong {
 					display: block;
 				}
