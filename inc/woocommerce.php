@@ -715,6 +715,7 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
     else: 
     	$add_links ='<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>';
     	$post_post_excerpt = $post_post_excerpt . $add_links;
+    	return $post_post_excerpt;
     endif;
 };
 
