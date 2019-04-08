@@ -1039,8 +1039,8 @@
 			  arrows: true,
 			  appendArrows: $( '.top-page-slider-wrap .slick-list' ),
 			  appendDots: $( '.top-page-slider-wrap .slick-list' ),
-			  prevArrow: '<button class="slick-prev" type="button"></button>',
-			  nextArrow: '<button class="slick-next" type="button"></button>',
+			  prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
 			});
 		}
 
@@ -1057,8 +1057,8 @@
 			  arrows: true,
 			  appendArrows: $( '.cta-section-slider-wrap .slick-list' ),
 			  appendDots: $( '.cta-section-slider-wrap .slick-list' ),
-			  prevArrow: '<button class="slick-prev" type="button"></button>',
-			  nextArrow: '<button class="slick-next" type="button"></button>',
+			  prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
 			});
 		}
 
@@ -1069,13 +1069,10 @@
 			  slidesToScroll: 1,
 			  autoplay: true,
 			  autoplaySpeed: 4000,
-			  fade: true,
 			  dots: true,
 			  arrows: true,
-			  appendArrows: $( 'body.home .instagram-wrap .slick-list' ),
-			  appendDots: $( 'body.home .instagram-wrap .slick-list' ),
-			  prevArrow: '<button class="slick-prev" type="button"></button>',
-			  nextArrow: '<button class="slick-next" type="button"></button>',
+			  prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
 			});
 		}
 		/*=====  End of For setting up sliders on the front page  ======*/
