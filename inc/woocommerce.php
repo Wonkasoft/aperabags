@@ -709,10 +709,9 @@ add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
  * 
  * @since 1.0.0
  */
-function wonka_filter_woocommerce_short_description( $post_post_excerpt ) { 
-    var_dump($post_post_excerpt);
-    if ( strstr( $post_post_excerpt, 'key-features-link' ) ) :
-    	return $post_post_excerpt . "second time"; 
+function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
+    if ( strstr( $post_post_excerpt, "key-features-link" ) ) :
+    	return "This was true";
     else: 
     	$add_links ='<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>';
     	$post_post_excerpt = $post_post_excerpt . $add_links;
