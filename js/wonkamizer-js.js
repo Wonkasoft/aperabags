@@ -77,6 +77,7 @@
 	  	setTimeout( function() {
 	  		document.querySelector( '#search_overlay' ).style.opacity = 1;
 	  		document.querySelector( '#search_overlay' ).style.left = 0;
+	  		document.querySelector( '#searchform input[name="s"]' ).focus();
 	  	}, 300);
 	}
 
