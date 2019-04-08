@@ -162,6 +162,24 @@
 			}
 		}
 
+		.woocommerce-thankyou-order-received {
+			padding: 15px 0;
+		}
+
+		ul.woocommerce-thankyou-order-details {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			flex-wrap: wrap;
+
+			li:not(:last-child) {
+				border-right: 1px dotted rgba( #444, .6 );
+				strong {
+					display: block;
+				}
+			}
+		}
+
 		table.woocommerce-table--order-details {
 			background: $color__background_alt;
 
@@ -170,7 +188,7 @@
 			}
 
 			tfoot {
-				
+
 				td {
 					text-align: right;
 				}
