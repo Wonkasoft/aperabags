@@ -333,20 +333,12 @@
 		{
 			scroll_direction = 'scrolled down';
 			scroll_distance = window.pageYOffset - last_scroll_top;
-			if ( scroll_distance > 100 ) 
-			{
-				window.scrollBy({ left: 0,  top: 100, behavior: 'smooth' });
-			}
 		}
 
 		if ( window.pageYOffset < last_scroll_top )
 		{
 			scroll_direction = 'scrolled up';
 			scroll_distance = last_scroll_top - window.pageYOffset;
-			if ( scroll_distance > 100 ) 
-			{
-				window.scrollBy( { left: 0,  top: 100, behavior: 'smooth' } );
-			}
 		}
 
 		last_scroll_top = window.pageYOffset;
@@ -378,6 +370,14 @@
 				}
 				else if ( window.innerWidth > 792 && win_y > img_area_top && win_y - img_area_top < target_stop ) 
 				{
+					if ( scroll_distance > 100 ) 
+					{
+						window.scrollBy({ left: 0,  top: 100, behavior: 'smooth' });
+					}
+					if ( scroll_distance > 100 ) 
+					{
+						window.scrollBy( { left: 0,  top: 100, behavior: 'smooth' } );
+					}
 					/*===============================================
 					=            Adjustment for adminbar            =
 					===============================================*/
