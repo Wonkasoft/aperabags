@@ -370,13 +370,13 @@
 				}
 				else if ( window.innerWidth > 792 && win_y > img_area_top && win_y - img_area_top < target_stop ) 
 				{
-					if ( scroll_distance > 100 && scroll_direction === 'scrolled down'  ) 
+					if ( scroll_distance > 101 && scroll_direction === 'scrolled down'  ) 
 					{
-						window.scroll({ left: 0,  top: 50, behavior: 'smooth' });
+						window.scroll({ left: 0,  top: 99, behavior: 'smooth' });
 					}
-					if ( scroll_distance > 100 && scroll_direction === 'scrolled up' ) 
+					if ( scroll_distance > 101 && scroll_direction === 'scrolled up' ) 
 					{
-						window.scroll( { left: 0,  top: -50, behavior: 'smooth' } );
+						window.scroll( { left: 0,  top: -99, behavior: 'smooth' } );
 					}
 					/*===============================================
 					=            Adjustment for adminbar            =
