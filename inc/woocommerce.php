@@ -31,6 +31,7 @@ add_action( 'after_setup_theme', 'apera_bags_woocommerce_setup' );
  * @return void
  */
 function apera_bags_woocommerce_scripts() {
+	wp_enqueue_style( 'apera-bags-woocommerce-style', get_template_directory_uri() . '/woocommerce.css' );
 	$font_path   = WC()->plugin_url() . '/assets/fonts/';
 	$inline_font = '@font-face {
 		font-family: "star";
@@ -44,7 +45,6 @@ function apera_bags_woocommerce_scripts() {
 	}';
 	wp_add_inline_style( 'apera-bags-woocommerce-style', $inline_font );
 
-	wp_enqueue_style( 'apera-bags-woocommerce-style', get_template_directory_uri() . '/woocommerce.css' );
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_woocommerce_scripts' );
 
