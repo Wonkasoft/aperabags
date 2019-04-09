@@ -25,10 +25,9 @@ $show_shipping_calculator = ! empty( $show_shipping_calculator );
 $calculator_text          = '';
 ?>
 <tr class="woocommerce-shipping-totals shipping">
-	<th colspan="1"><?php echo wp_kses_post( $package_name ); ?></th>
-	<td colspan="2"><?php _e( '(Shipping only within the US)', 'woocommerce' ); ?></td>
+	<th colspan="3"><?php echo wp_kses_post( $package_name ); ?><span class="shipping-disclosure"> <?php _e( '(US only)', 'woocommerce' ); ?></span></th>
 </tr>
-<tr>
+<tr class="shipping-methods">
 	<td colspan="3" data-title="<?php echo esc_attr( $package_name ); ?>">
 		<?php if ( $available_methods ) : ?>
 			<ul id="shipping_method" class="woocommerce-shipping-methods">
@@ -46,7 +45,7 @@ $calculator_text          = '';
 					</li>
 				<?php endforeach; ?>
 			</ul>
-			<?php if ( is_cart() || is_checkout() ) : ?>
+			<?php if ( is_cart() ) : ?>
 				<p class="woocommerce-shipping-destination">
 					<?php
 					if ( $formatted_destination ) {

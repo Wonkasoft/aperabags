@@ -1,6 +1,19 @@
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Tables
+# Products
+# Single Product
+# Checkout
+# Components
+# Widgets
+# WooCommerce Page
+--------------------------------------------------------------*/
 /**
- * WooCommerce styles override
+ * Imports
  */
+@import "variables-site/variables-site";
+@import "mixins/mixins-master";
 
 /**
  * WooCommerce color variables
@@ -9,43 +22,37 @@ $woocommerce__color-error: #e2401c;
 $woocommerce__color-success: #0f834d;
 $woocommerce__color-info: #3D9CD2;
 
-/**
- * Imports
- */
-@import "variables-site/variables-site";
-@import "mixins/mixins-master";
-
-/**
- * Shop tables
+/*
+# Tables
  */
 @import "shop/tables";
 
-/**
- * Products
+/*
+# Products
  */
 @import "shop/products";
 
-/**
- * Single product
+/*
+# Single Product
  */
 @import "shop/single-product";
 
-/**
- * Checkout
+/*
+# Checkout
  */
 @import "shop/checkout";
 
-/**
- * General WooCommerce components
+/*
+# Components
  */
 @import "shop/components";
 
-/**
- * WooCommerce widgets
+/*
+# Widgets
  */
 @import "shop/widgets";
 
-/**
- * WooCommerce cart page
+/*
+# WooCommerce Page
  */
 @import "shop/woocommerce-pages";

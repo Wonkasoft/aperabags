@@ -31,8 +31,6 @@ add_action( 'after_setup_theme', 'apera_bags_woocommerce_setup' );
  * @return void
  */
 function apera_bags_woocommerce_scripts() {
-	wp_enqueue_style( 'apera-bags-woocommerce-style', get_template_directory_uri() . '/woocommerce.css' );
-
 	$font_path   = WC()->plugin_url() . '/assets/fonts/';
 	$inline_font = '@font-face {
 		font-family: "star";
@@ -44,8 +42,9 @@ function apera_bags_woocommerce_scripts() {
 		font-weight: normal;
 		font-style: normal;
 	}';
-
 	wp_add_inline_style( 'apera-bags-woocommerce-style', $inline_font );
+
+	wp_enqueue_style( 'apera-bags-woocommerce-style', get_template_directory_uri() . '/woocommerce.css' );
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_woocommerce_scripts' );
 
@@ -375,32 +374,6 @@ function wonka_checkout_wrap_before( $checkout ) {
 
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25, 1 );
 
-function wonka_thwmsc_multi_step_before_tab_panels( $checkout ) {
-
-	ob_start();
-	$output = '';
-
-	$output .= '<div class="row wonka-row-express-checkout-btns">';
-	$output .= '<div class="col col-12">';
-	$output .= '<div class="col col-12">';
-	$output .= '<span class="express-btns-text">' . __( 'Express checkout', 'aperabags') . '</span>';
-	$output .= '</div>';
-	$output .= '<div class="express-checkout-btns">';
-	$output .= do_action( 'wonka_checkout_express_btns' );
-	$output .= '</div>';
-	$output .= '</div>';
-	$output .= '<div class="col col-12">';
-	$output .= '<div class="row below-express-checkout-btns no-gutters"><div class="col-12 col-md"><hr /></div><div class="col-12 col-md"><span class="continue-past-btns-text">' . __( 'Or continue below to pay with a credit card', 'aperabags') . '</span></div><div class="col-12 col-md"><hr /></div></div>';
-	$output .= '</div>';
-	$output .= '</div>';
-
-	$output .= ob_get_clean();
-	_e( $output ); 
-	do_action( 'wonka_checkout_login_form' );
-
-}
-add_action( 'thwmsc_multi_step_before_tab_panels', 'wonka_thwmsc_multi_step_before_tab_panels', 4 );
-
 /**
  * This is for adding custom fields to woocommerce shipping and billing fields
  * @param  array $fields all woocommerce fields
@@ -477,6 +450,7 @@ function wonka_checkout_wrap_after( $checkout ) {
 	?>
 		</div><!-- .col -->
 		<div class="col col-12 col-md-5 checkout-order-details">
+			<div class="table-responsive">
 			<table class="table table-hover">
 				<tbody>
 					<?php
@@ -535,17 +509,6 @@ function wonka_checkout_wrap_after( $checkout ) {
 
 						<?php do_action( 'woocommerce_cart_totals_after_shipping' ); ?>
 
-					<?php elseif ( WC()->cart->needs_shipping() && 'yes' === get_option( 'woocommerce_enable_shipping_calc' ) ) : ?>
-
-						<tr class="shipping">
-							<th scope="row" colspan="1"><?php _e( 'Shipping', 'woocommerce' ); ?></th>
-							<td colspan="2"><?php _e( '(Shipping only within the US)', 'woocommerce' ); ?></td>
-						</tr>
-						<tr class="shipping-methods">
-							<td></td>
-							<td colspan="2" data-title="<?php esc_attr_e( 'Shipping', 'woocommerce' ); ?>"><?php woocommerce_shipping_calculator(); ?></td>
-						</tr>
-
 					<?php endif; ?>
 
 					<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
@@ -560,7 +523,7 @@ function wonka_checkout_wrap_after( $checkout ) {
 							<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
 								<tr class="tax-rate tax-rate-<?php echo sanitize_title( $code ); ?>">
 									<th><?php echo esc_html( $tax->label ); ?></th>
-									<td><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
+									<td colspan="2"><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
 								</tr>
 							<?php endforeach; ?>
 						<?php else : ?>
@@ -582,6 +545,7 @@ function wonka_checkout_wrap_after( $checkout ) {
 
 				</tfoot>
 			</table>
+		</div><!-- .table-responsive -->
 		</div><!-- .col-12 -->
 		</div><!-- .row -->
 		<?php
