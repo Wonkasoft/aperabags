@@ -24,8 +24,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="cart_totals <?php echo ( WC()->customer->has_calculated_shipping() ) ? 'calculated_shipping' : ''; ?>">
 
 	<?php do_action( 'woocommerce_before_cart_totals' ); ?>
-
-	<table cellspacing="0" class="shop_table shop_table_responsive table table-hover">
+	<div class="table-responsive">
+	<table cellspacing="0" class="shop_table table table-hover">
 		<thead>
 			<tr>
 				<th scope="col" colspan="2">
@@ -38,6 +38,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<th scope="row"><?php _e( 'Subtotal', 'woocommerce' ); ?></th>
 			<td data-title="<?php esc_attr_e( 'Subtotal', 'woocommerce' ); ?>"><?php wc_cart_totals_subtotal_html(); ?></td>
 		</tr>
+		<?php if ( wc_coupons_enabled() ) : ?>
+			<tr class="cart-promo">
+				<th colspan="2">
+					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+						<div class="panel panel-default activate-panel" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+							<div class="panel-heading" role="tab" id="headingOne">
+								<span class="panel-title">
+										Add Promo Code (Optional)
+								</span>
+							</div>
+						</div>
+					</div>
+					<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+						<div class="panel-body">
+							<div class="coupon form-group form-inline">
+								<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
+								<?php do_action( 'woocommerce_cart_coupon' ); ?>
+							</div>
+						</div>
+					</div>
+				</th>
+			</tr>
+		<?php endif; ?>
 
 		<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
 			<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
@@ -91,29 +114,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endif; ?>
 		<?php endif; ?>
 
-		<?php if ( wc_coupons_enabled() ) : ?>
-			<tr class="cart-promo">
-				<th colspan="2">
-					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-						<div class="panel panel-default activate-panel" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-							<div class="panel-heading" role="tab" id="headingOne">
-								<span class="panel-title">
-										Add Promo Code (Optional)
-								</span>
-							</div>
-						</div>
-					</div>
-					<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-						<div class="panel-body">
-							<div class="coupon form-group form-inline">
-								<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
-								<?php do_action( 'woocommerce_cart_coupon' ); ?>
-							</div>
-						</div>
-					</div>
-				</th>
-			</tr>
-		<?php endif; ?>
 		<?php do_action( 'woocommerce_cart_totals_before_order_total' ); ?>
 
 		<tr class="order-total">
@@ -124,7 +124,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php do_action( 'woocommerce_cart_totals_after_order_total' ); ?>
 	</tbody>
 	</table>
-
+	</div>
 	<div class="wc-proceed-to-checkout">
 		<?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
 	</div>

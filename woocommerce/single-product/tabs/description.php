@@ -180,12 +180,12 @@ if ( !empty( $product_specs_data ) ) : ?>
 				</tr>
 				<tr>
 					<td>
-						Water and stain resistant fabric (tdat&#39;s easy to clean)
+						Water and stain resistant fabric (that&#39;s easy to clean)
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Laser Vented Compartments (allows your gear to breatde)
+						Laser Vented Compartments (allows your gear to breathe)
 					</td>
 				</tr>
 				<tr>
@@ -218,7 +218,7 @@ if ( !empty( $product_specs_data ) ) : ?>
 				</tr>
 				<tr>
 					<td>
-						Durable fabrics and material (stand up to tde rigors of life)
+						Durable fabrics and material (stand up to the rigors of life)
 					</td>
 				</tr>
 				<tr>

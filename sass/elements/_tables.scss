@@ -1,4 +1,16 @@
 table {
 	margin: 0 0 1.5em;
 	width: 100%;
+
+	&.table {
+
+		th {
+			font-family: $font__main_jose;
+
+			span.shipping-disclosure {
+				margin-left: 8px;
+				font-weight: 500;
+			}
+		}
+	}
 }

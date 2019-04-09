@@ -54,6 +54,20 @@
 			}
 		}
 
+		tr.shipping-methods {
+
+			td {
+				text-align: left;
+				
+				ul#shipping_method {
+
+					label {
+						margin-left: 8px;
+					}
+				}
+			}
+		}
+
 		/*====================================================
 		=            This is for the archive page            =
 		====================================================*/
@@ -92,16 +106,6 @@
 
 					.wonka-btn {
 						margin-left: 15px;
-					}
-				}
-			}
-
-			div.checkout-order-details {
-
-				ul#shipping_method {
-
-					label {
-						margin-left: 8px;
 					}
 				}
 			}
@@ -144,22 +148,6 @@
 		div#checkout_paypal_message,
 		div.wc-amazon-checkout-message {
 			display: none;
-		}
-		
-		div.wonka-row-express-checkout-btns {
-			margin-top: 15px;
-
-			.express-btns-text {
-				flex: 1 100%;
-			}
-			
-			div.express-checkout-btns {
-				display: flex;
-				align-items: center;
-				justify-content: space-evenly;
-				flex-wrap: wrap;
-
-			}
 		}
 
 		.woocommerce-thankyou-order-received {
@@ -218,35 +206,67 @@
 				}
 			}
 		}
+		div.wonka-row-express-checkout-btns {
 
-		div.below-express-checkout-btns {
-			align-items: center;
-			text-align: center;
-			margin: 15px auto;
+            div.express-btns-text-wrap {
+                position: relative;
+                width: 100%;
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
+                
+                .express-btns-text {
+                    position: relative;
+                    top: 11px;
+                    padding: 2px 15px;
+                    background: #ffffff;
+                    z-index: 10;
+                }
+            }
 
-			hr {
-				margin: 8px auto;
-				height: 2px;
-				background: rgba( #333, .5 );
-			}
+    		div.express-checkout-btns {
+    			align-items: center;
+    			text-align: center;
+    			margin: 0 auto 15px;
+                padding: 12px 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                flex-wrap: wrap;
 
-			> div {
+                > div:not(:last-child) {
+                    margin-bottom: 8px;
+                }
 
-			}
+    			hr {
+    				margin: 8px auto;
+    				height: 2px;
+    				background: rgba( #333, .5 );
+    			}
+    		}
+			
+            span.continue-past-btns-text {
+                display: inline-block;
+                text-align: center;
+    			color: #444444;
+    			font-weight: 700;
+    			padding: 4px 15px;
+    		}
 
-			span.continue-past-btns-text {
-				color: #444444;
-				font-weight: 700;
-				padding: 4px 15px;
-			}
+            @include media-breakpoint-up( md ) {
 
-			@include media-breakpoint-up( md ) {
+                div.express-checkout-btns {
+
+                    > div {
+                        margin-bottom: 0;
+                    }
+                }
 
 				span.continue-past-btns-text {
 					white-space: nowrap;
 				}
 			}
-		}
+        }
 		/*=====  End of This is for the checkout page  ======*/
 		
 		/*===========================================================
@@ -302,6 +322,13 @@
 						td {
 							text-align: right;
 						}
+
+                        &.shipping-methods {
+
+                            td {
+                                text-align: left;
+                            }
+                        }
 
 						&.cart-promo {
 
@@ -427,9 +454,19 @@
 	}
 }
 
-.woocommerce-cart {
+body.woocommerce-checkout,
+body.woocommerce-cart {
 
-	.entry-title {
-		display: none;
-	}
+    div#primary {
+
+    	main#main {
+
+    		article.page {
+
+        		header.entry-header {
+        			display: none;
+        		}
+        	}
+        }
+    }
 }
