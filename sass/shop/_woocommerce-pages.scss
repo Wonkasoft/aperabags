@@ -129,7 +129,7 @@
 			ul {
 				list-style: none;
 				margin: 0;
-				padding: 0 8px;
+				padding: 0;
 			}
 
 			input[type=checkbox] {
@@ -140,14 +140,53 @@
 				padding: 0 8px;
 			}
 
-			ul.payment_methods .stripe-card-group {
-				width: 100%;
-			}
+			ul.payment_methods {
+
+                li {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    border: 1px inset rgba( #444, .7 );
+                    border-top: none;
+                    width: 100%;
+                    padding: 8px;
+
+                    &:first-child {
+                        border-top: 1px inset rgba( #444, .7 );
+                    }
+
+                    &.payment_method_paypal {
+
+                        img {
+                            display: none;
+                        }
+                    }
+                }
+
+                .stripe-card-group {
+    				width: 100%;
+    			}
+
+
+
+
+            }
 
 			.wc-stripe-elements-field {
 				width: 100%;
 			}
 		}
+
+        div.thwmsc-buttons {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            #action-prev {
+                align-self: flex-start;
+            }
+        }
 
 		div#checkout_paypal_message,
 		div.wc-amazon-checkout-message {

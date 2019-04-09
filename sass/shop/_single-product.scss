@@ -107,6 +107,7 @@
 			align-items: flex-start;
 			justify-content: space-between;
 			flex-wrap: wrap;
+			@include prefix( transition, $trans_3, o moz webkit );
 
 			div.product-on-sale {
 				flex: 1 100%;
@@ -115,6 +116,7 @@
 			div.wonka-single-product-img-area {
 				position: relative;
 				flex: 1 100%;
+				height: 100%;
 
 				div.flex-control-wrapper {
 					overflow: hidden;
@@ -126,6 +128,7 @@
 					align-items: flex-start;
 					justify-content: center;
 					flex-direction: row-reverse;
+					height: 100%;
 					max-width: 715px;
 
 					.woocommerce-product-gallery__trigger {

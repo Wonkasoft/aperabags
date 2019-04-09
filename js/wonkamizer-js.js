@@ -16,7 +16,7 @@
 	/* vars set for single product page */
 	if ( document.querySelector( '.product-img-section' ) ) 
 	{
-		var product_img_section, wonka_single_product_img_area, thumbnail_controls, summary_section, slide_view_box, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop, scroll_stick, one_click = true;
+		var product_img_section, product_img_section_height, wonka_single_product_img_area, thumbnail_controls, summary_section, slide_view_box, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop, one_click = true;
 	}
 	/*=====  End of vars set for script use  ======*/
 	
@@ -31,6 +31,10 @@
   		setTimeout( function() 
   			{
   				window.scrollBy({ left: 0,top: -30, behavior: 'smooth'});
+  				setTimeout( function() 
+  					{
+  						one_click = true;
+  					}, 850 );
   			}, 850 );
 	}
 
@@ -39,6 +43,7 @@
 		if ( document.querySelector( '.product-img-section' ) ) 
 		{
 			product_img_section = document.querySelector( '.product-img-section' );
+			product_img_section_height = document.querySelector( '.product-img-section' ).offsetHeight;
 			wonka_single_product_img_area = document.querySelector( '.wonka-single-product-img-area' );
 			thumbnail_controls = document.querySelector( '.flex-control-nav' );
 			summary_section = document.querySelector( '.summary.entry-summary' );
@@ -304,10 +309,12 @@
 				if ( active_slide_img.offsetHeight > 760 ) 
 				{
 					slide_view_box.style.height = 760 + 'px';
+					product_img_section.style.height = product_img_section_height - 100 + slide_view_box.offsetHeight + 'px';
 				}
 				else
 				{
 					slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
+					product_img_section.style.height = product_img_section_height - 100 + slide_view_box.offsetHeight + 'px';
 				}
 			}, 450);
 	}
@@ -341,80 +348,26 @@
 				win_y = window.pageYOffset;
 				img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
 				target_stop = wonka_single_product_img_area.offsetHeight - slide_view_box.offsetHeight;
-				scroll_stick = slide_control.parentElement.offsetTop + img_area_top;
 
 				/*=================================================
 				=            This initiates the scroll            =
 				=================================================*/
-				if ( win_y < img_area_top )
+				if ( window.innerWidth > 792 && win_y < img_area_top )
 				{
 				console.log("{win_y < img_area_top} ");
 					slide_view_box.classList.remove( 'sticky-on' );
 					slide_view_box.style.top = '';
 
-				console.log(slide_control.parentElement.previousElementSibling);
-					if ( scroll_direction === 'scrolled up' && slide_control.parentElement.previousElementSibling !== null ) 
-					{
-						if ( slide_view_box.offsetTop === 0 ) 
-						{
-							one_click = false;
-							slide_control.parentElement.previousElementSibling.firstElementChild.click();
-							active_img_adjustment();
-							window.scrollBy( 0, 0 );
-							window.scrollTo({ left: 0, top: img_area_top, behavior: 'smooth' });
-							setTimeout( function() 
-								{
-									one_click = true;
-								}, 850 );
-							return;
-						}
-					}
 				}
-
-				if ( win_y > img_area_top + target_stop )
+				else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop )
 				{
 				console.log("{win_y > img_area_top + target_stop} ");
 					slide_view_box.classList.remove( 'sticky-on' );
 					slide_view_box.style.top = target_stop + 'px';
-
-					if ( scroll_direction === 'scrolled down' && slide_control.parentElement.nextElementSibling.firstElementChild !== null ) 
-					{
-						if ( slide_view_box.offsetTop == target_stop )
-						{
-							one_click = false;
-							slide_control.parentElement.nextElementSibling.firstElementChild.click();
-							active_img_adjustment();
-							window.scrollBy( 0, 0 );
-							window.scrollTo({ left: 0, top: target_stop, behavior: 'smooth' });
-							setTimeout( function() 
-								{
-									one_click = true;
-								}, 850 );
-							return;
-						}
-					}
-
-					if ( scroll_direction === 'scrolled up' && slide_control.parentElement.previousElementSibling !== null ) 
-					{
-						if ( slide_view_box.offsetTop === 0 ) 
-						{
-							one_click = false;
-							slide_control.parentElement.previousElementSibling.firstElementChild.click();
-							active_img_adjustment();
-							window.scrollBy( 0, 0 );
-							window.scrollTo({ left: 0, top: target_stop, behavior: 'smooth' });
-							setTimeout( function() 
-								{
-									one_click = true;
-								}, 850 );
-							return;
-						}
-					}
 				}
-
-				if ( win_y > img_area_top && win_y < img_area_top + target_stop ) 
+				else if ( window.innerWidth > 792 && win_y > img_area_top && win_y - img_area_top < target_stop ) 
 				{
-				console.log("{win_y > img_area_top && win_y < img_area_top + target_stop} ");
+				console.log("{win_y > img_area_top && win_y - img_area_top < target_stop} ");
 					/*===============================================
 					=            Adjustment for adminbar            =
 					===============================================*/
@@ -1017,15 +970,11 @@
 				e.preventDefault();
 				e.stopImmediatePropagation();
 				e.stopPropagation();
-				// if (one_click) 
-				// {
-				// 	thumbnail_scroll();
-				// 	stickySummary(); 
-				// }
-				// else
-				// {
-				// 	window.scroll(0,0);
-				// }
+				if (one_click) 
+				{
+					thumbnail_scroll();
+					stickySummary(); 
+				}
 			};
 		}
 		/*=====  End of For single product page  ======*/
@@ -1131,6 +1080,7 @@
 						e.preventDefault();
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
+							one_click = false;
 							scrollToSection( 'product-statement' );
 						}
 					} );
@@ -1145,6 +1095,7 @@
 						e.preventDefault();
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
+							one_click = false;
 							scrollToSection( 'product-statement' );
 						}
 					} );
@@ -1159,6 +1110,7 @@
 						e.preventDefault();
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
+							one_click = false;
 							scrollToSection( 'reviews' );
 						}
 					} );
