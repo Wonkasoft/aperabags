@@ -333,12 +333,20 @@
 		{
 			scroll_direction = 'scrolled down';
 			scroll_distance = window.pageYOffset - last_scroll_top;
+			if ( scroll_distance > 100 ) 
+			{
+				window.scrollBy({ left: 0,  top: 100, behavior: 'smooth' });
+			}
 		}
 
 		if ( window.pageYOffset < last_scroll_top )
 		{
 			scroll_direction = 'scrolled up';
 			scroll_distance = last_scroll_top - window.pageYOffset;
+			if ( scroll_distance > 100 ) 
+			{
+				window.scrollBy( { left: 0,  top: 100, behavior: 'smooth' } );
+			}
 		}
 
 		last_scroll_top = window.pageYOffset;
@@ -397,12 +405,19 @@
 					/*======  End of Adjustment for adminbar  ======*/
 					thumbnail_controls.forEach( function( item, i ) 
 						{
-							if ( slide_view_box.offsetTop > item.offsetTop - parseInt( slide_view_box.style.top ) && slide_view_box.offsetTop < item.offsetTop + item.offsetHeight ) 
+							if ( scroll_direction === 'scrolled down' && slide_view_box.offsetTop > item.offsetTop && slide_view_box.offsetTop < item.offsetTop + item.offsetHeight ) 
 							{
-								console.log( "{slide_view_box.offsetTop} " + slide_view_box.offsetTop );
-								console.log( "{item.offsetTop} " + item.offsetTop );
+								item.nextElementSibling.firstElementChild.click();
+								window.scrollBy(0,0);
+								window.scrollTo({ left: 0, top: img_area_top + item.nextElementSibling.offsetTop - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
+								active_img_adjustment();
+								return;
+							}
+							if ( scroll_direction === 'scrolled up' && slide_view_box.offsetTop > item.offsetTop && slide_view_box.offsetTop < item.offsetTop + item.offsetHeight ) 
+							{
 								item.firstElementChild.click();
 								window.scrollBy(0,0);
+								window.scrollTo({ left: 0, top: img_area_top + item.offsetTop - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
 								active_img_adjustment();
 								return;
 							}
