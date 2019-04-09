@@ -31,7 +31,7 @@
   		setTimeout( function() 
   			{
   				window.scrollBy({ left: 0,top: -30, behavior: 'smooth'});
-  			}, 825 );
+  			}, 850 );
 	}
 
 	function load_page_vars() 
