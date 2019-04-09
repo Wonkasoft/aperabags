@@ -336,6 +336,10 @@ section.about-brand-section {
 			}
 		}
 	}
+}
+
+section.our-cause-section,
+section.about-brand-section {
 
 	div#videoModal, div#videoModalpop {
 		align-items: center;
@@ -402,7 +406,7 @@ section.about-brand-section {
 
 						&:hover {
 							animation-name: wiggle;
-						  	animation-duration: .4s;
+								animation-duration: .4s;
 						}
 					}
 				}
