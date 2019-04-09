@@ -31,10 +31,7 @@
   		setTimeout( function() 
   			{
   				window.scrollBy({ left: 0,top: -30, behavior: 'smooth'});
-  				setTimeout( function() 
-  					{
-  						one_click = true;
-  					}, 850 );
+  				one_click_timer();
   			}, 850 );
 	}
 
@@ -45,11 +42,19 @@
 			product_img_section = document.querySelector( '.product-img-section' );
 			product_img_section_height = document.querySelector( '.product-img-section' ).offsetHeight;
 			wonka_single_product_img_area = document.querySelector( '.wonka-single-product-img-area' );
-			thumbnail_controls = document.querySelector( '.flex-control-nav' );
+			thumbnail_controls = document.querySelectorAll( '.flex-control-nav li' );
 			summary_section = document.querySelector( '.summary.entry-summary' );
 			slide_view_box = document.querySelector( '.flex-viewport' );
 			win_y = window.pageYOffset;
 		}
+	}
+
+	function one_click_timer() 
+	{
+		setTimeout( function() 
+			{
+				one_click = true;
+			}, 400 );
 	}
 
 	function slide_adjustment()
@@ -354,20 +359,17 @@
 				=================================================*/
 				if ( window.innerWidth > 792 && win_y < img_area_top )
 				{
-				console.log("{win_y < img_area_top} ");
 					slide_view_box.classList.remove( 'sticky-on' );
 					slide_view_box.style.top = '';
 
 				}
 				else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop )
 				{
-				console.log("{win_y > img_area_top + target_stop} ");
 					slide_view_box.classList.remove( 'sticky-on' );
 					slide_view_box.style.top = target_stop + 'px';
 				}
 				else if ( window.innerWidth > 792 && win_y > img_area_top && win_y - img_area_top < target_stop ) 
 				{
-				console.log("{win_y > img_area_top && win_y - img_area_top < target_stop} ");
 					/*===============================================
 					=            Adjustment for adminbar            =
 					===============================================*/
@@ -393,35 +395,18 @@
 						slide_view_box.style.top = 30 + 'px';
 					}
 					/*======  End of Adjustment for adminbar  ======*/
-
-					if ( slide_view_box.offsetTop >= slide_control.offsetTop + slide_control.offsetHeight && one_click && scroll_direction === 'scrolled down' && slide_control.parentElement.nextElementSibling.firstElementChild !== null ) 
-					{
-						one_click = false;	
-						slide_control.parentElement.nextElementSibling.firstElementChild.click();
-						active_img_adjustment();
-						window.scrollBy( 0, 10 );
-						window.scrollTo({ left: 0, top: slide_control.parentElement.nextElementSibling.firstElementChild.offsetTop + img_area_top - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
-						setTimeout( function() 
+					thumbnail_controls.forEach( function( item, i ) 
+						{
+							if ( slide_view_box.offsetTop > item.offsetTop - parseInt( slide_view_box.style.top ) && slide_view_box.offsetTop < item.offsetTop + item.offsetHeight ) 
 							{
-								one_click = true;
-							}, 850 );
-						return;
-					}
-
-					if ( slide_view_box.offsetTop <= slide_control.offsetTop - parseInt( slide_view_box.style.top ) && one_click && scroll_direction === 'scrolled up' && slide_control.parentElement.previousElementSibling.firstElementChild !== null ) 
-					{
-						one_click = false;	
-						slide_control.parentElement.previousElementSibling.firstElementChild.click();
-						active_img_adjustment();
-						window.scrollBy( 0, 10 );
-						window.scrollTo({ left: 0, top: slide_control.parentElement.previousElementSibling.firstElementChild.offsetTop + img_area_top - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
-						setTimeout( function() 
-							{
-								one_click = true;
-							}, 850 );
-						return;
-
-					}
+								console.log( "{slide_view_box.offsetTop} " + slide_view_box.offsetTop );
+								console.log( "{item.offsetTop} " + item.offsetTop );
+								item.firstElementChild.click();
+								window.scrollBy(0,0);
+								active_img_adjustment();
+								return;
+							}
+						});
 				}
 				/*=====  End of This initiates the scroll  ======*/
 			}
@@ -959,6 +944,7 @@
 		===============================================*/
 		if ( document.querySelector( 'body.single-product' ) ) 
 		{	
+			img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
 
 			if ( window.pageYOffset > document.querySelector( '#main' ).offsetTop ) 
 			{
@@ -967,6 +953,7 @@
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
+				
 				e.preventDefault();
 				e.stopImmediatePropagation();
 				e.stopPropagation();
