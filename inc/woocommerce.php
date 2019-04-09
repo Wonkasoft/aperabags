@@ -763,7 +763,7 @@ add_action( 'woocommerce_after_add_to_cart_button', 'wonka_express_checkout_add'
  */
 function wonka_before_comment_meta_add( $comment ) {
 	?>
-		<div class="wonka-rating-and-meta-wrap col-4">
+		<div class="wonka-rating-and-meta-wrap col-12 col-md-4">
 		<?php
 		/**
 		 * The woocommerce_review_before hook
@@ -779,7 +779,7 @@ add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta
 function wonka_before_comment_text_add( $comment ) {
 	?>
 		</div><!-- .wonka-rating-and-meta-wrap -->
-		<div class="wonka-review-text-wrap col-7">
+		<div class="wonka-review-text-wrap col-12 col-md-7">
 	<?php
 }
 add_action( 'woocommerce_review_before_comment_text', 'wonka_before_comment_text_add', 5 );

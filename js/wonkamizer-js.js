@@ -784,10 +784,12 @@
 								{
 									reviews_top.scrollIntoView({behavior: 'smooth'});
 								}, 500, comment_list );
+							more_reviews.innerText = 'More Reviews';
 						}
 						else
 						{
 							comment_list.style.height = 100 + '%';
+							more_reviews.innerText = 'Less Reviews';
 						}
 					});
 			}
