@@ -497,7 +497,7 @@ function wonka_checkout_wrap_after( $checkout ) {
 
 					<?php if ( wc_coupons_enabled() ) : ?>
 						<tr class="cart-promo">
-							<th colspan="2">
+							<th colspan="3">
 								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 									<div class="panel panel-default activate-panel" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
 										<div class="panel-heading" role="tab" id="headingOne">

@@ -111,6 +111,10 @@
 			}
 		}
 
+        .woocommerce-SavedPaymentMethods-saveNew {
+            display: none;
+        }
+
 		span.woocommerce-input-wrapper {
 			width: 100%;
 
@@ -235,11 +239,12 @@
     			align-items: center;
     			text-align: center;
     			margin: 0 auto 15px;
-                padding: 12px 0;
+                padding: 12px 8px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 flex-wrap: wrap;
+                min-width: 170px;
 
                 > div:not(:last-child) {
                     margin-bottom: 8px;
@@ -267,7 +272,11 @@
                     div.express-checkout-btns {
 
                         > div {
-                            margin-bottom: 0 !important;
+                            margin: 0 4px 0 0 !important;
+                        }
+
+                        > div:first-child {
+                            margin-left: 4px;
                         }
                     }
                 }
@@ -370,9 +379,28 @@
 								}
 							}
 
-							input {
-								width: 50%;
-							}
+							div#collapseOne {
+
+                                input {
+                                    width: 55%;
+                                    line-height: 1.1;
+                                    padding: 8px;
+                                    border-radius: 100px 0 0 100px;
+                                    @include font-size( 1.1 );
+
+                                    &::placeholder {
+                                        font-style: italic;
+                                    }
+                                }
+
+                                button.wonka-btn {
+                                    margin-left: -3px;
+                                    padding: 8px;
+                                    border-radius: 0 100px 100px 0;
+                                    line-height: 1.1;
+                                    @include font-size( 1.1 );
+                                }
+                            }
 						}
 					}
 				}
@@ -416,6 +444,64 @@
 					background: #ffffff;
 				}
 			}
+
+            .cart-promo {
+
+                div#accordion {
+
+                    div.activate-panel {
+                        cursor: pointer;
+
+                        .panel-title {
+                            position: relative;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+
+                            &:after {
+                                content: "+";
+                                display: inline-block;
+                                @include font-size( 1.6 );
+                                @include prefix( transition, all .3s ease-in-out, o moz webkit );
+                            }
+                        }
+
+                        &[aria-expanded=true] {
+
+                            .panel-title {
+
+                                &:after {
+                                    content: "-";
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                div#collapseOne {
+
+                    input {
+                        width: 55%;
+                        line-height: 1.1;
+                        padding: 8px;
+                        border-radius: 100px 0 0 100px;
+                        @include font-size( 1.1 );
+
+                        &::placeholder {
+                            font-style: italic;
+                        }
+                    }
+
+                    button.wonka-btn {
+                        margin-left: -3px;
+                        padding: 8px;
+                        border-radius: 0 100px 100px 0;
+                        line-height: 1.1;
+                        @include font-size( 1.1 );
+                    }
+                }
+            }
 		}
 
 		&.main-page {
