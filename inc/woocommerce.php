@@ -160,15 +160,16 @@ if ( ! function_exists( 'apera_bags_woocommerce_wrapper_before' ) ) {
 	 */
 	function apera_bags_woocommerce_wrapper_before() {
 		global $post;
-		$ws_post_type = ( !empty( $post->post_type ) ) ? ' main-' . $post->post_type: '';
-		$ws_post_slug = ( !empty( $post->post_name ) ) ? ' main-' . $post->post_name: '';
+
+		$ws_post_type = ( ! empty( $post->post_type ) ) ? ' main-' . $post->post_type : '';
+		$ws_post_slug = ( ! empty( $post->post_name ) ) ? ' main-' . $post->post_name : '';
 		?>
 		<div id="primary" class="content-area">
-			<main id="main" class="site-main<?php esc_attr( $ws_post_slug . $ws_post_type ); ?>" role="main">
-				<?php
-			}
+			<main id="main" class="site-main<?php echo esc_attr( $ws_post_slug . $ws_post_type ); ?>" role="main">
+		<?php
 		}
-		add_action( 'woocommerce_before_main_content', 'apera_bags_woocommerce_wrapper_before' );
+}
+add_action( 'woocommerce_before_main_content', 'apera_bags_woocommerce_wrapper_before' );
 
 		if ( ! function_exists( 'apera_bags_woocommerce_wrapper_after' ) ) {
 	/**
@@ -251,15 +252,15 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 function setting_up_image_flipper_class( $classes ) {
 	global $product;
 	$post_type = get_post_type( get_the_ID() );
-		if ( ! is_admin() ) {
-			if ( $post_type == 'product' ) {
-				$attachment_ids = $product->get_gallery_image_ids( $product );
-				if ( $attachment_ids ) {
-					$classes[] = 'pif-has-gallery';
-				}
+	if ( ! is_admin() ) {
+		if ( $post_type == 'product' ) {
+			$attachment_ids = $product->get_gallery_image_ids( $product );
+			if ( $attachment_ids ) {
+				$classes[] = 'pif-has-gallery';
 			}
 		}
-		return $classes;
+	}
+	return $classes;
 
 }
 

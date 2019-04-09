@@ -1,6 +1,10 @@
 <?php
 /**
+<<<<<<< HEAD
  * Template Name: Page no Title
+=======
+ * Template Name: Page-NoTitle
+>>>>>>> 1afdf9b699f12844808c21f7aad8a37bc7a461a1
  *
  * This is the template that displays all pages by default.
  * Please note that this is the WordPress construct of pages
@@ -13,14 +17,16 @@
  */
 
 global $post;
-$ws_post_type = ( ! empty( $post->post_type ) ) ? ' main-' . $post->post_type: '';
-$ws_post_slug = ( ! empty( $post->post_name ) ) ? ' main-' . $post->post_name: '';
+
+$ws_post_type = ( ! empty( $post->post_type ) ) ? ' main-' . $post->post_type : '';
+$ws_post_slug = ( ! empty( $post->post_name ) ) ? ' main-' . $post->post_name : '';
+$ws_classes = $ws_post_slug . $ws_post_type;
 
 get_header();
 ?>
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main<?php echo esc_attr( $ws_post_slug . $ws_post_type ); ?>">
+		<main id="main" class="site-main<?php echo esc_attr( $ws_classes ); ?>">
 
 		<?php
 		while ( have_posts() ) :
