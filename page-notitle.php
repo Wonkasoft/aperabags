@@ -1,10 +1,6 @@
 <?php
 /**
-<<<<<<< HEAD
  * Template Name: Page no Title
-=======
- * Template Name: Page-NoTitle
->>>>>>> 1afdf9b699f12844808c21f7aad8a37bc7a461a1
  *
  * This is the template that displays all pages by default.
  * Please note that this is the WordPress construct of pages
