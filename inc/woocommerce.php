@@ -400,44 +400,28 @@ function wonka_override_checkout_fields( $fields ) {
 	return $fields;
 }
 
-add_filter( 'woocommerce_package_rates', 'ws_show_shipping_method_based_on_state', 10, 2 );
+add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free_shipping' );
 
 /**
- * [ws_show_shipping_method_based_on_state description]
- * @param  array $available_shipping_methods shipping methods
- * @param  array $package                    packages
- * @return array                             available shipping methods
+ * Limit the availability of this shipping method based
+ * on the destination state.
+ *
+ * Restricted locations include Alaska, American Samoa,
+ * Guam, Hawaii, North Mariana Islands, Puerto Rico,
+ * US Minor Outlying Islands, and the US Virgin Islands.
+ *
+ * @param bool $is_available Is this shipping method available?
+ * @return bool
  */
-function ws_show_shipping_method_based_on_state( $available_shipping_methods, $package ) {
+function ws_restrict_free_shipping( $is_available ) {
+  $restricted = array( 'AK', 'AS', 'GU', 'HI', 'MP', 'PR', 'UM', 'VI' );
 
-    $states_list = array( 'AK', 'HI', 'PR', 'GU', 'AS', 'VI', 'UM' );
-
-    var_dump($available_shipping_methods);
-    $eligible_services_for_states_list  =   array(
-            'wf_shipping_usps:flat_rate_box_priority',
-            'wf_shipping_usps:flat_rate_box_express',
-            'wf_shipping_usps:D_FIRST_CLASS',
-            'wf_shipping_usps:D_EXPRESS_MAIL',
-            'wf_shipping_usps:D_STANDARD_POST',
-            'wf_shipping_usps:D_MEDIA_MAIL',
-            'wf_shipping_usps:D_LIBRARY_MAIL',
-            'wf_shipping_usps:D_PRIORITY_MAIL',
-            'wf_shipping_usps:I_EXPRESS_MAIL',
-            'wf_shipping_usps:I_PRIORITY_MAIL',
-            'wf_shipping_usps:I_GLOBAL_EXPRESS',
-            'wf_shipping_usps:I_FIRST_CLASS',
-            'wf_shipping_usps:I_POSTCARDS',         
-        );
-
-    // Basically, below code will reset shipping services if the shipping
-    // state is other than defined states_list.
-    if ( !in_array(WC()->customer->shipping_state, $states_list) ) {
-        foreach ( $eligible_services_for_states_list as &$value ) {
-            unset( $available_shipping_methods[$value] );       
-        }
+  foreach ( WC()->cart->get_shipping_packages() as $package ) {
+    if ( in_array( $package['destination']['state'], $restricted ) ) {
+      return false;
     }
-
-    return $available_shipping_methods;
+  }
+  return $is_available;
 }
 
 add_filter( 'woocommerce_checkout_fields' , 'wonka_override_checkout_fields' );
