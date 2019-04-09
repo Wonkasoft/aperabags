@@ -255,10 +255,13 @@
 
             @include media-breakpoint-up( md ) {
 
-                div.express-checkout-btns {
+                > div {
 
-                    > div {
-                        margin-bottom: 0;
+                    div.express-checkout-btns {
+
+                        > div {
+                            margin-bottom: 0;
+                        }
                     }
                 }
 
@@ -452,6 +455,13 @@
 			}
 		}
 	}
+}
+
+body.woocommerce-edit-account {
+
+    .wonka-form-row.first-row {
+        margin-bottom: 15px;
+    }
 }
 
 body.woocommerce-checkout,

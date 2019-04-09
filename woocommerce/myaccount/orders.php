@@ -81,6 +81,7 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 		</tbody>
 	</table>
 </div>
+</div><!-- .col-10 -->
 	<?php do_action( 'woocommerce_before_account_orders_pagination' ); ?>
 
 	<?php if ( 1 < $customer_orders->max_num_pages ) : ?>
@@ -103,5 +104,6 @@ do_action( 'woocommerce_before_account_orders', $has_orders ); ?>
 		<?php _e( 'No order has been made yet.', 'woocommerce' ); ?>
 	</div>
 <?php endif; ?>
+</div><!-- .row -->
 
 <?php do_action( 'woocommerce_after_account_orders', $has_orders ); ?>

@@ -380,3 +380,37 @@
 	}
 }
 /*=====  End of Cart Menu Styles  ======*/
+
+/*============================================================
+=            This is for the my account dashboard            =
+============================================================*/
+div.woocommerce {
+
+	nav.woocommerce-MyAccount-navigation {
+		position: relative;
+		padding: 15px 8px;
+		background: $color__background_alt;
+		border-left: 1px dotted rgba( #444444, .6 );
+		border-right: 1px dotted rgba( #444444, .6 );
+
+		ul {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			flex-wrap: wrap;
+
+			li{
+				flex: 1 100%;
+				height: 30px;
+				margin-bottom: 8px;
+
+				a.wonka-btn {
+					padding: 2px 4px;
+					line-height: 1;
+					@include font-size( .8 );
+				}
+			}
+		}
+	}
+}
+/*=====  End of This is for the my account dashboard  ======*/
