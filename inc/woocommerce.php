@@ -400,6 +400,46 @@ function wonka_override_checkout_fields( $fields ) {
 	return $fields;
 }
 
+add_filter( 'woocommerce_package_rates', 'ws_show_shipping_method_based_on_state', 10, 2 );
+
+/**
+ * [ws_show_shipping_method_based_on_state description]
+ * @param  array $available_shipping_methods shipping methods
+ * @param  array $package                    packages
+ * @return array                             available shipping methods
+ */
+function ws_show_shipping_method_based_on_state( $available_shipping_methods, $package ) {
+
+    $states_list = array( 'AK', 'HI', 'PR', 'GU', 'AS', 'VI', 'UM' );
+
+    var_dump($available_shipping_methods);
+    $eligible_services_for_states_list  =   array(
+            'wf_shipping_usps:flat_rate_box_priority',
+            'wf_shipping_usps:flat_rate_box_express',
+            'wf_shipping_usps:D_FIRST_CLASS',
+            'wf_shipping_usps:D_EXPRESS_MAIL',
+            'wf_shipping_usps:D_STANDARD_POST',
+            'wf_shipping_usps:D_MEDIA_MAIL',
+            'wf_shipping_usps:D_LIBRARY_MAIL',
+            'wf_shipping_usps:D_PRIORITY_MAIL',
+            'wf_shipping_usps:I_EXPRESS_MAIL',
+            'wf_shipping_usps:I_PRIORITY_MAIL',
+            'wf_shipping_usps:I_GLOBAL_EXPRESS',
+            'wf_shipping_usps:I_FIRST_CLASS',
+            'wf_shipping_usps:I_POSTCARDS',         
+        );
+
+    // Basically, below code will reset shipping services if the shipping
+    // state is other than defined states_list.
+    if ( !in_array(WC()->customer->shipping_state, $states_list) ) {
+        foreach ( $eligible_services_for_states_list as &$value ) {
+            unset( $available_shipping_methods[$value] );       
+        }
+    }
+
+    return $available_shipping_methods;
+}
+
 add_filter( 'woocommerce_checkout_fields' , 'wonka_override_checkout_fields' );
 
 function wonka_before_checkout_shipping_form( $checkout ) {
