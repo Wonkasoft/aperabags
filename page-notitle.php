@@ -21,7 +21,7 @@ get_header();
 ?>
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main<?php esc_html( $ws_classes ); ?>">
+		<main id="main" class="site-main<?php esc_attr( $ws_classes ); ?>">
 
 		<?php
 		while ( have_posts() ) :
