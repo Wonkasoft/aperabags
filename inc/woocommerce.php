@@ -400,6 +400,30 @@ function wonka_override_checkout_fields( $fields ) {
 	return $fields;
 }
 
+add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free_shipping' );
+
+/**
+ * Limit the availability of this shipping method based
+ * on the destination state.
+ *
+ * Restricted locations include Alaska, American Samoa,
+ * Guam, Hawaii, North Mariana Islands, Puerto Rico,
+ * US Minor Outlying Islands, and the US Virgin Islands.
+ *
+ * @param bool $is_available Is this shipping method available?
+ * @return bool
+ */
+function ws_restrict_free_shipping( $is_available ) {
+  $restricted = array( 'AK', 'AS', 'GU', 'HI', 'MP', 'PR', 'UM', 'VI' );
+
+  foreach ( WC()->cart->get_shipping_packages() as $package ) {
+    if ( in_array( $package['destination']['state'], $restricted ) ) {
+      return false;
+    }
+  }
+  return $is_available;
+}
+
 add_filter( 'woocommerce_checkout_fields' , 'wonka_override_checkout_fields' );
 
 function wonka_before_checkout_shipping_form( $checkout ) {
