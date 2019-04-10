@@ -65,6 +65,10 @@
 						margin-left: 8px;
 					}
 				}
+
+				p.woocommerce-shipping-destination {
+					margin: 15px auto;
+				}
 			}
 		}
 
@@ -101,12 +105,8 @@
 
 				}
 
-				.thwmsc-buttons {
-					padding: 0 15px;
-
-					.wonka-btn {
-						margin-left: 15px;
-					}
+				.woocommerce-account-fields {
+					margin: 15px auto;
 				}
 			}
 		}
@@ -132,6 +132,11 @@
 				padding: 0;
 			}
 
+			.wonka-row {
+				margin-top: 15px;
+				margin-bottom: 15px;
+			}
+
 			input[type=checkbox] {
 				margin-right: 8px;
 			}
@@ -143,17 +148,8 @@
 			ul.payment_methods {
 
                 li {
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-start;
-                    border: 1px inset rgba( #444, .7 );
-                    border-top: none;
                     width: 100%;
                     padding: 8px;
-
-                    &:first-child {
-                        border-top: 1px inset rgba( #444, .7 );
-                    }
 
                     &.payment_method_paypal {
 
@@ -161,32 +157,40 @@
                             display: none;
                         }
                     }
+
+                    .wonka-custom-control-label {
+                    	display: flex;
+                    	align-items: center;
+                    	justify-content: space-between;
+                    	flex-wrap: wrap;
+                    	width: 100%;
+                    	padding-right: 15px;
+
+                    	.wonka-payment-method-icon {
+                    		flex: .5 20%;
+	                    	display: flex;
+	                    	align-items: center;
+	                    	justify-content: flex-end;
+	                    	flex-wrap: wrap;
+
+                    	}
+                    }
                 }
 
                 .stripe-card-group {
     				width: 100%;
     			}
 
-
-
-
             }
+			
+			.place-order {
+				padding: 15px 0;
+			}
 
 			.wc-stripe-elements-field {
 				width: 100%;
 			}
 		}
-
-        div.thwmsc-buttons {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-
-            #action-prev {
-                align-self: flex-start;
-            }
-        }
 
 		div#checkout_paypal_message,
 		div.wc-amazon-checkout-message {

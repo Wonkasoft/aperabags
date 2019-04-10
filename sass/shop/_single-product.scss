@@ -441,9 +441,10 @@
 =            Tabs section            =
 ====================================*/
 section.product-tabs-section {
-	max-width: 1200px;
+	width: 1200px;
+	max-width: 100%;
 	margin: 15px auto;
-	padding: 15px;
+	padding: 0;
 
 	section {
 		margin: 15px auto;
@@ -459,14 +460,23 @@ section.product-tabs-section {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
+				flex-wrap: wrap;
+			}
+
+			a#write-review {
+				margin-bottom: 15px;
 			}
 
 			ol.commentlist {
 				margin: 0;
-				padding: 8px;
+				padding: 0;
 				height: 100%;
 				list-style: none;
 				overflow: hidden;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-wrap: wrap;
 				@include prefix( transition, $trans_35, o moz webkit );
 
 				li:not(:last-child) {
@@ -512,10 +522,17 @@ section.product-tabs-section {
 				border-radius: 2px;
 				padding: 15px 25px;
 			}
+
+			@include media-breakpoint-up( md ) {
+				
+				a#write-review {
+					margin-bottom: 0;
+				}
+			}
 		}
 
 		section.wonka-section-product-statement {
-			padding: 15px;
+			padding: 8px;
 			border: 1px solid rgba( #000, .2 );
 			background: #fafafa;
 
@@ -570,23 +587,51 @@ section.product-tabs-section {
 
 					p {
 						margin: 0 auto;
-						max-width: 70%;
+						max-width: 100%;
+					}
+					
+					@include media-breakpoint-up( md ) {
+
+						p {
+							max-width: 70%;
+						}
 					}
 				}
 
 				div.wonka-row-product-specs {
-					padding: 15px;
+					padding: 8px;
+
+					.col {
+						@include prefix( transition, $trans_25, o moz webkit );
+					}
 
 					.col:not(:last-of-type) {
-						border-right: 1px solid rgba(0,0,0,.2);
+						border-right: 1px solid rgba(0,0,0,0);
 					}
 				}
 
 				div.wonka-row-product-built {
 
 					.col:not(:last-of-type) {
-						border-right: 1px solid rgba(0,0,0,.2);
+						border-right: 1px solid rgba(0,0,0,0);
 					}	
+				}
+
+				@include media-breakpoint-up( md ) {
+
+					div.wonka-row-product-specs {
+
+						.col:not(:last-of-type) {
+							border-right: 1px solid rgba(0,0,0,.2);
+						}
+					}
+
+					div.wonka-row-product-built {
+
+						.col:not(:last-of-type) {
+							border-right: 1px solid rgba(0,0,0,.2);
+						}	
+					}
 				}
 			}
 		}
@@ -611,7 +656,8 @@ section.product-tabs-section {
 
 section.related.products {
 	flex: 1 0 100%;
-	max-width: 1200px;
+	width: 1200px;
+	max-width: 100%;
 	margin: 15px auto;
 	padding: 15px;
 	border: 1px solid rgba( #000, .2 );

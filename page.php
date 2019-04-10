@@ -9,18 +9,18 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package Apera_Bags
+ * @package aperabags
  */
 
 global $post;
-$post_type = ( !empty( $post->post_type ) ) ? ' main-' . $post->post_type: '';
-$post_slug = ( !empty( $post->post_name ) ) ? ' main-' . $post->post_name: '';
+$ws_post_type = ( !empty( $post->post_type ) ) ? ' main-' . $post->post_type: '';
+$ws_post_slug = ( !empty( $post->post_name ) ) ? ' main-' . $post->post_name: '';
 
 get_header();
 ?>
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main<?php _e( $post_slug ); _e( $post_type ); ?>">
+		<main id="main" class="site-main<?php echo esc_attr( $ws_post_slug . $ws_post_type ); ?>">
 
 		<?php
 		while ( have_posts() ) :

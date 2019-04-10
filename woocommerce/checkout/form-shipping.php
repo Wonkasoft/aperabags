@@ -21,23 +21,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
+
 <div class="woocommerce-shipping-fields">
 
-	<div class="row wonka-row-express-checkout-btns">
-		<div class="col col-12">
-			<div class="express-btns-text-wrap">
-				<span class="express-btns-text"><?php _e( 'Express checkout', 'aperabags'); ?></span>
-			</div>
-			<div class="express-checkout-btns">
-				<?php do_action( 'wonka_checkout_express_btns' ); ?>
-			</div>
-		</div>
-		<div class="col col-12">
-			<div class="row below-express-checkout-btns no-gutters"><div class="col-12 col-md"><hr /></div><div class="col-12 col-md"><span class="continue-past-btns-text"><?php _e( 'Or continue below to pay with a credit card', 'aperabags'); ?></span></div>
-			<div class="col-12 col-md"><hr /></div></div>';
-		</div>
-	</div>
-	<?php do_action( 'wonka_checkout_login_form' ); ?>
 
 	<?php do_action( 'woocommerce_before_checkout_shipping_form', $checkout ); ?>
 
@@ -149,28 +135,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php if ( ! is_user_logged_in() && $checkout->is_registration_enabled() ) : ?>
 	<div class="woocommerce-account-fields">
 		<?php if ( ! $checkout->is_registration_required() ) : ?>
-
-			<p class="form-row form-row-wide create-account">
-				<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
-					<input class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" id="createaccount" <?php checked( ( true === $checkout->get_value( 'createaccount' ) || ( true === apply_filters( 'woocommerce_create_account_default_checked', false ) ) ), true ) ?> type="checkbox" name="createaccount" value="1" /> <span><?php _e( 'Create an account?', 'woocommerce' ); ?></span>
-				</label>
-			</p>
-
+			<div class="card">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">
+			<div class="custom-control custom-switch">
+					<input class="woocommerce-form__input woocommerce-form__input-checkbox custom-control-input" id="createaccount" <?php checked( ( true === $checkout->get_value( 'createaccount' ) || ( true === apply_filters( 'woocommerce_create_account_default_checked', false ) ) ), true ) ?> type="checkbox" name="createaccount" value="1" /> 
+				<label class="woocommerce-form__label custom-control-label" for="createaccount"><span><?php _e( 'Create an account?', 'woocommerce' ); ?></span></label>
+			</div>
+					</li>
 		<?php endif; ?>
 
 		<?php do_action( 'woocommerce_before_checkout_registration_form', $checkout ); ?>
 
 		<?php if ( $checkout->get_checkout_fields( 'account' ) ) : ?>
-
+			<li class="list-group-item">
 			<div class="create-account">
 				<?php foreach ( $checkout->get_checkout_fields( 'account' ) as $key => $field ) : ?>
 					<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
 				<?php endforeach; ?>
 				<div class="clear"></div>
 			</div>
-
+			</li>
 		<?php endif; ?>
-
 		<?php do_action( 'woocommerce_after_checkout_registration_form', $checkout ); ?>
+				</ul>
+			</div>
 	</div>
 <?php endif; ?>

@@ -31,10 +31,7 @@
   		setTimeout( function() 
   			{
   				window.scrollBy({ left: 0,top: -30, behavior: 'smooth'});
-  				setTimeout( function() 
-  					{
-  						one_click = true;
-  					}, 850 );
+  				one_click_timer();
   			}, 850 );
 	}
 
@@ -45,11 +42,19 @@
 			product_img_section = document.querySelector( '.product-img-section' );
 			product_img_section_height = document.querySelector( '.product-img-section' ).offsetHeight;
 			wonka_single_product_img_area = document.querySelector( '.wonka-single-product-img-area' );
-			thumbnail_controls = document.querySelector( '.flex-control-nav' );
+			thumbnail_controls = document.querySelectorAll( '.flex-control-nav li' );
 			summary_section = document.querySelector( '.summary.entry-summary' );
 			slide_view_box = document.querySelector( '.flex-viewport' );
 			win_y = window.pageYOffset;
 		}
+	}
+
+	function one_click_timer() 
+	{
+		setTimeout( function() 
+			{
+				one_click = true;
+			}, 400 );
 	}
 
 	function slide_adjustment()
@@ -354,20 +359,21 @@
 				=================================================*/
 				if ( window.innerWidth > 792 && win_y < img_area_top )
 				{
-				console.log("{win_y < img_area_top} ");
 					slide_view_box.classList.remove( 'sticky-on' );
 					slide_view_box.style.top = '';
 
 				}
 				else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop )
 				{
-				console.log("{win_y > img_area_top + target_stop} ");
 					slide_view_box.classList.remove( 'sticky-on' );
 					slide_view_box.style.top = target_stop + 'px';
 				}
 				else if ( window.innerWidth > 792 && win_y > img_area_top && win_y - img_area_top < target_stop ) 
 				{
-				console.log("{win_y > img_area_top && win_y - img_area_top < target_stop} ");
+					if ( scroll_distance > 100 ) 
+					{
+						window.scrollBy(0,0);
+					}
 					/*===============================================
 					=            Adjustment for adminbar            =
 					===============================================*/
@@ -393,35 +399,25 @@
 						slide_view_box.style.top = 30 + 'px';
 					}
 					/*======  End of Adjustment for adminbar  ======*/
-
-					if ( slide_view_box.offsetTop >= slide_control.offsetTop + slide_control.offsetHeight && one_click && scroll_direction === 'scrolled down' && slide_control.parentElement.nextElementSibling.firstElementChild !== null ) 
-					{
-						one_click = false;	
-						slide_control.parentElement.nextElementSibling.firstElementChild.click();
-						active_img_adjustment();
-						window.scrollBy( 0, 10 );
-						window.scrollTo({ left: 0, top: slide_control.parentElement.nextElementSibling.firstElementChild.offsetTop + img_area_top - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
-						setTimeout( function() 
+					thumbnail_controls.forEach( function( item, i ) 
+						{
+							if ( scroll_direction === 'scrolled down' && slide_view_box.offsetTop > item.offsetTop && slide_view_box.offsetTop < item.offsetTop + item.offsetHeight ) 
 							{
-								one_click = true;
-							}, 850 );
-						return;
-					}
-
-					if ( slide_view_box.offsetTop <= slide_control.offsetTop - parseInt( slide_view_box.style.top ) && one_click && scroll_direction === 'scrolled up' && slide_control.parentElement.previousElementSibling.firstElementChild !== null ) 
-					{
-						one_click = false;	
-						slide_control.parentElement.previousElementSibling.firstElementChild.click();
-						active_img_adjustment();
-						window.scrollBy( 0, 10 );
-						window.scrollTo({ left: 0, top: slide_control.parentElement.previousElementSibling.firstElementChild.offsetTop + img_area_top - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
-						setTimeout( function() 
+								item.nextElementSibling.firstElementChild.click();
+								window.scrollBy(0,0);
+								window.scrollTo({ left: 0, top: img_area_top + item.nextElementSibling.offsetTop - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
+								active_img_adjustment();
+								return;
+							}
+							if ( scroll_direction === 'scrolled up' && slide_view_box.offsetTop > item.offsetTop && slide_view_box.offsetTop < item.offsetTop + item.offsetHeight ) 
 							{
-								one_click = true;
-							}, 850 );
-						return;
-
-					}
+								item.firstElementChild.click();
+								window.scrollBy(0,0);
+								window.scrollTo({ left: 0, top: img_area_top + item.offsetTop - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
+								active_img_adjustment();
+								return;
+							}
+						});
 				}
 				/*=====  End of This initiates the scroll  ======*/
 			}
@@ -638,32 +634,14 @@
 			=            Copying Shipping info to Billing info           =
 			================================================================*/
 
-			if ( document.querySelector( '#thwmsc_wrapper' ) ) 
+			if ( document.querySelector( '.woocommerce-billing-fields' ) ) 
 			{
 				copy_to_billing();
-				var bill_to_check = document.getElementById( 'ship-to-different-address-checkbox' );
-				var tab_links = document.querySelectorAll( '.thwmsc-tab a' );
-				var tab_btns = document.querySelectorAll( '#thwmsc_wrapper input[type=button]' );
+				var bill_to_same = document.getElementById( 'ship-to-different-address-checkbox' );
 
-				bill_to_check.addEventListener( 'change', function(e) 
+				bill_to_same.addEventListener( 'change', function(e) 
 					{
 						copy_to_billing();
-					});
-
-				tab_links.forEach( function ( item, i ) 
-					{
-						item.addEventListener( 'click', function(e) 
-							{
-								copy_to_billing();
-							});
-					});
-
-				tab_btns.forEach( function ( item, i ) 
-					{
-						item.addEventListener( 'click', function(e) 
-							{
-								copy_to_billing();
-							});
 					});
 			}
 			/*=====  End of Copying Shipping info to Billing info  ======*/
@@ -788,10 +766,12 @@
 								{
 									reviews_top.scrollIntoView({behavior: 'smooth'});
 								}, 500, comment_list );
+							more_reviews.innerText = 'More Reviews';
 						}
 						else
 						{
 							comment_list.style.height = 100 + '%';
+							more_reviews.innerText = 'Less Reviews';
 						}
 					});
 			}
@@ -959,6 +939,7 @@
 		===============================================*/
 		if ( document.querySelector( 'body.single-product' ) ) 
 		{	
+			img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
 
 			if ( window.pageYOffset > document.querySelector( '#main' ).offsetTop ) 
 			{
@@ -967,6 +948,7 @@
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
+				
 				e.preventDefault();
 				e.stopImmediatePropagation();
 				e.stopPropagation();

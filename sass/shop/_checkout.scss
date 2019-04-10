@@ -19,6 +19,7 @@
 
 .woocommerce-shipping-fields__field-wrapper,
 .woocommerce-billing-fields__field-wrapper {
+	max-width: 100%;
 
 	p {
 		clear: both;
@@ -121,6 +122,18 @@ div.checkout-order-details {
 		
 		td {
 			text-align: right;
+		}
+	}
+}
+
+form.woocommerce-checkout {
+
+	div.wonka-checkout-row {
+		width: 100%;
+		margin: auto;
+
+		> div {
+			margin: 15px auto;
 		}
 	}
 }

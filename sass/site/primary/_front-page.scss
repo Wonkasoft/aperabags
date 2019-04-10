@@ -54,6 +54,7 @@ section.header-slider-section {
 					.img-header-text-container {
 						display: flex;
 						flex-direction: column;
+						top: 10%;
 
 						.set-align-left {
 							align-self: flex-start;
@@ -68,13 +69,25 @@ section.header-slider-section {
 						}
 
 						.text-box {
-							color: #ffffff;
-							max-width: 425px;
+							font-weight: bold;
+							color: #fffcfc;
+							letter-spacing: 4px;
+							max-width: 880px;
 							@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
 
 							h2 {
+								font-size: 45px;
 								margin: 0 auto;
 								font-weight: 800;
+								line-height: 50px;
+								margin-bottom: 0.5em;
+							}
+							h4 {
+								font-size: 31px;
+								font-weight: normal;
+								font-style: normal;
+								line-height: 1.5em;
+								margin-bottom: 1.5em;
 							}
 						}
 					}	
@@ -368,10 +381,15 @@ section.about-brand-section {
 			div.modal-content {
 				position: relative;
 				margin: auto;
-				width: 100%;
-				max-width: 100%;
+				width: 1200px;
+				max-width: 70%;
 				padding: 0;
 				background-color: transparent;
+				@include prefix( transition, $trans_25, o moz webkit );
+
+				@include media-breakpoint-up(lg){
+					max-width: 100%;
+				}
 				
 				div.modal-body {
 					padding: 0;
@@ -379,6 +397,7 @@ section.about-brand-section {
 					max-width: 100%;
 					overflow: visible;
 					@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+
 
 					button.close {
 						position: absolute;

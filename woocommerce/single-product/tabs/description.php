@@ -33,9 +33,7 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 
 <div class="row wonka-row-product-statement">
 	<div class="col text-center">
-		<p>
 			<?php the_content(); ?>
-		</p>
 	</div>
 </div>
 <hr />
@@ -45,6 +43,7 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 	<?php $key_feature_data = json_decode( get_post_meta( $post_id, 'key_features', true ) );
 	if ( !empty( $key_feature_data ) ) : ?>
 		<div id="keyfeatures" class="col">
+			<div class="table-responsive">
 			<table class="table table-hover wonka-key-features-table">
 				<thead>
 					<tr>
@@ -99,6 +98,7 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 			<?php endforeach; ?>
 		</tbody>
 	</table>
+</div><!-- .table-responsive -->
 </div>
 <?php endif; ?>
 
@@ -158,7 +158,7 @@ if ( !empty( $product_specs_data ) ) : ?>
 </div><!-- .row -->
 <hr />
 <div class="row wonka-row-product-built">
-	<div class="col-6">
+	<div class="col-12 col-md-6">
 		<table class="table wonka-healthy-design-table">
 			<thead>
 				<tr>
@@ -196,7 +196,7 @@ if ( !empty( $product_specs_data ) ) : ?>
 			</tbody>
 		</table>
 	</div>
-	<div class="col-6">
+	<div class="col-12 col-md-6">
 		<table class="table wonka-built-to-last-table">
 			<thead>
 				<tr>

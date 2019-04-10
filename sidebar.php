@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package Apera_Bags
+ * @package aperabags
  */
 
 if ( ! is_active_sidebar( 'sidebar-1' ) ) {

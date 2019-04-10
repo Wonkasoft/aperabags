@@ -1,32 +1,26 @@
 <?php
 /**
-<<<<<<< HEAD
- * Template Name: Page no Title
-=======
- * Template Name: Page-NoTitle
->>>>>>> 1afdf9b699f12844808c21f7aad8a37bc7a461a1
+ * Template Name: Page No Title
  *
- * This is the template that displays all pages by default.
+ * This is the template that displays all pages with no title.
  * Please note that this is the WordPress construct of pages
  * and that other 'pages' on your WordPress site may use a
  * different template.
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package Apera_Bags
+ * @package aperabags
  */
 
 global $post;
-
-$ws_post_type = ( ! empty( $post->post_type ) ) ? ' main-' . $post->post_type : '';
-$ws_post_slug = ( ! empty( $post->post_name ) ) ? ' main-' . $post->post_name : '';
-$ws_classes = $ws_post_slug . $ws_post_type;
+$post_type = ( !empty( $post->post_type ) ) ? ' main-' . $post->post_type: '';
+$post_slug = ( !empty( $post->post_name ) ) ? ' main-' . $post->post_name: '';
 
 get_header();
 ?>
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main<?php echo esc_attr( $ws_classes ); ?>">
+		<main id="main" class="site-main<?php _e( $post_slug ); _e( $post_type ); ?>">
 
 		<?php
 		while ( have_posts() ) :
@@ -36,7 +30,8 @@ get_header();
 
 			// If comments are open or we have at least one comment, load up the comment template.
 			if ( comments_open() || get_comments_number() ) :
-				comments_template();su
+				comments_template();
+			endif;
 
 		endwhile; // End of the loop.
 		?>
