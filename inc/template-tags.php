@@ -4,7 +4,7 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @package Apera_Bags
+ * @package aperabags
  */
 
 if ( ! function_exists( 'apera_bags_posted_on' ) ) :

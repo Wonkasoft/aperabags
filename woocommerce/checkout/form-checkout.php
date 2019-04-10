@@ -36,13 +36,13 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
 
 		<div class="row wonka-checkout-row">
-		<div class="col col-12 col-md-6" id="customer_details">
+		<div class="col-12" id="customer_details">
 			<div class="row">
-			<div class="col">
+			<div class="col-12">
 				<?php do_action( 'woocommerce_checkout_shipping' ); ?>
 			</div>
 
-			<div class="col">
+			<div class="col-12">
 				<?php do_action( 'woocommerce_checkout_billing' ); ?>
 			</div>
 		</div>
@@ -53,8 +53,8 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 	<?php endif; ?>
 
 	
-		<div class="col col-12 col-md-6">
-			<h3 id="order_review_heading"><?php esc_html_e( 'Your order', 'woocommerce' ); ?></h3>
+	</div><!-- .row -->
+		<div class="col-12">
 
 			<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
 
@@ -64,7 +64,6 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 			<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
 		</div><!-- .col-12 -->
-	</div><!-- .row -->
 </form>
 
 <?php do_action( 'woocommerce_after_checkout_form', $checkout ); ?>

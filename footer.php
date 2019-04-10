@@ -6,7 +6,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package Apera_Bags
+ * @package aperabags
  */
 
 do_action( 'get_mods_before_section', 'footer' );

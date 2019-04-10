@@ -4,7 +4,7 @@
  *
  * @link https://woocommerce.com/
  *
- * @package Apera_Bags
+ * @package aperabags
  */
 
 /**
@@ -521,7 +521,7 @@ function wonka_checkout_wrap_after( $checkout ) {
 
 					<?php if ( wc_coupons_enabled() ) : ?>
 						<tr class="cart-promo">
-							<th colspan="3">
+							<td colspan="3">
 								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 									<div class="panel panel-default activate-panel" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
 										<div class="panel-heading" role="tab" id="headingOne">
@@ -539,7 +539,7 @@ function wonka_checkout_wrap_after( $checkout ) {
 										</div>
 									</div>
 								</div>
-							</th>
+							</td>
 						</tr>
 					<?php endif; ?>
 
@@ -549,16 +549,6 @@ function wonka_checkout_wrap_after( $checkout ) {
 							<td><?php wc_cart_totals_coupon_html( $coupon ); ?></td>
 						</tr>
 					<?php endforeach; ?>
-
-					<?php if ( WC()->cart->needs_shipping() && WC()->cart->show_shipping() ) : ?>
-
-						<?php do_action( 'woocommerce_cart_totals_before_shipping' ); ?>
-
-						<?php wc_cart_totals_shipping_html(); ?>
-
-						<?php do_action( 'woocommerce_cart_totals_after_shipping' ); ?>
-
-					<?php endif; ?>
 
 					<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
 						<tr class="fee">
@@ -602,35 +592,37 @@ function wonka_checkout_wrap_after( $checkout ) {
 
 add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_after', 50, 1 );
 
-/**
- * This filters the display of the single product page image parse.
- * 
- */
-function wonka_single_product_display() {
-	global $product;
-
-	// Note: `wc_get_gallery_image_html` was added in WC 3.3.2 and did not exist prior. This check protects against theme overrides being used on older versions of WC.
-	if ( ! function_exists( 'wc_get_gallery_image_html' ) ) {
-		return;
-	}
-
+function wonka_woocommerce_checkout_shipping( $checkout ) {
 	$output = '';
-	$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( $product->get_data()['id'], 'full' ) ) . '" class="img-fluid wonka-img-fluid" />';
+	ob_start();
+	$output .= '<div class="row wonka-row-express-checkout-btns">';
+	$output .= '<div class="col col-12">';
+	$output .= '<div class="express-btns-text-wrap">';
+	$output .= '<span class="express-btns-text">';
+	$output .= _x( 'Express checkout', 'aperabags');
+	$output .= '</span>';
+	$output .= '</div>';
+	$output .= '<div class="express-checkout-btns">';
+	$output .= do_action( 'wonka_checkout_express_btns' );
+	$output .= '</div>';
+	$output .= '</div>';
+	$output .= '<div class="col col-12">';
+	$output .= '<div class="row below-express-checkout-btns no-gutters"><div class="col-12 col-md"><hr /></div><div class="col-12 col-md">';
+	$output .= '<span class="continue-past-btns-text">';
+	$output .= _x( 'Or continue below to pay with a credit card', 'aperabags');
+	$output .= '</span></div>';
+	$output .= '<div class="col-12 col-md"><hr /></div></div>';
+	$output .= '</div>';
+	$output .= '</div>';
+	$output .= do_action( 'wonka_checkout_login_form' );
+				
+	$output .= ob_get_clean();
 
-	$attachment_ids = $product->get_gallery_image_ids();
+	echo $output;
 
-	if ( $attachment_ids && $product->get_image_id() ) {
-		foreach ( $attachment_ids as $attachment_id ) {
-			echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', wc_get_gallery_image_html( $attachment_id ), $attachment_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
-		}
-	}
-
-	_e( $output );
-
+	return $checkout;
 }
-
-// remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
-// add_action( 'woocommerce_before_single_product_summary', 'wonka_single_product_display', 20 );
+add_action( 'wonka_checkout_before_checkout_form_custom', 'wonka_woocommerce_checkout_shipping', 20, 1 );
 
 /**
  * Remove Sku info only for users. Sku will still show for admins

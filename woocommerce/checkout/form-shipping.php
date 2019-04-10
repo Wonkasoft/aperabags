@@ -21,23 +21,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
+
 <div class="woocommerce-shipping-fields">
 
-	<div class="row wonka-row-express-checkout-btns">
-		<div class="col col-12">
-			<div class="express-btns-text-wrap">
-				<span class="express-btns-text"><?php _e( 'Express checkout', 'aperabags'); ?></span>
-			</div>
-			<div class="express-checkout-btns">
-				<?php do_action( 'wonka_checkout_express_btns' ); ?>
-			</div>
-		</div>
-		<div class="col col-12">
-			<div class="row below-express-checkout-btns no-gutters"><div class="col-12 col-md"><hr /></div><div class="col-12 col-md"><span class="continue-past-btns-text"><?php _e( 'Or continue below to pay with a credit card', 'aperabags'); ?></span></div>
-			<div class="col-12 col-md"><hr /></div></div>';
-		</div>
-	</div>
-	<?php do_action( 'wonka_checkout_login_form' ); ?>
 
 	<?php do_action( 'woocommerce_before_checkout_shipping_form', $checkout ); ?>
 

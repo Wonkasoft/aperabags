@@ -370,7 +370,7 @@
 				}
 				else if ( window.innerWidth > 792 && win_y > img_area_top && win_y - img_area_top < target_stop ) 
 				{
-					if ( scroll_distance > 100 && scroll_direction === 'scrolled down'  ) 
+					if ( scroll_distance > 100 ) 
 					{
 						window.scrollBy(0,0);
 					}

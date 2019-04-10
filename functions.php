@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
- * @package Apera_Bags
+ * @package aperabags
  */
 
 if ( ! function_exists( 'apera_bags_setup' ) ) :

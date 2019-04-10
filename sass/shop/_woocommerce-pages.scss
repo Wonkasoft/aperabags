@@ -65,6 +65,10 @@
 						margin-left: 8px;
 					}
 				}
+
+				p.woocommerce-shipping-destination {
+					margin: 15px auto;
+				}
 			}
 		}
 
@@ -143,17 +147,8 @@
 			ul.payment_methods {
 
                 li {
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-start;
-                    border: 1px inset rgba( #444, .7 );
-                    border-top: none;
                     width: 100%;
                     padding: 8px;
-
-                    &:first-child {
-                        border-top: 1px inset rgba( #444, .7 );
-                    }
 
                     &.payment_method_paypal {
 
@@ -167,10 +162,11 @@
     				width: 100%;
     			}
 
-
-
-
             }
+			
+			.place-order {
+				padding: 15px 0;
+			}
 
 			.wc-stripe-elements-field {
 				width: 100%;

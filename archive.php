@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package Apera_Bags
+ * @package aperabags
  */
 
 get_header();

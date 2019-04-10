@@ -2,7 +2,7 @@
 /**
  * Apera Bags Theme Customizer
  *
- * @package Apera_Bags
+ * @package aperabags
  */
 
 /**

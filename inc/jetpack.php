@@ -4,7 +4,7 @@
  *
  * @link https://jetpack.com/
  *
- * @package Apera_Bags
+ * @package aperabags
  */
 
 /**
