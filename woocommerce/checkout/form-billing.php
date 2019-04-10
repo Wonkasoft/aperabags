@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="card">
 		<ul class="list-group list-group-flush">
 			<li class="list-group-item">
-				<div class="custom-control custom-radio">
+				<div id="ship-to-different-address" class="custom-control custom-radio">
 					<input id="bill-to-different-address-radio1" class="custom-control-input" type="radio" name="ship_to_different_address" value="0" <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> />
 					<label class="custom-control-label" for="bill-to-different-address-radio1"><span><?php _e( 'Bill to shipping address?', 'woocommerce' ); ?></span></label>
 				</div>
@@ -58,7 +58,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							if ( !isset($field['placeholder'] ) ) :
 								$field['placeholder'] = $field['label'];
 							endif;
-							
+
 							if ( isset( $field['class'] ) ) :
 								array_push( $field['class'], 'wonka-form-group', 'form-group' ) ;
 							else:

@@ -21,8 +21,9 @@ if ( ! is_ajax() ) {
 	do_action( 'woocommerce_review_order_before_payment' );
 }
 ?>
-<div id="payment" class="woocommerce-checkout-payment card">
+<div id="payment" class="woocommerce-checkout-payment">
 	<?php if ( WC()->cart->needs_payment() ) : ?>
+		<div class="card">
 		<ul class="wc_payment_methods payment_methods methods list-group list-group-flush">
 			<?php
 			if ( ! empty( $available_gateways ) ) {
@@ -34,6 +35,7 @@ if ( ! is_ajax() ) {
 			}
 			?>
 		</ul>
+		</div>
 	<?php endif; ?>
 	<div class="form-row place-order">
 		<noscript>

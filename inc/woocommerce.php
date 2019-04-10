@@ -595,6 +595,20 @@ add_action( 'woocommerce_after_checkout_form', 'wonka_checkout_wrap_after', 50, 
 function wonka_woocommerce_checkout_shipping( $checkout ) {
 	$output = '';
 	ob_start();
+	$output .= '<div class="row wonka-row">';
+	$output .= '<div class="col-12">';
+	$output .= '<ul class="nav nav-tabs" id="wonka-steps" role="tablist">';
+	$output .= '<li class="nav-item"><a class="nav-link active" id="customer-info-step" data-toggle="tab" href="#customer-information" role="tab" aria-controls="home" aria-selected="true">';
+	$output .= _x( 'Customer Information', 'aperabags' ) . '<span class="badge badge-light badge-pill">1</span></a></li>';
+	$output .= '<li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">';
+	$output .= _x( 'Shipping Method', 'aperabags' ) . '<span class="badge badge-light badge-pill">2</span></a></li>';
+	$output .= '<li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#" role="tab" aria-controls="profile" aria-selected="false">';
+	$output .= _x( 'Payment Method', 'aperabags' ) . '<span class="badge badge-light badge-pill">3</span></a></li>';
+	$output .= '</ul>';
+	$output .= '</div>';
+	$output .= '</div>';
+	$output .= '<div class="tab-content" id="wonka-checkout-steps">';
+	$output .= '<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">';
 	$output .= '<div class="row wonka-row-express-checkout-btns">';
 	$output .= '<div class="col col-12">';
 	$output .= '<div class="express-btns-text-wrap">';

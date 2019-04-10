@@ -534,7 +534,7 @@
 		var postcode = document.getElementsByName("shipping_postcode")[0].value;
 		var phone = document.getElementsByName("shipping_phone")[0].value;
 
-		if ( document.getElementById( 'ship-to-different-address-checkbox' ).checked === true ) 
+		if ( document.getElementById( 'bill-to-different-address-radio1' ).checked === true ) 
 		{
 			document.getElementsByName("billing_email")[0].value = '';
 			document.getElementsByName("billing_first_name")[0].value = '';
@@ -634,32 +634,14 @@
 			=            Copying Shipping info to Billing info           =
 			================================================================*/
 
-			if ( document.querySelector( '#thwmsc_wrapper' ) ) 
+			if ( document.querySelector( '.woocommerce-billing-fields' ) ) 
 			{
 				copy_to_billing();
-				var bill_to_check = document.getElementById( 'ship-to-different-address-checkbox' );
-				var tab_links = document.querySelectorAll( '.thwmsc-tab a' );
-				var tab_btns = document.querySelectorAll( '#thwmsc_wrapper input[type=button]' );
+				var bill_to_same = document.getElementById( 'bill-to-different-address-radio1' );
 
-				bill_to_check.addEventListener( 'change', function(e) 
+				bill_to_same.addEventListener( 'change', function(e) 
 					{
 						copy_to_billing();
-					});
-
-				tab_links.forEach( function ( item, i ) 
-					{
-						item.addEventListener( 'click', function(e) 
-							{
-								copy_to_billing();
-							});
-					});
-
-				tab_btns.forEach( function ( item, i ) 
-					{
-						item.addEventListener( 'click', function(e) 
-							{
-								copy_to_billing();
-							});
 					});
 			}
 			/*=====  End of Copying Shipping info to Billing info  ======*/
