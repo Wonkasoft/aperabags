@@ -23,8 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="custom-control custom-radio">
 	<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio custom-control-input" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?>" />
 
-	<label class="custom-control-label" for="payment_method_<?php echo esc_attr( $gateway->id ); ?>">
-		<?php echo $gateway->get_title(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?> <?php echo $gateway->get_icon(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?>
+	<label class="custom-control-label wonka-custom-control-label" for="payment_method_<?php echo esc_attr( $gateway->id ); ?>">
+		<span class="wonka-payment-method-title"><?php echo $gateway->get_title(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></span><span class="wonka-payment-method-icon"><?php echo $gateway->get_icon(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></span>
 	</label>
 	</div>
 	</li>

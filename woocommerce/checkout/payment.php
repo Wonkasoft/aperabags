@@ -21,6 +21,7 @@ if ( ! is_ajax() ) {
 	do_action( 'woocommerce_review_order_before_payment' );
 }
 ?>
+
 <div id="payment" class="woocommerce-checkout-payment">
 	<?php if ( WC()->cart->needs_payment() ) : ?>
 		<div class="card">
@@ -37,6 +38,11 @@ if ( ! is_ajax() ) {
 		</ul>
 		</div>
 	<?php endif; ?>
+	 <div class="row wonka-row">
+		<div class="col-12">
+			<?php do_action( 'woocommerce_checkout_billing' ); ?>
+		</div>
+	</div>
 	<div class="form-row place-order">
 		<noscript>
 			<?php
@@ -57,6 +63,7 @@ if ( ! is_ajax() ) {
 		<?php wp_nonce_field( 'woocommerce-process_checkout', 'woocommerce-process-checkout-nonce' ); ?>
 	</div>
 </div>
+
 <?php
 if ( ! is_ajax() ) {
 	do_action( 'woocommerce_review_order_after_payment' );

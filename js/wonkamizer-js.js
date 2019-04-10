@@ -534,7 +534,7 @@
 		var postcode = document.getElementsByName("shipping_postcode")[0].value;
 		var phone = document.getElementsByName("shipping_phone")[0].value;
 
-		if ( document.getElementById( 'bill-to-different-address-radio1' ).checked === true ) 
+		if ( document.getElementById( 'ship-to-different-address-checkbox' ).checked === true ) 
 		{
 			document.getElementsByName("billing_email")[0].value = '';
 			document.getElementsByName("billing_first_name")[0].value = '';
@@ -637,7 +637,7 @@
 			if ( document.querySelector( '.woocommerce-billing-fields' ) ) 
 			{
 				copy_to_billing();
-				var bill_to_same = document.getElementById( 'bill-to-different-address-radio1' );
+				var bill_to_same = document.getElementById( 'ship-to-different-address-checkbox' );
 
 				bill_to_same.addEventListener( 'change', function(e) 
 					{
