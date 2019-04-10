@@ -62,6 +62,7 @@ section.header-slider-section {
 
 						.set-align-center {
 							align-self: center;
+
 						}
 
 						.set-align-right {
@@ -176,6 +177,14 @@ section.desirable-slider-section {
 
 						.set-align-center {
 							align-self: center;
+
+							h2.img-header-text {
+								font-size: 45px;
+								font-weight: 800;
+								line-height: 50px;
+								margin-bottom: 0.5em;
+								letter-spacing: 4px;
+							}
 						}
 
 						.set-align-right {
@@ -194,7 +203,7 @@ section.desirable-slider-section {
 							}
 
 							@include media-breakpoint-up( md ) {
-								max-width: 600px;
+								max-width: 1000px;
 								white-space: nowrap;
 							}
 						}
