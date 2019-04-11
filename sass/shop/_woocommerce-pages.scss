@@ -243,6 +243,31 @@
 			}
 		}
 
+		table.wonka-customer-information-table {
+			margin: 0;
+
+			td {
+				font-weight: 500;
+			}
+
+			td:not(:first-child) {
+				text-align: center;
+			}
+
+			td:nth-child(2) {
+				font-weight: 700;
+				width: 65%;
+			}
+
+			td.hr-spacer {
+				padding: 0 15px;
+
+				hr {
+					margin: 4px auto;
+				}
+			}
+		}
+
 		div.woocommerce-billing-fields {
 			
     		div.billing_address {
