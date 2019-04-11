@@ -26,16 +26,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="woocommerce-billing-fields">
 	<?php if ( true === WC()->cart->needs_shipping_address() ) : ?>
 
+	<div class="checkout-form-section-title"><h5 class="billing-address-section-title">Billing Address</h5></div>
 	<div class="card">
 		<ul class="list-group list-group-flush">
 			<li class="list-group-item">
-				<div id="ship-to-different-address" class="custom-control custom-switch">
-					<input id="ship-to-different-address-checkbox" class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox custom-control-input" <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> type="checkbox" name="ship_to_different_address" value="1" />
-					<label class="custom-control-label" for="ship-to-different-address-checkbox"><span><?php _e( 'Use a different billing address', 'woocommerce' ); ?></span></label>
+				<div id="bill-to-different-address-radio1" class="custom-control custom-radio">
+					<input id="bill-to-different-address-checkbox1" class="custom-control-input" type="radio" checked="checked" name="ship_to_different_address" value="0" />
+					<label class="custom-control-label" for="bill-to-different-address-checkbox1"><span><?php _e( 'Same as shipping address', 'woocommerce' ); ?></span></label>
 				</div>
 			</li>
 			<li class="list-group-item">
-				<div class="shipping_address">
+				<div id="bill-to-different-address-radio2" class="custom-control custom-radio">
+					<input id="bill-to-different-address-checkbox2" class="custom-control-input" type="radio" name="ship_to_different_address" value="1" />
+					<label class="custom-control-label" for="bill-to-different-address-checkbox2"><span><?php _e( 'Use a different billing address', 'woocommerce' ); ?></span></label>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div class="billing_address">
 
 					<?php do_action( 'woocommerce_before_checkout_billing_form', $checkout ); ?>
 
@@ -79,9 +86,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 
 					<?php do_action( 'woocommerce_after_checkout_billing_form', $checkout ); ?>
-				</div>
+				</div><!-- .billing_address -->
 			</li>
-		</ul>
-	</div>
+		</ul><!-- .list-group -->
+	</div><!-- .card -->
 <?php endif; ?>
-</div>
+</div><!-- .woocommerce-billing-fields -->

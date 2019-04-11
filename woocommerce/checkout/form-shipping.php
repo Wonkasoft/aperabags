@@ -22,6 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
+<div class="row wonka-row">
+	<div class="col col-12">
 <div class="woocommerce-shipping-fields">
 
 
@@ -86,14 +88,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<?php do_action( 'woocommerce_after_checkout_shipping_form', $checkout ); ?>
 
-</div>
+</div><!-- .woocommerce-shipping-fields -->
 <div class="woocommerce-additional-fields">
 	<?php do_action( 'woocommerce_before_order_notes', $checkout ); ?>
 
 	<?php if ( apply_filters( 'woocommerce_enable_order_notes_field', 'yes' === get_option( 'woocommerce_enable_order_comments', 'yes' ) ) ) : ?>
 		
-		<div class="row wonka-row">
-			<div class="col col-12">
 		<?php if ( ! WC()->cart->needs_shipping() || wc_ship_to_billing_address_only() ) : ?>
 
 			<h3><?php _e( 'Additional information', 'woocommerce' ); ?></h3>
@@ -126,22 +126,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 					
 			<?php endforeach; ?>
 		</div>
-		</div><!-- .col-12 -->
-	</div><!-- .wonka-row -->
+		
 	<?php endif; ?>
 
 	<?php do_action( 'woocommerce_after_order_notes', $checkout ); ?>
-</div>
+</div><!-- .woocommerce-additional-fields -->
 <?php if ( ! is_user_logged_in() && $checkout->is_registration_enabled() ) : ?>
 	<div class="woocommerce-account-fields">
 		<?php if ( ! $checkout->is_registration_required() ) : ?>
-			<div class="card">
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item">
-			<div class="custom-control custom-switch">
+			<div class="custom-control custom-checkbox">
 					<input class="woocommerce-form__input woocommerce-form__input-checkbox custom-control-input" id="createaccount" <?php checked( ( true === $checkout->get_value( 'createaccount' ) || ( true === apply_filters( 'woocommerce_create_account_default_checked', false ) ) ), true ) ?> type="checkbox" name="createaccount" value="1" /> 
 				<label class="woocommerce-form__label custom-control-label" for="createaccount"><span><?php _e( 'Create an account?', 'woocommerce' ); ?></span></label>
-			</div>
+			</div><!-- .custom-control -->
 					</li>
 		<?php endif; ?>
 
@@ -154,11 +152,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
 				<?php endforeach; ?>
 				<div class="clear"></div>
-			</div>
+			</div><!-- .create-account -->
 			</li>
 		<?php endif; ?>
 		<?php do_action( 'woocommerce_after_checkout_registration_form', $checkout ); ?>
 				</ul>
-			</div>
-	</div>
+	</div><!-- .woocommerce-account-fields -->
 <?php endif; ?>
+		</div><!-- .col-12 -->
+	</div><!-- .wonka-row -->

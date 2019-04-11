@@ -360,7 +360,6 @@ add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_ca
 function wonka_checkout_remove_actions() {
 	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
 	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
-	add_action( 'wonka_checkout_login_form', 'woocommerce_checkout_login_form', 10 );
 }
 
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_remove_actions', 1 );
@@ -471,15 +470,14 @@ add_action( 'woocommerce_before_checkout_shipping_form', 'wonka_before_checkout_
  * @param  [type] $checkout [description]
  * 
  */
-function wonka_checkout_wrap_after( $checkout ) {
+function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	?>
-		</div><!-- .col -->
+		</div><!-- .checkout-form-left-side -->
 		<div class="col col-12 col-md-5 checkout-order-details">
 			<div class="table-responsive">
 			<table class="table table-hover">
 				<tbody>
 					<?php
-						do_action( 'woocommerce_review_order_before_cart_contents' );
 						foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 							$_product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
 							if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
@@ -556,7 +554,10 @@ function wonka_checkout_wrap_after( $checkout ) {
 							<td colspan="2"><?php wc_cart_totals_fee_html( $fee ); ?></td>
 						</tr>
 					<?php endforeach; ?>
-
+					<?php 
+					if ( $show_package_details ) : ?>
+						<?php echo '<p class="woocommerce-shipping-contents"><small>' . esc_html( $package_details ) . '</small></p>'; ?>
+					<?php endif; ?>
 					<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
 						<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
 							<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
@@ -585,47 +586,57 @@ function wonka_checkout_wrap_after( $checkout ) {
 				</tfoot>
 			</table>
 		</div><!-- .table-responsive -->
-		</div><!-- .col-12 -->
+		</div><!-- .checkout-order-details -->
 		</div><!-- .row -->
 		<?php
 }
 
-add_action( 'wonka_checkout_after_checkout_form_custom', 'wonka_checkout_wrap_after', 50 );
+add_action( 'wonka_checkout_after_checkout_form_custom', 'wonka_checkout_after_checkout_form_custom', 50 );
 
 function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output = '';
 	ob_start();
 	$output .= '<div class="row wonka-row">';
 	$output .= '<div class="col-12">';
-	$output .= '<ul class="nav nav-tabs" id="wonka-steps" role="tablist">';
-	$output .= '<li class="nav-item"><a class="nav-link active" id="customer-information-tab" data-toggle="tab" href="#customer-information" role="tab" aria-controls="customer-information" aria-selected="true">';
-	$output .= _x( 'Customer Information', 'aperabags' ) . '<span class="badge badge-light badge-pill">1</span></a></li>';
-	$output .= '<li class="nav-item"><a class="nav-link" id="shipping-method-tab" data-toggle="tab" href="#shipping-method" role="tab" aria-controls="shipping-method" aria-selected="false">';
-	$output .= _x( 'Shipping Method', 'aperabags' ) . '<span class="badge badge-light badge-pill">2</span></a></li>';
-	$output .= '<li class="nav-item"><a class="nav-link" id="payment-method-tab" data-toggle="tab" href="#payment-method" role="tab" aria-controls="payment-method" aria-selected="false">';
-	$output .= _x( 'Payment Method', 'aperabags' ) . '<span class="badge badge-light badge-pill">3</span></a></li>';
-	$output .= '</ul>';
+	$output .= '<ul class="nav nav-fill" id="wonka-checkout-nav-steps" role="tablist">';
+	$output .= '<li class="nav-item">';
+	$output .= '<a class="nav-link active" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top">';
+	$output .= _x( 'Customer Information', 'aperabags' ) . '<span class="badge badge-light badge-pill">1</span>';
+	$output .= '</a></li>';
+	$output .= '<li class="nav-item">';
+	$output .= '<a class="nav-link" id="wonka_shipping_method_tab" data-toggle="tab" data-target="#wonka_shipping_method" role="tab" data-secondary="#wonka_shipping_method_top">';
+	$output .= _x( 'Shipping Method', 'aperabags' ) . '<span class="badge badge-light badge-pill">2</span>';
+	$output .= '</a></li>';
+	$output .= '<li class="nav-item">';
+	$output .= '<a class="nav-link" id="wonka_payment_method_tab" data-toggle="tab" data-target="#wonka_payment_method" role="tab" data-secondary="#wonka_shipping_method_top">';
+	$output .= _x( 'Payment Method', 'aperabags' ) . '<span class="badge badge-light badge-pill">3</span>';
+	$output .= '</a></li>';
+	$output .= '</ul><!-- #wonka-checkout-nav-steps -->';
 	$output .= '</div>';
-	$output .= '</div>';
+	$output .= '</div><!-- .wonka-row -->';
+
+	$output .= '<div class="tab-content" id="wonka-checkout-steps2">';
+	$output .= '<div class="tab-pane fade show active" id="wonka_customer_information_top" role="tabpanel">';
 	$output .= '<div class="row wonka-row-express-checkout-btns">';
 	$output .= '<div class="col col-12">';
 	$output .= '<div class="express-btns-text-wrap">';
 	$output .= '<span class="express-btns-text">';
 	$output .= _x( 'Express checkout', 'aperabags');
-	$output .= '</span>';
-	$output .= '</div>';
+	$output .= '</span><!-- .express-btns-text -->';
+	$output .= '</div><!-- .express-btns-text-wrap -->';
 	$output .= '<div class="express-checkout-btns">';
 	$output .= do_action( 'wonka_checkout_express_btns' );
-	$output .= '</div>';
-	$output .= '</div>';
+	$output .= '</div><!-- .express-checkout-btns -->';
+	$output .= '</div><!-- .col-12 -->';
 	$output .= '<div class="col col-12">';
-	$output .= '<div class="row below-express-checkout-btns no-gutters"><div class="col-12 col-md"><hr /></div><div class="col-12 col-md">';
+	$output .= '<div class="row below-express-checkout-btns no-gutters"><div class="col-12 col-md"><hr /></div><!-- .col-12 --><div class="col-12 col-md">';
 	$output .= '<span class="continue-past-btns-text">';
 	$output .= _x( 'Or continue below to pay with a credit card', 'aperabags');
-	$output .= '</span></div>';
-	$output .= '<div class="col-12 col-md"><hr /></div></div>';
-	$output .= '</div>';
-	$output .= '</div>';
+	$output .= '</span></div><!-- .col-12 -->';
+	$output .= '<div class="col-12 col-md"><hr /></div><!-- .col-12 --></div><!-- .below-express-checkout-btns -->';
+	$output .= '</div><!-- .col-12 -->';
+	$output .= '</div><!-- .wonka-row-express-checkout-btns -->';
+
 	$output .= do_action( 'wonka_checkout_login_form' );
 				
 	$output .= ob_get_clean();
@@ -635,58 +646,93 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	return $checkout;
 }
 
-add_action( 'wonka_checkout_before_checkout_form_custom', 'wonka_woocommerce_before_custom_checkout', 20, 1 );
+add_action( 'wonka_checkout_before_checkout_form_custom', 'wonka_woocommerce_before_custom_checkout', 10, 1 );
+
+
+add_action( 'wonka_checkout_login_form', 'woocommerce_checkout_login_form', 15 );
+
+function wonka_checkout_after_login_form() {
+	$output = '';
+
+	$output .= '</div><!-- .wonka_customer_information_top -->';
+	$output .= '<div class="tab-pane fade" id="wonka_shipping_method_top" role="tabpanel">';
+	$output .= '<div class="wonka-row">';
+	$output .= '<div class="card">';
+	$output .= '<ul class="wonka-customer-information-list list-group list-group-flush">';
+	$output .= '<li class="list-group-item">';
+	$output .= _x( 'Customer Information', 'aperabags' );
+	$output .= '</li><!-- .list-group-item -->';
+	$output .= '</ul><!-- .wonka-customer-information-list -->';
+	$output .= '</div><!-- .card -->';
+	$output .= '</div><!-- .wonka-row -->';
+	$output .= '</div><!-- #wonka_shipping_method_top -->';
+			
+	$output .= '</div><!-- #wonka-checkout-steps2 -->';
+
+	echo $output;
+}
+
+add_action( 'wonka_checkout_login_form', 'wonka_checkout_after_login_form', 20 );
 
 function wonka_checkout_before_customer_details() {
 	$output = '';
 
 	$output .= '<div class="tab-content" id="wonka-checkout-steps">';
-	$output .= '<div class="tab-pane fade show active" id="customer-information" role="tabpanel" aria-labelledby="customer-information-tab">';
+	$output .= '<div class="tab-pane fade show active" id="wonka_customer_information" role="tabpanel">';
 
 	echo $output;
 }
 
-add_action( 'wonka_checkout_before_customer_details_custom', 'wonka_checkout_before_customer_details' );
+add_action( 'woocommerce_checkout_before_customer_details', 'wonka_checkout_before_customer_details' );
 
-function wonka_woocommerce_review_order_before_shipping() {
+function wonka_checkout_after_customer_details() {
 	$output = '';
 
-	$output .= '<div class="tab-pane fade" id="shipping-method" role="tabpanel" aria-labelledby="shipping-method-tab">';
+	$output .= '</div><!-- #wonka_customer_information -->';
+
+	echo $output;
+}
+
+add_action( 'woocommerce_checkout_after_customer_details', 'wonka_checkout_after_customer_details' );
+
+function wonka_woocommerce_checkout_before_order_review() {
+	$output = '';
+
+	$output .= '<div class="tab-pane fade" id="wonka_shipping_method" role="tabpanel">';
 	
 	echo $output;
 }
-add_action( 'woocommerce_checkout_before_order_review', 'wonka_woocommerce_review_order_before_shipping' );
+add_action( 'woocommerce_checkout_before_order_review', 'wonka_woocommerce_checkout_before_order_review' );
 
 function wonka_woocommerce_review_order_before_payment() {
 	$output = '';
 
-	$output .= '</div><!-- #shipping-method -->';
-	$output .= '<div class="tab-pane fade" id="payment-method" role="tabpanel" aria-labelledby="payment-method-tab">';
+	$output .= '</div><!-- #wonka_shipping_method -->';
+	$output .= '<div class="tab-pane fade" id="wonka_payment_method" role="tabpanel">';
 	
 	echo $output;
 }
 add_action( 'woocommerce_review_order_before_payment', 'wonka_woocommerce_review_order_before_payment' );
 
+function wonka_woocommerce_review_order_before_payment2() {
+	$output = '';
+	ob_start();
+	$output .= do_action( 'woocommerce_checkout_billing' );
+	$output .= ob_get_clean();
+	
+	echo $output;
+}
+add_action( 'wonka_custom_billing_addition', 'wonka_woocommerce_review_order_before_payment2' );
+
 function wonka_woocommerce_review_order_after_payment() {
 	$output = '';
 
-	$output .= '</div><!-- #payment-method -->';
+	$output .= '</div><!-- #payment_method -->';
+	$output .= '</div><!-- #wonka-checkout-steps -->';
 	
 	echo $output;
 }
 add_action( 'woocommerce_review_order_after_payment', 'wonka_woocommerce_review_order_after_payment' );
-
-function wonka_woocommerce_after_custom_checkout( $checkout ) {
-	$output = '';
-	ob_start();
-	$output .= '</div><!-- #wonka-checkout-steps -->';
-	$output .= ob_get_clean();
-
-	echo $output;
-
-	return $checkout;
-}
-add_action( 'wonka_checkout_after_checkout_form_custom', 'wonka_woocommerce_after_custom_checkout', 20, 1 );
 
 /**
  * Remove Sku info only for users. Sku will still show for admins

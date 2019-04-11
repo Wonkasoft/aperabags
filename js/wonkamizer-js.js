@@ -20,6 +20,35 @@
 	}
 	/*=====  End of vars set for script use  ======*/
 	
+	/*===============================================================
+	=            This is for the checkout multistep tabs            =
+	===============================================================*/
+	if ( document.querySelector( '#wonka-checkout-nav-steps' ) ) 
+	{
+		var multistep_links = document.querySelectorAll( '#wonka-checkout-nav-steps li a.nav-link' );
+
+		multistep_links.forEach( function( item, i ) 
+			{
+				item.addEventListener( 'click', function( event ) 
+					{
+						copy_to_billing();
+						var target = event.target;
+						if ( target.nodeName === 'SPAN' ) 
+						{
+							target = target.parentElement;
+						}
+
+						if ( !target.classList.contains( 'active' ) ) 
+						{
+							var leaving_panel = document.querySelector( '#wonka-checkout-steps2 .show.active' );
+							var new_panel = document.querySelector( target.getAttribute( 'data-secondary' ) );
+							leaving_panel.classList.remove( 'show', 'active');
+							new_panel.classList.add( 'show', 'active' );
+						}
+					});
+			});
+	}
+	/*=====  End of This is for the checkout multistep tabs  ======*/
 
 	/*===================================================================
 	=            This is area for writing callable functions            =
@@ -534,7 +563,7 @@
 		var postcode = document.getElementsByName("shipping_postcode")[0].value;
 		var phone = document.getElementsByName("shipping_phone")[0].value;
 
-		if ( document.getElementById( 'ship-to-different-address-checkbox' ).checked === true ) 
+		if ( document.getElementById( 'bill-to-different-address-checkbox1' ).checked === true ) 
 		{
 			document.getElementsByName("billing_email")[0].value = '';
 			document.getElementsByName("billing_first_name")[0].value = '';
@@ -549,7 +578,9 @@
 		}
 		else
 		{
+			console.log( email );
 			document.getElementsByName("billing_email")[0].value = email;
+			console.log( document.getElementsByName("billing_email")[0].value );
 			document.getElementsByName("billing_first_name")[0].value = first_name;
 			document.getElementsByName("billing_last_name")[0].value = last_name;
 			document.getElementsByName("billing_company")[0].value = company;
@@ -600,7 +631,6 @@
 		===============================================================================*/
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 		{
-
 			if ( document.querySelector( '.shipping-calculator-button' ) ) 
 			{
 				var shipping_calc_btn = document.querySelector( '.shipping-calculator-button' ),
@@ -636,13 +666,40 @@
 
 			if ( document.querySelector( '.woocommerce-billing-fields' ) ) 
 			{
-				copy_to_billing();
-				var bill_to_same = document.getElementById( 'ship-to-different-address-checkbox' );
+				if ( document.querySelectorAll( 'input[name="ship_to_different_address"]' ) ) 
+				{
+					var billing_to_radios = document.querySelectorAll( 'input[name="ship_to_different_address"]' );
+					var billing_address_form = document.querySelector( '.billing_address' );
 
-				bill_to_same.addEventListener( 'change', function(e) 
-					{
-						copy_to_billing();
-					});
+					billing_to_radios.forEach( function( item, i ) 
+						{
+							if ( item.id === 'bill-to-different-address-checkbox1' ) 
+							{
+								copy_to_billing();
+							}
+							item.addEventListener( 'change', function( event ) 
+								{
+									var target = event.target;
+									console.log(target);
+									if ( target.id === 'bill-to-different-address-checkbox1' ) 
+									{
+										if ( billing_address_form.classList.contains( 'active' ) ) 
+										{
+											billing_address_form.classList.remove( 'active' );
+											copy_to_billing();
+										}
+									}
+									else
+									{
+										if ( !billing_address_form.classList.contains( 'active' ) ) 
+										{
+											billing_address_form.classList.add( 'active' );
+											copy_to_billing();
+										}
+									}
+								});
+						});
+				}
 			}
 			/*=====  End of Copying Shipping info to Billing info  ======*/
 		}

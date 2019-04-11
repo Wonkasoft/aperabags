@@ -90,6 +90,50 @@
 		/*=====================================================
 		=            This is for the checkout page            =
 		=====================================================*/
+		ul#wonka-checkout-nav-steps {
+
+			li.nav-item {
+
+				a.nav-link {
+					position: relative;
+					border-top: 4px solid rgba( #888, .3 );
+					font-weight: 600;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					cursor: pointer;
+					@include prefix( transition, $trans_25, o moz webkit );
+
+					span {
+						position: absolute;
+						margin: auto;
+						top: -12px;
+						border: 1px solid rgba( #000, .6 );
+					}
+
+					&:before {
+						content: "";
+						position: absolute;
+						display: inline-block;
+						background: #018dc2;
+						top: -4px;
+						height: 4px;
+						left: 0;
+						width: 0;
+						@include prefix( transition, $trans_25, o moz webkit );
+					}
+
+					&.active {
+						border-color: rgba( #018dc2, .2 );
+
+						&:before {
+							width: 100%;
+						}
+					}
+				}
+			}
+		}
+
 		div.wonka-checkout-row {
 
 			div.checkout-form-left-side {
@@ -108,6 +152,13 @@
 				.woocommerce-account-fields {
 					margin: 15px auto;
 				}
+			}
+		}
+
+		.tab-content {
+
+			.wonka-row {
+				margin: 15px auto;
 			}
 		}
 
@@ -192,6 +243,22 @@
 			}
 		}
 
+		div.woocommerce-billing-fields {
+			
+    		div.billing_address {
+    			position: relative;
+    			top: 0;
+    			height: 0;
+    			overflow: hidden;
+    			@include prefix( transition, $trans_25, o moz webkit );
+
+    			&.active {
+    				height: 100%;
+    				overflow: visible;
+    			}
+    		}
+		}
+
 		div#checkout_paypal_message,
 		div.wc-amazon-checkout-message {
 			display: none;
@@ -272,6 +339,7 @@
                 .express-btns-text {
                     position: relative;
                     top: 11px;
+                    font-weight: 600;
                     padding: 2px 15px;
                     background: #ffffff;
                     z-index: 10;
@@ -407,7 +475,7 @@
 										content: "+";
 										display: inline-block;
 										@include font-size( 1.6 );
-										@include prefix( transition, all .3s ease-in-out, o moz webkit );
+										@include prefix( transition, $trans_25, o moz webkit );
 									}
 								}
 

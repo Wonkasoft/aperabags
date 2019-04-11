@@ -21,8 +21,11 @@ if ( ! is_ajax() ) {
 	do_action( 'woocommerce_review_order_before_payment' );
 }
 ?>
-
 <div id="payment" class="woocommerce-checkout-payment">
+	
+	<div class="checkout-form-section-title"><h5 class="payment-method-section-title" id="payment-method-title">Payment Method</h5>
+		<label for="payment-method-title" class=""><?php echo __( 'All transations are secure and encrypted.', 'aperabags' ); ?></label>
+	</div>
 	<?php if ( WC()->cart->needs_payment() ) : ?>
 		<div class="card">
 		<ul class="wc_payment_methods payment_methods methods list-group list-group-flush">
@@ -32,17 +35,17 @@ if ( ! is_ajax() ) {
 					wc_get_template( 'checkout/payment-method.php', array( 'gateway' => $gateway ) );
 				}
 			} else {
-				echo '<li class="list-group-item woocommerce-notice woocommerce-notice--info woocommerce-info list-group-item">' . apply_filters( 'woocommerce_no_available_payment_methods_message', WC()->customer->get_billing_country() ? esc_html__( 'Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.', 'woocommerce' ) : esc_html__( 'Please fill in your details above to see available payment methods.', 'woocommerce' ) ) . '</li>'; // @codingStandardsIgnoreLine
+				echo '<li class="list-group-item woocommerce-notice woocommerce-notice--info woocommerce-info">' . apply_filters( 'woocommerce_no_available_payment_methods_message', WC()->customer->get_billing_country() ? esc_html__( 'Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.', 'woocommerce' ) : esc_html__( 'Please fill in your details above to see available payment methods.', 'woocommerce' ) ) . '</li>'; // @codingStandardsIgnoreLine
 			}
 			?>
 		</ul>
 		</div>
 	<?php endif; ?>
-	 <div class="row wonka-row">
-		<div class="col-12">
-			<?php do_action( 'woocommerce_checkout_billing' ); ?>
-		</div>
-	</div>
+
+	<div class="wonka-row">
+	<?php do_action( 'wonka_custom_billing_addition' ); ?>
+ 	</div><!-- .wonka-row -->
+
 	<div class="form-row place-order">
 		<noscript>
 			<?php
@@ -61,7 +64,8 @@ if ( ! is_ajax() ) {
 		<?php do_action( 'woocommerce_review_order_after_submit' ); ?>
 
 		<?php wp_nonce_field( 'woocommerce-process_checkout', 'woocommerce-process-checkout-nonce' ); ?>
-	</div>
+	</div><!-- .place-order -->
+
 </div>
 
 <?php

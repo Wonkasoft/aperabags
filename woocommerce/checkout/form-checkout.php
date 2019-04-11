@@ -31,7 +31,6 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 	
-	<?php do_action( 'wonka_checkout_before_customer_details_custom' ); ?>
 
 	<?php if ( $checkout->get_checkout_fields() ) : ?>
 
@@ -42,17 +41,14 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 			<div class="row">
 			<div class="col-12">
 				<?php do_action( 'woocommerce_checkout_shipping' ); ?>
+			</div><!-- .col-12 -->
 			</div>
-			</div>
-		</div>
+		</div><!-- #customer_details -->
+		</div><!-- .row -->
 		
-				<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
+		<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
 
 	<?php endif; ?>
-
-	
-	</div><!-- .row -->
-	</div><!-- #customer-information -->
 
 			<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
 			
