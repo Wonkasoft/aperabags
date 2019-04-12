@@ -36,7 +36,6 @@ if ( post_password_required() ) {
 		<?php do_action( 'woocommerce_before_single_product_summary' ); ?>
 		</div>
 	<div class="wonka-single-product-img-area">
-
 		<?php remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10 ); ?>
 		<?php add_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 ); ?>
 		<?php

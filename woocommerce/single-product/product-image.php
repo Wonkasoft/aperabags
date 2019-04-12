@@ -51,7 +51,6 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 			echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', $html, $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
 			if ( $attachment_ids && $product->get_image_id() ) {
 				foreach ( $attachment_ids as $attachment_id ) {
-					echo wc_get_gallery_image_html( $attachment_id, 'full');
 					echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', wc_get_gallery_image_html( $attachment_id, 'full' ), $attachment_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
 				}
 			}
