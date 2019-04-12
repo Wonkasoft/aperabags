@@ -61,7 +61,5 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 		<div class="wonka-thumbnails">
 			<?php do_action( 'woocommerce_product_thumbnails' ); ?>
 		</div>
-		
-		?>
 	</figure>
 </div>
