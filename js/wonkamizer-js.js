@@ -31,10 +31,11 @@
 
 		multistep_links.forEach( function( item, i ) 
 			{
-				if ( item.classList.contains( 'completed' ) ) 
+				if ( item.classList.contains( 'active' ) ) 
 				{
-					item.classList.remove( 'completed' );
+					item.classList.add( 'completed' );
 				}
+
 				item.addEventListener( 'click', function( event ) 
 					{
 						var target = event.target;
@@ -42,14 +43,60 @@
 						{
 							target = target.parentElement;
 						}
+						var completed_check = false;
+
 
 						if ( !target.classList.contains( 'active' ) ) 
 						{
 							copy_to_billing();
 							var leaving_panel = document.querySelector( '#wonka-checkout-steps2 .show.active' );
 							var new_panel = document.querySelector( target.getAttribute( 'data-secondary' ) );
-							leaving_panel.classList.remove( 'show', 'active');
+							leaving_panel.classList.remove( 'show', 'active' );
 							new_panel.classList.add( 'show', 'active' );
+
+							setTimeout( function() {
+								var children_array = target.parentElement.parentElement.childNodes;
+								console.log(children_array);
+								
+								children_array.forEach( function( item, i ) 
+									{
+
+										if ( completed_check === true ) 
+										{
+											if ( item.firstElementChild.classList.contains( 'completed' ) && item === children_array.lastElementChild ) 
+											{
+												setTimeout( function( cur_el ) 
+													{
+														cur_el.firstElementChild.classList.remove( 'completed' );
+													}, 600, item );
+											}
+											else
+											{
+												item.firstElementChild.classList.remove( 'completed' );
+											}
+										}
+
+										if ( completed_check === false ) 
+										{
+											if ( item === children_array.lastElementChild ) 
+											{
+												setTimeout( function( cur_el ) 
+													{
+														cur_el.firstElementChild.classList.add( 'completed' );
+													}, 600, item );
+											}
+											else
+											{
+												item.firstElementChild.classList.add( 'completed' );
+											}
+
+											if ( item.firstElementChild.classList.contains( 'active' ) ) 
+											{
+												completed_check = true;
+											}
+										}
+									});
+							}, 250 );
 						}
 					});
 			});
@@ -176,7 +223,7 @@
 		=======================================================================*/
 		if ( window.pageYOffset > top_slider_section.offsetTop && window.pageYOffset < top_slider_section.offsetTop + top_slider_section.offsetHeight ) 
 		{
-			parallax_adjust = parseFloat( (window.pageYOffset - top_slider_section.offsetTop ) / ( top_slider_section.offsetHeight / 2 ) ).toFixed( 5 );
+			parallax_adjust = parseFloat( ( window.pageYOffset - top_slider_section.offsetTop ) / ( top_slider_section.offsetHeight / 2 ) ).toFixed( 5 );
 			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
 				{

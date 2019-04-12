@@ -126,6 +126,10 @@
 					&.active {
 						border-color: rgba( #018dc2, .2 );
 
+					}
+
+					&.completed {
+
 						&:before {
 							width: 100%;
 						}
