@@ -153,11 +153,7 @@
 			product_img_section = document.querySelector( '.product-img-section' );
 			product_img_section_height = document.querySelector( '.product-img-section' ).offsetHeight;
 			wonka_single_product_img_area = document.querySelector( '.wonka-single-product-img-area' );
-<<<<<<< HEAD
-			thumbnail_controls = document.querySelector( 'div.wonka-thumbnails' );
-=======
 			thumbnail_controls = document.querySelectorAll( 'div.wonka-thumbnails' );
->>>>>>> stage
 			summary_section = document.querySelector( '.summary.entry-summary' );
 			// slide_view_box = document.querySelector( '.flex-viewport' );
 		}
@@ -912,26 +908,6 @@
 				/*===================================================
 				=            setting up the variant list            =
 				===================================================*/
-<<<<<<< HEAD
-				// express_attributes.forEach( function( express_attribute, i ) 
-				// 	{
-				// 		express_attribute.attributes.forEach( function( attribute, a ) 
-				// 			{
-				// 				if ( !( 'variants' in express_variants ) ) 
-				// 				{
-				// 					var variants_array = [];
-
-				// 					if ( !variants_array.includes(a) ) 
-				// 					{
-				// 						attribute_count++;
-				// 						variants_array.push( a );
-				// 					}
-				// 					express_variants.variants = variants_array;
-				// 					express_variants.variant_count = attribute_count;
-				// 				}
-				// 			});
-				// 	});
-=======
 				express_attributes.forEach( function( express_attribute, i ) 
 					{
 						var attribute = Object.keys( express_attribute.attributes )[0];
@@ -949,7 +925,6 @@
 							express_variants.variant_count = attribute_count;
 						}
 					});
->>>>>>> stage
 				/*=====  End of setting up the variant list  ======*/
 				/*========================================================
 				=            This is the click event function            =
@@ -1016,11 +991,7 @@
 				e.stopPropagation();
 				if (one_click) 
 				{
-<<<<<<< HEAD
-					stickyThumbnails();
-=======
 					stickyThumbnails(); 
->>>>>>> stage
 					stickySummary(); 
 				}
 			};
