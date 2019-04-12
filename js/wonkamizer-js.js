@@ -26,12 +26,17 @@
 	if ( document.querySelector( '#wonka-checkout-nav-steps' ) ) 
 	{
 		var multistep_links = document.querySelectorAll( '#wonka-checkout-nav-steps li a.nav-link' );
+		var info_table_contact_cells = document.querySelectorAll( '.contact-email-cell' );
+		var info_table_ship_cells = document.querySelectorAll( '.ship-to-address-cell' );
 
 		multistep_links.forEach( function( item, i ) 
 			{
+				if ( item.classList.contains( 'completed' ) ) 
+				{
+					item.classList.remove( 'completed' );
+				}
 				item.addEventListener( 'click', function( event ) 
 					{
-						copy_to_billing();
 						var target = event.target;
 						if ( target.nodeName === 'SPAN' ) 
 						{
@@ -40,6 +45,7 @@
 
 						if ( !target.classList.contains( 'active' ) ) 
 						{
+							copy_to_billing();
 							var leaving_panel = document.querySelector( '#wonka-checkout-steps2 .show.active' );
 							var new_panel = document.querySelector( target.getAttribute( 'data-secondary' ) );
 							leaving_panel.classList.remove( 'show', 'active');
@@ -552,6 +558,7 @@
 
 	/*----------  Copying the shipping fields to billing  ----------*/
 	function copy_to_billing() {
+		console.log( 'entered copy to billing' );
 		var email = document.getElementsByName("shipping_email")[0].value;
 		var first_name = document.getElementsByName("shipping_first_name")[0].value;
 		var last_name = document.getElementsByName("shipping_last_name")[0].value;
@@ -563,8 +570,9 @@
 		var postcode = document.getElementsByName("shipping_postcode")[0].value;
 		var phone = document.getElementsByName("shipping_phone")[0].value;
 
-		if ( document.getElementById( 'bill-to-different-address-checkbox1' ).checked === true ) 
+		if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
 		{
+			console.log( 'entered make blank form' );
 			document.getElementsByName("billing_email")[0].value = '';
 			document.getElementsByName("billing_first_name")[0].value = '';
 			document.getElementsByName("billing_last_name")[0].value = '';
@@ -673,30 +681,18 @@
 
 					billing_to_radios.forEach( function( item, i ) 
 						{
-							if ( item.id === 'bill-to-different-address-checkbox1' ) 
-							{
-								copy_to_billing();
-							}
-							item.addEventListener( 'change', function( event ) 
+							console.log(item);
+							
+							item.addEventListener( 'click change', function( event ) 
 								{
 									var target = event.target;
 									console.log(target);
-									if ( target.id === 'bill-to-different-address-checkbox1' ) 
+									if ( target.checked && target.id === 'bill-to-different-address-checkbox1' ) 
 									{
-										if ( billing_address_form.classList.contains( 'active' ) ) 
-										{
-											billing_address_form.classList.remove( 'active' );
-											copy_to_billing();
-										}
+										billing_address_form.classList.add( 'active' );
+										copy_to_billing();
 									}
-									else
-									{
-										if ( !billing_address_form.classList.contains( 'active' ) ) 
-										{
-											billing_address_form.classList.add( 'active' );
-											copy_to_billing();
-										}
-									}
+									
 								});
 						});
 				}
@@ -1030,6 +1026,8 @@
 			  slidesToScroll: 1,
 			  autoplay: true,
 			  autoplaySpeed: 4000,
+			  pauseOnFocus: false,
+			  pauseOnHover: false,
 			  fade: true,
 			  dots: false,
 			  arrows: true,
@@ -1047,6 +1045,8 @@
 			  slidesToScroll: 1,
 			  autoplay: true,
 			  autoplaySpeed: 4000,
+			  pauseOnFocus: false,
+			  pauseOnHover: false,
 			  fade: true,
 			  dots: false,
 			  arrows: true,
