@@ -30,7 +30,7 @@
 		var info_table_ship_cells = document.querySelectorAll( '.ship-to-address-cell' );
 		var contact_change_links = document.querySelectorAll( '.contact-email-change-link' );
 		var ship_to_change_links = document.querySelectorAll( '.ship-to-address-change-link' );
-		var ship_method_change_links = document.querySelectorAll( '.contact-email-change-link' );
+		var ship_method_change_links = document.querySelectorAll( '.ship-method-change-link' );
 
 		contact_change_links.forEach( function( item, i ) 
 			{
@@ -646,35 +646,6 @@
 		===============================================================================*/
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 		{
-			if ( document.querySelector( '.shipping-calculator-button' ) ) 
-			{
-				var shipping_calc_btn = document.querySelector( '.shipping-calculator-button' ),
-				shipping_form = document.querySelector( '.shipping-calculator-button' ),
-				shipping_form_section = document.querySelector( 'section.shipping-calculator-form' );
-
-				shipping_calc_btn.addEventListener( 'click', function(e) 
-					{
-						e.preventDefault();
-						if ( shipping_form_section.style.display === 'none' ) 
-						{
-							shipping_form_section.style.opacity = 0;
-							shipping_form_section.style.display = 'block';
-							setTimeout( function() 
-								{
-									shipping_form_section.style.opacity = 1;
-								}, 800 );
-						}
-						else
-						{
-							shipping_form_section.style.opacity = 0;
-							setTimeout( function() 
-								{
-									shipping_form_section.style.display = 'none';
-								}, 800 );
-						}
-					});
-			}
-
 			/*================================================================
 			=            Copying Shipping info to Billing info           =
 			================================================================*/
@@ -691,6 +662,7 @@
 							
 							item.addEventListener( 'change', function( event ) 
 								{
+									event.preventDefault();
 									var target = event.target;
 									if ( target.checked && target.id === 'bill-to-different-address-checkbox2' ) 
 									{

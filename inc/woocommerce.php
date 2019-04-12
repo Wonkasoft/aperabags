@@ -472,7 +472,7 @@ add_action( 'woocommerce_before_checkout_shipping_form', 'wonka_before_checkout_
 function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	?>
 		</div><!-- .checkout-form-left-side -->
-		<div class="col col-12 col-md-5 checkout-order-details">
+		<div class="col-12 col-md-5 checkout-order-details">
 			<div class="table-responsive">
 			<table class="table table-hover">
 				<tbody>
