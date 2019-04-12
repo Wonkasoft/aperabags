@@ -705,7 +705,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="contact-email-cell">';
 	$output .= '</td>';
 	$output .= '<td class="contact-email-change">';
-	$output .= _x( '<a href="#wonka_customer_information" data-toggle="tab" class="contact-email-change-link">Change</a>', 'aperabags' );
+	$output .= _x( '<a href="#" class="contact-email-change-link">Change</a>', 'aperabags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
@@ -720,7 +720,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="ship-to-address-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-to-address-change">';
-	$output .= _x( '<a href="#wonka_customer_information" data-toggle="tab" class="ship-to-address-change-link">Change</a>', 'aperabags' );
+	$output .= _x( '<a href="#" class="ship-to-address-change-link">Change</a>', 'aperabags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
@@ -735,7 +735,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="ship-method-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-method-change">';
-	$output .= _x( '<a href="#wonka_shipping_method" data-toggle="tab" class="ship-method-change-link">Change</a>', 'aperabags' );
+	$output .= _x( '<a href="" class="ship-method-change-link">Change</a>', 'aperabags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '</tbody><!-- tbody -->';
