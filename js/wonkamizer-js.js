@@ -25,13 +25,29 @@
 	===============================================================*/
 	if ( document.querySelector( '#wonka-checkout-nav-steps' ) ) 
 	{
+		var ship_method = document.querySelectorAll('#shipping_method li input.shipping_method');
 		var multistep_links = document.querySelectorAll( '#wonka-checkout-nav-steps li a.nav-link' );
 		var info_table_contact_cells = document.querySelectorAll( '.contact-email-cell' );
 		var info_table_ship_cells = document.querySelectorAll( '.ship-to-address-cell' );
 		var contact_change_links = document.querySelectorAll( '.contact-email-change-link' );
 		var ship_to_change_links = document.querySelectorAll( '.ship-to-address-change-link' );
 		var ship_method_change_links = document.querySelectorAll( '.ship-method-change-link' );
+		/**	
+		 * 
+		 * 
+		 */
 
+		ship_method.forEach( function( item, i ) 
+			{
+				item.addEventListener( 'click', function( event ) 
+				{
+					console.log("hello");
+				});
+			});
+
+		 /**
+			* END
+		  */
 		contact_change_links.forEach( function( item, i ) 
 			{
 				item.addEventListener( 'click', function( event ) 
