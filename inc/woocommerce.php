@@ -970,3 +970,24 @@ function wonka_after_comment_text_add( $comment ) {
 	<?php
 }
 add_action( 'woocommerce_review_after_comment_text', 'wonka_after_comment_text_add', 5 );
+
+
+/*====================================================================================
+=            This is filtering the first thumbnail on single product page            =
+====================================================================================*/
+/**
+ * Adding the active class to the first thumbnail
+ * @param  html $data html of the first thumbnail on the single product page
+ * @return [type]       [description]
+ */
+function wonka_single_product_image_thumbnail_html_custom( $data ) {
+	echo "<pre>\n";
+	print_r( esc_html__( $data, 'default' ) );
+	echo "</pre>\n";
+
+
+	return $data;
+}
+
+add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_image_thumbnail_html_custom' );
+/*=====  End of This is filtering the first thumbnail on single product page  ======*/

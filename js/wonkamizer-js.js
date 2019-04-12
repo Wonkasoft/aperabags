@@ -75,6 +75,11 @@
 						}
 						var completed_check = false;
 
+						if ( target.id === 'wonka_shipping_method_tab' ) 
+						{
+							var get_shipping_set = document.querySelector( '#shipping_method' );
+							
+						}
 
 						if ( !target.classList.contains( 'active' ) ) 
 						{
@@ -153,7 +158,7 @@
 			product_img_section = document.querySelector( '.product-img-section' );
 			product_img_section_height = document.querySelector( '.product-img-section' ).offsetHeight;
 			wonka_single_product_img_area = document.querySelector( '.wonka-single-product-img-area' );
-			thumbnail_controls = document.querySelectorAll( 'div.wonka-thumbnails' );
+			thumbnail_controls = document.querySelector( 'div.wonka-thumbnails' );
 			summary_section = document.querySelector( '.summary.entry-summary' );
 			// slide_view_box = document.querySelector( '.flex-viewport' );
 		}
@@ -985,10 +990,6 @@
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
-				
-				e.preventDefault();
-				e.stopImmediatePropagation();
-				e.stopPropagation();
 				if (one_click) 
 				{
 					stickyThumbnails(); 
