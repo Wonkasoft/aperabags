@@ -252,6 +252,7 @@
 
 			td {
 				font-weight: 500;
+				vertical-align: middle;
 			}
 
 			td:not(:first-child) {
@@ -259,8 +260,21 @@
 			}
 
 			td:nth-child(2) {
-				font-weight: 700;
+				font-weight: 500;
 				width: 65%;
+
+				&.ship-to-address-cell {
+					padding: 12px 0;
+					line-height: 1.1;
+
+					.address-number {
+						display: inline-block;
+					}
+				}
+
+				.city-state-zip {
+					display: inline-block;
+				}
 			}
 
 			td.hr-spacer {

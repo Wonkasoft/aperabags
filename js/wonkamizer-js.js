@@ -127,7 +127,6 @@
 			// thumbnail_controls = document.querySelectorAll( '.flex-control-nav li' );
 			summary_section = document.querySelector( '.summary.entry-summary' );
 			// slide_view_box = document.querySelector( '.flex-viewport' );
-			win_y = window.pageYOffset;
 		}
 	}
 
@@ -386,126 +385,6 @@
 		}
 
 	}
-	
-	// function active_img_adjustment() 
-	// {
-	// 	setTimeout( function() 
-	// 		{
-	// 			active_slide_img = document.querySelector( '.flex-viewport .flex-active-slide img');
-	// 			/* slide_view_box adjustment */
-	// 			if ( active_slide_img.offsetHeight > 760 ) 
-	// 			{
-	// 				slide_view_box.style.height = 760 + 'px';
-	// 				product_img_section.style.height = product_img_section_height - 100 + slide_view_box.offsetHeight + 'px';
-	// 			}
-	// 			else
-	// 			{
-	// 				slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
-	// 				product_img_section.style.height = product_img_section_height - 100 + slide_view_box.offsetHeight + 'px';
-	// 			}
-	// 		}, 450);
-	// }
-
-	// function thumbnail_scroll()
-	// {
-	// 	/*=========================================================================
-	// 	=            This is for setting the vertical scroll direction            =
-	// 	=========================================================================*/
-	// 	if ( window.pageYOffset > last_scroll_top ) 
-	// 	{
-	// 		scroll_direction = 'scrolled down';
-	// 		scroll_distance = window.pageYOffset - last_scroll_top;
-	// 	}
-
-	// 	if ( window.pageYOffset < last_scroll_top )
-	// 	{
-	// 		scroll_direction = 'scrolled up';
-	// 		scroll_distance = last_scroll_top - window.pageYOffset;
-	// 	}
-
-	// 	last_scroll_top = window.pageYOffset;
-	// 		/*==================================================================================
-	// 		=            This is setting up all the actions to the thumbnail scroll            =
-	// 		==================================================================================*/
-	// 		if ( document.querySelector( '.wonka-single-product-img-area' ) ) 
-	// 		{
-	// 			var flex_viewer_top = slide_view_box.offsetTop;
-	// 			slide_control = document.querySelector( '.flex-control-nav .flex-active'); 
-	// 			active_slide = document.querySelector( '.flex-viewport .flex-active-slide'); 
-	// 			win_y = window.pageYOffset;
-	// 			img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
-	// 			target_stop = wonka_single_product_img_area.offsetHeight - slide_view_box.offsetHeight;
-
-	// 			/*=================================================
-	// 			=            This initiates the scroll            =
-	// 			=================================================*/
-	// 			if ( window.innerWidth > 792 && win_y < img_area_top )
-	// 			{
-	// 				slide_view_box.classList.remove( 'sticky-on' );
-	// 				slide_view_box.style.top = '';
-
-	// 			}
-	// 			else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop )
-	// 			{
-	// 				slide_view_box.classList.remove( 'sticky-on' );
-	// 				slide_view_box.style.top = target_stop + 'px';
-	// 			}
-	// 			else if ( window.innerWidth > 792 && win_y > img_area_top && win_y - img_area_top < target_stop ) 
-	// 			{
-	// 				if ( scroll_distance > 100 ) 
-	// 				{
-	// 					window.scrollBy(0,0);
-	// 				}
-	// 				/*===============================================
-	// 				=            Adjustment for adminbar            =
-	// 				===============================================*/
-	// 				if ( document.querySelector( '#wpadminbar' ) ) 
-	// 				{
-	// 					admin_bar = document.querySelector( '#wpadminbar' );
-	// 					admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
-						
-	// 					if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
-	// 					{
-	// 						slide_view_box.classList.add( 'sticky-on' );
-	// 						slide_view_box.style.top = 30 + 'px';
-	// 					}
-	// 					else
-	// 					{
-	// 						slide_view_box.classList.add( 'sticky-on' );
-	// 						slide_view_box.style.top = admin_height + 30 + 'px';
-	// 					}
-	// 				}
-	// 				else
-	// 				{
-	// 					slide_view_box.classList.add( 'sticky-on' );
-	// 					slide_view_box.style.top = 30 + 'px';
-	// 				}
-	// 				/*======  End of Adjustment for adminbar  ======*/
-	// 				// thumbnail_controls.forEach( function( item, i ) 
-	// 				// 	{
-	// 				// 		if ( scroll_direction === 'scrolled down' && slide_view_box.offsetTop > item.offsetTop && slide_view_box.offsetTop < item.offsetTop + item.offsetHeight ) 
-	// 				// 		{
-	// 				// 			item.nextElementSibling.firstElementChild.click();
-	// 				// 			window.scrollBy(0,0);
-	// 				// 			window.scrollTo({ left: 0, top: img_area_top + item.nextElementSibling.offsetTop - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
-	// 				// 			active_img_adjustment();
-	// 				// 			return;
-	// 				// 		}
-	// 				// 		if ( scroll_direction === 'scrolled up' && slide_view_box.offsetTop > item.offsetTop && slide_view_box.offsetTop < item.offsetTop + item.offsetHeight ) 
-	// 				// 		{
-	// 				// 			item.firstElementChild.click();
-	// 				// 			window.scrollBy(0,0);
-	// 				// 			window.scrollTo({ left: 0, top: img_area_top + item.offsetTop - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
-	// 				// 			active_img_adjustment();
-	// 				// 			return;
-	// 				// 		}
-	// 				// 	});
-	// 			}
-	// 			/*=====  End of This initiates the scroll  ======*/
-	// 		}
-	// 		/*=====  End of This is setting up all the actions to the thumbnail scroll  ======*/
-	// 	/*=====  End of This is for setting the vertical scroll direction  ======*/
-	// }
 
 	function imageZoom(imgID, resultID) 
 	{
@@ -605,7 +484,6 @@
 
 	/*----------  Copying the shipping fields to billing  ----------*/
 	function copy_to_billing() {
-		console.log( 'entered copy to billing' );
 		var email = document.getElementsByName("shipping_email")[0].value;
 		var first_name = document.getElementsByName("shipping_first_name")[0].value;
 		var last_name = document.getElementsByName("shipping_last_name")[0].value;
@@ -616,6 +494,18 @@
 		var state = document.getElementById("shipping_state").value;
 		var postcode = document.getElementsByName("shipping_postcode")[0].value;
 		var phone = document.getElementsByName("shipping_phone")[0].value;
+		var contact_cells = document.querySelectorAll( '.contact-email-cell' );
+		var ship_to_cells = document.querySelectorAll( '.ship-to-address-cell' );
+
+		contact_cells.forEach( function( item, i ) 
+			{
+				item.innerText = email;
+			});
+
+		ship_to_cells.forEach( function( item, i ) 
+			{
+				item.innerHTML = '<span class="address-number">' +address_1 + ' ' + address_2 + '</span> <span class="city-state-zip">' + city + ', ' + state + ' ' + postcode + '</span>';
+			});
 
 		if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
 		{
@@ -633,9 +523,7 @@
 		}
 		else
 		{
-			console.log( email );
 			document.getElementsByName("billing_email")[0].value = email;
-			console.log( document.getElementsByName("billing_email")[0].value );
 			document.getElementsByName("billing_first_name")[0].value = first_name;
 			document.getElementsByName("billing_last_name")[0].value = last_name;
 			document.getElementsByName("billing_company")[0].value = company;
@@ -728,13 +616,13 @@
 
 					billing_to_radios.forEach( function( item, i ) 
 						{
-							console.log(item);
 							
+							console.log(item);
 							item.addEventListener( 'click change', function( event ) 
 								{
 									var target = event.target;
 									console.log(target);
-									if ( target.checked && target.id === 'bill-to-different-address-checkbox1' ) 
+									if ( target.checked && target.id === 'bill-to-different-address-checkbox2' ) 
 									{
 										billing_address_form.classList.add( 'active' );
 										copy_to_billing();
@@ -746,92 +634,6 @@
 			}
 			/*=====  End of Copying Shipping info to Billing info  ======*/
 		}
-		/*----------  For variant products  ----------*/
-		if ( document.querySelector( 'div.wonka-express-checkout-wrap' ) ) 
-		{
-			/*----------  loading vars  ----------*/
-			var express_btn_wrap = document.querySelector( 'div.wonka-express-checkout-wrap' ),
-			express_btn = document.querySelector( 'a#express_checkout_btn' ),
-			express_attributes = JSON.parse( document.querySelector( '.variations_form.cart' ).getAttribute( 'data-product_variations' ) ),
-			express_variants = {},
-			express_variant_id = 0,
-			express_qty = document.querySelector( '.quantity input[type="number"]' ),
-			express_btn_notice_wrapper = document.querySelector( '.woocommerce-notices-wrapper' ),
-			express_notice_text = '',
-			express_btn_href = express_btn.href,
-			variant = [],
-			attribute_count = 0;
-			/*===================================================
-			=            setting up the variant list            =
-			===================================================*/
-			for (var i in express_attributes ) 
-			{
-				for ( var a in express_attributes[i].attributes ) 
-				{
-					if ( !( 'variants' in express_variants ) ) 
-					{
-						var variants_array = [];
-						if ( !variants_array.includes(a) ) 
-						{
-							attribute_count++;
-							variants_array.push( a );
-						}
-						express_variants.variants = variants_array;
-						express_variants.variant_count = attribute_count;
-					}
-				}
-			}
-			/*=====  End of setting up the variant list  ======*/
-			/*========================================================
-			=            This is the click event function            =
-			========================================================*/
-			express_btn.addEventListener( 'click', function(e)
-				{
-					e.preventDefault();
-					var target = e.target;
-					express_variants.variants.forEach( function( item, w ) 
-						{
-							variant[item] = document.querySelector( '[name="' + item + '"]');
-						});
-					
-					for ( var v in variant )
-					{
-						if ( !variant[v].value ) 
-						{
-							express_notice_text = 'Please select a product variation in order to checkout!';
-							
-							set_message_timer( express_notice_text, express_btn_notice_wrapper );
-
-						}
-						else
-						{
-							express_btn_notice_wrapper.innerHTML =  '';
-							for (var i in express_attributes )
-							{
-								if ( express_attributes[i].attributes[v] === variant[v].value ) 
-								{
-									express_variant_id = express_attributes[i].variation_id;
-									if ( express_attributes[i].is_in_stock ) 
-									{
-										express_btn.href = express_btn_href + express_variant_id + '&quantity=' + express_qty.value;
-										window.location = express_btn.href;
-									}
-									else
-									{
-										express_notice_text = 'Product variation is currently out of stock.';
-
-										set_message_timer( express_notice_text, express_btn_notice_wrapper );
-									}
-								}
-							}
-						}
-					}
-				});
-			/*=====  End of This is the click event function  ======*/
-			
-		}
-		/*=====  End of This is the setup for the Wonka Express Checkout Button  ======*/
-		
 
 		/*==========================================================
 		=            This is for setting up the reviews            =
@@ -1039,6 +841,93 @@
 		===============================================*/
 		if ( document.querySelector( 'body.single-product' ) ) 
 		{	
+			/*----------  For variant products  ----------*/
+			if ( document.querySelector( 'div.wonka-express-checkout-wrap' ) ) 
+			{
+				/*----------  loading vars  ----------*/
+				var express_btn_wrap = document.querySelector( 'div.wonka-express-checkout-wrap' ),
+				express_btn = document.querySelector( 'a#express_checkout_btn' ),
+				express_attributes = JSON.parse( document.querySelector( '.variations_form.cart' ).getAttribute( 'data-product_variations' ) ),
+				express_variants = {},
+				express_variant_id = 0,
+				express_qty = document.querySelector( '.quantity input[type="number"]' ),
+				express_btn_notice_wrapper = document.querySelector( '.woocommerce-notices-wrapper' ),
+				express_notice_text = '',
+				express_btn_href = express_btn.href,
+				variant = [],
+				attribute_count = 0;
+				/*===================================================
+				=            setting up the variant list            =
+				===================================================*/
+				express_attributes.forEach( function( express_attribute, i ) 
+					{
+						express_attribute.attributes.forEach( function( attribute, a ) 
+							{
+								if ( !( 'variants' in express_variants ) ) 
+								{
+									var variants_array = [];
+
+									if ( !variants_array.includes(a) ) 
+									{
+										attribute_count++;
+										variants_array.push( a );
+									}
+									express_variants.variants = variants_array;
+									express_variants.variant_count = attribute_count;
+								}
+							});
+					});
+				/*=====  End of setting up the variant list  ======*/
+				/*========================================================
+				=            This is the click event function            =
+				========================================================*/
+				express_btn.addEventListener( 'click', function(e)
+					{
+						e.preventDefault();
+						var target = e.target;
+						express_variants.variants.forEach( function( item, w ) 
+							{
+								variant[item] = document.querySelector( '[name="' + item + '"]');
+							});
+						
+						for ( var v in variant )
+						{
+							if ( !variant[v].value ) 
+							{
+								express_notice_text = 'Please select a product variation in order to checkout!';
+								
+								set_message_timer( express_notice_text, express_btn_notice_wrapper );
+
+							}
+							else
+							{
+								express_btn_notice_wrapper.innerHTML =  '';
+								for (var i in express_attributes )
+								{
+									if ( express_attributes[i].attributes[v] === variant[v].value ) 
+									{
+										express_variant_id = express_attributes[i].variation_id;
+										if ( express_attributes[i].is_in_stock ) 
+										{
+											express_btn.href = express_btn_href + express_variant_id + '&quantity=' + express_qty.value;
+											window.location = express_btn.href;
+										}
+										else
+										{
+											express_notice_text = 'Product variation is currently out of stock.';
+
+											set_message_timer( express_notice_text, express_btn_notice_wrapper );
+										}
+									}
+								}
+							}
+						}
+					});
+				/*=====  End of This is the click event function  ======*/
+				
+			}
+			/*=====  End of This is the setup for the Wonka Express Checkout Button  ======*/
+
 			img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
 
 			if ( window.pageYOffset > document.querySelector( '#main' ).offsetTop ) 

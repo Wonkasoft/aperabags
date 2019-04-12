@@ -25,9 +25,12 @@
 				cursor: zoom-in;
 				@include prefix( transition, height .35s ease-in-out, o moz webkit );
 
+				div.woocommerce-product-gallery__image:not(:last-child) {
+					margin-bottom: 25px;
+				}
+
 				div.woocommerce-product-gallery__image {
 					width: 100%;
-					margin-bottom: 15px;
 
 					img {
 						width: 100%;
@@ -37,15 +40,23 @@
 
 			div.wonka-thumbnails {
 				position: relative;
-				width: 100px;
+				width: 115px;
 
 				div.woocommerce-product-gallery__image {
 					height: 100%;
+					margin-bottom: 15px;
 					
 					img {
 						width: 100px;
 						height: 100px;
 					}
+				}
+				
+				&.sticky-on {
+					position: -webkit-sticky !important;    
+					position: sticky !important;
+					top: 25px;
+					@include prefix( transition, $trans_3, o moz webkit );
 				}
 			}
 		}
@@ -131,21 +142,6 @@
 						align-items: flex-start;
 						justify-content: center;
 						flex-direction: row-reverse;
-					}
-
-					div.wonka-image-viewer {
-						flex: .8 10%;
-						top: 0;
-					}
-
-					div.wonka-thumbnails {
-
-						&.sticky-on {
-							position: -webkit-sticky !important;    
-							position: sticky !important;
-							top: 25px;
-							@include prefix( transition, $trans_3, o moz webkit );
-						}
 					}
 				}
 			}
