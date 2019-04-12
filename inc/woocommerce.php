@@ -24,21 +24,6 @@ function apera_bags_woocommerce_setup() {
 }
 add_action( 'after_setup_theme', 'apera_bags_woocommerce_setup' );
 
-add_filter('woocommerce_single_product_image_thumbnail_html', function( $data ) {
-	global $product;
-
-
-  $output = "";
-  ob_start();
-  $img_url = wp_get_attachment_image_url( $product->get_image_id() ,'medium');
-  $output .= '<img src="'; 
-  $output .= $img_url;
-  $output .= '" />';
-  $output .= ob_get_clean();
-
-   return $data;
-});
-
 /**
  * WooCommerce specific scripts & stylesheets.
  *
