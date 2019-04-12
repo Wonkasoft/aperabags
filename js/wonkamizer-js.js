@@ -28,6 +28,36 @@
 		var multistep_links = document.querySelectorAll( '#wonka-checkout-nav-steps li a.nav-link' );
 		var info_table_contact_cells = document.querySelectorAll( '.contact-email-cell' );
 		var info_table_ship_cells = document.querySelectorAll( '.ship-to-address-cell' );
+		var contact_change_links = document.querySelectorAll( '.contact-email-change-link' );
+		var ship_to_change_links = document.querySelectorAll( '.ship-to-address-change-link' );
+		var ship_method_change_links = document.querySelectorAll( '.ship-method-change-link' );
+
+		contact_change_links.forEach( function( item, i ) 
+			{
+				item.addEventListener( 'click', function( event ) 
+					{
+						event.preventDefault();
+						document.querySelector( '#wonka_customer_information_tab' ).click();
+					});
+			});
+
+		ship_to_change_links.forEach( function( item, i ) 
+			{
+				item.addEventListener( 'click', function( event ) 
+					{
+						event.preventDefault();
+						document.querySelector( '#wonka_customer_information_tab' ).click();
+					});
+			});
+
+		ship_method_change_links.forEach( function( item, i ) 
+			{
+				item.addEventListener( 'click', function( event ) 
+					{
+						event.preventDefault();
+						document.querySelector( '#wonka_shipping_method_tab' ).click();
+					});
+			});
 
 		multistep_links.forEach( function( item, i ) 
 			{
@@ -56,7 +86,6 @@
 
 							setTimeout( function() {
 								var children_array = target.parentElement.parentElement.childNodes;
-								console.log(children_array);
 								
 								children_array.forEach( function( item, i ) 
 									{
@@ -124,7 +153,11 @@
 			product_img_section = document.querySelector( '.product-img-section' );
 			product_img_section_height = document.querySelector( '.product-img-section' ).offsetHeight;
 			wonka_single_product_img_area = document.querySelector( '.wonka-single-product-img-area' );
+<<<<<<< HEAD
 			thumbnail_controls = document.querySelector( 'div.wonka-thumbnails' );
+=======
+			thumbnail_controls = document.querySelectorAll( 'div.wonka-thumbnails' );
+>>>>>>> stage
 			summary_section = document.querySelector( '.summary.entry-summary' );
 			// slide_view_box = document.querySelector( '.flex-viewport' );
 		}
@@ -617,35 +650,6 @@
 		===============================================================================*/
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 		{
-			if ( document.querySelector( '.shipping-calculator-button' ) ) 
-			{
-				var shipping_calc_btn = document.querySelector( '.shipping-calculator-button' ),
-				shipping_form = document.querySelector( '.shipping-calculator-button' ),
-				shipping_form_section = document.querySelector( 'section.shipping-calculator-form' );
-
-				shipping_calc_btn.addEventListener( 'click', function(e) 
-					{
-						e.preventDefault();
-						if ( shipping_form_section.style.display === 'none' ) 
-						{
-							shipping_form_section.style.opacity = 0;
-							shipping_form_section.style.display = 'block';
-							setTimeout( function() 
-								{
-									shipping_form_section.style.opacity = 1;
-								}, 800 );
-						}
-						else
-						{
-							shipping_form_section.style.opacity = 0;
-							setTimeout( function() 
-								{
-									shipping_form_section.style.display = 'none';
-								}, 800 );
-						}
-					});
-			}
-
 			/*================================================================
 			=            Copying Shipping info to Billing info           =
 			================================================================*/
@@ -660,15 +664,21 @@
 					billing_to_radios.forEach( function( item, i ) 
 						{
 							
-							console.log(item);
-							item.addEventListener( 'click change', function( event ) 
+							item.addEventListener( 'change', function( event ) 
 								{
+									event.preventDefault();
 									var target = event.target;
-									console.log(target);
 									if ( target.checked && target.id === 'bill-to-different-address-checkbox2' ) 
 									{
 										billing_address_form.classList.add( 'active' );
 										copy_to_billing();
+									}
+									else
+									{
+										if ( billing_address_form.classList.contains( 'active' ) ) 
+										{
+											billing_address_form.classList.remove( 'active' );
+										}
 									}
 									
 								});
@@ -902,6 +912,7 @@
 				/*===================================================
 				=            setting up the variant list            =
 				===================================================*/
+<<<<<<< HEAD
 				// express_attributes.forEach( function( express_attribute, i ) 
 				// 	{
 				// 		express_attribute.attributes.forEach( function( attribute, a ) 
@@ -920,6 +931,25 @@
 				// 				}
 				// 			});
 				// 	});
+=======
+				express_attributes.forEach( function( express_attribute, i ) 
+					{
+						var attribute = Object.keys( express_attribute.attributes )[0];
+
+						if ( !( 'variants' in express_variants ) ) 
+						{
+							var variants_array = [];
+
+							if ( !variants_array.includes( attribute )  ) 
+							{
+								attribute_count++;
+								variants_array.push( attribute );
+							}
+							express_variants.variants = variants_array;
+							express_variants.variant_count = attribute_count;
+						}
+					});
+>>>>>>> stage
 				/*=====  End of setting up the variant list  ======*/
 				/*========================================================
 				=            This is the click event function            =
@@ -986,7 +1016,11 @@
 				e.stopPropagation();
 				if (one_click) 
 				{
+<<<<<<< HEAD
 					stickyThumbnails();
+=======
+					stickyThumbnails(); 
+>>>>>>> stage
 					stickySummary(); 
 				}
 			};
