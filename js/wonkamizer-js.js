@@ -16,7 +16,7 @@
 	/* vars set for single product page */
 	if ( document.querySelector( '.product-img-section' ) ) 
 	{
-		var product_img_section, product_img_section_height, wonka_single_product_img_area, summary_section, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop, one_click = true;
+		var product_img_section, product_img_section_height, wonka_single_product_img_area, summary_section, thumbnail_controls, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop, one_click = true;
 	}
 	/*=====  End of vars set for script use  ======*/
 	
@@ -124,7 +124,7 @@
 			product_img_section = document.querySelector( '.product-img-section' );
 			product_img_section_height = document.querySelector( '.product-img-section' ).offsetHeight;
 			wonka_single_product_img_area = document.querySelector( '.wonka-single-product-img-area' );
-			// thumbnail_controls = document.querySelectorAll( '.flex-control-nav li' );
+			thumbnail_controls = document.querySelector( 'div.wonka-thumbnails' );
 			summary_section = document.querySelector( '.summary.entry-summary' );
 			// slide_view_box = document.querySelector( '.flex-viewport' );
 		}
@@ -341,6 +341,49 @@
 		{
 			header.removeAttribute( 'style' );
 		}
+	}
+
+	function stickyThumbnails() 
+	{
+		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
+		target_stop = wonka_single_product_img_area.offsetHeight - thumbnail_controls.offsetHeight;
+		win_y = window.pageYOffset;
+
+		if ( window.innerWidth > 792 && win_y < img_area_top ) 
+		{
+			thumbnail_controls.classList.remove( 'sticky-on' );
+			thumbnail_controls.removeAttribute( 'style' );
+		}
+		else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop ) 
+		{
+			thumbnail_controls.style.top = target_stop + 'px';
+			thumbnail_controls.classList.remove( 'sticky-on' );
+		}
+		else if ( window.innerWidth > 792 )
+		{
+			if ( document.querySelector( '#wpadminbar' ) ) 
+			{
+				admin_bar = document.querySelector( '#wpadminbar' );
+				admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+				
+				if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+				{
+					thumbnail_controls.classList.add( 'sticky-on' );
+					thumbnail_controls.style.top = 30 + 'px';
+				}
+				else
+				{
+					thumbnail_controls.classList.add( 'sticky-on' );
+					thumbnail_controls.style.top = admin_height + 30 + 'px';
+				}
+			}
+			else
+			{
+				thumbnail_controls.classList.add( 'sticky-on' );
+				thumbnail_controls.style.top = 30 + 'px';
+			}
+		}
+
 	}
 
 	function stickySummary() 
@@ -859,24 +902,24 @@
 				/*===================================================
 				=            setting up the variant list            =
 				===================================================*/
-				express_attributes.forEach( function( express_attribute, i ) 
-					{
-						express_attribute.attributes.forEach( function( attribute, a ) 
-							{
-								if ( !( 'variants' in express_variants ) ) 
-								{
-									var variants_array = [];
+				// express_attributes.forEach( function( express_attribute, i ) 
+				// 	{
+				// 		express_attribute.attributes.forEach( function( attribute, a ) 
+				// 			{
+				// 				if ( !( 'variants' in express_variants ) ) 
+				// 				{
+				// 					var variants_array = [];
 
-									if ( !variants_array.includes(a) ) 
-									{
-										attribute_count++;
-										variants_array.push( a );
-									}
-									express_variants.variants = variants_array;
-									express_variants.variant_count = attribute_count;
-								}
-							});
-					});
+				// 					if ( !variants_array.includes(a) ) 
+				// 					{
+				// 						attribute_count++;
+				// 						variants_array.push( a );
+				// 					}
+				// 					express_variants.variants = variants_array;
+				// 					express_variants.variant_count = attribute_count;
+				// 				}
+				// 			});
+				// 	});
 				/*=====  End of setting up the variant list  ======*/
 				/*========================================================
 				=            This is the click event function            =
@@ -943,7 +986,7 @@
 				e.stopPropagation();
 				if (one_click) 
 				{
-					// thumbnail_scroll();
+					stickyThumbnails();
 					stickySummary(); 
 				}
 			};
