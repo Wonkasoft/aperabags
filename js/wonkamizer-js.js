@@ -16,7 +16,7 @@
 	/* vars set for single product page */
 	if ( document.querySelector( '.product-img-section' ) ) 
 	{
-		var product_img_section, product_img_section_height, wonka_single_product_img_area, thumbnail_controls, summary_section, slide_view_box, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop, one_click = true;
+		var product_img_section, product_img_section_height, wonka_single_product_img_area, summary_section, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop, one_click = true;
 	}
 	/*=====  End of vars set for script use  ======*/
 	
@@ -124,9 +124,9 @@
 			product_img_section = document.querySelector( '.product-img-section' );
 			product_img_section_height = document.querySelector( '.product-img-section' ).offsetHeight;
 			wonka_single_product_img_area = document.querySelector( '.wonka-single-product-img-area' );
-			thumbnail_controls = document.querySelectorAll( '.flex-control-nav li' );
+			// thumbnail_controls = document.querySelectorAll( '.flex-control-nav li' );
 			summary_section = document.querySelector( '.summary.entry-summary' );
-			slide_view_box = document.querySelector( '.flex-viewport' );
+			// slide_view_box = document.querySelector( '.flex-viewport' );
 			win_y = window.pageYOffset;
 		}
 	}
@@ -387,125 +387,125 @@
 
 	}
 	
-	function active_img_adjustment() 
-	{
-		setTimeout( function() 
-			{
-				active_slide_img = document.querySelector( '.flex-viewport .flex-active-slide img');
-				/* slide_view_box adjustment */
-				if ( active_slide_img.offsetHeight > 760 ) 
-				{
-					slide_view_box.style.height = 760 + 'px';
-					product_img_section.style.height = product_img_section_height - 100 + slide_view_box.offsetHeight + 'px';
-				}
-				else
-				{
-					slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
-					product_img_section.style.height = product_img_section_height - 100 + slide_view_box.offsetHeight + 'px';
-				}
-			}, 450);
-	}
+	// function active_img_adjustment() 
+	// {
+	// 	setTimeout( function() 
+	// 		{
+	// 			active_slide_img = document.querySelector( '.flex-viewport .flex-active-slide img');
+	// 			/* slide_view_box adjustment */
+	// 			if ( active_slide_img.offsetHeight > 760 ) 
+	// 			{
+	// 				slide_view_box.style.height = 760 + 'px';
+	// 				product_img_section.style.height = product_img_section_height - 100 + slide_view_box.offsetHeight + 'px';
+	// 			}
+	// 			else
+	// 			{
+	// 				slide_view_box.style.height = active_slide_img.offsetHeight + 'px';
+	// 				product_img_section.style.height = product_img_section_height - 100 + slide_view_box.offsetHeight + 'px';
+	// 			}
+	// 		}, 450);
+	// }
 
-	function thumbnail_scroll()
-	{
-		/*=========================================================================
-		=            This is for setting the vertical scroll direction            =
-		=========================================================================*/
-		if ( window.pageYOffset > last_scroll_top ) 
-		{
-			scroll_direction = 'scrolled down';
-			scroll_distance = window.pageYOffset - last_scroll_top;
-		}
+	// function thumbnail_scroll()
+	// {
+	// 	/*=========================================================================
+	// 	=            This is for setting the vertical scroll direction            =
+	// 	=========================================================================*/
+	// 	if ( window.pageYOffset > last_scroll_top ) 
+	// 	{
+	// 		scroll_direction = 'scrolled down';
+	// 		scroll_distance = window.pageYOffset - last_scroll_top;
+	// 	}
 
-		if ( window.pageYOffset < last_scroll_top )
-		{
-			scroll_direction = 'scrolled up';
-			scroll_distance = last_scroll_top - window.pageYOffset;
-		}
+	// 	if ( window.pageYOffset < last_scroll_top )
+	// 	{
+	// 		scroll_direction = 'scrolled up';
+	// 		scroll_distance = last_scroll_top - window.pageYOffset;
+	// 	}
 
-		last_scroll_top = window.pageYOffset;
-			/*==================================================================================
-			=            This is setting up all the actions to the thumbnail scroll            =
-			==================================================================================*/
-			if ( document.querySelector( '.wonka-single-product-img-area' ) ) 
-			{
-				var flex_viewer_top = slide_view_box.offsetTop;
-				slide_control = document.querySelector( '.flex-control-nav .flex-active'); 
-				active_slide = document.querySelector( '.flex-viewport .flex-active-slide'); 
-				win_y = window.pageYOffset;
-				img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
-				target_stop = wonka_single_product_img_area.offsetHeight - slide_view_box.offsetHeight;
+	// 	last_scroll_top = window.pageYOffset;
+	// 		/*==================================================================================
+	// 		=            This is setting up all the actions to the thumbnail scroll            =
+	// 		==================================================================================*/
+	// 		if ( document.querySelector( '.wonka-single-product-img-area' ) ) 
+	// 		{
+	// 			var flex_viewer_top = slide_view_box.offsetTop;
+	// 			slide_control = document.querySelector( '.flex-control-nav .flex-active'); 
+	// 			active_slide = document.querySelector( '.flex-viewport .flex-active-slide'); 
+	// 			win_y = window.pageYOffset;
+	// 			img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
+	// 			target_stop = wonka_single_product_img_area.offsetHeight - slide_view_box.offsetHeight;
 
-				/*=================================================
-				=            This initiates the scroll            =
-				=================================================*/
-				if ( window.innerWidth > 792 && win_y < img_area_top )
-				{
-					slide_view_box.classList.remove( 'sticky-on' );
-					slide_view_box.style.top = '';
+	// 			/*=================================================
+	// 			=            This initiates the scroll            =
+	// 			=================================================*/
+	// 			if ( window.innerWidth > 792 && win_y < img_area_top )
+	// 			{
+	// 				slide_view_box.classList.remove( 'sticky-on' );
+	// 				slide_view_box.style.top = '';
 
-				}
-				else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop )
-				{
-					slide_view_box.classList.remove( 'sticky-on' );
-					slide_view_box.style.top = target_stop + 'px';
-				}
-				else if ( window.innerWidth > 792 && win_y > img_area_top && win_y - img_area_top < target_stop ) 
-				{
-					if ( scroll_distance > 100 ) 
-					{
-						window.scrollBy(0,0);
-					}
-					/*===============================================
-					=            Adjustment for adminbar            =
-					===============================================*/
-					if ( document.querySelector( '#wpadminbar' ) ) 
-					{
-						admin_bar = document.querySelector( '#wpadminbar' );
-						admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+	// 			}
+	// 			else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop )
+	// 			{
+	// 				slide_view_box.classList.remove( 'sticky-on' );
+	// 				slide_view_box.style.top = target_stop + 'px';
+	// 			}
+	// 			else if ( window.innerWidth > 792 && win_y > img_area_top && win_y - img_area_top < target_stop ) 
+	// 			{
+	// 				if ( scroll_distance > 100 ) 
+	// 				{
+	// 					window.scrollBy(0,0);
+	// 				}
+	// 				/*===============================================
+	// 				=            Adjustment for adminbar            =
+	// 				===============================================*/
+	// 				if ( document.querySelector( '#wpadminbar' ) ) 
+	// 				{
+	// 					admin_bar = document.querySelector( '#wpadminbar' );
+	// 					admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
 						
-						if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
-						{
-							slide_view_box.classList.add( 'sticky-on' );
-							slide_view_box.style.top = 30 + 'px';
-						}
-						else
-						{
-							slide_view_box.classList.add( 'sticky-on' );
-							slide_view_box.style.top = admin_height + 30 + 'px';
-						}
-					}
-					else
-					{
-						slide_view_box.classList.add( 'sticky-on' );
-						slide_view_box.style.top = 30 + 'px';
-					}
-					/*======  End of Adjustment for adminbar  ======*/
-					thumbnail_controls.forEach( function( item, i ) 
-						{
-							if ( scroll_direction === 'scrolled down' && slide_view_box.offsetTop > item.offsetTop && slide_view_box.offsetTop < item.offsetTop + item.offsetHeight ) 
-							{
-								item.nextElementSibling.firstElementChild.click();
-								window.scrollBy(0,0);
-								window.scrollTo({ left: 0, top: img_area_top + item.nextElementSibling.offsetTop - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
-								active_img_adjustment();
-								return;
-							}
-							if ( scroll_direction === 'scrolled up' && slide_view_box.offsetTop > item.offsetTop && slide_view_box.offsetTop < item.offsetTop + item.offsetHeight ) 
-							{
-								item.firstElementChild.click();
-								window.scrollBy(0,0);
-								window.scrollTo({ left: 0, top: img_area_top + item.offsetTop - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
-								active_img_adjustment();
-								return;
-							}
-						});
-				}
-				/*=====  End of This initiates the scroll  ======*/
-			}
-			/*=====  End of This is setting up all the actions to the thumbnail scroll  ======*/
-		/*=====  End of This is for setting the vertical scroll direction  ======*/
-	}
+	// 					if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+	// 					{
+	// 						slide_view_box.classList.add( 'sticky-on' );
+	// 						slide_view_box.style.top = 30 + 'px';
+	// 					}
+	// 					else
+	// 					{
+	// 						slide_view_box.classList.add( 'sticky-on' );
+	// 						slide_view_box.style.top = admin_height + 30 + 'px';
+	// 					}
+	// 				}
+	// 				else
+	// 				{
+	// 					slide_view_box.classList.add( 'sticky-on' );
+	// 					slide_view_box.style.top = 30 + 'px';
+	// 				}
+	// 				/*======  End of Adjustment for adminbar  ======*/
+	// 				// thumbnail_controls.forEach( function( item, i ) 
+	// 				// 	{
+	// 				// 		if ( scroll_direction === 'scrolled down' && slide_view_box.offsetTop > item.offsetTop && slide_view_box.offsetTop < item.offsetTop + item.offsetHeight ) 
+	// 				// 		{
+	// 				// 			item.nextElementSibling.firstElementChild.click();
+	// 				// 			window.scrollBy(0,0);
+	// 				// 			window.scrollTo({ left: 0, top: img_area_top + item.nextElementSibling.offsetTop - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
+	// 				// 			active_img_adjustment();
+	// 				// 			return;
+	// 				// 		}
+	// 				// 		if ( scroll_direction === 'scrolled up' && slide_view_box.offsetTop > item.offsetTop && slide_view_box.offsetTop < item.offsetTop + item.offsetHeight ) 
+	// 				// 		{
+	// 				// 			item.firstElementChild.click();
+	// 				// 			window.scrollBy(0,0);
+	// 				// 			window.scrollTo({ left: 0, top: img_area_top + item.offsetTop - parseInt( slide_view_box.style.top ), behavior: 'smooth' });
+	// 				// 			active_img_adjustment();
+	// 				// 			return;
+	// 				// 		}
+	// 				// 	});
+	// 			}
+	// 			/*=====  End of This initiates the scroll  ======*/
+	// 		}
+	// 		/*=====  End of This is setting up all the actions to the thumbnail scroll  ======*/
+	// 	/*=====  End of This is for setting the vertical scroll direction  ======*/
+	// }
 
 	function imageZoom(imgID, resultID) 
 	{
@@ -1054,7 +1054,7 @@
 				e.stopPropagation();
 				if (one_click) 
 				{
-					thumbnail_scroll();
+					// thumbnail_scroll();
 					stickySummary(); 
 				}
 			};
