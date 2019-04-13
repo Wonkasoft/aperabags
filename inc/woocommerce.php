@@ -981,19 +981,20 @@ add_action( 'woocommerce_review_after_comment_text', 'wonka_after_comment_text_a
  * @return [type]       [description]
  */
 function wonka_single_product_image_thumbnail_html_custom( $data ) {
-	global $product;
+	global $product, $post;
 	$post_thumbnail_id = $product->get_image_id();
+	$wonka_post_id = get_the_ID();
 
 	$output = '';
 	ob_start();
-	$output .= '<div data-thumb="' . esc_attr_e( wp_get_attachment_url( $post_thumbnail_id ) ) . '">';
-	$output .= '<a href="' . esc_attr_e( wp_get_attachment_url( $post_thumbnail_id ) ) . '">';
-	$output .= '<img src="' . esc_attr_e( wp_get_attachment_image_src( $post_thumbnail_id, 'thumbnail' ) ) . '" class=" wp-post-image active" alt="' . esc_attr_e( get_post_meta( $post_thumbnail_id , '_wp_attachment_image_alt', true) ) . '" title="' . esc_attr_e( get_post_meta( $post_thumbnail_id , '_wp_attachment_image_title', true ) ) . '" data-caption="" data-src="' . esc_attr_e( wp_get_attachment_image_src( $post_thumbnail_id, 'thumbnail' ) ) . '" data-large_image="' . esc_attr_e( wp_get_attachment_url( $post_thumbnail_id ) ) . '" srcset="' . esc_attr_e( wp_get_attachment_image_srcset( $post_thumbnail_id ) ) .'" />';
+	$output .= '<div data-thumb="' . esc_attr__( wp_get_attachment_url( $post_thumbnail_id ) ) . '" class="woocommerce-product-gallery__image">';
+	$output .= '<a href="' . esc_attr__( wp_get_attachment_url( $post_thumbnail_id ) ) . '" class="active">';
+	$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'thumbnail' ) . '" class="wp-post-image" alt="' . esc_attr__( get_post_meta( $post_thumbnail_id , '_wp_attachment_image_alt', true) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr__( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-src="' . wp_get_attachment_image_src( $post_thumbnail_id, 'thumbnail' ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr__( wp_get_attachment_image_srcset( $post_thumbnail_id, 'thumbnail', true ) ) .'" />';
 	$output .= '</a></div>';
 	$output .= ob_get_clean();
 
 	
-	return $output;
+	echo $output;
 }
 
 add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_image_thumbnail_html_custom' );
