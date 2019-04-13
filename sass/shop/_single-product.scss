@@ -41,7 +41,6 @@
 			div.wonka-thumbnails {
 				position: relative;
 				width: 115px;
-				@include prefix( transition, $trans_25, o moz webkit );
 
 				div.woocommerce-product-gallery__image {
 					height: 100%;
