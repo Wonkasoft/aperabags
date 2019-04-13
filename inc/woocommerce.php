@@ -981,12 +981,19 @@ add_action( 'woocommerce_review_after_comment_text', 'wonka_after_comment_text_a
  * @return [type]       [description]
  */
 function wonka_single_product_image_thumbnail_html_custom( $data ) {
-	echo "<pre>\n";
-	print_r( esc_html__( $data, 'default' ) );
-	echo "</pre>\n";
+	global $product;
+	$post_thumbnail_id = $product->get_image_id();
 
+	$output = '';
+	ob_start();
+	$output .= '<div data-thumb="' . esc_attr_e( wp_get_attachment_url( $post_thumbnail_id ) ) . '">';
+	$output .= '<a href="' . esc_attr_e( wp_get_attachment_url( $post_thumbnail_id ) ) . '">';
+	$output .= '<img src="' . esc_attr_e( wp_get_attachment_image_src( $post_thumbnail_id, 'thumbnail' ) ) . '" class=" wp-post-image active" alt="' . esc_attr_e( get_post_meta( $post_thumbnail_id , '_wp_attachment_image_alt', true) ) . '" title="' . esc_attr_e( get_post_meta( $post_thumbnail_id , '_wp_attachment_image_title', true ) ) . '" data-caption="" data-src="' . esc_attr_e( wp_get_attachment_image_src( $post_thumbnail_id, 'thumbnail' ) ) . '" data-large_image="' . esc_attr_e( wp_get_attachment_url( $post_thumbnail_id ) ) . '" srcset="' . esc_attr_e( wp_get_attachment_image_srcset( $post_thumbnail_id ) ) .'" />';
+	$output .= '</a></div>';
+	$output .= ob_get_clean();
 
-	return $data;
+	
+	return $output;
 }
 
 add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_image_thumbnail_html_custom' );
