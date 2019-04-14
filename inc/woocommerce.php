@@ -794,12 +794,7 @@ function wonka_woocommerce_review_order_before_payment() {
 add_action( 'woocommerce_review_order_before_payment', 'wonka_woocommerce_review_order_before_payment' );
 
 function wonka_woocommerce_review_order_before_payment2() {
-	$output = '';
-	ob_start();
-	$output .= do_action( 'woocommerce_checkout_billing' );
-	$output .= ob_get_clean();
-	
-	echo $output;
+	do_action( 'woocommerce_checkout_billing' );
 }
 add_action( 'wonka_custom_billing_addition', 'wonka_woocommerce_review_order_before_payment2' );
 
@@ -946,7 +941,7 @@ function wonka_before_comment_meta_add( $comment ) {
 	?>
 		<div class="wonka-rating-and-meta-wrap col-12 col-md-4">
 		<?php
-		/**
+		/*
 		 * The woocommerce_review_before hook
 		 *
 		 * @hooked woocommerce_review_display_gravatar - 10
@@ -955,7 +950,21 @@ function wonka_before_comment_meta_add( $comment ) {
 		?>
 	<?php
 }
+
 add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta_add', 5 );
+
+/**
+ * This is to add a custom gravatar from the site icon 
+ * @param  array $avatar_defaults site defaults
+ * @return array                  filtered defaults
+ */
+function ws_custom_new_gravatar ( $avatar_defaults ) {
+	$customavatar = get_site_icon_url();
+	$avatar_defaults[$customavatar] = "Site Default Gravatar";
+	return $avatar_defaults;
+}
+
+add_filter( 'avatar_defaults', 'ws_custom_new_gravatar' );
 
 function wonka_before_comment_text_add( $comment ) {
 	?>
