@@ -20,50 +20,6 @@
 	}
 	/*=====  End of vars set for script use  ======*/
 
-
-
-
-	/*================================================================
-	=            Copying Shipping info to Billing info           =
-	================================================================*/
-
-	if ( document.querySelector( '.woocommerce-billing-fields' ) ) 
-	{
-		if ( document.querySelectorAll( 'input[name="ship_to_different_address"]' ) ) 
-		{
-			var billing_to_radios = document.querySelectorAll( 'input[name="ship_to_different_address"]' );
-			var billing_address_form = document.querySelector( '.billing_address' );
-
-			billing_to_radios.forEach( function( item, i ) 
-				{
-					
-					item.addEventListener( 'click', function( event ) 
-						{
-							// event.preventDefault();
-							console.log('hey');
-							var target = event.target;
-							if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
-							{
-								billing_address_form.classList.add( 'active' );
-								copy_to_billing();
-							}
-							else
-							{
-								if ( billing_address_form.classList.contains( 'active' ) ) 
-								{
-									billing_address_form.classList.remove( 'active' );
-								}
-							}
-							
-						});
-				});
-		}
-	}
-	/*=====  End of Copying Shipping info to Billing info  ======*/
-
-
-
-
 	
 	/*===============================================================
 	=            This is for the checkout multistep tabs            =
@@ -88,6 +44,38 @@
 		{
 			document.querySelector( '#wonka_payment_method_tab' ).addEventListener( 'click', function( event ) {
 				event.preventDefault();
+				
+				/*================================================================
+				=            Copying Shipping info to Billing info           =
+				================================================================*/
+
+				var billing_to_radios = document.querySelectorAll( 'input[name="ship_to_different_address"]' );
+				var billing_address_form = document.querySelector( '.billing_address' );
+
+				billing_to_radios.forEach( function( item, i ) 
+					{
+						
+						item.addEventListener( 'click', function( event ) 
+							{
+								event.preventDefault();
+								var target = event.target;
+								if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
+								{
+									billing_address_form.classList.add( 'active' );
+									copy_to_billing();
+								}
+								else
+								{
+									if ( billing_address_form.classList.contains( 'active' ) ) 
+									{
+										billing_address_form.classList.remove( 'active' );
+									}
+								}
+								
+							});
+					});
+				/*=====  End of Copying Shipping info to Billing info  ======*/
+
 				var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
 				shippping_radios.forEach( function( item, i ) {
 					if (item.checked){
