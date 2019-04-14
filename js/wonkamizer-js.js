@@ -26,7 +26,7 @@
 	===============================================================*/
 	if ( document.querySelector( '#wonka-checkout-nav-steps' ) ) 
 	{
-		var ship_method = document.querySelectorAll('#shipping_method li input.shipping_method');
+		var ship_method = document.querySelectorAll('input[name="shipping_method[0]"]');
 		var multistep_links = document.querySelectorAll( '#wonka-checkout-nav-steps li a.nav-link' );
 		var info_table_contact_cells = document.querySelectorAll( '.contact-email-cell' );
 		var info_table_ship_cells = document.querySelectorAll( '.ship-to-address-cell' );
@@ -76,9 +76,18 @@
 					});
 				/*=====  End of Copying Shipping info to Billing info  ======*/
 
-				var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
-				shippping_radios.forEach( function( item, i ) {
-					if (item.checked){
+				// var shippping_radios = document.querySelectorAll( 'input[name="shipping_method"]' );
+
+			});
+
+			ship_method.forEach( function( item, i ) {
+
+				item.addEventListener( 'change', function( event ) {
+					var target = event.target;
+					console.log("helo");
+
+					if (target.checked){
+						console.log('hllo');
 						var shipping_label = item.nextSibling.innerText;
 						var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
 
@@ -88,6 +97,7 @@
 						});
 					}	
 				});
+
 			});
 		}
 
