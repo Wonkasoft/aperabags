@@ -954,7 +954,21 @@ function wonka_before_comment_meta_add( $comment ) {
 		?>
 	<?php
 }
+
 add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta_add', 5 );
+
+/**
+ * This is to add a custom gravatar from the site icon 
+ * @param  array $avatar_defaults site defaults
+ * @return array                  filtered defaults
+ */
+function ws_custom_new_gravatar ( $avatar_defaults ) {
+	$customavatar = get_site_icon_url();
+	$avatar_defaults[$customavatar] = "Default Gravatar";
+	return $avatar_defaults;
+}
+
+add_filter( 'avatar_defaults', 'ws_custom_new_gravatar' );
 
 function wonka_before_comment_text_add( $comment ) {
 	?>
