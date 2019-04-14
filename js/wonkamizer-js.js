@@ -61,6 +61,7 @@
 								if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
 								{
 									billing_address_form.classList.add( 'active' );
+										copy_to_billing();
 								}
 								else
 								{
