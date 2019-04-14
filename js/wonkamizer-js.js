@@ -33,16 +33,14 @@
 		{
 			var billing_to_radios = document.querySelectorAll( 'input[name="ship_to_different_address"]' );
 			var billing_address_form = document.querySelector( '.billing_address' );
-							console.log(billing_to_radios);
 
 			billing_to_radios.forEach( function( item, i ) 
 				{
-							console.log(item);
 					
 					item.addEventListener( 'change', function( event ) 
 						{
-							console.log(event.target);
-							event.preventDefault();
+							// event.preventDefault();
+							console.log('hey');
 							var target = event.target;
 							if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
 							{
