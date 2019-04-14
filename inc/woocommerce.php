@@ -945,7 +945,7 @@ function wonka_before_comment_meta_add( $comment ) {
 	?>
 		<div class="wonka-rating-and-meta-wrap col-12 col-md-4">
 		<?php
-		/**
+		/*
 		 * The woocommerce_review_before hook
 		 *
 		 * @hooked woocommerce_review_display_gravatar - 10
@@ -964,7 +964,7 @@ add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta
  */
 function ws_custom_new_gravatar ( $avatar_defaults ) {
 	$customavatar = get_site_icon_url();
-	$avatar_defaults[$customavatar] = "Default Gravatar";
+	$avatar_defaults[$customavatar] = "Site Default Gravatar";
 	return $avatar_defaults;
 }
 

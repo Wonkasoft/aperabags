@@ -33,10 +33,12 @@
 		var ship_to_change_links = document.querySelectorAll( '.ship-to-address-change-link' );
 		var ship_method_change_links = document.querySelectorAll( '.ship-method-change-link' );
 
-		/**	
-		 * carlos start
-		 * 
-		 */	
+		/**
+		 * Add Shipping method to current status table
+		 * @author Carlos
+		 *
+		 * @since 1.0.0
+		 */
 		if(document.querySelector( '#wonka_payment_method_tab' ))
 		{
 			document.querySelector( '#wonka_payment_method_tab' ).addEventListener( 'click', function( event ) {
@@ -55,10 +57,6 @@
 				});
 			});
 		}
-
-		 /**
-			* carlos END
-		  */
 
 		contact_change_links.forEach( function( item, i ) 
 			{
@@ -695,11 +693,11 @@
 							
 							item.addEventListener( 'change', function( event ) 
 								{
+									console.log(event.target);
 									event.preventDefault();
 									var target = event.target;
 									if ( target.checked && target.id === 'bill-to-different-address-checkbox2' ) 
 									{
-										console.log('hello');
 										billing_address_form.classList.add( 'active' );
 										copy_to_billing();
 									}
