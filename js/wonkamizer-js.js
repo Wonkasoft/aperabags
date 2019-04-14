@@ -44,7 +44,7 @@
 		{
 			document.querySelector( '#wonka_payment_method_tab' ).addEventListener( 'click', function( event ) {
 				event.preventDefault();
-				
+
 				/*================================================================
 				=            Copying Shipping info to Billing info           =
 				================================================================*/
@@ -55,9 +55,8 @@
 				billing_to_radios.forEach( function( item, i ) 
 					{
 						
-						item.addEventListener( 'click', function( event ) 
+						item.addEventListener( 'change', function( event ) 
 							{
-								event.preventDefault();
 								var target = event.target;
 								if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
 								{
