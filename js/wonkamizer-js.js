@@ -32,61 +32,34 @@
 		var contact_change_links = document.querySelectorAll( '.contact-email-change-link' );
 		var ship_to_change_links = document.querySelectorAll( '.ship-to-address-change-link' );
 		var ship_method_change_links = document.querySelectorAll( '.ship-method-change-link' );
+
 		/**	
 		 * carlos start
 		 * 
-		 */
+		 */	
+		if(document.querySelector( '#wonka_payment_method_tab' ))
+		{
+			document.querySelector( '#wonka_payment_method_tab' ).addEventListener( 'click', function( event ) {
+				event.preventDefault();
+				var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
+				shippping_radios.forEach( function( item, i ) {
+					if (item.checked){
+						var shipping_label = item.nextSibling.innerText;
+						var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
 
-
-		
-				// if ( document.querySelectorAll( 'input[name="shipping_method[0]"]' ) ) 
-				// {
-				// 	var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
-				// 	console.log('hello');
-				// 	shippping_radios.forEach( function( item, i ) 
-				// 		{
-				// 			console.log('hello');
-				// 			item.addEventListener( 'change', function( event ) 
-				// 				{ 
-				// 					console.log('hello');
-				// 					event.preventDefault();
-				// 					var target = event.target;
-				// 					if ( target.checked == true ) 
-				// 					{
-				// 						console.log('hello');
-				// 					}
-									
-				// 				});
-				// 		});
-				// }
-			
-
-				if(document.querySelector( '#wonka_payment_method_tab' ))
-				{
-					document.querySelector( '#wonka_payment_method_tab' ).addEventListener( 'click', function( event ) {
-						console.log('hello');
-						event.preventDefault();
-						var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
-						shippping_radios.forEach( function( item, i ) {
-							if (item.checked){
-								var shipping_label = item.nextSibling.innerText;
-								var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
-		
-								ship_to_cells.forEach( function( item, i ) 
-								{
-									item.innerHTML =shipping_label;
-								});
-							}	
+						ship_to_cells.forEach( function( item, i ) 
+						{
+							item.innerHTML =shipping_label;
 						});
-					});
-				}
-
-
-
+					}	
+				});
+			});
+		}
 
 		 /**
 			* carlos END
 		  */
+
 		contact_change_links.forEach( function( item, i ) 
 			{
 				item.addEventListener( 'click', function( event ) 
