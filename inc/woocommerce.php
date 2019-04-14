@@ -793,12 +793,7 @@ function wonka_woocommerce_review_order_before_payment() {
 add_action( 'woocommerce_review_order_before_payment', 'wonka_woocommerce_review_order_before_payment' );
 
 function wonka_woocommerce_review_order_before_payment2() {
-	$output = '';
-	ob_start();
-	$output .= do_action( 'woocommerce_checkout_billing' );
-	$output .= ob_get_clean();
-	
-	echo $output;
+	do_action( 'woocommerce_checkout_billing' );
 }
 add_action( 'wonka_custom_billing_addition', 'wonka_woocommerce_review_order_before_payment2' );
 
