@@ -48,18 +48,24 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 		?>
 		<div class="wonka-image-viewer">
 		<?php
-			echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', $html, $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
+			echo apply_filters( 'wonka_single_product_scroll_image_html', $html, $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
 			if ( $attachment_ids && $product->get_image_id() ) {
 				foreach ( $attachment_ids as $attachment_id ) {
-					echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', wc_get_gallery_image_html( $attachment_id, 'full' ), $attachment_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
+					echo apply_filters( 'wonka_single_product_scroll_image_html', wc_get_gallery_image_html( $attachment_id, 'full' ), $attachment_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
 				}
 			}
 		?>
 		</div>
 
 		<div class="wonka-thumbnails">
-			<?php echo apply_filters( 'wonka_single_product_image_thumbnail_html', wc_get_gallery_image_html( $post_thumbnail_id ), $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped ?>
-			<?php do_action( 'woocommerce_product_thumbnails' ); ?>
+			<ul>
+				
+				<li>
+					<?php echo apply_filters( 'wonka_single_product_image_thumbnail_html', wc_get_gallery_image_html( $post_thumbnail_id ), $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped ?>
+				</li>
+				
+					<?php do_action( 'woocommerce_product_thumbnails' ); ?>
+			</ul>
 		</div>
 	</figure>
 </div>

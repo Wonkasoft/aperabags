@@ -170,7 +170,7 @@ if ( !empty( $product_specs_data ) ) : ?>
 			<tbody>
 				<tr>
 					<td>
-						Sanitized Freshness
+						Sanitized Freshness <sup>&reg;</sup>
 					</td>
 				</tr>
 				<tr>
@@ -208,7 +208,7 @@ if ( !empty( $product_specs_data ) ) : ?>
 			<tbody>
 				<tr>
 					<td>
-						Lifetime guarantee against manufacture defects (provides peace of mind)
+						Lifetime guarantee against manufacturer defects (provides peace of mind)
 					</td>
 				</tr>
 				<tr>

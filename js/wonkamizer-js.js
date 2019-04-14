@@ -25,12 +25,40 @@
 	===============================================================*/
 	if ( document.querySelector( '#wonka-checkout-nav-steps' ) ) 
 	{
+		var ship_method = document.querySelectorAll('#shipping_method li input.shipping_method');
 		var multistep_links = document.querySelectorAll( '#wonka-checkout-nav-steps li a.nav-link' );
 		var info_table_contact_cells = document.querySelectorAll( '.contact-email-cell' );
 		var info_table_ship_cells = document.querySelectorAll( '.ship-to-address-cell' );
 		var contact_change_links = document.querySelectorAll( '.contact-email-change-link' );
 		var ship_to_change_links = document.querySelectorAll( '.ship-to-address-change-link' );
 		var ship_method_change_links = document.querySelectorAll( '.ship-method-change-link' );
+
+		/**	
+		 * carlos start
+		 * 
+		 */	
+		if(document.querySelector( '#wonka_payment_method_tab' ))
+		{
+			document.querySelector( '#wonka_payment_method_tab' ).addEventListener( 'click', function( event ) {
+				event.preventDefault();
+				var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
+				shippping_radios.forEach( function( item, i ) {
+					if (item.checked){
+						var shipping_label = item.nextSibling.innerText;
+						var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
+
+						ship_to_cells.forEach( function( item, i ) 
+						{
+							item.innerHTML =shipping_label;
+						});
+					}	
+				});
+			});
+		}
+
+		 /**
+			* carlos END
+		  */
 
 		contact_change_links.forEach( function( item, i ) 
 			{
@@ -671,6 +699,7 @@
 									var target = event.target;
 									if ( target.checked && target.id === 'bill-to-different-address-checkbox2' ) 
 									{
+										console.log('hello');
 										billing_address_form.classList.add( 'active' );
 										copy_to_billing();
 									}
