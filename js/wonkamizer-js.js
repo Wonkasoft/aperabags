@@ -37,7 +37,7 @@
 			billing_to_radios.forEach( function( item, i ) 
 				{
 					
-					item.addEventListener( 'change', function( event ) 
+					item.addEventListener( 'click', function( event ) 
 						{
 							// event.preventDefault();
 							console.log('hey');
