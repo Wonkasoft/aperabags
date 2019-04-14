@@ -21,9 +21,12 @@
 	/*=====  End of vars set for script use  ======*/
 
 	
-	/*===============================================================
-	=            This is for the checkout multistep tabs            =
-	===============================================================*/
+	/**
+	 * This is for the checkout multistep tabs 
+	 * @author Rudy
+	 * 
+	 * @since 1.0.0
+	 */
 	if ( document.querySelector( '#wonka-checkout-nav-steps' ) ) 
 	{
 		var ship_method = document.querySelectorAll('#shipping_method li input.shipping_method');
