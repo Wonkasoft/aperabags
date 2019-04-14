@@ -2,6 +2,8 @@
  * Single Product
  */
 .single-product {
+	position: relative;
+
 	div.product {
 		@include clearfix;
 		position: relative;
@@ -41,25 +43,40 @@
 			div.wonka-thumbnails {
 				position: relative;
 				width: 115px;
+				padding: 0;
 
-				div.woocommerce-product-gallery__image {
-					height: 100%;
-					margin-bottom: 15px;
+				ul {
+					list-style: none;
+					margin: 0;
+					padding: 0;
 
-					a {
-						@include prefix( transition, $trans_25, o moz webkit );
+					li:not(:last-child) {
 
-						img {
-							width: 100px;
-							height: 100px;
-							opacity: .3;
-							@include prefix( transition, $trans_25, o moz webkit );
+						a.woocommerce-product-gallery__image {
+							margin-bottom: 15px;
 						}
+					}
+					
+					li {
+						padding-right: 15px;
 
-						&.active {
+						a.woocommerce-product-gallery__image {
+							display: block;
+							padding: 0;
+							@include prefix( transition, $trans_25, o moz webkit );
 
 							img {
-								opacity: 1;
+								width: auto;
+								height: auto;
+								opacity: .3;
+								@include prefix( transition, $trans_25, o moz webkit );
+							}
+
+							&.active {
+
+								img {
+									opacity: 1;
+								}
 							}
 						}
 					}

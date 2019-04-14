@@ -49,7 +49,7 @@
 
 						ship_to_cells.forEach( function( item, i ) 
 						{
-							item.innerHTML =shipping_label;
+							item.innerHTML = shipping_label;
 						});
 					}	
 				});
@@ -188,7 +188,6 @@
 			wonka_single_product_img_area = document.querySelector( '.wonka-single-product-img-area' );
 			thumbnail_controls = document.querySelector( 'div.wonka-thumbnails' );
 			summary_section = document.querySelector( '.summary.entry-summary' );
-			// slide_view_box = document.querySelector( '.flex-viewport' );
 		}
 	}
 
@@ -924,6 +923,8 @@
 		===============================================*/
 		if ( document.querySelector( 'body.single-product' ) ) 
 		{	
+			$('body.single-product').scrollspy({ target: ".navbar", offset: 30 });
+
 			/*----------  For variant products  ----------*/
 			if ( document.querySelector( 'div.wonka-express-checkout-wrap' ) ) 
 			{

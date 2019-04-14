@@ -57,13 +57,11 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 		?>
 		</div>
 
-		<div class="wonka-thumbnails">
-			<ul>
-				
-				<li>
+		<div class="navbar wonka-thumbnails">
+			<ul class="navbar-nav">
+				<li class="nav-item">
 					<?php echo apply_filters( 'wonka_single_product_image_thumbnail_html', wc_get_gallery_image_html( $post_thumbnail_id ), $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped ?>
 				</li>
-				
 					<?php do_action( 'woocommerce_product_thumbnails' ); ?>
 			</ul>
 		</div>
