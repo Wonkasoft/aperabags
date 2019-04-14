@@ -37,6 +37,7 @@
 
 			billing_to_radios.forEach( function( item, i ) 
 				{
+							console.log(item[i]);
 					
 					item.addEventListener( 'change', function( event ) 
 						{
