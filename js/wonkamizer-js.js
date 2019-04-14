@@ -33,6 +33,7 @@
 		{
 			var billing_to_radios = document.querySelectorAll( 'input[name="ship_to_different_address"]' );
 			var billing_address_form = document.querySelector( '.billing_address' );
+							console.log(billing_to_radios);
 
 			billing_to_radios.forEach( function( item, i ) 
 				{
@@ -42,7 +43,7 @@
 							console.log(event.target);
 							event.preventDefault();
 							var target = event.target;
-							if ( target.checked && target.id === 'bill-to-different-address-checkbox2' ) 
+							if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
 							{
 								billing_address_form.classList.add( 'active' );
 								copy_to_billing();
@@ -63,7 +64,7 @@
 
 
 
-	
+
 	
 	/*===============================================================
 	=            This is for the checkout multistep tabs            =
