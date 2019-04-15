@@ -81,8 +81,14 @@
 					});
 				/*=====  End of Copying Shipping info to Billing info  ======*/
 
-				// var shippping_radios = document.querySelectorAll( 'input[name="shipping_method"]' );
-
+				var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
+				shippping_radios.forEach( function( item, i ) {
+					if ( item.checked ){
+						var shipping_label = item.nextSibling.innerText;
+						var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
+						var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
+						var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
+					}
 			});
 
 			ship_ul.addEventListener('load', function( event ) {
@@ -109,8 +115,9 @@
 				});	
 			});
 
-
-		}
+		})
+	}
+		
 
 		contact_change_links.forEach( function( item, i ) 
 			{
@@ -241,16 +248,6 @@
 	{
 		var current_el = document.querySelector( '#' + scroll_to_id );
   		current_el.scrollIntoView({behavior: 'smooth'});
-  		current_el.addEventListener( 'scroll', function() 
-  			{
-  				console.log(isElementInViewport( current_el ));
-		  		if ( isElementInViewport( current_el ) )
-		  		{
-  					window.scrollBy({ left: 0, top: -30, behavior: 'smooth'});
-
-		  		} 
-
-  			});
 	}
 
 	function load_page_vars() 
@@ -979,6 +976,21 @@
 			$('body.single-product').scrollspy({ target: ".navbar", offset: 30 });
 
 			var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails li');
+			var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
+
+			variant_lis.forEach( function( item, i ) 
+				{
+					item.addEventListener( 'click', function( event ) 
+					{
+						event.preventDefault();
+						var variant = event.target;
+						if ( variant.nodeName === 'SPAN' ) 
+						{
+							variant = variant.parentElement;
+						}
+						console.log(variant.getAttribute( 'data-value' ));
+					});
+				});
 
 			thumb_lis.forEach( function( item, i ) 
 				{
