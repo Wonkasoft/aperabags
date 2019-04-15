@@ -753,6 +753,13 @@ function wonka_checkout_after_login_form() {
 
 add_action( 'wonka_checkout_login_form', 'wonka_checkout_after_login_form', 20 );
 
+/**
+ * Add stripe on checkout page
+ *
+ * @since  1.0.0 Filter to add Apple Pay on checkout
+ */
+add_filter( 'wc_stripe_show_payment_request_on_checkout', '__return_true' );
+
 function wonka_checkout_before_customer_details() {
 	$output = '';
 
