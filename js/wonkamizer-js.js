@@ -706,12 +706,15 @@
 					{
 						variant = variant.parentElement;
 					}
+								console.log(variant);
 
 					var variant_selected = variant.getAttribute( 'data-value' );
 					if ( variant_selected ) 
 					{
+								console.log(variant_selected);
 						all_imgs.forEach( function( img, i ) 
 							{
+								console.log(img);
 								var img_variant = img.getAttribute( 'data-variant-color' );
 								if ( variant === img_variant ) 
 								{
