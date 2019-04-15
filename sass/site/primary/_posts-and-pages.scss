@@ -35,6 +35,10 @@
 				padding: 4px 8px;
 				white-space: nowrap;
 
+				&#place_order {
+					display: none !important;
+				}
+
 			    &:hover {
 			    	border: 2px solid #FFE6B2;
 			    	background: #FFE6B2;

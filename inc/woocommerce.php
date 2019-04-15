@@ -469,6 +469,20 @@ add_action( 'woocommerce_before_checkout_shipping_form', 'wonka_before_checkout_
  */
 function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	?>
+	<div id="wonka-checkout-step-buttons" class="wonka-step-buttons tab-content">
+		<div class="tab-pane fade show active" id="wonka_customer_information_buttons" role="tabpanel">
+			<a href="<?php echo get_permalink( wc_get_page_id( 'cart' ) ); ?>" data-target="#cart" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to cart</a>
+			<a href="#" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to shipping method</a>
+		</div>
+		<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
+			<a href="#wonka_customer_information_tab"  data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Customer information</a>
+			<a href="#wonka_payment_method_tab" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to payment method</a>
+		</div>
+		<div class="tab-pane fade" id="wonka_payment_method_buttons" role="tabpanel">
+			<a href="#wonka_shipping_method_tab" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Shipping Method</a>
+			<a href="#place_order" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn">Place Order</a>
+		</div>
+	</div><!-- #wonka-checkout-step-buttons -->
 		</div><!-- .checkout-form-left-side -->
 		<div class="col-12 col-md-5 checkout-order-details">
 			<div class="table-responsive">
@@ -600,15 +614,15 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '<div class="col-12">';
 	$output .= '<ul class="nav nav-fill" id="wonka-checkout-nav-steps" role="tablist">';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link active" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top">';
+	$output .= '<a class="nav-link active" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top" data-btns="#wonka_customer_information_buttons">';
 	$output .= _x( 'Customer Information', 'aperabags' ) . '<span class="badge badge-light badge-pill">1</span>';
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link" id="wonka_shipping_method_tab" data-toggle="tab" data-target="#wonka_shipping_method" role="tab" data-secondary="#wonka_shipping_method_top">';
+	$output .= '<a class="nav-link" id="wonka_shipping_method_tab" data-toggle="tab" data-target="#wonka_shipping_method" role="tab" data-secondary="#wonka_shipping_method_top" data-btns="#wonka_shipping_method_buttons">';
 	$output .= _x( 'Shipping Method', 'aperabags' ) . '<span class="badge badge-light badge-pill">2</span>';
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link" id="wonka_payment_method_tab" data-toggle="tab" data-target="#wonka_payment_method" role="tab" data-secondary="#wonka_payment_method_top">';
+	$output .= '<a class="nav-link" id="wonka_payment_method_tab" data-toggle="tab" data-target="#wonka_payment_method" role="tab" data-secondary="#wonka_payment_method_top" data-btns="#wonka_payment_method_buttons">';
 	$output .= _x( 'Payment Method', 'aperabags' ) . '<span class="badge badge-light badge-pill">3</span>';
 	$output .= '</a></li>';
 	$output .= '</ul><!-- #wonka-checkout-nav-steps -->';
@@ -803,11 +817,6 @@ function wonka_woocommerce_review_order_after_payment() {
 
 	$output .= '</div><!-- #payment_method -->';
 	$output .= '</div><!-- #wonka-checkout-steps -->';
-	$output .= '<div id="wonka-checkout-step-buttons" class="wonka-step-buttons">';
-	$output .= '<button class="btn wonka-btn">Previous Process</button>';
-	$output .= '<button class="btn wonka-btn">Next Process</button>';
-	$output .= '</div><!-- #wonka-checkout-step-buttons -->';
-
 	
 	echo $output;
 }

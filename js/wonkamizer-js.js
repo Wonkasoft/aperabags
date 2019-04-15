@@ -36,6 +36,7 @@
 		var contact_change_links = document.querySelectorAll( '.contact-email-change-link' );
 		var ship_to_change_links = document.querySelectorAll( '.ship-to-address-change-link' );
 		var ship_method_change_links = document.querySelectorAll( '.ship-method-change-link' );
+		var multistep_btns = document.querySelectorAll( '.wonka-multistep-checkout-btn' );
 
 		/**
 		 * Add Shipping method to current status table
@@ -84,6 +85,8 @@
 					if (item.checked){
 						var shipping_label = item.nextSibling.innerText;
 						var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
+						var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
+						var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
 
 						ship_to_cells.forEach( function( item, i ) 
 						{
@@ -147,9 +150,13 @@
 						{
 							copy_to_billing();
 							var leaving_panel = document.querySelector( '#wonka-checkout-steps2 .show.active' );
+							var leaving_btns = document.querySelector( '#wonka-checkout-step-buttons .show.active' );
 							var new_panel = document.querySelector( target.getAttribute( 'data-secondary' ) );
+							var new_btns = document.querySelector( target.getAttribute( 'data-btns' ) );
 							leaving_panel.classList.remove( 'show', 'active' );
+							leaving_btns.classList.remove( 'show', 'active' );
 							new_panel.classList.add( 'show', 'active' );
+							new_btns.classList.add( 'show', 'active' );
 
 							setTimeout( function() {
 								var children_array = target.parentElement.parentElement.childNodes;
@@ -193,6 +200,18 @@
 										}
 									});
 							}, 250 );
+						}
+					});
+			});
+
+		multistep_btns.forEach( function( item, i ) 
+			{
+				item.addEventListener( 'click', function( e ) 
+					{
+						if ( e.target.getAttribute( 'data-target' ) !== '#cart' ) 
+						{
+							e.preventDefault();
+							document.querySelector( e.target.getAttribute( 'data-target' ) ).click();
 						}
 					});
 			});
@@ -1024,8 +1043,8 @@
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
-				stickyThumbnails(); 
-				stickySummary(); 
+				stickyThumbnails();
+				stickySummary();
 			};
 		}
 		/*=====  End of For single product page  ======*/
