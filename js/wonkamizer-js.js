@@ -202,12 +202,18 @@
 	/*===== This is for Keyfeatures | Product Specs links on shor description ====*/
 	function scrollToSection( scroll_to_id ) 
 	{
-  		document.querySelector( '#' + scroll_to_id ).scrollIntoView({behavior: 'smooth'});
-  		setTimeout( function() 
+		var current_el = document.querySelector( '#' + scroll_to_id );
+  		current_el.scrollIntoView({behavior: 'smooth'});
+  		current_el.addEventListener( 'scroll', function() 
   			{
-  				window.scrollBy({ left: 0,top: -30, behavior: 'smooth'});
-  				one_click_timer();
-  			}, 850 );
+  				console.log(isElementInViewport( current_el ));
+		  		if ( isElementInViewport( current_el ) )
+		  		{
+  					window.scrollBy({ left: 0, top: -30, behavior: 'smooth'});
+
+		  		} 
+
+  			});
 	}
 
 	function load_page_vars() 
@@ -1015,11 +1021,8 @@
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
-				if (one_click) 
-				{
-					stickyThumbnails(); 
-					stickySummary(); 
-				}
+				stickyThumbnails(); 
+				stickySummary(); 
 			};
 		}
 		/*=====  End of For single product page  ======*/
