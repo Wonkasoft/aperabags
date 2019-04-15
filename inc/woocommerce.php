@@ -462,15 +462,6 @@ function wonka_before_checkout_shipping_form( $checkout ) {
 }
 add_action( 'woocommerce_before_checkout_shipping_form', 'wonka_before_checkout_shipping_form', 15 );
 
-function wonka_after_checkout_shipping_form() {
-	?>
-	<button class="btn wonka-btn">Previous Process</button>
-	<button class="btn wonka-btn">Next Process</button>
-	<?php
-}
-
-add_action( 'woocommerce_after_checkout_shipping_form', 'wonka_after_checkout_shipping_form', 15 );
-
 /**
  * This builds a custom table of order details on the checkout page.
  * @param  [type] $checkout [description]
@@ -812,6 +803,11 @@ function wonka_woocommerce_review_order_after_payment() {
 
 	$output .= '</div><!-- #payment_method -->';
 	$output .= '</div><!-- #wonka-checkout-steps -->';
+	$output .= '<div id="wonka-checkout-step-buttons" class="wonka-step-buttons">';
+	$output .= '<button class="btn wonka-btn">Previous Process</button>';
+	$output .= '<button class="btn wonka-btn">Next Process</button>';
+	$output .= '</div><!-- #wonka-checkout-step-buttons -->';
+
 	
 	echo $output;
 }

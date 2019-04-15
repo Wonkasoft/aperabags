@@ -363,6 +363,7 @@
 				}
 			}
 		}
+
 		div.wonka-row-express-checkout-btns {
 
             > div:first-child {
@@ -439,6 +440,12 @@
 					white-space: nowrap;
 				}
 			}
+        }
+
+        div#wonka-checkout-step-buttons {
+        	display: flex;
+        	align-items: center;
+        	justify-content: space-between;
         }
 		/*=====  End of This is for the checkout page  ======*/
 		
