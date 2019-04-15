@@ -767,6 +767,20 @@ add_filter( 'wc_stripe_show_payment_request_on_checkout', '__return_true' );
  */
 add_filter( 'wc_stripe_hide_payment_request_on_product_page', '__return_true' );
 
+/**
+ * Remove Stripe payment button on the cart page
+ *
+ * @since  1.0.0 This will remove the Apple Google Pay buttons from the cart page
+ */
+remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
+
+/**
+ * This will remove the payment button from the cart page
+ *
+ * @since  1.0.0 Remove Stripe buttons on the cart page
+ */
+remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
+
 function wonka_checkout_before_customer_details() {
 	$output = '';
 
