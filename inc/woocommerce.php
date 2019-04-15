@@ -207,9 +207,9 @@ add_action( 'woocommerce_after_main_content', 'apera_bags_woocommerce_wrapper_af
 	 * @return array Fragments to refresh via AJAX.
 	 */
 	function apera_bags_woocommerce_cart_link_fragment( $fragments ) {
-		ob_start();
+		
 		apera_bags_woocommerce_cart_link();
-		$fragments['span.car-contents-count.wonka-badge.badge'] = '<span class="cart-contents-count wonka-badge badge">' . WC()->cart->get_cart_contents_count() . '</span>' . ob_get_clean();
+		$fragments['span.car-contents-count.wonka-badge.badge'] = '<span class="cart-contents-count wonka-badge badge">' . WC()->cart->get_cart_contents_count() . '</span>';
 
 		return $fragments;
 	}
