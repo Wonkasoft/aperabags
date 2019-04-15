@@ -12,12 +12,12 @@
 			position: relative;
 			margin: 0 auto;
 
-			.woocommerce-product-gallery__trigger {
-				position: relative;
-				top: 1em;
-				right: 1em;
-				display: block;
-				z-index: 99;
+			img {
+				display: none;
+
+				&.variant-show {
+					display: block;
+				}
 			}
 
 			.wonka-image-viewer {

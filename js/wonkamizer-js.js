@@ -689,6 +689,59 @@
 		}
 
 	} 
+
+	function single_product_variants_setup()
+	{
+		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails li');
+		var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
+		var all_imgs = document.querySelectorAll( '.woocommerce-product-gallery__wrapper img');
+
+		variant_lis.forEach( function( item, i ) 
+			{
+				item.addEventListener( 'click', function( event ) 
+				{
+					event.preventDefault();
+					var variant = event.target;
+					if ( variant.nodeName === 'SPAN' ) 
+					{
+						variant = variant.parentElement;
+					}
+
+					var variant_selected = variant.getAttribute( 'data-value' );
+					if ( variant_selected ) 
+					{
+						all_imgs.forEach( function( img, i ) 
+							{
+								var img_variant = img.getAttribute( 'data-variant-color' );
+								if ( variant === img_variant ) 
+								{
+									img.classList.add( 'variant-show' );
+								}
+
+								if ( variant !== img_variant && img.classList.contains( 'variant-show' ) )
+								{
+									img.classList.remove( 'variant-show' );
+								}
+							});
+					}
+				});
+			});
+
+		thumb_lis.forEach( function( item, i ) 
+			{
+				item.addEventListener( 'click', function( event ) 
+					{
+						event.preventDefault();
+						var el = event.target;
+						if ( el.nodeName === 'IMG' )
+						{
+							el = el.parentElement;
+						}
+						var el_scroll_to_id = el.getAttribute( 'href' ).replace( '#', '' );
+						scrollToSection( el_scroll_to_id );
+					});
+			});
+	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -937,38 +990,8 @@
 		if ( document.querySelector( 'body.single-product' ) ) 
 		{	
 			$('body.single-product').scrollspy({ target: ".navbar", offset: 30 });
-
-			var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails li');
-			var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
-
-			variant_lis.forEach( function( item, i ) 
-				{
-					item.addEventListener( 'click', function( event ) 
-					{
-						event.preventDefault();
-						var variant = event.target;
-						if ( variant.nodeName === 'SPAN' ) 
-						{
-							variant = variant.parentElement;
-						}
-						console.log(variant.getAttribute( 'data-value' ));
-					});
-				});
-
-			thumb_lis.forEach( function( item, i ) 
-				{
-					item.addEventListener( 'click', function( event ) 
-						{
-							event.preventDefault();
-							var el = event.target;
-							if ( el.nodeName === 'IMG' ) 
-							{
-								el = el.parentElement;
-							}
-							var el_scroll_to_id = el.getAttribute( 'href' ).replace( '#', '' );
-							scrollToSection( el_scroll_to_id );
-						});
-				});
+			single_product_variants_setup();
+			
 			/*----------  For variant products  ----------*/
 			if ( document.querySelector( 'div.wonka-express-checkout-wrap' ) ) 
 			{
