@@ -71,6 +71,45 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 			'default-image' => '',
 		) ) );
 
+
+		/**
+		 * Add Varient to media uploader
+		 *
+		 * @param $form_fields array, fields to include in attachment form
+		 * @param $post object, attachment record in database
+		 * @return $form_fields, modified form fields
+		 */
+		  
+		function ws_attachment_field_varient( $form_fields, $post ) {
+		    $form_fields['variant-name'] = array(
+		        'label' => 'variant',
+		        'input' => 'text',
+		        'value' => get_post_meta( $post->ID, 'ws_variant_name', true ),
+		        'helps' => 'Input variant name',
+		    );
+		 
+		    return $form_fields;
+		}
+		 
+		add_filter( 'attachment_fields_to_edit', 'ws_attachment_field_variant', 10, 2 );
+		 
+		/**
+		 * Save values of Varient to media uploader
+		 *
+		 * @param $post array, the post data for database
+		 * @param $attachment array, attachment fields from $_POST form
+		 * @return $post array, modified post data
+		 */
+		 
+		function ws_attachment_field_variant_save( $post, $attachment ) {
+		    if( isset( $attachment['ws_variant_name'] ) )
+		        update_post_meta( $post['ID'], 'ws_variant_name', $attachment['ws_variant_name'] );
+		 
+		    return $post;
+		}
+		 
+		add_filter( 'attachment_fields_to_save', 'ws_attachment_field_variant_save', 10, 2 );
+
 		// Add theme support for selective refresh for widgets.
 		add_theme_support( 'customize-selective-refresh-widgets' );
 
