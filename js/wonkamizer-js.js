@@ -713,14 +713,12 @@
 						all_imgs.forEach( function( img, i ) 
 							{
 								var img_variant = img.getAttribute( 'data-variant-color' );
-									console.log(variant);
-									console.log(img_variant);
-								if ( variant === img_variant ) 
+								if ( variant_selected === img_variant ) 
 								{
 									img.classList.add( 'variant-show' );
 								}
 
-								if ( variant !== img_variant && img.classList.contains( 'variant-show' ) )
+								if ( variant_selected !== img_variant && img.classList.contains( 'variant-show' ) )
 								{
 									img.classList.remove( 'variant-show' );
 								}
