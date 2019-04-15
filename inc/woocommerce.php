@@ -760,6 +760,13 @@ add_action( 'wonka_checkout_login_form', 'wonka_checkout_after_login_form', 20 )
  */
 add_filter( 'wc_stripe_show_payment_request_on_checkout', '__return_true' );
 
+/**
+ * Remove Stripe from single product page
+ *
+ * @since  1.0.0 Remove Apple Pay on single product page
+ */
+add_filter( 'wc_stripe_hide_payment_request_on_product_page', '__return_true' );
+
 function wonka_checkout_before_customer_details() {
 	$output = '';
 
