@@ -1087,3 +1087,25 @@ function wonka_single_product_image_scroll_html_custom( $data, $attachment_id ) 
 add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_image_thumbnail_html_custom' , 10, 2 );
 add_filter( 'wonka_single_product_scroll_image_html', 'wonka_single_product_image_scroll_html_custom', 10, 2 );
 /*=====  End of This is filtering the first thumbnail on single product page  ======*/
+
+function be_attachment_field_credit( $form_fields, $post ) {
+    $form_fields['wonka-variant-color'] = array(
+        'label' => 'Variant Color',
+        'input' => 'text',
+        'value' => get_post_meta( $post->ID, 'wonka-variant-color', true ),
+        'helps' => 'This is for setting the variant color for this image',
+    );
+ 
+    return $form_fields;
+}
+ 
+add_filter( 'attachment_fields_to_edit', 'wonka_attachment_field_variant', 10, 2 );
+
+function wonka_attachment_field_credit_save( $post, $attachment ) {
+    if( isset( $attachment['wonka-variant-color'] ) )
+        update_post_meta( $post['ID'], 'wonka-variant-color', $attachment['wonka-variant-color'] );
+ 
+    return $post;
+}
+ 
+add_filter( 'attachment_fields_to_save', 'wonka_attachment_field_credit_save', 10, 2 );
