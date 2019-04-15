@@ -948,6 +948,22 @@
 		{	
 			$('body.single-product').scrollspy({ target: ".navbar", offset: 30 });
 
+			var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails li');
+
+			thumb_lis.forEach( function( item, i ) 
+				{
+					item.addEventListener( 'click', function( event ) 
+						{
+							event.preventDefault();
+							var el = event.target;
+							if ( el.nodeName === 'IMG' ) 
+							{
+								el = el.parentElement;
+							}
+							var el_scroll_to_id = el.getAttribute( 'href' ).replace( '#', '' );
+							scrollToSection( el_scroll_to_id );
+						});
+				});
 			/*----------  For variant products  ----------*/
 			if ( document.querySelector( 'div.wonka-express-checkout-wrap' ) ) 
 			{
