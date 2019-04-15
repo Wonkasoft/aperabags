@@ -760,6 +760,8 @@ add_action( 'wonka_checkout_login_form', 'wonka_checkout_after_login_form', 20 )
  */
 add_filter( 'wc_stripe_show_payment_request_on_checkout', '__return_true' );
 
+add_action('wonka_checkout_express_btns', 'wc_stripe_show_payment_request_on_checkout', '__return_true' );
+
 /**
  * Remove Stripe from single product page
  *
