@@ -80,7 +80,7 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		 * @return $form_fields, modified form fields
 		 */
 		  
-		function ws_attachment_field_varient( $form_fields, $post ) {
+		function ws_attachment_field_variant( $form_fields, $post ) {
 		    $form_fields['variant-name'] = array(
 		        'label' => 'variant',
 		        'input' => 'text',
