@@ -209,8 +209,8 @@ add_action( 'woocommerce_after_main_content', 'apera_bags_woocommerce_wrapper_af
 	function apera_bags_woocommerce_cart_link_fragment( $fragments ) {
 		ob_start();
 		apera_bags_woocommerce_cart_link();
-		$fragments['a.cart-contents'] = ob_get_clean();
-
+		$fragments['span.cart-contents-count.wonka-badge.badge'] = '<span class="cart-contents-count wonka-badge badge">' . WC()->cart->get_cart_contents_count() . '</span>';
+		ob_get_clean();
 		return $fragments;
 	}
 }
@@ -469,6 +469,20 @@ add_action( 'woocommerce_before_checkout_shipping_form', 'wonka_before_checkout_
  */
 function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	?>
+	<div id="wonka-checkout-step-buttons" class="wonka-step-buttons tab-content">
+		<div class="tab-pane fade show active" id="wonka_customer_information_buttons" role="tabpanel">
+			<a href="<?php echo get_permalink( wc_get_page_id( 'cart' ) ); ?>" data-target="#cart" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to cart</a>
+			<a href="#" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to shipping method</a>
+		</div>
+		<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
+			<a href="#wonka_customer_information_tab"  data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Customer information</a>
+			<a href="#wonka_payment_method_tab" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to payment method</a>
+		</div>
+		<div class="tab-pane fade" id="wonka_payment_method_buttons" role="tabpanel">
+			<a href="#wonka_shipping_method_tab" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Shipping Method</a>
+			<a href="#place_order" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn">Place Order</a>
+		</div>
+	</div><!-- #wonka-checkout-step-buttons -->
 		</div><!-- .checkout-form-left-side -->
 		<div class="col-12 col-md-5 checkout-order-details">
 			<div class="table-responsive">
@@ -528,10 +542,10 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 								</div>
 								<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 									<div class="panel-body">
-										<div class="coupon form-group form-inline">
+										<form method="post" class="coupon form-group form-inline">
 											<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
 											<?php do_action( 'woocommerce_cart_coupon' ); ?>
-										</div>
+										</form>
 									</div>
 								</div>
 							</td>
@@ -600,15 +614,15 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '<div class="col-12">';
 	$output .= '<ul class="nav nav-fill" id="wonka-checkout-nav-steps" role="tablist">';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link active" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top">';
+	$output .= '<a class="nav-link active" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top" data-btns="#wonka_customer_information_buttons">';
 	$output .= _x( 'Customer Information', 'aperabags' ) . '<span class="badge badge-light badge-pill">1</span>';
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link" id="wonka_shipping_method_tab" data-toggle="tab" data-target="#wonka_shipping_method" role="tab" data-secondary="#wonka_shipping_method_top">';
+	$output .= '<a class="nav-link" id="wonka_shipping_method_tab" data-toggle="tab" data-target="#wonka_shipping_method" role="tab" data-secondary="#wonka_shipping_method_top" data-btns="#wonka_shipping_method_buttons">';
 	$output .= _x( 'Shipping Method', 'aperabags' ) . '<span class="badge badge-light badge-pill">2</span>';
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link" id="wonka_payment_method_tab" data-toggle="tab" data-target="#wonka_payment_method" role="tab" data-secondary="#wonka_payment_method_top">';
+	$output .= '<a class="nav-link" id="wonka_payment_method_tab" data-toggle="tab" data-target="#wonka_payment_method" role="tab" data-secondary="#wonka_payment_method_top" data-btns="#wonka_payment_method_buttons">';
 	$output .= _x( 'Payment Method', 'aperabags' ) . '<span class="badge badge-light badge-pill">3</span>';
 	$output .= '</a></li>';
 	$output .= '</ul><!-- #wonka-checkout-nav-steps -->';
@@ -752,6 +766,36 @@ function wonka_checkout_after_login_form() {
 }
 
 add_action( 'wonka_checkout_login_form', 'wonka_checkout_after_login_form', 20 );
+
+/**
+ * Add stripe on checkout page
+ *
+ * @since  1.0.0 Filter to add Apple Pay on checkout
+ */
+add_filter( 'wc_stripe_show_payment_request_on_checkout', '__return_true' );
+
+add_action('wonka_checkout_express_btns', 'wc_stripe_show_payment_request_on_checkout', '__return_true' );
+
+/**
+ * Remove Stripe from single product page
+ *
+ * @since  1.0.0 Remove Apple Pay on single product page
+ */
+add_filter( 'wc_stripe_hide_payment_request_on_product_page', '__return_true' );
+
+/**
+ * Remove Stripe payment button on the cart page
+ *
+ * @since  1.0.0 This will remove the Apple Google Pay buttons from the cart page
+ */
+remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
+
+/**
+ * This will remove the payment button from the cart page
+ *
+ * @since  1.0.0 Remove Stripe buttons on the cart page
+ */
+remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
 
 function wonka_checkout_before_customer_details() {
 	$output = '';

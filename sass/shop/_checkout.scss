@@ -92,7 +92,7 @@ label.checkbox {
 }
 
 div.checkout-order-details {
-	padding: 0;
+	padding: 30px;
 	background: $color__background_alt;
 
 	tr.cart_item:first-child {
@@ -136,6 +136,7 @@ form.woocommerce-checkout {
 			margin: 15px auto;
 		}
 	}
+
 }
 
 .woocommerce-Price-amount {

@@ -21,11 +21,15 @@
 	/*=====  End of vars set for script use  ======*/
 
 	
-	/*===============================================================
-	=            This is for the checkout multistep tabs            =
-	===============================================================*/
+	/**
+	 * This is for the checkout multistep tabs 
+	 * @author Rudy
+	 * 
+	 * @since 1.0.0
+	 */
 	if ( document.querySelector( '#wonka-checkout-nav-steps' ) ) 
 	{
+		var ship_ul = document.querySelector( 'ul#shipping_method' );
 		var ship_method = document.querySelectorAll('input[name="shipping_method[0]"]');
 		var multistep_links = document.querySelectorAll( '#wonka-checkout-nav-steps li a.nav-link' );
 		var info_table_contact_cells = document.querySelectorAll( '.contact-email-cell' );
@@ -33,6 +37,7 @@
 		var contact_change_links = document.querySelectorAll( '.contact-email-change-link' );
 		var ship_to_change_links = document.querySelectorAll( '.ship-to-address-change-link' );
 		var ship_method_change_links = document.querySelectorAll( '.ship-method-change-link' );
+		var multistep_btns = document.querySelectorAll( '.wonka-multistep-checkout-btn' );
 
 		/**
 		 * Add Shipping method to current status table
@@ -80,25 +85,31 @@
 
 			});
 
-			ship_method.forEach( function( item, i ) {
+			ship_ul.addEventListener('load', function( event ) {
+				ship_method.forEach( function( item, i ) {
+					console.log(item);
+					item.addEventListener( 'change', function( event ) {
+						var target = event.target;
+						console.log("helo");
 
-				item.addEventListener( 'change', function( event ) {
-					var target = event.target;
-					console.log("helo");
+						if (target.checked){
+							target.trigger( 'update_checkout' );
+							console.log('hllo');
+							var shipping_label = item.nextSibling.innerText;
+							var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
+							var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
+							var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
 
-					if (target.checked){
-						console.log('hllo');
-						var shipping_label = item.nextSibling.innerText;
-						var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
-
-						ship_to_cells.forEach( function( item, i ) 
-						{
-							item.innerHTML = shipping_label;
-						});
-					}	
-				});
-
+							ship_to_cells.forEach( function( item, i ) 
+							{
+								item.innerHTML = shipping_label;
+							});
+						}	
+					});
+				});	
 			});
+
+
 		}
 
 		contact_change_links.forEach( function( item, i ) 
@@ -154,9 +165,13 @@
 						{
 							copy_to_billing();
 							var leaving_panel = document.querySelector( '#wonka-checkout-steps2 .show.active' );
+							var leaving_btns = document.querySelector( '#wonka-checkout-step-buttons .show.active' );
 							var new_panel = document.querySelector( target.getAttribute( 'data-secondary' ) );
+							var new_btns = document.querySelector( target.getAttribute( 'data-btns' ) );
 							leaving_panel.classList.remove( 'show', 'active' );
+							leaving_btns.classList.remove( 'show', 'active' );
 							new_panel.classList.add( 'show', 'active' );
+							new_btns.classList.add( 'show', 'active' );
 
 							setTimeout( function() {
 								var children_array = target.parentElement.parentElement.childNodes;
@@ -203,6 +218,18 @@
 						}
 					});
 			});
+
+		multistep_btns.forEach( function( item, i ) 
+			{
+				item.addEventListener( 'click', function( e ) 
+					{
+						if ( e.target.getAttribute( 'data-target' ) !== '#cart' ) 
+						{
+							e.preventDefault();
+							document.querySelector( e.target.getAttribute( 'data-target' ) ).click();
+						}
+					});
+			});
 	}
 	/*=====  End of This is for the checkout multistep tabs  ======*/
 
@@ -212,12 +239,18 @@
 	/*===== This is for Keyfeatures | Product Specs links on shor description ====*/
 	function scrollToSection( scroll_to_id ) 
 	{
-  		document.querySelector( '#' + scroll_to_id ).scrollIntoView({behavior: 'smooth'});
-  		setTimeout( function() 
+		var current_el = document.querySelector( '#' + scroll_to_id );
+  		current_el.scrollIntoView({behavior: 'smooth'});
+  		current_el.addEventListener( 'scroll', function() 
   			{
-  				window.scrollBy({ left: 0,top: -30, behavior: 'smooth'});
-  				one_click_timer();
-  			}, 850 );
+  				console.log(isElementInViewport( current_el ));
+		  		if ( isElementInViewport( current_el ) )
+		  		{
+  					window.scrollBy({ left: 0, top: -30, behavior: 'smooth'});
+
+		  		} 
+
+  			});
 	}
 
 	function load_page_vars() 
@@ -720,6 +753,21 @@
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 		{
 			
+
+			// $.ajax( {
+			// 	type:     'post',
+			// 	url:      get_url( 'update_shipping_method' ),
+			// 	data:     data,
+			// 	dataType: 'html',
+			// 	success:  function( response ) {
+			// 		update_cart_totals_div( response );
+			// 	},
+			// 	complete: function() {
+			// 		unblock( $( 'div.cart_totals' ) );
+			// 		$( document.body ).trigger( 'updated_shipping_method' );
+			// 	}
+			// } );
+
 		}
 
 		/*==========================================================
@@ -930,6 +978,22 @@
 		{	
 			$('body.single-product').scrollspy({ target: ".navbar", offset: 30 });
 
+			var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails li');
+
+			thumb_lis.forEach( function( item, i ) 
+				{
+					item.addEventListener( 'click', function( event ) 
+						{
+							event.preventDefault();
+							var el = event.target;
+							if ( el.nodeName === 'IMG' ) 
+							{
+								el = el.parentElement;
+							}
+							var el_scroll_to_id = el.getAttribute( 'href' ).replace( '#', '' );
+							scrollToSection( el_scroll_to_id );
+						});
+				});
 			/*----------  For variant products  ----------*/
 			if ( document.querySelector( 'div.wonka-express-checkout-wrap' ) ) 
 			{
@@ -1025,11 +1089,8 @@
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
-				if (one_click) 
-				{
-					stickyThumbnails(); 
-					stickySummary(); 
-				}
+				stickyThumbnails();
+				stickySummary();
 			};
 		}
 		/*=====  End of For single product page  ======*/

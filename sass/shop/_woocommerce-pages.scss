@@ -141,7 +141,7 @@
 		div.wonka-checkout-row {
 
 			div.checkout-form-left-side {
-				margin-bottom: 30px;
+				padding: 30px;
 
 				.woocommerce-form-login-toggle {
 					position: relative;
@@ -240,6 +240,7 @@
 			
 			.place-order {
 				padding: 15px 0;
+				display: hidden;
 			}
 
 			.wc-stripe-elements-field {
@@ -363,6 +364,7 @@
 				}
 			}
 		}
+
 		div.wonka-row-express-checkout-btns {
 
             > div:first-child {
@@ -440,6 +442,32 @@
 				}
 			}
         }
+
+        div#wonka-checkout-step-buttons {
+        	display: flex;
+        	align-items: center;
+        	justify-content: space-between;
+        	flex-wrap: wrap;
+        	padding: 8px;
+
+        	div.tab-pane {
+        		flex: 1 100%;
+
+	        	a {
+	        		white-space: nowrap;
+	        		margin-bottom: 15px;
+	        		@include font-size( .8 );
+	        	}
+
+	        	&.show {
+		        	display: flex;
+		        	align-items: center;
+		        	justify-content: space-between;
+		        	flex-wrap: wrap;
+	        	}
+        	}
+        }
+
 		/*=====  End of This is for the checkout page  ======*/
 		
 		/*===========================================================
