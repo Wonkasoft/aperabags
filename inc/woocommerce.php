@@ -231,7 +231,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 			$item_count_text = sprintf(
 				/* translators: number of items in the mini cart. */
 				_n( '%d item', '%d items', WC()->cart->get_cart_contents_count(), 'apera-bags' ),
-				WC()->cart->get_cart_contents_count()
+				WC_Cart()->get_total()
 			);
 			?>
 			<span class="amount"><?php echo wp_kses_data( WC()->cart->get_cart_subtotal() ); ?></span> <span class="count"><?php echo esc_html( $item_count_text ); ?></span>
@@ -244,8 +244,10 @@ if ( ! function_exists( 'wonka_woocommerce_update_order_review_fragments' ) ) {
 
 	function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 		ob_start();
-		echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_cart_total() . '</span></strong></td></tr>';
+		echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
+		echo $fragments['td.ship-method-cell'] = '<td class="ship-method-cell">' . json_decode(WC()->session->get( 'chosen_shipping_methods' )[0]) . '</td>';
 		ob_get_clean();
+
 		return $fragments;
 	}
 
