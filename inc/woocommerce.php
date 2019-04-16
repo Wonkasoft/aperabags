@@ -243,7 +243,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 
 function wonka_woocommerce_update_order_review_fragments_jz( $fragments ) {
 	ob_start();
-	echo $fragments['span.woocommerce-Price-amount.amout'] = '<span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>' . wp_kses_data( WC()->cart->get_cart_total() ) . '</span>';
+	echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>' . wp_kses_data( WC()->cart->get_cart_total() ) . '</span></strong></td></tr>';
 
 	ob_get_clean();
 
@@ -252,16 +252,6 @@ function wonka_woocommerce_update_order_review_fragments_jz( $fragments ) {
 
 add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments_jz', 10, 1 );
 
-function wonka_woocommerce_update_order_review_fragments( $fragments ) {
-	ob_start();
-	echo $fragments['.order-totalspan.woocommerce-Price-amount.amount'] = '<span class="woocommerce-Price-amount amount">' . wp_kses_data( WC()->cart->get_cart_total() ) . '</span>';
-
-	ob_get_clean();
-
-	return $fragments;
-}
-
-add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10, 1 );
 
 /**
  * This sets up the image flipper class
