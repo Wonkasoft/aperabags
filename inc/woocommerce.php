@@ -218,7 +218,7 @@ add_filter( 'woocommerce_add_to_cart_fragments', 'apera_bags_woocommerce_cart_li
 
 function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 	ob_start();
-	echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . wp_kses_data( WC()->cart->get_cart_total() ) . '</span></strong></td></tr>';
+	echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_cart_total() . '</span></strong></td></tr>';
 
 	ob_get_clean();
 
