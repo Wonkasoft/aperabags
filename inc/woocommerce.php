@@ -216,13 +216,39 @@ add_action( 'woocommerce_after_main_content', 'apera_bags_woocommerce_wrapper_af
 
 add_filter( 'woocommerce_add_to_cart_fragments', 'apera_bags_woocommerce_cart_link_fragment' );
 
-function wonka_woocommerce_update_order_review_fragments( $fragments ) {
-	ob_start();
-	echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_cart_total() . '</span></strong></td></tr>';
+if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
+	/**
+	 * Cart Link.
+	 *
+	 * Displayed a link to the cart including the number of items present and the cart total.
+	 *
+	 * @return void
+	 */
+	function apera_bags_woocommerce_cart_link() {
+		?>
+		<a class="cart-contents" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'View your shopping cart', 'apera-bags' ); ?>">
+			<?php
+			$item_count_text = sprintf(
+				/* translators: number of items in the mini cart. */
+				_n( '%d item', '%d items', WC()->cart->get_cart_contents_count(), 'apera-bags' ),
+				WC()->cart->get_cart_contents_count()
+			);
+			?>
+			<span class="amount"><?php echo wp_kses_data( WC()->cart->get_cart_subtotal() ); ?></span> <span class="count"><?php echo esc_html( $item_count_text ); ?></span>
+		</a>
+		<?php
+	}
+}
 
-	ob_get_clean();
+if ( ! function_exists( 'wonka_woocommerce_update_order_review_fragments' ) ) {
 
-	return $fragments;
+	function wonka_woocommerce_update_order_review_fragments( $fragments ) {
+		ob_start();
+		echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_cart_total() . '</span></strong></td></tr>';
+		ob_get_clean();
+		return $fragments;
+	}
+
 }
 
 add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10, 1 );
