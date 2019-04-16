@@ -4,7 +4,7 @@
 .topbar-notice {
 	position: absolute;
 	color: #ffffff;
-	height: 30px;
+	height: 40px;
 	width: 100%;
 	z-index: 150;
 	@include prefix( box-shadow, $box_shadow_6, o moz webkit );
@@ -13,6 +13,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		text-align: center;
 
 		span.topbar-message-text {
 			letter-spacing: 4px;
