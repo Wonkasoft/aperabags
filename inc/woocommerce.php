@@ -243,7 +243,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 
 function wonka_woocommerce_update_order_review_fragments_jz( $fragments ) {
 	ob_start();
-	echo $fragments['tr.order-total'] = '<th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>' . wp_kses_data( WC()->cart->get_cart_total() ) . '</span>/strong> </td>';
+	echo $fragments['tr.order-total'] = '<th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>' . wp_kses_data( WC()->cart->get_cart_total() ) . '</span>/strong></td>';
 
 	ob_get_clean();
 
