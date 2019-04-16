@@ -18,6 +18,10 @@
 				&.variant-show {
 					display: block;
 				}
+
+				&.variant-show:last-of-type {
+					margin-bottom: 0;
+				}
 			}
 
 			.wonka-image-viewer {
