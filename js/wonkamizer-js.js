@@ -710,9 +710,9 @@
 
 	function single_product_variants_setup()
 	{
-		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails [data-variant-check="true"]');
 		var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
-		var all_imgs = document.querySelectorAll( 'div.wonka-image-viewer [data-variant-check="true"]');
+		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails [data-variant-check="true"]');
+		var full_imgs = document.querySelectorAll( 'div.wonka-image-viewer [data-variant-check="true"]');
 		var variant_selected;
 		var thumbs_set;
 		var imgs_set;
@@ -723,7 +723,20 @@
 				{
 					variant_selected = item.getAttribute( 'data-value' );
 
-					all_imgs.forEach( function( img_tainers, i ) 
+					full_imgs.forEach( function( img_tainers, i ) 
+						{
+							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+							{
+								img_tainers.classList.add( 'variant-show' );
+							}
+
+							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+							{
+								img_tainers.classList.remove( 'variant-show' );
+							}
+						});
+
+					thumb_lis.forEach( function( img_tainers, i ) 
 						{
 							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
 							{
@@ -751,7 +764,22 @@
 					console.log( "{variant_selected} " + variant_selected );
 					if ( variant_selected ) 
 					{
-						all_imgs.forEach( function( img, i ) 
+						full_imgs.forEach( function( img, i ) 
+							{
+								var img_variant = img.getAttribute( 'data-variant-color' );
+								console.log( "{img_variant} " + img_variant );
+								if ( variant_selected === img_variant ) 
+								{
+									img.classList.add( 'variant-show' );
+								}
+
+								if ( variant_selected !== img_variant && img.classList.contains( 'variant-show' ) )
+								{
+									img.classList.remove( 'variant-show' );
+								}
+							});
+
+						thumb_lis.forEach( function( img, i ) 
 							{
 								var img_variant = img.getAttribute( 'data-variant-color' );
 								console.log( "{img_variant} " + img_variant );
