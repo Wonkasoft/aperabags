@@ -710,10 +710,12 @@
 
 	function single_product_variants_setup()
 	{
-		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails li');
+		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails [data-variant-check="true"]');
 		var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
-		var all_imgs = document.querySelectorAll( '.woocommerce-product-gallery__wrapper [data-variant-check="true"]');
+		var all_imgs = document.querySelectorAll( 'div.wonka-image-viewer [data-variant-check="true"]');
 		var variant_selected;
+		var thumbs_set;
+		var imgs_set;
 
 		variant_lis.forEach( function( item, i ) 
 			{	
