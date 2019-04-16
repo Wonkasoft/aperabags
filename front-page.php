@@ -118,7 +118,7 @@ get_header();
 						if ( !empty( $slide->slide_img ) ) : ?>
 							<div class="cta-section-slide">
 								<?php
-								if ( wp_is_mobile ) :
+								if ( wp_is_mobile() ) :
 								?>
 								<div class="cta-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 								<?php

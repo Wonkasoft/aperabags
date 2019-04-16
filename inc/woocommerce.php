@@ -245,7 +245,17 @@ if ( ! function_exists( 'wonka_woocommerce_update_order_review_fragments' ) ) {
 	function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 		ob_start();
 		echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
-		echo $fragments['td.ship-method-cell'] = '<td class="ship-method-cell">' . WC_Shipping_Rate . '</td>';
+
+		$current_method = WC()->session->get('chosen_shipping_methods')[0];
+		foreach ( WC()->session->get( 'shipping_for_package_0')['rates'] as $method_id => $rate ) :
+			if ( WC()->session->get( 'chosen_shipping_methods')[0] === $method_id ) :
+				$rate_label = $rate->label;
+				$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+			endif;
+		endforeach;
+
+		echo $fragments['td.ship-method-cell'] = '<td colspan="2" class="ship-method-cell">' . $rate_label . '</td>';
+		echo $fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
 		ob_get_clean();
 
 		return $fragments;
@@ -579,13 +589,39 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 							<td colspan="2"><?php wc_cart_totals_fee_html( $fee ); ?></td>
 						</tr>
 					<?php endforeach; ?>
-						<tr class="woocommerce-shipping-totals shipping">
-							<th colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php _e( '(US only)', 'woocommerce' ); ?></span></th>
-						</tr>
-						<tr class="shipping-methods">
-							<td colspan="3" class="ship-method-cell">
-							</td>
-						</tr>
+						<?php 
+						$current_method = WC()->session->get('chosen_shipping_methods')[0];
+						if ( ! $current_method ) : ?>
+							<tr class="woocommerce-shipping-totals shipping">
+								<th colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php _e( '(US only)', 'woocommerce' ); ?></span></th>
+							</tr>
+							<tr class="shipping-methods">
+								<td colspan="3" class="ship-method-cell">
+									This will be calculated on the next step.
+								</td>
+							</tr>
+						<?php else: ?>
+							<tr class="woocommerce-shipping-totals shipping">
+								<th colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php _e( '(US only)', 'woocommerce' ); ?></span></th>
+							</tr>
+							<tr class="shipping-methods">
+								<?php foreach ( WC()->session->get( 'shipping_for_package_0')['rates'] as $method_id => $rate ) : ?>
+									<?php if ( WC()->session->get( 'chosen_shipping_methods')[0] === $method_id ) :
+										$rate_label = $rate->label;
+										$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+									?>
+									<td colspan="2" class="ship-method-cell">
+										<?php echo $rate_label ?>
+									</td>
+									<td colspan="1" class="ship-method-cost-cell">
+										<?php echo sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) ?>
+									</td>
+									<?php endif; ?>
+								<?php endforeach; ?>
+								<?php 
+								?>
+							</tr>
+						<?php endif; ?>
 					<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
 						<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
 							<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
@@ -693,14 +729,14 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="contact-email-text">';
 	$output .= _x( 'Contact', 'aperabags' );
 	$output .= '</td>';
-	$output .= '<td class="contact-email-cell">';
+	$output .= '<td colspan="3" class="contact-email-cell">';
 	$output .= '</td>';
 	$output .= '<td class="contact-email-change">';
 	$output .= _x( '<a href="#" class="contact-email-change-link">Change</a>', 'aperabags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
-	$output .= '<td colspan="3" class="hr-spacer">';
+	$output .= '<td colspan="5" class="hr-spacer">';
 	$output .= '<hr />';
 	$output .= '</td>';
 	$output .= '</tr>';
@@ -708,7 +744,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="ship-to-text">';
 	$output .= _x( 'Ship to', 'aperabags' );
 	$output .= '</td>';
-	$output .= '<td class="ship-to-address-cell">';
+	$output .= '<td colspan="3" class="ship-to-address-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-to-address-change">';
 	$output .= _x( '<a href="#" class="ship-to-address-change-link">Change</a>', 'aperabags' );
@@ -731,14 +767,14 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="contact-email-text">';
 	$output .= _x( 'Contact', 'aperabags' );
 	$output .= '</td>';
-	$output .= '<td class="contact-email-cell">';
+	$output .= '<td colspan="3" class="contact-email-cell">';
 	$output .= '</td>';
 	$output .= '<td class="contact-email-change">';
 	$output .= _x( '<a href="#" class="contact-email-change-link">Change</a>', 'aperabags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
-	$output .= '<td colspan="3" class="hr-spacer">';
+	$output .= '<td colspan="5" class="hr-spacer">';
 	$output .= '<hr />';
 	$output .= '</td>';
 	$output .= '</tr>';
@@ -746,14 +782,14 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="ship-to-text">';
 	$output .= _x( 'Ship to', 'aperabags' );
 	$output .= '</td>';
-	$output .= '<td class="ship-to-address-cell">';
+	$output .= '<td colspan="3" class="ship-to-address-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-to-address-change">';
 	$output .= _x( '<a href="#" class="ship-to-address-change-link">Change</a>', 'aperabags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
-	$output .= '<td colspan="3" class="hr-spacer">';
+	$output .= '<td colspan="5" class="hr-spacer">';
 	$output .= '<hr />';
 	$output .= '</td>';
 	$output .= '</tr>';
@@ -761,7 +797,9 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="ship-method-text">';
 	$output .= _x( 'Method', 'aperabags' );
 	$output .= '</td>';
-	$output .= '<td class="ship-method-cell">';
+	$output .= '<td colspan="2" class="ship-method-cell">';
+	$output .= '</td>';
+	$output .= '<td colspan="1" class="ship-method-cost-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-method-change">';
 	$output .= _x( '<a href="" class="ship-method-change-link">Change</a>', 'aperabags' );
