@@ -216,7 +216,6 @@ add_action( 'woocommerce_after_main_content', 'apera_bags_woocommerce_wrapper_af
 
 add_filter( 'woocommerce_add_to_cart_fragments', 'apera_bags_woocommerce_cart_link_fragment' );
 
-
 if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 	/**
 	 * Cart Link.
