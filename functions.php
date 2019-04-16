@@ -80,9 +80,9 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		 * @return $form_fields, modified form fields
 		 */
 		  
-		function ws_attachment_field_varient( $form_fields, $post ) {
+		function ws_attachment_field_variant( $form_fields, $post ) {
 		    $form_fields['variant-name'] = array(
-		        'label' => 'variant',
+		        'label' => 'Variant',
 		        'input' => 'text',
 		        'value' => get_post_meta( $post->ID, 'ws_variant_name', true ),
 		        'helps' => 'Input variant name',
@@ -102,8 +102,8 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		 */
 		 
 		function ws_attachment_field_variant_save( $post, $attachment ) {
-		    if( isset( $attachment['ws_variant_name'] ) )
-		        update_post_meta( $post['ID'], 'ws_variant_name', $attachment['ws_variant_name'] );
+		    if( isset( $attachment['variant-name'] ) )
+		        update_post_meta( $post['ID'], 'ws_variant_name', $attachment['variant-name'] );
 		 
 		    return $post;
 		}
