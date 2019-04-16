@@ -93,14 +93,10 @@
 
 			ship_ul.addEventListener('load', function( event ) {
 				ship_method.forEach( function( item, i ) {
-					console.log(item);
 					item.addEventListener( 'change', function( event ) {
 						var target = event.target;
-						console.log("helo");
 
 						if (target.checked){
-							target.trigger( 'update_checkout' );
-							console.log('hllo');
 							var shipping_label = item.nextSibling.innerText;
 							var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
 							var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
