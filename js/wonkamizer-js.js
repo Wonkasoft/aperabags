@@ -93,14 +93,10 @@
 
 			ship_ul.addEventListener('load', function( event ) {
 				ship_method.forEach( function( item, i ) {
-					console.log(item);
 					item.addEventListener( 'change', function( event ) {
 						var target = event.target;
-						console.log("helo");
 
 						if (target.checked){
-							target.trigger( 'update_checkout' );
-							console.log('hllo');
 							var shipping_label = item.nextSibling.innerText;
 							var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
 							var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
@@ -625,17 +621,17 @@
 		var first_three_height = 0;
 		for (var i = 0; i < comment_list.children.length; i++) 
 		{
-			first_three_height += comment_list.children[i].offsetHeight + 15;
+			first_three_height += comment_list.children[i].offsetHeight;
 			if ( i === 2 ) 
 			{
 				comment_list.style.height = first_three_height + 'px';
-				return first_three_height;
+				break;
 			}
 
 			if ( i === comment_list.children.length - 1 ) 
 			{
 				comment_list.style.height = first_three_height + 'px';
-				return first_three_height;
+				break;
 			}
 		}
 	}
@@ -684,7 +680,6 @@
 
 		if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
 		{
-			console.log( 'entered make blank form' );
 			document.getElementsByName("billing_email")[0].value = '';
 			document.getElementsByName("billing_first_name")[0].value = '';
 			document.getElementsByName("billing_last_name")[0].value = '';
@@ -714,12 +709,46 @@
 
 	function single_product_variants_setup()
 	{
-		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails li');
 		var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
-		var all_imgs = document.querySelectorAll( '.woocommerce-product-gallery__wrapper img');
+		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails [data-variant-check="true"]');
+		var full_imgs = document.querySelectorAll( 'div.wonka-image-viewer [data-variant-check="true"]');
+		var variant_selected;
+		var thumbs_set;
+		var imgs_set;
 
 		variant_lis.forEach( function( item, i ) 
-			{
+			{	
+				if ( item.classList.contains( 'selected' ) ) 
+				{
+					variant_selected = item.getAttribute( 'data-value' );
+
+					full_imgs.forEach( function( img_tainers, i ) 
+						{
+							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+							{
+								img_tainers.classList.add( 'variant-show' );
+							}
+
+							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+							{
+								img_tainers.classList.remove( 'variant-show' );
+							}
+						});
+
+					thumb_lis.forEach( function( img_tainers, i ) 
+						{
+							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+							{
+								img_tainers.classList.add( 'variant-show' );
+							}
+
+							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+							{
+								img_tainers.classList.remove( 'variant-show' );
+							}
+						});
+				}
+
 				item.addEventListener( 'click', function( event ) 
 				{
 					event.preventDefault();
@@ -729,10 +758,24 @@
 						variant = variant.parentElement;
 					}
 
-					var variant_selected = variant.getAttribute( 'data-value' );
+					variant_selected = variant.getAttribute( 'data-value' );
 					if ( variant_selected ) 
 					{
-						all_imgs.forEach( function( img, i ) 
+						full_imgs.forEach( function( img, i ) 
+							{
+								var img_variant = img.getAttribute( 'data-variant-color' );
+								if ( variant_selected === img_variant ) 
+								{
+									img.classList.add( 'variant-show' );
+								}
+
+								if ( variant_selected !== img_variant && img.classList.contains( 'variant-show' ) )
+								{
+									img.classList.remove( 'variant-show' );
+								}
+							});
+
+						thumb_lis.forEach( function( img, i ) 
 							{
 								var img_variant = img.getAttribute( 'data-variant-color' );
 								if ( variant_selected === img_variant ) 
@@ -751,7 +794,7 @@
 
 		thumb_lis.forEach( function( item, i ) 
 			{
-				item.addEventListener( 'click', function( event ) 
+				item.addEventListener( 'click', function( event )                   
 					{
 						event.preventDefault();
 						var el = event.target;
@@ -802,21 +845,6 @@
 		===============================================================================*/
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 		{
-			
-
-			// $.ajax( {
-			// 	type:     'post',
-			// 	url:      get_url( 'update_shipping_method' ),
-			// 	data:     data,
-			// 	dataType: 'html',
-			// 	success:  function( response ) {
-			// 		update_cart_totals_div( response );
-			// 	},
-			// 	complete: function() {
-			// 		unblock( $( 'div.cart_totals' ) );
-			// 		$( document.body ).trigger( 'updated_shipping_method' );
-			// 	}
-			// } );
 
 		}
 

@@ -59,7 +59,7 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 
 		<div class="navbar wonka-thumbnails">
 			<ul class="navbar-nav">
-				<li class="nav-item">
+				<li class="nav-item" data-variant-check="true" data-variant-color="<?php echo esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) ?>">
 					<?php echo apply_filters( 'wonka_single_product_image_thumbnail_html', wc_get_gallery_image_html( $post_thumbnail_id ), $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped ?>
 				</li>
 					<?php do_action( 'woocommerce_product_thumbnails' ); ?>

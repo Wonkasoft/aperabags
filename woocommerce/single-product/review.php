@@ -56,4 +56,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 			do_action( 'woocommerce_review_after_comment_text', $comment ); ?>
 
 		</div>
-	</div>
+	</div><!-- #comment-<?php comment_ID(); ?> -->

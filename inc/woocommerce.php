@@ -208,7 +208,6 @@ add_action( 'woocommerce_after_main_content', 'apera_bags_woocommerce_wrapper_af
 	 */
 	function apera_bags_woocommerce_cart_link_fragment( $fragments ) {
 		ob_start();
-		apera_bags_woocommerce_cart_link();
 		$fragments['span.cart-contents-count.wonka-badge.badge'] = '<span class="cart-contents-count wonka-badge badge">' . WC()->cart->get_cart_contents_count() . '</span>';
 		ob_get_clean();
 		return $fragments;
@@ -232,7 +231,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 			$item_count_text = sprintf(
 				/* translators: number of items in the mini cart. */
 				_n( '%d item', '%d items', WC()->cart->get_cart_contents_count(), 'apera-bags' ),
-				WC()->cart->get_cart_contents_count()
+				WC_Cart()->get_total()
 			);
 			?>
 			<span class="amount"><?php echo wp_kses_data( WC()->cart->get_cart_subtotal() ); ?></span> <span class="count"><?php echo esc_html( $item_count_text ); ?></span>
@@ -241,17 +240,41 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 	}
 }
 
+<<<<<<< HEAD
 function wonka_woocommerce_update_order_review_fragments_jz( $fragments ) {
 	ob_start();
 	echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>' . wp_kses_data( WC()->cart->get_cart_total() ) . '</span></strong></td></tr>';
 
 	ob_get_clean();
+=======
+if ( ! function_exists( 'wonka_woocommerce_update_order_review_fragments' ) ) {
+>>>>>>> stage
 
-	return $fragments;
+	function wonka_woocommerce_update_order_review_fragments( $fragments ) {
+		ob_start();
+		echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
+
+		$current_method = WC()->session->get('chosen_shipping_methods')[0];
+		foreach ( WC()->session->get( 'shipping_for_package_0')['rates'] as $method_id => $rate ) :
+			if ( WC()->session->get( 'chosen_shipping_methods')[0] === $method_id ) :
+				$rate_label = $rate->label;
+				$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+			endif;
+		endforeach;
+
+<<<<<<< HEAD
+=======
+		echo $fragments['td.ship-method-cell'] = '<td colspan="2" class="ship-method-cell">' . $rate_label . '</td>';
+		echo $fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
+		ob_get_clean();
+
+		return $fragments;
+	}
+
 }
 
-add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments_jz', 10, 1 );
-
+add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10, 1 );
+>>>>>>> stage
 
 /**
  * This sets up the image flipper class
@@ -577,13 +600,39 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 							<td colspan="2"><?php wc_cart_totals_fee_html( $fee ); ?></td>
 						</tr>
 					<?php endforeach; ?>
-						<tr class="woocommerce-shipping-totals shipping">
-							<th colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php _e( '(US only)', 'woocommerce' ); ?></span></th>
-						</tr>
-						<tr class="shipping-methods">
-							<td colspan="3" class="ship-method-cell">
-							</td>
-						</tr>
+						<?php 
+						$current_method = WC()->session->get('chosen_shipping_methods')[0];
+						if ( ! $current_method ) : ?>
+							<tr class="woocommerce-shipping-totals shipping">
+								<th colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php _e( '(US only)', 'woocommerce' ); ?></span></th>
+							</tr>
+							<tr class="shipping-methods">
+								<td colspan="3" class="ship-method-cell">
+									This will be calculated on the next step.
+								</td>
+							</tr>
+						<?php else: ?>
+							<tr class="woocommerce-shipping-totals shipping">
+								<th colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php _e( '(US only)', 'woocommerce' ); ?></span></th>
+							</tr>
+							<tr class="shipping-methods">
+								<?php foreach ( WC()->session->get( 'shipping_for_package_0')['rates'] as $method_id => $rate ) : ?>
+									<?php if ( WC()->session->get( 'chosen_shipping_methods')[0] === $method_id ) :
+										$rate_label = $rate->label;
+										$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+									?>
+									<td colspan="2" class="ship-method-cell">
+										<?php echo $rate_label ?>
+									</td>
+									<td colspan="1" class="ship-method-cost-cell">
+										<?php echo sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) ?>
+									</td>
+									<?php endif; ?>
+								<?php endforeach; ?>
+								<?php 
+								?>
+							</tr>
+						<?php endif; ?>
 					<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
 						<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
 							<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
@@ -691,14 +740,14 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="contact-email-text">';
 	$output .= _x( 'Contact', 'aperabags' );
 	$output .= '</td>';
-	$output .= '<td class="contact-email-cell">';
+	$output .= '<td colspan="3" class="contact-email-cell">';
 	$output .= '</td>';
 	$output .= '<td class="contact-email-change">';
 	$output .= _x( '<a href="#" class="contact-email-change-link">Change</a>', 'aperabags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
-	$output .= '<td colspan="3" class="hr-spacer">';
+	$output .= '<td colspan="5" class="hr-spacer">';
 	$output .= '<hr />';
 	$output .= '</td>';
 	$output .= '</tr>';
@@ -706,7 +755,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="ship-to-text">';
 	$output .= _x( 'Ship to', 'aperabags' );
 	$output .= '</td>';
-	$output .= '<td class="ship-to-address-cell">';
+	$output .= '<td colspan="3" class="ship-to-address-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-to-address-change">';
 	$output .= _x( '<a href="#" class="ship-to-address-change-link">Change</a>', 'aperabags' );
@@ -729,14 +778,14 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="contact-email-text">';
 	$output .= _x( 'Contact', 'aperabags' );
 	$output .= '</td>';
-	$output .= '<td class="contact-email-cell">';
+	$output .= '<td colspan="3" class="contact-email-cell">';
 	$output .= '</td>';
 	$output .= '<td class="contact-email-change">';
 	$output .= _x( '<a href="#" class="contact-email-change-link">Change</a>', 'aperabags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
-	$output .= '<td colspan="3" class="hr-spacer">';
+	$output .= '<td colspan="5" class="hr-spacer">';
 	$output .= '<hr />';
 	$output .= '</td>';
 	$output .= '</tr>';
@@ -744,14 +793,14 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="ship-to-text">';
 	$output .= _x( 'Ship to', 'aperabags' );
 	$output .= '</td>';
-	$output .= '<td class="ship-to-address-cell">';
+	$output .= '<td colspan="3" class="ship-to-address-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-to-address-change">';
 	$output .= _x( '<a href="#" class="ship-to-address-change-link">Change</a>', 'aperabags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
-	$output .= '<td colspan="3" class="hr-spacer">';
+	$output .= '<td colspan="5" class="hr-spacer">';
 	$output .= '<hr />';
 	$output .= '</td>';
 	$output .= '</tr>';
@@ -759,7 +808,9 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td class="ship-method-text">';
 	$output .= _x( 'Method', 'aperabags' );
 	$output .= '</td>';
-	$output .= '<td class="ship-method-cell">';
+	$output .= '<td colspan="2" class="ship-method-cell">';
+	$output .= '</td>';
+	$output .= '<td colspan="1" class="ship-method-cost-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-method-change">';
 	$output .= _x( '<a href="" class="ship-method-change-link">Change</a>', 'aperabags' );
@@ -1020,7 +1071,7 @@ function ws_custom_new_gravatar ( $avatar_defaults ) {
 	return $avatar_defaults;
 }
 
-add_filter( 'avatar_defaults', 'ws_custom_new_gravatar' );
+// add_filter( 'avatar_defaults', 'ws_custom_new_gravatar' );
 
 function wonka_before_comment_text_add( $comment ) {
 	?>
@@ -1074,7 +1125,7 @@ function wonka_single_product_image_scroll_html_custom( $data, $attachment_id ) 
 
 	$output = '';
 	ob_start();
-	$output .= '<div id="scroll_image_' . esc_attr__($post_thumbnail_id) . '" class="woocommerce-product-gallery__image">';
+	$output .= '<div id="scroll_image_' . esc_attr__($post_thumbnail_id) . '" class="woocommerce-product-gallery__image" data-variant-check="true" data-variant-color="' . esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '">';
 	$output .= '<a href="' . esc_attr__( wp_get_attachment_url( $post_thumbnail_id ) ) . '">';
 	$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'full' ) . '" class="wp-post-image" alt="' . esc_attr__( get_post_meta( $post_thumbnail_id , '_wp_attachment_image_alt', true) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr__( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . wp_get_attachment_image_src( $post_thumbnail_id, 'full' ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr__( wp_get_attachment_image_srcset( $post_thumbnail_id, 'full', true ) ) .'" />';
 	$output .= '</a></div>';
