@@ -112,7 +112,7 @@ if ( ! comments_open() ) {
 			endif; ?>
 
 			<?php if ( $count > 3 ) : ?>
-				<div class="row wonka-row">
+				<div class="row wonka-row wonka-more-reviews">
 					<div class="col-12 text-center">
 						<a id="more-reviews" href="#" class="btn wonka-btn">More reviews</a>
 					</div>

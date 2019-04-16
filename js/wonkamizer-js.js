@@ -621,17 +621,17 @@
 		var first_three_height = 0;
 		for (var i = 0; i < comment_list.children.length; i++) 
 		{
-			first_three_height += comment_list.children[i].offsetHeight + 15;
+			first_three_height += comment_list.children[i].offsetHeight;
 			if ( i === 2 ) 
 			{
 				comment_list.style.height = first_three_height + 'px';
-				return first_three_height;
+				break;
 			}
 
 			if ( i === comment_list.children.length - 1 ) 
 			{
 				comment_list.style.height = first_three_height + 'px';
-				return first_three_height;
+				break;
 			}
 		}
 	}
@@ -712,10 +712,29 @@
 	{
 		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails li');
 		var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
-		var all_imgs = document.querySelectorAll( '.woocommerce-product-gallery__wrapper img');
+		var all_imgs = document.querySelectorAll( '.woocommerce-product-gallery__wrapper [data-variant-check="true"]');
+		var variant_selected;
 
 		variant_lis.forEach( function( item, i ) 
-			{
+			{	
+				if ( item.classList.contains( 'selected' ) ) 
+				{
+					variant_selected = item.getAttribute( 'data-value' );
+
+					all_imgs.forEach( function( img_tainers, i ) 
+						{
+							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+							{
+								img_tainers.classList.add( 'variant-show' );
+							}
+
+							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+							{
+								img_tainers.classList.remove( 'variant-show' );
+							}
+						});
+				}
+
 				item.addEventListener( 'click', function( event ) 
 				{
 					event.preventDefault();
@@ -725,7 +744,7 @@
 						variant = variant.parentElement;
 					}
 
-					var variant_selected = variant.getAttribute( 'data-value' );
+					variant_selected = variant.getAttribute( 'data-value' );
 					if ( variant_selected ) 
 					{
 						all_imgs.forEach( function( img, i ) 
@@ -747,7 +766,7 @@
 
 		thumb_lis.forEach( function( item, i ) 
 			{
-				item.addEventListener( 'click', function( event ) 
+				item.addEventListener( 'click', function( event )                   
 					{
 						event.preventDefault();
 						var el = event.target;
@@ -798,21 +817,6 @@
 		===============================================================================*/
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 		{
-			
-
-			// $.ajax( {
-			// 	type:     'post',
-			// 	url:      get_url( 'update_shipping_method' ),
-			// 	data:     data,
-			// 	dataType: 'html',
-			// 	success:  function( response ) {
-			// 		update_cart_totals_div( response );
-			// 	},
-			// 	complete: function() {
-			// 		unblock( $( 'div.cart_totals' ) );
-			// 		$( document.body ).trigger( 'updated_shipping_method' );
-			// 	}
-			// } );
 
 		}
 
