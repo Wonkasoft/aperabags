@@ -252,16 +252,7 @@ function wonka_woocommerce_update_order_review_fragments_jz( $fragments ) {
 
 add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments_jz', 10, 1 );
 
-function wonka_woocommerce_update_order_review_fragments( $fragments ) {
-	ob_start();
-	echo $fragments['.order-totalspan.woocommerce-Price-amount.amount'] = '<span class="woocommerce-Price-amount amount">' . wp_kses_data( WC()->cart->get_cart_total() ) . '</span>';
 
-	ob_get_clean();
-
-	return $fragments;
-}
-
-add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10, 1 );
 
 /**
  * This sets up the image flipper class
