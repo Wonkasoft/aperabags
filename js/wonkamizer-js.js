@@ -680,7 +680,6 @@
 
 		if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
 		{
-			console.log( 'entered make blank form' );
 			document.getElementsByName("billing_email")[0].value = '';
 			document.getElementsByName("billing_first_name")[0].value = '';
 			document.getElementsByName("billing_last_name")[0].value = '';
@@ -754,20 +753,17 @@
 				{
 					event.preventDefault();
 					var variant = event.target;
-					console.log( "{variant} " + variant );
 					if ( variant.nodeName === 'SPAN' ) 
 					{
 						variant = variant.parentElement;
 					}
 
 					variant_selected = variant.getAttribute( 'data-value' );
-					console.log( "{variant_selected} " + variant_selected );
 					if ( variant_selected ) 
 					{
 						full_imgs.forEach( function( img, i ) 
 							{
 								var img_variant = img.getAttribute( 'data-variant-color' );
-								console.log( "{img_variant} " + img_variant );
 								if ( variant_selected === img_variant ) 
 								{
 									img.classList.add( 'variant-show' );
@@ -782,7 +778,6 @@
 						thumb_lis.forEach( function( img, i ) 
 							{
 								var img_variant = img.getAttribute( 'data-variant-color' );
-								console.log( "{img_variant} " + img_variant );
 								if ( variant_selected === img_variant ) 
 								{
 									img.classList.add( 'variant-show' );
