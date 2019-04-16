@@ -1078,7 +1078,7 @@ function wonka_single_product_image_scroll_html_custom( $data, $attachment_id ) 
 	ob_start();
 	$output .= '<div id="scroll_image_' . esc_attr__($post_thumbnail_id) . '" class="woocommerce-product-gallery__image" data-variant-check="true" data-variant-color="' . esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '">';
 	$output .= '<a href="' . esc_attr__( wp_get_attachment_url( $post_thumbnail_id ) ) . '">';
-	$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'full' ) . '" class="wp-post-image" alt="' . esc_attr__( get_post_meta( $post_thumbnail_id , '_wp_attachment_image_alt', true) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr__( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-src="' . wp_get_attachment_image_src( $post_thumbnail_id, 'full' ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr__( wp_get_attachment_image_srcset( $post_thumbnail_id, 'full', true ) ) .'" />';
+	$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'full' ) . '" class="wp-post-image" alt="' . esc_attr__( get_post_meta( $post_thumbnail_id , '_wp_attachment_image_alt', true) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr__( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . wp_get_attachment_image_src( $post_thumbnail_id, 'full' ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr__( wp_get_attachment_image_srcset( $post_thumbnail_id, 'full', true ) ) .'" />';
 	$output .= '</a></div>';
 	$output .= ob_get_clean();
 
