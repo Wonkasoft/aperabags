@@ -854,7 +854,7 @@
 						setTimeout( function() 
 							{
 								footer_btn_container.style.opacity = 1;
-								side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight + side_cart_footer.offsetHeight + 'px';
+								side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight + 15 + 'px';
 							}, 350 );
 					}
 					
