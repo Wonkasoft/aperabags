@@ -835,7 +835,7 @@
 			var side_cart_body = document.querySelector( 'div.xoo-wsc-body' );
 			var side_cart_footer = document.querySelector( 'div.xoo-wsc-footer' );
 			var side_cart_footer_content = document.querySelector( 'div.xoo-wsc-footer-content' );
-			var footer_btn = document.createNode( 'A' );
+			var footer_btn = document.createElement( 'A' );
 			footer_btn.classList.add( 'wonka-btn' );
 			footer_btn.setAttribute( 'href', '#' );
 
