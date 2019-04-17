@@ -7,6 +7,21 @@
 	@include prefix( transition, $trans_3, o moz webkit );
 }
 
+.xoo-wsc-footer {
+
+	.wonka-btn-container {
+		position: relative;
+		width: 100%;
+
+		.wonka-btn {
+			position: relative;
+			margin: 0;
+			width: 100%;
+			top: -15px;
+		}
+	}
+}
+
 .xoo-wsc-tools {
 
 	> div.xoo-wsc-tool {
