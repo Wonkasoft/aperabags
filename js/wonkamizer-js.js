@@ -836,14 +836,16 @@
 			var side_cart_footer = document.querySelector( 'div.xoo-wsc-footer' );
 			var side_cart_footer_content = document.querySelector( 'div.xoo-wsc-footer-content' );
 			var footer_btn = document.createElement( 'A' );
+			var footer_btn_text = '<i class="fa fa-angle-up"></i>';
 			footer_btn.classList.add( 'wonka-btn' );
 			footer_btn.setAttribute( 'href', '#' );
+			footer_btn.innerHTML = footer_btn_text;
 
 			side_cart_body.onscroll = function( e ) 
 				{
 					if ( side_cart_body.scrollTop > 0 ) 
 					{
-						side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + 15 + 'px';
+						side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + footer_btn.offsetHeight + 8 + 'px';
 
 						setTimeout( function() 
 							{
