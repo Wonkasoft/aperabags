@@ -828,34 +828,33 @@
 	===================================================================*/
 	window.onload = function()
 	{
-		if ( document.querySelector( '.xoo-wsc-modal' ) ) 
+		if ( document.querySelector( 'div.xoo-wsc-modal' ) ) 
 		{
-			var side_cart_container = document.querySelector( '.xoo-wsc-container' );
-			var side_cart_header = document.querySelector( '.xoo-wsc-header' );
-			var side_cart_body = document.querySelector( '.xoo-wsc-body' );
-			var side_cart_footer = document.querySelector( '.xoo-wsc-footer' );
+			var side_cart_container = document.querySelector( 'div.xoo-wsc-container' );
+			var side_cart_header = document.querySelector( 'div.xoo-wsc-header' );
+			var side_cart_body = document.querySelector( 'div.xoo-wsc-body' );
+			var side_cart_footer = document.querySelector( 'div.xoo-wsc-footer' );
 
-			console.log( side_cart_body );
 			side_cart_body.onscroll = function( e ) 
 				{
 					console.log( e );
 					if ( side_cart_body.scrollTop > 0 ) 
 					{
-						side_cart_footer.style.bottom = -48 + '%';
-						setTimeout( function() 
+						side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + 'px';
+						setTimeout( function( side_cart_body ) 
 							{
 								side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
 
-							}, 350 );
+							}, 850, side_cart_body );
 					}
 					else
 					{
 						side_cart_footer.style.bottom = 0;
-						setTimeout( function() 
+						setTimeout( function( side_cart_body ) 
 							{
 								side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
 
-							}, 350 );
+							}, 850, side_cart_body );
 					}
 				};
 		}
