@@ -848,7 +848,7 @@
 				{
 					if ( side_cart_body.scrollTop > 0 ) 
 					{
-						side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + footer_btn_container.offsetHeight + 8 + 'px';
+						side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + footer_btn_container.offsetHeight + 15 + 'px';
 
 						setTimeout( function() 
 							{
