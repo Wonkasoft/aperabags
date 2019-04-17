@@ -477,17 +477,17 @@
 		target_stop = wonka_single_product_img_area.offsetHeight - thumbnail_controls.offsetHeight;
 		win_y = window.pageYOffset;
 
-		if ( window.innerWidth > 792 && win_y < img_area_top ) 
+		if ( win_y < img_area_top ) 
 		{
 			thumbnail_controls.classList.remove( 'sticky-on' );
 			thumbnail_controls.removeAttribute( 'style' );
 		}
-		else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop ) 
+		else if ( win_y - img_area_top > target_stop ) 
 		{
 			thumbnail_controls.style.top = target_stop + 'px';
 			thumbnail_controls.classList.remove( 'sticky-on' );
 		}
-		else if ( window.innerWidth > 792 )
+		else
 		{
 			if ( document.querySelector( '#wpadminbar' ) ) 
 			{
