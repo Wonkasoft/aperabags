@@ -840,10 +840,10 @@
 					console.log( e );
 					if ( side_cart_body.scrollTop > 0 ) 
 					{
-						side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + 'px';
+						side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + 8 + 'px';
 						setTimeout( function( side_cart_body ) 
 							{
-								side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
+								side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight + side_cart_footer.offsetHeight + 'px';
 
 							}, 850, side_cart_body );
 					}
