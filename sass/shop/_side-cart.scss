@@ -1,10 +1,22 @@
 /*#
  * Side Cart
  */
+.xoo-wsc-header,
+.xoo-wsc-body,
+.xoo-wsc-footer {
+	@include prefix( transition, $trans_3, o moz webkit );
+}
+
+.xoo-wsc-tools {
+
+	> div.xoo-wsc-tool {
+		margin: auto;
+	}
+}
 
 .xoo-wsc-rp-item {
 	justify-content: center;
-	
+
 	.xoo-wsc-rp-right-area {
 
 		span.price {

@@ -828,6 +828,35 @@
 	===================================================================*/
 	window.onload = function()
 	{
+		if ( document.querySelector( '.xoo-wsc-body' ) ) 
+		{
+			var side_cart_container = document.querySelector( '.xoo-wsc-container' );
+			var side_cart_header = document.querySelector( '.xoo-wsc-header' );
+			var side_cart_body = document.querySelector( '.xoo-wsc-body' );
+			var side_cart_footer = document.querySelector( '.xoo-wsc-footer' );
+
+			side_cart_body.addEventListener( 'scroll', function( event ) 
+				{
+					if ( side_cart_body.scrollTop > 0 ) 
+					{
+						side_cart_footer.style.bottom = -48 + '%';
+						setTimeout( function() 
+							{
+								side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
+
+							}, 350 );
+					}
+					else
+					{
+						side_cart_footer.style.bottom = 0;
+						setTimeout( function() 
+							{
+								side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
+
+							}, 350 );
+					}
+				});
+		}
 		/*========================================================
 		=            This loads the vars for the page            =
 		========================================================*/
