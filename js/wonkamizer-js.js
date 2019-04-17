@@ -834,29 +834,35 @@
 			var side_cart_header = document.querySelector( 'div.xoo-wsc-header' );
 			var side_cart_body = document.querySelector( 'div.xoo-wsc-body' );
 			var side_cart_footer = document.querySelector( 'div.xoo-wsc-footer' );
+			var side_cart_footer_content = document.querySelector( 'div.xoo-wsc-footer-content' );
+			var footer_btn = document.createNode( 'A' );
+			footer_btn.classList.add( 'wonka-btn' );
+			footer_btn.setAttribute( 'href', '#' );
 
 			side_cart_body.onscroll = function( e ) 
 				{
-					console.log( e );
 					if ( side_cart_body.scrollTop > 0 ) 
 					{
-						side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + 8 + 'px';
-						setTimeout( function( side_cart_body ) 
+						side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + 15 + 'px';
+
+						setTimeout( function() 
 							{
+								side_cart_footer.insertBefore( footer_btn, side_cart_footer_content );
 								side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight + side_cart_footer.offsetHeight + 'px';
-
-							}, 850, side_cart_body );
+							}, 350 );
 					}
-					else
-					{
-						side_cart_footer.style.bottom = 0;
-						setTimeout( function( side_cart_body ) 
-							{
-								side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
-
-							}, 850, side_cart_body );
-					}
+					
 				};
+
+			side_cart_footer.addEventListener( 'click', function( e ) 
+				{
+					side_cart_footer.style.bottom = 0;
+					setTimeout( function( side_cart_body ) 
+						{
+							side_cart_footer.removeChild( footer_btn );
+							side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
+						}, 350, side_cart_body );
+				});
 		}
 		/*========================================================
 		=            This loads the vars for the page            =
