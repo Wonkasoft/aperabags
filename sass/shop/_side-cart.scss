@@ -13,6 +13,8 @@
 		position: relative;
 		margin-bottom: 15px;
 		width: 100%;
+		opacity: 0;
+		@include prefix( transition, $trans_3, o moz webkit );
 
 		.wonka-btn {
 			position: relative;
