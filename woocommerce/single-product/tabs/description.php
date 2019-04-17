@@ -26,7 +26,7 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 <?php if ( $heading ) : ?>
 	<div class="row wonka-row wonka-product-statement-header">
 		<div class="col text-center">
-			<h2><?php echo $heading; ?></h2>
+			<h2 class="wonka wonka-h2"><?php echo $heading; ?></h2>
 		</div><!-- .col -->
 	</div><!-- .row -->
 <?php endif; ?>
@@ -48,7 +48,7 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 				<thead>
 					<tr>
 						<th colspan="3">
-							<h4>Key Features</h4>
+							<h4 class="wonka-title wonka-h4">Key Features</h4>
 						</th>
 					</tr>
 				</thead>
@@ -109,7 +109,7 @@ if ( !empty( $product_specs_data ) ) : ?>
 			<thead>
 				<tr>
 					<th colspan="2">
-						<h4 id="product-spec">Product Specs</h4>
+						<h4 class="wonka-title wonka-h4" id="product-spec">Product Specs</h4>
 					</th>
 				</tr>
 			</thead>
@@ -163,7 +163,7 @@ if ( !empty( $product_specs_data ) ) : ?>
 			<thead>
 				<tr>
 					<th>
-						<h4>Healthy by Design</h4>
+						<h4 class="wonka wonka-h4">Healthy by Design</h4>
 					</th>
 				</tr>
 			</thead>
@@ -201,7 +201,7 @@ if ( !empty( $product_specs_data ) ) : ?>
 			<thead>
 				<tr>
 					<th>
-						<h4>Built to Last</h4>
+						<h4 class="wonka wonka-h4">Built to Last</h4>
 					</th>
 				</tr>
 			</thead>

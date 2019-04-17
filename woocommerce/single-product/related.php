@@ -21,7 +21,7 @@ if ( $related_products ) : ?>
 
   <section class="related products text-center">
 
-    <h4 class="related-product-title"><?php esc_html_e( 'You may also like', 'woocommerce' ); ?></h4>
+    <div class="wonka"><h4 class="wonka wonka-h4 related-product-title"><?php esc_html_e( 'You may also like', 'woocommerce' ); ?></h4></div>
 
     <?php woocommerce_product_loop_start(); ?>
 
