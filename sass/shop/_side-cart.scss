@@ -1,17 +1,25 @@
-.xoo-wsc-rp-right-area {
+/*#
+ * Side Cart
+ */
 
-	span.price {
-		display: flex;
-	    align-items: center;
-	    justify-content: space-between;
-	    width: 40%;
-	    margin: 0;
-	    color: #333333;
-	    @include font-size( 1.3 );
+.xoo-wsc-rp-item {
+	justify-content: center;
+	
+	.xoo-wsc-rp-right-area {
 
-	    ins {
-	    	color: #e81409;
-	    	background: transparent;
-	    }
+		span.price {
+			display: flex;
+		    align-items: center;
+		    justify-content: space-between;
+		    width: 40%;
+		    margin: 0;
+		    color: #333333;
+		    @include font-size( 1.3 );
+
+		    ins {
+		    	color: #e81409;
+		    	background: transparent;
+		    }
+		}
 	}
 }
