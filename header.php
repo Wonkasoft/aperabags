@@ -83,12 +83,12 @@
 						'theme_location' 	=> 'menu-cart',
 						'menu_id'        	=> 'cart-menu-desktop',
 						'menu_class'        => 'wonka-cart-menu header-cart-menu d-none d-md-flex',
-						'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s<li class="menu-item menu-item-type-post"><a><span class="cart-contents-count wonka-badge badge">' . esc_html( $count ) . '</span></a></li></ul>',
+						'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s<li class="menu-item menu-item-type-post"><a href="' . wc_get_cart_url() . '"><span class="cart-contents-count wonka-badge badge">' . esc_html( $count ) . '</span></a></li></ul>',
 					) );
 					?>
 				</nav><!-- #site-navigation -->
 			</div> <!-- .col-8 -->
 		</div> <!-- .row -->
 	</header><!-- #masthead -->
-	
+	                                                                                                                                                 
 	<div id="content" class="site-content">

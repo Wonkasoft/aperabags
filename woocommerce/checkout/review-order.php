@@ -20,25 +20,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<h5 class="wonka-checkout-form-titles">Shipping Method <span>(US only)</span></h5>
+<div class="wonka checkout-form-section-title"><h5 class="wonka wonka-h5">Shipping Method <span>(US only)</span></h5></div>
 <div class="card wonka-card wonka-card-shipping-selection">
 <?php $available_methods = WC()->session->get( 'shipping_for_package_0')['rates'];
 	$chooen_method = WC()->session->get( 'chosen_shipping_methods')[0]; ?>
 <?php if ( $available_methods ) : ?>
-			<ul id="shipping_method" class="woocommerce-shipping-methods list-group list-group-flush">
-				<?php foreach ( $available_methods as $index => $method ) : ?>
-					<li class="list-group-item">
-						<?php
-						if ( 1 < count( $available_methods ) ) {
-							printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
-						} else {
-							printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
-						}
-						printf( '<label for="shipping_method_%1$s_%2$s" data-label="">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
-						do_action( 'woocommerce_after_shipping_rate', $method, $index );
-						?>
-					</li>
-				<?php endforeach; ?>
-			</ul>
+		<ul id="shipping_method" class="woocommerce-shipping-methods list-group list-group-flush">
+			<?php foreach ( $available_methods as $index => $method ) : ?>
+				<li class="list-group-item">
+					<?php
+					if ( 1 < count( $available_methods ) ) {
+						printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+					} else {
+						printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
+					}
+					printf( '<label for="shipping_method_%1$s_%2$s" data-label="">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
+					do_action( 'woocommerce_after_shipping_rate', $method, $index );
+					?>
+				</li>
+			<?php endforeach; ?>
+		</ul>
 <?php endif; ?>
 </div>

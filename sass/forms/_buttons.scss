@@ -9,7 +9,7 @@ input[type="submit"] {
 	font-weight: 700;
 	line-height: 1.2;
 	text-align: center;
-	background: rgba( #fff, .3 );
+	background: rgba( #777, .3 );
 	@include prefix( transition, $trans_25, webkit moz o);
 
 
@@ -18,7 +18,7 @@ input[type="submit"] {
 	}
 
 	&:hover {
-		background: #FFE6B2;
+		background: #777;
 		color: rgba(255, 255, 255, .8);
 		@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
 	}
@@ -37,15 +37,15 @@ input[type="submit"].wonka-btn {
 	padding: .5rem 1rem;
 	text-align: center;
 	border-radius: 100px;
-	background: rgba( #fff, .3 );
-    border: 3px solid #FFE6B2;
+	background: rgba( #777, .3 );
+    border: 3px solid #777;
     @include font-size( 1 );
     @include prefix( box-shadow, $box_shadow_4, o moz webkit );
     @include prefix( text-shadow, 1px 1px 3px rgba(#000, 0 ), o moz webkit );
 
     &:hover {
-    	border: 3px solid #FFE6B2;
-    	background: #FFE6B2;
+    	border: 3px solid #777;
+    	background: #777;
 		color: rgba(255, 255, 255, .8);
 		@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
     }
