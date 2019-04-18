@@ -770,7 +770,7 @@
 		{
 
 			var write_review = document.querySelector( '#write-review' ),
-			comment_form = document.querySelector( '#commentform' ),
+			comment_form_wrapper = document.querySelector( 'div#review_form_wrapper' ),
 			reviews_top = document.querySelector( '.wonka-section-reviews' ),
 			more_reviews,
 			comment_list,
@@ -806,20 +806,16 @@
 					});
 			}
 
-
-
 			write_review.addEventListener( 'click', function(e) 
 				{
 					e.preventDefault();
-					if ( getComputedStyle( comment_form ).height === '0px' || comment_form.style.height === 100 + 'px' ) 
+					if ( getComputedStyle( comment_form_wrapper ).height === '25px' ) 
 					{
-						comment_form.style.height = 100 + '%';
-						comment_form.style.opacity = 1;
+						comment_form_wrapper.style.height = 415 + 'px';
 					}
 					else
 					{
-						comment_form.style.height = 0;
-						comment_form.style.opacity = 0;
+						comment_form_wrapper.style.height = 25 + 'px';
 					}
 				});
 		}
