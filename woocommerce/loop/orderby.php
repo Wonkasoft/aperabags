@@ -11,19 +11,15 @@
  * the readme will list any important changes.
  *
  * @see 	    https://docs.woocommerce.com/document/template-structure/
- * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     3.3.0
+ * @version     3.6.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
+defined( 'ABSPATH' ) ||	exit;
 ?>
 <form class="woocommerce-ordering form-inline wonka-form-inline" method="get">
 	<div class="form-group wonka-form-group">
-	<select name="orderby" class="orderby form-control wonka-form-control">
+	<select name="orderby" class="orderby form-control wonka-form-control"  aria-label="<?php esc_attr_e( 'Shop order', 'woocommerce' ); ?>">
 		<?php foreach ( $catalog_orderby_options as $id => $name ) : ?>
 			<option value="<?php echo esc_attr( $id ); ?>" <?php selected( $orderby, $id ); ?>><?php echo esc_html( $name ); ?></option>
 		<?php endforeach; ?>
