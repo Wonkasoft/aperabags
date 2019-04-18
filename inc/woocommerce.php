@@ -372,7 +372,7 @@ add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
 
 
 function wonka_add_continue_shopping_notice_to_cart() {
-	$shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( '/shop' ), esc_html__( 'Continue shopping', 'woocommerce' ) );
+	$shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ), esc_html__( 'Continue shopping', 'woocommerce' ) );
 
 	echo $shopping;
 }

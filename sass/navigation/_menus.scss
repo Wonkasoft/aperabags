@@ -78,7 +78,7 @@
 			opacity: 0;
 			overflow: hidden;
 			z-index: 100;
-			background: rgba( #FFE6B2, .9 );
+			background: rgba( #777, .9 );
 			@include prefix( transition, $trans_25, webkit moz o);
 			@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0.4), webkit moz o );
 
@@ -88,7 +88,7 @@
 				align-items: center;
 				justify-content: center;
 				flex-wrap: wrap;
-				padding: 4px;
+				padding: 4px 8px;
 				height: 60px;
 				@include prefix( transition, $trans_25, webkit moz o);
 
@@ -102,6 +102,7 @@
 					list-style: none;
 					margin: 0;
 					top: -30px;
+					left: 0;
 					height: 0;
 					width: 100%;
 					padding: 0;
@@ -113,8 +114,8 @@
 					@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0.4), webkit moz o );
 
 					li {
-						padding: 4px;
-						background: rgba( #FFE6B2, .8 );
+						padding: 4px 8px;
+						background: rgba( #777, .8 );
 					}
 				}
 			}

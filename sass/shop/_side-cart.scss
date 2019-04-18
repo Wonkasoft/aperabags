@@ -1,0 +1,59 @@
+/*#
+ * Side Cart
+ */
+.xoo-wsc-header,
+.xoo-wsc-body,
+.xoo-wsc-footer {
+	@include prefix( transition, $trans_3, o moz webkit );
+}
+
+.xoo-wsc-footer {
+
+	.wonka-btn-container {
+		position: relative;
+		margin-bottom: 15px;
+		width: 100%;
+		opacity: 0;
+		@include prefix( transition, $trans_3, o moz webkit );
+
+		.wonka-btn {
+			position: relative;
+			display: block;
+			margin: 0;
+			width: 100%;
+		}
+	}
+}
+
+.xoo-wsc-tools {
+
+	> div.xoo-wsc-tool {
+		margin: auto;
+	}
+}
+
+.xoo-wsc-ft-btn {
+	border-radius: 100px;
+}
+
+.xoo-wsc-rp-item {
+	justify-content: center;
+
+	.xoo-wsc-rp-right-area {
+
+		span.price {
+			display: flex;
+		    align-items: center;
+		    justify-content: space-between;
+		    width: 40%;
+		    margin: 0;
+		    color: #333333;
+		    @include font-size( 1.3 );
+
+		    ins {
+		    	color: #e81409;
+		    	background: transparent;
+		    }
+		}
+	}
+}

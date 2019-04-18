@@ -4,8 +4,6 @@
 .home {
 
 	section {
-		margin-top: 30px;
-		margin-bottom: 30px;
 
 		p.price,
 		span.price {
@@ -125,6 +123,11 @@ section.shop-section {
 	background-position: center;
 	padding: 15px 0;
 
+	.wonka-row {
+		margin: 15px auto;
+		max-width: 1180px;
+	}
+
 	.star-rating {
 		display: none;
 	}
@@ -234,8 +237,13 @@ section.desirable-slider-section {
 
 /*----------  Our Cause Section  ----------*/
 section.our-cause-section {
-	max-width: 1180px;
-	margin: 15px auto;
+	margin: 0;
+	padding: 15px 0;
+
+	.wonka-row {
+		margin: 15px auto;
+		max-width: 1180px;
+	}
 
 	.cause-section-module {
 		max-width: 380px;
@@ -299,8 +307,15 @@ div.modal-backdrop {
 }
 
 section.about-brand-section {
-	max-width: 1180px;
-	margin: 15px auto;
+	margin: 0;
+	padding: 15px 0;
+	background: #f0f0f0;
+	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+
+	.wonka-row {
+		margin: 15px auto;
+		max-width: 1180px;
+	}
 
 	.about-components-wrap {
 		margin: 15px auto;
@@ -447,7 +462,13 @@ section.about-brand-section {
 =            Social section            =
 ======================================*/
 section.social-section {
-	margin: 15px auto;
+	margin: 0;
+	padding: 15px 0;
+
+	.wonka-row {
+		margin: 15px auto;
+		max-width: 1180px;
+	}
 }
 /*=====  End of Social section  ======*/
 

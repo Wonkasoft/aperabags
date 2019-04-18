@@ -8,6 +8,7 @@
 # Components
 # Widgets
 # WooCommerce Page
+# Side Cart
 --------------------------------------------------------------*/
 /**
  * Imports
@@ -56,3 +57,8 @@ $woocommerce__color-info: #3D9CD2;
 # WooCommerce Page
  */
 @import "shop/woocommerce-pages";
+
+/*
+# Side Cart
+ */
+@import "shop/side-cart";

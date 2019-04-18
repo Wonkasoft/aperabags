@@ -317,177 +317,23 @@
 		}, 300);
 	}
 
-	// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-	function stickyStatus() 
-	{	
-		// Get the header
-		var header = document.querySelector('.site-header');
-		var header_notice = document.querySelector('.topbar-notice');
-		var shop_section = document.querySelector( '.shop-section' );
-		var top_slider_section = document.querySelector( '.header-slider-section' );
-		var cta_section = document.querySelector( '.desirable-slider-section' );
-		var parallax_adjust, slide_imgs;
-
-		// Get the offset position of the navbar
-		var sticky = shop_section.offsetTop;
-
-		if ( window.pageYOffset > last_scroll_top ) 
-		{
-			scroll_direction = 'scrolled down';
-			scroll_distance = window.pageYOffset - last_scroll_top;
-		}
-
-		if ( window.pageYOffset < last_scroll_top )
-		{
-			scroll_direction = 'scrolled up';
-			scroll_distance = last_scroll_top - window.pageYOffset;
-		}
-
-		last_scroll_top = window.pageYOffset;
-
-		/*=======================================================================
-		=            This is for the top slider section for parallax            =
-		=======================================================================*/
-		if ( window.pageYOffset > top_slider_section.offsetTop && window.pageYOffset < top_slider_section.offsetTop + top_slider_section.offsetHeight ) 
-		{
-			parallax_adjust = parseFloat( ( window.pageYOffset - top_slider_section.offsetTop ) / ( top_slider_section.offsetHeight / 2 ) ).toFixed( 5 );
-			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
-			slide_imgs.forEach( function( el, i ) 
-				{
-					el.style.backgroundPosition = 'center ' + parallax_adjust + 'vh';
-				});
-		}
-
-		if ( window.pageYOffset < top_slider_section.offsetTop ) 
-		{
-			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
-			slide_imgs.forEach( function( el, i ) 
-				{
-					el.style.backgroundPosition = '';
-				});
-		}
-		/*=====  End of This is for the top slider section for parallax  ======*/
-
-		/*=======================================================================
-		=            This is for the cta slider section for parallax            =
-		=======================================================================*/
-		if ( window.pageYOffset > cta_section.offsetTop && window.pageYOffset < cta_section.offsetTop + cta_section.offsetHeight ) 
-		{
-			parallax_adjust = parseFloat( (window.pageYOffset - cta_section.offsetTop ) / ( cta_section.offsetHeight / 2 ) ).toFixed( 5 );
-			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
-			slide_imgs.forEach( function( el, i ) 
-				{
-					el.style.backgroundPosition = 'center ' + parallax_adjust + 'vh';
-				});
-		}
-
-		if ( window.pageYOffset < cta_section.offsetTop ) 
-		{
-			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
-			slide_imgs.forEach( function( el, i ) 
-				{
-					el.style.backgroundPosition = '';
-				});
-		}
-		/*=====  End of This is for the top slider section for parallax  ======*/
-		
-	   	if ( document.querySelector( '#wpadminbar' ) ) 
-	   	{
-	   		admin_bar = document.querySelector( '#wpadminbar' );
-	   		admin_height = admin_bar.offsetHeight;
-	   		header_notice.style.position = 'fixed';
-
-	   		if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
-	   		{
-	   			header_notice.style.top = 0;
-	   		}
-	   		else
-	   		{
-	   			header_notice.style.top = admin_height + 'px';
-	   		}
-	   	}
-	   	else
-	   	{
-	   		header_notice.style.position = 'fixed';
-	   		header_notice.style.top = 0;
-	   	}
-
-		if ( window.pageYOffset > header.offsetHeight - header_notice.offsetHeight && window.innerWidth > 782 && window.pageYOffset < sticky ) 
-		{
-			header.style.height = header_notice.offsetHeight + 'px';
-		}
-
-		if ( window.pageYOffset > sticky && window.innerWidth > 782 ) 
-		{
-			header.classList.add( 'sticky' );
-			header_notice.style.position = 'absolute';
-	   		header_notice.style.top = 0;
-			document.querySelector( '.sticky' ).style.top = admin_height + 'px';
-
-			if ( window.pageYOffset > sticky && header.offsetHeight == header_notice.offsetHeight ) 
-			{
-				setTimeout( function( header ) 
-				{
-					header.style.height = '120px';
-					header.style.background = '#646371';
-					header.style.overflow = 'visible';
-				}, 120, header );
-			}
-		} 
-		else 
-		{
-			header.style.height = header_notice.offsetHeight + 'px';
-			header.style.background = 'transparent';
-			setTimeout( function( header, header_notice ) 
-			{
-				if ( document.querySelector( '#wpadminbar' ) ) 
-				{
-					admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
-					header_notice.style.position = 'fixed';
-					
-					if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
-					{
-						header_notice.style.top = 0;
-					}
-					else
-					{
-						header_notice.style.top = admin_height + 'px';
-					}
-				}
-				else
-				{
-					header_notice.style.position = 'fixed';
-					header_notice.style.top = 0;
-					header.style.overflow = 'visible';
-				}
-				header.classList.remove( 'sticky' );
-			}, 120, header, header_notice );
-
-		}
-
-		if ( window.pageYOffset == 0 ) 
-		{
-			header.removeAttribute( 'style' );
-		}
-	}
-
 	function stickyThumbnails() 
 	{
 		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
 		target_stop = wonka_single_product_img_area.offsetHeight - thumbnail_controls.offsetHeight;
 		win_y = window.pageYOffset;
 
-		if ( window.innerWidth > 792 && win_y < img_area_top ) 
+		if ( win_y < img_area_top ) 
 		{
 			thumbnail_controls.classList.remove( 'sticky-on' );
 			thumbnail_controls.removeAttribute( 'style' );
 		}
-		else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop ) 
+		else if ( win_y - img_area_top > target_stop ) 
 		{
 			thumbnail_controls.style.top = target_stop + 'px';
 			thumbnail_controls.classList.remove( 'sticky-on' );
 		}
-		else if ( window.innerWidth > 792 )
+		else
 		{
 			if ( document.querySelector( '#wpadminbar' ) ) 
 			{
@@ -828,6 +674,60 @@
 	===================================================================*/
 	window.onload = function()
 	{
+		// if ( document.querySelector( 'div.xoo-wsc-modal' ) ) 
+		// {
+		// 	var side_cart_btn = document.querySelector( '.wonka-cart-open' );
+		// 	var side_cart_modal = document.querySelector( 'div.xoo-wsc-modal' );
+		// 	var side_cart_container = document.querySelector( 'div.xoo-wsc-container' );
+		// 	var side_cart_header = document.querySelector( 'div.xoo-wsc-header' );
+		// 	var side_cart_body = document.querySelector( 'div.xoo-wsc-body' );
+		// 	var side_cart_body_content = document.querySelector( 'div.xoo-wsc-content' );
+		// 	var side_cart_footer = document.querySelector( 'div.xoo-wsc-footer' );
+		// 	var side_cart_footer_content = document.querySelector( 'div.xoo-wsc-footer-content' );
+		// 	var footer_btn_container = document.createElement( 'DIV' );
+		// 	var footer_btn = document.createElement( 'A' );
+		// 	var footer_btn_text = 'Checkout <i class="fa fa-angle-down"></i>';
+		// 	footer_btn_container.classList.add( 'wonka-btn-container' );
+		// 	footer_btn.classList.add( 'wonka-btn' );
+		// 	footer_btn.setAttribute( 'href', '#' );
+		// 	footer_btn.innerHTML = footer_btn_text;
+		// 	footer_btn_container.appendChild( footer_btn );
+
+		// 	console.log( side_cart_footer );
+		// 	side_cart_btn.
+		// 	document.addEventListener( 'scroll', function(e)  
+		// 		{
+		// 			console.log(e);
+		// 		});
+			
+		// 	side_cart_body_content.onload = function( e ) 
+		// 		{
+		// 			console.log( e );
+		// 			if ( side_cart_body.scrollTop > 0 ) 
+		// 			{
+		// 				side_cart_footer.insertBefore( footer_btn_container, side_cart_footer_content );
+		// 				side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + footer_btn_container.offsetHeight + 15 + 'px';
+
+		// 				setTimeout( function() 
+		// 					{
+		// 						footer_btn_container.style.opacity = 1;
+		// 						side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - footer_btn_container.offsetHeight - 15 + 'px';
+		// 					}, 350 );
+		// 			}
+					
+		// 		};
+
+		// 	footer_btn.addEventListener( 'click', function( e ) 
+		// 		{
+		// 			footer_btn_container.style.opacity = 0;
+		// 			side_cart_footer.style.bottom = 0;
+		// 			setTimeout( function( side_cart_body ) 
+		// 				{
+		// 					side_cart_footer.removeChild( footer_btn_container );
+		// 					side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
+		// 				}, 350, side_cart_body );
+		// 		});
+		// }
 		/*========================================================
 		=            This loads the vars for the page            =
 		========================================================*/
@@ -1054,16 +954,6 @@
 		} );
 		close_btn.addEventListener( 'click', closeSearch );
 		/*=====  End of Search btn actions  ======*/
-		
-		/*=========================================
-		=            For Sticky Header            =
-		=========================================*/
-		if ( document.querySelector( 'body.home' ) ) 
-		{
-			// When the user scrolls the page, execute stickyStatus 
-			window.onscroll = function() { stickyStatus(); };
-		}
-		/*=====  End of For Sticky Header  ======*/
 		
 		/*===============================================
 		=            For single product page            =

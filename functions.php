@@ -242,4 +242,4 @@ function apera_bags_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'apera_bags_scripts' );
+add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 200 );
