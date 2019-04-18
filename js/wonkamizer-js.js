@@ -653,51 +653,6 @@
 					});
 			});
 	}
-
-	function setup_side_cart_js() {
-		var side_cart_container = document.querySelector( 'div.xoo-wsc-container' );
-		var side_cart_header = document.querySelector( 'div.xoo-wsc-header' );
-		var side_cart_body = document.querySelector( 'div.xoo-wsc-body' );
-		var side_cart_footer = document.querySelector( 'div.xoo-wsc-footer' );
-		var side_cart_footer_content = document.querySelector( 'div.xoo-wsc-footer-content' );
-		var footer_btn_container = document.createElement( 'DIV' );
-		var footer_btn = document.createElement( 'A' );
-		var footer_btn_text = 'Checkout <i class="fa fa-angle-down"></i>';
-		footer_btn_container.classList.add( 'wonka-btn-container' );
-		footer_btn.classList.add( 'wonka-btn' );
-		footer_btn.setAttribute( 'href', '#' );
-		footer_btn.innerHTML = footer_btn_text;
-		footer_btn_container.appendChild( footer_btn );
-
-				console.log( side_cart_footer );
-		side_cart_body.onscroll = function( e ) 
-			{
-				console.log( e );
-				if ( side_cart_body.scrollTop > 0 ) 
-				{
-					side_cart_footer.insertBefore( footer_btn_container, side_cart_footer_content );
-					side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + footer_btn_container.offsetHeight + 15 + 'px';
-
-					setTimeout( function() 
-						{
-							footer_btn_container.style.opacity = 1;
-							side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - footer_btn_container.offsetHeight - 15 + 'px';
-						}, 350 );
-				}
-				
-			};
-
-		footer_btn.addEventListener( 'click', function( e ) 
-			{
-				footer_btn_container.style.opacity = 0;
-				side_cart_footer.style.bottom = 0;
-				setTimeout( function( side_cart_body ) 
-					{
-						side_cart_footer.removeChild( footer_btn_container );
-						side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
-					}, 350, side_cart_body );
-			});
-	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -719,22 +674,60 @@
 	===================================================================*/
 	window.onload = function()
 	{
-		if ( document.querySelector( 'div.xoo-wsc-modal' ) ) 
-		{
+		// if ( document.querySelector( 'div.xoo-wsc-modal' ) ) 
+		// {
+		// 	var side_cart_btn = document.querySelector( '.wonka-cart-open' );
+		// 	var side_cart_modal = document.querySelector( 'div.xoo-wsc-modal' );
+		// 	var side_cart_container = document.querySelector( 'div.xoo-wsc-container' );
+		// 	var side_cart_header = document.querySelector( 'div.xoo-wsc-header' );
+		// 	var side_cart_body = document.querySelector( 'div.xoo-wsc-body' );
+		// 	var side_cart_body_content = document.querySelector( 'div.xoo-wsc-content' );
+		// 	var side_cart_footer = document.querySelector( 'div.xoo-wsc-footer' );
+		// 	var side_cart_footer_content = document.querySelector( 'div.xoo-wsc-footer-content' );
+		// 	var footer_btn_container = document.createElement( 'DIV' );
+		// 	var footer_btn = document.createElement( 'A' );
+		// 	var footer_btn_text = 'Checkout <i class="fa fa-angle-down"></i>';
+		// 	footer_btn_container.classList.add( 'wonka-btn-container' );
+		// 	footer_btn.classList.add( 'wonka-btn' );
+		// 	footer_btn.setAttribute( 'href', '#' );
+		// 	footer_btn.innerHTML = footer_btn_text;
+		// 	footer_btn_container.appendChild( footer_btn );
 
-				console.log(document.querySelector( 'div.xoo-wsc-body' ));
-				setTimeout( function() 
-					{
-						console.log(document.querySelector( 'div.xoo-wsc-body' ));
-						setup_side_cart_js();
-					}, 250 );
-			document.querySelector( 'div.xoo-wsc-body' ).onload = function( e ) 
-			{
-				console.log(e);
-				setup_side_cart_js();
-			};
+		// 	console.log( side_cart_footer );
+		// 	side_cart_btn.
+		// 	document.addEventListener( 'scroll', function(e)  
+		// 		{
+		// 			console.log(e);
+		// 		});
+			
+		// 	side_cart_body_content.onload = function( e ) 
+		// 		{
+		// 			console.log( e );
+		// 			if ( side_cart_body.scrollTop > 0 ) 
+		// 			{
+		// 				side_cart_footer.insertBefore( footer_btn_container, side_cart_footer_content );
+		// 				side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + footer_btn_container.offsetHeight + 15 + 'px';
 
-		}
+		// 				setTimeout( function() 
+		// 					{
+		// 						footer_btn_container.style.opacity = 1;
+		// 						side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - footer_btn_container.offsetHeight - 15 + 'px';
+		// 					}, 350 );
+		// 			}
+					
+		// 		};
+
+		// 	footer_btn.addEventListener( 'click', function( e ) 
+		// 		{
+		// 			footer_btn_container.style.opacity = 0;
+		// 			side_cart_footer.style.bottom = 0;
+		// 			setTimeout( function( side_cart_body ) 
+		// 				{
+		// 					side_cart_footer.removeChild( footer_btn_container );
+		// 					side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
+		// 				}, 350, side_cart_body );
+		// 		});
+		// }
 		/*========================================================
 		=            This loads the vars for the page            =
 		========================================================*/
@@ -746,14 +739,6 @@
 		===========================================================================================*/
 		footer_adjustment();
 		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
-
-		/*===============================================================================
-		=            This is the setup for the Wonka Express Checkout Button            =
-		===============================================================================*/
-		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
-		{
-
-		}
 
 		/*==========================================================
 		=            This is for setting up the reviews            =

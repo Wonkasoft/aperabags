@@ -82,12 +82,15 @@ get_header();
 			if ( !empty( $shop_section->shop_mods->shop_title ) ) : 
 		?>
 
-			<section class="shop-section align-items-center justify-content-center" style="background-image:url(<?php echo esc_url( $shop_section->shop_mods->shop_background_image );?>);">
-				<div class="container-fluid wonka-wrapper">
+			<section class="shop-section container-fluid" style="background-image:url(<?php echo esc_url( $shop_section->shop_mods->shop_background_image );?>);">
+				<div class="row wonka-row align-items-center justify-content-center">
+					<div class="col-12">
 					<div class="row">
-						<div class="col col-12 text-center">
-							<h3 class="section-title shop-title"><?php _e( $shop_section->shop_mods->shop_title ); ?></h3>
+					<div class="col-12">
+						<div class="wonka wonka-section-title text-center">
+							<h3 class="wonka wonka-h3 section-title shop-title"><?php _e( $shop_section->shop_mods->shop_title ); ?></h3>
 						</div>
+					</div>
 					</div>
 					<div class="row">
 						<div class="col col-12">
@@ -102,7 +105,8 @@ get_header();
 							<a href="/shop" class="wonka-btn" target="_self"><?php _e( __( 'Shop All' ) ) ?></a>
 						</div><!-- .col -->
 					</div><!-- .row -->
-				</div><!-- .col-12 -->
+					</div><!-- .col -->
+				</div><!-- .wonka-row -->
 			</section><!-- .shop-section -->
 		<?php endif; ?>
 		<?php do_action( 'get_mods_before_section', 'cta' );

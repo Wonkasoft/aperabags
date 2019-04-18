@@ -123,6 +123,11 @@ section.shop-section {
 	background-position: center;
 	padding: 15px 0;
 
+	.wonka-row {
+		margin: 15px auto;
+		max-width: 1180px;
+	}
+
 	.star-rating {
 		display: none;
 	}
