@@ -744,16 +744,49 @@
 		/**************************************************************************
 		 * This allow the user to view their password in the the sign in form CARLOS
 		 **************************************************************************/
-		var signin_form = document.querySelector('input[name="password"]');
-		signin_form.addEventListener('click', function(e)
+		if ( document.querySelectorAll( 'div.input-group-append' ) )
 		{
-			preventDefault(e);
-			// console.log
-			// if(signin_form.getAttribute("type") = "password"){
-			// 	// console.log('hello');
-			// }
-		});
+			var password_toggle_btns = document.querySelectorAll( 'div.input-group-append' );
+			password_toggle_btns.forEach( function( password_toggle_btn )
+			{
+				password_toggle_btn.addEventListener( 'click', function( e )
+				{
+					var parent_input, password_input, password_icon_btn, password_type;
+					var target = e.target;
 
+					if ( target.nodeName === 'DIV' ) 
+					{
+						password_icon_btn = target.firstElementChild;
+						parent_input = target.parentElement.parentElement;
+						password_input = parent_input.firstElementChild;
+						password_type = password_input.getAttribute( "type" );
+					}
+
+					if ( target.nodeName === "I" ) 
+					{
+						password_icon_btn = target;
+						target = target.parentElement;
+						parent_input = target.parentElement.parentElement;
+						password_input = parent_input.firstElementChild;
+						password_type = password_input.getAttribute( "type" );
+					}
+
+					if( password_type === "password" )
+					{
+						password_icon_btn.classList.toggle( 'fa-eye' );
+						password_icon_btn.classList.toggle( 'fa-eye-slash' );
+						password_input.type = "text";
+					}
+
+					if ( password_type === "text" ) 
+					{
+						password_icon_btn.classList.toggle( 'fa-eye' );
+						password_icon_btn.classList.toggle( 'fa-eye-slash' );
+						password_input.type = "password";
+					}
+				});
+			});
+		}
 
 
 		/*===============================================================================
