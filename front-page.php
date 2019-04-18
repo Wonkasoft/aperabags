@@ -93,7 +93,7 @@ get_header();
 					</div>
 					</div>
 					<div class="row">
-						<div class="col col-12">
+						<div class="col-12">
 							<?php
 								$shop_shortcode = '[products limit="' . $shop_section->shop_mods->shop_num_of_products . '" columns="' . $shop_section->shop_mods->shop_product_per_row . '" visibility="featured"]';
 								echo do_shortcode( $shop_shortcode );
