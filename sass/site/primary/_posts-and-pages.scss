@@ -232,3 +232,24 @@ div.wonka-gform_wrapper {
 	}
 }
 /*=====  End of Search styles  ======*/
+/*===== Styles for asterisk in Shipping, Returns, Warranty =====*/
+
+main.main-shipping-returns-warranty {
+
+	article {
+
+		div.entry-content {
+
+			p.shipping-returns-warranty-asterisk strong{
+				@include font-size(1.8);
+				position: relative;
+				bottom: 12px;
+				vertical-align: top;
+				display: inline-block;
+				height: 20px;
+				
+			}
+		}
+	}
+}
+/*=====  End for asterisk in Shipping, Returns, Warranty =====*/

@@ -740,6 +740,30 @@
 		footer_adjustment();
 		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
 
+
+		/**************************************************************************
+		 * This allow the user to view their password in the the sign in form CARLOS
+		 **************************************************************************/
+		var signin_form = document.querySelector('input[name="password"]');
+		signin_form.addEventListener('click', function(e)
+		{
+			preventDefault(e);
+			// console.log
+			// if(signin_form.getAttribute("type") = "password"){
+			// 	// console.log('hello');
+			// }
+		});
+
+
+
+		/*===============================================================================
+		=            This is the setup for the Wonka Express Checkout Button            =
+		===============================================================================*/
+		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
+		{
+
+		}
+
 		/*==========================================================
 		=            This is for setting up the reviews            =
 		==========================================================*/
