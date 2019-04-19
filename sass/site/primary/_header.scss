@@ -16,8 +16,16 @@
 		text-align: center;
 
 		span.topbar-message-text {
+			letter-spacing: 3px;
+			@include font-size( .7 );
+		}
+	}
+
+	@include media-breakpoint-up( md ) {
+
+		span.topbar-message-text {
 			letter-spacing: 4px;
-			@include font-size( .8 );
+			@include font-size( .9 );
 		}
 	}
 }

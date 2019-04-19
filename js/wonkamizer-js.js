@@ -317,6 +317,75 @@
 		}, 300);
 	}
 
+	// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+	function shifting_parallax() 
+	{	
+		var top_slider_section = document.querySelector( '.header-slider-section' );
+		var cta_section = document.querySelector( '.desirable-slider-section' );
+		var parallax_adjust, slide_imgs;
+
+		if ( window.pageYOffset > last_scroll_top ) 
+		{
+			scroll_direction = 'scrolled down';
+			scroll_distance = window.pageYOffset - last_scroll_top;
+		}
+
+		if ( window.pageYOffset < last_scroll_top )
+		{
+			scroll_direction = 'scrolled up';
+			scroll_distance = last_scroll_top - window.pageYOffset;
+		}
+
+		last_scroll_top = window.pageYOffset;
+
+		/*=======================================================================
+		=            This is for the top slider section for parallax            =
+		=======================================================================*/
+		if ( window.pageYOffset > top_slider_section.offsetTop && window.pageYOffset < top_slider_section.offsetTop + top_slider_section.offsetHeight ) 
+		{
+			parallax_adjust = parseFloat( (window.pageYOffset - top_slider_section.offsetTop ) / ( top_slider_section.offsetHeight / 2 ) ).toFixed( 5 );
+			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
+			slide_imgs.forEach( function( el, i ) 
+				{
+					el.style.backgroundPosition = 'center ' + parallax_adjust + 'vh';
+				});
+		}
+
+		if ( window.pageYOffset < top_slider_section.offsetTop ) 
+		{
+			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
+			slide_imgs.forEach( function( el, i ) 
+				{
+					el.style.backgroundPosition = '';
+				});
+		}
+		/*=====  End of This is for the top slider section for parallax  ======*/
+
+		/*=======================================================================
+		=            This is for the cta slider section for parallax            =
+		=======================================================================*/
+		if ( window.pageYOffset > cta_section.offsetTop && window.pageYOffset < cta_section.offsetTop + cta_section.offsetHeight ) 
+		{
+			parallax_adjust = parseFloat( (window.pageYOffset - cta_section.offsetTop ) / ( cta_section.offsetHeight / 2 ) ).toFixed( 5 );
+			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
+			slide_imgs.forEach( function( el, i ) 
+				{
+					el.style.backgroundPosition = 'center ' + parallax_adjust + 'vh';
+				});
+		}
+
+		if ( window.pageYOffset < cta_section.offsetTop ) 
+		{
+			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
+			slide_imgs.forEach( function( el, i ) 
+				{
+					el.style.backgroundPosition = '';
+				});
+		}
+		/*=====  End of This is for the top slider section for parallax  ======*/
+		
+	}
+
 	function stickyThumbnails() 
 	{
 		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;

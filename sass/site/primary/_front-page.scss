@@ -34,9 +34,9 @@ section.header-slider-section {
 			@include prefix( transition, $trans_25, o moz webkit );
 
 			div.top-slide-img-holder {
-				background-position: center 0;
+				background-position: center bottom;
 				background-attachment: fixed;
-				background-size: 100% auto;
+				background-size: 100%;
 				background-repeat: no-repeat;
 				width: 100%;
 				height: 100%;
@@ -75,18 +75,18 @@ section.header-slider-section {
 							@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
 
 							h2 {
-								font-size: 45px;
 								margin: 0 auto;
 								font-weight: 800;
-								line-height: 50px;
+								line-height: 1.5;
 								margin-bottom: 0.5em;
+								@include font-size( 1.4 );
 							}
 							h4 {
-								font-size: 31px;
 								font-weight: normal;
 								font-style: normal;
 								line-height: 1.5em;
 								margin-bottom: 1.5em;
+								@include font-size( 1.2 );
 							}
 						}
 					}	
@@ -125,7 +125,8 @@ section.shop-section {
 
 	.wonka-row {
 		margin: 15px auto;
-		max-width: 1180px;
+		width: 1180px;
+		max-width: 100%;
 	}
 
 	.star-rating {
@@ -153,9 +154,9 @@ section.desirable-slider-section {
 			@include prefix( transition, $trans_25, o moz webkit );
 
 			div.cta-slide-img-holder {
-				background-position: center 0;
+				background-position: center bottom;
 				background-attachment: fixed;
-				background-size: cover;
+				background-size: 100%;
 				background-repeat: no-repeat;
 				width: 100%;
 				height: 100%;
