@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 global $product;
 $added_classes = array(
 	'col-6',
-	'col-md-4'
+	'col-sm-4'
 );
 
 // Ensure visibility.

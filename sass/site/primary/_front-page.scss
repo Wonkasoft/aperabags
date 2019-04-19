@@ -214,12 +214,11 @@ section.desirable-slider-section {
 
 							h2 {
 								color: #ffffff;
-								white-space: wrap;
 								font-weight: 800;
 							}
 
 							@include media-breakpoint-up( md ) {
-								max-width: 1000px;
+								max-width: 1200px;
 								white-space: nowrap;
 							}
 						}
@@ -228,6 +227,14 @@ section.desirable-slider-section {
 
 				@include media-breakpoint-up( md ) {
 					background-size: cover;
+
+					.text-box {
+
+						h2 {
+							letter-spacing: 4px;
+							@include font-size( 3.5 );
+						}
+					}
 				}
 			}
 
