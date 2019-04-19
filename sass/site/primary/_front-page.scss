@@ -76,7 +76,7 @@ section.header-slider-section {
 							h2 {
 								margin: 0 auto;
 								font-weight: 800;
-								line-height: 1.5;
+								line-height: 1;
 								letter-spacing: 4px;
 								margin-bottom: 8px;
 								@include font-size( 1.5 );
@@ -84,7 +84,7 @@ section.header-slider-section {
 							h4 {
 								font-weight: normal;
 								font-style: normal;
-								line-height: 1.2;
+								line-height: 1;
 								letter-spacing: 2px;
 								margin-bottom: 15px;
 								@include font-size( 1.2 );
@@ -96,17 +96,21 @@ section.header-slider-section {
 							.text-box {
 
 								h2 {
-									line-height: 2.2;
-									@include font-size( 2.2 );
+									line-height: 1.1;
+									@include font-size( 3.5 );
 								}
 
 								h4 {
-									line-height: 1.9;
-									@include font-size( 1.9 );
+									line-height: 1.1;
+									@include font-size( 2.5 );
 								}
 							}
 						}
 					}	
+				}
+
+				@include media-breakpoint-up( md ) {
+					background-size: cover;
 				}
 			}
 
@@ -220,6 +224,10 @@ section.desirable-slider-section {
 							}
 						}
 					}	
+				}
+
+				@include media-breakpoint-up( md ) {
+					background-size: cover;
 				}
 			}
 

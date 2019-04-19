@@ -8,6 +8,11 @@ textarea {
 	font-family: $font__main;
 	line-height: $font__line-height-body;
 	@include font-size(.9);
+
+	@include media-breakpoint-up( md ) {
+		line-height: 1.2;
+		@include font-size( 1.1 );
+	}
 }
 
 @import "headings";
