@@ -124,7 +124,7 @@ get_header();
 								<?php
 								if ( wp_is_mobile() ) :
 								?>
-								<div class="cta-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+								<div class="cta-slide-img-holder" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php
 								else:
 								?>
