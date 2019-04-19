@@ -1305,7 +1305,20 @@
 			}
 		/*=====  End of This is for single product page short description scrolling  ======*/
 		
+		/**
+		 * This is for login form validation
+		 * 
+		 */
+		var form_feedback, validation_message ;
+		if ( document.querySelector( 'main-my-account' ) ) 
+		{
+			validation_message = document.querySelector( 'woocommerce-error' );
 
+			if ( validation_message ) 
+			{
+				console.log(validation_message);
+			}
+		}
 	};
 	/*=====  End of This is for running after document is ready  ======*/
 })(jQuery);
