@@ -66,3 +66,9 @@ input[type="submit"].wonka-btn {
 		margin-left: -5px;
 	}
 }
+
+button.slick-arrow {
+	background: transparent;
+	border-radius: 50%;
+	@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
+}

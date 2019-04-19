@@ -272,11 +272,15 @@
 		top_slide = document.querySelector( '.top-page-slide' ),
 		cta_slider = document.querySelector( '.header-slider-section' ),
 		cta_slider_section = document.querySelector( '.desirable-slider-section' ),
-		header_topbar = document.querySelector( '.topbar-notice' ),
-		adjustment = document.querySelector( '.topbar-notice' ).offsetHeight + document.querySelector( '.topbar-notice' ).offsetTop;
+		adjustment = window.innerHeight;
 
-		header_slider_section.style.height = (window.innerHeight - adjustment) + 'px';
-		cta_slider_section.style.height = (window.innerHeight - adjustment) + 'px';
+		if ( document.querySelector( '#wpadminbar' ) )
+		{
+			adjustment -= document.querySelector( '#wpadminbar' ).offsetHeight;
+		}
+
+		header_slider_section.style.height = adjustment + 'px';
+		cta_slider_section.style.height = adjustment + 'px';
 		top_slide.style.height = header_slider_section.offsetHeight;
 		top_slide.style.width = header_slider_section.offsetWidth;
 	}
