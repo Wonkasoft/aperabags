@@ -412,6 +412,11 @@
 						position: sticky;
 						top: 25px;
 					}
+
+					.product_title {
+						letter-spacing: -0.8px;
+						@include font-size( 1.8 );
+					}
 				}
 
 				div.woocommerce-tabs {
