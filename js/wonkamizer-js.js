@@ -632,7 +632,7 @@
 	{
 		var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
 		var img_viewer = document.querySelector( '.wonka-image-viewer');
-		var thumbs = document.querySelector( '.wonka-thumbnails');
+		var thumbs = document.querySelector( '.wonka-thumbnails > ul');
 		var variant_selected;
 		var thumbs_set;
 		var imgs_set;
