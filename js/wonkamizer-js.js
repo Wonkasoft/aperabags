@@ -1309,14 +1309,16 @@
 		 * This is for login form validation
 		 * 
 		 */
-		var form_feedback, validation_message ;
-		if ( document.querySelector( 'main-my-account' ) ) 
+		var form_feedback, validation_li ;
+		if ( document.querySelector( '.main-my-account' ) ) 
 		{
-			validation_message = document.querySelector( 'woocommerce-error' );
+			console.log("hello");
+			validation_li = document.querySelector( '.woocommerce-error' );
 
-			if ( validation_message ) 
+			if ( validation_li ) 
 			{
-				console.log(validation_message);
+				var validation_text = validation_li.innerText;
+				// console.log(validation_text);
 			}
 		}
 	};

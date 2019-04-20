@@ -1128,3 +1128,20 @@ function wonka_single_product_image_scroll_html_custom( $data, $attachment_id ) 
 add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_image_thumbnail_html_custom' , 10, 2 );
 add_filter( 'wonka_single_product_scroll_image_html', 'wonka_single_product_image_scroll_html_custom', 10, 2 );
 /*=====  End of This is filtering the first thumbnail on single product page  ======*/
+
+
+
+
+add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
+ 
+function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
+   if ( strpos( $field, '</label>' ) !== false && $args['required'] ) {
+      $error = '<span class="error" style="display:none">';
+      $error .= sprintf( __( '%s is a required field.', 'woocommerce' ), $args['label'] );
+      $error .= '</span>';
+      $field = substr_replace( $field, $error, strpos( $field, '</p>' ), 0);
+	 }
+   return $field;
+}
+
+
