@@ -684,7 +684,7 @@
 								if ( variant_selected === img_variant ) 
 								{
 									img.classList.add( 'variant-show' );
-									img_viewer.appendChild( img_tainers );
+									img_viewer.appendChild( img );
 								}
 							});
 
@@ -694,7 +694,7 @@
 								if ( variant_selected === img_variant ) 
 								{
 									img.classList.add( 'variant-show' );
-									thumbs.appendChild( img_tainers );
+									thumbs.appendChild( img );
 								}
 							});
 					}
