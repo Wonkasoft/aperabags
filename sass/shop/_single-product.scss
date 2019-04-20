@@ -581,11 +581,15 @@ section.product-tabs-section {
 				.table {
 
 					th {
-						font-weight: 300;
+						font-weight: 400;
+						font-family: $font__main;
+						@include font-size( 1 );
 					}
 
 					td {
-						font-weight: 300;
+						font-weight: 400;
+						font-family: $font__main;
+						@include font-size( 1 );
 					}
 
 					thead {
