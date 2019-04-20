@@ -544,13 +544,13 @@
 			if ( i === 2 ) 
 			{
 				comment_list.style.height = first_three_height + 'px';
-				break;
+				return first_three_height;
 			}
 
 			if ( i === comment_list.children.length - 1 ) 
 			{
 				comment_list.style.height = first_three_height + 'px';
-				break;
+				return first_three_height;
 			}
 		}
 	}
@@ -896,10 +896,10 @@
 						if ( get_custom_height < comment_list.offsetHeight ) 
 						{
 							setup_for_reviews( comment_list );
-							setTimeout( function( comment_list ) 
+							setTimeout( function() 
 								{
 									reviews_top.scrollIntoView({behavior: 'smooth'});
-								}, 500, comment_list );
+								}, 500 );
 							more_reviews.innerText = 'More Reviews';
 						}
 						else
@@ -996,6 +996,26 @@
 		/*===================================================================
 		=            This is to kill the about us video on close            =
 		===================================================================*/
+		if ( document.querySelector( 'div#videoModalpop' ) ) 
+		{
+			var sanitize_vid_modal = document.querySelector( 'div#videoModalpop' );
+			var sanitize_vid_close = document.querySelector( 'div#videoModalpop button.close' );
+			var sanitize_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
+			var sanitize_vid_iframe_link = document.querySelector( 'div#videoModalpop iframe' ).src;
+
+			sanitize_vid_close.onclick = function()
+			{
+				sanitize_vid_iframe.src = '';
+				sanitize_vid_iframe.src = sanitize_vid_iframe_link;
+			};
+
+			sanitize_vid_modal.onclick = function() 
+			{
+				sanitize_vid_iframe.src = '';
+				sanitize_vid_iframe.src = sanitize_vid_iframe_link;
+			};
+		}
+
 		if ( document.querySelector( 'div#videoModal' ) ) 
 		{
 			var about_vid_modal = document.querySelector( 'div#videoModal' );
