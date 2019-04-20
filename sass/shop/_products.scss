@@ -63,11 +63,6 @@ ul.products {
 				margin-bottom: 4px;
 				letter-spacing: -1px;
 				@include font-size( .8 );
-
-				@include media-breakpoint-up( md ) {
-
-					@include font-size( 1.2 );
-				}
 			}
 
 			span.price {
@@ -88,6 +83,14 @@ ul.products {
 
 				div.wonka-shop-img-wrap {
 					max-height: 570px;
+				}
+
+				.woocommerce-loop-product__title {
+					@include font-size( 1.3 );
+				}
+
+				span.price {
+					@include font-size( 1.2 );
 				}
 			}
 		}

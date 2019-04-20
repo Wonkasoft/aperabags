@@ -1,6 +1,11 @@
+a.button.wc-forward,
+a.button.wc-backward,
+a.restore-item,
+a.showlogin,
 a.xoo-wsc-ft-btn,
 a.btn.btn-primary,
 a.wonka-btn,
+button.woocommerce-Button,
 button:not(.menu-toggle),
 input[type="button"],
 input[type="reset"],
@@ -30,8 +35,13 @@ input[type="submit"] {
 	}
 }
 
+a.button.wc-forward,
+a.button.wc-backward,
+a.restore-item,
+a.showlogin,
 a.xoo-wsc-ft-btn,
 a.wonka-btn,
+button.woocommerce-Button,
 button.wonka-btn,
 input[type="button"].wonka-btn,
 input[type="reset"].wonka-btn,
@@ -71,4 +81,9 @@ button.slick-arrow {
 	background: transparent;
 	border-radius: 50%;
 	@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
+}
+
+a.showlogin {
+	padding: 4px 8px;
+	@include font-size( .8 );
 }

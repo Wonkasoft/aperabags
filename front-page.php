@@ -39,11 +39,11 @@ get_header();
 							<?php
 							if ( wp_is_mobile() ) :
 								?>
-							<div class="top-slide-img-holder" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
+							<div class="top-slide-img-holder" data-img-url="<?php echo $slide->slide_mobile_img; ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php
 							else:
 								?>
-							<div class="top-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+							<div class="top-slide-img-holder" data-img-url="<?php echo $slide->slide_img; ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 							<?php 
 							endif;
 							/* Checks for an message set in the slide object */
@@ -124,11 +124,11 @@ get_header();
 								<?php
 								if ( wp_is_mobile() ) :
 								?>
-								<div class="cta-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+								<div class="cta-slide-img-holder" data-img-url="<?php echo $slide->slide_mobile_img; ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php
 								else:
 								?>
-								<div class="cta-slide-img-holder" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+								<div class="cta-slide-img-holder" data-img-url="<?php echo $slide->slide_img; ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 								<?php
 								endif;
 								/* Checks for an message set in the slide object */

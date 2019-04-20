@@ -17,7 +17,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
-is_user_logged_in() || return;
+if ( is_user_logged_in() ) { 
+	return;
+}
 
 ?>
 <form class="woocommerce-form woocommerce-form-login login" method="post" <?php echo ( $hidden ) ? 'style="display:none;"' : ''; ?>>
