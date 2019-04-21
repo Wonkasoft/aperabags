@@ -1149,4 +1149,4 @@ function wonka_wc_cybersource_request_object( $obj ) {
 	print_r( $obj );
 	echo "</pre>\n";
 }
-add_filter( 'wc_cybersource_request_object', 'wonka_wc_cybersource_request_object' );
+// add_filter( 'wc_cybersource_request_object', 'wonka_wc_cybersource_request_object' );
