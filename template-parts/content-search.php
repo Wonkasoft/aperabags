@@ -11,6 +11,9 @@
 <div class="col">
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
+		<?php apera_bags_post_thumbnail(); ?>
+	</header><!-- .entry-header -->
+
 		<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
 
 		<?php if ( 'post' === get_post_type() ) : ?>
@@ -21,9 +24,6 @@
 			?>
 		</div><!-- .entry-meta -->
 		<?php endif; ?>
-	</header><!-- .entry-header -->
-
-	<?php apera_bags_post_thumbnail(); ?>
 
 	<div class="entry-summary">
 		<?php the_excerpt(); ?>

@@ -1144,4 +1144,9 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
    return $field;
 }
 
-
+function wonka_wc_cybersource_request_object( $obj ) {
+	echo "<pre>\n";
+	print_r( $obj );
+	echo "</pre>\n";
+}
+add_filter( 'wc_cybersource_request_object', 'wonka_wc_cybersource_request_object' );
