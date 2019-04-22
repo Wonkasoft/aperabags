@@ -414,7 +414,8 @@ function wonka_override_checkout_fields( $fields ) {
 	    'placeholder'   => _x('Email Address', 'placeholder', 'woocommerce'),
 	    'required'  	=> true,
 	    'class'     	=> array('form-row-wide'),
-	    'clear'     	=> true
+			'clear'     	=> true,
+			'type'				=> 'email'
 	     );
 	
 	return $fields;
