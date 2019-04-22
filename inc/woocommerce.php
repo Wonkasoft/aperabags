@@ -1129,9 +1129,6 @@ add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_i
 add_filter( 'wonka_single_product_scroll_image_html', 'wonka_single_product_image_scroll_html_custom', 10, 2 );
 /*=====  End of This is filtering the first thumbnail on single product page  ======*/
 
-
-
-
 add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
  
 function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
@@ -1143,6 +1140,35 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
 	 }
    return $field;
 }
+
+/**
+ * Filter the except length to 20 words.
+ *
+ * @param int $length Excerpt length.
+ * @return int (Maybe) modified excerpt length.
+ */
+function wonka_custom_excerpt_length( $length ) {
+	if ( is_admin() ) :
+		return $length;
+	endif;
+
+    return 20;
+}
+add_filter( 'excerpt_length', 'wonka_custom_excerpt_length', 1999 );
+
+/**
+ * Filter the excerpt "read more" string.
+ *
+ * @param string $more "Read more" excerpt string.
+ * @return string (Maybe) modified "read more" excerpt string.
+ */
+function wonka_excerpt_more( $more ) {
+    if ( is_admin() ) {
+        return $more;
+    }
+    return '[...]';
+}
+add_filter( 'excerpt_more', 'wonka_excerpt_more' );
 
 function wonka_wc_cybersource_request_object( $request, $order ) {
 	echo "<pre>\n";
