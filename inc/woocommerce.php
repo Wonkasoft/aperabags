@@ -1148,9 +1148,6 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
  * @return int (Maybe) modified excerpt length.
  */
 function wonka_custom_excerpt_length( $length ) {
-	if ( is_admin() && is_admin_page() ) :
-		return $length;
-	endif;
 
     return 20;
 }
@@ -1163,9 +1160,7 @@ add_filter( 'excerpt_length', 'wonka_custom_excerpt_length', 1999 );
  * @return string (Maybe) modified "read more" excerpt string.
  */
 function wonka_excerpt_more( $more ) {
-    if ( is_admin() && is_admin_page() ) {
-        return $more;
-    }
+
     return '[...]';
 }
 add_filter( 'excerpt_more', 'wonka_excerpt_more' );
