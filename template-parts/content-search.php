@@ -35,9 +35,33 @@
 		</div>
 	</content>
 	<footer class="entry-footer wonka-search-footer">
+		<div class="wonka-row">
+			<?php apera_bags_entry_footer(); ?>
+		</div>
+		<div class="wonka-row">
 		<a class="btn wonka-btn" href="<?php echo get_permalink(); ?>" rel="bookmark">See Details</a>
 		<!-- commented out comments area --> 
-		<!-- <?php apera_bags_entry_footer(); ?> -->
+		<?php
+			edit_post_link(
+				sprintf(
+					wp_kses(
+						/* translators: %s: Name of current post. Only visible to screen readers */
+						__( 'Edit <span class="screen-reader-text">%s</span>', 'apera-bags' ),
+						array(
+							'span' => array(
+								'class' => array(),
+							),
+						)
+					),
+					get_the_title()
+				),
+				'<span class="edit-link">',
+				'</span>',
+				get_the_ID(),
+				'wonka-btn'
+			);
+		?>
+		</div>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->
 </div> <!-- .col -->

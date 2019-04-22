@@ -74,7 +74,7 @@ if ( ! function_exists( 'apera_bags_entry_footer' ) ) :
 		}
 
 		if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
-			echo '<span class="comments-link">';
+			echo '<span class="comments-link wonka-btn">';
 			comments_popup_link(
 				sprintf(
 					wp_kses(
@@ -87,27 +87,13 @@ if ( ! function_exists( 'apera_bags_entry_footer' ) ) :
 						)
 					),
 					get_the_title()
-				)
+				),
+				null,
+				null,
+				'wonka-btn'
 			);
 			echo '</span>';
 		}
-
-		edit_post_link(
-			sprintf(
-				wp_kses(
-					/* translators: %s: Name of current post. Only visible to screen readers */
-					__( 'Edit <span class="screen-reader-text">%s</span>', 'apera-bags' ),
-					array(
-						'span' => array(
-							'class' => array(),
-						),
-					)
-				),
-				get_the_title()
-			),
-			'<span class="edit-link">',
-			'</span>'
-		);
 	}
 endif;
 

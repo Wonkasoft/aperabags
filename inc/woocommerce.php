@@ -1148,22 +1148,13 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
  * @return int (Maybe) modified excerpt length.
  */
 function wonka_custom_excerpt_length( $length ) {
+	echo "<pre>\n";
+	print_r( $length );
+	echo "</pre>\n";
 
     return 20;
 }
 add_filter( 'excerpt_length', 'wonka_custom_excerpt_length', 999 );
-
-/**
- * Filter the excerpt "read more" string.
- *
- * @param string $more "Read more" excerpt string.
- * @return string (Maybe) modified "read more" excerpt string.
- */
-function wonka_excerpt_more( $more ) {
-
-    return '[...]';
-}
-add_filter( 'excerpt_more', 'wonka_excerpt_more', 999 );
 
 function wonka_wc_cybersource_request_object( $request, $order ) {
 	echo "<pre>\n";
