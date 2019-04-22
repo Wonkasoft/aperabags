@@ -16,7 +16,7 @@
 	/* vars set for single product page */
 	if ( document.querySelector( '.product-img-section' ) ) 
 	{
-		var product_img_section, product_img_section_height, wonka_single_product_img_area, summary_section, thumb_lis, full_imgs, thumbnail_controls, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop, one_click = true;
+		var product_img_section, product_img_section_height, wonka_single_product_img_area, summary_section, thumbnail_controls, slide_control, active_slide, active_slide_img, win_y, img_area_top, target_stop, one_click = true;
 	}
 	/*=====  End of vars set for script use  ======*/
 
@@ -255,8 +255,6 @@
 			wonka_single_product_img_area = document.querySelector( '.wonka-single-product-img-area' );
 			thumbnail_controls = document.querySelector( 'div.wonka-thumbnails' );
 			summary_section = document.querySelector( '.summary.entry-summary' );
-			thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails [data-variant-check="true"]');
-			full_imgs = document.querySelectorAll( 'div.wonka-image-viewer [data-variant-check="true"]');
 		}
 	}
 
@@ -546,13 +544,13 @@
 			if ( i === 2 ) 
 			{
 				comment_list.style.height = first_three_height + 'px';
-				return first_three_height;
+				break;
 			}
 
 			if ( i === comment_list.children.length - 1 ) 
 			{
 				comment_list.style.height = first_three_height + 'px';
-				return first_three_height;
+				break;
 			}
 		}
 	}
@@ -631,8 +629,8 @@
 	function single_product_variants_setup()
 	{
 		var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
-		var img_viewer = document.querySelector( '.wonka-image-viewer');
-		var thumbs = document.querySelector( '.wonka-thumbnails > ul');
+		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails [data-variant-check="true"]');
+		var full_imgs = document.querySelectorAll( 'div.wonka-image-viewer [data-variant-check="true"]');
 		var variant_selected;
 		var thumbs_set;
 		var imgs_set;
@@ -642,15 +640,17 @@
 				if ( item.classList.contains( 'selected' ) ) 
 				{
 					variant_selected = item.getAttribute( 'data-value' );
-					img_viewer.innerHTML = '';
-					thumbs.innerHTML = '';
 
 					full_imgs.forEach( function( img_tainers, i ) 
 						{
 							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
-								img_viewer.appendChild( img_tainers );
+							}
+
+							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+							{
+								img_tainers.classList.remove( 'variant-show' );
 							}
 						});
 
@@ -659,7 +659,11 @@
 							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
-								thumbs.appendChild( img_tainers );
+							}
+
+							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+							{
+								img_tainers.classList.remove( 'variant-show' );
 							}
 						});
 				}
@@ -676,15 +680,17 @@
 					variant_selected = variant.getAttribute( 'data-value' );
 					if ( variant_selected ) 
 					{
-						img_viewer.innerHTML = '';
-						thumbs.innerHTML = '';
 						full_imgs.forEach( function( img, i ) 
 							{
 								var img_variant = img.getAttribute( 'data-variant-color' );
 								if ( variant_selected === img_variant ) 
 								{
 									img.classList.add( 'variant-show' );
-									img_viewer.appendChild( img );
+								}
+
+								if ( variant_selected !== img_variant && img.classList.contains( 'variant-show' ) )
+								{
+									img.classList.remove( 'variant-show' );
 								}
 							});
 
@@ -694,7 +700,11 @@
 								if ( variant_selected === img_variant ) 
 								{
 									img.classList.add( 'variant-show' );
-									thumbs.appendChild( img );
+								}
+
+								if ( variant_selected !== img_variant && img.classList.contains( 'variant-show' ) )
+								{
+									img.classList.remove( 'variant-show' );
 								}
 							});
 					}
@@ -886,10 +896,10 @@
 						if ( get_custom_height < comment_list.offsetHeight ) 
 						{
 							setup_for_reviews( comment_list );
-							setTimeout( function() 
+							setTimeout( function( comment_list ) 
 								{
 									reviews_top.scrollIntoView({behavior: 'smooth'});
-								}, 500 );
+								}, 500, comment_list );
 							more_reviews.innerText = 'More Reviews';
 						}
 						else
@@ -986,26 +996,6 @@
 		/*===================================================================
 		=            This is to kill the about us video on close            =
 		===================================================================*/
-		if ( document.querySelector( 'div#videoModalpop' ) ) 
-		{
-			var sanitize_vid_modal = document.querySelector( 'div#videoModalpop' );
-			var sanitize_vid_close = document.querySelector( 'div#videoModalpop button.close' );
-			var sanitize_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
-			var sanitize_vid_iframe_link = document.querySelector( 'div#videoModalpop iframe' ).src;
-
-			sanitize_vid_close.onclick = function()
-			{
-				sanitize_vid_iframe.src = '';
-				sanitize_vid_iframe.src = sanitize_vid_iframe_link;
-			};
-
-			sanitize_vid_modal.onclick = function() 
-			{
-				sanitize_vid_iframe.src = '';
-				sanitize_vid_iframe.src = sanitize_vid_iframe_link;
-			};
-		}
-
 		if ( document.querySelector( 'div#videoModal' ) ) 
 		{
 			var about_vid_modal = document.querySelector( 'div#videoModal' );
@@ -1314,23 +1304,66 @@
 					} );
 			}
 		/*=====  End of This is for single product page short description scrolling  ======*/
-		
+	
 		/**
 		 * This is for login form validation
 		 * 
 		 */
-		var form_feedback, validation_li ;
-		if ( document.querySelector( '.main-my-account' ) ) 
+		var validation_li ;
+		if ( document.querySelector( 'main.main-my-account' ) ) 
 		{
-			console.log("hello");
 			validation_li = document.querySelector( '.woocommerce-error' );
 
 			if ( validation_li ) 
 			{
-				var validation_text = validation_li.innerText;
-				// console.log(validation_text);
+				var validation_text = validation_li.innerText.trim();
+				validation_text = validation_text.split(' ').slice(1).join(' ');
+				var validation_text_2 = validation_text.split('.').slice(0,1).join();
+
+				switch(validation_text_2)
+				{
+
+					case "Username is required":
+						document.querySelector( 'input#username' ).classList.add("is-invalid");
+						document.querySelector( 'div.invalid-feedback.username' ).innerText = validation_text;
+						break;
+					case "The password field is empty":
+						document.querySelector( 'input#password' ).classList.add("is-invalid");
+						document.querySelector( 'div.invalid-feedback.password' ).innerText = validation_text;
+						break;
+					case "Too many failed login attempts":
+						document.querySelector( 'input#username' ).classList.add("is-invalid");
+						document.querySelector( 'input#password' ).classList.add("is-invalid");
+						document.querySelector( 'div.invalid-feedback.username' ).innerText = validation_text;
+						document.querySelector( 'div.invalid-feedback.password' ).innerText = validation_text;
+						break;
+					case "Incorrect username or password":
+						document.querySelector( 'input#username' ).classList.add("is-invalid");
+						document.querySelector( 'input#password' ).classList.add("is-invalid");
+						document.querySelector( 'div.invalid-feedback.username' ).innerText = validation_text;
+						document.querySelector( 'div.invalid-feedback.password' ).innerText = validation_text;
+						break;
+						
+					case "Please provide a valid email address":
+						document.querySelector( 'input#reg_email' ).classList.add("is-invalid");
+						document.querySelector( 'div.invalid-feedback.reg_email' ).innerText = validation_text;
+						break;
+
+					case "An account is already registered with your email address":
+						document.querySelector( 'input#reg_email' ).classList.add("is-invalid");
+						document.querySelector( 'div.invalid-feedback.reg_email' ).innerText = validation_text;
+						break;
+
+					case "Please enter an account password":
+						document.querySelector( 'input#register_password' ).classList.add("is-invalid");
+						document.querySelector( 'div.invalid-feedback.register_password' ).innerText = validation_text;
+						break;
+					}
+
 			}
 		}
+
 	};
 	/*=====  End of This is for running after document is ready  ======*/
+	 
 })(jQuery);

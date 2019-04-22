@@ -37,6 +37,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 				<label for="username" class="sr-only"><?php esc_html_e( 'Username or email address', 'woocommerce' ); ?>&nbsp;<span class="required sr-only">*</span></label>			
 				<div class="input-group">
 					<input type="text" class="form-control input-text" name="username" id="username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" placeholder="<?php esc_html_e( 'Username or email address *', 'woocommerce' ); ?>" /><?php // @codingStandardsIgnoreLine ?>
+					<div class="invalid-feedback username"></div>
 				</div>
 				
 			</div>
@@ -45,6 +46,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 				<label for="password" class="sr-only"><?php esc_html_e( 'Password', 'woocommerce' ); ?>&nbsp;<span class="required sr-only">*</span></label>
 				<div class="input-group">
 					<input class="form-control input-text" type="password" name="password" id="password" autocomplete="current-password" placeholder="<?php esc_html_e( 'Password *', 'woocommerce' ); ?>" /><div class="input-group-append"><div class="input-group-text"><i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i></div></div>
+					<div class="invalid-feedback password"></div>
 				</div>
 			</div>
 			<?php do_action( 'woocommerce_login_form' ); ?>
@@ -82,6 +84,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 					<div class="input-group">
 
 						<input type="text" class="form-control input-text" name="username" id="reg_username" placeholder="<?php esc_html_e( 'Username *', 'woocommerce' ); ?>" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" /><?php // @codingStandardsIgnoreLine ?>
+						<div class="invalid-feedback reg_username"></div>
 					</div>
 				</div>
 
@@ -92,6 +95,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 				<div class="input-group">
 
 					<input type="email" class="form-control input-text" name="email" id="reg_email" autocomplete="email" placeholder="<?php esc_html_e( 'Email address *', 'woocommerce' ); ?>" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( wp_unslash( $_POST['email'] ) ) : ''; ?>" /><?php // @codingStandardsIgnoreLine ?>
+					<div class="invalid-feedback reg_email"></div>
 				</div>
 			</div>
 
@@ -101,6 +105,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 				<div class="input-group">
 					
 					<input type="password" class="form-control input-text" name="password" id="register_password" autocomplete="new-password" placeholder="<?php esc_html_e( 'Password *', 'woocommerce' ); ?>" /><div class="input-group-append"><div class="input-group-text"><i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i></div></div>
+					<div class="invalid-feedback register_password"></div>
 				</div>
 		</div>
 
