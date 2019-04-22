@@ -8,9 +8,14 @@
  */
 
 ?>
-<div class="col">
+<div class="col-6 col-md-4">
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
+		<?php apera_bags_post_thumbnail(); ?>
+	</header><!-- .entry-header -->
+	<content class="row wonka-row">
+		<div class="col-12">
+		
 		<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
 
 		<?php if ( 'post' === get_post_type() ) : ?>
@@ -21,14 +26,14 @@
 			?>
 		</div><!-- .entry-meta -->
 		<?php endif; ?>
-	</header><!-- .entry-header -->
+		</div>
+		<div class="col-12">
+		<div class="entry-summary">
+			<?php the_excerpt(); ?>
+		</div><!-- .entry-summary -->
 
-	<?php apera_bags_post_thumbnail(); ?>
-
-	<div class="entry-summary">
-		<?php the_excerpt(); ?>
-	</div><!-- .entry-summary -->
-
+		</div>
+	</content>
 	<footer class="entry-footer">
 		<a class="btn wonka-btn" href="<?php echo get_permalink(); ?>" rel="bookmark">See Details</a>
 		<!-- commented out comments area --> 
