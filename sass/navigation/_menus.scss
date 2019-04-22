@@ -115,7 +115,7 @@
 
 					li {
 						padding: 4px 8px;
-						background: rgba( #777, .8 );
+						background: rgba( #777, .9 );
 					}
 				}
 			}
@@ -147,15 +147,15 @@
 				@include prefix( text-shadow, 1px 1px 2px rgba(#000, .8 ), o moz webkit );
 				@include prefix( transition, $trans_25, webkit moz o);
 
-				.wonka-badge {
-					display: flex;
-					align-items: flex-start;
+				.wonka-cart-badge {
+					display: inline-flex;
+					align-items: center;
 					justify-content: center;
-					font-family: $font__main_jose;
+					font-family: 'Open Sans';
 					font-weight: 800;
 					background: #ffffff;
-					width: 20px;
-					height: 20px;
+					width: 22px;
+					height: 22px;
 				    line-height: 1;
 				    text-shadow: none;
 				    color: #333333;

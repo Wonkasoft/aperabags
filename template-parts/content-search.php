@@ -8,7 +8,7 @@
  */
 
 ?>
-<div class="col">
+<div class="col-6 col-md-4">
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 		<?php apera_bags_post_thumbnail(); ?>

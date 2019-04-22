@@ -208,7 +208,7 @@ add_action( 'woocommerce_after_main_content', 'apera_bags_woocommerce_wrapper_af
 	 */
 	function apera_bags_woocommerce_cart_link_fragment( $fragments ) {
 		ob_start();
-		$fragments['span.cart-contents-count.wonka-badge.badge'] = '<span class="cart-contents-count wonka-badge badge">' . WC()->cart->get_cart_contents_count() . '</span>';
+		$fragments['span.cart-contents-count.wonka-cart-badge.badge.badge-light'] = '<span class="cart-contents-count wonka-cart-badge badge badge-light">' . WC()->cart->get_cart_contents_count() . '</span>';
 		ob_get_clean();
 		return $fragments;
 	}
@@ -665,15 +665,15 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '<ul class="nav nav-fill" id="wonka-checkout-nav-steps" role="tablist">';
 	$output .= '<li class="nav-item">';
 	$output .= '<a class="nav-link active" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top" data-btns="#wonka_customer_information_buttons">';
-	$output .= _x( 'Customer Information', 'aperabags' ) . '<span class="badge badge-light badge-pill">1</span>';
+	$output .= _x( 'Customer Information', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">1</span>';
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
 	$output .= '<a class="nav-link" id="wonka_shipping_method_tab" data-toggle="tab" data-target="#wonka_shipping_method" role="tab" data-secondary="#wonka_shipping_method_top" data-btns="#wonka_shipping_method_buttons">';
-	$output .= _x( 'Shipping Method', 'aperabags' ) . '<span class="badge badge-light badge-pill">2</span>';
+	$output .= _x( 'Shipping Method', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">2</span>';
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
 	$output .= '<a class="nav-link" id="wonka_payment_method_tab" data-toggle="tab" data-target="#wonka_payment_method" role="tab" data-secondary="#wonka_payment_method_top" data-btns="#wonka_payment_method_buttons">';
-	$output .= _x( 'Payment Method', 'aperabags' ) . '<span class="badge badge-light badge-pill">3</span>';
+	$output .= _x( 'Payment Method', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">3</span>';
 	$output .= '</a></li>';
 	$output .= '</ul><!-- #wonka-checkout-nav-steps -->';
 	$output .= '</div>';
@@ -1144,9 +1144,9 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
    return $field;
 }
 
-function wonka_wc_cybersource_request_object( $obj ) {
+function wonka_wc_cybersource_request_object( $request, $order ) {
 	echo "<pre>\n";
-	print_r( $obj );
+	print_r( $request );
 	echo "</pre>\n";
 }
-// add_filter( 'wc_cybersource_request_object', 'wonka_wc_cybersource_request_object' );
+add_filter( 'wc_cybersource_request_object', 'wonka_wc_cybersource_request_object' );
