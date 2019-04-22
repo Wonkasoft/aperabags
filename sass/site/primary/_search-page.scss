@@ -1,0 +1,26 @@
+body.search-results {
+
+	.wonka-search-header {
+		margin-bottom: 15px;
+	}
+
+	.wonka-search-title {
+
+		a {
+			color: #333333;
+
+			&:hover {
+				color: #666666;
+			}
+		}
+	}
+
+	.wonka-search-excerpt {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;  
+		white-space: nowrap; 
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
