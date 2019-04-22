@@ -1144,4 +1144,18 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
    return $field;
 }
 
+// function filter_woocommerce_process_login_errors($validation_error, $post_username, $post_password)
+// {    
+// 		// if (!filter_var($post_username)) //<--recommend option
 
+//     if (strpos($post_username, '@') == FALSE)
+//     {
+//         throw new Exception( '<strong>' . __( 'Error', 'woocommerce' ) . ':</strong> ' . __( 'Please Entedfdjkfhdjr a Valid Email ID.', 'woocommerce' ) );
+// 		}
+// 		print_r($validation_error->get_error_message());
+// 		// echo $validation_error;
+//     return $validation_error;
+// }
+
+// // add the filter 
+// add_filter('woocommerce_process_login_errors', 'filter_woocommerce_process_login_errors', 10, 3);
