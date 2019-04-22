@@ -1151,7 +1151,7 @@ function wonka_custom_excerpt_length( $length ) {
 
     return 20;
 }
-add_filter( 'excerpt_length', 'wonka_custom_excerpt_length', 1999 );
+add_filter( 'excerpt_length', 'wonka_custom_excerpt_length', 999 );
 
 /**
  * Filter the excerpt "read more" string.
@@ -1163,7 +1163,7 @@ function wonka_excerpt_more( $more ) {
 
     return '[...]';
 }
-add_filter( 'excerpt_more', 'wonka_excerpt_more' );
+add_filter( 'excerpt_more', 'wonka_excerpt_more', 999 );
 
 function wonka_wc_cybersource_request_object( $request, $order ) {
 	echo "<pre>\n";
