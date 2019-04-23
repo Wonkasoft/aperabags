@@ -148,7 +148,7 @@
 				@include prefix( transition, $trans_25, webkit moz o);
 
 				.wonka-cart-badge {
-					display: inline-flex;
+					display: flex;
 					align-items: center;
 					justify-content: center;
 					font-family: 'Open Sans';
