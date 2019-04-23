@@ -88,8 +88,30 @@ if ( ! function_exists( 'apera_bags_entry_footer' ) ) :
 					),
 					get_the_title()
 				),
-				null,
-				null,
+				sprintf(
+					wp_kses(
+						/* translators: %s: post title */
+						__( 'Leave your own Comment<span class="screen-reader-text"> on %s</span>', 'apera-bags' ),
+						array(
+							'span' => array(
+								'class' => array(),
+							),
+						)
+					),
+					get_the_title()
+				),
+				sprintf(
+					wp_kses(
+						/* translators: %s: post title */
+						__( 'Leave your own Comment<span class="screen-reader-text"> on %s</span>', 'apera-bags' ),
+						array(
+							'span' => array(
+								'class' => array(),
+							),
+						)
+					),
+					get_the_title()
+				),
 				'wonka-btn'
 			);
 			echo '</span>';
