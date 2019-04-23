@@ -8,6 +8,7 @@ body.search-results {
 
 		a {
 			color: #333333;
+			@include font-size( 1.2 );
 
 			&:hover {
 				color: #666666;
