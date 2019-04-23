@@ -36,9 +36,6 @@
 	</content>
 	<footer class="entry-footer wonka-search-footer">
 		<div class="wonka-row">
-			<?php apera_bags_entry_footer(); ?>
-		</div>
-		<div class="wonka-row">
 		<a class="btn wonka-btn" href="<?php echo get_permalink(); ?>" rel="bookmark">See Details</a>
 		<!-- commented out comments area --> 
 		<?php
