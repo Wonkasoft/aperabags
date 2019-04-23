@@ -1141,24 +1141,36 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
    return $field;
 }
 
-/**
- * Filter the except length to 20 words.
- *
- * @param int $length Excerpt length.
- * @return int (Maybe) modified excerpt length.
- */
-function wonka_custom_excerpt_length( $length ) {
-	echo "<pre>\n";
-	print_r( $length );
-	echo "</pre>\n";
-
-    return 20;
-}
-add_filter( 'excerpt_length', 'wonka_custom_excerpt_length', 999 );
-
 function wonka_wc_cybersource_request_object( $request, $order ) {
 	echo "<pre>\n";
 	print_r( $request );
 	echo "</pre>\n";
 }
 add_filter( 'wc_cybersource_request_object', 'wonka_wc_cybersource_request_object' );
+
+/**
+ * Filter the except length to 20 words.
+ *
+ * @param int $length Excerpt length.
+ * @return int (Maybe) modified excerpt length.
+ */
+function wonka_custom_excerpt_length( $text ) {
+	$length = 20;
+	$str_array = explode( ' ', $text );
+	$output = '';
+	if ( is_search() ) :
+		for( $i = 0; $i < $length-1; $i++ ) :
+			if ( $i === $length-1 ) :
+				$output .= $str_array[$i];
+			else:
+				$output .= $str_array[$i] . ' ';
+			endif;
+		endfor;
+
+		_e( $output . '...', 'aperabags' );
+	else:
+    	_e( $text, 'aperabags' );
+	endif;
+
+}
+add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );

@@ -29,7 +29,7 @@
 		</div>
 		<div class="col-12">
 		<div class="entry-summary wonka-search-excerpt">
-			<?php the_excerpt(); ?>
+			<?php get_the_excerpt(); ?>
 		</div><!-- .entry-summary -->
 
 		</div>
