@@ -72,11 +72,11 @@ body.search {
 	margin: 15px;
 
 	input#s {
-		margin-left: -3px;
-		border-radius: 100px 100px 0 0;
+		border-radius: 100px;
 		border-width: 3px;
 		padding: 8px;
-		line-height: 1.1;
+		line-height: 1.2;
+		height: 100%;
 		@include font-size( 1.1 );
 
 		&::placeholder {
@@ -85,10 +85,23 @@ body.search {
 	}
 
 	button.wonka-btn {
-		border-radius: 0 0 100px 100px;
-		padding: 8px;
-		line-height: 1.1;
+		border-radius: 100px;
+		line-height: 1.2;
+		text-transform: none;
+		height: 100%;
 		@include font-size( 1.1 );
+
+		i {
+			color: rgba( #777, .7 );
+			@include prefix( transition, $trans_25, o moz webkit );
+		}
+
+		&:hover {
+
+			i {
+				color: #ffffff;
+			}
+		}
 	}
 
 	@include media-breakpoint-up( md ) {

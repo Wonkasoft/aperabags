@@ -272,3 +272,19 @@ function wonka_add_classes_to_button( $button, $form ) {
 
 add_filter( 'gform_submit_button', 'wonka_add_classes_to_button', 8, 2 );
 /*=====  End of Customizing of Gravity forms  ======*/
+
+/**
+ * This will check is screen is an admin screen
+ */
+if (!function_exists('is_admin_page')) {
+
+  function is_admin_page() {
+    if (function_exists('check_admin_referer')) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+}

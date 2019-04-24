@@ -13,6 +13,7 @@
 
 		ul.woocommerce-error {
 			list-style: none;
+			display: none;
 			li {
 				padding: 4px 8px;
 			}
@@ -36,6 +37,10 @@
 					@include prefix( text-shadow, 1px 1px 4px rgba(#000, .6 ), o moz webkit );
 				}
 			}
+		}
+
+		.woocommerce-NoticeGroup {
+			
 		}
 
 		.select2-selection--single,

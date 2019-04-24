@@ -1,0 +1,56 @@
+body.search-results {
+
+	.wonka-search-header {
+		margin-bottom: 15px;
+	}
+
+	.wonka-search-title {
+
+		a {
+			color: #333333;
+			@include font-size( 1.2 );
+
+			&:hover {
+				color: #666666;
+			}
+		}
+	}
+
+	content.wonka-row {
+		padding: 0 8px;
+
+		.wonka-search-excerpt {
+			margin: 0;
+
+			p {
+				margin: 0;
+				padding: 0;
+			}
+		}
+	}
+
+	.wonka-search-footer {
+		padding: 0 8px;
+
+		.wonka-row {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-evenly;
+			margin: auto;
+			padding: 15px 0;
+
+			.comments-link {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.edit-link {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+	}
+}

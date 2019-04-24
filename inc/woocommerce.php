@@ -1130,9 +1130,6 @@ add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_i
 add_filter( 'wonka_single_product_scroll_image_html', 'wonka_single_product_image_scroll_html_custom', 10, 2 );
 /*=====  End of This is filtering the first thumbnail on single product page  ======*/
 
-
-
-
 add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
  
 function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
@@ -1168,3 +1165,29 @@ function m_prevent_submission($posted) {
 	} 
 
 }
+/**
+ * Filter the except length to 20 words.
+ *
+ * @param int $length Excerpt length.
+ * @return int (Maybe) modified excerpt length.
+ */
+function wonka_custom_excerpt_length( $text ) {
+	$length = 20;
+	$str_array = explode( ' ', $text );
+	$output = '';
+	if ( is_search() ) :
+		for( $i = 0; $i < $length-1; $i++ ) :
+			if ( $i === $length-1 ) :
+				$output .= $str_array[$i];
+			else:
+				$output .= $str_array[$i] . ' ';
+			endif;
+		endfor;
+
+		_e( $output . '...', 'aperabags' );
+	else:
+    	_e( $text, 'aperabags' );
+	endif;
+
+}
+add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );
