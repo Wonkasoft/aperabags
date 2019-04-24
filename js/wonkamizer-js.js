@@ -1305,18 +1305,74 @@
 			}
 		/*=====  End of This is for single product page short description scrolling  ======*/
 	
+
+		/********************************************************************************
+		 * this is For Checkout validation 
+		 ********************************************************************************/
+			// var checkout_error_ul;
+			// if (document.querySelector( 'main.main-checkout' ))
+			// {
+				 
+				// console.log(document.querySelector( 'main.main-checkout' ));
+				// // checkout_error_ul = document.querySelector( 'ul.woocommerce-error' );
+				// var checkout_error_form = document.querySelector( 'form.woocommerce-checkout' );  
+				// console.log(checkout_error_form);
+
+				// if (checkout_error_form.childElementCount) {
+				// 	checkout_error_ul = checkout_error_form.children;
+				// 	console.log(checkout_error_ul);
+				// // if ( checkout_error_ul ) 
+				// // {	
+				// // 	console.log(checkout_error_ul.innerText);
+				// // }	
+				// }
+		/***********************************************************************************
+		 * End For Checkout validation
+		 * ****************************************************************************** */
+
+		 		/********************************************************************************
+		 * this is form credit Card form placeholders
+		 ********************************************************************************/
+		// var checkout_error_ul;
+		if (document.querySelector( 'main.main-checkout' ))
+		{
+			 var payment_acountnumber = document.querySelector( 'input#cybersource_accountNumber' );
+			 var payment_cardtype_label = document.querySelector( 'label[for="cybersource_cardType"]' );
+			 var payment_cardtype_select = document.querySelector( 'select.cybersource_cardType' );
+			//  var payment_acountnumber = document.querySelector( 'input#cybersource_accountNumber' );
+			//  var payment_acountnumber = document.querySelector( 'input#cybersource_accountNumber' );
+			//  var payment_acountnumber = document.querySelector( 'input#cybersource_accountNumber' );
+
+			 console.log(payment_cardtype_select);
+			// console.log(document.querySelector( 'main.main-checkout' ));
+			// // checkout_error_ul = document.querySelector( 'ul.woocommerce-error' );
+			// var checkout_error_form = document.querySelector( 'form.woocommerce-checkout' );  
+			// console.log(checkout_error_form);
+
+			// if (checkout_error_form.childElementCount) {
+			// 	checkout_error_ul = checkout_error_form.children;
+			// 	console.log(checkout_error_ul);
+			// // if ( checkout_error_ul ) 
+			// // {	
+			// // 	console.log(checkout_error_ul.innerText);
+			// // }	
+			// }
+	/***********************************************************************************
+	 * End for Credit card form placeholders
+	 * ****************************************************************************** */
+			}
+
 		/**
 		 * This is for login form validation
 		 * 
 		 */
-		var validation_li ;
 		if ( document.querySelector( 'main.main-my-account' ) ) 
 		{
-			validation_li = document.querySelector( '.woocommerce-error' );
+			var validation_div = document.querySelector( '.woocommerce-error' );
 
-			if ( validation_li ) 
+			if ( validation_div ) 
 			{
-				var validation_text = validation_li.innerText.trim();
+				var validation_text = validation_div.innerText.trim();
 				validation_text = validation_text.split(' ').slice(1).join(' ');
 				var validation_text_2 = validation_text.split('.').slice(0,1).join();
 
@@ -1366,4 +1422,15 @@
 	};
 	/*=====  End of This is for running after document is ready  ======*/
 	 
+	// jQuery( document ).on( 'updated_checkout', function() {
+	
+	// 	console.log( 'here goes a action' ); 
+
+	// 	var checkout_error_ul = document.querySelector( 'ul.woocommerce-error' );
+	// 	console.log(checkout_error_ul);
+	// });
+
+
+
+
 })(jQuery);

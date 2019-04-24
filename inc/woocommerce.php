@@ -416,7 +416,7 @@ function wonka_override_checkout_fields( $fields ) {
 	    'class'     	=> array('form-row-wide'),
 			'clear'     	=> true,
 			'type'				=> 'email'
-	     );
+			 );
 	
 	return $fields;
 }
@@ -1151,3 +1151,20 @@ function wonka_wc_cybersource_request_object( $request, $order ) {
 	echo "</pre>\n";
 }
 add_filter( 'wc_cybersource_request_object', 'wonka_wc_cybersource_request_object' );
+
+add_action('woocommerce_after_checkout_validation', 'm_prevent_submission');
+
+function m_prevent_submission($posted) {
+	echo "<pre>\n";
+	print_r( $posted );
+	echo "</pre>\n";
+
+	if ( isset($_POST['m_prevent_submit']) && wc_notice_count( 'error' ) == 0 ) {
+		// echo "<pre>\n";
+		// print_r( $posted );
+		// echo "</pre>\n";
+	// wc_add_notice( __( "custom_notice", 'm_example' ), 'error');
+	// change the data in $posted here
+	} 
+
+}
