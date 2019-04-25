@@ -666,11 +666,8 @@
 								img_tainers.classList.remove( 'variant-show' );
 							}
 						});
-				}
-				else
-				{
-					
-					if ( variant.classList.contains( 'reset_variations' ) ) 
+
+					if ( item.selectedIndex === 0 ) 
 					{
 						full_imgs.forEach( function( img_tainers, i ) 
 							{
