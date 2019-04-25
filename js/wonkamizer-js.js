@@ -1307,18 +1307,71 @@
 			}
 		/*=====  End of This is for single product page short description scrolling  ======*/
 	
+
+		/********************************************************************************
+		 * this is For Checkout validation 
+		 ********************************************************************************/
+			// var checkout_error_ul;
+			// if (document.querySelector( 'main.main-checkout' ))
+			// {
+				 
+				// console.log(document.querySelector( 'main.main-checkout' ));
+				// // checkout_error_ul = document.querySelector( 'ul.woocommerce-error' );
+				// var checkout_error_form = document.querySelector( 'form.woocommerce-checkout' );  
+				// console.log(checkout_error_form);
+
+				// if (checkout_error_form.childElementCount) {
+				// 	checkout_error_ul = checkout_error_form.children;
+				// 	console.log(checkout_error_ul);
+				// // if ( checkout_error_ul ) 
+				// // {	
+				// // 	console.log(checkout_error_ul.innerText);
+				// // }	
+				// }
+		/***********************************************************************************
+		 * End For Checkout validation
+		 * ****************************************************************************** */
+
+		 		/********************************************************************************
+		 * this is form credit Card form placeholders
+		 ********************************************************************************/
+		// var checkout_error_ul;
+		if (document.querySelector( 'main.main-checkout' ))
+		{
+			 var payment_accountnumber_label = document.querySelector( 'label[for="cybersource_accountNumber"]' );
+			 var payment_acountnumber_input = document.querySelector( 'input#cybersource_accountNumber' );
+			 var payment_cardtype_label = document.querySelector( 'label[for="cybersource_cardType"]' );
+			 var payment_cardtype_select = document.querySelector( 'select.cybersource_cardType' );
+			 var payment_xpdate_label = document.querySelector( 'label[for="cybersource_expirationMonth"]' );
+			 var payment_xpmonth_select = document.querySelector( 'select#cybersource_expirationMonth' );
+			 var payment_xpyear_select = document.querySelector( 'select#cybersource_expirationYear' );
+			 var payment_cvnumber_label = document.querySelector( 'label[for="cybersource_cvNumber"]' );
+		   var payment_cvnumber_select = document.querySelector( 'input#cybersource_accountNumber' );
+
+			 payment_accountnumber_label.classList.add('sr-only');
+			 var paymentmethod_cybersource_labels = document.querySelectorAll( 'div.payment_method_cybersource label' );
+			 paymentmethod_cybersource_labels.forEach(function (item, index) {
+				item.classList.add( 'sr-only' );
+				// item.nextElementSibling.setAttribute("placeholder", item.innerText);
+			 });
+
+		}
+	/***********************************************************************************
+	 * End for Credit card form placeholders
+	 * ****************************************************************************** */
+		
+
 		/**
 		 * This is for login form validation
 		 * 
 		 */
-		var validation_li ;
 		if ( document.querySelector( 'main.main-my-account' ) ) 
 		{
-			validation_li = document.querySelector( '.woocommerce-error' );
+			var validation_div = document.querySelector( '.woocommerce-error' );
 
-			if ( validation_li ) 
+			if ( validation_div ) 
 			{
-				var validation_text = validation_li.innerText.trim();
+				var validation_text = validation_div.innerText.trim();
 				validation_text = validation_text.split(' ').slice(1).join(' ');
 				var validation_text_2 = validation_text.split('.').slice(0,1).join();
 
@@ -1365,7 +1418,51 @@
 			}
 		}
 
-	};
+	/**
+	 * search autocomplete
+	 * 
+	 */
+	
+	var search_results = document.createElement("div");
+	var xhr = new XMLHttpRequest();
+	var search_field = document.querySelector('input#s');
+	var data_value;
+	search_results.classList.add('autocomplete-suggestions');
+	document.querySelector('body').appendChild(search_results);
+
+	search_field.addEventListener('focus', function () {
+
+		data_value = search_field.value;
+
+		xhr.onreadystatechange = function() {
+
+			if (this.readyState == 4 && this.status == 200) {
+				var response = JSON.parse(this.responseText);
+				console.log(response.data);
+
+				response.data.forEach(function(item, i){
+					var title_element = document.createElement('div');
+					title_element.innerText = item;
+					search_results.appendChild(title_element);
+				});
+				search_results.style.display = 'block';
+				search_results.style.position = 'absolute';
+				search_results.style.left= search_field.offsetLeft + window.scrollX + 'px';
+				search_results.style.top= search_field.offsetTop + window.scrollY +'px';
+			}
+		};
+		xhr.open('GET', auto_search.ajax + "?" + "action=search_site&" + "data=" + data_value + "&security=" + auto_search.security);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.send();
+	});
+
+
+
+};
 	/*=====  End of This is for running after document is ready  ======*/
-	 
+
+
+
+
+
 })(jQuery);

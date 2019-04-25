@@ -414,8 +414,9 @@ function wonka_override_checkout_fields( $fields ) {
 	    'placeholder'   => _x('Email Address', 'placeholder', 'woocommerce'),
 	    'required'  	=> true,
 	    'class'     	=> array('form-row-wide'),
-	    'clear'     	=> true
-	     );
+			'clear'     	=> true,
+			'type'				=> 'email'
+			 );
 	
 	return $fields;
 }
@@ -1148,6 +1149,22 @@ function wonka_wc_cybersource_request_object( $request, $order ) {
 }
 add_filter( 'wc_cybersource_request_object', 'wonka_wc_cybersource_request_object' );
 
+add_action('woocommerce_after_checkout_validation', 'm_prevent_submission');
+
+function m_prevent_submission($posted) {
+	echo "<pre>\n";
+	print_r( $posted );
+	echo "</pre>\n";
+
+	if ( isset($_POST['m_prevent_submit']) && wc_notice_count( 'error' ) == 0 ) {
+		// echo "<pre>\n";
+		// print_r( $posted );
+		// echo "</pre>\n";
+	// wc_add_notice( __( "custom_notice", 'm_example' ), 'error');
+	// change the data in $posted here
+	} 
+
+}
 /**
  * Filter the except length to 20 words.
  *
@@ -1182,3 +1199,26 @@ function wonka_woocommerce_after_checkout_validation( $data ) {
 }
 
 add_action( 'woocommerce_after_checkout_validation', 'wonka_woocommerce_after_checkout_validation' );
+
+function ws_ajax_search() {
+	// This is a security check, it validates a random number that is generated on the request.
+	if ( !check_ajax_referer( 'ws-autocomplete-search', 'security' ) ) {
+	return wp_send_json_error( 'Invalid Nonce' );
+ }
+	$results = new WP_Query( array(
+		'post_type'     => array( 'product' ),
+		'post_status'   => 'publish',
+		'nopaging'      => true,
+		'posts_per_page'=> 100,
+		's'             => stripslashes( $_GET['data'] ),
+	) );
+	$items = array();
+	if ( !empty( $results->posts ) ) {
+		foreach ( $results->posts as $result ) {
+			$items[] = $result->post_title;
+		}
+	}
+	wp_send_json_success( $items );
+}
+add_action( 'wp_ajax_search_site',        'ws_ajax_search' );
+add_action( 'wp_ajax_nopriv_search_site', 'ws_ajax_search' );
