@@ -63,17 +63,17 @@
 
 			td {
 				text-align: left;
-				
-				ul#shipping_method {
-
-					label {
-						margin-left: 8px;
-					}
-				}
 
 				p.woocommerce-shipping-destination {
 					margin: 15px auto;
 				}
+			}
+		}
+
+		ul#shipping_method {
+
+			label {
+				margin-left: 8px;
 			}
 		}
 
@@ -243,9 +243,9 @@
 
             }
 			
-			.place-order {
+			div.place-order {
 				padding: 15px 0;
-				display: hidden;
+				display: none;
 			}
 
 			.wc-stripe-elements-field {

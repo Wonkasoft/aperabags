@@ -140,7 +140,7 @@ get_header();
 												<?php
 												/* Checks for an subheader set in the slide object */
 												if ( !empty( $slide->slide_link ) ) : ?>
-													<a href="<?php echo $slide->slide_link; ?>" class="btn btn-primary wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
+													<a href="<?php echo $slide->slide_link; ?>" class="btn wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
 												<?php endif; ?>
 											</div><!-- .text-box -->
 										</div><!-- .img-header-text-container -->
@@ -163,7 +163,7 @@ get_header();
 		if ( !empty( $cause_section->cause_mods->cause_section_title ) ) : ?>
 			<section class="container-fluid our-cause-section">
 				<div class="row wonka-row">
-				<div class="col col-12 text-center title-wrap">
+				<div class="col-12 text-center title-wrap">
 					<h3 class="section-title our-cause-title"><?php echo $cause_section->cause_mods->cause_section_title; ?></h3>
 				</div>
 				</div>
@@ -172,7 +172,7 @@ get_header();
 					foreach ( $cause_section->causes as $cause ) :
 					if ( !empty( $cause->img ) ) :
 					?>
-						<div class="col col-12 col-md-4">
+						<div class="col-12 col-md-4">
 							<div class="cause-section-module">
 								<div class="module-component-wrap">
 									<div class="img-container">
@@ -217,7 +217,7 @@ get_header();
 		if ( !empty( $about_section ) ) : ?>
 			<section class="container-fluid about-brand-section align-items-center justify-content-around">
 				<div class="row wonka-row">
-				<div class="col col-12 col-md-6 text-center">
+				<div class="col-12 col-sm-6 text-center">
 					<div class="about-components-wrap">
 						<h2 class="about-brand-header"><?php _e( $about_section->about_the_brand->about_header ); ?></h2>
 						<h4 class="about-brand-subheader"><?php _e( $about_section->about_the_brand->about_subheader ); ?></h4>
@@ -264,7 +264,7 @@ get_header();
 					</div><!-- .about-components-wrap -->
 				</div>
 				<?php if ( ! empty( $about_section->about_the_brand->about_the_brand_second_image ) ) : ?>
-				<div class="col col-12 col-md-5 text-center">
+				<div class="col-12 col-sm-6 text-center">
 					<div class="img-container">
 						<img class="about-second-image" src="<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />
 					</div>
@@ -286,10 +286,10 @@ get_header();
 				<div class="col-12 col-md-8 text-center">
 					<p class="social-message"><?php _e( $social_section->social_mods->social_message ); ?></p>
 				</div> <!-- .col -->
-				<div class="col col-10">
+				<div class="col-12 social-shortcode">
 					<?php _e( do_shortcode( $social_section->social_mods->social_shortcode ) ); ?>
 				</div>
-				<div class="col col-12 shop-social-btn text-center">
+				<div class="col-12 shop-social-btn text-center">
 					<a class="btn btn-lg btn-primary wonka-btn" href="<?php _e( $social_section->social_mods->social_shop_button);?>"><?php _e($social_section->social_mods->social_btn_text); ?></a>
 				</div> <!-- .col -->
 				</div>

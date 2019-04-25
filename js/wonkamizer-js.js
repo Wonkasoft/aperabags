@@ -670,7 +670,7 @@
 
 				item.addEventListener( 'click', function( event ) 
 				{
-					event.preventDefault();
+
 					var variant = event.target;
 					if ( variant.nodeName === 'SPAN' ) 
 					{
@@ -715,7 +715,6 @@
 			{
 				item.addEventListener( 'click', function( event )                   
 					{
-						event.preventDefault();
 						var el = event.target;
 						if ( el.nodeName === 'IMG' )
 						{
@@ -1179,8 +1178,6 @@
 			  pauseOnHover: false,
 			  fade: true,
 			  dots: false,
-			  arrows: true,
-			  appendArrows: $( '.top-page-slider-wrap .slick-list' ),
 			  prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
 			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
 			});
@@ -1198,8 +1195,6 @@
 			  pauseOnHover: false,
 			  fade: true,
 			  dots: false,
-			  arrows: true,
-			  appendArrows: $( '.cta-section-slider-wrap .slick-list' ),
 			  prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
 			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
 			});
@@ -1209,7 +1204,7 @@
 		{
 			$( 'body.home .instagram-wrap' ).slick({
 			  slidesToShow: 5,
-			  slidesToScroll: 1,
+			  slidesToScroll: 3,
 			  autoplay: true,
 			  autoplaySpeed: 4000,
 			  dots: false,
@@ -1217,6 +1212,13 @@
 			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
 			  responsive: [
     			{
+			      breakpoint: 1200,
+			      settings: {
+			        slidesToShow: 4,
+			        slidesToScroll: 3,
+			      }
+			    },
+			    {
 			      breakpoint: 1024,
 			      settings: {
 			        slidesToShow: 3,
