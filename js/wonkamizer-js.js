@@ -667,48 +667,76 @@
 							}
 						});
 				}
+				else
+				{
+					full_imgs.forEach( function( img_tainers, i ) 
+						{
+							img_tainers.classList.add( 'variant-show' );
+						});
+
+					thumb_lis.forEach( function( img_tainers, i ) 
+						{
+							img_tainers.classList.add( 'variant-show' );
+						});
+				}
 
 				item.addEventListener( 'click', function( event ) 
 				{
 
 					var variant = event.target;
+					console.log(variant);
 					if ( variant.nodeName === 'SPAN' ) 
 					{
 						variant = variant.parentElement;
+						variant_selected = variant.getAttribute( 'data-value' );
 					}
 
-					variant_selected = variant.getAttribute( 'data-value' );
-
-					full_imgs.forEach( function( img_tainers, i ) 
-						{
-							if ( i === 0 ) 
+					if ( variant_selected !== null ) 
+					{
+						full_imgs.forEach( function( img_tainers, i ) 
 							{
-								img_tainers.setAttribute( 'data-variant-color', variant_selected );
-							}
+								if ( i === 0 ) 
+								{
+									img_tainers.setAttribute( 'data-variant-color', variant_selected );
+								}
 
-							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+								if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+								{
+									img_tainers.classList.add( 'variant-show' );
+								}
+
+								if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+								{
+									img_tainers.classList.remove( 'variant-show' );
+								}
+							});
+
+						thumb_lis.forEach( function( img_tainers, i ) 
+							{
+								if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+								{
+									img_tainers.classList.add( 'variant-show' );
+								}
+
+								if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+								{
+									img_tainers.classList.remove( 'variant-show' );
+								}
+							});
+					}
+
+					if ( variant.classList.contains( 'reset_variations' ) ) 
+					{
+						full_imgs.forEach( function( img_tainers, i ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
-							}
+							});
 
-							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
-							{
-								img_tainers.classList.remove( 'variant-show' );
-							}
-						});
-
-					thumb_lis.forEach( function( img_tainers, i ) 
-						{
-							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+						thumb_lis.forEach( function( img_tainers, i ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
-							}
-
-							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
-							{
-								img_tainers.classList.remove( 'variant-show' );
-							}
-						});
+							});
+					}
 				});
 			});
 
