@@ -1163,7 +1163,7 @@ function wonka_custom_excerpt_length( $text ) {
 
 		_e( $output, 'aperabags' );
 	else:
-    	_e( $text, 'aperabags' );
+    	return $text;
 	endif;
 
 }
