@@ -63,7 +63,7 @@
 						a.woocommerce-product-gallery__image {
 							display: block;
 							padding: 0;
-							@include prefix( transition, $trans_25, o moz webkit );
+
 
 							img {
 								width: auto;
@@ -215,7 +215,7 @@
 					max-width: 100%;
 
 					p.price {
-						flex: .3 15%;
+						width: 33%;
 						display: flex;
 					    align-items: center;
 					    justify-content: space-between;

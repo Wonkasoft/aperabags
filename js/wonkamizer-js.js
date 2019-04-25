@@ -630,7 +630,9 @@
 	{
 		var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
 		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails [data-variant-check="true"]');
+		var thumb_lis_parent = document.querySelector( 'div.wonka-thumbnails');
 		var full_imgs = document.querySelectorAll( 'div.wonka-image-viewer [data-variant-check="true"]');
+		var full_imgs_parent = document.querySelector( 'div.wonka-image-viewer');
 		var variant_selected;
 		var thumbs_set;
 		var imgs_set;
@@ -641,11 +643,13 @@
 				{
 					variant_selected = item.getAttribute( 'data-value' );
 
+					full_imgs_parent.innerHTML = '';
 					full_imgs.forEach( function( img_tainers, i ) 
 						{
 							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
+								full_imgs_parent.appendChild( img_tainers );
 							}
 
 							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
@@ -654,11 +658,13 @@
 							}
 						});
 
+					thumb_lis_parent.innerHTML = '';
 					thumb_lis.forEach( function( img_tainers, i ) 
 						{
 							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
+								thumb_lis_parent.appendChild( img_tainers );
 							}
 
 							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
@@ -688,11 +694,13 @@
 					if ( variant.nodeName === 'SPAN' ) 
 					{
 						variant = variant.parentElement;
-						variant_selected = variant.getAttribute( 'data-value' );
 					}
+					
+					variant_selected = variant.getAttribute( 'data-value' );
 
 					if ( variant_selected !== null ) 
 					{
+						full_imgs_parent.innerHTML = '';
 						full_imgs.forEach( function( img_tainers, i ) 
 							{
 								if ( i === 0 ) 
@@ -703,6 +711,7 @@
 								if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
 								{
 									img_tainers.classList.add( 'variant-show' );
+									full_imgs_parent.appendChild( img_tainers );
 								}
 
 								if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
@@ -711,11 +720,13 @@
 								}
 							});
 
+						thumb_lis_parent.innerHTML = '';
 						thumb_lis.forEach( function( img_tainers, i ) 
 							{
 								if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
 								{
 									img_tainers.classList.add( 'variant-show' );
+									thumb_lis_parent.appendChild( img_tainers );
 								}
 
 								if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
@@ -727,14 +738,18 @@
 
 					if ( variant.classList.contains( 'reset_variations' ) ) 
 					{
+						full_imgs_parent.innerHTML = '';
 						full_imgs.forEach( function( img_tainers, i ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
+								full_imgs_parent.appendChild( img_tainers );
 							});
 
+						thumb_lis_parent.innerHTML = '';
 						thumb_lis.forEach( function( img_tainers, i ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
+								thumb_lis_parent.appendChild( img_tainers );
 							});
 					}
 				});
