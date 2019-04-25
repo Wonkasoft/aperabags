@@ -684,7 +684,6 @@
 				{
 
 					var variant = event.target;
-					console.log(variant);
 					if ( variant.nodeName === 'SPAN' ) 
 					{
 						variant = variant.parentElement;
