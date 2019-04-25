@@ -86,7 +86,6 @@
 					position: -webkit-sticky !important;    
 					position: sticky !important;
 					top: 25px;
-					@include prefix( transition, $trans_3, o moz webkit );
 				}
 			}
 		}

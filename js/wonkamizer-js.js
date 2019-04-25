@@ -630,7 +630,7 @@
 	{
 		var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
 		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails [data-variant-check="true"]');
-		var thumb_lis_parent = document.querySelector( 'div.wonka-thumbnails');
+		var thumb_lis_parent = document.querySelector( 'div.wonka-thumbnails ul');
 		var full_imgs = document.querySelectorAll( 'div.wonka-image-viewer [data-variant-check="true"]');
 		var full_imgs_parent = document.querySelector( 'div.wonka-image-viewer');
 		var variant_selected;
