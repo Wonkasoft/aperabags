@@ -90,27 +90,58 @@ section.header-slider-section {
 								@include font-size( 1.2 );
 							}
 						}
-
-						@include media-breakpoint-up( md ) {
-
-							.text-box {
-
-								h2 {
-									line-height: 1.1;
-									@include font-size( 3.5 );
-								}
-
-								h4 {
-									line-height: 1.1;
-									@include font-size( 2.5 );
-								}
-							}
-						}
 					}	
 				}
 
 				@include media-breakpoint-up( md ) {
 					background-size: cover;
+							
+					.text-box {
+
+						h2 {
+							line-height: 1.1;
+							@include font-size( 2.5 );
+						}
+
+						h4 {
+							line-height: 1.1;
+							@include font-size( 1.5 );
+						}
+					}
+				}
+
+				@include media-breakpoint-up( lg ) {
+					background-size: cover;
+							
+					.text-box {
+
+						h2 {
+							line-height: 1.1;
+							@include font-size( 2.8 );
+						}
+
+						h4 {
+							line-height: 1.1;
+							@include font-size( 1.8 );
+						}
+					}
+				}
+
+				@include media-breakpoint-up( xl ) {
+					background-size: cover;
+							
+					.text-box {
+
+						h2 {
+							line-height: 1.1;
+							@include font-size( 3.2 );
+						}
+
+						h4 {
+							line-height: 1.1;
+							@include font-size( 2.2 );
+						}
+					}
 				}
 			}
 
@@ -237,12 +268,36 @@ section.desirable-slider-section {
 
 				@include media-breakpoint-up( md ) {
 					background-size: cover;
-
+							
 					.text-box {
 
 						h2 {
-							letter-spacing: 4px;
-							@include font-size( 3.5 );
+							line-height: 1.1;
+							@include font-size( 2.5 );
+						}
+					}
+				}
+
+				@include media-breakpoint-up( lg ) {
+					background-size: cover;
+							
+					.text-box {
+
+						h2 {
+							line-height: 1.1;
+							@include font-size( 2.8 );
+						}
+					}
+				}
+
+				@include media-breakpoint-up( xl ) {
+					background-size: cover;
+							
+					.text-box {
+
+						h2 {
+							line-height: 1.1;
+							@include font-size( 3.2 );
 						}
 					}
 				}

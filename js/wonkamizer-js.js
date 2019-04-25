@@ -1502,6 +1502,15 @@
 		xhr.send();
 	});
 
+	search_field.addEventListener( 'blur', function () 
+		{
+			search_results.style.display = 'none';
+			search_results.style.position = '';
+			search_results.style.width = '';
+			search_results.style.left = '';
+			search_results.style.top = '';
+		});
+
 
 
 };
