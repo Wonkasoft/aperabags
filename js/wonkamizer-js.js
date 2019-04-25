@@ -1423,35 +1423,75 @@
 	 * 
 	 */
 	
-	var search_results = document.createElement("div");
+	var search_results = document.createElement( 'DIV' );
 	var xhr = new XMLHttpRequest();
-	var search_field = document.querySelector('input#s');
+	var search_field = document.querySelector( 'input#s' );
 	var data_value;
-	search_results.classList.add('autocomplete-suggestions');
-	document.querySelector('body').appendChild(search_results);
+	var field_position;
+	search_results.classList.add( 'autocomplete-suggestions' );
+	document.querySelector( 'body' ).appendChild( search_results );
+	search_field.setAttribute( 'autocomplete', 'off' );
 
-	search_field.addEventListener('focus', function () {
+	search_field.addEventListener( 'focus', function () {
 
 		data_value = search_field.value;
 
 		xhr.onreadystatechange = function() {
 
-			if (this.readyState == 4 && this.status == 200) {
-				var response = JSON.parse(this.responseText);
-				console.log(response.data);
+			if ( this.readyState == 4 && this.status == 200 ) {
+				var response = JSON.parse( this.responseText );
+				field_position = search_field.getBoundingClientRect();
 
-				response.data.forEach(function(item, i){
-					var title_element = document.createElement('div');
-					title_element.innerText = item;
-					search_results.appendChild(title_element);
-				});
-				search_results.style.display = 'block';
-				search_results.style.position = 'absolute';
-				search_results.style.left= search_field.offsetLeft + window.scrollX + 'px';
-				search_results.style.top= search_field.offsetTop + window.scrollY +'px';
+				search_field.addEventListener( 'keyup', function() 
+					{
+						search_results.innerHTML = '';
+						if ( search_field.value.length >= 2 ) 
+						{
+							response.data.forEach( function( item, i )
+								{
+									if ( item.toLowerCase().match( search_field.value ) ) 
+									{
+										var title_element = document.createElement( 'DIV' );
+										title_element.classList.add( 'autocomplete-suggestion' );
+										title_element.setAttribute( 'data-index', i );
+										title_element.innerText = item;
+										search_results.appendChild( title_element );
+										title_element.addEventListener( 'mouseover', function() 
+											{
+												search_field.value = title_element.innerText;
+											});
+										title_element.addEventListener( 'click', function() 
+											{
+												search_field.value = title_element.innerText;
+												search_results.style.display = 'none';
+												search_results.style.position = '';
+												search_results.style.width = '';
+												search_results.style.left = '';
+												search_results.style.top = '';
+											});
+									}
+								});
+							if ( search_results.children.length !== 0 ) 
+							{
+								search_results.style.display = 'block';
+								search_results.style.position = 'fixed';
+								search_results.style.width = field_position.width.toFixed(2) + 'px';
+								search_results.style.left = field_position.x.toFixed(2) + 'px';
+								search_results.style.top = field_position.bottom.toFixed(2) + 'px';						}
+							}
+							else
+							{
+								search_results.style.display = 'none';
+								search_results.style.position = '';
+								search_results.style.width = '';
+								search_results.style.left = '';
+								search_results.style.top = '';
+							}
+					});
 			}
 		};
-		xhr.open('GET', auto_search.ajax + "?" + "action=search_site&" + "data=" + data_value + "&security=" + auto_search.security);
+
+		xhr.open('GET', auto_search.ajax + "?" + "action=search_site&security=" + auto_search.security);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhr.send();
 	});

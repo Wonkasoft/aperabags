@@ -145,6 +145,7 @@ body.search {
 	text-align: center;
 	margin-top: 30px;
 	margin: auto;
+	overflow: hidden;
 	@include prefix( transition, $trans_25, o moz webkit );
 
 	form#searchform {
@@ -222,7 +223,18 @@ div.wonka-gform_wrapper {
 
 div.autocomplete-suggestions {
 	margin-top: 8px;
+	border-radius: 4px;
 	z-index: 99999;
+
+	div.autocomplete-suggestion {
+		padding: 8px;
+		background: transparent;
+		@include prefix( transition, $trans_25, o moz webkit );
+
+		&:hover {
+			background: rgba( #000, .2 );
+		}
+	}
 }
 /*=====  End of Search styles  ======*/
 /*===== Styles for asterisk in Shipping, Returns, Warranty =====*/
