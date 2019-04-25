@@ -678,36 +678,37 @@
 					}
 
 					variant_selected = variant.getAttribute( 'data-value' );
-					if ( variant_selected ) 
-					{
-						full_imgs.forEach( function( img, i ) 
+
+					full_imgs.forEach( function( img_tainers, i ) 
+						{
+							if ( i === 0 ) 
 							{
-								var img_variant = img.getAttribute( 'data-variant-color' );
-								if ( variant_selected === img_variant ) 
-								{
-									img.classList.add( 'variant-show' );
-								}
+								img_tainers.setAttribute( 'data-variant-color', variant_selected );
+							}
 
-								if ( variant_selected !== img_variant && img.classList.contains( 'variant-show' ) )
-								{
-									img.classList.remove( 'variant-show' );
-								}
-							});
-
-						thumb_lis.forEach( function( img, i ) 
+							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
 							{
-								var img_variant = img.getAttribute( 'data-variant-color' );
-								if ( variant_selected === img_variant ) 
-								{
-									img.classList.add( 'variant-show' );
-								}
+								img_tainers.classList.add( 'variant-show' );
+							}
 
-								if ( variant_selected !== img_variant && img.classList.contains( 'variant-show' ) )
-								{
-									img.classList.remove( 'variant-show' );
-								}
-							});
-					}
+							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+							{
+								img_tainers.classList.remove( 'variant-show' );
+							}
+						});
+
+					thumb_lis.forEach( function( img_tainers, i ) 
+						{
+							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+							{
+								img_tainers.classList.add( 'variant-show' );
+							}
+
+							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+							{
+								img_tainers.classList.remove( 'variant-show' );
+							}
+						});
 				});
 			});
 
