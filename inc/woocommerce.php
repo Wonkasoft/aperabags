@@ -1169,13 +1169,6 @@ function wonka_custom_excerpt_length( $text ) {
 }
 add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );
 
-function wonka_woocommerce_after_checkout_validation( $data ) {
-	echo "<pre>\n";
-	print_r( $data );
-	echo "</pre>\n";
-}
-
-add_action( 'woocommerce_after_checkout_validation', 'wonka_woocommerce_after_checkout_validation' );
 
 function ws_ajax_search() {
 	// This is a security check, it validates a random number that is generated on the request.

@@ -1459,13 +1459,14 @@
 											{
 												search_field.value = title_element.innerText;
 											});
-										title_element.addEventListener( 'mouseout', function() 
+										title_element.addEventListener( 'mouseleave', function() 
 											{
 												search_field.value = data_value;
 											});
 										title_element.addEventListener( 'click', function() 
 											{
 												search_field.value = title_element.innerText;
+												data_value = search_field.value;
 												search_results.style.display = 'none';
 												search_results.style.position = '';
 												search_results.style.width = '';
@@ -1474,13 +1475,14 @@
 											});
 									}
 								});
+
 							if ( document.querySelector( '.autocomplete-suggestions' ).hasChildNodes() ) 
 							{
 								search_results.style.display = 'block';
 								search_results.style.position = 'fixed';
 								search_results.style.width = field_position.width.toFixed(2) + 'px';
 								search_results.style.left = field_position.x.toFixed(2) + 'px';
-								search_results.style.top = field_position.bottom.toFixed(2) + 'px';						}
+								search_results.style.top = field_position.bottom.toFixed(2) + 'px';
 							}
 							else
 							{
@@ -1490,6 +1492,7 @@
 								search_results.style.left = '';
 								search_results.style.top = '';
 							}
+						}
 					});
 			}
 		};
