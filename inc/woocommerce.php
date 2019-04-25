@@ -1104,7 +1104,7 @@ function wonka_single_product_image_thumbnail_html_custom( $data, $attachment_id
 		$output .= '</a>';
 	endif;
 	$output .= ob_get_clean();
-
+	echo $output;
 	return $output;
 }
 
