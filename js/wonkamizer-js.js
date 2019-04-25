@@ -1336,31 +1336,28 @@
 		// var checkout_error_ul;
 		if (document.querySelector( 'main.main-checkout' ))
 		{
-			 var payment_acountnumber = document.querySelector( 'input#cybersource_accountNumber' );
+			 var payment_accountnumber_label = document.querySelector( 'label[for="cybersource_accountNumber"]' );
+			 var payment_acountnumber_input = document.querySelector( 'input#cybersource_accountNumber' );
 			 var payment_cardtype_label = document.querySelector( 'label[for="cybersource_cardType"]' );
 			 var payment_cardtype_select = document.querySelector( 'select.cybersource_cardType' );
-			//  var payment_acountnumber = document.querySelector( 'input#cybersource_accountNumber' );
-			//  var payment_acountnumber = document.querySelector( 'input#cybersource_accountNumber' );
-			//  var payment_acountnumber = document.querySelector( 'input#cybersource_accountNumber' );
+			 var payment_xpdate_label = document.querySelector( 'label[for="cybersource_expirationMonth"]' );
+			 var payment_xpmonth_select = document.querySelector( 'select#cybersource_expirationMonth' );
+			 var payment_xpyear_select = document.querySelector( 'select#cybersource_expirationYear' );
+			 var payment_cvnumber_label = document.querySelector( 'label[for="cybersource_cvNumber"]' );
+		   var payment_cvnumber_select = document.querySelector( 'input#cybersource_accountNumber' );
 
-			 console.log(payment_cardtype_select);
-			// console.log(document.querySelector( 'main.main-checkout' ));
-			// // checkout_error_ul = document.querySelector( 'ul.woocommerce-error' );
-			// var checkout_error_form = document.querySelector( 'form.woocommerce-checkout' );  
-			// console.log(checkout_error_form);
+			 payment_accountnumber_label.classList.add('sr-only');
+			 var paymentmethod_cybersource_labels = document.querySelectorAll( 'div.payment_method_cybersource label' );
+			 paymentmethod_cybersource_labels.forEach(function (item, index) {
+				item.classList.add( 'sr-only' );
+				// item.nextElementSibling.setAttribute("placeholder", item.innerText);
+			 });
 
-			// if (checkout_error_form.childElementCount) {
-			// 	checkout_error_ul = checkout_error_form.children;
-			// 	console.log(checkout_error_ul);
-			// // if ( checkout_error_ul ) 
-			// // {	
-			// // 	console.log(checkout_error_ul.innerText);
-			// // }	
-			// }
+		}
 	/***********************************************************************************
 	 * End for Credit card form placeholders
 	 * ****************************************************************************** */
-			}
+		
 
 		/**
 		 * This is for login form validation
@@ -1419,16 +1416,51 @@
 			}
 		}
 
-	};
-	/*=====  End of This is for running after document is ready  ======*/
-	 
-	// jQuery( document ).on( 'updated_checkout', function() {
+		/**
+	 * search autocomplete
+	 * 
+	 */
 	
-	// 	console.log( 'here goes a action' ); 
+	var search_results = document.createElement("div");
+	var xhr = new XMLHttpRequest();
+	var search_field = document.querySelector('input#s');
+	var data_value;
+	search_results.classList.add('autocomplete-suggestions');
+	document.querySelector('body').appendChild(search_results);
 
-	// 	var checkout_error_ul = document.querySelector( 'ul.woocommerce-error' );
-	// 	console.log(checkout_error_ul);
-	// });
+	search_field.addEventListener('keyup', function () {
+
+		if(search_field.value.length >= 3) {
+				data_value = search_field.value;
+
+				xhr.onreadystatechange = function() {
+
+					if (this.readyState == 4 && this.status == 200) {
+						var response = JSON.parse(this.responseText);
+						console.log(response.data);
+
+						response.data.forEach(function(item, i){
+							var title_element = document.createElement('div');
+							title_element.innerText = item;
+							search_results.appendChild(title_element);
+						});
+						search_results.style.display = 'block';
+						search_results.style.position = 'absolute';
+						search_results.style.left= search_field.offsetLeft + window.scrollX + 'px';
+						search_results.style.top= search_field.offsetTop + window.scrollY +'px';
+					}
+				};
+				xhr.open('GET', global.ajax + "?" + "action=search_site&" + "data=" + data_value + "&security=" + global.security);
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+		}
+	});
+
+
+
+};
+	/*=====  End of This is for running after document is ready  ======*/
+
 
 
 

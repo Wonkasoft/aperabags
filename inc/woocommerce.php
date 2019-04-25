@@ -1191,3 +1191,29 @@ function wonka_custom_excerpt_length( $text ) {
 
 }
 add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );
+
+
+
+
+function ws_ajax_search() {
+	// This is a security check, it validates a random number that is generated on the request.
+	if ( !check_ajax_referer( 'ws-autocomplete-search', 'security' ) ) {
+	return wp_send_json_error( 'Invalid Nonce' );
+ }
+	$results = new WP_Query( array(
+		'post_type'     => array( 'product' ),
+		'post_status'   => 'publish',
+		'nopaging'      => true,
+		'posts_per_page'=> 100,
+		's'             => stripslashes( $_GET['data'] ),
+	) );
+	$items = array();
+	if ( !empty( $results->posts ) ) {
+		foreach ( $results->posts as $result ) {
+			$items[] = $result->post_title;
+		}
+	}
+	wp_send_json_success( $items );
+}
+add_action( 'wp_ajax_search_site',        'ws_ajax_search' );
+add_action( 'wp_ajax_nopriv_search_site', 'ws_ajax_search' );
