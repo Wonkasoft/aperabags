@@ -1056,15 +1056,12 @@ add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta
  * @return array                  filtered defaults
  */
 function ws_custom_new_gravatar ( $avatar_defaults ) {
-	echo "<pre>\n";
-	print_r( $avatar_defaults );
-	echo "</pre>\n";
 	$customavatar = get_site_icon_url();
-	$avatar_defaults["Site Default Gravatar"] = $customavatar;
+	$avatar_defaults[$customavatar] = "Site Default Gravatar";
 	return $avatar_defaults;
 }
 
-add_filter( 'avatar_defaults', 'ws_custom_new_gravatar' );
+// add_filter( 'avatar_defaults', 'ws_custom_new_gravatar' );
 
 function wonka_before_comment_text_add( $comment ) {
 	?>

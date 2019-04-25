@@ -744,6 +744,7 @@
 			{
 				item.addEventListener( 'click', function( event )                   
 					{
+						event.preventDefault();
 						var el = event.target;
 						if ( el.nodeName === 'IMG' )
 						{
