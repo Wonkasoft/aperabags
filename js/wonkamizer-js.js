@@ -670,7 +670,7 @@
 
 				item.addEventListener( 'click', function( event ) 
 				{
-					event.preventDefault();
+
 					var variant = event.target;
 					if ( variant.nodeName === 'SPAN' ) 
 					{
@@ -715,7 +715,6 @@
 			{
 				item.addEventListener( 'click', function( event )                   
 					{
-						event.preventDefault();
 						var el = event.target;
 						if ( el.nodeName === 'IMG' )
 						{
@@ -1179,8 +1178,6 @@
 			  pauseOnHover: false,
 			  fade: true,
 			  dots: false,
-			  arrows: true,
-			  appendArrows: $( '.top-page-slider-wrap .slick-list' ),
 			  prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
 			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
 			});
@@ -1198,8 +1195,6 @@
 			  pauseOnHover: false,
 			  fade: true,
 			  dots: false,
-			  arrows: true,
-			  appendArrows: $( '.cta-section-slider-wrap .slick-list' ),
 			  prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
 			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
 			});
@@ -1209,7 +1204,7 @@
 		{
 			$( 'body.home .instagram-wrap' ).slick({
 			  slidesToShow: 5,
-			  slidesToScroll: 1,
+			  slidesToScroll: 3,
 			  autoplay: true,
 			  autoplaySpeed: 4000,
 			  dots: false,
@@ -1217,6 +1212,13 @@
 			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
 			  responsive: [
     			{
+			      breakpoint: 1200,
+			      settings: {
+			        slidesToShow: 4,
+			        slidesToScroll: 3,
+			      }
+			    },
+			    {
 			      breakpoint: 1024,
 			      settings: {
 			        slidesToShow: 3,
@@ -1416,44 +1418,88 @@
 			}
 		}
 
-		/**
+	/**
 	 * search autocomplete
 	 * 
 	 */
 	
-	var search_results = document.createElement("div");
+	var search_results = document.createElement( 'DIV' );
 	var xhr = new XMLHttpRequest();
-	var search_field = document.querySelector('input#s');
+	var search_field = document.querySelector( 'input#s' );
 	var data_value;
-	search_results.classList.add('autocomplete-suggestions');
-	document.querySelector('body').appendChild(search_results);
+	var field_position;
+	search_results.classList.add( 'autocomplete-suggestions' );
+	document.querySelector( 'body' ).appendChild( search_results );
+	search_field.setAttribute( 'autocomplete', 'off' );
 
-	search_field.addEventListener('keyup', function () {
+	search_field.addEventListener( 'focus', function () {
 
-		if(search_field.value.length >= 3) {
-				data_value = search_field.value;
+		xhr.onreadystatechange = function() {
 
-				xhr.onreadystatechange = function() {
+			if ( this.readyState == 4 && this.status == 200 ) {
+				var response = JSON.parse( this.responseText );
+				field_position = search_field.getBoundingClientRect();
 
-					if (this.readyState == 4 && this.status == 200) {
-						var response = JSON.parse(this.responseText);
-						console.log(response.data);
+				search_field.addEventListener( 'keyup', function() 
+					{
+						data_value = search_field.value;
+						search_results.innerHTML = '';
+						if ( search_field.value.length >= 2 ) 
+						{
+							response.data.forEach( function( item, i )
+								{
+									if ( item.toLowerCase().match( search_field.value.toLowerCase() ) ) 
+									{
+										var title_element = document.createElement( 'DIV' );
+										title_element.classList.add( 'autocomplete-suggestion' );
+										title_element.setAttribute( 'data-index', i );
+										title_element.innerText = item;
+										search_results.appendChild( title_element );
+										title_element.addEventListener( 'mouseover', function() 
+											{
+												search_field.value = title_element.innerText;
+											});
+										title_element.addEventListener( 'mouseleave', function() 
+											{
+												search_field.value = data_value;
+											});
+										title_element.addEventListener( 'click', function() 
+											{
+												search_field.value = title_element.innerText;
+												data_value = search_field.value;
+												search_results.style.display = 'none';
+												search_results.style.position = '';
+												search_results.style.width = '';
+												search_results.style.left = '';
+												search_results.style.top = '';
+											});
+									}
+								});
 
-						response.data.forEach(function(item, i){
-							var title_element = document.createElement('div');
-							title_element.innerText = item;
-							search_results.appendChild(title_element);
-						});
-						search_results.style.display = 'block';
-						search_results.style.position = 'absolute';
-						search_results.style.left= search_field.offsetLeft + window.scrollX + 'px';
-						search_results.style.top= search_field.offsetTop + window.scrollY +'px';
-					}
-				};
-				xhr.open('GET', global.ajax + "?" + "action=search_site&" + "data=" + data_value + "&security=" + global.security);
-				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhr.send();
-		}
+							if ( document.querySelector( '.autocomplete-suggestions' ).hasChildNodes() ) 
+							{
+								search_results.style.display = 'block';
+								search_results.style.position = 'fixed';
+								search_results.style.width = field_position.width.toFixed(2) + 'px';
+								search_results.style.left = field_position.x.toFixed(2) + 'px';
+								search_results.style.top = field_position.bottom.toFixed(2) + 'px';
+							}
+							else
+							{
+								search_results.style.display = 'none';
+								search_results.style.position = '';
+								search_results.style.width = '';
+								search_results.style.left = '';
+								search_results.style.top = '';
+							}
+						}
+					});
+			}
+		};
+
+		xhr.open('GET', auto_search.ajax + "?" + "action=search_site&security=" + auto_search.security);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.send();
 	});
 
 

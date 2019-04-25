@@ -34,9 +34,9 @@ section.header-slider-section {
 			@include prefix( transition, $trans_25, o moz webkit );
 
 			div.top-slide-img-holder {
-				background-position: center bottom;
+				background-position: center -50px;
 				background-attachment: fixed;
-				background-size: 100% auto;
+				background-size: cover;
 				background-repeat: no-repeat;
 				width: 100%;
 				height: 100%;
@@ -175,9 +175,9 @@ section.desirable-slider-section {
 			@include prefix( transition, $trans_25, o moz webkit );
 
 			div.cta-slide-img-holder {
-				background-position: center bottom;
+				background-position: center -50px;
 				background-attachment: fixed;
-				background-size: 100% auto;
+				background-size: cover;
 				background-repeat: no-repeat;
 				width: 100%;
 				height: 100%;
@@ -215,6 +215,16 @@ section.desirable-slider-section {
 							h2 {
 								color: #ffffff;
 								font-weight: 800;
+							}
+
+							.wonka-btn {
+								color: rgba( #ffff00, .8 );
+								border-color: #674af4;
+
+								&:hover {
+									color: rgba( #ffffff, 1 );
+									background: #674af4;
+								}
 							}
 
 							@include media-breakpoint-up( md ) {
@@ -266,7 +276,8 @@ section.our-cause-section {
 
 	.wonka-row {
 		margin: 15px auto;
-		max-width: 1180px;
+		width: 1200px;
+		max-width: 100%;
 	}
 
 	.cause-section-module {
@@ -277,24 +288,16 @@ section.our-cause-section {
 		.module-component-wrap {
 
 			.img-container {
-				margin-bottom: 15px;
+				margin: 0 auto 15px;
 				display: flex;
 				align-items: center;
-				max-width: 380px;
+				max-width: 300px;
 				height: auto;
 				@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 				img {
 					height: auto;
 					width: auto;
-				}
-
-				@include media-breakpoint-up( md ) {
-					height: 570px;
-
-					img {
-						height: 100%;
-					}
 				}
 			}
 
@@ -306,6 +309,13 @@ section.our-cause-section {
 				margin-bottom: 8px;
 				padding: 0 15px;
 			}
+
+			@include media-breakpoint-up( md ) {
+
+				.img-container {
+					max-width: 380px;
+				}
+			}	
 		}
 	}
 }
@@ -338,7 +348,8 @@ section.about-brand-section {
 
 	.wonka-row {
 		margin: 15px auto;
-		max-width: 1180px;
+		width: 1200px;
+		max-width: 100%;
 	}
 
 	.about-components-wrap {
@@ -350,17 +361,16 @@ section.about-brand-section {
 		margin: 15px auto;
 		display: flex;
 		align-items: center;
-		max-width: 450px;
+		width: 450px;
+		max-width: 100%;
+		max-height: 520px;
 		height: auto;
 		overflow: hidden;
 		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 		.about-second-image {
-			width: 580px;
-		}
-
-		@include media-breakpoint-up( md ) {
-			height: 525px;
+			width: auto;
+			height: auto;
 		}
 	}
 
@@ -487,7 +497,9 @@ section.social-section {
 
 	.wonka-row {
 		margin: 15px auto;
-		max-width: 1180px;
+		width: 1500px;
+		max-width: 100%;
+
 	}
 }
 /*=====  End of Social section  ======*/
@@ -496,6 +508,21 @@ body.home {
 
 	a.wonka-btn {
 		margin: 15px auto;
+	}
+
+	.slick-slider {
+		overflow: hidden;
+
+		&:hover {
+
+			.slick-prev {
+				left: 0;
+			}
+
+			.slick-next {
+				right: 0;
+			}
+		}
 	}
 }
 /*=====  End of front page styles  ======*/

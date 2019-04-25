@@ -76,8 +76,29 @@ input[type="submit"].wonka-btn {
 
 button.slick-arrow {
 	background: transparent;
-	border-radius: 50%;
+	width: 48px;
+	height: 48px;
+	z-index: 999;
 	@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
+	@include prefix( transition, $trans_25, webkit moz o);
+
+	&.slick-prev {
+		left: -50px;
+	}
+
+	&.slick-next {
+		right: -50px;
+	}
+
+	&:before {
+		@include font-size( 3 );
+		opacity: .3;
+		@include prefix( transition, $trans_25, webkit moz o);
+	}
+
+	&:hover {
+		background: transparent;
+	}
 }
 
 a.showlogin {

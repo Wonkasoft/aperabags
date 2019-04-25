@@ -1142,29 +1142,6 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
    return $field;
 }
 
-function wonka_wc_cybersource_request_object( $request, $order ) {
-	echo "<pre>\n";
-	print_r( $request );
-	echo "</pre>\n";
-}
-add_filter( 'wc_cybersource_request_object', 'wonka_wc_cybersource_request_object' );
-
-add_action('woocommerce_after_checkout_validation', 'm_prevent_submission');
-
-function m_prevent_submission($posted) {
-	echo "<pre>\n";
-	print_r( $posted );
-	echo "</pre>\n";
-
-	if ( isset($_POST['m_prevent_submit']) && wc_notice_count( 'error' ) == 0 ) {
-		// echo "<pre>\n";
-		// print_r( $posted );
-		// echo "</pre>\n";
-	// wc_add_notice( __( "custom_notice", 'm_example' ), 'error');
-	// change the data in $posted here
-	} 
-
-}
 /**
  * Filter the except length to 20 words.
  *
@@ -1176,23 +1153,21 @@ function wonka_custom_excerpt_length( $text ) {
 	$str_array = explode( ' ', $text );
 	$output = '';
 	if ( is_search() ) :
-		for( $i = 0; $i < $length-1; $i++ ) :
-			if ( $i === $length-1 ) :
-				$output .= $str_array[$i];
+		for( $i = 0; $i < $length; $i++ ) :
+			if ( $i == ($length - 1) ) :
+				$output .= $str_array[$i] . '...';
 			else:
 				$output .= $str_array[$i] . ' ';
 			endif;
 		endfor;
 
-		_e( $output . '...', 'aperabags' );
+		_e( $output, 'aperabags' );
 	else:
-    	_e( $text, 'aperabags' );
+    	return $text;
 	endif;
 
 }
 add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );
-
-
 
 
 function ws_ajax_search() {
@@ -1205,7 +1180,6 @@ function ws_ajax_search() {
 		'post_status'   => 'publish',
 		'nopaging'      => true,
 		'posts_per_page'=> 100,
-		's'             => stripslashes( $_GET['data'] ),
 	) );
 	$items = array();
 	if ( !empty( $results->posts ) ) {
