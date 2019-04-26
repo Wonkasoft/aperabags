@@ -240,10 +240,10 @@
 	=            This is area for writing callable functions            =
 	===================================================================*/
 	/*===== This is for Keyfeatures | Product Specs links on shor description ====*/
-	function scrollToSection( scroll_to_id ) 
+	function scrollToSection( scroll_to_id, adjustment ) 
 	{
 		var current_el = document.querySelector( '#' + scroll_to_id );
-  		current_el.scrollIntoView({behavior: 'smooth'});
+  		current_el.scrollIntoView( { behavior: "smooth" } );
 	}
 
 	function load_page_vars() 
@@ -392,7 +392,7 @@
 
 	function stickyThumbnails() 
 	{
-		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
+		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 40;
 		target_stop = wonka_single_product_img_area.offsetHeight - thumbnail_controls.offsetHeight;
 		win_y = window.pageYOffset;
 
@@ -405,7 +405,7 @@
 		{
 			thumbnail_controls.style.top = target_stop + 'px';
 			thumbnail_controls.classList.remove( 'sticky-on' );
-		}
+		} 
 		else
 		{
 			if ( document.querySelector( '#wpadminbar' ) ) 
@@ -429,13 +429,12 @@
 				thumbnail_controls.classList.add( 'sticky-on' );
 				thumbnail_controls.style.top = 30 + 'px';
 			}
-		}
-
+		} 
 	}
 
 	function stickySummary() 
 	{
-		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
+		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 40;
 		target_stop = wonka_single_product_img_area.offsetHeight - summary_section.offsetHeight;
 		win_y = window.pageYOffset;
 
@@ -650,7 +649,7 @@
 							{
 								img_tainers.setAttribute( 'data-variant-color', variant_selected );
 							}
-							
+
 							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
@@ -764,6 +763,7 @@
 			{
 				item.addEventListener( 'click', function( event )                   
 					{
+						var top_adjustment = getComputedStyle( thumb_lis_parent.parentElement ).top;
 						event.preventDefault();
 						var el = event.target;
 						if ( el.nodeName === 'IMG' )
@@ -771,7 +771,7 @@
 							el = el.parentElement;
 						}
 						var el_scroll_to_id = el.getAttribute( 'href' ).replace( '#', '' );
-						scrollToSection( el_scroll_to_id );
+						scrollToSection( el_scroll_to_id, top_adjustment );
 					});
 			});
 	}
@@ -1201,7 +1201,7 @@
 
 			if ( window.pageYOffset > document.querySelector( '#main' ).offsetTop ) 
 			{
-				scrollToSection( 'main' );
+				scrollToSection( 'main', 15 );
 			}
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
@@ -1321,7 +1321,7 @@
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
 							one_click = false;
-							scrollToSection( 'product-statement' );
+							scrollToSection( 'product-statement', 15 );
 						}
 					} );
 			}
@@ -1336,7 +1336,7 @@
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
 							one_click = false;
-							scrollToSection( 'product-statement' );
+							scrollToSection( 'product-statement', 15 );
 						}
 					} );
 			}
@@ -1351,7 +1351,7 @@
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
 							one_click = false;
-							scrollToSection( 'reviews' );
+							scrollToSection( 'reviews', 15 );
 						}
 					} );
 			}
