@@ -388,7 +388,8 @@
 
 			/* This media query is on section.product-img-section */
 			@media screen and ( min-width: 768px ) {
-
+				max-width: 100%;
+				
 				div.wonka-single-product-img-area {
 					position: relative;
 					flex: 1 55%;
