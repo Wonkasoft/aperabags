@@ -646,6 +646,11 @@
 					full_imgs_parent.innerHTML = '';
 					full_imgs.forEach( function( img_tainers, i ) 
 						{
+							if ( i === 0 ) 
+							{
+								img_tainers.setAttribute( 'data-variant-color', variant_selected );
+							}
+							
 							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
