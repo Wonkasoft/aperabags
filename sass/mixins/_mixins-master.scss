@@ -49,32 +49,60 @@
 }
 
 @mixin media-breakpoint-up( $breakpoint ) {
+	@if $breakpoint == xs {
+		@media only screen and ( min-width: 480px ) {
+			@content;
+		}
+	}
 	@if $breakpoint == sm {
-		@media ( min-width: 576px ) {
+		@media only screen and ( min-width: 576px ) {
 			@content;
 		}
 	}
 	@if $breakpoint == md {
-		@media ( min-width: 768px ) {
+		@media only screen and ( min-width: 768px ) {
 			@content;
 		}
 	}
 	@if $breakpoint == lg {
-		@media ( min-width: 992px ) {
+		@media only screen and  ( min-width: 992px ) {
 			@content;
 		}
 	}
 	@if $breakpoint == xl {
-		@media ( min-width: 1200px ) {
+		@media only screen and  ( min-width: 1200px ) {
 			@content;
 		}
 	}
 	@if $breakpoint == xxl {
-		@media ( min-width: 1460px ) {
+		@media only screen and  ( min-width: 1460px ) {
 			@content;
 		}
 	}
-
+	@if $breakpoint == ipx {
+		@media only screen 
+    	and (device-width : 375px) 
+    	and (device-height : 812px) 
+    	and (-webkit-device-pixel-ratio : 3) {
+			@content;
+		}
+	}
+	@if $breakpoint == ip8 {
+		@media only screen 
+    	and (device-width : 375px) 
+    	and (device-height : 667px) 
+    	and (-webkit-device-pixel-ratio : 2) {
+			@content;
+		}
+	}
+	@if $breakpoint == ip8 {
+		@media only screen 
+    	and (device-width : 375px) 
+    	and (device-height : 736px) 
+    	and (-webkit-device-pixel-ratio : 3) {
+			@content;
+		}
+	}
 }
 
 @mixin clear-webkits( $value, $types: () ) {
