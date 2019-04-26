@@ -154,9 +154,9 @@
 					font-family: 'Open Sans';
 					font-weight: 800;
 					background: #ffffff;
-					width: 22px;
-					height: 22px;
-				    line-height: 1;
+					width: 24px;
+					height: 24px;
+				    line-height: 1.5;
 				    text-shadow: none;
 				    color: #333333;
 					@include font-size( .9 );
@@ -303,6 +303,10 @@
 		    padding: 8px;
 		    @include prefix( transition, $trans_25, webkit moz o);
 
+		    ul.sub-menu {
+		    	position: relative;
+		    }
+
 	    	i {
 		    	color: $color__main-menu;
 		    	line-height: 1.5;
@@ -324,16 +328,16 @@
 				padding: 0.5rem 0;
 				@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
 
-				.wonka-badge {
+				.wonka-cart-badge {
 					display: flex;
 					align-items: flex-start;
 					justify-content: center;
 					font-family: $font__main_jose;
 					font-weight: 800;
 					background: #ffffff;
-					width: 20px;
-					height: 20px;
-				    line-height: 1;
+					width: 24px;
+					height: 24px;
+				    line-height: 1.5;
 				    text-shadow: none;
 				    color: #333333;
 					@include font-size( .9 );
@@ -361,21 +365,23 @@
 		ul#cart-menu-mobile {
 	    	display: flex;
 	    	align-items: center;
-	    	justify-content: space-between;
+	    	justify-content: center;
 	    	width: 100%;
 	    	height: inherit;
 	    	overflow: visible;
 	    	background: none;
 
 	    	li {
-	    		margin: 0;
-	    		padding: 0;
+	    		padding: 8px 15px;
 
 	    		a {
 	    			padding: 0;
 					@include font-size( 1 );
 				    line-height: 1.2;
 
+				    .wonka-cart-badge {
+				    	text-shadow: none;
+				    }
 	    		}
 	    	}
 		}

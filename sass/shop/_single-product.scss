@@ -20,73 +20,94 @@
 				}
 			}
 
-			.wonka-image-viewer {
-				position: relative;
-				height: 100%;
-				max-height: 100%;
-				cursor: zoom-in;
-				@include prefix( transition, $trans_25, o moz webkit );
+			figure.woocommerce-product-gallery__wrapper {
 
-				div.woocommerce-product-gallery__image:not(:last-child) {
-					margin-bottom: 25px;
-				}
-
-				div.woocommerce-product-gallery__image {
+				div.sticky-spacer {
+					position: relative;
+					display: block;
+					flex: 0 0 100%;
+					background: #fff;
 					width: 100%;
+					height: 0;
+					top: 0;
+					@include prefix( transition, height .25s ease-in-out, o moz webkit );
 
-					img {
-						width: 100%;
+					&.spacing-now {
+						position: -webkit-sticky !important;    
+						position: sticky !important;
+						height: 30px;
+						z-index: 999;
 					}
 				}
-			}
 
-			div.wonka-thumbnails {
-				position: relative;
-				width: 115px;
-				padding: 0;
+				div.wonka-image-viewer {
+					position: relative;
+					flex: 0 0 80%;
+					height: 100%;
+					max-height: 100%;
+					cursor: zoom-in;
+					@include prefix( transition, $trans_25, o moz webkit );
 
-				ul {
-					list-style: none;
-					margin: 0;
-					padding: 0;
+					div.woocommerce-product-gallery__image:not(:last-child) {
+						margin-bottom: 25px;
+					}
 
-					li:not(:last-child) {
+					div.woocommerce-product-gallery__image {
+						width: 100%;
 
-						a.woocommerce-product-gallery__image {
-							margin-bottom: 15px;
+						img {
+							width: 100%;
 						}
 					}
-					
-					li {
-						padding-right: 15px;
+				}
 
-						a.woocommerce-product-gallery__image {
-							display: block;
-							padding: 0;
-							@include prefix( transition, $trans_25, o moz webkit );
+				div.wonka-thumbnails {
+					position: relative;
+					flex: 0 0 20%;
+					padding: 0;
 
-							img {
-								width: auto;
-								height: auto;
-								opacity: .3;
-								@include prefix( transition, $trans_25, o moz webkit );
+					ul {
+						list-style: none;
+						margin: 0;
+						padding: 0;
+
+						li:not(:last-child) {
+
+							a.woocommerce-product-gallery__image {
+								margin-bottom: 15px;
 							}
+						}
+						
+						li {
+							padding-right: 15px;
 
-							&.active {
+							a.woocommerce-product-gallery__image {
+								display: block;
+								padding: 0;
+
 
 								img {
-									opacity: 1;
+									width: auto;
+									height: auto;
+									opacity: .3;
+									@include prefix( transition, $trans_25, o moz webkit );
+								}
+
+								&.active {
+
+									img {
+										opacity: 1;
+									}
 								}
 							}
 						}
 					}
-				}
-				
-				&.sticky-on {
-					position: -webkit-sticky !important;    
-					position: sticky !important;
-					top: 25px;
-					@include prefix( transition, $trans_3, o moz webkit );
+					
+					&.sticky-on {
+						position: -webkit-sticky !important;    
+						position: sticky !important;
+						top: 25px;
+					}
 				}
 			}
 		}
@@ -139,8 +160,8 @@
 		flex-wrap: wrap;
 
 		section.product-img-section {
-			max-width: 1200px;
-			width: 100%;
+			max-width: 80%;
+			width: 1200px;
 			margin: 15px auto;
 			display: flex;
 			align-items: flex-start;
@@ -168,6 +189,7 @@
 						align-items: flex-start;
 						justify-content: center;
 						flex-direction: row-reverse;
+						flex-wrap: wrap;
 					}
 				}
 			}
@@ -197,7 +219,7 @@
 					flex: 1 100%;
 					text-align: left;
 					letter-spacing: -0.8px;
-					@include font-size( 1.1 );
+					@include font-size( 1 );
 				}
 
 				div.woocommerce-product-details__short-description {
@@ -215,7 +237,7 @@
 					max-width: 100%;
 
 					p.price {
-						flex: .3 15%;
+						width: 33%;
 						display: flex;
 					    align-items: center;
 					    justify-content: space-between;
@@ -366,10 +388,11 @@
 
 			/* This media query is on section.product-img-section */
 			@media screen and ( min-width: 768px ) {
-
+				max-width: 100%;
+				
 				div.wonka-single-product-img-area {
 					position: relative;
-					flex: 1 59%;
+					flex: 1 55%;
 
 					div.woocommerce-product-gallery {
 						position: relative;
@@ -380,7 +403,6 @@
 						}
 
 						div.wonka-image-viewer {
-							flex: 1 85%;
 
 							div.woocommerce-product-gallery__image {
 								
@@ -400,7 +422,7 @@
 				}
  
 				div.summary {
-					flex: 0.1 40%;
+					flex: 0 0 45%;
 					position: relative;
 					z-index: 20;
 					top: 0;
@@ -413,7 +435,12 @@
 
 					.product_title {
 						letter-spacing: -0.8px;
-						@include font-size( 1.8 );
+						@include font-size( 1 );
+					}
+
+					.woocommerce-product-details__short-description {
+
+						@include font-size( .9 );
 					}
 				}
 
@@ -490,7 +517,7 @@ section.product-tabs-section {
 			}
 
 			div#review_form_wrapper {
-				height: 25px;
+				height: 24px;
 				overflow: hidden;
 				@include prefix( transition, $trans_35, o moz webkit );
 

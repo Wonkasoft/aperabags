@@ -36,7 +36,7 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 ?>
 <div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>" style="opacity: 0; transition: opacity .25s ease-in-out;">
 	<figure class="woocommerce-product-gallery__wrapper">
-
+		<div class="sticky-spacer"></div>
 		<?php
 		if ( $product->get_image_id() ) {
 			$html = wc_get_gallery_image_html( $post_thumbnail_id, true );
@@ -59,10 +59,7 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 
 		<div class="navbar wonka-thumbnails">
 			<ul class="navbar-nav">
-				<li class="nav-item" data-variant-check="true" data-variant-color="<?php echo esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) ?>">
-					<?php echo apply_filters( 'wonka_single_product_image_thumbnail_html', wc_get_gallery_image_html( $post_thumbnail_id ), $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped ?>
-				</li>
-					<?php do_action( 'woocommerce_product_thumbnails' ); ?>
+				<?php do_action( 'woocommerce_product_thumbnails' ); ?>
 			</ul>
 		</div>
 	</figure>
