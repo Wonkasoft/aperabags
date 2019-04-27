@@ -1191,3 +1191,43 @@ function ws_ajax_search() {
 }
 add_action( 'wp_ajax_search_site',        'ws_ajax_search' );
 add_action( 'wp_ajax_nopriv_search_site', 'ws_ajax_search' );
+
+// define the woocommerce_product_review_list_args callback 
+function filter_woocommerce_product_review_list_args( $comment ) { 
+	// make filter magic happen here...
+	
+	$length = 40;
+	$str_array = explode( ' ', $comment->comment_content );
+	$comment_word_count = count( (array)$str_array );
+	$output = '';
+
+		for( $i = 0; $i < $length; $i++ ) :
+		
+			if ( $i == ($length - 1) && $comment_word_count > $length ) :
+				$output .= $str_array[$i] . '...';
+			else:
+				$output .= $str_array[$i] . ' ';
+			endif;
+		endfor;
+
+	// $output = explode(' ', $comment->comment_content, 21);
+
+
+
+	ob_start();
+	echo "<div class='wonka-comment-wrapper'>";
+	echo "<p class='comment-text' ws-data-comment='" . htmlspecialchars($comment->comment_content, ENT_QUOTES) . "'>";
+	echo $output; 
+	echo "</p>";
+	if ( $comment_word_count >= $length )
+	{
+		echo "<button class='wonka-btn ws-data-comment-btn'>Read More</button>";
+	}
+	echo "</div>";
+	echo ob_get_clean();
+
+}; 
+			 
+// add the filter 
+remove_action('woocommerce_review_comment_text', 'woocommerce_review_display_comment_text', 10, 1 );
+add_action( 'woocommerce_review_comment_text', 'filter_woocommerce_product_review_list_args', 10, 1 ); 

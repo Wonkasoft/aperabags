@@ -1574,6 +1574,37 @@
 
 
 
+/***********************************************************************
+ * This is for Review length
+ **********************************************************************/
+var review = document.querySelectorAll('p.comment-text');
+var read_more_btn = document.querySelectorAll('button.ws-data-comment-btn');
+
+read_more_btn.forEach(function(item, i){
+	var short_comment = review[i].innerText;
+	var full_comment = review[i].getAttribute('ws-data-comment');
+
+	item.addEventListener( 'click', function(e)
+	{
+		e.preventDefault();
+		item.classList.toggle('full_comment');
+	
+		if (item.classList.contains('full_comment'))
+		{
+			review[i].innerText = full_comment;
+			item.innerText = "Read Less";
+		} else {
+			review[i].innerText = short_comment;
+			item.innerText = "Read More";
+		}
+	});
+});
+
+
+
+/**
+ * End of Review length
+ */
 };
 	/*=====  End of This is for running after document is ready  ======*/
 
