@@ -110,12 +110,12 @@ $footer_section = get_section_mods( 'footer' );
 						</div><!-- .col -->
 						<?php endif; ?>
 					</div><!-- .row -->
-					<div class="row align-items-center justify-content-end email-form">
+					<div class="row align-items-center justify-content-end wonka-email-form">
 						<?php if ( !empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
 							<div class="col col-12 col-md-8">
 								<?php
-									_e( "<small>Sign up for our email newsletter and receive a 10% discount on today's purchase!</small><br />" );
 									_e( do_shortcode( $footer_section->footer_mods->footer_form_shortcode ) );
+									_e( "<small>Sign up for our email newsletter and receive a 10% discount on today's purchase!</small><br />" );
 								?>
 							</div> <!-- .col -->
 						<?php endif; ?>
