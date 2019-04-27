@@ -58,7 +58,7 @@
 			outline: 0;
 		}
 
-		@include media-breakpoint-up( sm ) {
+		@include media-breakpoint( sm ) {
 			top: -4.2rem;
 		}
 	}
@@ -198,7 +198,7 @@
 			}
 		}
 
-		@include media-breakpoint-up( lg ) {
+		@include media-breakpoint( lg ) {
 			flex: .2 10%;
 
 			> ul {
@@ -252,7 +252,7 @@
 	top: -5px;
 }
 
-@include media-breakpoint-up( lg ) {
+@include media-breakpoint( lg ) {
 	.menu-toggle {
 		display: none;
 	}
@@ -360,7 +360,7 @@
 	    }
 	}
 
-	@include media-breakpoint-up( md ) {
+	@include media-breakpoint( md ) {
 
 		ul#cart-menu-mobile {
 	    	display: flex;
