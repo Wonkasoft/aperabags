@@ -140,7 +140,7 @@ get_header();
 												<?php
 												/* Checks for an subheader set in the slide object */
 												if ( !empty( $slide->slide_link ) ) : ?>
-													<a href="<?php echo $slide->slide_link; ?>" class="btn wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
+													<a href="<?php echo sprintf( esc_html__( "%1s%2s", "aperabags"), get_site_url(), $slide->slide_link ); ?>" class="btn wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
 												<?php endif; ?>
 											</div><!-- .text-box -->
 										</div><!-- .img-header-text-container -->
