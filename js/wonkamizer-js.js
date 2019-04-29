@@ -676,6 +676,7 @@
 					thumb_lis_parent.innerHTML = '';
 					thumb_lis.forEach( function( img_tainers, i ) 
 						{
+							console.log(i);
 							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
@@ -690,13 +691,16 @@
 
 					if ( item.selectedIndex === 0 ) 
 					{
+						full_imgs_parent.innerHTML = '';
 						full_imgs.forEach( function( img_tainers, i ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
 							});
 
+						thumb_lis_parent.innerHTML = '';
 						thumb_lis.forEach( function( img_tainers, i ) 
 							{
+							console.log(i);
 								img_tainers.classList.add( 'variant-show' );
 							});
 					}
@@ -1567,11 +1571,41 @@
 
 
 
+	/***********************************************************************
+	 * This is for Review length
+	 **********************************************************************/
+	var read_more_btn = document.querySelectorAll( 'button.ws-data-comment-btn' );
+
+	read_more_btn.forEach(function( item, i ){
+
+		item.addEventListener( 'click', function( e )
+		{
+			e.preventDefault();
+			var target = e.target;
+			var comment_el = target.previousElementSibling;
+			var inner_comment = comment_el.innerText;
+			var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+		
+			if ( comment_el.classList.contains( 'full_comment' ) )
+			{
+				comment_el.classList.toggle( 'full_comment' );
+				comment_el.innerText = data_comment;
+				comment_el.setAttribute( 'ws-data-comment', inner_comment );
+				target.innerText = "Read More";
+			} 
+			else 
+			{
+				comment_el.classList.toggle( 'full_comment' );
+				comment_el.innerText = data_comment;
+				comment_el.setAttribute( 'ws-data-comment', inner_comment );
+				target.innerText = "Read Less";
+			}
+		});
+	});
+	/**
+	 * End of Review length
+	 */
 };
 	/*=====  End of This is for running after document is ready  ======*/
-
-
-
-
 
 })(jQuery);

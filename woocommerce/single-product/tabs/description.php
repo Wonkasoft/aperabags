@@ -185,7 +185,7 @@ if ( !empty( $product_specs_data ) ) : ?>
 				</tr>
 				<tr>
 					<td>
-						Laser Vented Compartments (allows your gear to breathe)
+						Laser-Cut Venting (allows your gear to breathe)
 					</td>
 				</tr>
 				<tr>
