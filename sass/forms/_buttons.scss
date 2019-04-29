@@ -11,21 +11,23 @@ input[type="button"],
 input[type="reset"],
 input[type="submit"] {
 	text-transform: uppercase;
-	color: rgba(0, 0, 0, .8);
+	color: rgba( #fff, 1 );
 	font-weight: 700;
 	line-height: 1.2;
 	text-align: center;
-	background: rgba( #777, .3 );
+	border-style: outset;
+	border-width: 2px;
+	background: rgba( #674af4, 1 );
 	@include prefix( transition, $trans_25, webkit moz o);
 
 
 	&:visited {
-		color: rgba(0, 0, 0, .8);
+		color: rgba( #fff, .8);
 	}
 
 	&:hover {
-		background: #777;
-		color: rgba(255, 255, 255, .8);
+		background: rgba( #5683fc, 1 );
+		color: rgba(255, 255, 255, 1);
 	}
 
 	&:active,
@@ -48,21 +50,20 @@ input[type="submit"].wonka-btn {
 	padding: .5rem 1rem;
 	text-align: center;
 	border-radius: 100px;
-	background: rgba( #777, .3 );
-    border: 3px solid #777;
+	background: rgba( #674af4, 1 );
+	border-style: outset;
+	color: rgba(255, 255, 255, 1);
     @include font-size( 1 );
     @include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
     &:hover {
-    	border: 3px solid #777;
-    	background: #777;
-		color: rgba(255, 255, 255, .8);
+		background: rgba( #5683fc, 1 );
+		color: rgba(255, 255, 255, 1);
     }
 
     &:active,
     &:focus {
     	outline: 0;
-    	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
     }
 }
 

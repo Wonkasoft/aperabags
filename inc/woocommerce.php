@@ -1104,7 +1104,6 @@ function wonka_single_product_image_thumbnail_html_custom( $data, $attachment_id
 		$output .= '</a>';
 	endif;
 	$output .= ob_get_clean();
-	echo $output;
 	return $output;
 }
 
@@ -1212,11 +1211,9 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 
 	// $output = explode(' ', $comment->comment_content, 21);
 
-
-
 	ob_start();
 	echo "<div class='wonka-comment-wrapper'>";
-	echo "<p class='comment-text' ws-data-comment='" . $comment->comment_content . "'>";
+	echo "<p class='comment-text' ws-data-comment='" . esc_html( $comment->comment_content ) . "'>";
 	echo $output; 
 	echo "</p>";
 	if ( $comment_word_count >= $length )

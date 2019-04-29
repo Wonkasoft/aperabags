@@ -267,16 +267,6 @@ section.desirable-slider-section {
 								font-weight: 800;
 							}
 
-							.wonka-btn {
-								color: rgba( #ffff00, .8 );
-								border-color: #674af4;
-
-								&:hover {
-									color: rgba( #ffffff, 1 );
-									background: #674af4;
-								}
-							}
-
 							@include media-breakpoint( md ) {
 								max-width: 1200px;
 								white-space: nowrap;
