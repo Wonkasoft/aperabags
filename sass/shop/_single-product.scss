@@ -635,6 +635,11 @@ section.product-tabs-section {
 						font-weight: 400;
 						font-family: $font__main;
 						@include font-size( 1 );
+
+						&.product-disclosures {
+							font-size: .9rem;
+
+						}
 					}
 
 					thead {
