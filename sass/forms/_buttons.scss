@@ -80,6 +80,7 @@ button.slick-arrow {
 	width: 48px;
 	height: 48px;
 	z-index: 999;
+	border-style: none;
 	@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
 	@include prefix( transition, $trans_25, webkit moz o);
 
