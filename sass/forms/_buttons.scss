@@ -11,9 +11,11 @@ input[type="button"],
 input[type="reset"],
 input[type="submit"] {
 	text-transform: uppercase;
+	display: inline-block;
 	color: rgba( #fff, 1 );
 	font-weight: 700;
 	line-height: 1.2;
+	letter-spacing: .1rem;
 	text-align: center;
 	border-style: outset;
 	border-width: 2px;

@@ -140,7 +140,7 @@ get_header();
 												<?php
 												/* Checks for an subheader set in the slide object */
 												if ( !empty( $slide->slide_link ) ) : ?>
-													<a href="<?php echo sprintf( esc_html__( "%1s%2s", "aperabags"), get_site_url(), $slide->slide_link ); ?>" class="btn wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
+													<a href="<?php echo sprintf( esc_html__( "%1s%2s", "aperabags"), get_site_url(), $slide->slide_link ); ?>" class="wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
 												<?php endif; ?>
 											</div><!-- .text-box -->
 										</div><!-- .img-header-text-container -->
@@ -259,7 +259,7 @@ get_header();
 						<?php endif; ?>
 						<?php
 						if ( ! empty( $about_section->about_the_brand->about_the_brand_button_link ) ) : ?>
-							<a class="btn btn-primary wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
+							<a class="wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
 						<?php endif; ?>
 					</div><!-- .about-components-wrap -->
 				</div>
@@ -290,7 +290,7 @@ get_header();
 					<?php _e( do_shortcode( $social_section->social_mods->social_shortcode ) ); ?>
 				</div>
 				<div class="col-12 shop-social-btn text-center">
-					<a class="btn btn-lg btn-primary wonka-btn" href="<?php _e( $social_section->social_mods->social_shop_button);?>"><?php _e($social_section->social_mods->social_btn_text); ?></a>
+					<a class="wonka-btn" href="<?php _e( $social_section->social_mods->social_shop_button);?>"><?php _e($social_section->social_mods->social_btn_text); ?></a>
 				</div> <!-- .col -->
 				</div>
 			</section><!-- .instagram-section -->
