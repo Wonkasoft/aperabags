@@ -998,6 +998,17 @@
 					var comment_el = target.previousElementSibling;
 					var inner_comment = comment_el.innerText;
 					var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+
+					target.addEventListener( 'blur', function() 
+						{
+							if ( !comment_el.classList.contains( 'full_comment' ) )
+							{
+								comment_el.classList.toggle( 'full_comment' );
+								comment_el.innerText = data_comment;
+								comment_el.setAttribute( 'ws-data-comment', inner_comment );
+								target.innerText = "Read Less";
+							}
+						});
 				
 					if ( comment_el.classList.contains( 'full_comment' ) )
 					{
@@ -1005,7 +1016,7 @@
 						comment_el.innerText = data_comment;
 						comment_el.setAttribute( 'ws-data-comment', inner_comment );
 						target.innerText = "Read More";
-						console.log( target );
+						setup_for_reviews( comment_list );
 					} 
 					else 
 					{
