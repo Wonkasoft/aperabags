@@ -26,7 +26,7 @@ input[type="submit"] {
 	}
 
 	&:hover {
-		background: rgba( #674af4, 1 );
+		background: rgba( #5683fc, 1 );
 		color: rgba(255, 255, 255, 1);
 	}
 
@@ -57,7 +57,7 @@ input[type="submit"].wonka-btn {
     @include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
     &:hover {
-		background: rgba( #674af4, 1 );
+		background: rgba( #5683fc, 1 );
 		color: rgba(255, 255, 255, 1);
     }
 
