@@ -125,9 +125,10 @@ if ( !empty( $product_specs_data ) ) : ?>
 					<?php endif; ?>
 
 					<?php if ( is_object( $spec ) ) : ?>
-						<?php if ( !empty( $spec ) ) : ?>
+						<?php if ( !empty( $spec ) && !$spec->disclosure ) : ?>
 							<tr>
-								<th>
+								<th>	
+
 									<?php _e( $spec->spec_header ); ?>
 								</th>
 								<?php if ( !empty( $spec->points ) && is_array( $spec->points ) ) : ?>
@@ -150,7 +151,29 @@ if ( !empty( $product_specs_data ) ) : ?>
 					</tr>
 				<?php endif; ?>
 			<?php endif; ?>
+		<?php if ( !empty( $spec->disclosure ) && is_object( $spec->disclosure ) ) : ?>
+								<tr>
+								<td colspan="2" class="product-disclosures">
+									<ul class="product-spec-disclosures">
+										<?php $disclosure_count = 0;
+										foreach ( $spec->disclosure as $disclosure ) : $disclosure_count++; ?>
+											<li class="disclosure-point-<?php _e( $disclosure_count ); ?>">
+												<?php _e( $disclosure ); ?>
+											</li>
+										<?php endforeach; ?>
+									</ul>
+								</td>
+								</tr>
+							<?php endif; ?>
+							<?php if ( !empty( $spec->disclosure ) && is_string( $spec->disclosure ) ) : ?>
+							<tr>
+								<td colspan="2" class="product-disclosures">
+									<?php _e( $spec->disclosure ); ?>
+								</td>
+							</tr>
+						<?php endif; ?>
 		<?php endforeach; ?>
+
 	</tbody>
 </table>
 </div>
