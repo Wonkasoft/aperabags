@@ -676,7 +676,6 @@
 					thumb_lis_parent.innerHTML = '';
 					thumb_lis.forEach( function( img_tainers, i ) 
 						{
-							console.log(i);
 							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
@@ -700,7 +699,6 @@
 						thumb_lis_parent.innerHTML = '';
 						thumb_lis.forEach( function( img_tainers, i ) 
 							{
-							console.log(i);
 								img_tainers.classList.add( 'variant-show' );
 							});
 					}
