@@ -934,7 +934,6 @@
 		==========================================================*/
 		if ( document.querySelector( '#reviews' ) ) 
 		{
-
 			var write_review = document.querySelector( '#write-review' ),
 			comment_form_wrapper = document.querySelector( 'div#review_form_wrapper' ),
 			reviews_top = document.querySelector( '.wonka-section-reviews' ),
@@ -984,6 +983,42 @@
 						comment_form_wrapper.style.height = 25 + 'px';
 					}
 				});
+
+			/***********************************************************************
+			 * This is for Review length
+			 **********************************************************************/
+			var read_more_btn = document.querySelectorAll( 'button.ws-data-comment-btn' );
+
+			read_more_btn.forEach(function( item, i ){
+
+				item.addEventListener( 'click', function( e )
+				{
+					e.preventDefault();
+					var target = e.target;
+					var comment_el = target.previousElementSibling;
+					var inner_comment = comment_el.innerText;
+					var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+				
+					if ( comment_el.classList.contains( 'full_comment' ) )
+					{
+						comment_el.classList.toggle( 'full_comment' );
+						comment_el.innerText = data_comment;
+						comment_el.setAttribute( 'ws-data-comment', inner_comment );
+						target.innerText = "Read More";
+						console.log( target );
+					} 
+					else 
+					{
+						comment_el.classList.toggle( 'full_comment' );
+						comment_el.innerText = data_comment;
+						comment_el.setAttribute( 'ws-data-comment', inner_comment );
+						target.innerText = "Read Less";
+					}
+				});
+			});
+			/**
+			 * End of Review length
+			 */
 		}
 		/*=====  End of This is for setting up the reviews  ======*/
 		
@@ -1481,11 +1516,9 @@
 			}
 		}
 
-	/**
-	 * search autocomplete
-	 * 
-	 */
-	
+	/*=================================================
+	=            Setup for the search form            =
+	=================================================*/
 	var search_results = document.createElement( 'DIV' );
 	var xhr = new XMLHttpRequest();
 	var search_field = document.querySelector( 'input#s' );
@@ -1566,43 +1599,7 @@
 			search_results.style.left = '';
 			search_results.style.top = '';
 		});
-
-
-
-	/***********************************************************************
-	 * This is for Review length
-	 **********************************************************************/
-	var read_more_btn = document.querySelectorAll( 'button.ws-data-comment-btn' );
-
-	read_more_btn.forEach(function( item, i ){
-
-		item.addEventListener( 'click', function( e )
-		{
-			e.preventDefault();
-			var target = e.target;
-			var comment_el = target.previousElementSibling;
-			var inner_comment = comment_el.innerText;
-			var data_comment = comment_el.getAttribute( 'ws-data-comment' );
-		
-			if ( comment_el.classList.contains( 'full_comment' ) )
-			{
-				comment_el.classList.toggle( 'full_comment' );
-				comment_el.innerText = data_comment;
-				comment_el.setAttribute( 'ws-data-comment', inner_comment );
-				target.innerText = "Read More";
-			} 
-			else 
-			{
-				comment_el.classList.toggle( 'full_comment' );
-				comment_el.innerText = data_comment;
-				comment_el.setAttribute( 'ws-data-comment', inner_comment );
-				target.innerText = "Read Less";
-			}
-		});
-	});
-	/**
-	 * End of Review length
-	 */
+	/*=====  End of Setup for the search form  ======*/
 };
 	/*=====  End of This is for running after document is ready  ======*/
 
