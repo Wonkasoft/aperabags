@@ -387,7 +387,22 @@
 			}
 
 			/* This media query is on section.product-img-section */
-			@media screen and ( min-width: 768px ) {
+			@include media-breakpoint( sm ) {
+
+				div.summary {
+
+					.product_title {
+						letter-spacing: -0.8px;
+						@include font-size( 1.2 );
+					}
+
+					.woocommerce-product-details__short-description {
+
+						@include font-size( 1.1 );
+					}
+				}
+			}
+			@include media-breakpoint( md ) {
 				max-width: 100%;
 				
 				div.wonka-single-product-img-area {
@@ -435,12 +450,12 @@
 
 					.product_title {
 						letter-spacing: -0.8px;
-						@include font-size( 1 );
+						@include font-size( 1.4 );
 					}
 
 					.woocommerce-product-details__short-description {
 
-						@include font-size( .9 );
+						@include font-size( 1.1 );
 					}
 				}
 
@@ -567,7 +582,7 @@ section.product-tabs-section {
 				margin: 15px auto;
 			}
 
-			@include media-breakpoint-up( md ) {
+			@include media-breakpoint( md ) {
 				
 				a#write-review {
 					margin-bottom: 0;
@@ -642,7 +657,7 @@ section.product-tabs-section {
 						max-width: 100%;
 					}
 					
-					@include media-breakpoint-up( md ) {
+					@include media-breakpoint( md ) {
 
 						p {
 							max-width: 70%;
@@ -669,7 +684,7 @@ section.product-tabs-section {
 					}	
 				}
 
-				@include media-breakpoint-up( md ) {
+				@include media-breakpoint( md ) {
 
 					div.wonka-row-product-specs {
 

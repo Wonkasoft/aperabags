@@ -1216,7 +1216,7 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 
 	ob_start();
 	echo "<div class='wonka-comment-wrapper'>";
-	echo "<p class='comment-text' ws-data-comment='" . htmlspecialchars($comment->comment_content, ENT_QUOTES) . "'>";
+	echo "<p class='comment-text' ws-data-comment='" . $comment->comment_content . "'>";
 	echo $output; 
 	echo "</p>";
 	if ( $comment_word_count >= $length )

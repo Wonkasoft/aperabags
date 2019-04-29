@@ -1487,6 +1487,7 @@
 	var search_results = document.createElement( 'DIV' );
 	var xhr = new XMLHttpRequest();
 	var search_field = document.querySelector( 'input#s' );
+	var search_close = document.querySelector( 'span.closebtn' );
 	var data_value;
 	var field_position;
 	search_results.classList.add( 'autocomplete-suggestions' );
@@ -1524,7 +1525,7 @@
 											{
 												search_field.value = data_value;
 											});
-										title_element.addEventListener( 'click', function() 
+										title_element.addEventListener( 'click', function(e) 
 											{
 												search_field.value = title_element.innerText;
 												data_value = search_field.value;
@@ -1545,14 +1546,6 @@
 								search_results.style.left = field_position.x.toFixed(2) + 'px';
 								search_results.style.top = field_position.bottom.toFixed(2) + 'px';
 							}
-							else
-							{
-								search_results.style.display = 'none';
-								search_results.style.position = '';
-								search_results.style.width = '';
-								search_results.style.left = '';
-								search_results.style.top = '';
-							}
 						}
 					});
 			}
@@ -1563,7 +1556,7 @@
 		xhr.send();
 	});
 
-	search_field.addEventListener( 'blur', function () 
+	search_close.addEventListener( 'click', function () 
 		{
 			search_results.style.display = 'none';
 			search_results.style.position = '';

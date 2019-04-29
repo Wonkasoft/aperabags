@@ -104,7 +104,7 @@ body.search {
 		}
 	}
 
-	@include media-breakpoint-up( md ) {
+	@include media-breakpoint( md ) {
 
 		input#s {
 			border-radius: 100px 0 0 100px;
@@ -174,7 +174,7 @@ body.search {
 			@include prefix( transition, $trans_25, o moz webkit );
 		}
 
-		@include media-breakpoint-up( md ) {
+		@include media-breakpoint( md ) {
 			width: 65%;
 
 			input[type=text] {

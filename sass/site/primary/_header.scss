@@ -21,7 +21,7 @@
 		}
 	}
 
-	@include media-breakpoint-up( md ) {
+	@include media-breakpoint( md ) {
 
 		span.topbar-message-text {
 			letter-spacing: 4px;
@@ -63,11 +63,11 @@
 		}
 	}
 
-	@include media-breakpoint-up( sm ) {
+	@include media-breakpoint( sm ) {
 		height: 140px;
 	}
 
-	@include media-breakpoint-up( md ) {
+	@include media-breakpoint( md ) {
 		height: 130px;
 	}
 }

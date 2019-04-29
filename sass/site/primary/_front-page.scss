@@ -87,13 +87,14 @@ section.header-slider-section {
 								line-height: 1;
 								letter-spacing: 2px;
 								margin-bottom: 15px;
-								@include font-size( 1.2 );
+								white-space: nowrap;
+								@include font-size( 1.1 );
 							}
 						}
 					}	
 				}
 
-				@include media-breakpoint-up( md ) {
+				@include media-breakpoint( md ) {
 					background-size: cover;
 
 					.img-header-text-wrap {
@@ -116,7 +117,7 @@ section.header-slider-section {
 					}	
 				}
 
-				@include media-breakpoint-up( lg ) {
+				@include media-breakpoint( lg ) {
 					background-size: cover;
 							
 					.img-header-text-wrap {
@@ -139,7 +140,7 @@ section.header-slider-section {
 					}
 				}
 
-				@include media-breakpoint-up( xl ) {
+				@include media-breakpoint( xl ) {
 					background-size: cover;
 					
 					.img-header-text-wrap {
@@ -276,7 +277,7 @@ section.desirable-slider-section {
 								}
 							}
 
-							@include media-breakpoint-up( md ) {
+							@include media-breakpoint( md ) {
 								max-width: 1200px;
 								white-space: nowrap;
 							}
@@ -284,7 +285,7 @@ section.desirable-slider-section {
 					}	
 				}
 
-				@include media-breakpoint-up( md ) {
+				@include media-breakpoint( md ) {
 					background-size: cover;
 
 					.img-header-text-wrap {
@@ -303,7 +304,7 @@ section.desirable-slider-section {
 
 				}
 
-				@include media-breakpoint-up( lg ) {
+				@include media-breakpoint( lg ) {
 					background-size: cover;
 
 					.img-header-text-wrap {
@@ -321,7 +322,7 @@ section.desirable-slider-section {
 					}	
 				}
 
-				@include media-breakpoint-up( xl ) {
+				@include media-breakpoint( xl ) {
 					background-size: cover;
 
 					.img-header-text-wrap {
@@ -403,7 +404,7 @@ section.our-cause-section {
 				padding: 0 15px;
 			}
 
-			@include media-breakpoint-up( md ) {
+			@include media-breakpoint( md ) {
 
 				.img-container {
 					max-width: 380px;
