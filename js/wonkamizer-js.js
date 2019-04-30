@@ -270,10 +270,15 @@
 	{
 		var header_slider_section = document.querySelector( '.header-slider-section' ),
 		top_slide = document.querySelector( '.top-page-slide' ),
-		cta_slider = document.querySelector( '.header-slider-section' ),
+		top_slide_img_holder = top_slide.querySelectorAll( '.top-slide-img-holder' )[0],
 		cta_slider_section = document.querySelector( '.desirable-slider-section' ),
-		adjustment = window.innerHeight;
+		img_for_sizing = new Image(),
+		adjustment,
+		height_set;
 
+		img_for_sizing.src = 'https:' + top_slide_img_holder.getAttribute( 'data-img-url' );
+		img_for_sizing.style.width = window.innerWidth + 'px';
+		console.log(getComputedStyle( img_for_sizing ) );
 		if ( document.querySelector( '#wpadminbar' ) )
 		{
 			adjustment -= document.querySelector( '#wpadminbar' ).offsetHeight;
@@ -321,7 +326,7 @@
 		}, 300);
 	}
 
-	// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+
 	function shifting_parallax() 
 	{	
 		var top_slider_section = document.querySelector( '.header-slider-section' );
@@ -954,14 +959,14 @@
 				more_reviews.addEventListener( 'click', function(e) 
 					{
 						e.preventDefault();
-						if ( get_custom_height < comment_list.offsetHeight ) 
+						if ( more_reviews.innerText.toLowerCase() === 'less reviews' ) 
 						{
 							setup_for_reviews( comment_list );
-							setTimeout( function( comment_list ) 
+							setTimeout( function() 
 								{
 									reviews_top.scrollIntoView({behavior: 'smooth'});
-								}, 500, comment_list );
-							more_reviews.innerText = 'More Reviews';
+									more_reviews.innerText = 'More Reviews';
+								}, 500 );
 						}
 						else
 						{
@@ -998,15 +1003,25 @@
 					var comment_el = target.previousElementSibling;
 					var inner_comment = comment_el.innerText;
 					var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+					more_reviews = document.querySelector( '#more-reviews' );
 
-					target.addEventListener( 'blur', function() 
+					target.addEventListener( 'blur', function( e ) 
 						{
-							if ( !comment_el.classList.contains( 'full_comment' ) )
+							var target = e.target;
+							var comment_el = target.previousElementSibling;
+							var inner_comment = comment_el.innerText;
+							var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+
+							if ( comment_el.classList.contains( 'full_comment' ) )
 							{
 								comment_el.classList.toggle( 'full_comment' );
 								comment_el.innerText = data_comment;
 								comment_el.setAttribute( 'ws-data-comment', inner_comment );
-								target.innerText = "Read Less";
+								target.innerText = "Read More";
+								if ( more_reviews.innerText.toLowerCase() === 'more reviews' )
+								{
+									setup_for_reviews( comment_list );
+								}
 							}
 						});
 				
@@ -1016,7 +1031,7 @@
 						comment_el.innerText = data_comment;
 						comment_el.setAttribute( 'ws-data-comment', inner_comment );
 						target.innerText = "Read More";
-						if ( more_reviews.innerText === 'More Reviews' )
+						if ( more_reviews.innerText.toLowerCase() === 'more reviews' )
 						{
 							setup_for_reviews( comment_list );
 						}
@@ -1027,7 +1042,7 @@
 						comment_el.innerText = data_comment;
 						comment_el.setAttribute( 'ws-data-comment', inner_comment );
 						target.innerText = "Read Less";
-						if ( more_reviews.innerText === 'More Reviews' )
+						if ( more_reviews.innerText.toLowerCase() === 'more reviews' )
 						{
 							setup_for_reviews( comment_list );
 						}
