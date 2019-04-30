@@ -74,7 +74,7 @@ body.search {
 
 	input#s {
 		border-radius: 100px;
-		border-width: 3px;
+		border-width: 2px;
 		padding: 8px;
 		line-height: 1.2;
 		height: 100%;
@@ -93,7 +93,7 @@ body.search {
 		@include font-size( 1.1 );
 
 		i {
-			color: rgba( #777, .7 );
+			color: rgba( #fff, .8 );
 			@include prefix( transition, $trans_25, o moz webkit );
 		}
 
