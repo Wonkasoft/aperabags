@@ -17,9 +17,8 @@ input[type="submit"] {
 	line-height: 1.2;
 	letter-spacing: .1rem;
 	text-align: center;
-	border-style: outset;
-	border-width: 2px;
-	background: rgba( #674af4, 1 );
+	border: 2px outset #eeeeee;
+	background: rgba( #5884fc, 1 );
 	@include prefix( transition, $trans_25, webkit moz o);
 
 
@@ -52,8 +51,8 @@ input[type="submit"].wonka-btn {
 	padding: .5rem 1rem;
 	text-align: center;
 	border-radius: 100px;
-	background: rgba( #674af4, 1 );
-	border-style: outset;
+	background: rgba( #5884fc, 1 );
+	border: 2px outset #eeeeee;
 	color: rgba(255, 255, 255, 1);
     @include font-size( 1 );
     @include prefix( box-shadow, $box_shadow_4, o moz webkit );

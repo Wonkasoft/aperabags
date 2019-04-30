@@ -1124,6 +1124,30 @@
 			};
 		}
 		/*=====  End of This is to kill the about us video on close  ======*/
+
+		/*===================================================================
+		=            This is to kill the about us video on close            =
+		===================================================================*/
+		if ( document.querySelector( 'div#videoModalpop' ) ) 
+		{
+			var cause_vid_modal = document.querySelector( 'div#videoModalpop' );
+			var cause_vid_close = document.querySelector( 'div#videoModalpop button.close' );
+			var cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
+			var cause_vid_iframe_link = document.querySelector( 'div#videoModalpop iframe' ).src;
+
+			about_vid_close.onclick = function()
+			{
+				cause_vid_iframe.src = '';
+				cause_vid_iframe.src = cause_vid_iframe_link;
+			};
+
+			about_vid_modal.onclick = function() 
+			{
+				cause_vid_iframe.src = '';
+				cause_vid_iframe.src = cause_vid_iframe_link;
+			};
+		}
+		/*=====  End of This is to kill the about us video on close  ======*/
 		
 		/*============================================================================
 		=            This removes the title attribute from product images            =
