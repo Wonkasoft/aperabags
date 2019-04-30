@@ -37,7 +37,7 @@ get_header();
 						?>
 						<div class="top-page-slide">
 							<?php
-							if ( wp_is_mobile() ) :
+							if ( wp_is_mobile()  && ! is_ios() ) :
 								?>
 							<div class="top-slide-img-holder" data-img-url="<?php echo $slide->slide_mobile_img; ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php
@@ -122,7 +122,7 @@ get_header();
 						if ( !empty( $slide->slide_img ) ) : ?>
 							<div class="cta-section-slide">
 								<?php
-								if ( wp_is_mobile() ) :
+								if ( wp_is_mobile()  && ! is_ios() ) :
 								?>
 								<div class="cta-slide-img-holder" data-img-url="<?php echo $slide->slide_mobile_img; ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php

@@ -478,13 +478,13 @@ section.about-brand-section {
 
 			span.video-img-symbol-link {
 				position: absolute;
-				color: #aaa;
+				color: #4646fa;
 				@include font-size( 5 );
 				@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
 				@include prefix( transition, $trans_25, o moz webkit );
 
 				&:hover {
-					color: #777!important;
+					color: #1f98ff !important;
 					animation-name: wiggle;
 				  	animation-duration: .4s;
 				}

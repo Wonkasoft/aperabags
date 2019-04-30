@@ -1016,7 +1016,7 @@
 						comment_el.innerText = data_comment;
 						comment_el.setAttribute( 'ws-data-comment', inner_comment );
 						target.innerText = "Read More";
-						if ( more_reviews.innerText === 'More Reviews' ) 
+						if ( more_reviews.innerText === 'More Reviews' )
 						{
 							setup_for_reviews( comment_list );
 						}
@@ -1027,7 +1027,7 @@
 						comment_el.innerText = data_comment;
 						comment_el.setAttribute( 'ws-data-comment', inner_comment );
 						target.innerText = "Read Less";
-						if ( more_reviews.innerText === 'More Reviews' ) 
+						if ( more_reviews.innerText === 'More Reviews' )
 						{
 							setup_for_reviews( comment_list );
 						}
