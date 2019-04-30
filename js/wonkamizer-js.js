@@ -10,7 +10,9 @@
 	scroll_distance,
 	admin_bar,
 	message_timer,
-	admin_height;
+	admin_height,
+	xhr = new XMLHttpRequest();
+
 
 
 	/* vars set for single product page */
@@ -226,6 +228,10 @@
 			{
 				item.addEventListener( 'click', function( e ) 
 					{
+		
+
+
+
 						if ( e.target.getAttribute( 'data-target' ) !== '#cart' ) 
 						{
 							e.preventDefault();
@@ -239,6 +245,108 @@
 	/*===================================================================
 	=            This is area for writing callable functions            =
 	===================================================================*/
+
+	function wonka_ajax_request( xhr, action, data ) {
+		if ( action === "search_site" ) 
+		{
+			var search_results = document.createElement( 'DIV' );
+			var search_field = document.querySelector( 'input#s' );
+			var search_close = document.querySelector( 'span.closebtn' );
+			var data_value;
+			var field_position;
+		
+
+		search_results.classList.add( 'autocomplete-suggestions' );
+		document.querySelector( 'body' ).appendChild( search_results );
+		search_field.setAttribute( 'autocomplete', 'off' );
+	
+		search_field.addEventListener( 'focus', function () {
+	
+			xhr.onreadystatechange = function() {
+
+				if ( this.readyState == 4 && this.status == 200 ) 
+				{
+				
+						var response = JSON.parse( this.responseText );
+						field_position = search_field.getBoundingClientRect();
+		
+						search_field.addEventListener( 'keyup', function() 
+							{
+								data_value = search_field.value;
+								search_results.innerHTML = '';
+								if ( search_field.value.length >= 2 ) 
+								{
+									response.data.forEach( function( item, i )
+										{
+											if ( item.toLowerCase().match( search_field.value.toLowerCase() ) ) 
+											{
+												var title_element = document.createElement( 'DIV' );
+												title_element.classList.add( 'autocomplete-suggestion' );
+												title_element.setAttribute( 'data-index', i );
+												title_element.innerText = item;
+												search_results.appendChild( title_element );
+												title_element.addEventListener( 'mouseover', function() 
+													{
+														search_field.value = title_element.innerText;
+													});
+												title_element.addEventListener( 'mouseleave', function() 
+													{
+														search_field.value = data_value;
+													});
+												title_element.addEventListener( 'click', function(e) 
+													{
+														search_field.value = title_element.innerText;
+														data_value = search_field.value;
+														search_results.style.display = 'none';
+														search_results.style.position = '';
+														search_results.style.width = '';
+														search_results.style.left = '';
+														search_results.style.top = '';
+													});
+											}
+										});
+		
+									if ( document.querySelector( '.autocomplete-suggestions' ).hasChildNodes() ) 
+									{
+										search_results.style.display = 'block';
+										search_results.style.position = 'fixed';
+										search_results.style.width = field_position.width.toFixed(2) + 'px';
+										search_results.style.left = field_position.x.toFixed(2) + 'px';
+										search_results.style.top = field_position.bottom.toFixed(2) + 'px';
+									}
+								}
+							});
+						
+				}
+	
+			xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + "&security=" + wonkasoft_request.security);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.send();
+		});
+		search_close.addEventListener( 'click', function () 
+		{
+			search_results.style.display = 'none';
+			search_results.style.position = '';
+			search_results.style.width = '';
+			search_results.style.left = '';
+			search_results.style.top = '';
+		});
+	}
+
+		
+		if ( action === "shipping_field_validation" ) 
+		{
+			xhr.onreadystatechange = function() {
+
+				if ( this.readyState == 4 && this.status == 200 ) 
+				{}
+			};
+			xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + "&security=" + wonkasoft_request.security);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.send();
+		}
+
+	}
 	/*===== This is for Keyfeatures | Product Specs links on shor description ====*/
 	function scrollToSection( scroll_to_id, adjustment ) 
 	{
@@ -1561,86 +1669,7 @@
 	/*=================================================
 	=            Setup for the search form            =
 	=================================================*/
-	var search_results = document.createElement( 'DIV' );
-	var xhr = new XMLHttpRequest();
-	var search_field = document.querySelector( 'input#s' );
-	var search_close = document.querySelector( 'span.closebtn' );
-	var data_value;
-	var field_position;
-	search_results.classList.add( 'autocomplete-suggestions' );
-	document.querySelector( 'body' ).appendChild( search_results );
-	search_field.setAttribute( 'autocomplete', 'off' );
-
-	search_field.addEventListener( 'focus', function () {
-
-		xhr.onreadystatechange = function() {
-
-			if ( this.readyState == 4 && this.status == 200 ) {
-				var response = JSON.parse( this.responseText );
-				field_position = search_field.getBoundingClientRect();
-
-				search_field.addEventListener( 'keyup', function() 
-					{
-						data_value = search_field.value;
-						search_results.innerHTML = '';
-						if ( search_field.value.length >= 2 ) 
-						{
-							response.data.forEach( function( item, i )
-								{
-									if ( item.toLowerCase().match( search_field.value.toLowerCase() ) ) 
-									{
-										var title_element = document.createElement( 'DIV' );
-										title_element.classList.add( 'autocomplete-suggestion' );
-										title_element.setAttribute( 'data-index', i );
-										title_element.innerText = item;
-										search_results.appendChild( title_element );
-										title_element.addEventListener( 'mouseover', function() 
-											{
-												search_field.value = title_element.innerText;
-											});
-										title_element.addEventListener( 'mouseleave', function() 
-											{
-												search_field.value = data_value;
-											});
-										title_element.addEventListener( 'click', function(e) 
-											{
-												search_field.value = title_element.innerText;
-												data_value = search_field.value;
-												search_results.style.display = 'none';
-												search_results.style.position = '';
-												search_results.style.width = '';
-												search_results.style.left = '';
-												search_results.style.top = '';
-											});
-									}
-								});
-
-							if ( document.querySelector( '.autocomplete-suggestions' ).hasChildNodes() ) 
-							{
-								search_results.style.display = 'block';
-								search_results.style.position = 'fixed';
-								search_results.style.width = field_position.width.toFixed(2) + 'px';
-								search_results.style.left = field_position.x.toFixed(2) + 'px';
-								search_results.style.top = field_position.bottom.toFixed(2) + 'px';
-							}
-						}
-					});
-			}
-		};
-
-		xhr.open('GET', auto_search.ajax + "?" + "action=search_site&security=" + auto_search.security);
-		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhr.send();
-	});
-
-	search_close.addEventListener( 'click', function () 
-		{
-			search_results.style.display = 'none';
-			search_results.style.position = '';
-			search_results.style.width = '';
-			search_results.style.left = '';
-			search_results.style.top = '';
-		});
+	wonka_ajax_request( xhr, "search_site", null);
 	/*=====  End of Setup for the search form  ======*/
 };
 	/*=====  End of This is for running after document is ready  ======*/

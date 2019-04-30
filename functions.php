@@ -247,7 +247,7 @@ function apera_bags_scripts() {
 
 	wp_enqueue_script( 'apera-bags-wonkamizer-js', get_template_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'apera-bags-slick-js' ), 'all', true );
 
-	wp_localize_script( 'apera-bags-wonkamizer-js', 'auto_search', array( 'ajax' => admin_url( 'admin-ajax.php' ), 'security' => wp_create_nonce( 'ws-autocomplete-search' ), ) );
+	wp_localize_script( 'apera-bags-wonkamizer-js', 'wonkasoft_request', array( 'ajax' => admin_url( 'admin-ajax.php' ), 'security' => wp_create_nonce( 'ws-request-nonce' ), ) );
 
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

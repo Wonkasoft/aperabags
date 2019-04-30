@@ -665,15 +665,15 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '<div class="col-12">';
 	$output .= '<ul class="nav nav-fill" id="wonka-checkout-nav-steps" role="tablist">';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link active" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top" data-btns="#wonka_customer_information_buttons">';
+	$output .= '<a class="nav-link active disabled" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top" data-btns="#wonka_customer_information_buttons">';
 	$output .= _x( 'Customer Information', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">1</span>';
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link" id="wonka_shipping_method_tab" data-toggle="tab" data-target="#wonka_shipping_method" role="tab" data-secondary="#wonka_shipping_method_top" data-btns="#wonka_shipping_method_buttons">';
+	$output .= '<a class="nav-link disabled" id="wonka_shipping_method_tab" data-toggle="tab" data-target="#wonka_shipping_method" role="tab" data-secondary="#wonka_shipping_method_top" data-btns="#wonka_shipping_method_buttons">';
 	$output .= _x( 'Shipping Method', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">2</span>';
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link" id="wonka_payment_method_tab" data-toggle="tab" data-target="#wonka_payment_method" role="tab" data-secondary="#wonka_payment_method_top" data-btns="#wonka_payment_method_buttons">';
+	$output .= '<a class="nav-link disabled" id="wonka_payment_method_tab" data-toggle="tab" data-target="#wonka_payment_method" role="tab" data-secondary="#wonka_payment_method_top" data-btns="#wonka_payment_method_buttons">';
 	$output .= _x( 'Payment Method', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">3</span>';
 	$output .= '</a></li>';
 	$output .= '</ul><!-- #wonka-checkout-nav-steps -->';
@@ -1144,6 +1144,17 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
    return $field;
 }
 
+function ws_shipping_fields_validation() {
+	// This is a security check, it validates a random number that is generated on the request.
+	if ( !check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
+	return wp_send_json_error( 'Invalid Nonce' );
+ 	}
+	 do_action( 'woocommerce_after_checkout_validation' );
+}
+add_action( 'wp_ajax_shipping_field_validation',        'ws_shipping_fields_validation' );
+add_action( 'wp_ajax_nopriv_shipping_field_validation', 'ws_shipping_fields_validation' );
+
+
 /**
  * Filter the except length to 20 words.
  *
@@ -1174,7 +1185,7 @@ add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );
 
 function ws_ajax_search() {
 	// This is a security check, it validates a random number that is generated on the request.
-	if ( !check_ajax_referer( 'ws-autocomplete-search', 'security' ) ) {
+	if ( !check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
 	return wp_send_json_error( 'Invalid Nonce' );
  }
 	$results = new WP_Query( array(
@@ -1231,3 +1242,12 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 // add the filter 
 remove_action('woocommerce_review_comment_text', 'woocommerce_review_display_comment_text', 10, 1 );
 add_action( 'woocommerce_review_comment_text', 'filter_woocommerce_product_review_list_args', 10, 1 ); 
+
+function wp_ws($wp_filters){
+	
+
+	echo "<pre>\n";
+print_r( $wp_filters );
+echo "</pre>\n";
+}
+add_action('wp', 'wp_ws', 10, 1);
