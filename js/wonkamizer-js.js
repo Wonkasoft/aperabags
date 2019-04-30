@@ -1016,7 +1016,10 @@
 						comment_el.innerText = data_comment;
 						comment_el.setAttribute( 'ws-data-comment', inner_comment );
 						target.innerText = "Read More";
-						setup_for_reviews( comment_list );
+						if ( more_reviews.innerText === 'More Reviews' ) 
+						{
+							setup_for_reviews( comment_list );
+						}
 					} 
 					else 
 					{
@@ -1024,6 +1027,10 @@
 						comment_el.innerText = data_comment;
 						comment_el.setAttribute( 'ws-data-comment', inner_comment );
 						target.innerText = "Read Less";
+						if ( more_reviews.innerText === 'More Reviews' ) 
+						{
+							setup_for_reviews( comment_list );
+						}
 					}
 				});
 			});
@@ -1109,7 +1116,7 @@
 			var about_vid_modal = document.querySelector( 'div#videoModal' );
 			var about_vid_close = document.querySelector( 'div#videoModal button.close' );
 			var about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
-			var about_vid_iframe_link = document.querySelector( 'div#videoModal iframe' ).src;
+			var about_vid_iframe_link = about_vid_iframe.src;
 
 			about_vid_close.onclick = function()
 			{
@@ -1133,15 +1140,15 @@
 			var cause_vid_modal = document.querySelector( 'div#videoModalpop' );
 			var cause_vid_close = document.querySelector( 'div#videoModalpop button.close' );
 			var cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
-			var cause_vid_iframe_link = document.querySelector( 'div#videoModalpop iframe' ).src;
+			var cause_vid_iframe_link = cause_vid_iframe.src;
 
-			about_vid_close.onclick = function()
+			cause_vid_close.onclick = function()
 			{
 				cause_vid_iframe.src = '';
 				cause_vid_iframe.src = cause_vid_iframe_link;
 			};
 
-			about_vid_modal.onclick = function() 
+			cause_vid_modal.onclick = function() 
 			{
 				cause_vid_iframe.src = '';
 				cause_vid_iframe.src = cause_vid_iframe_link;
