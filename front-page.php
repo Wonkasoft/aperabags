@@ -37,7 +37,7 @@ get_header();
 						?>
 						<div class="top-page-slide">
 							<?php
-							if ( wp_is_mobile()  && ! is_ios() ) :
+							if ( 1+1 == 3 ) :
 								?>
 							<div class="top-slide-img-holder" data-img-url="<?php echo $slide->slide_mobile_img; ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php

@@ -820,6 +820,7 @@ function wonka_checkout_after_login_form() {
 
 add_action( 'wonka_checkout_login_form', 'wonka_checkout_after_login_form', 20 );
 
+If ( function_exists( 'wc_stripe_show_payment_request_on_checkout' ) ) :
 /**
  * Add stripe on checkout page
  *
@@ -849,6 +850,8 @@ remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Reque
  * @since  1.0.0 Remove Stripe buttons on the cart page
  */
 remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
+
+endif;
 
 function wonka_checkout_before_customer_details() {
 	$output = '';
