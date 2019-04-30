@@ -51,11 +51,11 @@ get_header();
 								<div class="row img-header-text-wrap">
 									<div class="col col-12 img-header-text-container">
 										<div class="text-box text-center<?php $set_text_align = ( !empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position: ' set-align-center'; echo $set_text_align; ?>">
-											<h2 class="img-header-text text-center"><?php esc_html_e( $slide->slide_header_message ); ?></h2>
+											<h2 class="img-header-text text-center"><?php _e( $slide->slide_header_message ); ?></h2>
 											<?php
 											/* Checks for an subheader set in the slide object */
 											if ( !empty( $slide->slide_subheader ) ) : ?>
-												<h4 class="img-subheader-text text-center"><?php esc_html_e( $slide->slide_subheader ); ?></h4>
+												<h4 class="img-subheader-text text-center"><?php _e( $slide->slide_subheader ); ?></h4>
 											<?php endif; ?>
 										</div><!-- .text-box -->
 									</div><!-- .img-header-text-container -->
@@ -88,7 +88,7 @@ get_header();
 					<div class="row">
 					<div class="col-12">
 						<div class="wonka wonka-section-title text-center">
-							<h3 class="wonka wonka-h3 section-title shop-title"><?php esc_html_e( $shop_section->shop_mods->shop_title ); ?></h3>
+							<h3 class="wonka wonka-h3 section-title shop-title"><?php _e( $shop_section->shop_mods->shop_title ); ?></h3>
 						</div>
 					</div>
 					</div>
@@ -102,7 +102,7 @@ get_header();
 					</div><!-- .row -->
 					<div class="row">
 						<div class="col col-12 text-center">
-							<a href="/shop" class="wonka-btn" target="_self"><?php esc_attr_e( __( 'Shop All' ) ) ?></a>
+							<a href="/shop" class="wonka-btn" target="_self"><?php _e( __( 'Shop All' ) ) ?></a>
 						</div><!-- .col -->
 					</div><!-- .row -->
 					</div><!-- .col -->
@@ -178,8 +178,8 @@ get_header();
 									<div class="img-container">
 										<img class="cause-img img-fluid" src="<?php esc_attr_e( $cause->img ); ?>" />
 									</div>
-									<h3 class="cause-title text-<?php esc_attr_e( $cause->position ); ?>"><?php esc_attr_e( $cause->header ); ?></h3>
-									<p class="cause-message text-<?php esc_attr_e( $cause->position ); ?>"><?php esc_attr_e( $cause->message ); ?></p>
+									<h3 class="cause-title text-<?php esc_attr_e( $cause->position ); ?>"><?php _e( $cause->header ); ?></h3>
+									<p class="cause-message text-<?php esc_attr_e( $cause->position ); ?>"><?php _e( $cause->message ); ?></p>
 								</div><!-- .module-component-wrap -->
 							</div><!-- .cause-section-module -->
 						</div>

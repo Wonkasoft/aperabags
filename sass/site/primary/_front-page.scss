@@ -163,6 +163,75 @@ section.header-slider-section {
 						}
 					}	
 				}
+
+				@include media-breakpoint( ipx ) {
+					background-size: cover;
+					
+					.img-header-text-wrap {
+
+						.img-header-text-container {
+							
+							.text-box {
+
+								h2 {
+									line-height: 1.1;
+									@include font-size( 3.2 );
+								}
+
+								h4 {
+									line-height: 1.1;
+									@include font-size( 2.2 );
+								}
+							}
+						}
+					}	
+				}
+
+				@include media-breakpoint( ip8 ) {
+					background-size: cover;
+					
+					.img-header-text-wrap {
+
+						.img-header-text-container {
+							
+							.text-box {
+
+								h2 {
+									line-height: 1.1;
+									@include font-size( 3.2 );
+								}
+
+								h4 {
+									line-height: 1.1;
+									@include font-size( 2.2 );
+								}
+							}
+						}
+					}	
+				}
+
+				@include media-breakpoint( ip8p ) {
+					background-size: cover;
+					
+					.img-header-text-wrap {
+
+						.img-header-text-container {
+							
+							.text-box {
+
+								h2 {
+									line-height: 1.1;
+									@include font-size( 3.2 );
+								}
+
+								h4 {
+									line-height: 1.1;
+									@include font-size( 2.2 );
+								}
+							}
+						}
+					}	
+				}
 			}
 
 			&:first-child {
@@ -330,8 +399,61 @@ section.desirable-slider-section {
 								}
 							}
 						}
-					}
+					}		
+				}
+
+				@include media-breakpoint( ipx ) {
+					background-size: cover;
+
+					.img-header-text-wrap {
+
+						.img-header-text-container {
 							
+							.text-box {
+
+								h2 {
+									line-height: 1.1;
+									@include font-size( 3.2 );
+								}
+							}
+						}
+					}		
+				}
+
+				@include media-breakpoint( ip8 ) {
+					background-size: cover;
+
+					.img-header-text-wrap {
+
+						.img-header-text-container {
+							
+							.text-box {
+
+								h2 {
+									line-height: 1.1;
+									@include font-size( 3.2 );
+								}
+							}
+						}
+					}		
+				}
+
+				@include media-breakpoint( ip8p ) {
+					background-size: cover;
+
+					.img-header-text-wrap {
+
+						.img-header-text-container {
+							
+							.text-box {
+
+								h2 {
+									line-height: 1.1;
+									@include font-size( 3.2 );
+								}
+							}
+						}
+					}		
 				}
 			}
 
