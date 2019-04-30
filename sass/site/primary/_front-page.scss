@@ -36,6 +36,7 @@ section.header-slider-section {
 			div.top-slide-img-holder {
 				background-position: center -50px;
 				background-attachment: fixed;
+				-webkit-background-size: cover;
 				background-size: cover;
 				background-repeat: no-repeat;
 				width: 100%;
@@ -190,6 +191,7 @@ section.shop-section {
 	background: rgba( 255, 255, 255, .9 );
 	background-blend-mode: screen;
 	background-repeat: no-repeat;
+	-webkit-background-size: cover;
 	background-size: cover;
 	background-position: center;
 	padding: 15px 0;
@@ -227,6 +229,7 @@ section.desirable-slider-section {
 			div.cta-slide-img-holder {
 				background-position: center -50px;
 				background-attachment: fixed;
+				-webkit-background-size: cover;
 				background-size: cover;
 				background-repeat: no-repeat;
 				width: 100%;
