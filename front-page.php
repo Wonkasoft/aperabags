@@ -37,13 +37,13 @@ get_header();
 						?>
 						<div class="top-page-slide">
 							<?php
-							if ( wp_is_mobile() ) :
+							if ( wp_is_mobile() && !preg_match( '/iPad|iPod|iPhone/', $_SERVER['HTTP_USER_AGENT'] ) ) :
 								?>
-							<div class="top-slide-img-holder" data-img-url="<?php echo $slide->slide_mobile_img; ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
+							<div class="top-slide-img-holder" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php
 							else:
 								?>
-							<div class="top-slide-img-holder" data-img-url="<?php echo $slide->slide_img; ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+							<div class="top-slide-img-holder" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 							<?php 
 							endif;
 							/* Checks for an message set in the slide object */
@@ -51,11 +51,11 @@ get_header();
 								<div class="row img-header-text-wrap">
 									<div class="col col-12 img-header-text-container">
 										<div class="text-box text-center<?php $set_text_align = ( !empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position: ' set-align-center'; echo $set_text_align; ?>">
-											<h2 class="img-header-text text-center"><?php echo $slide->slide_header_message; ?></h2>
+											<h2 class="img-header-text text-center"><?php _e( $slide->slide_header_message ); ?></h2>
 											<?php
 											/* Checks for an subheader set in the slide object */
 											if ( !empty( $slide->slide_subheader ) ) : ?>
-												<h4 class="img-subheader-text text-center"><?php echo $slide->slide_subheader; ?></h4>
+												<h4 class="img-subheader-text text-center"><?php _e( $slide->slide_subheader ); ?></h4>
 											<?php endif; ?>
 										</div><!-- .text-box -->
 									</div><!-- .img-header-text-container -->
@@ -122,13 +122,13 @@ get_header();
 						if ( !empty( $slide->slide_img ) ) : ?>
 							<div class="cta-section-slide">
 								<?php
-								if ( wp_is_mobile() ) :
+								if ( wp_is_mobile() && !preg_match( '/iPad|iPod|iPhone/', $_SERVER['HTTP_USER_AGENT'] ) ) :
 								?>
-								<div class="cta-slide-img-holder" data-img-url="<?php echo $slide->slide_mobile_img; ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
+								<div class="cta-slide-img-holder" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php
 								else:
 								?>
-								<div class="cta-slide-img-holder" data-img-url="<?php echo $slide->slide_img; ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+								<div class="cta-slide-img-holder" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 								<?php
 								endif;
 								/* Checks for an message set in the slide object */
@@ -140,7 +140,7 @@ get_header();
 												<?php
 												/* Checks for an subheader set in the slide object */
 												if ( !empty( $slide->slide_link ) ) : ?>
-													<a href="<?php echo $slide->slide_link; ?>" class="btn wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
+													<a href="<?php echo sprintf( esc_html__( "%1s%2s", "aperabags"), get_site_url(), $slide->slide_link ); ?>" class="wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
 												<?php endif; ?>
 											</div><!-- .text-box -->
 										</div><!-- .img-header-text-container -->
@@ -176,10 +176,10 @@ get_header();
 							<div class="cause-section-module">
 								<div class="module-component-wrap">
 									<div class="img-container">
-										<img class="cause-img img-fluid" src="<?php _e( $cause->img ); ?>" />
+										<img class="cause-img img-fluid" src="<?php esc_attr_e( $cause->img ); ?>" />
 									</div>
-									<h3 class="cause-title text-<?php _e( $cause->position ); ?>"><?php _e( $cause->header ); ?></h3>
-									<p class="cause-message text-<?php _e( $cause->position ); ?>"><?php _e( $cause->message ); ?></p>
+									<h3 class="cause-title text-<?php esc_attr_e( $cause->position ); ?>"><?php _e( $cause->header ); ?></h3>
+									<p class="cause-message text-<?php esc_attr_e( $cause->position ); ?>"><?php _e( $cause->message ); ?></p>
 								</div><!-- .module-component-wrap -->
 							</div><!-- .cause-section-module -->
 						</div>
@@ -196,7 +196,7 @@ get_header();
 					      <div class="modal-body">
 					        <!-- 16:9 aspect ratio -->
 							<div class="embed-responsive embed-responsive-16by9">
-							<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php _e( $cause_video ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
+							<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php esc_attr_e( $cause_video ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
 							</div>
 					       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					          <span aria-hidden="true">X</span>
@@ -259,7 +259,7 @@ get_header();
 						<?php endif; ?>
 						<?php
 						if ( ! empty( $about_section->about_the_brand->about_the_brand_button_link ) ) : ?>
-							<a class="btn btn-primary wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
+							<a class="wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
 						<?php endif; ?>
 					</div><!-- .about-components-wrap -->
 				</div>
@@ -290,7 +290,7 @@ get_header();
 					<?php _e( do_shortcode( $social_section->social_mods->social_shortcode ) ); ?>
 				</div>
 				<div class="col-12 shop-social-btn text-center">
-					<a class="btn btn-lg btn-primary wonka-btn" href="<?php _e( $social_section->social_mods->social_shop_button);?>"><?php _e($social_section->social_mods->social_btn_text); ?></a>
+					<a class="wonka-btn" href="<?php _e( $social_section->social_mods->social_shop_button);?>"><?php _e($social_section->social_mods->social_btn_text); ?></a>
 				</div> <!-- .col -->
 				</div>
 			</section><!-- .instagram-section -->

@@ -62,10 +62,6 @@ footer#colophon {
 	.wonka-row-footer {
 		margin: 15px auto;
 
-		> div {
-			margin-bottom: 15px;
-		}
-
 		@include media-breakpoint( md ) {
 			margin: 0 auto 15px;
 		}
@@ -76,6 +72,7 @@ footer#colophon {
 		margin: 15px 0;
 		
 		.wonka-newsletter-form_wrapper {
+			margin-bottom: 8px;
 
 			form.wonka-newsletter-form {
 
@@ -131,7 +128,7 @@ footer#colophon {
 						justify-content: center;
 						font-family: $font__main;
 						font-weight: 800;
-						color: #bfc0c2;
+						color: #ffffff;
 						margin-left: 0;
 						width: 100%;
 						height: 49px;
@@ -155,9 +152,6 @@ footer#colophon {
 
 	.site-info {
 		padding-bottom: 15px;
-		background: $footer__background_sec;
-		color: $footer__background;
-		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 		.footer-logo {
 

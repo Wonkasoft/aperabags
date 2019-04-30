@@ -171,7 +171,6 @@ if ( !empty( $product_specs_data ) ) : ?>
 									<?php _e( $spec->disclosure ); ?>
 								</td>
 							</tr>
-
 						<?php endif; ?>
 		<?php endforeach; ?>
 

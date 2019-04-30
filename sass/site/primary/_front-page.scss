@@ -36,6 +36,7 @@ section.header-slider-section {
 			div.top-slide-img-holder {
 				background-position: center -50px;
 				background-attachment: fixed;
+				-webkit-background-size: cover;
 				background-size: cover;
 				background-repeat: no-repeat;
 				width: 100%;
@@ -162,6 +163,75 @@ section.header-slider-section {
 						}
 					}	
 				}
+
+				@include media-breakpoint( ipx ) {
+					background-size: cover;
+					
+					.img-header-text-wrap {
+
+						.img-header-text-container {
+							
+							.text-box {
+
+								h2 {
+									line-height: 1.1;
+									@include font-size( 3.2 );
+								}
+
+								h4 {
+									line-height: 1.1;
+									@include font-size( 2.2 );
+								}
+							}
+						}
+					}	
+				}
+
+				@include media-breakpoint( ip8 ) {
+					background-size: cover;
+					
+					.img-header-text-wrap {
+
+						.img-header-text-container {
+							
+							.text-box {
+
+								h2 {
+									line-height: 1.1;
+									@include font-size( 3.2 );
+								}
+
+								h4 {
+									line-height: 1.1;
+									@include font-size( 2.2 );
+								}
+							}
+						}
+					}	
+				}
+
+				@include media-breakpoint( ip8p ) {
+					background-size: cover;
+					
+					.img-header-text-wrap {
+
+						.img-header-text-container {
+							
+							.text-box {
+
+								h2 {
+									line-height: 1.1;
+									@include font-size( 3.2 );
+								}
+
+								h4 {
+									line-height: 1.1;
+									@include font-size( 2.2 );
+								}
+							}
+						}
+					}	
+				}
 			}
 
 			&:first-child {
@@ -190,6 +260,7 @@ section.shop-section {
 	background: rgba( 255, 255, 255, .9 );
 	background-blend-mode: screen;
 	background-repeat: no-repeat;
+	-webkit-background-size: cover;
 	background-size: cover;
 	background-position: center;
 	padding: 15px 0;
@@ -227,6 +298,7 @@ section.desirable-slider-section {
 			div.cta-slide-img-holder {
 				background-position: center -50px;
 				background-attachment: fixed;
+				-webkit-background-size: cover;
 				background-size: cover;
 				background-repeat: no-repeat;
 				width: 100%;
@@ -327,8 +399,61 @@ section.desirable-slider-section {
 								}
 							}
 						}
-					}
+					}		
+				}
+
+				@include media-breakpoint( ipx ) {
+					background-size: cover;
+
+					.img-header-text-wrap {
+
+						.img-header-text-container {
 							
+							.text-box {
+
+								h2 {
+									line-height: 1.1;
+									@include font-size( 3.2 );
+								}
+							}
+						}
+					}		
+				}
+
+				@include media-breakpoint( ip8 ) {
+					background-size: cover;
+
+					.img-header-text-wrap {
+
+						.img-header-text-container {
+							
+							.text-box {
+
+								h2 {
+									line-height: 1.1;
+									@include font-size( 3.2 );
+								}
+							}
+						}
+					}		
+				}
+
+				@include media-breakpoint( ip8p ) {
+					background-size: cover;
+
+					.img-header-text-wrap {
+
+						.img-header-text-container {
+							
+							.text-box {
+
+								h2 {
+									line-height: 1.1;
+									@include font-size( 3.2 );
+								}
+							}
+						}
+					}		
 				}
 			}
 
@@ -478,13 +603,13 @@ section.about-brand-section {
 
 			span.video-img-symbol-link {
 				position: absolute;
-				color: #aaa;
+				color: #4646fa;
 				@include font-size( 5 );
 				@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
 				@include prefix( transition, $trans_25, o moz webkit );
 
 				&:hover {
-					color: #777!important;
+					color: #1f98ff !important;
 					animation-name: wiggle;
 				  	animation-duration: .4s;
 				}
@@ -583,7 +708,6 @@ section.social-section {
 		margin: 15px auto;
 		width: 1500px;
 		max-width: 100%;
-
 	}
 }
 /*=====  End of Social section  ======*/
