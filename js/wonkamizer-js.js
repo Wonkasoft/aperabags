@@ -228,14 +228,17 @@
 			{
 				item.addEventListener( 'click', function( e ) 
 					{
-		
-
-
-
 						if ( e.target.getAttribute( 'data-target' ) !== '#cart' ) 
 						{
 							e.preventDefault();
-							document.querySelector( e.target.getAttribute( 'data-target' ) ).click();
+							var shipping_form_fields = document.querySelectorAll( '.woocommerce-shipping-fields input' );
+							console.log( shipping_form_fields );
+							shipping_form_fields.forEach( function( input, i ) 
+								{
+									console.log( input.required );
+									input.required = true;
+									console.log( input.reportValidity() );
+								});
 						}
 					});
 			});
@@ -246,7 +249,8 @@
 	=            This is area for writing callable functions            =
 	===================================================================*/
 
-	function wonka_ajax_request( xhr, action, data ) {
+	function wonka_ajax_request( xhr, action, data ) 
+	{
 		if ( action === "search_site" ) 
 		{
 			var search_results = document.createElement( 'DIV' );
@@ -256,6 +260,7 @@
 			var field_position;
 		
 
+<<<<<<< HEAD
 		search_results.classList.add( 'autocomplete-suggestions' );
 		document.querySelector( 'body' ).appendChild( search_results );
 		search_field.setAttribute( 'autocomplete', 'off' );
@@ -336,13 +341,94 @@
 		});
 	}
 
+=======
+			search_results.classList.add( 'autocomplete-suggestions' );
+			document.querySelector( 'body' ).appendChild( search_results );
+			search_field.setAttribute( 'autocomplete', 'off' );
+	
+			search_field.addEventListener( 'focus', function () 
+			{
+				xhr.onreadystatechange = function() 
+				{
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+					
+						var response = JSON.parse( this.responseText );
+						field_position = search_field.getBoundingClientRect();
+		
+						search_field.addEventListener( 'keyup', function() 
+							{
+								data_value = search_field.value;
+								search_results.innerHTML = '';
+								if ( search_field.value.length >= 2 ) 
+								{
+									response.data.forEach( function( item, i )
+										{
+											if ( item.toLowerCase().match( search_field.value.toLowerCase() ) ) 
+											{
+												var title_element = document.createElement( 'DIV' );
+												title_element.classList.add( 'autocomplete-suggestion' );
+												title_element.setAttribute( 'data-index', i );
+												title_element.innerText = item;
+												search_results.appendChild( title_element );
+												title_element.addEventListener( 'mouseover', function() 
+													{
+														search_field.value = title_element.innerText;
+													});
+												title_element.addEventListener( 'mouseleave', function() 
+													{
+														search_field.value = data_value;
+													});
+												title_element.addEventListener( 'click', function(e) 
+													{
+														search_field.value = title_element.innerText;
+														data_value = search_field.value;
+														search_results.style.display = 'none';
+														search_results.style.position = '';
+														search_results.style.width = '';
+														search_results.style.left = '';
+														search_results.style.top = '';
+													});
+											}
+										});
+		
+									if ( document.querySelector( '.autocomplete-suggestions' ).hasChildNodes() ) 
+									{
+										search_results.style.display = 'block';
+										search_results.style.position = 'fixed';
+										search_results.style.width = field_position.width.toFixed(2) + 'px';
+										search_results.style.left = field_position.x.toFixed(2) + 'px';
+										search_results.style.top = field_position.bottom.toFixed(2) + 'px';
+									}
+								}
+							});
+					}	
+				};
+		
+				xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + "&security=" + wonkasoft_request.security);
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+			});
+			search_close.addEventListener( 'click', function () 
+			{
+				search_results.style.display = 'none';
+				search_results.style.position = '';
+				search_results.style.width = '';
+				search_results.style.left = '';
+				search_results.style.top = '';
+			});
+		}
+>>>>>>> stage
 		
 		if ( action === "shipping_field_validation" ) 
 		{
 			xhr.onreadystatechange = function() {
 
 				if ( this.readyState == 4 && this.status == 200 ) 
-				{}
+				{
+					var response = JSON.parse( this.responseText );
+					console.log( response );
+				}
 			};
 			xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + "&security=" + wonkasoft_request.security);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -381,10 +467,15 @@
 	{
 		var header_slider_section = document.querySelector( '.header-slider-section' ),
 		top_slide = document.querySelector( '.top-page-slide' ),
-		cta_slider = document.querySelector( '.header-slider-section' ),
+		top_slide_img_holder = top_slide.querySelectorAll( '.top-slide-img-holder' )[0],
 		cta_slider_section = document.querySelector( '.desirable-slider-section' ),
-		adjustment = window.innerHeight;
+		img_for_sizing = new Image(),
+		adjustment,
+		height_set;
 
+		img_for_sizing.src = 'https:' + top_slide_img_holder.getAttribute( 'data-img-url' );
+		img_for_sizing.style.width = window.innerWidth + 'px';
+		console.log(getComputedStyle( img_for_sizing ) );
 		if ( document.querySelector( '#wpadminbar' ) )
 		{
 			adjustment -= document.querySelector( '#wpadminbar' ).offsetHeight;
@@ -432,7 +523,7 @@
 		}, 300);
 	}
 
-	// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+
 	function shifting_parallax() 
 	{	
 		var top_slider_section = document.querySelector( '.header-slider-section' );
@@ -1065,14 +1156,14 @@
 				more_reviews.addEventListener( 'click', function(e) 
 					{
 						e.preventDefault();
-						if ( get_custom_height < comment_list.offsetHeight ) 
+						if ( more_reviews.innerText.toLowerCase() === 'less reviews' ) 
 						{
 							setup_for_reviews( comment_list );
-							setTimeout( function( comment_list ) 
+							setTimeout( function() 
 								{
 									reviews_top.scrollIntoView({behavior: 'smooth'});
-								}, 500, comment_list );
-							more_reviews.innerText = 'More Reviews';
+									more_reviews.innerText = 'More Reviews';
+								}, 500 );
 						}
 						else
 						{
@@ -1109,15 +1200,25 @@
 					var comment_el = target.previousElementSibling;
 					var inner_comment = comment_el.innerText;
 					var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+					more_reviews = document.querySelector( '#more-reviews' );
 
-					target.addEventListener( 'blur', function() 
+					target.addEventListener( 'blur', function( e ) 
 						{
-							if ( !comment_el.classList.contains( 'full_comment' ) )
+							var target = e.target;
+							var comment_el = target.previousElementSibling;
+							var inner_comment = comment_el.innerText;
+							var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+
+							if ( comment_el.classList.contains( 'full_comment' ) )
 							{
 								comment_el.classList.toggle( 'full_comment' );
 								comment_el.innerText = data_comment;
 								comment_el.setAttribute( 'ws-data-comment', inner_comment );
-								target.innerText = "Read Less";
+								target.innerText = "Read More";
+								if ( more_reviews.innerText.toLowerCase() === 'more reviews' )
+								{
+									setup_for_reviews( comment_list );
+								}
 							}
 						});
 				
@@ -1127,7 +1228,7 @@
 						comment_el.innerText = data_comment;
 						comment_el.setAttribute( 'ws-data-comment', inner_comment );
 						target.innerText = "Read More";
-						if ( more_reviews.innerText === 'More Reviews' )
+						if ( more_reviews.innerText.toLowerCase() === 'more reviews' )
 						{
 							setup_for_reviews( comment_list );
 						}
@@ -1138,7 +1239,7 @@
 						comment_el.innerText = data_comment;
 						comment_el.setAttribute( 'ws-data-comment', inner_comment );
 						target.innerText = "Read Less";
-						if ( more_reviews.innerText === 'More Reviews' )
+						if ( more_reviews.innerText.toLowerCase() === 'more reviews' )
 						{
 							setup_for_reviews( comment_list );
 						}
