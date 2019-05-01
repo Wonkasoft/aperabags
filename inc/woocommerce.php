@@ -845,7 +845,7 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '<div class="col-12">';
 	$output .= '<ul class="nav nav-fill" id="wonka-checkout-nav-steps" role="tablist">';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link active disabled" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top" data-btns="#wonka_customer_information_buttons">';
+	$output .= '<a class="nav-link active" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top" data-btns="#wonka_customer_information_buttons">';
 	$output .= _x( 'Customer Information', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">1</span>';
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
@@ -1435,7 +1435,7 @@ function wonka_woocommerce_review_order_before_submit() {
 				if ( i === 0 )
 				{
 					new_container = document.createElement( 'DIV' );
-					new_container.classList.add( 'form-group' );
+					new_container.classList.add( 'form-group', 'form-row' );
 					new_container.innerHTML = field_group.innerHTML;
 					field_group.parentElement.insertBefore( new_container, field_group );
 					field_group.remove();
@@ -1444,7 +1444,7 @@ function wonka_woocommerce_review_order_before_submit() {
 				if ( i === 1 ) 
 				{
 					new_row_container = document.createElement( 'DIV' );
-					new_row_container.classList.add( 'form-row', 'form-inline', 'justify-content-between' );
+					new_row_container.classList.add( 'form-row', 'form-inline', 'justify-content-between', 'wonka-form-row' );
 					new_container = document.createElement( 'DIV' );
 					new_container.classList.add( 'form-group' );
 					new_container.innerHTML = field_group.innerHTML;
@@ -1458,7 +1458,7 @@ function wonka_woocommerce_review_order_before_submit() {
 					new_container = document.createElement( 'DIV' );
 					new_container.classList.add( 'form-group', 'form-inline' );
 					new_container.innerHTML = field_group.innerHTML;
-					field_group.parentElement.querySelector( '.form-row' ).appendChild( new_container );
+					field_group.parentElement.querySelector( '.wonka-form-row' ).appendChild( new_container );
 					field_group.parentElement.querySelector( '.clear' ).remove();
 					field_group.remove();
 				}
@@ -1469,6 +1469,7 @@ function wonka_woocommerce_review_order_before_submit() {
 			{
 				label.classList.add( 'sr-only' );
 			});
+		
 		var cybersource_inputs = document.querySelectorAll( '.payment_box.payment_method_cybersource input' );
 		cybersource_inputs.forEach( function( input, i ) 
 			{

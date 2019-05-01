@@ -40,6 +40,13 @@
 	margin-top: 0;
 }
 
+.payment_box.payment_method_cybersource {
+
+	.form-control {
+		margin-bottom: 8px;
+	}
+}
+
 .woocommerce-shipping-fields__field-wrapper,
 .woocommerce-billing-fields__field-wrapper {
 	max-width: 100%;
@@ -150,7 +157,7 @@ div.checkout-order-details {
 			font-family: 'Open Sans';
 		}
 	}
-	
+
 	td.product-name {
 		@include font-size( .8 );
 	}

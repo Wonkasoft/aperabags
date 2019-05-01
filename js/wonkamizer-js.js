@@ -146,7 +146,6 @@
 
 		multistep_links.forEach( function( item, i ) 
 			{
-				console.log( item );
 				if ( item.classList.contains( 'active' ) ) 
 				{
 					item.classList.add( 'completed' );
@@ -155,6 +154,7 @@
 				item.addEventListener( 'click', function( event ) 
 					{
 						var target = event.target;
+						console.log( target );
 						if ( target.nodeName === 'SPAN' ) 
 						{
 							target = target.parentElement;
@@ -232,7 +232,7 @@
 				if ( i === 0 )
 				{
 					new_container = document.createElement( 'DIV' );
-					new_container.classList.add( 'form-group' );
+					new_container.classList.add( 'form-group', 'form-row' );
 					new_container.innerHTML = field_group.innerHTML;
 					field_group.parentElement.insertBefore( new_container, field_group );
 					field_group.remove();
@@ -241,7 +241,7 @@
 				if ( i === 1 ) 
 				{
 					new_row_container = document.createElement( 'DIV' );
-					new_row_container.classList.add( 'form-row', 'form-inline', 'justify-content-between' );
+					new_row_container.classList.add( 'form-row', 'form-inline', 'justify-content-between', 'wonka-form-row' );
 					new_container = document.createElement( 'DIV' );
 					new_container.classList.add( 'form-group' );
 					new_container.innerHTML = field_group.innerHTML;
@@ -255,7 +255,7 @@
 					new_container = document.createElement( 'DIV' );
 					new_container.classList.add( 'form-group', 'form-inline' );
 					new_container.innerHTML = field_group.innerHTML;
-					field_group.parentElement.querySelector( '.form-row' ).appendChild( new_container );
+					field_group.parentElement.querySelector( '.wonka-form-row' ).appendChild( new_container );
 					field_group.parentElement.querySelector( '.clear' ).remove();
 					field_group.remove();
 				}
@@ -266,6 +266,7 @@
 			{
 				label.classList.add( 'sr-only' );
 			});
+		
 		var cybersource_inputs = document.querySelectorAll( '.payment_box.payment_method_cybersource input' );
 		cybersource_inputs.forEach( function( input, i ) 
 			{
@@ -283,11 +284,16 @@
 		var cybersource_select_boxes = document.querySelectorAll( '.payment_box.payment_method_cybersource select' );
 		cybersource_select_boxes.forEach( function( select, i ) 
 			{
+				select.classList.add( 'form-control' );
 				if ( select.name === 'cybersource_cardType' ) 
 				{
 					select.firstElementChild.innerText = select.parentElement.querySelector( 'label' ).innerText;
 				}
-				select.classList.add( 'form-control' );
+
+				if ( select.name === 'cybersource_expirationMonth' ) 
+				{
+					select.style.marginRight = 15 + 'px';
+				}
 			});
 		
 		multistep_btns.forEach( function( item, i ) 
@@ -323,7 +329,7 @@
 
 									if ( i === field_count - 1 && validation_checker )
 									{
-										next_tab.classList.toggle( 'disabled' );
+										next_tab.classList.remove( 'disabled' );
 										next_tab.click();
 									}
 								});
