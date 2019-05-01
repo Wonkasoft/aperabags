@@ -1501,7 +1501,8 @@ function wonka_woocommerce_review_order_before_submit() {
 
 		var billing_to_radios = document.querySelectorAll( 'input[name="ship_to_different_address"]' );
 		var billing_address_form = document.querySelector( '.billing_address' );
-
+		copy_to_billing();
+		
 		billing_to_radios.forEach( function( item, i ) 
 			{
 				
@@ -1577,31 +1578,6 @@ function wonka_woocommerce_review_order_before_submit() {
 				document.getElementsByName("billing_phone")[0].value = phone;
 			}
 		}
-
-		var place_order_btn = document.querySelector( '#place_order' );
-		var payment_fields = document.querySelectorAll( '.wc_payment_methods input' );
-		console.log( payment_fields );
-		var validation_checker = true;
-		var field_count = payment_fields.length;
-		place_order_btn.addEventListener( 'click', function() 
-			{
-				payment_fields.forEach( function( input, i ) 
-					{
-						console.log( input );
-						if ( input.reportValidity() === false ) 
-						{
-							validation_checker = false;
-							input.classList.add( 'is-invalid' );
-						}
-						else
-						{
-							if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
-							{
-								input.classList.remove( 'is-invalid' );
-							}
-						}
-					});
-			});
 	</script>
 	<?php
 }
@@ -1616,29 +1592,24 @@ function wonka_woocommerce_after_checkout_validation( $data, $errors ) {
 			console.log( payment_fields );
 			var validation_checker = true;
 			var field_count = payment_fields.length;
-			place_order_btn.addEventListener( 'click', function() 
+			payment_fields.forEach( function( input, i ) 
 				{
-					payment_fields.forEach( function( input, i ) 
+					console.log( input );
+					if ( input.reportValidity() === false ) 
+					{
+						validation_checker = false;
+						input.classList.add( 'is-invalid' );
+					}
+					else
+					{
+						if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
 						{
-							console.log( input );
-							if ( input.reportValidity() === false ) 
-							{
-								validation_checker = false;
-								input.classList.add( 'is-invalid' );
-							}
-							else
-							{
-								if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
-								{
-									input.classList.remove( 'is-invalid' );
-								}
-							}
-						});
+							input.classList.remove( 'is-invalid' );
+						}
+					}
 				});
 		</script>
 	<?php
-
-	return $data;
 }
 
 // add_action( 'woocommerce_after_checkout_validation', 'wonka_woocommerce_after_checkout_validation', 10, 2 ); 

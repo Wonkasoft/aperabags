@@ -348,6 +348,13 @@
 									}
 								});
 						}
+
+						if ( e.target.getAttribute( 'data-target' ) === '#place_order' ) 
+						{
+							e.preventDefault();
+							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
+							next_tab.click();
+						}
 					});
 			});
 	}
@@ -521,7 +528,7 @@
 	}
 
 	// Open the full screen search box 
-	function openSearch(e) 
+	function openSearch( e ) 
 	{
 		e.preventDefault();
 	  	document.getElementById( "search_overlay" ).style.display = "block";
@@ -534,7 +541,7 @@
 	}
 
 	// Close the full screen search box 
-	function closeSearch(e) 
+	function closeSearch( e ) 
 	{
 		e.preventDefault();
   		document.querySelector( '#search_overlay' ).style.left = '100%';
