@@ -303,7 +303,6 @@
 						if ( e.target.getAttribute( 'data-target' ) === '#wonka_shipping_method_tab' ) 
 						{
 							e.preventDefault();
-							console.log( e.target );
 							var shipping_form_fields = document.querySelectorAll( '.woocommerce-shipping-fields input' );
 							var validation_checker = true;
 							var field_count = shipping_form_fields.length;
@@ -495,7 +494,7 @@
 		top_slide_img_holder = top_slide.querySelectorAll( '.top-slide-img-holder' )[0],
 		cta_slider_section = document.querySelector( '.desirable-slider-section' ),
 		img_for_sizing = new Image(),
-		adjustment,
+		adjustment = window.innerHeight,
 		height_set;
 
 		img_for_sizing.src = 'https:' + top_slide_img_holder.getAttribute( 'data-img-url' );
