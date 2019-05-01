@@ -1242,12 +1242,3 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 // add the filter 
 remove_action('woocommerce_review_comment_text', 'woocommerce_review_display_comment_text', 10, 1 );
 add_action( 'woocommerce_review_comment_text', 'filter_woocommerce_product_review_list_args', 10, 1 ); 
-
-function wp_ws($wp_filters){
-	
-
-	echo "<pre>\n";
-print_r( $wp_filters );
-echo "</pre>\n";
-}
-add_action('wp', 'wp_ws', 10, 1);
