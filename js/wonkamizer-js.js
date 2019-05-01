@@ -224,6 +224,42 @@
 					});
 			});
 
+		var cybersource_labels = document.querySelectorAll( '.payment_box.payment_method_cybersource label' );
+		cybersource_labels.forEach( function( label, i ) 
+			{
+				label.classList.add( 'sr-only' );
+			});
+		var cybersource_inputs = document.querySelectorAll( '.payment_box.payment_method_cybersource input' );
+		cybersource_inputs.forEach( function( input, i ) 
+			{
+				input.classList.add( 'form-control' );
+				if ( input.id === 'cybersource_cvNumber' ) 
+				{
+					input.setAttribute( 'placeholder', 'CCV' );
+				}
+				else
+				{
+					input.setAttribute( 'placeholder', input.parentElement.querySelector( 'label' ).innerText );
+				}
+			});
+
+		var cybersource_select_boxes = document.querySelectorAll( '.payment_box.payment_method_cybersource select' );
+		cybersource_select_boxes.forEach( function( select, i ) 
+			{
+				select.parentElement.classList.add( 'inline-group' );
+				select.classList.add( 'form-control' );
+			});
+		
+		var cybersource_form_field_group = document.querySelectorAll( '.payment_box.payment_method_cybersource .form-row' );
+		cybersource_form_field_group.forEach( function( field_group, i ) 
+			{
+				var new_container = document.createElement( 'DIV' );
+				new_container.classList.add( 'form-group' );
+				new_container.innerHTML = field_group.innerHTML;
+				field_group.parentElement.insertBefore( new_container, field_group );
+				field_group.remove();
+			});
+
 		multistep_btns.forEach( function( item, i ) 
 			{
 				item.addEventListener( 'click', function( e ) 
@@ -239,12 +275,18 @@
 								{
 									if ( input.name !== 'shipping_company' && input.name !== 'shipping_address_2' ) 
 									{
-										console.log(input.name);
 										input.required = true;
 										if ( input.reportValidity() === false ) 
 										{
 											validation_checker = false;
 											input.classList.add( 'is-invalid' );
+										}
+										else
+										{
+											if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
+											{
+												input.classList.remove( 'is-invalid' );
+											}
 										}
 
 									}
@@ -360,7 +402,6 @@
 				if ( this.readyState == 4 && this.status == 200 ) 
 				{
 					var response = JSON.parse( this.responseText );
-					console.log( response );
 				}
 			};
 			xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + "&security=" + wonkasoft_request.security);

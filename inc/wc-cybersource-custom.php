@@ -20,11 +20,11 @@ class WONKA_WC_Gateway_CyberSource extends WC_Gateway_CyberSource
 			<?php if ( $this->get_description() ) : ?><?php echo wpautop( wptexturize( $this->get_description() ) ); ?><?php endif; ?>
 
 			<div class="form-row form-row-first">
-				<label for="cybersource_accountNumber"><?php esc_html_e( 'Credit Card number', 'woocommerce-gateway-cybersource' ) ?> <span class="required">*</span></label>
+				<label for="cybersource_accountNumber" class="sr-only"><?php esc_html_e( 'Credit Card number', 'woocommerce-gateway-cybersource' ) ?> <span class="required">*</span></label>
 				<input type="text" class="input-text" id="cybersource_accountNumber" name="cybersource_accountNumber" maxlength="19" autocomplete="off" />
 			</div>
 			<div class="form-row form-row-last">
-				<label for="cybersource_cardType"><?php esc_html_e( 'Card Type', 'woocommerce-gateway-cybersource' ); ?> <span class="required">*</span></label>
+				<label for="cybersource_cardType" class="sr-only"><?php esc_html_e( 'Card Type', 'woocommerce-gateway-cybersource' ); ?> <span class="required">*</span></label>
 				<select name="cybersource_cardType" style="width:auto;"><br />
 					<option value="">
 					<?php
@@ -41,7 +41,7 @@ class WONKA_WC_Gateway_CyberSource extends WC_Gateway_CyberSource
 			<div class="clear"></div>
 
 			<div class="form-row form-row-first">
-				<label for="cybersource_expirationMonth"><?php esc_html_e( 'Expiration date', 'woocommerce-gateway-cybersource' ) ?> <span class="required">*</span></label>
+				<label for="cybersource_expirationMonth" class="sr-only"><?php esc_html_e( 'Expiration date', 'woocommerce-gateway-cybersource' ) ?> <span class="required">*</span></label>
 				<select name="cybersource_expirationMonth" id="cybersource_expirationMonth" class="woocommerce-select woocommerce-cc-month" style="width:auto;">
 					<option value=""><?php esc_html_e( 'Month', 'woocommerce-gateway-cybersource' ) ?></option>
 					<?php foreach ( range( 1, 12 ) as $month ) : ?>
@@ -58,7 +58,7 @@ class WONKA_WC_Gateway_CyberSource extends WC_Gateway_CyberSource
 			<?php if ( $this->is_cvv_required() ) : ?>
 
 				<div class="form-row form-row-last">
-					<label for="cybersource_cvNumber"><?php esc_html_e( 'Card security code', 'woocommerce-gateway-cybersource') ?> <span class="required">*</span></label>
+					<label for="cybersource_cvNumber" class="sr-only"><?php esc_html_e( 'Card security code', 'woocommerce-gateway-cybersource') ?> <span class="required">*</span></label>
 					<input type="text" class="input-text" id="cybersource_cvNumber" name="cybersource_cvNumber" maxlength="4" style="width:60px" autocomplete="off" />
 				</div>
 			<?php endif; ?>
