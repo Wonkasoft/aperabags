@@ -154,7 +154,6 @@
 				item.addEventListener( 'click', function( event ) 
 					{
 						var target = event.target;
-						console.log( target );
 						if ( target.nodeName === 'SPAN' ) 
 						{
 							target = target.parentElement;
@@ -343,7 +342,7 @@
 							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 							ship_method.forEach( function( method, i ) 
 								{
-									if ( method.selected ) 
+									if ( method.checked ) 
 									{
 										next_tab.classList.remove( 'disabled' );
 										next_tab.click();
@@ -501,7 +500,6 @@
 
 		img_for_sizing.src = 'https:' + top_slide_img_holder.getAttribute( 'data-img-url' );
 		img_for_sizing.style.width = window.innerWidth + 'px';
-		console.log(getComputedStyle( img_for_sizing ) );
 		if ( document.querySelector( '#wpadminbar' ) )
 		{
 			adjustment -= document.querySelector( '#wpadminbar' ).offsetHeight;
