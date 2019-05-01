@@ -47,7 +47,7 @@
 		 *
 		 * @since 1.0.0
 		 */
-		if(document.querySelector( '#wonka_payment_method_tab' ))
+		if( document.querySelector( '#wonka_payment_method_tab' ) )
 		{
 			document.querySelector( '#wonka_payment_method_tab' ).addEventListener( 'click', function( event ) {
 				event.preventDefault();
