@@ -421,7 +421,7 @@ function wonka_override_checkout_fields( $fields ) {
 	return $fields;
 }
 
-add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free_shipping' );
+add_filter( 'woocommerce_checkout_fields' , 'wonka_override_checkout_fields' );
 
 /**
  * Limit the availability of this shipping method based
@@ -445,7 +445,7 @@ function ws_restrict_free_shipping( $is_available ) {
   return $is_available;
 }
 
-add_filter( 'woocommerce_checkout_fields' , 'wonka_override_checkout_fields' );
+add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free_shipping' );
 
 function wonka_before_checkout_shipping_form( $checkout ) {
 	_e( '<h5 class="wonka-contact-information">Contact Information</h5>', 'aperabags' );
@@ -455,12 +455,13 @@ function wonka_before_checkout_shipping_form( $checkout ) {
 		if ( strtolower( $key ) === 'shipping_email' ) :
 			if ( !isset($field['placeholder'] ) ) :
 				$field['placeholder'] = $field['label'];
+				$field['required'] = true;
 			endif;
 
 			if ( isset( $field['class'] ) ) :
-				$field['class'] = array( 'wonka-form-group' );
+				$field['class'] = array( 'wonka-form-group', 'form-group' );
 			else :
-				$field['class'] = array( 'wonka-form-group' );
+				$field['class'] = array( 'wonka-form-group', 'form-group' );
 			endif;
 
 			if ( isset( $field['label_class'] ) ) :
@@ -486,6 +487,7 @@ function wonka_before_checkout_shipping_form( $checkout ) {
 <?php
 }
 add_action( 'woocommerce_before_checkout_shipping_form', 'wonka_before_checkout_shipping_form', 15 );
+
 
 /**
  * This builds a custom table of order details on the checkout page.
@@ -665,15 +667,15 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '<div class="col-12">';
 	$output .= '<ul class="nav nav-fill" id="wonka-checkout-nav-steps" role="tablist">';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link active" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top" data-btns="#wonka_customer_information_buttons">';
+	$output .= '<a class="nav-link active disabled" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top" data-btns="#wonka_customer_information_buttons">';
 	$output .= _x( 'Customer Information', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">1</span>';
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link" id="wonka_shipping_method_tab" data-toggle="tab" data-target="#wonka_shipping_method" role="tab" data-secondary="#wonka_shipping_method_top" data-btns="#wonka_shipping_method_buttons">';
+	$output .= '<a class="nav-link disabled" id="wonka_shipping_method_tab" data-toggle="tab" data-target="#wonka_shipping_method" role="tab" data-secondary="#wonka_shipping_method_top" data-btns="#wonka_shipping_method_buttons">';
 	$output .= _x( 'Shipping Method', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">2</span>';
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
-	$output .= '<a class="nav-link" id="wonka_payment_method_tab" data-toggle="tab" data-target="#wonka_payment_method" role="tab" data-secondary="#wonka_payment_method_top" data-btns="#wonka_payment_method_buttons">';
+	$output .= '<a class="nav-link disabled" id="wonka_payment_method_tab" data-toggle="tab" data-target="#wonka_payment_method" role="tab" data-secondary="#wonka_payment_method_top" data-btns="#wonka_payment_method_buttons">';
 	$output .= _x( 'Payment Method', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">3</span>';
 	$output .= '</a></li>';
 	$output .= '</ul><!-- #wonka-checkout-nav-steps -->';
@@ -1132,8 +1134,6 @@ add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_i
 add_filter( 'wonka_single_product_scroll_image_html', 'wonka_single_product_image_scroll_html_custom', 10, 2 );
 /*=====  End of This is filtering the first thumbnail on single product page  ======*/
 
-add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
- 
 function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
    if ( strpos( $field, '</label>' ) !== false && $args['required'] ) {
       $error = '<span class="error" style="display:none">';
@@ -1141,8 +1141,23 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
       $error .= '</span>';
       $field = substr_replace( $field, $error, strpos( $field, '</p>' ), 0);
 	 }
+
    return $field;
 }
+
+add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
+
+function ws_shipping_fields_validation() {
+	// This is a security check, it validates a random number that is generated on the request.
+	if ( !check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
+	return wp_send_json_error( 'Invalid Nonce' );
+ 	}
+ 	$address_fields = apply_filters('woocommerce_shipping_fields', $address_fields);
+
+	 wp_send_json_success( $address_fields );
+}
+add_action( 'wp_ajax_shipping_field_validation',        'ws_shipping_fields_validation' );
+add_action( 'wp_ajax_nopriv_shipping_field_validation', 'ws_shipping_fields_validation' );
 
 /**
  * Filter the except length to 20 words.
@@ -1174,7 +1189,7 @@ add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );
 
 function ws_ajax_search() {
 	// This is a security check, it validates a random number that is generated on the request.
-	if ( !check_ajax_referer( 'ws-autocomplete-search', 'security' ) ) {
+	if ( !check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
 	return wp_send_json_error( 'Invalid Nonce' );
  }
 	$results = new WP_Query( array(
