@@ -1498,6 +1498,87 @@ function wonka_woocommerce_review_order_before_submit() {
 					select.style.marginRight = 15 + 'px';
 				}
 			});
+
+		var billing_to_radios = document.querySelectorAll( 'input[name="ship_to_different_address"]' );
+		var billing_address_form = document.querySelector( '.billing_address' );
+
+		billing_to_radios.forEach( function( item, i ) 
+			{
+				
+				item.addEventListener( 'change', function( event ) 
+					{
+						var target = event.target;
+						if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
+						{
+							billing_address_form.classList.add( 'active' );
+								copy_to_billing();
+						}
+						else
+						{
+							if ( billing_address_form.classList.contains( 'active' ) ) 
+							{
+								billing_address_form.classList.remove( 'active' );
+								copy_to_billing();
+							}
+						}
+						
+					});
+			});
+
+		function copy_to_billing() {
+
+			var email = document.getElementsByName("shipping_email")[0].value;
+			var first_name = document.getElementsByName("shipping_first_name")[0].value;
+			var last_name = document.getElementsByName("shipping_last_name")[0].value;
+			var company = document.getElementsByName("shipping_company")[0].value;
+			var address_1 = document.getElementsByName("shipping_address_1")[0].value;
+			var address_2 = document.getElementsByName("shipping_address_2")[0].value;
+			var city = document.getElementsByName("shipping_city")[0].value;
+			var state = document.getElementById("shipping_state").value;
+			var postcode = document.getElementsByName("shipping_postcode")[0].value;
+			var phone = document.getElementsByName("shipping_phone")[0].value;
+			var contact_cells = document.querySelectorAll( '.contact-email-cell' );
+			var ship_to_cells = document.querySelectorAll( '.ship-to-address-cell' );
+
+			contact_cells.forEach( function( item, i ) 
+				{
+					item.innerText = email;
+				});
+
+			ship_to_cells.forEach( function( item, i ) 
+				{
+					item.innerHTML = '<span class="address-number">' +address_1 + ' ' + address_2 + '</span> <span class="city-state-zip">' + city + ', ' + state + ' ' + postcode + '</span>';
+				});
+
+			if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
+			{
+				document.getElementsByName("billing_email")[0].value = '';
+				document.getElementsByName("billing_first_name")[0].value = '';
+				document.getElementsByName("billing_last_name")[0].value = '';
+				document.getElementsByName("billing_company")[0].value = '';
+				document.getElementsByName("billing_address_1")[0].value = '';
+				document.getElementsByName("billing_address_2")[0].value = '';
+				document.getElementsByName("billing_city")[0].value = '';
+				document.getElementById("billing_state").value = '';
+				document.getElementsByName("billing_postcode")[0].value = '';
+				document.getElementsByName("billing_phone")[0].value = '';
+			}
+			else
+			{
+				document.getElementsByName("billing_email")[0].value = email;
+				document.getElementsByName("billing_first_name")[0].value = first_name;
+				document.getElementsByName("billing_last_name")[0].value = last_name;
+				document.getElementsByName("billing_company")[0].value = company;
+				document.getElementsByName("billing_address_1")[0].value = address_1;
+				document.getElementsByName("billing_address_2")[0].value = address_2;
+				document.getElementsByName("billing_city")[0].value = city;
+				document.getElementById("billing_state").value = state;
+				document.getElementsByName("billing_postcode")[0].value = postcode;
+				document.getElementsByName("billing_phone")[0].value = phone;
+			}
+		}
+
+		
 	</script>
 	<?php
 }

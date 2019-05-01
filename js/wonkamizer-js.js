@@ -266,7 +266,7 @@
 			{
 				label.classList.add( 'sr-only' );
 			});
-		
+
 		var cybersource_inputs = document.querySelectorAll( '.payment_box.payment_method_cybersource input' );
 		cybersource_inputs.forEach( function( input, i ) 
 			{
@@ -300,13 +300,15 @@
 			{
 				item.addEventListener( 'click', function( e ) 
 					{
-						if ( e.target.getAttribute( 'data-target' ) !== '#cart' ) 
+						var next_tab;
+						if ( e.target.getAttribute( 'data-target' ) === '#wonka_shipping_method_tab' ) 
 						{
 							e.preventDefault();
+							console.log( e.target );
 							var shipping_form_fields = document.querySelectorAll( '.woocommerce-shipping-fields input' );
 							var validation_checker = true;
 							var field_count = shipping_form_fields.length;
-							var next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
+							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 							shipping_form_fields.forEach( function( input, i ) 
 								{
 									if ( input.name !== 'shipping_company' && input.name !== 'shipping_address_2' ) 
@@ -328,6 +330,20 @@
 									}
 
 									if ( i === field_count - 1 && validation_checker )
+									{
+										next_tab.classList.remove( 'disabled' );
+										next_tab.click();
+									}
+								});
+						}
+
+						if ( e.target.getAttribute( 'data-target' ) === '#wonka_payment_method_tab' ) 
+						{
+							e.preventDefault();
+							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
+							ship_method.forEach( function( method, i ) 
+								{
+									if ( method.selected ) 
 									{
 										next_tab.classList.remove( 'disabled' );
 										next_tab.click();

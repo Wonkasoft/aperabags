@@ -1,6 +1,12 @@
 /**
  * Checkout
  */
+main.main-checkout {
+
+	.wonka-btn {
+		padding: 2px 8px;
+	}
+}
 
 .woocommerce-checkout p.woocommerce-invalid-required-field {
 	color: #e2401c;
