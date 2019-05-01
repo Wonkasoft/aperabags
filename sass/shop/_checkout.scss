@@ -150,6 +150,10 @@ div.checkout-order-details {
 			font-family: 'Open Sans';
 		}
 	}
+	
+	td.product-name {
+		@include font-size( .8 );
+	}
 
 	.cart-subtotal,
 	.fee,

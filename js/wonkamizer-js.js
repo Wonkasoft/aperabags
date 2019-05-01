@@ -146,6 +146,7 @@
 
 		multistep_links.forEach( function( item, i ) 
 			{
+				console.log( item );
 				if ( item.classList.contains( 'active' ) ) 
 				{
 					item.classList.add( 'completed' );
@@ -224,6 +225,42 @@
 					});
 			});
 
+		var cybersource_form_field_group = document.querySelectorAll( '.payment_box.payment_method_cybersource .form-row' );
+		cybersource_form_field_group.forEach( function( field_group, i ) 
+			{
+				var new_container, new_row_container;
+				if ( i === 0 )
+				{
+					new_container = document.createElement( 'DIV' );
+					new_container.classList.add( 'form-group' );
+					new_container.innerHTML = field_group.innerHTML;
+					field_group.parentElement.insertBefore( new_container, field_group );
+					field_group.remove();
+				}
+
+				if ( i === 1 ) 
+				{
+					new_row_container = document.createElement( 'DIV' );
+					new_row_container.classList.add( 'form-row', 'form-inline', 'justify-content-between' );
+					new_container = document.createElement( 'DIV' );
+					new_container.classList.add( 'form-group' );
+					new_container.innerHTML = field_group.innerHTML;
+					new_row_container.appendChild( new_container );
+					field_group.parentElement.insertBefore( new_row_container, field_group );
+					field_group.remove();
+				}
+
+				if ( i > 1 ) 
+				{
+					new_container = document.createElement( 'DIV' );
+					new_container.classList.add( 'form-group', 'form-inline' );
+					new_container.innerHTML = field_group.innerHTML;
+					field_group.parentElement.querySelector( '.form-row' ).appendChild( new_container );
+					field_group.parentElement.querySelector( '.clear' ).remove();
+					field_group.remove();
+				}
+			});
+		
 		var cybersource_labels = document.querySelectorAll( '.payment_box.payment_method_cybersource label' );
 		cybersource_labels.forEach( function( label, i ) 
 			{
@@ -246,20 +283,13 @@
 		var cybersource_select_boxes = document.querySelectorAll( '.payment_box.payment_method_cybersource select' );
 		cybersource_select_boxes.forEach( function( select, i ) 
 			{
-				select.parentElement.classList.add( 'inline-group' );
+				if ( select.name === 'cybersource_cardType' ) 
+				{
+					select.firstElementChild.innerText = select.parentElement.querySelector( 'label' ).innerText;
+				}
 				select.classList.add( 'form-control' );
 			});
 		
-		var cybersource_form_field_group = document.querySelectorAll( '.payment_box.payment_method_cybersource .form-row' );
-		cybersource_form_field_group.forEach( function( field_group, i ) 
-			{
-				var new_container = document.createElement( 'DIV' );
-				new_container.classList.add( 'form-group' );
-				new_container.innerHTML = field_group.innerHTML;
-				field_group.parentElement.insertBefore( new_container, field_group );
-				field_group.remove();
-			});
-
 		multistep_btns.forEach( function( item, i ) 
 			{
 				item.addEventListener( 'click', function( e ) 
