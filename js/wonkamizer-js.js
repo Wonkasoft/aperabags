@@ -1440,6 +1440,13 @@
 		===============================================*/
 		if ( document.querySelector( 'body.single-product' ) ) 
 		{	
+			/************** For review **********************************/
+			var rating_li = document.querySelector('.woocommerce-product-rating');
+			rating_li.addEventListener( 'click', function( e ) {
+				scrollToSection( 'reviews', null );
+
+			});
+
 			$('body.single-product').scrollspy({ target: ".navbar", offset: 30 });
 			single_product_variants_setup();
 			
@@ -1747,7 +1754,7 @@
 		 * This is for login form validation
 		 * 
 		 */
-		if ( document.querySelector( 'main.main-my-account' ) ) 
+		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ) 
 		{
 			var validation_div = document.querySelector( '.woocommerce-error' );
 

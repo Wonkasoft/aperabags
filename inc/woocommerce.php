@@ -861,7 +861,7 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '</div><!-- .wonka-row -->';
 
 	$output .= '<div class="tab-content" id="wonka-checkout-steps2">';
-	$output .= '<div class="tab-pane fade show active" id="wonka_customer_information_top" role="tabpanel">';
+	$output .= '<div class="tab-pane fade col show active" id="wonka_customer_information_top" role="tabpanel">';
 	$output .= '<div class="row wonka-row-express-checkout-btns">';
 	$output .= '<div class="col col-12">';
 	$output .= '<div class="express-btns-text-wrap">';
