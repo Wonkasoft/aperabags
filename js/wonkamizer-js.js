@@ -232,12 +232,28 @@
 						{
 							e.preventDefault();
 							var shipping_form_fields = document.querySelectorAll( '.woocommerce-shipping-fields input' );
-							console.log( shipping_form_fields );
+							var validation_checker = true;
+							var field_count = shipping_form_fields.length;
+							var next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 							shipping_form_fields.forEach( function( input, i ) 
 								{
-									console.log( input.required );
-									input.required = true;
-									console.log( input.reportValidity() );
+									if ( input.name !== 'shipping_company' && input.name !== 'shipping_address_2' ) 
+									{
+										console.log(input.name);
+										input.required = true;
+										if ( input.reportValidity() === false ) 
+										{
+											validation_checker = false;
+											input.classList.add( 'is-invalid' );
+										}
+
+									}
+
+									if ( i === field_count - 1 && validation_checker )
+									{
+										next_tab.classList.toggle( 'disabled' );
+										next_tab.click();
+									}
 								});
 						}
 					});
@@ -260,88 +276,6 @@
 			var field_position;
 		
 
-<<<<<<< HEAD
-		search_results.classList.add( 'autocomplete-suggestions' );
-		document.querySelector( 'body' ).appendChild( search_results );
-		search_field.setAttribute( 'autocomplete', 'off' );
-	
-		search_field.addEventListener( 'focus', function () 
-		{
-	
-			search_field.addEventListener( 'focus', function () 
-			{
-			xhr.onreadystatechange = function() 
-			{
-			if ( this.readyState == 4 && this.status == 200 ) 
-			{
-			
-			var response = JSON.parse( this.responseText );
-			field_position = search_field.getBoundingClientRect();
-			
-			search_field.addEventListener( 'keyup', function() 
-			{
-			data_value = search_field.value;
-			search_results.innerHTML = '';
-			if ( search_field.value.length >= 2 ) 
-			{
-			response.data.forEach( function( item, i )
-			{
-			if ( item.toLowerCase().match( search_field.value.toLowerCase() ) ) 
-			{
-			var title_element = document.createElement( 'DIV' );
-			title_element.classList.add( 'autocomplete-suggestion' );
-			title_element.setAttribute( 'data-index', i );
-			title_element.innerText = item;
-			search_results.appendChild( title_element );
-			title_element.addEventListener( 'mouseover', function() 
-			{
-			search_field.value = title_element.innerText;
-			});
-			title_element.addEventListener( 'mouseleave', function() 
-			{
-			search_field.value = data_value;
-			});
-			title_element.addEventListener( 'click', function(e) 
-			{
-			search_field.value = title_element.innerText;
-			data_value = search_field.value;
-			search_results.style.display = 'none';
-			search_results.style.position = '';
-			search_results.style.width = '';
-			search_results.style.left = '';
-			search_results.style.top = '';
-			});
-			}
-			});
-			
-			if ( document.querySelector( '.autocomplete-suggestions' ).hasChildNodes() ) 
-			{
-			search_results.style.display = 'block';
-			search_results.style.position = 'fixed';
-			search_results.style.width = field_position.width.toFixed(2) + 'px';
-			search_results.style.left = field_position.x.toFixed(2) + 'px';
-			search_results.style.top = field_position.bottom.toFixed(2) + 'px';
-			}
-			}
-			});
-			}	
-			};
-			
-			xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + "&security=" + wonkasoft_request.security);
-			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr.send();
-		});
-		search_close.addEventListener( 'click', function () 
-		{
-			search_results.style.display = 'none';
-			search_results.style.position = '';
-			search_results.style.width = '';
-			search_results.style.left = '';
-			search_results.style.top = '';
-		});
-	}
-
-=======
 			search_results.classList.add( 'autocomplete-suggestions' );
 			document.querySelector( 'body' ).appendChild( search_results );
 			search_field.setAttribute( 'autocomplete', 'off' );
@@ -418,7 +352,6 @@
 				search_results.style.top = '';
 			});
 		}
->>>>>>> stage
 		
 		if ( action === "shipping_field_validation" ) 
 		{

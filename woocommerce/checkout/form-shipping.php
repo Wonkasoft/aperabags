@@ -25,60 +25,107 @@ defined( 'ABSPATH' ) || exit;
 
 	<?php do_action( 'woocommerce_before_checkout_shipping_form', $checkout ); ?>
 
-	<?php if ( wc_ship_to_billing_address_only() && WC()->cart->needs_shipping() ) : ?>
-
-
-		<h5><?php _e( 'Shipping &amp; Billing', 'woocommerce' ); ?></h5>
-
-	<?php else : ?>
-
-		<h5><?php _e( 'Shipping details', 'woocommerce' ); ?></h5>
-
-	<?php endif; ?>
-
-			<div class="woocommerce-shipping-fields__field-wrapper">
 				<?php
+				ob_start();
+					_e( '<h5 class="wonka-contact-information">Contact Information</h5>', 'aperabags' );
 					$fields = $checkout->get_checkout_fields( 'shipping' );
 
+					foreach ( $fields as $key => $field ) :
+						if ( strtolower( $key ) === 'shipping_email' ) :
+							if ( !isset($field['placeholder'] ) ) :
+								$field['placeholder'] = $field['label'];
+								$field['required'] = true;
+							endif;
+
+							$field['priority'] = 1;
+
+							if ( isset( $field['class'] ) ) :
+								$field['class'] = array( 'wonka-form-group', 'form-group' );
+							else :
+								$field['class'] = array( 'wonka-form-group', 'form-group' );
+							endif;
+
+							if ( isset( $field['label_class'] ) ) :
+								array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
+							else:
+								$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
+							endif;
+
+							if ( isset( $field['input_class'] ) ) :
+								array_push( $field['input_class'], 'wonka-form-control', 'form-control' ) ;
+							else:
+								$field['input_class'] = array( 'wonka-form-control', 'form-control' );
+							endif;
+
+						woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+						endif;
+					endforeach; 
+					echo ob_get_clean();
+					?>
+
+					<div class="wonka-newletter-form-check checkbox">
+						<label for="mc4wp-subscribe">
+							<input type="checkbox" class="wonka-checkbox form-checkbox" name="mc4wp-subscribe" checked="checked" value="1" />
+							Keep me up to date on news and exclusive offers.	</label>
+					</div>
+
+				<div class="woocommerce-shipping-fields__field-wrapper">
+
+				<?php if ( wc_ship_to_billing_address_only() && WC()->cart->needs_shipping() ) : ?>
+
+
+					<h5><?php _e( 'Shipping &amp; Billing', 'woocommerce' ); ?></h5>
+
+				<?php else : ?>
+
+					<h5><?php _e( 'Shipping details', 'woocommerce' ); ?></h5>
+
+				<?php endif;
+				ob_start();
+				$fields = $checkout->get_checkout_fields( 'shipping' );
 					foreach ( $fields as $key => $field ) {
 						if ( $key !== 'shipping_email') :
 
-						if ( $key === 'shipping_first_name' ) :
-							$field['priority'] = 5;
-						endif;
+							if ( $key !== 'shipping_company' || $key !== 'shipping_address_2_field' ) :
+								$field['required'] = true;
+							endif;
+							if ( $key === 'shipping_first_name' ) :
+								$field['priority'] = 5;
+							endif;
 
-						if ( $key === 'shipping_country' ) :
-							$field['priority'] = 95;
-						endif;
-						
-						if ( !isset($field['placeholder'] ) ) :
-							$field['placeholder'] = $field['label'];
-						endif;
+							if ( $key === 'shipping_country' ) :
+								$field['priority'] = 95;
+							endif;
+							
+							if ( !isset($field['placeholder'] ) ) :
+								$field['placeholder'] = $field['label'];
+							endif;
 
-						if ( isset( $field['class'] ) ) :
-							array_push( $field['class'], 'wonka-form-group', 'form-group' ) ;
-						else:
-							$field['class'] = array( 'wonka-form-group', 'form-group' );
-						endif;
+							if ( isset( $field['class'] ) ) :
+								array_push( $field['class'], 'wonka-form-group', 'form-group' ) ;
+							else:
+								$field['class'] = array( 'wonka-form-group', 'form-group' );
+							endif;
 
-						if ( isset( $field['label_class'] ) ) :
-							array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
-						else:
-							$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
-						endif;
+							if ( isset( $field['label_class'] ) ) :
+								array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
+							else:
+								$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
+							endif;
 
-						if ( isset( $field['input_class'] ) ) :
-							array_push( $field['input_class'], 'wonka-form-control', 'form-control' ) ;
-						else:
-							$field['input_class'] = array( 'wonka-form-control', 'form-control' );
-						endif;
+							if ( isset( $field['input_class'] ) ) :
+								array_push( $field['input_class'], 'wonka-form-control', 'form-control' ) ;
+							else:
+								$field['input_class'] = array( 'wonka-form-control', 'form-control' );
+							endif;
 
-						if ( isset( $field['country_field'], $fields[ $field['country_field'] ] ) ) {
-							$field['country'] = $checkout->get_value( $field['country_field'] );
-						}
-						woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+							if ( isset( $field['country_field'], $fields[ $field['country_field'] ] ) ) {
+								$field['country'] = $checkout->get_value( $field['country_field'] );
+							}
+							woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 						endif;
 					}
+				echo ob_get_clean();
 				?>
 			</div>
 
