@@ -36,37 +36,41 @@
 	}
 }
 
+#customer_details {
+	margin-top: 0;
+}
+
 .woocommerce-shipping-fields__field-wrapper,
 .woocommerce-billing-fields__field-wrapper {
 	max-width: 100%;
 
-	p {
+	div {
 		clear: both;
 	}
 
-	p#shipping_first_name_field,
-	p#billing_first_name_field {
+	div#shipping_first_name_field,
+	div#billing_first_name_field {
 		width: 49%;
 		float: left;
 		clear: none;
 	}
 
-	p#shipping_last_name_field,
-	p#billing_last_name_field {
+	div#shipping_last_name_field,
+	div#billing_last_name_field {
 		width: 49%;
 		float: right;
 		clear: none;
 	}
 
-	p#shipping_city_field,
-	p#billing_city_field {
+	div#shipping_city_field,
+	div#billing_city_field {
 		width: 49%;
 		float: left;
 		clear: none;
 	}
 
-	p#shipping_state_field,
-	p#billing_state_field {
+	div#shipping_state_field,
+	div#billing_state_field {
 		width: 24%;
 		margin-left: 15px;
 		float: left;
@@ -89,15 +93,25 @@
 		}
 	}
 
-	p#shipping_postcode_field,
-	p#billing_postcode_field {
+	div#shipping_postcode_field,
+	div#billing_postcode_field {
 		width: 25%;
 		float: right;
 		clear: none;
 	}
+
 }
 
-p#billing_email_field {
+div#shipping_email_field {
+	margin-bottom: 4px;
+}
+
+div.wonka-newletter-form-check {
+	margin-bottom: 15px;
+	@include font-size( .8 );
+}
+
+div#billing_email_field {
 	margin-bottom: 8px;
 }
 

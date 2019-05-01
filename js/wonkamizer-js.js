@@ -232,12 +232,28 @@
 						{
 							e.preventDefault();
 							var shipping_form_fields = document.querySelectorAll( '.woocommerce-shipping-fields input' );
-							console.log( shipping_form_fields );
+							var validation_checker = true;
+							var field_count = shipping_form_fields.length;
+							var next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 							shipping_form_fields.forEach( function( input, i ) 
 								{
-									console.log( input.required );
-									input.required = true;
-									console.log( input.reportValidity() );
+									if ( input.name !== 'shipping_company' && input.name !== 'shipping_address_2' ) 
+									{
+										console.log(input.name);
+										input.required = true;
+										if ( input.reportValidity() === false ) 
+										{
+											validation_checker = false;
+											input.classList.add( 'is-invalid' );
+										}
+
+									}
+
+									if ( i === field_count - 1 && validation_checker )
+									{
+										next_tab.classList.toggle( 'disabled' );
+										next_tab.click();
+									}
 								});
 						}
 					});
