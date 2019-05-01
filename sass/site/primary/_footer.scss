@@ -134,12 +134,6 @@ footer#colophon {
 						height: 49px;
 						border-radius: 100px;
 						@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
-
-						&:hover {
-							color: #eeeeee;
-							background: #777777;
-							@include prefix( text-shadow, 1px 1px 3px rgba(#000, 0.8 ), o moz webkit );
-						}
 					}
 				}
 			}
@@ -157,7 +151,6 @@ footer#colophon {
 
 			img {
 				position: relative;
-				// top: -20px;	
 			}
 		}
 
