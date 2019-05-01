@@ -1424,7 +1424,6 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 // add the filter 
 remove_action('woocommerce_review_comment_text', 'woocommerce_review_display_comment_text', 10, 1 );
 add_action( 'woocommerce_review_comment_text', 'filter_woocommerce_product_review_list_args', 10, 1 ); 
-<<<<<<< HEAD
 
 function wonka_woocommerce_review_order_before_submit() {
 	?>
@@ -1469,5 +1468,3 @@ function wonka_woocommerce_review_order_before_submit() {
 }
 
 add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_order_before_submit', 999 );
-=======
->>>>>>> 799b81cfc97f05394eb39e743dd185aff76d37e2
