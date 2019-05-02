@@ -28,29 +28,28 @@ if ( is_user_logged_in() ) {
 
 	<?php echo ( $message ) ? wpautop( wptexturize( $message ) ) : ''; // @codingStandardsIgnoreLine ?>
 
-	<p class="form-row form-row-first input-group wonka-input-group">
+	<div class="form-row form-row-first form-group wonka-form-group">
 		<label for="username" class="sr-only"><?php esc_html_e( 'Username or email', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
 		<input type="text" class="input-text form-control wonka-form-control" name="username" id="username" autocomplete="username" placeholder="<?php esc_html_e( 'Username or email', 'woocommerce' ); ?>" />
-	</p>
-	<p class="form-row form-row-last input-group wonka-input-group">
+	</div>
+	<div class="form-row form-row-last form-group wonka-form-group">
 		<label for="password" class="sr-only"><?php esc_html_e( 'Password', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
 		<input class="input-text form-control wonka-form-control" type="password" name="password" id="password" autocomplete="current-password" placeholder="<?php esc_html_e( 'Password', 'woocommerce' ); ?>" />
-	</p>
-	<div class="clear"></div>
+	</div>
 
 	<?php do_action( 'woocommerce_login_form' ); ?>
 
-	<p class="form-row input-group wonka-input-group">
+	<div class="form-row form-group wonka-form-group">
 		<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
 		<button type="submit" class="button wonka-btn" name="login" value="<?php esc_attr_e( 'Login', 'woocommerce' ); ?>"><?php esc_html_e( 'Login', 'woocommerce' ); ?></button>
 		<input type="hidden" name="redirect" value="<?php echo esc_url( $redirect ) ?>" />
 		<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
 			<input class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox wonka-input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span><?php esc_html_e( 'Remember me', 'woocommerce' ); ?></span>
 		</label>
-	</p>
-	<p class="lost_password">
+	</div>
+	<div class="lost_password">
 		<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Lost your password?', 'woocommerce' ); ?></a>
-	</p>
+	</div>
 
 	<div class="clear"></div>
 

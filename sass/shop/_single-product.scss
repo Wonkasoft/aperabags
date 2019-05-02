@@ -132,7 +132,7 @@
 	color: #333333;	
 
 	a {
-		color: $color__link;
+		color: #52abf6;
 	}
 }
 
@@ -259,6 +259,10 @@
 
 					    a.woocommerce-review-link {
 					    	display: none;
+					    }
+
+					    :before {
+					    	color: #52abf6;
 					    }
 					}
 

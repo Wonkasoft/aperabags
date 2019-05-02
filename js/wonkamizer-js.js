@@ -1183,7 +1183,7 @@
 			{
 				more_reviews = document.querySelector( '#more-reviews' );
 
-				more_reviews.addEventListener( 'click', function(e) 
+				more_reviews.addEventListener( 'click', function( e ) 
 					{
 						e.preventDefault();
 						if ( more_reviews.innerText.toLowerCase() === 'less reviews' ) 
@@ -1203,16 +1203,19 @@
 					});
 			}
 
-			write_review.addEventListener( 'click', function(e) 
+			var write_review_initial_text = write_review.innerText;
+			write_review.addEventListener( 'click', function( e ) 
 				{
 					e.preventDefault();
-					if ( getComputedStyle( comment_form_wrapper ).height === '25px' ) 
+					if ( getComputedStyle( comment_form_wrapper ).height === '24px' ) 
 					{
-						comment_form_wrapper.style.height = 415 + 'px';
+						comment_form_wrapper.style.height = 590 + 'px';
+						write_review.innerText = 'Cancel';
 					}
 					else
 					{
-						comment_form_wrapper.style.height = 25 + 'px';
+						comment_form_wrapper.style.height = 24 + 'px';
+						write_review.innerText = write_review_initial_text;
 					}
 				});
 
@@ -1245,7 +1248,7 @@
 								comment_el.innerText = data_comment;
 								comment_el.setAttribute( 'ws-data-comment', inner_comment );
 								target.innerText = "Read More";
-								if ( more_reviews.innerText.toLowerCase() === 'more reviews' )
+								if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
 								{
 									setup_for_reviews( comment_list );
 								}
