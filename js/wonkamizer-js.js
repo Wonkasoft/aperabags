@@ -1209,7 +1209,7 @@
 					e.preventDefault();
 					if ( getComputedStyle( comment_form_wrapper ).height === '24px' ) 
 					{
-						comment_form_wrapper.style.height = 590 + 'px';
+						comment_form_wrapper.style.height = comment_form_wrapper.firstElementChild.offsetHeight + 'px';
 						write_review.innerText = 'Cancel';
 					}
 					else
@@ -1222,7 +1222,7 @@
 			/***********************************************************************
 			 * This is for Review length
 			 **********************************************************************/
-			var read_more_btn = document.querySelectorAll( 'button.ws-data-comment-btn' );
+			var read_more_btn = document.querySelectorAll( 'a.ws-data-comment-btn' );
 
 			read_more_btn.forEach(function( item, i ){
 
@@ -1234,34 +1234,15 @@
 					var inner_comment = comment_el.innerText;
 					var data_comment = comment_el.getAttribute( 'ws-data-comment' );
 					more_reviews = document.querySelector( '#more-reviews' );
-
-					target.addEventListener( 'blur', function( e ) 
-						{
-							var target = e.target;
-							var comment_el = target.previousElementSibling;
-							var inner_comment = comment_el.innerText;
-							var data_comment = comment_el.getAttribute( 'ws-data-comment' );
-
-							if ( comment_el.classList.contains( 'full_comment' ) )
-							{
-								comment_el.classList.toggle( 'full_comment' );
-								comment_el.innerText = data_comment;
-								comment_el.setAttribute( 'ws-data-comment', inner_comment );
-								target.innerText = "Read More";
-								if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
-								{
-									setup_for_reviews( comment_list );
-								}
-							}
-						});
 				
 					if ( comment_el.classList.contains( 'full_comment' ) )
 					{
 						comment_el.classList.toggle( 'full_comment' );
 						comment_el.innerText = data_comment;
 						comment_el.setAttribute( 'ws-data-comment', inner_comment );
-						target.innerText = "Read More";
-						if ( more_reviews.innerText.toLowerCase() === 'more reviews' )
+						target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
+						
+						if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
 						{
 							setup_for_reviews( comment_list );
 						}
@@ -1271,12 +1252,35 @@
 						comment_el.classList.toggle( 'full_comment' );
 						comment_el.innerText = data_comment;
 						comment_el.setAttribute( 'ws-data-comment', inner_comment );
-						target.innerText = "Read Less";
-						if ( more_reviews.innerText.toLowerCase() === 'more reviews' )
+						target.innerHTML = " <i class='fa fa-angle-up'></i> read less";
+						
+						if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
 						{
 							setup_for_reviews( comment_list );
 						}
+
+						target.addEventListener( 'blur', function( e ) 
+							{
+								var target = e.target;
+								var comment_el = target.previousElementSibling;
+								var inner_comment = comment_el.innerText;
+								var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+
+								if ( comment_el.classList.contains( 'full_comment' ) )
+								{
+									comment_el.classList.toggle( 'full_comment' );
+									comment_el.innerText = data_comment;
+									comment_el.setAttribute( 'ws-data-comment', inner_comment );
+									target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
+									
+									if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
+									{
+										setup_for_reviews( comment_list );
+									}
+								}
+							});
 					}
+
 				});
 			});
 			/**
@@ -1443,6 +1447,13 @@
 		===============================================*/
 		if ( document.querySelector( 'body.single-product' ) ) 
 		{	
+			/************** For review **********************************/
+			var rating_li = document.querySelector('.woocommerce-product-rating');
+			rating_li.addEventListener( 'click', function( e ) {
+				scrollToSection( 'reviews', null );
+
+			});
+
 			$('body.single-product').scrollspy({ target: ".navbar", offset: 30 });
 			single_product_variants_setup();
 			
@@ -1750,7 +1761,7 @@
 		 * This is for login form validation
 		 * 
 		 */
-		if ( document.querySelector( 'main.main-my-account' ) ) 
+		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ) 
 		{
 			var validation_div = document.querySelector( '.woocommerce-error' );
 

@@ -24,6 +24,8 @@ input[type="submit"] {
 
 	&:visited {
 		color: rgba( #fff, .8);
+		border: 2px solid #52abf6;
+		background: rgba( #52abf6, 1 );
 	}
 
 	&:hover {
@@ -35,6 +37,9 @@ input[type="submit"] {
 	&:active,
 	&:focus {
 		outline: 0;
+		background: rgba( #5858e4, 1 );
+		border-color: #5858e4;
+		color: rgba(255, 255, 255, 1);
 	}
 }
 
@@ -58,6 +63,12 @@ input[type="submit"].wonka-btn {
     @include font-size( 1 );
     @include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
+    &:visited {
+    	color: rgba( #fff, .8);
+    	border: 2px solid #52abf6;
+    	background: rgba( #52abf6, 1 );
+    }
+    
     &:hover {
 		background: rgba( #5858e4, 1 );
 		border-color: #5858e4;
@@ -67,6 +78,9 @@ input[type="submit"].wonka-btn {
     &:active,
     &:focus {
     	outline: 0;
+    	background: rgba( #5858e4, 1 );
+		border-color: #5858e4;
+		color: rgba(255, 255, 255, 1);
     }
 }
 

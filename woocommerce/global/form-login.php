@@ -22,19 +22,24 @@ if ( is_user_logged_in() ) {
 }
 
 ?>
-<form class="woocommerce-form woocommerce-form-login login" method="post" <?php echo ( $hidden ) ? 'style="display:none;"' : ''; ?>>
+<form class="woocommerce-form col woocommerce-form-login login" method="post" <?php echo ( $hidden ) ? 'style="display:none;"' : ''; ?>>
 
 	<?php do_action( 'woocommerce_login_form_start' ); ?>
 
 	<?php echo ( $message ) ? wpautop( wptexturize( $message ) ) : ''; // @codingStandardsIgnoreLine ?>
 
 	<div class="form-row form-row-first form-group wonka-form-group">
+
 		<label for="username" class="sr-only"><?php esc_html_e( 'Username or email', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
+
+	<div class="form-row form-row-first input-group wonka-input-group">
 		<input type="text" class="input-text form-control wonka-form-control" name="username" id="username" autocomplete="username" placeholder="<?php esc_html_e( 'Username or email', 'woocommerce' ); ?>" />
+		<div class="invalid-feedback username"></div>
 	</div>
 	<div class="form-row form-row-last form-group wonka-form-group">
 		<label for="password" class="sr-only"><?php esc_html_e( 'Password', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
 		<input class="input-text form-control wonka-form-control" type="password" name="password" id="password" autocomplete="current-password" placeholder="<?php esc_html_e( 'Password', 'woocommerce' ); ?>" />
+		<div class="invalid-feedback password"></div>
 	</div>
 
 	<?php do_action( 'woocommerce_login_form' ); ?>
