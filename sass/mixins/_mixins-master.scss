@@ -50,37 +50,37 @@
 
 @mixin media-breakpoint( $breakpoint ) {
 	@if $breakpoint == xs {
-		@media only screen and ( min-width: 480px ) {
+		@media screen and ( min-width: 480px ) {
 			@content;
 		}
 	}
 	@if $breakpoint == sm {
-		@media only screen and ( min-width: 576px ) {
+		@media screen and ( min-width: 576px ) {
 			@content;
 		}
 	}
 	@if $breakpoint == md {
-		@media only screen and ( min-width: 768px ) {
+		@media screen and ( min-width: 768px ) {
 			@content;
 		}
 	}
 	@if $breakpoint == lg {
-		@media only screen and  ( min-width: 992px ) {
+		@media screen and  ( min-width: 992px ) {
 			@content;
 		}
 	}
 	@if $breakpoint == xl {
-		@media only screen and  ( min-width: 1200px ) {
+		@media screen and  ( min-width: 1200px ) {
 			@content;
 		}
 	}
 	@if $breakpoint == xxl {
-		@media only screen and  ( min-width: 1460px ) {
+		@media screen and  ( min-width: 1460px ) {
 			@content;
 		}
 	}
 	@if $breakpoint == ipx {
-		@media only screen 
+		@media screen 
     	and (device-width : 375px) 
     	and (device-height : 812px) 
     	and (-webkit-device-pixel-ratio : 3) {
@@ -88,7 +88,7 @@
 		}
 	}
 	@if $breakpoint == ip8 {
-		@media only screen 
+		@media screen 
     	and (device-width : 375px) 
     	and (device-height : 667px) 
     	and (-webkit-device-pixel-ratio : 2) {
@@ -96,7 +96,7 @@
 		}
 	}
 	@if $breakpoint == ip8p {
-		@media only screen 
+		@media screen 
     	and (device-width : 375px) 
     	and (device-height : 736px) 
     	and (-webkit-device-pixel-ratio : 3) {
