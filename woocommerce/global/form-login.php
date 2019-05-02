@@ -31,8 +31,6 @@ if ( is_user_logged_in() ) {
 	<div class="form-row form-row-first form-group wonka-form-group">
 
 		<label for="username" class="sr-only"><?php esc_html_e( 'Username or email', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-
-	<div class="form-row form-row-first input-group wonka-input-group">
 		<input type="text" class="input-text form-control wonka-form-control" name="username" id="username" autocomplete="username" placeholder="<?php esc_html_e( 'Username or email', 'woocommerce' ); ?>" />
 		<div class="invalid-feedback username"></div>
 	</div>

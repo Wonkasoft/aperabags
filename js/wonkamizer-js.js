@@ -1448,11 +1448,13 @@
 		if ( document.querySelector( 'body.single-product' ) ) 
 		{	
 			/************** For review **********************************/
-			var rating_li = document.querySelector('.woocommerce-product-rating');
-			rating_li.addEventListener( 'click', function( e ) {
-				scrollToSection( 'reviews', null );
-
-			});
+			if ( document.querySelector( '.woocommerce-product-rating' ) ) 
+			{
+				var rating_div = document.querySelector( '.woocommerce-product-rating' );
+				rating_div.addEventListener( 'click', function( e ) {
+					scrollToSection( 'reviews', null );
+				});
+			}
 
 			$('body.single-product').scrollspy({ target: ".navbar", offset: 30 });
 			single_product_variants_setup();
@@ -1727,34 +1729,6 @@
 		/***********************************************************************************
 		 * End For Checkout validation
 		 * ****************************************************************************** */
-
-		 		/********************************************************************************
-		 * this is form credit Card form placeholders
-		 ********************************************************************************/
-		// var checkout_error_ul;
-		if (document.querySelector( 'main.main-checkout' ))
-		{
-			 var payment_accountnumber_label = document.querySelector( 'label[for="cybersource_accountNumber"]' );
-			 var payment_acountnumber_input = document.querySelector( 'input#cybersource_accountNumber' );
-			 var payment_cardtype_label = document.querySelector( 'label[for="cybersource_cardType"]' );
-			 var payment_cardtype_select = document.querySelector( 'select.cybersource_cardType' );
-			 var payment_xpdate_label = document.querySelector( 'label[for="cybersource_expirationMonth"]' );
-			 var payment_xpmonth_select = document.querySelector( 'select#cybersource_expirationMonth' );
-			 var payment_xpyear_select = document.querySelector( 'select#cybersource_expirationYear' );
-			 var payment_cvnumber_label = document.querySelector( 'label[for="cybersource_cvNumber"]' );
-		   var payment_cvnumber_select = document.querySelector( 'input#cybersource_accountNumber' );
-
-			 payment_accountnumber_label.classList.add('sr-only');
-			 var paymentmethod_cybersource_labels = document.querySelectorAll( 'div.payment_method_cybersource label' );
-			 paymentmethod_cybersource_labels.forEach(function (item, index) {
-				item.classList.add( 'sr-only' );
-				// item.nextElementSibling.setAttribute("placeholder", item.innerText);
-			 });
-
-		}
-	/***********************************************************************************
-	 * End for Credit card form placeholders
-	 * ****************************************************************************** */
 		
 
 		/**
