@@ -1745,42 +1745,42 @@
 				validation_text = validation_text.split(' ').slice(1).join(' ');
 				var validation_text_2 = validation_text.split('.').slice(0,1).join();
 
-				switch(validation_text_2)
+				switch( validation_text_2 )
 				{
 
 					case "Username is required":
-						document.querySelector( 'input#username' ).classList.add("is-invalid");
+						document.querySelector( 'input#username' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.username' ).innerText = validation_text;
 						break;
 					case "The password field is empty":
-						document.querySelector( 'input#password' ).classList.add("is-invalid");
+						document.querySelector( 'input#password' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.password' ).innerText = validation_text;
 						break;
 					case "Too many failed login attempts":
-						document.querySelector( 'input#username' ).classList.add("is-invalid");
-						document.querySelector( 'input#password' ).classList.add("is-invalid");
+						document.querySelector( 'input#username' ).classList.add( "is-invalid" );
+						document.querySelector( 'input#password' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.username' ).innerText = validation_text;
 						document.querySelector( 'div.invalid-feedback.password' ).innerText = validation_text;
 						break;
 					case "Incorrect username or password":
-						document.querySelector( 'input#username' ).classList.add("is-invalid");
-						document.querySelector( 'input#password' ).classList.add("is-invalid");
+						document.querySelector( 'input#username' ).classList.add( "is-invalid" );
+						document.querySelector( 'input#password' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.username' ).innerText = validation_text;
 						document.querySelector( 'div.invalid-feedback.password' ).innerText = validation_text;
 						break;
 						
 					case "Please provide a valid email address":
-						document.querySelector( 'input#reg_email' ).classList.add("is-invalid");
+						document.querySelector( 'input#reg_email' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.reg_email' ).innerText = validation_text;
 						break;
 
 					case "An account is already registered with your email address":
-						document.querySelector( 'input#reg_email' ).classList.add("is-invalid");
+						document.querySelector( 'input#reg_email' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.reg_email' ).innerText = validation_text;
 						break;
 
 					case "Please enter an account password":
-						document.querySelector( 'input#register_password' ).classList.add("is-invalid");
+						document.querySelector( 'input#register_password' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.register_password' ).innerText = validation_text;
 						break;
 					}

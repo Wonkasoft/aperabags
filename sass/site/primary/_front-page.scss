@@ -35,7 +35,7 @@ section.header-slider-section {
 
 			div.top-slide-img-holder {
 				background-position: center -50px;
-				@include prefix( background-attachment, fixed, o moz webkit );
+				// @include prefix( background-attachment, fixed, o moz webkit );
 				@include prefix( background-size, cover, o moz webkit );
 				background-repeat: no-repeat;
 				width: 100%;
