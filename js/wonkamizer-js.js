@@ -1545,12 +1545,6 @@
 			}
 			/*=====  End of This is the setup for the Wonka Express Checkout Button  ======*/
 
-			img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop;
-
-			if ( window.pageYOffset > document.querySelector( '#main' ).offsetTop ) 
-			{
-				scrollToSection( 'main', 15 );
-			}
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
