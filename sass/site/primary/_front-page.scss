@@ -161,7 +161,6 @@ section.header-slider-section {
 				}
 
 				@include media-breakpoint( ipx ) {
-					@include prefix( background-attachment, inherit, o moz webkit );
 					
 					.img-header-text-wrap {
 
@@ -184,7 +183,6 @@ section.header-slider-section {
 				}
 
 				@include media-breakpoint( ip8 ) {
-					@include prefix( background-attachment, inherit, o moz webkit );
 					
 					.img-header-text-wrap {
 
@@ -207,7 +205,6 @@ section.header-slider-section {
 				}
 
 				@include media-breakpoint( ip8p ) {
-					@include prefix( background-attachment, inherit, o moz webkit );
 					
 					.img-header-text-wrap {
 
