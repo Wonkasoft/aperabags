@@ -35,7 +35,7 @@ section.header-slider-section {
 
 			div.top-slide-img-holder {
 				background-position: center -50px;
-				@include prefix( background-attachment, cover, o moz webkit );
+				@include prefix( background-attachment, fixed, o moz webkit );
 				@include prefix( background-size, cover, o moz webkit );
 				background-repeat: no-repeat;
 				width: 100%;
@@ -71,6 +71,7 @@ section.header-slider-section {
 							font-weight: bold;
 							color: #fffcfc;
 							max-width: 1200px;
+							@include prefix( text-shadow, 1px 1px 2px rgba( #000, .8 ), o moz webkit );
 
 							h2 {
 								margin: 0 auto;
