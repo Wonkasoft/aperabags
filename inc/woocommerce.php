@@ -1411,11 +1411,11 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 	echo "<div class='wonka-comment-wrapper'>";
 	echo "<p class='comment-text' ws-data-comment='" . esc_html( $comment->comment_content ) . "'>";
 	echo $output; 
-	echo "</p>";
 	if ( $comment_word_count >= $length )
 	{
-		echo "<button class='wonka-btn ws-data-comment-btn'>Read More</button>";
+		echo "<a href='#' class='ws-data-comment-btn'>Read More</a>";
 	}
+	echo "</p>";
 	echo "</div>";
 	echo ob_get_clean();
 
