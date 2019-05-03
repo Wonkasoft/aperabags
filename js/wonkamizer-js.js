@@ -360,7 +360,6 @@
 							if ( document.querySelector( '#payment_method_cybersource' ).checked ) 
 							{
 								var cybersource_inputs_for_validation = document.querySelectorAll( '.payment_box.payment_method_cybersource input' );
-								console.log( cybersource_inputs_for_validation );
 								var cybersource_selects_for_validation = document.querySelectorAll( '.payment_box.payment_method_cybersource select' );
 								var feedback_div;
 								cybersource_inputs_for_validation.forEach( function( input, i ) 
@@ -484,9 +483,27 @@
 							if ( document.querySelector( '#bill-to-different-address-checkbox2' ).checked ) 
 							{
 								var billing_form_fields = document.querySelectorAll( '.woocommerce-billing-fields__field-wrapper input' );
-								var validation_checker = true;
-								var field_count = billing_form_fields.length;
+								var billing_form_selects = document.querySelectorAll( '.woocommerce-billing-fields__field-wrapper select' );
+								var billing_field_count = billing_form_fields.length;
 								next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
+								var validation_billing_checker = true;
+
+								billing_form_selects.forEach( function( select, i ) 
+									{
+										if ( select.selectedIndex === 0 ) 
+										{
+											validation_billing_checker = false;
+											select.classList.add( 'is-invalid' );
+										}
+										else
+										{
+											if ( select.selectedIndex > 0 && select.classList.contains( 'is-invalid' ) ) 
+											{
+												select.classList.remove( 'is-invalid' );
+											}
+										}
+									});
+
 								billing_form_fields.forEach( function( input, i ) 
 									{
 										if ( input.name !== 'billing_company' && input.name !== 'billing_address_2' ) 
@@ -494,7 +511,7 @@
 											input.required = true;
 											if ( input.reportValidity() === false ) 
 											{
-												validation_checker = false;
+												validation_billing_checker = false;
 												input.classList.add( 'is-invalid' );
 											}
 											else
@@ -507,10 +524,9 @@
 
 										}
 
-										if ( i === field_count - 1 && validation_checker )
+										if ( i === field_count - 1 && validation_billing_checker )
 										{
-											next_tab.classList.remove( 'disabled' );
-											next_tab.click();
+											// next_tab.submit();
 										}
 									});
 							}
