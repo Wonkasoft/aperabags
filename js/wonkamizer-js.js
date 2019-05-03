@@ -480,6 +480,40 @@
 										}
 									});
 							}
+
+							if ( document.querySelector( '#bill-to-different-address-checkbox2' ).checked ) 
+							{
+								var billing_form_fields = document.querySelectorAll( '.woocommerce-billing-fields__field-wrapper input' );
+								var validation_checker = true;
+								var field_count = billing_form_fields.length;
+								next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
+								billing_form_fields.forEach( function( input, i ) 
+									{
+										if ( input.name !== 'billing_company' && input.name !== 'billing_address_2' ) 
+										{
+											input.required = true;
+											if ( input.reportValidity() === false ) 
+											{
+												validation_checker = false;
+												input.classList.add( 'is-invalid' );
+											}
+											else
+											{
+												if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
+												{
+													input.classList.remove( 'is-invalid' );
+												}
+											}
+
+										}
+
+										if ( i === field_count - 1 && validation_checker )
+										{
+											next_tab.classList.remove( 'disabled' );
+											next_tab.click();
+										}
+									});
+							}
 						}
 						/*=====  End of This is for validation from clicking the place order button  ======*/
 					});
