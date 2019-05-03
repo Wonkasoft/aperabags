@@ -349,12 +349,139 @@
 								});
 						}
 
+						/*===================================================================================
+						=            This is for validation from clicking the place order button            =
+						===================================================================================*/
 						if ( e.target.getAttribute( 'data-target' ) === '#place_order' ) 
 						{
 							e.preventDefault();
 							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
-							next_tab.click();
+
+							if ( document.querySelector( '#payment_method_cybersource' ).checked ) 
+							{
+								var cybersource_inputs_for_validation = document.querySelectorAll( '.payment_box.payment_method_cybersource input' );
+								console.log( cybersource_inputs_for_validation );
+								var cybersource_selects_for_validation = document.querySelectorAll( '.payment_box.payment_method_cybersource select' );
+								var feedback_div;
+								cybersource_inputs_for_validation.forEach( function( input, i ) 
+									{
+										input.required = true;
+										if ( input.name === 'cybersource_accountNumber' ) 
+										{
+											feedback_div = document.createElement( 'DIV' );
+											feedback_div.classList.add( 'invalid-feedback' );
+											feedback_div.innerText = 'Credit Card Number is a required field';
+											if ( !input.parentElement.querySelector( '.invalid-feedback' ) ) 
+											{
+												input.parentElement.appendChild( feedback_div );
+											}
+											if ( input.reportValidity() === false ) 
+											{
+												input.classList.add( 'is-invalid' );
+											}
+											else
+											{
+												if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
+												{
+													input.classList.remove( 'is-invalid' );
+												}
+											}
+										}
+
+										if ( input.name === 'cybersource_cvNumber' ) 
+										{
+											feedback_div = document.createElement( 'DIV' );
+											feedback_div.classList.add( 'invalid-feedback' );
+											feedback_div.innerText = 'CCV is a required field';
+											if ( !input.parentElement.querySelector( '.invalid-feedback' ) ) 
+											{
+												input.parentElement.appendChild( feedback_div );
+											}
+											if ( input.reportValidity() === false ) 
+											{
+												input.classList.add( 'is-invalid' );
+											}
+											else
+											{
+												if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
+												{
+													input.classList.remove( 'is-invalid' );
+												}
+											}
+										}
+									});
+
+								cybersource_selects_for_validation.forEach( function( select, i ) 
+									{
+										if ( select.name === 'cybersource_cardType' ) 
+										{
+											feedback_div = document.createElement( 'DIV' );
+											feedback_div.classList.add( 'invalid-feedback' );
+											feedback_div.innerText = 'Select Card Type is a required field';
+											if ( !select.parentElement.querySelector( '.invalid-feedback' ) ) 
+											{
+												select.parentElement.appendChild( feedback_div );
+											}
+											if ( select.selectedIndex === 0 ) 
+											{
+												select.classList.add( 'is-invalid' );
+											}
+											else
+											{
+												if ( select.selectedIndex > 0 && select.classList.contains( 'is-invalid' ) ) 
+												{
+													select.classList.remove( 'is-invalid' );
+												}
+											}
+										}
+
+										if ( select.name === 'cybersource_expirationMonth' ) 
+										{
+											feedback_div = document.createElement( 'DIV' );
+											feedback_div.classList.add( 'invalid-feedback', 'invalid-feedback-month' );
+											feedback_div.innerText = 'Expiration Month is a required field';
+											if ( !select.parentElement.querySelector( '.invalid-feedback.invalid-feedback-month' ) ) 
+											{
+												select.parentElement.appendChild( feedback_div );
+											}
+											if ( select.selectedIndex === 0 ) 
+											{
+												select.classList.add( 'is-invalid' );
+											}
+											else
+											{
+												if ( select.selectedIndex > 0 && select.classList.contains( 'is-invalid' ) ) 
+												{
+													select.classList.remove( 'is-invalid' );
+												}
+											}
+										}
+
+										if ( select.name === 'cybersource_expirationYear' ) 
+										{
+											feedback_div = document.createElement( 'DIV' );
+											feedback_div.classList.add( 'invalid-feedback', 'invalid-feedback-year' );
+											feedback_div.innerText = 'Expiration Year is a required field';
+											if ( !select.parentElement.querySelector( '.invalid-feedback.invalid-feedback-year' ) ) 
+											{
+												select.parentElement.appendChild( feedback_div );
+											}
+											if ( select.selectedIndex === 0 ) 
+											{
+												select.classList.add( 'is-invalid' );
+											}
+											else
+											{
+												if ( select.selectedIndex > 0 && select.classList.contains( 'is-invalid' ) ) 
+												{
+													select.classList.remove( 'is-invalid' );
+												}
+											}
+										}
+									});
+							}
 						}
+						/*=====  End of This is for validation from clicking the place order button  ======*/
 					});
 			});
 	}
