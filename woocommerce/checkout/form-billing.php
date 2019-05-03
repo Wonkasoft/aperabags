@@ -32,7 +32,7 @@ defined( 'ABSPATH' ) || exit;
 			</li>
 			<li class="list-group-item">
 				<div id="bill-to-different-address-radio2" class="custom-control custom-radio">
-					<input id="bill-to-different-address-checkbox2" class="custom-control-input" type="radio" <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 0 : 1 ), 1 ); ?> name="ship_to_different_address" />
+					<input id="bill-to-different-address-checkbox2" class="custom-control-input" type="radio" <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 0 : 1 ), 0 ); ?> name="ship_to_different_address" />
 					<label class="custom-control-label" for="bill-to-different-address-checkbox2"><span><?php _e( 'Use a different billing address', 'woocommerce' ); ?></span></label>
 				</div>
 			</li>

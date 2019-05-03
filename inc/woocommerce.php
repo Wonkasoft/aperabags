@@ -1583,33 +1583,3 @@ function wonka_woocommerce_review_order_before_submit() {
 }
 
 add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_order_before_submit', 999 );
-
-function wonka_woocommerce_after_checkout_validation( $data, $errors ) {
-	?>
-		<script>
-			var place_order_btn = document.querySelector( '#place_order' );
-			var payment_fields = document.querySelectorAll( '.wc_payment_methods input' );
-			console.log( payment_fields );
-			var validation_checker = true;
-			var field_count = payment_fields.length;
-			payment_fields.forEach( function( input, i ) 
-				{
-					console.log( input );
-					if ( input.reportValidity() === false ) 
-					{
-						validation_checker = false;
-						input.classList.add( 'is-invalid' );
-					}
-					else
-					{
-						if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
-						{
-							input.classList.remove( 'is-invalid' );
-						}
-					}
-				});
-		</script>
-	<?php
-}
-
-// add_action( 'woocommerce_after_checkout_validation', 'wonka_woocommerce_after_checkout_validation', 10, 2 ); 
