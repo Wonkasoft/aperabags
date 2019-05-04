@@ -31,7 +31,7 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 	</div><!-- .row -->
 <?php endif; ?>
 
-<div class="row wonka-row-product-statement">
+<div class="row wonka-row-">
 	<div class="col text-center">
 			<?php the_content(); ?>
 	</div>
