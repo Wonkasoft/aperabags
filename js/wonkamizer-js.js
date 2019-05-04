@@ -533,7 +533,7 @@
 
 										if ( i === field_count - 1 && validation_billing_checker )
 										{
-											// next_tab.submit();
+											next_tab.submit();
 										}
 									});
 							}
@@ -1848,7 +1848,7 @@
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
 							one_click = false;
-							scrollToSection( 'product-statement', 15 );
+							scrollToSection( 'section-product-statement', 15 );
 						}
 					} );
 			}
@@ -1863,7 +1863,7 @@
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
 							one_click = false;
-							scrollToSection( 'product-statement', 15 );
+							scrollToSection( 'section-product-statement', 15 );
 						}
 					} );
 			}
