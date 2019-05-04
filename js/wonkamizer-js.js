@@ -406,12 +406,14 @@
 											if ( input.reportValidity() === false ) 
 											{
 												input.classList.add( 'is-invalid' );
+												input.style.width = 100 + 'px';
 											}
 											else
 											{
 												if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
 												{
 													input.classList.remove( 'is-invalid' );
+													input.style.width = '';
 												}
 											}
 										}
@@ -492,7 +494,6 @@
 								var billing_form_fields = document.querySelectorAll( '.woocommerce-billing-fields__field-wrapper input' );
 								var billing_form_selects = document.querySelectorAll( '.woocommerce-billing-fields__field-wrapper select' );
 								var billing_field_count = billing_form_fields.length;
-								next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 								var validation_billing_checker = true;
 
 								billing_form_selects.forEach( function( select, i ) 
@@ -533,9 +534,14 @@
 
 										if ( i === field_count - 1 && validation_billing_checker )
 										{
-											next_tab.submit();
+											next_tab.click();
 										}
 									});
+							}
+
+							if ( document.querySelector( '#bill-to-different-address-checkbox1' ).checked ) 
+							{
+								next_tab.click();
 							}
 						}
 						/*=====  End of This is for validation from clicking the place order button  ======*/
