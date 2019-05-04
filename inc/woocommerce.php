@@ -247,6 +247,9 @@ if ( ! function_exists( 'wonka_woocommerce_update_order_review_fragments' ) ) {
 		echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
 
 		$current_method = WC()->session->get('chosen_shipping_methods')[0];
+		echo "<pre>\n";
+		print_r( WC()->session->get( 'shipping_for_package_0')['rates'] );
+		echo "</pre>\n";
 		foreach ( WC()->session->get( 'shipping_for_package_0')['rates'] as $method_id => $rate ) :
 			if ( $current_method === $method_id ) :
 				$rate_label = $rate->label;
