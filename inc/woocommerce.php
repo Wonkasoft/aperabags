@@ -240,30 +240,29 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 	}
 }
 
-if ( ! function_exists( 'wonka_woocommerce_update_order_review_fragments' ) ) {
-
-	function wonka_woocommerce_update_order_review_fragments( $fragments ) {
-		ob_start();
-		echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
-
-		$current_method = WC()->session->get('chosen_shipping_methods')[0];
-		foreach ( WC()->session->get( 'shipping_for_package_0')['rates'] as $method_id => $rate ) :
-			if ( WC()->session->get( 'chosen_shipping_methods')[0] === $method_id ) :
-				$rate_label = $rate->label;
-				$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
-			endif;
-		endforeach;
-
-		echo $fragments['td.ship-method-cell'] = '<td colspan="2" class="ship-method-cell">' . $rate_label . '</td>';
-		echo $fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
-		ob_get_clean();
-
-		return $fragments;
-	}
-
+function wonka_woocommerce_update_order_review_fragments( $fragments ) {
+	$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
+	ob_start();
+	foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
+		if ( $current_method === $method_id ) :
+			$rate_label = $rate->label;
+			$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+		endif;
+	endforeach;
+	if ( ! empty( $rate_label ) ) :
+		$fragments['td.ship-method-cell'] = '<td colspan="2" class="ship-method-cell">' . $rate_label . '</td>';
+	endif;
+	if ( ! empty( $rate_cost ) ) :
+		$fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
+	endif;
+	$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
+	ob_get_clean();
+	
+	return $fragments;
 }
 
 add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10, 1 );
+
 
 /**
  * This sets up the image flipper class
@@ -1583,33 +1582,3 @@ function wonka_woocommerce_review_order_before_submit() {
 }
 
 add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_order_before_submit', 999 );
-
-function wonka_woocommerce_after_checkout_validation( $data, $errors ) {
-	?>
-		<script>
-			var place_order_btn = document.querySelector( '#place_order' );
-			var payment_fields = document.querySelectorAll( '.wc_payment_methods input' );
-			console.log( payment_fields );
-			var validation_checker = true;
-			var field_count = payment_fields.length;
-			payment_fields.forEach( function( input, i ) 
-				{
-					console.log( input );
-					if ( input.reportValidity() === false ) 
-					{
-						validation_checker = false;
-						input.classList.add( 'is-invalid' );
-					}
-					else
-					{
-						if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
-						{
-							input.classList.remove( 'is-invalid' );
-						}
-					}
-				});
-		</script>
-	<?php
-}
-
-// add_action( 'woocommerce_after_checkout_validation', 'wonka_woocommerce_after_checkout_validation', 10, 2 ); 
