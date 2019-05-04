@@ -1104,20 +1104,21 @@
 							}
 						});
 
-					if ( item.selectedIndex === 0 ) 
-					{
-						full_imgs_parent.innerHTML = '';
-						full_imgs.forEach( function( img_tainers, i ) 
-							{
-								img_tainers.classList.add( 'variant-show' );
-							});
+				}
+				
+				if ( item.selectedIndex === 0 ) 
+				{
+					full_imgs_parent.innerHTML = '';
+					full_imgs.forEach( function( img_tainers, i ) 
+						{
+							img_tainers.classList.add( 'variant-show' );
+						});
 
-						thumb_lis_parent.innerHTML = '';
-						thumb_lis.forEach( function( img_tainers, i ) 
-							{
-								img_tainers.classList.add( 'variant-show' );
-							});
-					}
+					thumb_lis_parent.innerHTML = '';
+					thumb_lis.forEach( function( img_tainers, i ) 
+						{
+							img_tainers.classList.add( 'variant-show' );
+						});
 				}
 
 				item.addEventListener( 'click', function( event ) 
