@@ -83,35 +83,35 @@
 					});
 				/*=====  End of Copying Shipping info to Billing info  ======*/
 
-				var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
-				shippping_radios.forEach( function( item, i ) {
-					if ( item.checked ){
-						var shipping_label = item.nextSibling.innerText;
-						var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
-						var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
-						var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
-					}
-			});
+				// var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
+				// shippping_radios.forEach( function( item, i ) {
+				// 	if ( item.checked ){
+				// 		var shipping_label = item.nextSibling.innerText;
+				// 		var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
+				// 		var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
+				// 		var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
+				// 	}
+				// });
 
-			ship_ul.addEventListener('load', function( event ) {
-				ship_method.forEach( function( item, i ) {
-					item.addEventListener( 'change', function( event ) {
-						var target = event.target;
+			// ship_ul.addEventListener('load', function( event ) {
+			// 	ship_method.forEach( function( item, i ) {
+			// 		item.addEventListener( 'change', function( event ) {
+			// 			var target = event.target;
 
-						if (target.checked){
-							var shipping_label = item.nextSibling.innerText;
-							var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
-							var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
-							var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
+			// 			if (target.checked){
+			// 				var shipping_label = item.nextSibling.innerText;
+			// 				var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
+			// 				var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
+			// 				var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
 
-							ship_to_cells.forEach( function( item, i ) 
-							{
-								item.innerHTML = shipping_label;
-							});
-						}	
-					});
-				});	
-			});
+			// 				ship_to_cells.forEach( function( item, i ) 
+			// 				{
+			// 					item.innerHTML = shipping_label;
+			// 				});
+			// 			}	
+			// 		});
+			// 	});	
+			// });
 
 		});
 	}

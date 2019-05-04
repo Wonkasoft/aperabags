@@ -255,7 +255,7 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 	if ( ! empty( $rate_cost ) ) :
 		$fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
 	endif;
-	$fragments['test'] = WC()->session->get( 'chosen_shipping_methods' );
+	$fragments['test'] = WC()->session->get( 'chosen_shipping_methods' )[0];
 	$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
 	ob_get_clean();
 	return $fragments;
