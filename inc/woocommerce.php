@@ -243,6 +243,9 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 	ob_start();
 	$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
+	echo "<pre>\n";
+	print_r( WC()->session->get( 'shipping_for_package_0' )['rates'] );
+	echo "</pre>\n";
 	foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
 		if ( $current_method === $method_id ) :
 			$rate_label = $rate->label;

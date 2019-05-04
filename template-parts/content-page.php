@@ -13,9 +13,13 @@
 	<header class="entry-header">
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 	</header><!-- .entry-header -->
-
-	<?php apera_bags_post_thumbnail(); ?>
-
+	<section class="post-thumbnail-section container-fluid">
+		<div class="row">
+			<div class="col">
+				<?php apera_bags_post_thumbnail(); ?>
+			</div>
+		</div>
+	</section>
 	<div class="entry-content">
 		<?php
 		the_content();
