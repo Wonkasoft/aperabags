@@ -405,7 +405,7 @@ function wonka_override_checkout_fields( $fields ) {
         'label'    	 	=> __('Phone', 'woocommerce'),
 	    'placeholder'   => _x('Phone', 'placeholder', 'woocommerce'),
 	    'required'  	=> true,
-	    'class'     	=> array('form-row-wide'),
+	    'class'     	=> array('form-row'),
 	    'clear'     	=> true
 	     );
 
@@ -413,7 +413,7 @@ function wonka_override_checkout_fields( $fields ) {
         'label'    	 	=> __('Email', 'woocommerce'),
 	    'placeholder'   => _x('Email Address', 'placeholder', 'woocommerce'),
 	    'required'  	=> true,
-	    'class'     	=> array('form-row-wide'),
+	    'class'     	=> array('form-row'),
 		'clear'     	=> true,
 		'type'			=> 'email'
 		 );

@@ -101,19 +101,19 @@ defined( 'ABSPATH' ) || exit;
 								$field['placeholder'] = $field['label'];
 							endif;
 
-							if ( isset( $field['class'] ) ) :
+							if ( isset( $field['class'] ) && is_array( $field['class'] ) ) :
 								array_push( $field['class'], 'wonka-form-group', 'form-group' ) ;
 							else:
 								$field['class'] = array( 'wonka-form-group', 'form-group' );
 							endif;
 
-							if ( isset( $field['label_class'] ) ) :
+							if ( isset( $field['label_class'] ) && is_array( $field['label_class'] ) ) :
 								array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
 							else:
 								$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
 							endif;
 
-							if ( isset( $field['input_class'] ) ) :
+							if ( isset( $field['input_class'] ) && is_array( $field['input_class'] ) ) :
 								array_push( $field['input_class'], 'wonka-form-control', 'form-control' ) ;
 							else:
 								$field['input_class'] = array( 'wonka-form-control', 'form-control' );
