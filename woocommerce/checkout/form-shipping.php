@@ -26,10 +26,8 @@ defined( 'ABSPATH' ) || exit;
 	<?php do_action( 'woocommerce_before_checkout_shipping_form', $checkout ); ?>
 
 				<?php
-				ob_start();
 					_e( '<h5 class="wonka-contact-information">Contact Information</h5>', 'aperabags' );
 					$fields = $checkout->get_checkout_fields( 'shipping' );
-
 					foreach ( $fields as $key => $field ) :
 						if ( strtolower( $key ) === 'shipping_email' ) :
 							if ( !isset($field['placeholder'] ) ) :
@@ -60,7 +58,6 @@ defined( 'ABSPATH' ) || exit;
 						woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 						endif;
 					endforeach; 
-					echo ob_get_clean();
 					?>
 
 					<div class="wonka-newletter-form-check checkbox">
@@ -81,10 +78,8 @@ defined( 'ABSPATH' ) || exit;
 					<h5><?php _e( 'Shipping details', 'woocommerce' ); ?></h5>
 
 				<?php endif;
-				ob_start();
-				$fields = $checkout->get_checkout_fields( 'shipping' );
 					foreach ( $fields as $key => $field ) {
-						if ( $key !== 'shipping_email') :
+						if ( $key !== 'shipping_email' ) :
 
 							if ( $key !== 'shipping_company' || $key !== 'shipping_address_2_field' ) :
 								$field['required'] = true;
@@ -97,7 +92,7 @@ defined( 'ABSPATH' ) || exit;
 								$field['priority'] = 95;
 							endif;
 							
-							if ( !isset($field['placeholder'] ) ) :
+							if ( !isset( $field['placeholder'] ) ) :
 								$field['placeholder'] = $field['label'];
 							endif;
 
@@ -125,7 +120,6 @@ defined( 'ABSPATH' ) || exit;
 							woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 						endif;
 					}
-				echo ob_get_clean();
 				?>
 			</div>
 

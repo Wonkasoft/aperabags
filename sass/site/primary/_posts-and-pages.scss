@@ -260,3 +260,48 @@ main.main-shipping-returns-warranty {
 	}
 }
 /*=====  End for asterisk in Shipping, Returns, Warranty =====*/
+
+/*==============================================================================
+=            This is for the full width feature image page template            =
+==============================================================================*/
+main#full-width {
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+
+	header {
+		position: relative;
+		margin: 15px auto;
+		padding: 0 15px;
+		width: 1200px;
+		max-width: 100%;
+	}
+
+	section.post-thumbnail-section {
+		position: relative;
+		margin: 0;
+		padding: 0;
+
+		div.post-thumbnail {
+			position: relative;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+
+			img {
+				width: 100%;
+				@include prefix( box-shadow, 0 1px 6px 0 rgba( #000, .3 ), o moz webkit );
+			}
+		}
+	}
+
+	div.entry-content {
+		position: relative;
+		margin: 15px auto;
+		padding: 0 15px;
+		width: 1200px;
+		max-width: 100%;	
+	}
+}
+/*=====  End of This is for the full width feature image page template  ======*/

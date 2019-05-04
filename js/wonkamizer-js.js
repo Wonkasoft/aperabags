@@ -83,35 +83,35 @@
 					});
 				/*=====  End of Copying Shipping info to Billing info  ======*/
 
-				var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
-				shippping_radios.forEach( function( item, i ) {
-					if ( item.checked ){
-						var shipping_label = item.nextSibling.innerText;
-						var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
-						var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
-						var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
-					}
-			});
+				// var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
+				// shippping_radios.forEach( function( item, i ) {
+				// 	if ( item.checked ){
+				// 		var shipping_label = item.nextSibling.innerText;
+				// 		var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
+				// 		var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
+				// 		var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
+				// 	}
+				// });
 
-			ship_ul.addEventListener('load', function( event ) {
-				ship_method.forEach( function( item, i ) {
-					item.addEventListener( 'change', function( event ) {
-						var target = event.target;
+			// ship_ul.addEventListener('load', function( event ) {
+			// 	ship_method.forEach( function( item, i ) {
+			// 		item.addEventListener( 'change', function( event ) {
+			// 			var target = event.target;
 
-						if (target.checked){
-							var shipping_label = item.nextSibling.innerText;
-							var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
-							var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
-							var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
+			// 			if (target.checked){
+			// 				var shipping_label = item.nextSibling.innerText;
+			// 				var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
+			// 				var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
+			// 				var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
 
-							ship_to_cells.forEach( function( item, i ) 
-							{
-								item.innerHTML = shipping_label;
-							});
-						}	
-					});
-				});	
-			});
+			// 				ship_to_cells.forEach( function( item, i ) 
+			// 				{
+			// 					item.innerHTML = shipping_label;
+			// 				});
+			// 			}	
+			// 		});
+			// 	});	
+			// });
 
 		});
 	}
@@ -347,6 +347,13 @@
 										next_tab.click();
 									}
 								});
+						}
+
+						if ( e.target.getAttribute( 'data-target' ) === '#wonka_customer_information_tab' ) 
+						{
+							e.preventDefault();
+							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
+							next_tab.click();
 						}
 
 						/*===================================================================================
@@ -1097,20 +1104,21 @@
 							}
 						});
 
-					if ( item.selectedIndex === 0 ) 
-					{
-						full_imgs_parent.innerHTML = '';
-						full_imgs.forEach( function( img_tainers, i ) 
-							{
-								img_tainers.classList.add( 'variant-show' );
-							});
+				}
+				
+				if ( item.selectedIndex === 0 ) 
+				{
+					full_imgs_parent.innerHTML = '';
+					full_imgs.forEach( function( img_tainers, i ) 
+						{
+							img_tainers.classList.add( 'variant-show' );
+						});
 
-						thumb_lis_parent.innerHTML = '';
-						thumb_lis.forEach( function( img_tainers, i ) 
-							{
-								img_tainers.classList.add( 'variant-show' );
-							});
-					}
+					thumb_lis_parent.innerHTML = '';
+					thumb_lis.forEach( function( img_tainers, i ) 
+						{
+							img_tainers.classList.add( 'variant-show' );
+						});
 				}
 
 				item.addEventListener( 'click', function( event ) 
@@ -1341,7 +1349,7 @@
 		/*==========================================================
 		=            This is for setting up the reviews            =
 		==========================================================*/
-		if ( document.querySelector( '#reviews' ) ) 
+		if ( document.querySelector( '#write-review' ) ) 
 		{
 			var write_review = document.querySelector( '#write-review' ),
 			comment_form_wrapper = document.querySelector( 'div#review_form_wrapper' ),
