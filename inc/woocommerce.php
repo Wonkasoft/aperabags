@@ -248,7 +248,7 @@ if ( ! function_exists( 'wonka_woocommerce_update_order_review_fragments' ) ) {
 
 		$current_method = WC()->session->get('chosen_shipping_methods')[0];
 		foreach ( WC()->session->get( 'shipping_for_package_0')['rates'] as $method_id => $rate ) :
-			if ( WC()->session->get( 'chosen_shipping_methods')[0] === $method_id ) :
+			if ( $current_method === $method_id ) :
 				$rate_label = $rate->label;
 				$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
 			endif;
@@ -261,9 +261,9 @@ if ( ! function_exists( 'wonka_woocommerce_update_order_review_fragments' ) ) {
 		return $fragments;
 	}
 
+// add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10, 1 );
 }
 
-add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10, 1 );
 
 /**
  * This sets up the image flipper class
