@@ -258,7 +258,7 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 	$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
 	ob_get_clean();
 	$fragments['test'] = $current_method;
-	$fragments['test2'] = $_POST['shipping_method'];
+	$fragments['test2'] = WC()->session;
 	return $fragments;
 }
 
