@@ -20,7 +20,7 @@ get_header();
 ?>
 
 	<div id="primary" class="content-area">
-		<main id="main" class="full-width site-main<?php echo esc_attr( $ws_post_slug . $ws_post_type ); ?>">
+		<main id="full-width" class="site-main<?php echo esc_attr( $ws_post_slug . $ws_post_type ); ?>">
 
 		<?php
 		while ( have_posts() ) :
