@@ -533,7 +533,7 @@
 
 										if ( i === field_count - 1 && validation_billing_checker )
 										{
-											// next_tab.submit();
+											next_tab.submit();
 										}
 									});
 							}
