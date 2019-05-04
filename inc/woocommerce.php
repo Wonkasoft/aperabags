@@ -241,8 +241,8 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 }
 
 function wonka_woocommerce_update_order_review_fragments( $fragments ) {
-	ob_start();
 	$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
+	ob_start();
 	foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
 		if ( $current_method === $method_id ) :
 			$rate_label = $rate->label;
@@ -255,9 +255,9 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 	if ( ! empty( $rate_cost ) ) :
 		$fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
 	endif;
-	$fragments['test'] = WC()->session->get( 'chosen_shipping_methods' )[0];
 	$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
 	ob_get_clean();
+	$fragments['test'] = $current_method;
 	return $fragments;
 }
 
