@@ -349,6 +349,13 @@
 								});
 						}
 
+						if ( e.target.getAttribute( 'data-target' ) === '#wonka_customer_information_tab' ) 
+						{
+							e.preventDefault();
+							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
+							next_tab.click();
+						}
+
 						/*===================================================================================
 						=            This is for validation from clicking the place order button            =
 						===================================================================================*/
