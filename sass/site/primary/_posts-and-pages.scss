@@ -259,4 +259,25 @@ main.main-shipping-returns-warranty {
 		}
 	}
 }
+
+main.full-width {
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+
+	header {
+		position: relative;
+		margin: 15px auto;
+		width: 1200px;
+		max-width: 100%;
+	}
+
+	div.entry-content {
+		position: relative;
+		margin: 15px auto;
+		width: 1200px;
+		max-width: 100%;	
+	}
+}
 /*=====  End for asterisk in Shipping, Returns, Warranty =====*/
