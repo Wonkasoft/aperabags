@@ -273,6 +273,22 @@ main#full-width {
 		max-width: 100%;
 	}
 
+	section.post-thumbnail-section {
+		position: relative;
+		margin: 0;
+		padding: 0;
+
+		div.post-thumbnail {
+			position: relative;
+			margin: 0;
+			padding: 0;
+
+			img {
+				width: 100%;
+			}
+		}
+	}
+
 	div.entry-content {
 		position: relative;
 		margin: 15px auto;

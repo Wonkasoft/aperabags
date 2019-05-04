@@ -15,9 +15,7 @@
 	</header><!-- .entry-header -->
 	<section class="post-thumbnail-section container-fluid">
 		<div class="row">
-			<div class="col">
-				<?php apera_bags_post_thumbnail(); ?>
-			</div>
+			<?php apera_bags_post_thumbnail(); ?>
 		</div>
 	</section>
 	<div class="entry-content">
