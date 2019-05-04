@@ -261,7 +261,7 @@ if ( ! function_exists( 'wonka_woocommerce_update_order_review_fragments' ) ) {
 		return $fragments;
 	}
 
-// add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10, 1 );
+add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 50, 1 );
 }
 
 
