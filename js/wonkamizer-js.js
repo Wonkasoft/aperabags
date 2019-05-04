@@ -1348,7 +1348,7 @@
 		/*==========================================================
 		=            This is for setting up the reviews            =
 		==========================================================*/
-		if ( document.querySelector( '#reviews' ) ) 
+		if ( document.querySelector( '#write-review' ) ) 
 		{
 			var write_review = document.querySelector( '#write-review' ),
 			comment_form_wrapper = document.querySelector( 'div#review_form_wrapper' ),
