@@ -252,6 +252,7 @@ if ( ! function_exists( 'wonka_woocommerce_update_order_review_fragments' ) ) {
 		echo "</pre>\n";
 		foreach ( WC()->session->get( 'shipping_for_package_0')['rates'] as $method_id => $rate ) :
 			if ( $current_method === $method_id ) :
+				echo $rate;
 				$rate_label = $rate->label;
 				$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
 			endif;
