@@ -291,6 +291,7 @@ main#full-width {
 
 			img {
 				width: 100%;
+				@include prefix( box-shadow, 0 1px 6px 0 rgba( #000, .3 ), o moz webkit );
 			}
 		}
 	}
