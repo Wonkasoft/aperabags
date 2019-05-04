@@ -533,10 +533,10 @@
 
 										if ( i === field_count - 1 && validation_billing_checker )
 										{
-											next_tab.submit();
+											next_tab.click();
 										}
-									});
-							}
+										});
+								}
 						}
 						/*=====  End of This is for validation from clicking the place order button  ======*/
 					});
