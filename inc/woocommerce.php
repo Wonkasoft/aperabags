@@ -240,31 +240,25 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 	}
 }
 
-if ( ! function_exists( 'wonka_woocommerce_update_order_review_fragments' ) ) {
+function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 
-	function wonka_woocommerce_update_order_review_fragments( $fragments ) {
-		echo $fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
+	$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
 
-		$current_method = WC()->session->get('chosen_shipping_methods')[0];
-		echo "<pre>\n";
-		print_r( WC()->session->get( 'shipping_for_package_0')['rates'] );
-		echo "</pre>\n";
-		foreach ( WC()->session->get( 'shipping_for_package_0')['rates'] as $method_id => $rate ) :
-			if ( $current_method === $method_id ) :
-				echo $rate;
-				$rate_label = $rate->label;
-				$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
-			endif;
-		endforeach;
+	$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
+	foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
+		if ( $current_method === $method_id ) :
+			$rate_label = $rate->label;
+			$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+		endif;
+	endforeach;
 
-		echo $fragments['td.ship-method-cell'] = '<td colspan="2" class="ship-method-cell">' . $rate_label . '</td>';
-		echo $fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
+	$fragments['td.ship-method-cell'] = '<td colspan="2" class="ship-method-cell">' . $rate_label . '</td>';
+	$fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
 
-		return $fragments;
-	}
+	return $fragments;
+}
 
 add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 50, 1 );
-}
 
 
 /**
