@@ -245,8 +245,8 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 	$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
 	foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
 		if ( $current_method === $method_id ) :
-			$rate_label = $rate->label;
-			$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+			$rate_label = _x( $rate->label );
+			$rate_cost = _x( wc_format_decimal( $rate->cost, wc_get_price_decimals() ) );
 		endif;
 	endforeach;
 	if ( $rate_label ) :

@@ -28,11 +28,6 @@ defined( 'ABSPATH' ) || exit;
 				<?php
 					_e( '<h5 class="wonka-contact-information">Contact Information</h5>', 'aperabags' );
 					$fields = $checkout->get_checkout_fields( 'shipping' );
-					foreach( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
-					echo "<pre>\n";
-					print_r( $rate->label );
-					echo "</pre>\n";
-					endforeach;
 					foreach ( $fields as $key => $field ) :
 						if ( strtolower( $key ) === 'shipping_email' ) :
 							if ( !isset($field['placeholder'] ) ) :
