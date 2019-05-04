@@ -20,6 +20,7 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly
 global $product;
 
 if ( ! comments_open() ) {
+	echo '<div class="no-reviews">Comments are not turned on</div>';
 	return;
 }
 
