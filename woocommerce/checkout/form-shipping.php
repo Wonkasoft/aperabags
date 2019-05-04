@@ -79,9 +79,6 @@ defined( 'ABSPATH' ) || exit;
 					<h5><?php _e( 'Shipping details', 'woocommerce' ); ?></h5>
 
 				<?php endif;
-				echo "<pre>\n";
-				print_r( WC()->session->get( 'chosen_shipping_methods' )[0] );
-				echo "</pre>\n";
 					foreach ( $fields as $key => $field ) {
 						if ( $key !== 'shipping_email' ) :
 
