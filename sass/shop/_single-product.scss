@@ -62,6 +62,7 @@
 				}
 
 				div.wonka-thumbnails {
+					display: none;
 					position: relative;
 					flex: 0 0 20%;
 					padding: 0;
@@ -620,7 +621,7 @@ section.product-tabs-section {
 				margin-bottom: 8px;
 			}
 
-			div#tab- {
+			div {
 
 				ul {
 					list-style: none;
@@ -720,22 +721,6 @@ section.product-tabs-section {
 							border-right: 1px solid rgba(0,0,0,.2);
 						}	
 					}
-				}
-			}
-		}
-
-		section.wonka-section-additional-information {
-
-			h2 {
-				padding: 8px;
-				border: 1px solid rgba( #000, .2 );
-				margin: 0;
-			}
-			table.shop_attributes {
-				border: 1px solid rgba( #000, .2 );
-				th,
-				td {
-					padding: 8px;
 				}
 			}
 		}
