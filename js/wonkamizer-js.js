@@ -1643,7 +1643,7 @@
 			{
 				var rating_div = document.querySelector( '.woocommerce-product-rating' );
 				rating_div.addEventListener( 'click', function( e ) {
-					scrollToSection( 'reviews', null );
+					scrollToSection( 'section-reviews', null );
 				});
 			}
 
@@ -1884,7 +1884,7 @@
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
 							one_click = false;
-							scrollToSection( 'reviews', 15 );
+							scrollToSection( 'section-reviews', 15 );
 						}
 					} );
 			}
