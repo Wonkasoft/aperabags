@@ -343,6 +343,10 @@ section.desirable-slider-section {
 					}	
 				}
 
+				&.is-ios {
+					background-attachment: unset;
+				}
+
 				@include media-breakpoint( md ) {
 
 					.img-header-text-wrap {
