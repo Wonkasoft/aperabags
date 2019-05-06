@@ -1582,13 +1582,3 @@ function wonka_woocommerce_review_order_before_submit() {
 }
 
 add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_order_before_submit', 999 );
-
-function wonka_add_your_shipping_method( $methods ) {
-	$methods['wonkashipping_2_day'] = 'WONKA_Shipping_test';
-	// echo "<pre>\n";
-	// print_r( $methods );
-	// echo "</pre>\n";
-
-	return $methods;
-}
-add_filter( 'woocommerce_shipping_methods', 'wonka_add_your_shipping_method' );
