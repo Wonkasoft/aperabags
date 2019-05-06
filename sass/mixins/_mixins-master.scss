@@ -81,7 +81,7 @@
 	}
 	@if $breakpoint == ipx {
 		@media screen 
-    	and (device-width : 375px) 
+    	and (device-width : 414px) 
     	and (device-height : 812px) 
     	and (-webkit-device-pixel-ratio : 3) {
 			@content;
@@ -89,7 +89,7 @@
 	}
 	@if $breakpoint == ip8 {
 		@media screen 
-    	and (device-width : 375px) 
+    	and (device-width : 414px) 
     	and (device-height : 667px) 
     	and (-webkit-device-pixel-ratio : 2) {
 			@content;
@@ -97,7 +97,7 @@
 	}
 	@if $breakpoint == ip8p {
 		@media screen 
-    	and (device-width : 375px) 
+    	and (device-width : 414px) 
     	and (device-height : 736px) 
     	and (-webkit-device-pixel-ratio : 3) {
 			@content;

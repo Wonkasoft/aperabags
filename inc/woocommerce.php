@@ -1383,6 +1383,7 @@ function ws_ajax_search() {
 	}
 	wp_send_json_success( $items );
 }
+
 add_action( 'wp_ajax_search_site',        'ws_ajax_search' );
 add_action( 'wp_ajax_nopriv_search_site', 'ws_ajax_search' );
 
@@ -1582,3 +1583,4 @@ function wonka_woocommerce_review_order_before_submit() {
 }
 
 add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_order_before_submit', 999 );
+
