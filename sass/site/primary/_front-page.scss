@@ -38,7 +38,7 @@ section.header-slider-section {
 				@include prefix( background-attachment, fixed, o moz webkit );
 				@include prefix( background-size, cover, o moz webkit );
 				background-repeat: no-repeat;
-				width: 100%;
+				width: 360px;
 				height: 100%;
 				@include prefix( transition, $trans_25, o moz webkit );
 
