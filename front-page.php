@@ -125,11 +125,11 @@ get_header();
 								<?php
 								if ( wp_is_mobile() ) :
 								?>
-								<div class="cta-slide-img-holder" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
+								<div class="cta-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php
 								else:
 								?>
-								<div class="cta-slide-img-holder" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+								<div class="cta-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 								<?php
 								endif;
 								/* Checks for an message set in the slide object */
