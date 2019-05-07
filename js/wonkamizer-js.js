@@ -1829,26 +1829,6 @@
 		      ],
 			});
 		}
-
-		if ( document.querySelector( '.wonka-image-viewer') ) 
-		{
-			$( '.wonka-image-viewer' ).slick({
-				slidesToShow: 1,
-				slidesToScroll: 1,
-				mobileFirst: true,
-				centerMode: true,
-				centerPadding: 0,
-				dots: false,
-				prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
-				nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
-				responsive: [
-					{
-						breakpoint: 768,
-						settings: 'unslick'
-					},
-				],
-			});
-		}
 		/*=====  End of For setting up sliders on the front page  ======*/
 
 		// ===== Scroll to Top ==== 
