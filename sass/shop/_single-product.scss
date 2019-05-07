@@ -49,7 +49,7 @@
 
 				div.wonka-image-viewer {
 					position: relative;
-					flex: 0 0 80%;
+					flex: 0 0 100%;
 					display: flex;
 					align-items: center;
 					justify-content: flex-start;
@@ -60,7 +60,12 @@
 					@include prefix( transition, $trans_25, o moz webkit );
 
 					div.woocommerce-product-gallery__image:not(:last-child) {
-						margin-bottom: 25px;
+						margin-bottom: auto;
+
+						@include media-breakpoint( md ) {
+							margin-bottom: 25px;
+
+						}
 					}
 
 					div.woocommerce-product-gallery__image {
@@ -75,6 +80,7 @@
 
 					@include media-breakpoint( md ) {
 						display: block;
+						flex: 0 0 80%;
 					}
 				}
 

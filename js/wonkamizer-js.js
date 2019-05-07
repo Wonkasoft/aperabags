@@ -1,6 +1,5 @@
 ( function($)
 {
-	"use strict";
 
 	/*===============================================
 	=            vars set for script use            =
@@ -61,17 +60,18 @@
 
 				billing_to_radios.forEach( function( item, i ) 
 					{
-						
 						item.addEventListener( 'change', function( event ) 
 							{
 								var target = event.target;
 								if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
 								{
+									wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=billing' );
 									billing_address_form.classList.add( 'active' );
 										copy_to_billing();
 								}
 								else
 								{
+									wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=shipping' );
 									if ( billing_address_form.classList.contains( 'active' ) ) 
 									{
 										billing_address_form.classList.remove( 'active' );
@@ -496,6 +496,8 @@
 								var billing_field_count = billing_form_fields.length;
 								var validation_billing_checker = true;
 
+
+
 								billing_form_selects.forEach( function( select, i ) 
 									{
 										if ( select.selectedIndex === 0 ) 
@@ -642,16 +644,18 @@
 			});
 		}
 		
-		if ( action === "shipping_field_validation" ) 
+		if ( action === "shipping_to_billing" ) 
 		{
+
 			xhr.onreadystatechange = function() {
 
 				if ( this.readyState == 4 && this.status == 200 ) 
 				{
 					var response = JSON.parse( this.responseText );
+					console.log( response );
 				}
 			};
-			xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + "&security=" + wonkasoft_request.security);
+			xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + data + "&security=" + wonkasoft_request.security);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhr.send();
 		}
@@ -1823,6 +1827,26 @@
 			      }
 		        }
 		      ],
+			});
+		}
+
+		if ( document.querySelector( '.wonka-image-viewer') ) 
+		{
+			$( '.wonka-image-viewer' ).slick({
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				mobileFirst: true,
+				centerMode: true,
+				centerPadding: 0,
+				dots: false,
+				prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+				nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+				responsive: [
+					{
+						breakpoint: 768,
+						settings: 'unslick'
+					},
+				],
 			});
 		}
 		/*=====  End of For setting up sliders on the front page  ======*/
