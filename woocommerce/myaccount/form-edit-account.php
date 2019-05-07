@@ -27,20 +27,24 @@ do_action( 'woocommerce_before_edit_account_form' ); ?>
 	<div class="col">
 		<label for="account_first_name" class="sr-only"><?php esc_html_e( 'First name', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
 		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text form-control wonka-form-control" placeholder="<?php esc_html_e( 'First name *', 'woocommerce' ); ?>" name="account_first_name" id="account_first_name" autocomplete="given-name" value="<?php echo esc_attr( $user->first_name ); ?>" />
+		<div class="invalid-feedback account_first_name"></div>
 	</div>
 	<div class="col">
 		<label for="account_last_name" class="sr-only"><?php esc_html_e( 'Last name', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
 		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text form-control wonka-form-control" placeholder="<?php esc_html_e( 'Last name *', 'woocommerce' ); ?>" name="account_last_name" id="account_last_name" autocomplete="family-name" value="<?php echo esc_attr( $user->last_name ); ?>" />
+		<div class="invalid-feedback account_last_name"></div>
 	</div>
 </div>
 <div class="form-row wonka-form-row">
 	<div class="col">
 		<label for="account_display_name" class="sr-only"><?php esc_html_e( 'Display name', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
 		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text form-control wonka-form-control" placeholder="<?php esc_html_e( 'Display name *', 'woocommerce' ); ?>" name="account_display_name" id="account_display_name" value="<?php echo esc_attr( $user->display_name ); ?>" /> 
+		<div class="invalid-feedback account_display_name"></div>
 	</div>
 	<div class="col">
 		<label for="account_email" class="sr-only"><?php esc_html_e( 'Email address', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
 		<input type="email" class="woocommerce-Input woocommerce-Input--email input-text form-control wonka-form-control" placeholder="<?php esc_html_e( 'Email address *', 'woocommerce' ); ?>" name="account_email" id="account_email" autocomplete="email" value="<?php echo esc_attr( $user->user_email ); ?>" />
+		<div class="invalid-feedback account_email"></div>
 	</div>
 </div>
 <div class="form-row wonka-form-row">
@@ -50,19 +54,27 @@ do_action( 'woocommerce_before_edit_account_form' ); ?>
 </div>
 	<fieldset>
 		<legend><?php esc_html_e( 'Password change', 'woocommerce' ); ?></legend>
-
-		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+		<div class="form-group form-row">
 			<label for="password_current" class="sr-only"><?php esc_html_e( 'Current password (leave blank to leave unchanged)', 'woocommerce' ); ?></label>
-			<input type="password" class="woocommerce-Input woocommerce-Input--password input-text form-control wonka-form-control" placeholder="<?php esc_html_e( 'Current password (leave blank to leave unchanged)', 'woocommerce' ); ?>" name="password_current" id="password_current" autocomplete="off" />
-		</p>
-		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+			<div class="input-group woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+				<input type="password" class="woocommerce-Input woocommerce-Input--password input-text form-control wonka-form-control" placeholder="<?php esc_html_e( 'Current password (leave blank to leave unchanged)', 'woocommerce' ); ?>" name="password_current" id="password_current" autocomplete="off" /><div class="input-group-append"><div class="input-group-text"><i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i></div></div>
+				<div class="invalid-feedback current-password"></div>
+			</div>
+		</div>
+		<div class="form-group form-row">
 			<label for="password_1" class="sr-only"><?php esc_html_e( 'New password (leave blank to leave unchanged)', 'woocommerce' ); ?></label>
-			<input type="password" class="woocommerce-Input woocommerce-Input--password input-text form-control wonka-form-control" placeholder="<?php esc_html_e( 'New password (leave blank to leave unchanged)', 'woocommerce' ); ?>" name="password_1" id="password_1" autocomplete="off" />
-		</p>
-		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+			<div class="input-group woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+				<input type="password" class="woocommerce-Input woocommerce-Input--password input-text form-control wonka-form-control" placeholder="<?php esc_html_e( 'New password (leave blank to leave unchanged)', 'woocommerce' ); ?>" name="password_1" id="password_1" autocomplete="off" /><div class="input-group-append"><div class="input-group-text"><i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i></div></div>
+				<div class="invalid-feedback password-1"></div>
+			</div>
+		</div>
+		<div class="form-group form-row">
 			<label for="password_2" class="sr-only"><?php esc_html_e( 'Confirm new password', 'woocommerce' ); ?></label>
-			<input type="password" class="woocommerce-Input woocommerce-Input--password input-text form-control wonka-form-control" placeholder="<?php esc_html_e( 'Confirm new password', 'woocommerce' ); ?>" name="password_2" id="password_2" autocomplete="off" />
-		</p>
+			<div class="input-group woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+				<input type="password" class="woocommerce-Input woocommerce-Input--password input-text form-control wonka-form-control" placeholder="<?php esc_html_e( 'Confirm new password', 'woocommerce' ); ?>" name="password_2" id="password_2" autocomplete="off" /><div class="input-group-append"><div class="input-group-text"><i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i></div></div>
+				<div class="invalid-feedback password-2"></div>
+			</div>
+		</div>
 	</fieldset>
 	<div class="clear"></div>
 
