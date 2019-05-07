@@ -1914,22 +1914,39 @@
 		/***********************************************************************************
 		 * End For Checkout validation
 		 * ****************************************************************************** */
-		
 
 		/**
 		 * This is for login form validation
+		 * first if checks for the right pages to validate
 		 * 
 		 */
+
 		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ) 
 		{
+			/** Form structure for edit my account  */
+			if ( document.querySelector( 'woocommerce-EditAccountForm' ) )
+			{
+
+					document.querySelector('form.edit-account #password_1').addEventListener('click', function ( e ) 
+					{
+						console.log(e);
+					});
+			
+			}
+			/** End Form structure for edit my account */
+
 			var validation_div = document.querySelector( '.woocommerce-error' );
+			var validation_li = document.querySelectorAll( '.woocommerce-error li' );
+			var passwords = document.querySelectorAll( 'input#password_current, input#password_1, input#password_2' );
+			var invalid_text = document.querySelectorAll( 'div.invalid-feedback' );
 
 			if ( validation_div ) 
 			{
-				var validation_text = validation_div.innerText.trim();
-				validation_text = validation_text.split(' ').slice(1).join(' ');
-				var validation_text_2 = validation_text.split('.').slice(0,1).join();
+								console.log(validation_li);
 
+				var validation_text = validation_div.innerText.trim();
+				var validation_text_1 = validation_text.split(' ').slice(1).join(' ');
+				var validation_text_2 = validation_text_1.split('.').slice(0,1).join();
 				switch( validation_text_2 )
 				{
 
@@ -1968,7 +1985,59 @@
 						document.querySelector( 'input#register_password' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.register_password' ).innerText = validation_text;
 						break;
+				}
+				validation_li.forEach(function(item)
+				{
+					switch (validation_text)
+					{
+						// Validation for account edit page
+						case "First name is a required field.":
+							document.querySelector( 'input#account_first_name' ).classList.add( "is-invalid" );
+							document.querySelector( 'div.invalid-feedback.account_first_name' ).innerText = validation_text;
+							break;
+						case "Last name is a required field.":
+							document.querySelector( 'input#account_last_name' ).classList.add( "is-invalid" );
+							document.querySelector( 'div.invalid-feedback.account_last_name' ).innerText = validation_text;
+							break;
+						case "Display name is a required field.":
+							document.querySelector( 'input#account_display_name' ).classList.add( "is-invalid" );
+							document.querySelector( 'div.invalid-feedback.account_display_name' ).innerText = validation_text;
+							break;
+						case "Email address is a required field.":
+							document.querySelector( 'input#account_email' ).classList.add( "is-invalid" );
+							document.querySelector( 'div.invalid-feedback.account_email' ).innerText = validation_text;
+							break;
+	
+						case "Please fill out all password fields.":
+							console.log(invalid_text);
+							passwords.forEach( function(item) 
+							{
+								item.classList.add("is-invalid");
+								invalid_text.forEach(function(item)
+								{
+									item.innerText = validation_text;
+								});
+	
+							});
+							break;
+	
+						case "New passwords do not match.":
+	
+							console.log(invalid_text);
+							passwords.forEach( function(item, i) 
+							{
+								if (i !== 0){
+									item.classList.add("is-invalid");
+									invalid_text.forEach(function(item)
+									{
+										item.innerText = validation_text;
+									});	
+								}
+							});
+							break;
 					}
+				});
+
 
 			}
 		}
