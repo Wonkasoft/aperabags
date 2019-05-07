@@ -1492,38 +1492,132 @@
 		 */
 		
 		if ( document.querySelector( '.comment-form-comment' ) )  {
-			    var commentform=$('#commentform'); // find the comment form
-			    commentform.prepend('<div id="comment-status" ></div>'); // add info panel before the form to provide feedback or errors
-			    var statusdiv=$('#comment-status'); // define the infopanel
-
-			    commentform.submit(function(){
-			        //serialize and store form data in a variable
-			        var formdata=commentform.serialize();
+			    var commentform = document.querySelector( '#commentform' ); // find the comment form
+			    var comment_status = document.createElement( 'DIV' );
+			    comment_status.setAttribute( 'id', 'comment-status' );
+			    commentform.insertBefore( comment_status, document.querySelector( '.comment-form-rating' ) ); // add info panel before the form to provide feedback or errors
+			    var statusdiv = document.querySelector( '#comment-status' ); // define the infopanel
+			    var commentform_inputs = commentform.querySelectorAll( 'input' );
+			    //serialize and store form data in a variable
+			    var formdata;
+			    commentform.onsubmit = function( e ) 
+			    {
+			    	e.preventDefault();
+			    	statusdiv.innerHTML = '';
 			        //Add a status message
-			        statusdiv.html('<p>Processing...</p>');
+			        statusdiv.innerHTML = '<p>Processing...</p>';
+			    	var field_checker = true;
+
+			    	if ( commentform.querySelector( 'select#rating' ).selectedIndex === 0 ) 
+			    	{
+			    		field_checker = false;
+			    		if ( statusdiv.innerHTML !== '' ) 
+			    		{
+			    			statusdiv.innerHTML += '<p class="ajax-error" >You must pick your rating before you can submit this review</p>';
+			    		}
+			    		else
+			    		{
+			    			statusdiv.innerHTML = '<p class="ajax-error" >You must pick your rating before you can submit this review</p>';
+			    		}
+			    	}
+			    	else
+			    	{
+			    		statusdiv.innerHTML = '';
+			    	}
+
+			    	if ( commentform.querySelector( 'textarea#comment' ).value === '' ) 
+			    	{
+			    		field_checker = false;
+			    		commentform.querySelector( 'textarea#comment' ).classList.add( 'form-control', 'is-invalid' );
+			    		if ( statusdiv.innerHTML !== '' ) 
+			    		{
+			    			statusdiv.innerHTML += '<p class="ajax-error" >You cannot submit a blank review</p>';
+			    		}
+			    		else
+			    		{
+			    			statusdiv.innerHTML = '<p class="ajax-error" >You cannot submit a blank review</p>';
+			    		}
+			    	}
+			    	else
+			    	{
+			    		if ( commentform.querySelector( 'textarea#comment' ).classList.contains( 'is-invalid' ) && commentform.querySelector( 'textarea#comment' ).value !== '' ) 
+			    		{
+			    			commentform.querySelector( 'textarea#comment' ).classList.remove( 'form-control', 'is-invalid' );
+			    		}
+			    	}
+
+			    	commentform_inputs.forEach( function( input, i ) 
+			    		{
+					    	if ( input.value === '' && input.id === 'name' ) 
+					    	{
+					    		field_checker = false;
+					    		input.classList.add( 'form-control', 'is-invalid' );
+					    		if ( statusdiv.innerHTML !== '' ) 
+					    		{
+					    			statusdiv.innerHTML += '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
+					    		}
+					    		else
+					    		{
+					    			statusdiv.innerHTML = '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
+					    		}
+					    	}
+					    	else
+					    	{
+					    		if ( input.value !== '' && input.id === 'name' && input.classList.contains( 'is-invalid' ) ) 
+					    		{
+					    			input.classList.remove( 'form-control', 'is-invalid' );
+					    		}
+					    	}
+
+					    	if ( input.value === '' && input.id === 'email' ) 
+					    	{
+					    		field_checker = false;
+					    		input.classList.add( 'form-control', 'is-invalid' );
+					    		if ( statusdiv.innerHTML !== '' ) 
+					    		{
+					    			statusdiv.innerHTML += '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
+					    		}
+					    		else
+					    		{
+					    			statusdiv.innerHTML = '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
+					    		}
+					    	}
+					    	else
+					    	{
+					    		if ( input.value !== '' && input.id === 'email' && input.classList.contains( 'is-invalid' ) ) 
+					    		{
+					    			input.classList.remove( 'form-control', 'is-invalid' );
+					    		}
+					    	}
+			    		});
+			    	
+			    	setTimeout( function() 
+			    		{
+			    			statusdiv.innerHTML = '';
+			    		}, 3000 );
 			        //Extract action URL from commentform
-			        var formurl=commentform.attr('action');
-			        //Post Form with data
-			        $.ajax({
-			            type: 'post',
-			            url: formurl,
-			            data: formdata,
-			            error: function(XMLHttpRequest, textStatus, errorThrown)
-			                {
-			                    statusdiv.html('<p class="ajax-error" >You must pick your rating before you can submit this review</p>');
-			                },
-			            success: function(data, textStatus){
-			                if(data == "success" || textStatus == "success"){
-			                    statusdiv.html('<p class="ajax-success" >Thanks for your comment. We appreciate your response.</p>');
-			                }else{
-			                    statusdiv.html('<p class="ajax-error" >Please wait a while before posting your next comment</p>');
-			                    commentform.find('textarea[name=comment]').val('');
-			                }
-			            }
-			        });
-			        return false;
-			    });
-		}
+			        var formurl = commentform.getAttribute( 'action' );
+			        if ( field_checker ) 
+			        {
+				        //Post Form with data
+				        xhr.onreadystatechange = function() {
+					        if ( this.readyState == 4 && this.status == 200 )  {
+					        	var response =   this;
+					        	console.log( response );
+					        		// If you don't pick a rating
+				                    
+				                    // This is if you have successfully submitted a comment
+				                    statusdiv.innerHTML = '<p class="ajax-success" >Thanks for your comment. We appreciate your response.</p>';
+				                    // if wait
+				                    // statusdiv.innerHTML = '<p class="ajax-error" >Please wait a while before posting your next comment</p>';
+					        }
+				        };
+				        xhr.open('POST', formurl );
+				        xhr.setRequestHeader("Content-type", "application/json");
+				        xhr.send( formdata );
+			        }
+			    };
+			}
 		/*=====  End of This is for setting up the reviews  ======*/
 		
 
