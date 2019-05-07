@@ -1495,8 +1495,7 @@
 			    var commentform=$('#commentform'); // find the comment form
 			    commentform.prepend('<div id="comment-status" ></div>'); // add info panel before the form to provide feedback or errors
 			    var statusdiv=$('#comment-status'); // define the infopanel
-
-			    commentform.submit(function(){
+			    commentform.submit(function() {
 			        //serialize and store form data in a variable
 			        var formdata=commentform.serialize();
 			        //Add a status message
@@ -1504,26 +1503,24 @@
 			        //Extract action URL from commentform
 			        var formurl=commentform.attr('action');
 			        //Post Form with data
-			        $.ajax({
-			            type: 'post',
-			            url: formurl,
-			            data: formdata,
-			            error: function(XMLHttpRequest, textStatus, errorThrown)
-			                {
+			        xhr.onreadystatechange = function() {
+				        if ( this.readyState == 4 && this.status == 200 )  {
+				        	var response = JSON.parse( this.responseText );
+				        	console.log( response );
+				        		// If you don't pick a rating
 			                    statusdiv.html('<p class="ajax-error" >You must pick your rating before you can submit this review</p>');
-			                },
-			            success: function(data, textStatus){
-			                if(data == "success" || textStatus == "success"){
+			                    // This is if you have successfully submitted a comment
 			                    statusdiv.html('<p class="ajax-success" >Thanks for your comment. We appreciate your response.</p>');
-			                }else{
+			                    // if wait
 			                    statusdiv.html('<p class="ajax-error" >Please wait a while before posting your next comment</p>');
 			                    commentform.find('textarea[name=comment]').val('');
-			                }
-			            }
-			        });
-			        return false;
+				        }
+			        };
+			        xhr.open('POST', formurl + "?" + "data=" + formdata);
+			        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			        xhr.send();
 			    });
-		}
+			}
 		/*=====  End of This is for setting up the reviews  ======*/
 		
 
