@@ -1514,12 +1514,14 @@
 				        if ( this.readyState == 4 && this.status == 200 )  {
 				        	var response =   this;
 				        	console.log( response );
+				        	if ( ! document.querySelector('.stars.selected') ) {
 				        		// If you don't pick a rating
 			                    statusdiv.html('<p class="ajax-error" >You must pick your rating before you can submit this review</p>');
+				        	}
 			                    // This is if you have successfully submitted a comment
 			                    statusdiv.html('<p class="ajax-success" >Thanks for your comment. We appreciate your response.</p>');
 			                    // if wait
-			                    statusdiv.html('<p class="ajax-error" >Please wait a while before posting your next comment</p>');
+			                    // statusdiv.html('<p class="ajax-error" >Please wait a while before posting your next comment</p>');
 			                    commentform.find('textarea[name=comment]').val('');
 				        }
 			        };
