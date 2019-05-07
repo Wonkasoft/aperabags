@@ -1517,7 +1517,7 @@
 				        }
 			        };
 			        xhr.open('POST', formurl + "?" + "data=" + formdata);
-			        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			        xhr.setRequestHeader("Content-type", "application/json");
 			        xhr.send();
 			    });
 			}
