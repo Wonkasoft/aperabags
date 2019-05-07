@@ -1499,14 +1499,20 @@
 			    	e.preventDefault();
 			        //serialize and store form data in a variable
 			        var formdata=commentform.serialize();
-			        //Add a status message
-			        statusdiv.html('<p>Processing...</p>');
 			        //Extract action URL from commentform
 			        var formurl=commentform.attr('action');
 			        //Post Form with data
 			        xhr.onreadystatechange = function() {
+			        	if ( this.readyState == 1) {
+					        //Add a status message
+					        statusdiv.html('<p>Processing...</p>');
+			        	}
+			        	if ( this.readyState == 2) {
+			        	}
+			        	if ( this.readyState == 3) {
+			        	}
 				        if ( this.readyState == 4 && this.status == 200 )  {
-				        	var response =   this.responseText;
+				        	var response =   this;
 				        	console.log( response );
 				        		// If you don't pick a rating
 			                    statusdiv.html('<p class="ajax-error" >You must pick your rating before you can submit this review</p>');
