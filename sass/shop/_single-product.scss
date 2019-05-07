@@ -60,7 +60,7 @@
 					@include prefix( transition, $trans_25, o moz webkit );
 
 					div.woocommerce-product-gallery__image:not(:last-child) {
-						margin-bottom: auto;
+						margin: auto;
 
 						@include media-breakpoint( md ) {
 							margin-bottom: 25px;
