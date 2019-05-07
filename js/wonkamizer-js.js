@@ -1482,6 +1482,15 @@
 			 * End of Review length
 			 */
 		}
+		/**
+		 *  This function handles the submit reviews form
+		 *  @author Louis Lister
+		 *
+		 * @since  1.0.0
+		 */
+		if ( document.querySelector( '.comment-form-comment' ) )  {
+			console.log('comment form is here');
+		}
 		/*=====  End of This is for setting up the reviews  ======*/
 		
 
