@@ -1516,9 +1516,9 @@
 			                    commentform.find('textarea[name=comment]').val('');
 				        }
 			        };
-			        xhr.open('POST', formurl + "?" + "data=" + formdata);
+			        xhr.open('POST', formurl );
 			        xhr.setRequestHeader("Content-type", "application/json");
-			        xhr.send();
+			        xhr.send(formdata);
 			    });
 			}
 		/*=====  End of This is for setting up the reviews  ======*/
