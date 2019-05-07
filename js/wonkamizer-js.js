@@ -538,10 +538,6 @@
 										{
 											next_tab.click();
 										}
-<<<<<<< HEAD
-										});
-								}
-=======
 									});
 							}
 
@@ -549,7 +545,6 @@
 							{
 								next_tab.click();
 							}
->>>>>>> stage
 						}
 						/*=====  End of This is for validation from clicking the place order button  ======*/
 					});
@@ -2055,37 +2050,13 @@
 		/*=====  End of This is for single product page short description scrolling  ======*/
 	
 
-		/********************************************************************************
-		 * this is For Checkout validation 
-		 ********************************************************************************/
-			// var checkout_error_ul;
-			// if (document.querySelector( 'main.main-checkout' ))
-			// {
-				 
-				// console.log(document.querySelector( 'main.main-checkout' ));
-				// // checkout_error_ul = document.querySelector( 'ul.woocommerce-error' );
-				// var checkout_error_form = document.querySelector( 'form.woocommerce-checkout' );  
-				// console.log(checkout_error_form);
-
-				// if (checkout_error_form.childElementCount) {
-				// 	checkout_error_ul = checkout_error_form.children;
-				// 	console.log(checkout_error_ul);
-				// // if ( checkout_error_ul ) 
-				// // {	
-				// // 	console.log(checkout_error_ul.innerText);
-				// // }	
-				// }
-		/***********************************************************************************
-		 * End For Checkout validation
-		 * ****************************************************************************** */
-
 		/**
 		 * This is for login form validation
 		 * first if checks for the right pages to validate
 		 * 
 		 */
 
-		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ) 
+		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ||document.querySelector( 'form.woocommerce-ResetPassword' ) ) 
 		{
 			/** Form structure for edit my account  */
 			if ( document.querySelector( 'woocommerce-EditAccountForm' ) )
@@ -2101,33 +2072,35 @@
 
 			var validation_div = document.querySelector( '.woocommerce-error' );
 			var validation_li = document.querySelectorAll( '.woocommerce-error li' );
-			var passwords = document.querySelectorAll( 'input#password_current, input#password_1, input#password_2' );
+			var password_inputs = document.querySelectorAll( 'input#password_current, input#password_1, input#password_2' );
 			var invalid_text = document.querySelectorAll( 'div.invalid-feedback' );
+
 
 			if ( validation_div ) 
 			{
-								console.log(validation_li);
-
 				var validation_text = validation_div.innerText.trim();
 				var validation_text_1 = validation_text.split(' ').slice(1).join(' ');
 				var validation_text_2 = validation_text_1.split('.').slice(0,1).join();
 				switch( validation_text_2 )
 				{
-
+					
 					case "Username is required":
 						document.querySelector( 'input#username' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.username' ).innerText = validation_text;
 						break;
+
 					case "The password field is empty":
 						document.querySelector( 'input#password' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.password' ).innerText = validation_text;
 						break;
+
 					case "Too many failed login attempts":
 						document.querySelector( 'input#username' ).classList.add( "is-invalid" );
 						document.querySelector( 'input#password' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.username' ).innerText = validation_text;
 						document.querySelector( 'div.invalid-feedback.password' ).innerText = validation_text;
 						break;
+
 					case "Incorrect username or password":
 						document.querySelector( 'input#username' ).classList.add( "is-invalid" );
 						document.querySelector( 'input#password' ).classList.add( "is-invalid" );
@@ -2152,29 +2125,43 @@
 				}
 				validation_li.forEach(function(item)
 				{
+					validation_text =item.innerText.trim();
 					switch (validation_text)
 					{
+						// Validation for lost password
+						case "Enter a username or email address.":
+							document.querySelector('input#user_login').classList.add("is-invalid");
+							document.querySelector( 'div.invalid-feedback.user_login' ).innerText = validation_text;
+							break;
+
+						case "Invalid username or email.":
+							document.querySelector('input#user_login').classList.add("is-invalid");
+							document.querySelector( 'div.invalid-feedback.user_login' ).innerText = validation_text;
+							break;
+
 						// Validation for account edit page
 						case "First name is a required field.":
 							document.querySelector( 'input#account_first_name' ).classList.add( "is-invalid" );
 							document.querySelector( 'div.invalid-feedback.account_first_name' ).innerText = validation_text;
 							break;
+
 						case "Last name is a required field.":
 							document.querySelector( 'input#account_last_name' ).classList.add( "is-invalid" );
 							document.querySelector( 'div.invalid-feedback.account_last_name' ).innerText = validation_text;
 							break;
+
 						case "Display name is a required field.":
 							document.querySelector( 'input#account_display_name' ).classList.add( "is-invalid" );
 							document.querySelector( 'div.invalid-feedback.account_display_name' ).innerText = validation_text;
 							break;
+
 						case "Email address is a required field.":
 							document.querySelector( 'input#account_email' ).classList.add( "is-invalid" );
 							document.querySelector( 'div.invalid-feedback.account_email' ).innerText = validation_text;
 							break;
 	
 						case "Please fill out all password fields.":
-							console.log(invalid_text);
-							passwords.forEach( function(item) 
+							password_inputs.forEach( function(item) 
 							{
 								item.classList.add("is-invalid");
 								invalid_text.forEach(function(item)
@@ -2185,10 +2172,8 @@
 							});
 							break;
 	
-						case "New passwords do not match.":
-	
-							console.log(invalid_text);
-							passwords.forEach( function(item, i) 
+						case "New password_inputs do not match.":
+							password_inputs.forEach( function(item, i) 
 							{
 								if (i !== 0){
 									item.classList.add("is-invalid");
