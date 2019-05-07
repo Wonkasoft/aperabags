@@ -1324,17 +1324,24 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
 
 add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
 
-function ws_shipping_fields_validation() {
+function ws_shipping_to_billing() {
 	// This is a security check, it validates a random number that is generated on the request.
 	if ( !check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
 	return wp_send_json_error( 'Invalid Nonce' );
  	}
- 	$address_fields = apply_filters('woocommerce_shipping_fields', $address_fields);
 
-	 wp_send_json_success( $address_fields );
+ 	if ( $_GET['opt_set'] === 'shipping' ) :
+ 		update_option( 'woocommerce_ship_to_destination', $_GET['opt_set'], false );
+ 	endif;
+
+ 	if ( $_GET['opt_set'] === 'billing' ) :
+ 		update_option( 'woocommerce_ship_to_destination', $_GET['opt_set'], false );
+ 	endif;
+
+	wp_send_json_success( $_GET['opt_set'] );
 }
-add_action( 'wp_ajax_shipping_field_validation',        'ws_shipping_fields_validation' );
-add_action( 'wp_ajax_nopriv_shipping_field_validation', 'ws_shipping_fields_validation' );
+add_action( 'wp_ajax_shipping_to_billing',        'ws_shipping_to_billing' );
+add_action( 'wp_ajax_nopriv_shipping_to_billing', 'ws_shipping_to_billing' );
 
 /**
  * Filter the except length to 20 words.
@@ -1383,6 +1390,7 @@ function ws_ajax_search() {
 	}
 	wp_send_json_success( $items );
 }
+
 add_action( 'wp_ajax_search_site',        'ws_ajax_search' );
 add_action( 'wp_ajax_nopriv_search_site', 'ws_ajax_search' );
 
@@ -1500,6 +1508,7 @@ function wonka_woocommerce_review_order_before_submit() {
 
 		var billing_to_radios = document.querySelectorAll( 'input[name="ship_to_different_address"]' );
 		var billing_address_form = document.querySelector( '.billing_address' );
+		var xhr = new XMLHttpRequest();
 		copy_to_billing();
 		
 		billing_to_radios.forEach( function( item, i ) 
@@ -1510,11 +1519,13 @@ function wonka_woocommerce_review_order_before_submit() {
 						var target = event.target;
 						if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
 						{
+							wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=billing' );
 							billing_address_form.classList.add( 'active' );
 								copy_to_billing();
 						}
 						else
 						{
+							wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=billing' );
 							if ( billing_address_form.classList.contains( 'active' ) ) 
 							{
 								billing_address_form.classList.remove( 'active' );
@@ -1577,8 +1588,29 @@ function wonka_woocommerce_review_order_before_submit() {
 				document.getElementsByName("billing_phone")[0].value = phone;
 			}
 		}
+
+		function wonka_ajax_request( xhr, action, data ) 
+		{	
+			if ( action === "shipping_to_billing" ) 
+			{
+
+				xhr.onreadystatechange = function() {
+
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+						var response = JSON.parse( this.responseText );
+						console.log( response );
+					}
+				};
+				xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + data + "&security=" + wonkasoft_request.security);
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+			}
+
+		}
 	</script>
 	<?php
 }
 
 add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_order_before_submit', 999 );
+
