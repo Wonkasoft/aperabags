@@ -1548,7 +1548,7 @@
 
 			    	commentform_inputs.forEach( function( input, i ) 
 			    		{
-					    	if ( input.value === '' && input.id === 'name' ) 
+					    	if ( input.value === '' && input.id === 'author' ) 
 					    	{
 					    		field_checker = false;
 					    		input.classList.add( 'form-control', 'is-invalid' );
@@ -1563,7 +1563,7 @@
 					    	}
 					    	else
 					    	{
-					    		if ( input.value !== '' && input.id === 'name' && input.classList.contains( 'is-invalid' ) ) 
+					    		if ( input.value !== '' && input.id === 'author' && input.classList.contains( 'is-invalid' ) ) 
 					    		{
 					    			input.classList.remove( 'form-control', 'is-invalid' );
 					    		}
