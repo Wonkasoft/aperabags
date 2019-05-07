@@ -1505,7 +1505,7 @@
 			        //Post Form with data
 			        xhr.onreadystatechange = function() {
 				        if ( this.readyState == 4 && this.status == 200 )  {
-				        	var response = JSON.parse( this.responseText );
+				        	var response =   this.responseText;
 				        	console.log( response );
 				        		// If you don't pick a rating
 			                    statusdiv.html('<p class="ajax-error" >You must pick your rating before you can submit this review</p>');
