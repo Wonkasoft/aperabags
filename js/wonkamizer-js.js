@@ -1495,7 +1495,8 @@
 			    var commentform=$('#commentform'); // find the comment form
 			    commentform.prepend('<div id="comment-status" ></div>'); // add info panel before the form to provide feedback or errors
 			    var statusdiv=$('#comment-status'); // define the infopanel
-			    commentform.submit(function() {
+			    commentform.submit(function( e ) {
+			    	e.preventDefault();
 			        //serialize and store form data in a variable
 			        var formdata=commentform.serialize();
 			        //Add a status message
