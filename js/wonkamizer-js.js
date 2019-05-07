@@ -1,6 +1,5 @@
 ( function($)
 {
-	"use strict";
 
 	/*===============================================
 	=            vars set for script use            =
@@ -61,17 +60,18 @@
 
 				billing_to_radios.forEach( function( item, i ) 
 					{
-						
 						item.addEventListener( 'change', function( event ) 
 							{
 								var target = event.target;
 								if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
 								{
+									wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=billing' );
 									billing_address_form.classList.add( 'active' );
 										copy_to_billing();
 								}
 								else
 								{
+									wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=shipping' );
 									if ( billing_address_form.classList.contains( 'active' ) ) 
 									{
 										billing_address_form.classList.remove( 'active' );
@@ -496,6 +496,8 @@
 								var billing_field_count = billing_form_fields.length;
 								var validation_billing_checker = true;
 
+
+
 								billing_form_selects.forEach( function( select, i ) 
 									{
 										if ( select.selectedIndex === 0 ) 
@@ -642,16 +644,18 @@
 			});
 		}
 		
-		if ( action === "shipping_field_validation" ) 
+		if ( action === "shipping_to_billing" ) 
 		{
+
 			xhr.onreadystatechange = function() {
 
 				if ( this.readyState == 4 && this.status == 200 ) 
 				{
 					var response = JSON.parse( this.responseText );
+					console.log( response );
 				}
 			};
-			xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + "&security=" + wonkasoft_request.security);
+			xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + data + "&security=" + wonkasoft_request.security);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhr.send();
 		}
@@ -1395,17 +1399,18 @@
 			}
 
 			var write_review_initial_text = write_review.innerText;
+			var comment_wrapper_height = comment_form_wrapper.offsetHeight;
 			write_review.addEventListener( 'click', function( e ) 
 				{
 					e.preventDefault();
-					if ( getComputedStyle( comment_form_wrapper ).height === '24px' ) 
+					if ( comment_form_wrapper.offsetHeight <= 25 ) 
 					{
-						comment_form_wrapper.style.height = comment_form_wrapper.firstElementChild.offsetHeight + 'px';
+						comment_form_wrapper.style.height = 100 + '%';
 						write_review.innerText = 'Cancel';
 					}
 					else
 					{
-						comment_form_wrapper.style.height = 24 + 'px';
+						comment_form_wrapper.style.height = comment_wrapper_height + 'px';
 						write_review.innerText = write_review_initial_text;
 					}
 				});
@@ -1478,6 +1483,141 @@
 			 * End of Review length
 			 */
 		}
+
+		/**
+		 *  This function handles the submit reviews form
+		 *  @author Louis Lister
+		 *
+		 * @since  1.0.0
+		 */
+		
+		if ( document.querySelector( '.comment-form-comment' ) )  {
+			    var commentform = document.querySelector( '#commentform' ); // find the comment form
+			    var comment_status = document.createElement( 'DIV' );
+			    comment_status.setAttribute( 'id', 'comment-status' );
+			    commentform.insertBefore( comment_status, document.querySelector( '.comment-form-rating' ) ); // add info panel before the form to provide feedback or errors
+			    var statusdiv = document.querySelector( '#comment-status' ); // define the infopanel
+			    var commentform_inputs = commentform.querySelectorAll( 'input' );
+			    //serialize and store form data in a variable
+			    var formdata;
+			    commentform.onsubmit = function( e ) 
+			    {
+			    	e.preventDefault();
+			    	statusdiv.innerHTML = '';
+			        //Add a status message
+			        statusdiv.innerHTML = '<p>Processing...</p>';
+			    	var field_checker = true;
+
+			    	if ( commentform.querySelector( 'select#rating' ).selectedIndex === 0 ) 
+			    	{
+			    		field_checker = false;
+			    		if ( statusdiv.innerHTML !== '' ) 
+			    		{
+			    			statusdiv.innerHTML += '<p class="ajax-error" >You must pick your rating before you can submit this review</p>';
+			    		}
+			    		else
+			    		{
+			    			statusdiv.innerHTML = '<p class="ajax-error" >You must pick your rating before you can submit this review</p>';
+			    		}
+			    	}
+			    	else
+			    	{
+			    		statusdiv.innerHTML = '';
+			    	}
+
+			    	if ( commentform.querySelector( 'textarea#comment' ).value === '' ) 
+			    	{
+			    		field_checker = false;
+			    		commentform.querySelector( 'textarea#comment' ).classList.add( 'form-control', 'is-invalid' );
+			    		if ( statusdiv.innerHTML !== '' ) 
+			    		{
+			    			statusdiv.innerHTML += '<p class="ajax-error" >You cannot submit a blank review</p>';
+			    		}
+			    		else
+			    		{
+			    			statusdiv.innerHTML = '<p class="ajax-error" >You cannot submit a blank review</p>';
+			    		}
+			    	}
+			    	else
+			    	{
+			    		if ( commentform.querySelector( 'textarea#comment' ).classList.contains( 'is-invalid' ) && commentform.querySelector( 'textarea#comment' ).value !== '' ) 
+			    		{
+			    			commentform.querySelector( 'textarea#comment' ).classList.remove( 'form-control', 'is-invalid' );
+			    		}
+			    	}
+
+			    	commentform_inputs.forEach( function( input, i ) 
+			    		{
+					    	if ( input.value === '' && input.id === 'name' ) 
+					    	{
+					    		field_checker = false;
+					    		input.classList.add( 'form-control', 'is-invalid' );
+					    		if ( statusdiv.innerHTML !== '' ) 
+					    		{
+					    			statusdiv.innerHTML += '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
+					    		}
+					    		else
+					    		{
+					    			statusdiv.innerHTML = '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
+					    		}
+					    	}
+					    	else
+					    	{
+					    		if ( input.value !== '' && input.id === 'name' && input.classList.contains( 'is-invalid' ) ) 
+					    		{
+					    			input.classList.remove( 'form-control', 'is-invalid' );
+					    		}
+					    	}
+
+					    	if ( input.value === '' && input.id === 'email' ) 
+					    	{
+					    		field_checker = false;
+					    		input.classList.add( 'form-control', 'is-invalid' );
+					    		if ( statusdiv.innerHTML !== '' ) 
+					    		{
+					    			statusdiv.innerHTML += '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
+					    		}
+					    		else
+					    		{
+					    			statusdiv.innerHTML = '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
+					    		}
+					    	}
+					    	else
+					    	{
+					    		if ( input.value !== '' && input.id === 'email' && input.classList.contains( 'is-invalid' ) ) 
+					    		{
+					    			input.classList.remove( 'form-control', 'is-invalid' );
+					    		}
+					    	}
+			    		});
+			    	
+			    	setTimeout( function() 
+			    		{
+			    			statusdiv.innerHTML = '';
+			    		}, 3000 );
+			        //Extract action URL from commentform
+			        var formurl = commentform.getAttribute( 'action' );
+			        if ( field_checker ) 
+			        {
+				        //Post Form with data
+				        xhr.onreadystatechange = function() {
+					        if ( this.readyState == 4 && this.status == 200 )  {
+					        	var response =   this;
+					        	console.log( response );
+					        		// If you don't pick a rating
+				                    
+				                    // This is if you have successfully submitted a comment
+				                    statusdiv.innerHTML = '<p class="ajax-success" >Thanks for your comment. We appreciate your response.</p>';
+				                    // if wait
+				                    // statusdiv.innerHTML = '<p class="ajax-error" >Please wait a while before posting your next comment</p>';
+					        }
+				        };
+				        xhr.open('POST', formurl );
+				        xhr.setRequestHeader("Content-type", "application/json");
+				        xhr.send( formdata );
+			        }
+			    };
+			}
 		/*=====  End of This is for setting up the reviews  ======*/
 		
 
@@ -1825,6 +1965,25 @@
 		      ],
 			});
 		}
+
+		if ( document.querySelector( '.wonka-image-viewer' ) ) 
+		{
+			$( '.wonka-image-viewer' ).slick({
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				adaptiveHeight: true,
+				mobileFirst: true,
+				dots: false,
+				prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+				nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+				responsive: [
+					{
+					  breakpoint: 768,
+					  settings: 'unslick',
+					},
+				],
+			});
+		}
 		/*=====  End of For setting up sliders on the front page  ======*/
 
 		// ===== Scroll to Top ==== 
@@ -1914,22 +2073,39 @@
 		/***********************************************************************************
 		 * End For Checkout validation
 		 * ****************************************************************************** */
-		
 
 		/**
 		 * This is for login form validation
+		 * first if checks for the right pages to validate
 		 * 
 		 */
+
 		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ) 
 		{
+			/** Form structure for edit my account  */
+			if ( document.querySelector( 'woocommerce-EditAccountForm' ) )
+			{
+
+					document.querySelector('form.edit-account #password_1').addEventListener('click', function ( e ) 
+					{
+						console.log(e);
+					});
+			
+			}
+			/** End Form structure for edit my account */
+
 			var validation_div = document.querySelector( '.woocommerce-error' );
+			var validation_li = document.querySelectorAll( '.woocommerce-error li' );
+			var passwords = document.querySelectorAll( 'input#password_current, input#password_1, input#password_2' );
+			var invalid_text = document.querySelectorAll( 'div.invalid-feedback' );
 
 			if ( validation_div ) 
 			{
-				var validation_text = validation_div.innerText.trim();
-				validation_text = validation_text.split(' ').slice(1).join(' ');
-				var validation_text_2 = validation_text.split('.').slice(0,1).join();
+								console.log(validation_li);
 
+				var validation_text = validation_div.innerText.trim();
+				var validation_text_1 = validation_text.split(' ').slice(1).join(' ');
+				var validation_text_2 = validation_text_1.split('.').slice(0,1).join();
 				switch( validation_text_2 )
 				{
 
@@ -1968,7 +2144,59 @@
 						document.querySelector( 'input#register_password' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.register_password' ).innerText = validation_text;
 						break;
+				}
+				validation_li.forEach(function(item)
+				{
+					switch (validation_text)
+					{
+						// Validation for account edit page
+						case "First name is a required field.":
+							document.querySelector( 'input#account_first_name' ).classList.add( "is-invalid" );
+							document.querySelector( 'div.invalid-feedback.account_first_name' ).innerText = validation_text;
+							break;
+						case "Last name is a required field.":
+							document.querySelector( 'input#account_last_name' ).classList.add( "is-invalid" );
+							document.querySelector( 'div.invalid-feedback.account_last_name' ).innerText = validation_text;
+							break;
+						case "Display name is a required field.":
+							document.querySelector( 'input#account_display_name' ).classList.add( "is-invalid" );
+							document.querySelector( 'div.invalid-feedback.account_display_name' ).innerText = validation_text;
+							break;
+						case "Email address is a required field.":
+							document.querySelector( 'input#account_email' ).classList.add( "is-invalid" );
+							document.querySelector( 'div.invalid-feedback.account_email' ).innerText = validation_text;
+							break;
+	
+						case "Please fill out all password fields.":
+							console.log(invalid_text);
+							passwords.forEach( function(item) 
+							{
+								item.classList.add("is-invalid");
+								invalid_text.forEach(function(item)
+								{
+									item.innerText = validation_text;
+								});
+	
+							});
+							break;
+	
+						case "New passwords do not match.":
+	
+							console.log(invalid_text);
+							passwords.forEach( function(item, i) 
+							{
+								if (i !== 0){
+									item.classList.add("is-invalid");
+									invalid_text.forEach(function(item)
+									{
+										item.innerText = validation_text;
+									});	
+								}
+							});
+							break;
 					}
+				});
+
 
 			}
 		}
