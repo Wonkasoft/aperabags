@@ -1399,17 +1399,18 @@
 			}
 
 			var write_review_initial_text = write_review.innerText;
+			var comment_wrapper_height = comment_form_wrapper.offsetHeight;
 			write_review.addEventListener( 'click', function( e ) 
 				{
 					e.preventDefault();
-					if ( getComputedStyle( comment_form_wrapper ).height === '24px' ) 
+					if ( comment_form_wrapper.offsetHeight <= 25 ) 
 					{
-						comment_form_wrapper.style.height = comment_form_wrapper.firstElementChild.offsetHeight + 'px';
+						comment_form_wrapper.style.height = 100 + '%';
 						write_review.innerText = 'Cancel';
 					}
 					else
 					{
-						comment_form_wrapper.style.height = 24 + 'px';
+						comment_form_wrapper.style.height = comment_wrapper_height + 'px';
 						write_review.innerText = write_review_initial_text;
 					}
 				});
@@ -1827,6 +1828,25 @@
 			      }
 		        }
 		      ],
+			});
+		}
+
+		if ( document.querySelector( '.wonka-image-viewer' ) ) 
+		{
+			$( '.wonka-image-viewer' ).slick({
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				adaptiveHeight: true,
+				mobileFirst: true,
+				dots: false,
+				prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+				nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+				responsive: [
+					{
+					  breakpoint: 768,
+					  settings: 'unslick',
+					},
+				],
 			});
 		}
 		/*=====  End of For setting up sliders on the front page  ======*/
