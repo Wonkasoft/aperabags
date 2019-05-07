@@ -1232,6 +1232,12 @@ function wonka_before_comment_meta_add( $comment ) {
 
 add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta_add', 5 );
 
+function post_comment_message() {
+	echo "hello";
+}
+
+add_action('comment_post', 'post_comment_message');
+
 /**
  * This is to add a custom gravatar from the site icon 
  * @param  array $avatar_defaults site defaults
