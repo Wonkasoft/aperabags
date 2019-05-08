@@ -1499,10 +1499,10 @@
 			    var statusdiv = document.querySelector( '#comment-status' ); // define the infopanel
 			    var commentform_inputs = commentform.querySelectorAll( 'input' );
 			    //serialize and store form data in a variable
-			    var formdata;
+			    var formdata = {};
 			    commentform.onsubmit = function( e ) 
 			    {
-			    	e.preventDefault();
+			    	
 			    	statusdiv.innerHTML = '';
 			        //Add a status message
 			        statusdiv.innerHTML = '<p>Processing...</p>';
@@ -1523,8 +1523,9 @@
 			    	else
 			    	{
 			    		statusdiv.innerHTML = '';
+			    		formdata.rating = commentform.querySelector( 'select#rating' ).value;
 			    	}
-
+			    	
 			    	if ( commentform.querySelector( 'textarea#comment' ).value === '' ) 
 			    	{
 			    		field_checker = false;
@@ -1543,12 +1544,17 @@
 			    		if ( commentform.querySelector( 'textarea#comment' ).classList.contains( 'is-invalid' ) && commentform.querySelector( 'textarea#comment' ).value !== '' ) 
 			    		{
 			    			commentform.querySelector( 'textarea#comment' ).classList.remove( 'form-control', 'is-invalid' );
+			    			formdata.comment = commentform.querySelector( 'textarea#comment' ).value;
+			    		}
+			    		else
+			    		{
+			    			formdata.comment = commentform.querySelector( 'textarea#comment' ).value;
 			    		}
 			    	}
 
 			    	commentform_inputs.forEach( function( input, i ) 
 			    		{
-					    	if ( input.value === '' && input.id === 'name' ) 
+					    	if ( document.querySelector( '#author' ).value === '' && input.id === 'author' ) 
 					    	{
 					    		field_checker = false;
 					    		input.classList.add( 'form-control', 'is-invalid' );
@@ -1563,13 +1569,18 @@
 					    	}
 					    	else
 					    	{
-					    		if ( input.value !== '' && input.id === 'name' && input.classList.contains( 'is-invalid' ) ) 
+					    		if ( document.querySelector( '#author' ).value !== '' && input.id === 'author' && input.classList.contains( 'is-invalid' ) ) 
 					    		{
 					    			input.classList.remove( 'form-control', 'is-invalid' );
+					    			formdata.author = document.querySelector( '#author' ).value;
+					    		}
+					    		else
+					    		{
+					    			formdata.author = document.querySelector( '#author' ).value;
 					    		}
 					    	}
 
-					    	if ( input.value === '' && input.id === 'email' ) 
+					    	if ( document.querySelector( '#email' ).value === '' && input.id === 'email' ) 
 					    	{
 					    		field_checker = false;
 					    		input.classList.add( 'form-control', 'is-invalid' );
@@ -1584,37 +1595,53 @@
 					    	}
 					    	else
 					    	{
-					    		if ( input.value !== '' && input.id === 'email' && input.classList.contains( 'is-invalid' ) ) 
+					    		if ( document.querySelector( '#email' ).value !== '' && input.id === 'email' && input.classList.contains( 'is-invalid' ) ) 
 					    		{
 					    			input.classList.remove( 'form-control', 'is-invalid' );
+					    			formdata.email = document.querySelector( '#email' ).value;
+					    		}
+					    		else
+					    		{
+					    			formdata.email = document.querySelector( '#email' ).value;
 					    		}
 					    	}
 			    		});
-			    	
-			    	setTimeout( function() 
-			    		{
-			    			statusdiv.innerHTML = '';
-			    		}, 3000 );
+			    	formdata.comment_post_ID = commentform.querySelector( 'input[name="comment_post_ID"]').value;
+			    	console.log(formdata);
 			        //Extract action URL from commentform
 			        var formurl = commentform.getAttribute( 'action' );
 			        if ( field_checker ) 
 			        {
+
 				        //Post Form with data
 				        xhr.onreadystatechange = function() {
 					        if ( this.readyState == 4 && this.status == 200 )  {
 					        	var response =   this;
 					        	console.log( response );
-					        		// If you don't pick a rating
-				                    
-				                    // This is if you have successfully submitted a comment
 				                    statusdiv.innerHTML = '<p class="ajax-success" >Thanks for your comment. We appreciate your response.</p>';
-				                    // if wait
-				                    // statusdiv.innerHTML = '<p class="ajax-error" >Please wait a while before posting your next comment</p>';
+				                    setTimeout( function() 
+				                    	{
+				                    		statusdiv.innerHTML = '';
+				                    	}, 3000 );
+
 					        }
 				        };
 				        xhr.open('POST', formurl );
 				        xhr.setRequestHeader("Content-type", "application/json");
 				        xhr.send( formdata );
+	                    
+	                    return true;
+			        }
+
+			        if ( field_checker === false ) 
+			        {
+			        	e.preventDefault();
+				    	setTimeout( function() 
+				    		{
+				    			statusdiv.innerHTML = '';
+				    		}, 3000 );
+
+				    	return false;
 			        }
 			    };
 			}
