@@ -1353,7 +1353,11 @@
 		===============================================================================*/
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 		{
-
+			if ( window.location.href.indexOf( '?add-to-cart' ) ) 
+			{
+				window.history.replaceState({}, document.title, window.location.href.split( '?' )[0] );
+				document.querySelector( 'div.woocommerce-message' ).style.display = 'none';
+			}
 		}
 
 		/*==========================================================
