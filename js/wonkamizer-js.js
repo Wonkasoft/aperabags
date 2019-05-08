@@ -974,7 +974,7 @@
 	function setup_for_reviews( comment_list )
 	{
 		var first_three_height = 0;
-		for (var i = 0; i < comment_list.children.length; i++) 
+		for ( var i = 0; i < comment_list.children.length; i++ ) 
 		{
 			first_three_height += comment_list.children[i].offsetHeight;
 			if ( i === 2 ) 
@@ -1363,7 +1363,7 @@
 		/*==========================================================
 		=            This is for setting up the reviews            =
 		==========================================================*/
-		if ( document.querySelector( '#write-review' ) ) 
+		if ( document.querySelector( '#section-reviews' ) ) 
 		{
 			var write_review = document.querySelector( '#write-review' ),
 			comment_form_wrapper = document.querySelector( 'div#review_form_wrapper' ),
@@ -1424,7 +1424,8 @@
 			 **********************************************************************/
 			var read_more_btn = document.querySelectorAll( 'a.ws-data-comment-btn' );
 
-			read_more_btn.forEach(function( item, i ){
+			read_more_btn.forEach(function( item, i )
+			{
 
 				item.addEventListener( 'click', function( e )
 				{
@@ -1433,52 +1434,106 @@
 					var comment_el = target.previousElementSibling;
 					var inner_comment = comment_el.innerText;
 					var data_comment = comment_el.getAttribute( 'ws-data-comment' );
-					more_reviews = document.querySelector( '#more-reviews' );
-				
-					if ( comment_el.classList.contains( 'full_comment' ) )
-					{
-						comment_el.classList.toggle( 'full_comment' );
-						comment_el.innerText = data_comment;
-						comment_el.setAttribute( 'ws-data-comment', inner_comment );
-						target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
-						
-						if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
-						{
-							setup_for_reviews( comment_list );
-						}
-					} 
-					else 
-					{
-						comment_el.classList.toggle( 'full_comment' );
-						comment_el.innerText = data_comment;
-						comment_el.setAttribute( 'ws-data-comment', inner_comment );
-						target.innerHTML = " <i class='fa fa-angle-up'></i> read less";
-						
-						if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
-						{
-							setup_for_reviews( comment_list );
-						}
 
-						target.addEventListener( 'blur', function( e ) 
+					if ( document.querySelector( '#more-reviews' ) ) 
+					{
+						more_reviews = document.querySelector( '#more-reviews' );
+					
+						if ( comment_el.classList.contains( 'full_comment' ) )
+						{
+							comment_el.classList.toggle( 'full_comment' );
+							comment_el.innerText = data_comment;
+							comment_el.setAttribute( 'ws-data-comment', inner_comment );
+							target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
+							
+							if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
 							{
-								var target = e.target;
-								var comment_el = target.previousElementSibling;
-								var inner_comment = comment_el.innerText;
-								var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+								setup_for_reviews( comment_list );
+							}
+						} 
+						else 
+						{
+							comment_el.classList.toggle( 'full_comment' );
+							comment_el.innerText = data_comment;
+							comment_el.setAttribute( 'ws-data-comment', inner_comment );
+							target.innerHTML = " <i class='fa fa-angle-up'></i> read less";
+							
+							if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
+							{
+								setup_for_reviews( comment_list );
+							}
 
-								if ( comment_el.classList.contains( 'full_comment' ) )
+							target.addEventListener( 'blur', function( e ) 
 								{
-									comment_el.classList.toggle( 'full_comment' );
-									comment_el.innerText = data_comment;
-									comment_el.setAttribute( 'ws-data-comment', inner_comment );
-									target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
-									
-									if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
+									var target = e.target;
+									var comment_el = target.previousElementSibling;
+									var inner_comment = comment_el.innerText;
+									var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+
+									if ( comment_el.classList.contains( 'full_comment' ) )
 									{
-										setup_for_reviews( comment_list );
+										comment_el.classList.toggle( 'full_comment' );
+										comment_el.innerText = data_comment;
+										comment_el.setAttribute( 'ws-data-comment', inner_comment );
+										target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
+										
+										if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
+										{
+											setup_for_reviews( comment_list );
+										}
 									}
-								}
-							});
+								});
+						}
+					}
+					else
+					{
+						more_reviews = document.querySelector( '#more-reviews' );
+					
+						if ( comment_el.classList.contains( 'full_comment' ) )
+						{
+							comment_el.classList.toggle( 'full_comment' );
+							comment_el.innerText = data_comment;
+							comment_el.setAttribute( 'ws-data-comment', inner_comment );
+							target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
+							
+							if ( comment_list.children.length <= 3 )
+							{
+								setup_for_reviews( comment_list );
+							}
+						} 
+						else 
+						{
+							comment_el.classList.toggle( 'full_comment' );
+							comment_el.innerText = data_comment;
+							comment_el.setAttribute( 'ws-data-comment', inner_comment );
+							target.innerHTML = " <i class='fa fa-angle-up'></i> read less";
+							
+							if ( comment_list.children.length <= 3 )
+							{
+								setup_for_reviews( comment_list );
+							}
+
+							target.addEventListener( 'blur', function( e ) 
+								{
+									var target = e.target;
+									var comment_el = target.previousElementSibling;
+									var inner_comment = comment_el.innerText;
+									var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+
+									if ( comment_el.classList.contains( 'full_comment' ) )
+									{
+										comment_el.classList.toggle( 'full_comment' );
+										comment_el.innerText = data_comment;
+										comment_el.setAttribute( 'ws-data-comment', inner_comment );
+										target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
+										
+										if ( comment_list.children.length <= 3 )
+										{
+											setup_for_reviews( comment_list );
+										}
+									}
+								});
+						}
 					}
 
 				});
