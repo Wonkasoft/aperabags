@@ -2062,33 +2062,29 @@
 			var validation_li = document.querySelectorAll( '.woocommerce-error li' );
 			var password_inputs = document.querySelectorAll( 'input#password_current, input#password_1, input#password_2' );
 			var invalid_text = document.querySelectorAll( 'div.invalid-feedback' );
+			var count = 0;
 
 			/** Form structure for edit my account  */
 			if ( document.querySelector( 'form.woocommerce-EditAccountForm' ) )
 			{
 
-					
-						document.querySelector('input#password_1').parentElement.addEventListener( "DOMNodeInserted", function( e ) 
+				document.querySelector('input#password_1').parentElement.addEventListener( "DOMNodeInserted", function( e ) 
+				{
+
+					if ( e.target === document.querySelector( '.woocommerce-password-strength' ) )
+					{
+						var container = e.target.parentElement;
+						var password_error = container.querySelector( '.woocommerce-password-strength' );
+						// var i_icon = container.querySelector( 'div.input-group-append' );
+						var password_1_parent = container;
+						if (count === 0) 
 						{
+							count++;
+							password_1_parent.insertBefore( password_error, container.querySelector('div.password-1') );
+						}
 
-							if ( e.target === document.querySelector( '.woocommerce-password-strength' ) )
-							{
-								console.log(e.target);
-
-								var container = e.target.parentElement;
-								var password_error = container.querySelector( '.woocommerce-password-strength' );
-								var i_icon = container.querySelector( 'div.input-group-append' );
-								var password_1_parent = container;
-								password_1_parent.insertBefore( password_error, i_icon );
-								document.querySelector('input#password_1').parentElement.removeEventListener( "DOMNodeInserted");
-
-							
-							}
-						});
-
-						
-
-				
+					}
+				});
 			
 			}
 			/** End Form structure for edit my account */
