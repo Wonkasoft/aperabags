@@ -104,7 +104,7 @@
 
 					@include media-breakpoint( md ) {
 						display: block;
-						flex: 0 0 70%;
+						margin: 0;
 					}
 				}
 
@@ -255,6 +255,10 @@
 						justify-content: center;
 						flex-direction: row-reverse;
 						flex-wrap: wrap;
+
+						@include media-breakpoint( md ) {
+							margin: 0;
+						}
 					}
 				}
 			}
