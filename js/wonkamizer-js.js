@@ -2169,13 +2169,23 @@
 		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ) 
 		{
 			/** Form structure for edit my account  */
-			if ( document.querySelector( 'woocommerce-EditAccountForm' ) )
+			if ( document.querySelector( '.woocommerce-EditAccountForm' ) )
 			{
+				var password_one = document.querySelector( 'form.edit-account #password_1' );
+				var password_parent = document.querySelector( 'form.edit-account #password_1' ).parentElement;
 
-					document.querySelector('form.edit-account #password_1').addEventListener('click', function ( e ) 
-					{
-						console.log(e);
-					});
+				password_one.addEventListener( 'keyup', function ( e ) 
+				{
+					setTimeout( function() 
+						{
+							var i_icon = password_parent.querySelector( '.input-group-append' );
+							var strength_meter = password_parent.querySelector( '.woocommerce-password-strength' );
+							if ( strength_meter ) 
+							{
+								password_parent.insertBefore( i_icon, strength_meter );
+							}
+						}, 10 );
+				}, true );
 			
 			}
 			/** End Form structure for edit my account */
@@ -2187,8 +2197,6 @@
 
 			if ( validation_div ) 
 			{
-								console.log(validation_li);
-
 				var validation_text = validation_div.innerText.trim();
 				var validation_text_1 = validation_text.split(' ').slice(1).join(' ');
 				var validation_text_2 = validation_text_1.split('.').slice(0,1).join();
