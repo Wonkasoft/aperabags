@@ -1398,7 +1398,7 @@ add_action( 'wp_ajax_nopriv_search_site', 'ws_ajax_search' );
 function filter_woocommerce_product_review_list_args( $comment ) { 
 	// make filter magic happen here...
 	
-	$length = 40;
+	$length = 43;
 	$str_array = explode( ' ', $comment->comment_content );
 	$comment_word_count = count( (array)$str_array );
 	$output = '';

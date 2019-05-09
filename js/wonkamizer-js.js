@@ -665,7 +665,9 @@
 	function scrollToSection( scroll_to_id, adjustment ) 
 	{
 		var current_el = document.querySelector( '#' + scroll_to_id );
-  		current_el.scrollIntoView( { behavior: "smooth" } );
+		$('body,html').animate({
+			scrollTop : $('#' + scroll_to_id).offset().top                     // Scroll to top of body
+		}, 500);
 	}
 
 	function load_page_vars() 
