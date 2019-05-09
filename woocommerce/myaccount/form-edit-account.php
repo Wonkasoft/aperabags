@@ -63,7 +63,7 @@ do_action( 'woocommerce_before_edit_account_form' ); ?>
 		</div>
 		<div class="form-group form-row">
 			<label for="password_1" class="sr-only"><?php esc_html_e( 'New password (leave blank to leave unchanged)', 'woocommerce' ); ?></label>
-			<div class="input-group woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+			<div class="password_1 input-group woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
 				<input type="password" class="woocommerce-Input woocommerce-Input--password input-text form-control wonka-form-control" placeholder="<?php esc_html_e( 'New password (leave blank to leave unchanged)', 'woocommerce' ); ?>" name="password_1" id="password_1" autocomplete="off" /><div class="input-group-append"><div class="input-group-text"><i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i></div></div>
 				<div class="invalid-feedback password-1"></div>
 			</div>

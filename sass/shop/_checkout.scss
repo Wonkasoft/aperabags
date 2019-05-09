@@ -138,7 +138,7 @@ label.checkbox {
 }
 
 div.checkout-order-details {
-	padding: 30px;
+	padding: 0px;
 	background: $color__background_alt;
 
 	tr.cart_item:first-child {
@@ -176,6 +176,10 @@ div.checkout-order-details {
 		td {
 			text-align: right;
 		}
+	}
+
+	@include media-breakpoint( lg ) {
+		padding: 30px;
 	}
 }
 
