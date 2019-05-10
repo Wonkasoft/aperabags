@@ -1589,7 +1589,7 @@
 			    		statusdiv.innerHTML = '';
 			    		formdata.rating = commentform.querySelector( 'select#rating' ).value;
 			    	}
-			    	
+			    	console.log( commentform.querySelector( 'textarea#comment' ).value );
 			    	if ( commentform.querySelector( 'textarea#comment' ).value === '' ) 
 			    	{
 			    		field_checker = false;
@@ -1618,7 +1618,7 @@
 
 			    	if ( commentform.querySelectorAll( 'input' ).length ) 
 			    	{
-				    	commentform_inputs.forEach( function( input, i ) 
+				    	commentform_inputs.forEach( function( input, i )
 				    		{
 						    	if ( document.querySelector( '#author' ).value === '' && input.id === 'author' ) 
 						    	{
