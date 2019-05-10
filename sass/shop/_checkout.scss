@@ -240,3 +240,10 @@ span.wonka-badge {
 	padding: 0;
 	font-family: 'Open Sans';
 }
+
+@media screen and  ( max-width: 992px ) {
+	div.wonka-row {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
