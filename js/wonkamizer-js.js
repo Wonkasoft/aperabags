@@ -2101,7 +2101,7 @@
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
 							one_click = false;
-							scrollToSection( 'section-product-statement', 15 );
+							scrollToSection( 'keyfeatures', 15 );
 						}
 					} );
 			}
@@ -2116,7 +2116,7 @@
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
 							one_click = false;
-							scrollToSection( 'section-product-statement', 15 );
+							scrollToSection( 'product-specification', 15 );
 						}
 					} );
 			}
