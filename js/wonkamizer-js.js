@@ -667,7 +667,7 @@
 		var current_el = document.querySelector( '#' + scroll_to_id );
 		$('body,html').animate({
 			scrollTop : $('#' + scroll_to_id).offset().top                     // Scroll to top of body
-		}, 500);
+		}, 1000);
 	}
 
 	function load_page_vars() 
@@ -2277,7 +2277,7 @@
 							});
 							break;
 	
-						case "New password_inputs do not match.":
+						case "New passwords do not match.":
 							password_inputs.forEach( function(item, i) 
 							{
 								if (i !== 0){
