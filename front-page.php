@@ -58,11 +58,14 @@ get_header();
 											if ( !empty( $slide->slide_subheader ) ) : ?>
 												<h4 class="img-subheader-text text-center"><?php _e( $slide->slide_subheader ); ?></h4>
 											<?php endif; ?>
+											<?php
+											/* Checks for an link set in the slide object */
+											if ( !empty( $slide->slide_link ) ) : ?>
+												<a href="<?php echo sprintf( esc_html__( "%1s", "aperabags"), get_permalink( $slide->slide_link ) ); ?>" class="wonka-btn img-head-slider-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
+											<?php endif; ?>
 										</div><!-- .text-box -->
 									</div><!-- .img-header-text-container -->
-
 								</div><!-- .img-header-text-wrap -->
-								
 							<?php endif; ?>
 							</div><!-- .top-slide-img-holder -->
 						</div><!-- .top-page-slide -->
@@ -139,7 +142,7 @@ get_header();
 											<div class="text-box text-center<?php $set_text_align = ( !empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position: ' set-align-center'; echo $set_text_align; ?>">
 												<h2 class="img-header-text text-center"><?php echo $slide->slide_text_message; ?></h2>
 												<?php
-												/* Checks for an subheader set in the slide object */
+												/* Checks for an link set in the slide object */
 												if ( !empty( $slide->slide_link ) ) : ?>
 													<a href="<?php echo sprintf( esc_html__( "%1s", "aperabags"), get_permalink( $slide->slide_link ) ); ?>" class="wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
 												<?php endif; ?>
