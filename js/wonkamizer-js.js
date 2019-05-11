@@ -652,7 +652,6 @@
 				if ( this.readyState == 4 && this.status == 200 ) 
 				{
 					var response = JSON.parse( this.responseText );
-					console.log( response );
 				}
 			};
 			xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + data + "&security=" + wonkasoft_request.security);
@@ -1371,13 +1370,12 @@
 			comment_form_wrapper = document.querySelector( 'div#review_form_wrapper' ),
 			reviews_top = document.querySelector( '.wonka-section-reviews' ),
 			more_reviews,
-			comment_list,
-			get_custom_height;
+			comment_list;
 
 			if ( document.querySelector( 'ol.commentlist' ) ) 
 			{
 				comment_list = document.querySelector( 'ol.commentlist' );
-				get_custom_height = setup_for_reviews( comment_list );
+				setup_for_reviews( comment_list );
 			}
 
 			if ( document.querySelector( '#more-reviews' ) ) 
@@ -1392,7 +1390,7 @@
 							setup_for_reviews( comment_list );
 							setTimeout( function() 
 								{
-									reviews_top.scrollIntoView({behavior: 'smooth'});
+									reviews_top.scrollIntoView( { behavior: 'smooth' } );
 									more_reviews.innerText = 'More Reviews';
 								}, 500 );
 						}
@@ -1555,52 +1553,53 @@
 		if ( document.querySelector( '.comment-form-comment' ) )  {
 			    var commentform = document.querySelector( '#commentform' ); // find the comment form
 			    var comment_status = document.createElement( 'DIV' );
+			    var comment_errors = document.createElement( 'DIV' );
 			    comment_status.setAttribute( 'id', 'comment-status' );
+			    comment_errors.setAttribute( 'id', 'comment-errors' );
 			    commentform.insertBefore( comment_status, document.querySelector( '.comment-form-rating' ) ); // add info panel before the form to provide feedback or errors
-			    var statusdiv = document.querySelector( '#comment-status' ); // define the infopanel
-			    if ( commentform.querySelectorAll( 'input' ).length ) 
-			    {
-			    	var commentform_inputs = commentform.querySelectorAll( 'input' );
-			    }
+			    commentform.insertBefore( comment_errors, document.querySelector( '.comment-form-rating' ) ); // add info panel before the form to provide feedback or errors
+			    var statusdiv = document.querySelector( '#comment-status' );
+			    var status_errors = document.querySelector( '#comment-errors' );
+				var commentform_inputs = commentform.querySelectorAll( 'input' );
+			    var errors;
 			    //serialize and store form data in a variable
 			    var formdata = {};
 			    commentform.onsubmit = function( e ) 
 			    {
-			    	
 			    	statusdiv.innerHTML = '';
+			    	status_errors.innerHTML = '';
+			    	errors = '';
 			        //Add a status message
-			        statusdiv.innerHTML = '<p>Processing...</p>';
+			        statusdiv.innerHTML = '<span class="processing-form">Processing... <div class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div></span>';
 			    	var field_checker = true;
 
 			    	if ( commentform.querySelector( 'select#rating' ).selectedIndex === 0 ) 
 			    	{
 			    		field_checker = false;
-			    		if ( statusdiv.innerHTML !== '' ) 
+			    		if ( errors !== '' ) 
 			    		{
-			    			statusdiv.innerHTML += '<p class="ajax-error">You must pick your rating before you can submit this review</p>';
+			    			errors += '<p class="ajax-error">You must pick your rating before you can submit this review</p>';
 			    		}
 			    		else
 			    		{
-			    			statusdiv.innerHTML = '<p class="ajax-error">You must pick your rating before you can submit this review</p>';
+			    			errors = '<p class="ajax-error">You must pick your rating before you can submit this review</p>';
 			    		}
 			    	}
 			    	else
 			    	{
-			    		statusdiv.innerHTML = '';
 			    		formdata.rating = commentform.querySelector( 'select#rating' ).value;
 			    	}
-			    	console.log( commentform.querySelector( 'textarea#comment' ).value );
 			    	if ( commentform.querySelector( 'textarea#comment' ).value === '' ) 
 			    	{
 			    		field_checker = false;
 			    		commentform.querySelector( 'textarea#comment' ).classList.add( 'form-control', 'is-invalid' );
-			    		if ( statusdiv.innerHTML !== '' ) 
+			    		if ( errors !== '' ) 
 			    		{
-			    			statusdiv.innerHTML += '<p class="ajax-error">You cannot submit a blank review</p>';
+			    			errors += '<p class="ajax-error">You cannot submit a blank review</p>';
 			    		}
 			    		else
 			    		{
-			    			statusdiv.innerHTML = '<p class="ajax-error">You cannot submit a blank review</p>';
+			    			errors = '<p class="ajax-error">You cannot submit a blank review</p>';
 			    		}
 			    	}
 			    	else
@@ -1620,62 +1619,66 @@
 			    	{
 				    	commentform_inputs.forEach( function( input, i )
 				    		{
-						    	if ( document.querySelector( '#author' ).value === '' && input.id === 'author' ) 
-						    	{
-						    		field_checker = false;
-						    		input.classList.add( 'form-control', 'is-invalid' );
-						    		if ( statusdiv.innerHTML !== '' ) 
-						    		{
-						    			statusdiv.innerHTML += '<p class="ajax-error">' + input.id + ' is a required field.</p>';
-						    		}
-						    		else
-						    		{
-						    			statusdiv.innerHTML = '<p class="ajax-error">' + input.id + ' is a required field.</p>';
-						    		}
-						    	}
-						    	else
-						    	{
-						    		if ( document.querySelector( '#author' ).value !== '' && input.id === 'author' && input.classList.contains( 'is-invalid' ) ) 
-						    		{
-						    			input.classList.remove( 'form-control', 'is-invalid' );
-						    			formdata.author = document.querySelector( '#author' ).value;
-						    		}
-						    		else
-						    		{
-						    			formdata.author = document.querySelector( '#author' ).value;
-						    		}
-						    	}
+				    			if ( input.id === 'author' ) 
+				    			{
+							    	if ( input.value === '' ) 
+							    	{
+							    		field_checker = false;
+							    		input.classList.add( 'form-control', 'is-invalid' );
+							    		if ( errors !== '' ) 
+							    		{
+							    			errors += '<p class="ajax-error">' + input.id + ' is a required field.</p>';
+							    		}
+							    		else
+							    		{
+							    			errors = '<p class="ajax-error">' + input.id + ' is a required field.</p>';
+							    		}
+							    	}
 
-						    	if ( document.querySelector( '#email' ).value === '' && input.id === 'email' ) 
-						    	{
-						    		field_checker = false;
-						    		input.classList.add( 'form-control', 'is-invalid' );
-						    		if ( statusdiv.innerHTML !== '' ) 
-						    		{
-						    			statusdiv.innerHTML += '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
-						    		}
-						    		else
-						    		{
-						    			statusdiv.innerHTML = '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
-						    		}
-						    	}
-						    	else
-						    	{
-						    		if ( document.querySelector( '#email' ).value !== '' && input.id === 'email' && input.classList.contains( 'is-invalid' ) ) 
+						    		if ( input.value !== '' && input.classList.contains( 'is-invalid' ) ) 
 						    		{
 						    			input.classList.remove( 'form-control', 'is-invalid' );
-						    			formdata.email = document.querySelector( '#email' ).value;
+						    			formdata.author = document.querySelector( '#author' ).value;
 						    		}
-						    		else
+						    		else if ( input.value !== '' )
 						    		{
-						    			formdata.email = document.querySelector( '#email' ).value;
+						    			formdata.author = document.querySelector( '#author' ).value;
 						    		}
-						    	}
+				    			}
+
+				    			if ( input.id === 'email' ) 
+				    			{
+							    	if ( input.value === '' ) 
+							    	{
+							    		field_checker = false;
+							    		input.classList.add( 'form-control', 'is-invalid' );
+							    		if ( errors !== '' ) 
+							    		{
+							    			errors += '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
+							    		}
+							    		else
+							    		{
+							    			errors = '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
+							    		}
+							    	}
+							    	else
+							    	{
+							    		if ( input.value !== '' && input.classList.contains( 'is-invalid' ) ) 
+							    		{
+							    			input.classList.remove( 'form-control', 'is-invalid' );
+							    			formdata.email = document.querySelector( '#email' ).value;
+							    		}
+							    		else
+							    		{
+							    			formdata.email = document.querySelector( '#email' ).value;
+							    		}
+							    	}
+				    			}
 				    		});
 			    	}
 
 			    	formdata.comment_post_ID = commentform.querySelector( 'input[name="comment_post_ID"]').value;
-			    	console.log(formdata);
+			    	console.log( formdata );
 			        //Extract action URL from commentform
 			        var formurl = commentform.getAttribute( 'action' );
 			        if ( field_checker ) 
@@ -1685,8 +1688,7 @@
 				        xhr.onreadystatechange = function() {
 					        if ( this.readyState == 4 && this.status == 200 )  {
 					        	var response =   this;
-					        	console.log( response );
-				                    statusdiv.innerHTML = '<p class="ajax-success" >Thanks for your comment. We appreciate your response.</p>';
+				                    statusdiv.innerHTML = '<p class="ajax-success" >Thanks for your post. We appreciate your response.</p>';
 				                    setTimeout( function() 
 				                    	{
 				                    		statusdiv.innerHTML = '';
@@ -1706,7 +1708,8 @@
 			        	e.preventDefault();
 				    	setTimeout( function() 
 				    		{
-				    			statusdiv.innerHTML = '';
+	                    		statusdiv.innerHTML = '';
+	                    		status_errors.innerHTML = errors;
 				    		}, 3000 );
 
 				    	return false;

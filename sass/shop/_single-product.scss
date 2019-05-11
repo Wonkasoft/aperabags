@@ -570,6 +570,18 @@ section.product-tabs-section {
 
 			div#comments {
 				position: relative;
+
+				div#comment-status {
+
+					div.spinner-border-sm {
+						border-width: .15rem;
+					}
+				}
+
+				div#comment-errors {
+					color: red;
+					font-weight: 500;
+				}
 			}
 
 			div.commentlist-wrapper {
@@ -577,7 +589,6 @@ section.product-tabs-section {
 				ol.commentlist {
 					margin: 0;
 					padding: 0;
-					height: 100% !important;
 					list-style: none;
 					overflow: hidden;
 					display: flex;
@@ -625,10 +636,6 @@ section.product-tabs-section {
 
 			div.wonka-row-comment-text {
 				margin: 15px auto;
-			}
-
-			div.star-rating {
-				width: 100%;
 			}
 
 			p.meta {

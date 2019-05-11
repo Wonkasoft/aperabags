@@ -1327,18 +1327,16 @@ add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10
 function ws_shipping_to_billing() {
 	// This is a security check, it validates a random number that is generated on the request.
 	if ( !check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
-	return wp_send_json_error( 'Invalid Nonce' );
+		return wp_send_json_error( 'Invalid Nonce' );
  	}
 
- 	if ( $_GET['opt_set'] === 'shipping' ) :
+ 	if ( isset( $_GET['opt_set'] ) ) :
  		update_option( 'woocommerce_ship_to_destination', $_GET['opt_set'], false );
+ 		
+		return wp_send_json_success( $_GET['opt_set'] );
  	endif;
 
- 	if ( $_GET['opt_set'] === 'billing' ) :
- 		update_option( 'woocommerce_ship_to_destination', $_GET['opt_set'], false );
- 	endif;
-
-	wp_send_json_success( $_GET['opt_set'] );
+ 	return false;
 }
 add_action( 'wp_ajax_shipping_to_billing',        'ws_shipping_to_billing' );
 add_action( 'wp_ajax_nopriv_shipping_to_billing', 'ws_shipping_to_billing' );
@@ -1425,7 +1423,6 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 	}
 	echo "</div>";
 	echo ob_get_clean();
-
 }; 
 			 
 // add the filter 
