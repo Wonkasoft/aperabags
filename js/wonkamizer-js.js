@@ -1104,12 +1104,21 @@
 				item.addEventListener( 'click', function( event ) 
 				{
 					var variant = event.target;
+					console.log(variant);
 					if ( variant.nodeName === 'SPAN' ) 
 					{
 						variant = variant.parentElement;
 					}
-					
-					variant_selected = variant.getAttribute( 'data-value' );
+
+					if ( variant.getAttribute( 'data-value' ) ) 
+					{
+						variant_selected = variant.getAttribute( 'data-value' );
+					}
+
+					if ( variant.nodeName === 'A' ) 
+					{
+						variant = variant.parentElement;
+					}
 
 					if ( window.innerWidth < 480 ) 
 					{
@@ -1176,8 +1185,9 @@
 						}
 					}
 
-					if ( variant.classList.contains( 'reset_variations' ) ) 
+					if ( variant.firstElementChild.classList.contains( 'reset_variations' ) ) 
 					{
+
 						full_imgs_parent.innerHTML = '';
 						full_imgs.forEach( function( img_tainers, i ) 
 							{
@@ -1211,7 +1221,7 @@
 											},
 										],
 									});
-								}, 10 );
+								}, 20 );
 						}
 					}
 					
