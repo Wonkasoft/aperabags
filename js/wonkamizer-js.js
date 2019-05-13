@@ -82,37 +82,6 @@
 							});
 					});
 				/*=====  End of Copying Shipping info to Billing info  ======*/
-
-				// var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
-				// shippping_radios.forEach( function( item, i ) {
-				// 	if ( item.checked ){
-				// 		var shipping_label = item.nextSibling.innerText;
-				// 		var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
-				// 		var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
-				// 		var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
-				// 	}
-				// });
-
-			// ship_ul.addEventListener('load', function( event ) {
-			// 	ship_method.forEach( function( item, i ) {
-			// 		item.addEventListener( 'change', function( event ) {
-			// 			var target = event.target;
-
-			// 			if (target.checked){
-			// 				var shipping_label = item.nextSibling.innerText;
-			// 				var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
-			// 				var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
-			// 				var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
-
-			// 				ship_to_cells.forEach( function( item, i ) 
-			// 				{
-			// 					item.innerHTML = shipping_label;
-			// 				});
-			// 			}	
-			// 		});
-			// 	});	
-			// });
-
 		});
 	}
 		
@@ -1134,14 +1103,19 @@
 
 				item.addEventListener( 'click', function( event ) 
 				{
-
 					var variant = event.target;
+					console.log( variant );
 					if ( variant.nodeName === 'SPAN' ) 
 					{
 						variant = variant.parentElement;
 					}
 					
 					variant_selected = variant.getAttribute( 'data-value' );
+
+					if ( window.innerWidth < 768 ) 
+					{
+						$( '.wonka-image-viewer' ).slick( 'unslick' );
+					}
 
 					if ( variant_selected !== null ) 
 					{
@@ -1179,6 +1153,28 @@
 									img_tainers.classList.remove( 'variant-show' );
 								}
 							});
+
+						if ( window.innerWidth < 768 ) 
+						{
+							setTimeout( function() 
+								{
+									$( '.wonka-image-viewer' ).slick({
+										slidesToShow: 1,
+										slidesToScroll: 1,
+										adaptiveHeight: true,
+										mobileFirst: true,
+										dots: false,
+										prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+										nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+										responsive: [
+											{
+											  breakpoint: 768,
+											  settings: 'unslick',
+											},
+										],
+									});
+								}, 10 );
+						}
 					}
 
 					if ( variant.classList.contains( 'reset_variations' ) ) 
@@ -1197,6 +1193,8 @@
 								thumb_lis_parent.appendChild( img_tainers );
 							});
 					}
+					
+					
 				});
 			});
 
