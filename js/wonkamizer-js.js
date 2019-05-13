@@ -1191,6 +1191,28 @@
 								img_tainers.classList.add( 'variant-show' );
 								thumb_lis_parent.appendChild( img_tainers );
 							});
+
+						if ( window.innerWidth < 480 ) 
+						{
+							setTimeout( function() 
+								{
+									$( '.wonka-image-viewer' ).slick({
+										slidesToShow: 1,
+										slidesToScroll: 1,
+										adaptiveHeight: true,
+										mobileFirst: true,
+										dots: false,
+										prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+										nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+										responsive: [
+											{
+											  breakpoint: 768,
+											  settings: 'unslick',
+											},
+										],
+									});
+								}, 10 );
+						}
 					}
 					
 					
@@ -1354,7 +1376,13 @@
 			if ( window.location.href.indexOf( '?add-to-cart' ) ) 
 			{
 				window.history.replaceState({}, document.title, window.location.href.split( '?' )[0] );
-				document.querySelector( 'div.woocommerce-message' ).style.display = 'none';
+				if ( document.querySelector( 'div.woocommerce-message' ) ) 
+				{
+					setTimeout( function() 
+						{
+							document.querySelector( 'div.woocommerce-message' ).style.display = 'none';
+						}, 3500 );
+				}
 			}
 		}
 
