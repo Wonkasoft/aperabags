@@ -1112,7 +1112,7 @@
 					
 					variant_selected = variant.getAttribute( 'data-value' );
 
-					if ( window.innerWidth < 768 ) 
+					if ( window.innerWidth < 480 ) 
 					{
 						$( '.wonka-image-viewer' ).slick( 'unslick' );
 					}
@@ -1154,7 +1154,7 @@
 								}
 							});
 
-						if ( window.innerWidth < 768 ) 
+						if ( window.innerWidth < 480 ) 
 						{
 							setTimeout( function() 
 								{

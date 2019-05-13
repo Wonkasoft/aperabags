@@ -78,6 +78,7 @@ body.search {
 		padding: 8px;
 		line-height: 1.2;
 		height: 100%;
+		border-radius: 100px 0 0 100px;
 		@include font-size( 1.1 );
 
 		&::placeholder {
@@ -91,6 +92,7 @@ body.search {
 		line-height: 1.2;
 		text-transform: none;
 		height: 100%;
+		border-radius: 0 100px 100px 0;
 		@include font-size( 1.1 );
 
 		i {
@@ -143,7 +145,7 @@ body.search {
 	justify-content: center;
 	position: relative;
 	top: 46%;
-	width: 80%;
+	width: 100%;
 	text-align: center;
 	margin-top: 30px;
 	margin: auto;
@@ -159,7 +161,7 @@ body.search {
 
 		/* Style the search field */
 		input[type=text] {
-			width: 100%;
+			width: 70%;
 			padding: 13px;
 			@include font-size( 1.1 );
 			@include prefix( transition, $trans_25, o moz webkit );
@@ -170,23 +172,25 @@ body.search {
 		}
 
 		button {
-			width: 100%;
-			margin-top: -2px;
+			width: auto;
+			margin-top: 0px;
 			margin-left: 0;
 			@include prefix( transition, $trans_25, o moz webkit );
 		}
-
-		@include media-breakpoint( md ) {
+	}
+	@include media-breakpoint( md ) {
+		width: 80%;
+		form#searchform {
 			width: 65%;
 
 			input[type=text] {
-					width: 50%;
-				}
+				width: 50%;
+			}
 			button {
-						width: auto;
-						margin-top: 0;
-						margin-left: -2px;
-					}
+				width: auto;
+				margin-top: 0;
+				margin-left: -2px;
+			}
 		}
 	}
 }
