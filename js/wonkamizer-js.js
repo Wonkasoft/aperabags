@@ -1005,16 +1005,23 @@
 
 		if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
 		{
-			document.getElementsByName("billing_email")[0].value = '';
-			document.getElementsByName("billing_first_name")[0].value = '';
-			document.getElementsByName("billing_last_name")[0].value = '';
-			document.getElementsByName("billing_company")[0].value = '';
-			document.getElementsByName("billing_address_1")[0].value = '';
-			document.getElementsByName("billing_address_2")[0].value = '';
-			document.getElementsByName("billing_city")[0].value = '';
-			document.getElementById("billing_state").value = '';
-			document.getElementsByName("billing_postcode")[0].value = '';
-			document.getElementsByName("billing_phone")[0].value = '';
+			document.getElementById( "billing_address_1" ).classList.remove( 'input-text' );
+			document.getElementById( "billing_address_1" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_address_1" ).removeEventListener( 'keydown', function() { return; }, true );
+			document.getElementById( "billing_address_2" ).classList.remove( 'input-text' );
+			document.getElementById( "billing_address_2" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_address_2" ).removeEventListener( 'keydown', function() { return; }, true );
+			document.getElementById( "billing_city" ).classList.remove( 'input-text' );
+			document.getElementById( "billing_city" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_city" ).removeEventListener( 'keydown', function() { return; }, true );
+			document.getElementById( "billing_state" ).classList.remove( 'state_select' );
+			document.getElementById( "billing_state" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_state" ).removeEventListener( 'input', function() { return; }, true );
+			document.getElementById( "billing_state" ).removeEventListener( 'click', function() { return; }, true );
+			document.getElementById( "billing_state" ).removeEventListener( 'keydown', function() { return; }, true );
+			document.getElementById( "billing_postcode" ).classList.remove( 'input-text' );
+			document.getElementById( "billing_postcode" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_postcode" ).removeEventListener( 'keydown', function() { return; }, true );
 		}
 		else
 		{
