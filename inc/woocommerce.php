@@ -1573,7 +1573,6 @@ function wonka_woocommerce_review_order_before_submit() {
 				document.getElementById( "billing_city" ).classList.remove( 'input-text' );
 				document.getElementById( "billing_city" ).removeEventListener( 'change', function() { return; }, true );
 				document.getElementById( "billing_city" ).removeEventListener( 'keydown', function() { return; }, true );
-				document.getElementById( "billing_state" ).classList.remove( 'state_select' );
 				document.getElementById( "billing_state" ).addEventListener( 'change', function( e ) { e.stopImmediatePropagation(); return; } );
 				document.getElementById( "billing_postcode" ).classList.remove( 'input-text' );
 				document.getElementById( "billing_postcode" ).removeEventListener( 'change', function() { return; }, true );
