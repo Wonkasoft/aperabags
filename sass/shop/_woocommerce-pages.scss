@@ -11,10 +11,34 @@
 			font-family: $font__main_jose;
 		}
 
+		div.woocommerce-NoticeGroup-checkout {
+		}
+
 		ul.woocommerce-error {
 			list-style: none;
-			display: none;
+			margin: 15px auto;
+			padding: 8px;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+
+
+			&:before {
+				content: "\f06a";
+				font-family: "FontAwesome";
+				display: inline-block;
+				flex: 0 0 100%;
+				width: 45px;
+				height: 45px;
+				color: #909090;
+				padding: 4px 8px;
+				@include font-size( 2 );
+			}
+
 			li {
+				flex: 0 0 100%;
 				padding: 4px 8px;
 			}
 		}
@@ -29,10 +53,6 @@
 			background-color: transparent;
 			@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-		}
-
-		.woocommerce-NoticeGroup {
-			
 		}
 
 		.select2-selection--single,
@@ -690,7 +710,8 @@
 		&.main-page {
 			max-width: 1180px;
 
-			ul {
+			ul#shipping_method,
+			ul.woocommerce-order-overview {
 				list-style: none;
 				margin: 0;
 				padding: 0;

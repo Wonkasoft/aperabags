@@ -2,7 +2,7 @@ a.button.wc-forward,
 a.button.wc-backward,
 a.restore-item,
 a.showlogin,
-a.xoo-wsc-ft-btn,
+.xoo-wsc-footer a.xoo-wsc-ft-btn,
 a.btn.btn-primary,
 a.wonka-btn,
 button.woocommerce-Button,
@@ -45,7 +45,7 @@ a.button.wc-forward,
 a.button.wc-backward,
 a.restore-item,
 a.showlogin,
-a.xoo-wsc-ft-btn,
+.xoo-wsc-footer a.xoo-wsc-ft-btn,
 a.wonka-btn,
 button.woocommerce-Button,
 button.wonka-btn,
@@ -119,4 +119,8 @@ button.slick-arrow {
 a.showlogin {
 	padding: 4px 8px;
 	@include font-size( .8 );
+}
+
+.xoo-wsc-footer a.xoo-wsc-ft-btn {
+	width: 100%;
 }

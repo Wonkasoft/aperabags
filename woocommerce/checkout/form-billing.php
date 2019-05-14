@@ -67,11 +67,7 @@ defined( 'ABSPATH' ) || exit;
 								$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
 							endif;
 
-							if ( isset( $field['input_class'] ) ) :
-								array_push( $field['input_class'], 'wonka-form-control', 'form-control' ) ;
-							else:
-								$field['input_class'] = array( 'wonka-form-control', 'form-control' );
-							endif;
+							$field['input_class'] = array( 'wonka-form-control', 'form-control' );
 
 							if ( isset( $field['country_field'], $fields[ $field['country_field'] ] ) ) {
 								$field['country'] = $checkout->get_value( $field['country_field'] );

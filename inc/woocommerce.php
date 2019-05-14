@@ -1506,7 +1506,11 @@ function wonka_woocommerce_review_order_before_submit() {
 		var billing_to_radios = document.querySelectorAll( 'input[name="ship_to_different_address"]' );
 		var billing_address_form = document.querySelector( '.billing_address' );
 		var xhr = new XMLHttpRequest();
-		copy_to_billing();
+		if ( document.querySelector( '#bill-to-different-address-radio2' ) ) 
+		{
+			billing_address_form.classList.add( 'active' );
+			copy_to_billing();
+		}
 		
 		billing_to_radios.forEach( function( item, i ) 
 			{
@@ -1518,11 +1522,11 @@ function wonka_woocommerce_review_order_before_submit() {
 						{
 							wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=billing' );
 							billing_address_form.classList.add( 'active' );
-								copy_to_billing();
+							copy_to_billing();
 						}
 						else
 						{
-							wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=billing' );
+							wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=shipping' );
 							if ( billing_address_form.classList.contains( 'active' ) ) 
 							{
 								billing_address_form.classList.remove( 'active' );
@@ -1558,31 +1562,35 @@ function wonka_woocommerce_review_order_before_submit() {
 					item.innerHTML = '<span class="address-number">' +address_1 + ' ' + address_2 + '</span> <span class="city-state-zip">' + city + ', ' + state + ' ' + postcode + '</span>';
 				});
 
-			if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
+			if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked ) 
 			{
-				document.getElementsByName("billing_email")[0].value = '';
-				document.getElementsByName("billing_first_name")[0].value = '';
-				document.getElementsByName("billing_last_name")[0].value = '';
-				document.getElementsByName("billing_company")[0].value = '';
-				document.getElementsByName("billing_address_1")[0].value = '';
-				document.getElementsByName("billing_address_2")[0].value = '';
-				document.getElementsByName("billing_city")[0].value = '';
-				document.getElementById("billing_state").value = '';
-				document.getElementsByName("billing_postcode")[0].value = '';
-				document.getElementsByName("billing_phone")[0].value = '';
+				document.getElementById( "billing_address_1" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_address_1" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_address_1" ).removeEventListener( 'keydown', function() { return; }, true );
+				document.getElementById( "billing_address_2" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_address_2" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_address_2" ).removeEventListener( 'keydown', function() { return; }, true );
+				document.getElementById( "billing_city" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_city" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_city" ).removeEventListener( 'keydown', function() { return; }, true );
+				document.getElementById( "billing_state" ).classList.remove( 'state_select' );
+				document.getElementById( "billing_state" ).addEventListener( 'change', function( e ) { e.stopImmediatePropagation(); return; } );
+				document.getElementById( "billing_postcode" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_postcode" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_postcode" ).removeEventListener( 'keydown', function() { return; }, true );
 			}
 			else
 			{
-				document.getElementsByName("billing_email")[0].value = email;
-				document.getElementsByName("billing_first_name")[0].value = first_name;
-				document.getElementsByName("billing_last_name")[0].value = last_name;
-				document.getElementsByName("billing_company")[0].value = company;
-				document.getElementsByName("billing_address_1")[0].value = address_1;
-				document.getElementsByName("billing_address_2")[0].value = address_2;
-				document.getElementsByName("billing_city")[0].value = city;
-				document.getElementById("billing_state").value = state;
-				document.getElementsByName("billing_postcode")[0].value = postcode;
-				document.getElementsByName("billing_phone")[0].value = phone;
+				document.getElementById( "billing_email" ).value = email;
+				document.getElementById( "billing_first_name" ).value = first_name;
+				document.getElementById( "billing_last_name" ).value = last_name;
+				document.getElementById( "billing_company" ).value = company;
+				document.getElementById( "billing_address_1" ).value = address_1;
+				document.getElementById( "billing_address_2" ).value = address_2;
+				document.getElementById( "billing_city" ).value = city;
+				document.getElementById( "billing_state" ).value = state;
+				document.getElementById( "billing_postcode" ).value = postcode;
+				document.getElementById( "billing_phone" ).value = phone;
 			}
 		}
 
@@ -1604,6 +1612,16 @@ function wonka_woocommerce_review_order_before_submit() {
 				xhr.send();
 			}
 
+		}
+
+		if ( document.querySelector( 'a[data-target="#place_order"]' ) ) 
+		{
+			document.querySelector( 'a[data-target="#place_order"]' ).addEventListener( 'click', function( e ) 
+				{
+					var target = e.target;
+					var for_submit_id = target.getAttribute( 'data-target' );
+					document.querySelector( for_submit_id ).click();
+				});
 		}
 	</script>
 	<?php

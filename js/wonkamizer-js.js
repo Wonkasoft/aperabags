@@ -1005,16 +1005,20 @@
 
 		if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
 		{
-			document.getElementsByName("billing_email")[0].value = '';
-			document.getElementsByName("billing_first_name")[0].value = '';
-			document.getElementsByName("billing_last_name")[0].value = '';
-			document.getElementsByName("billing_company")[0].value = '';
-			document.getElementsByName("billing_address_1")[0].value = '';
-			document.getElementsByName("billing_address_2")[0].value = '';
-			document.getElementsByName("billing_city")[0].value = '';
-			document.getElementById("billing_state").value = '';
-			document.getElementsByName("billing_postcode")[0].value = '';
-			document.getElementsByName("billing_phone")[0].value = '';
+			document.getElementById( "billing_address_1" ).classList.remove( 'input-text' );
+			document.getElementById( "billing_address_1" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_address_1" ).removeEventListener( 'keydown', function() { return; }, true );
+			document.getElementById( "billing_address_2" ).classList.remove( 'input-text' );
+			document.getElementById( "billing_address_2" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_address_2" ).removeEventListener( 'keydown', function() { return; }, true );
+			document.getElementById( "billing_city" ).classList.remove( 'input-text' );
+			document.getElementById( "billing_city" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_city" ).removeEventListener( 'keydown', function() { return; }, true );
+			document.getElementById( "billing_state" ).classList.remove( 'state_select' );
+			document.getElementById( "billing_state" ).addEventListener( 'change', function( e ) { e.stopImmediatePropagation(); return; } );
+			document.getElementById( "billing_postcode" ).classList.remove( 'input-text' );
+			document.getElementById( "billing_postcode" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_postcode" ).removeEventListener( 'keydown', function() { return; }, true );
 		}
 		else
 		{
@@ -1104,12 +1108,21 @@
 				item.addEventListener( 'click', function( event ) 
 				{
 					var variant = event.target;
+					console.log(variant);
 					if ( variant.nodeName === 'SPAN' ) 
 					{
 						variant = variant.parentElement;
 					}
-					
-					variant_selected = variant.getAttribute( 'data-value' );
+
+					if ( variant.getAttribute( 'data-value' ) ) 
+					{
+						variant_selected = variant.getAttribute( 'data-value' );
+					}
+
+					if ( variant.nodeName === 'A' ) 
+					{
+						variant = variant.parentElement;
+					}
 
 					if ( window.innerWidth < 480 ) 
 					{
@@ -1176,8 +1189,9 @@
 						}
 					}
 
-					if ( variant.classList.contains( 'reset_variations' ) ) 
+					if ( variant.firstElementChild.classList.contains( 'reset_variations' ) ) 
 					{
+
 						full_imgs_parent.innerHTML = '';
 						full_imgs.forEach( function( img_tainers, i ) 
 							{
@@ -1211,7 +1225,7 @@
 											},
 										],
 									});
-								}, 10 );
+								}, 20 );
 						}
 					}
 					
@@ -1389,7 +1403,7 @@
 		/*==========================================================
 		=            This is for setting up the reviews            =
 		==========================================================*/
-		if ( document.querySelector( '#section-reviews' ) ) 
+		if ( document.querySelector( '#write-review' ) ) 
 		{
 			var write_review = document.querySelector( '#write-review' ),
 			comment_form_wrapper = document.querySelector( 'div#review_form_wrapper' ),

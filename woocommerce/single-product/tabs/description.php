@@ -212,14 +212,17 @@ if ( !empty( $product_specs_data ) ) : ?>
 					</td>
 				</tr>
 					<?php 
-						$fit_pockets = ["Fit Pocket x3 - Assorted","Fit Pocket x2 - Large","Fit Pocket x2 - Medium","Fit Pocket x2 - Small"];
-						if ( !in_array($post->post_title, $fit_pockets)  )
+						$fit_pockets = ["fit pocket x3 - assorted","fit pocket x2 - large","fit pocket x2 - medium","fit pocket x2 - small"];
+						if ( !in_array( strtolower( $post->post_title ) , $fit_pockets ) )
 						{
-										echo "<tr>
-											<td>
-												Water resistant base (protects your gear when sitting on wet and damp surfaces)
-											</td>
-										</tr>";
+							$water_base = '';
+							$water_base .= '<tr>';
+							$water_base .= '<td>';
+							$water_base .= 'Water resistant base (protects your gear when sitting on wet and damp surfaces)';
+							$water_base .= '</td>';
+							$water_base .= '</tr>';
+
+							echo $water_base;
 						}
 					?>
 			</tbody>
