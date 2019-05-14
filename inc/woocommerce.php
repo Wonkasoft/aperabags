@@ -1517,7 +1517,6 @@ function wonka_woocommerce_review_order_before_submit() {
 				
 				item.addEventListener( 'change', function( event ) 
 					{
-						console.log(event);
 						var target = event.target;
 						if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
 						{
@@ -1563,7 +1562,7 @@ function wonka_woocommerce_review_order_before_submit() {
 					item.innerHTML = '<span class="address-number">' +address_1 + ' ' + address_2 + '</span> <span class="city-state-zip">' + city + ', ' + state + ' ' + postcode + '</span>';
 				});
 
-			if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
+			if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked ) 
 			{
 				document.getElementById( "billing_address_1" ).classList.remove( 'input-text' );
 				document.getElementById( "billing_address_1" ).removeEventListener( 'change', function() { return; } );
