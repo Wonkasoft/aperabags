@@ -703,7 +703,17 @@ section.product-tabs-section {
 						margin-bottom: 15px;
 
 						iframe {
-							height: 200px;
+							width: 560px;
+							height: auto;
+						}
+					}
+					@include media-breakpoint( md ) 
+					{
+						.col {
+							
+							iframe {
+								height: 314px;
+							}
 						}
 					}
 				}
