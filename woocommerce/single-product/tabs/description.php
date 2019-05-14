@@ -213,17 +213,13 @@ if ( !empty( $product_specs_data ) ) : ?>
 				</tr>
 					<?php 
 						$fit_pockets = ["Fit Pocket x3 - Assorted","Fit Pocket x2 - Large","Fit Pocket x2 - Medium","Fit Pocket x2 - Small"];
-						
-						foreach ($fit_pockets as $fit_pocket)
+						if ( !in_array($post->post_title, $fit_pockets)  )
 						{
-							if ( $post->post_title === $fit_pocket )
-							{
-								echo "<tr>
-												<td>
-													Water resistant base (protects your gear when sitting on wet and damp surfaces)
-												</td>
-											</tr>";
-							}
+										echo "<tr>
+											<td>
+												Water resistant base (protects your gear when sitting on wet and damp surfaces)
+											</td>
+										</tr>";
 						}
 					?>
 			</tbody>
