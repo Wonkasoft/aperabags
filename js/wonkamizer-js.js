@@ -1015,10 +1015,8 @@
 			document.getElementById( "billing_city" ).removeEventListener( 'change', function() { return; }, true );
 			document.getElementById( "billing_city" ).removeEventListener( 'keydown', function() { return; }, true );
 			document.getElementById( "billing_state" ).classList.remove( 'state_select' );
-			document.getElementById( "billing_state" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_state" ).removeEventListener( 'change', function( e ) { e.preventDefault(); return; }, true );
 			document.getElementById( "billing_state" ).removeEventListener( 'input', function() { return; }, true );
-			document.getElementById( "billing_state" ).removeEventListener( 'validate', function() { return; }, true );
-			document.getElementById( "billing_state" ).removeEventListener( 'update_checkout', function() { return; }, true );
 			document.getElementById( "billing_state" ).removeEventListener( 'click', function() { return; }, true );
 			document.getElementById( "billing_state" ).removeEventListener( 'keydown', function() { return; }, true );
 			document.getElementById( "billing_postcode" ).classList.remove( 'input-text' );
