@@ -221,18 +221,6 @@ if ( !empty( $product_specs_data ) ) : ?>
 											</td>
 										</tr>";
 						}
-						
-						// foreach ($fit_pockets as $fit_pocket)
-						// {
-						// 	if ( in_array($post->post_title,)  )
-						// 	{
-						// 					echo "<tr>
-						// 						<td>
-						// 							Water resistant base (protects your gear when sitting on wet and damp surfaces)
-						// 						</td>
-						// 					</tr>";
-						// 	}
-						// }
 					?>
 			</tbody>
 		</table>
