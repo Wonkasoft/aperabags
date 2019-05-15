@@ -90,6 +90,10 @@ section.header-slider-section {
 								white-space: nowrap;
 								@include font-size( 1.1 );
 							}
+
+							.img-head-slider-link {
+								text-shadow: none;
+							}
 						}
 					}	
 				}
