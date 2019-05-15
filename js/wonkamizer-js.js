@@ -668,7 +668,7 @@
 		adjustment = window.innerHeight,
 		height_set;
 
-		img_for_sizing.src = 'https:' + top_slide_img_holder.getAttribute( 'data-img-url' );
+		img_for_sizing.src = top_slide_img_holder.getAttribute( 'data-img-url' );
 		img_for_sizing.style.width = window.innerWidth + 'px';
 		if ( document.querySelector( '#wpadminbar' ) )
 		{
