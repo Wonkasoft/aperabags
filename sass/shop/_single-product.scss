@@ -704,18 +704,19 @@ section.product-tabs-section {
 
 						iframe {
 							width: 560px;
-							height: auto;
-						}
-					}
-					@include media-breakpoint( md ) 
-					{
-						.col {
+							height: 12.4rem;
 							
-							iframe {
-								height: 314px;
+							@include media-breakpoint( xs ) {
+								height: 15.2rem;
+							}
+							@include media-breakpoint( sm ) {
+								height: 18.6rem;
+							}
+							@include media-breakpoint( md ) {
+								height: 19.7rem;
 							}
 						}
-					}
+					}		
 				}
 
 				.table {
