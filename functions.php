@@ -229,7 +229,7 @@ function apera_bags_scripts() {
 	wp_enqueue_style( 'slick-js-theme-style', get_template_directory_uri() . '/slick/slick-theme.css' );
 
  	wp_enqueue_style( 'jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css', array(), '1.0.7' );
-	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), '', time() );
+	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
 	
 
 	/**
