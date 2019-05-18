@@ -31,8 +31,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php
 					if ( 1 < count( $available_methods ) ) {
 						printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, true ) ); // WPCS: XSS ok.
-						print_r( $method->id );
-						print_r( $chosen_method );
 					} else {
 						printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
 					}
