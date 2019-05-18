@@ -104,6 +104,14 @@ main.main-checkout {
 				}
 			} 
 		}
+
+		select.state_select {
+			padding: 0px;
+			min-width: 0px;
+			border-radius: 2px;
+			font-size: 1rem;
+			line-height: 1.5;
+		}
 	}
 
 	div#shipping_postcode_field,
