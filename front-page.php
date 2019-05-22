@@ -37,13 +37,14 @@ get_header();
 						?>
 						<div class="top-page-slide">
 							<?php
-							if ( wp_is_mobile() ) :
+							$ios_class = ( preg_match( '/iPad|iPod|iPhone/', $_SERVER['HTTP_USER_AGENT'] ) ) ? ' is-ios': '';
+							if ( wp_is_mobile() && ! preg_match( '/iPad/', $_SERVER['HTTP_USER_AGENT'] ) ) :
 								?>
-							<div class="top-slide-img-holder" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
+							<div class="top-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php
 							else:
 								?>
-							<div class="top-slide-img-holder" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+							<div class="top-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 							<?php 
 							endif;
 							/* Checks for an message set in the slide object */
@@ -57,11 +58,14 @@ get_header();
 											if ( !empty( $slide->slide_subheader ) ) : ?>
 												<h4 class="img-subheader-text text-center"><?php _e( $slide->slide_subheader ); ?></h4>
 											<?php endif; ?>
+											<?php
+											/* Checks for an link set in the slide object */
+											if ( !empty( $slide->slide_link ) ) : ?>
+												<a href="<?php echo sprintf( esc_html__( "%1s", "aperabags"), get_permalink( $slide->slide_link ) ); ?>" class="wonka-btn img-head-slider-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
+											<?php endif; ?>
 										</div><!-- .text-box -->
 									</div><!-- .img-header-text-container -->
-
 								</div><!-- .img-header-text-wrap -->
-								
 							<?php endif; ?>
 							</div><!-- .top-slide-img-holder -->
 						</div><!-- .top-page-slide -->
@@ -102,7 +106,7 @@ get_header();
 					</div><!-- .row -->
 					<div class="row">
 						<div class="col col-12 text-center">
-							<a href="/shop" class="wonka-btn" target="_self"><?php _e( __( 'Shop All' ) ) ?></a>
+							<a href="<?php echo get_site_url() . '/shop'; ?>" class="wonka-btn" target="_self"><?php _e( __( 'Shop All' ) ) ?></a>
 						</div><!-- .col -->
 					</div><!-- .row -->
 					</div><!-- .col -->
@@ -122,13 +126,13 @@ get_header();
 						if ( !empty( $slide->slide_img ) ) : ?>
 							<div class="cta-section-slide">
 								<?php
-								if ( wp_is_mobile() ) :
+								if ( wp_is_mobile() && ! preg_match( '/iPad/', $_SERVER['HTTP_USER_AGENT'] ) ) :
 								?>
-								<div class="cta-slide-img-holder" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
+								<div class="cta-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php
 								else:
 								?>
-								<div class="cta-slide-img-holder" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+								<div class="cta-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 								<?php
 								endif;
 								/* Checks for an message set in the slide object */
@@ -138,9 +142,9 @@ get_header();
 											<div class="text-box text-center<?php $set_text_align = ( !empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position: ' set-align-center'; echo $set_text_align; ?>">
 												<h2 class="img-header-text text-center"><?php echo $slide->slide_text_message; ?></h2>
 												<?php
-												/* Checks for an subheader set in the slide object */
+												/* Checks for an link set in the slide object */
 												if ( !empty( $slide->slide_link ) ) : ?>
-													<a href="<?php echo sprintf( esc_html__( "%1s%2s", "aperabags"), get_site_url(), $slide->slide_link ); ?>" class="wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
+													<a href="<?php echo sprintf( esc_html__( "%1s", "aperabags"), get_permalink( $slide->slide_link ) ); ?>" class="wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
 												<?php endif; ?>
 											</div><!-- .text-box -->
 										</div><!-- .img-header-text-container -->

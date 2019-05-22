@@ -27,8 +27,11 @@
     "jshint": "^2.9.6",
     "json-file": "^0.1.0",
     "node-fs": "^0.1.7",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.12.0",
     "path": "^0.12.7"
   },
-  "siteName": "aperabags.com"
+  "siteName": "aperabags.com",
+  "dependencies": {
+    "smoothscroll-polyfill": "^0.4.4"
+  }
 }

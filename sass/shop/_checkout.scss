@@ -104,6 +104,14 @@ main.main-checkout {
 				}
 			} 
 		}
+
+		select.state_select {
+			padding: 0px;
+			min-width: 0px;
+			border-radius: 2px;
+			font-size: 1rem;
+			line-height: 1.5;
+		}
 	}
 
 	div#shipping_postcode_field,
@@ -138,7 +146,7 @@ label.checkbox {
 }
 
 div.checkout-order-details {
-	padding: 30px;
+	padding: 0px 15px;
 	background: $color__background_alt;
 
 	tr.cart_item:first-child {
@@ -176,6 +184,10 @@ div.checkout-order-details {
 		td {
 			text-align: right;
 		}
+	}
+
+	@include media-breakpoint( lg ) {
+		padding: 30px;
 	}
 }
 
@@ -235,4 +247,11 @@ span.wonka-badge {
 	height: 22px;
 	padding: 0;
 	font-family: 'Open Sans';
+}
+
+@media screen and  ( max-width: 992px ) {
+	div.wonka-row {
+		margin-left: 0;
+		margin-right: 0;
+	}
 }

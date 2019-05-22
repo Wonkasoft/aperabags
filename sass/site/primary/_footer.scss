@@ -113,7 +113,8 @@ footer#colophon {
 
 							&::placeholder {
 								font-style: italic;
-								font-weight: 400;
+								font-weight: 300;
+								color: #ffffff
 							}
 						}
 					}
@@ -134,6 +135,11 @@ footer#colophon {
 						height: 49px;
 						border-radius: 100px;
 						@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+					}
+				}
+				@media screen and  ( max-width: 992px ) {
+					> .top_label {
+						display: none;
 					}
 				}
 			}

@@ -11,14 +11,6 @@
 			font-family: $font__main_jose;
 		}
 
-		ul.woocommerce-error {
-			list-style: none;
-			display: none;
-			li {
-				padding: 4px 8px;
-			}
-		}
-
 		.woocommerce-notice,
 		.woocommerce-info,
 		.woocommerce-message {
@@ -29,10 +21,6 @@
 			background-color: transparent;
 			@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
-		}
-
-		.woocommerce-NoticeGroup {
-			
 		}
 
 		.select2-selection--single,
@@ -138,7 +126,7 @@
 		div.wonka-checkout-row {
 
 			div.checkout-form-left-side {
-				padding: 30px;
+				padding: 0px 15px;
 
 				.woocommerce-form-login-toggle {
 					position: relative;
@@ -152,6 +140,10 @@
 
 				.woocommerce-account-fields {
 					margin: 15px auto;
+				}
+
+				@include media-breakpoint( lg ) {
+					padding: 30px;
 				}
 			}
 		}
@@ -692,13 +684,42 @@
 				padding: 0;
 			}
 
+			ul.woocommerce-error {
+				list-style: none;
+				margin: 15px auto;
+				padding: 8px;
+				width: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-wrap: wrap;
+
+
+				&:before {
+					content: "\f06a";
+					font-family: "FontAwesome";
+					display: inline-block;
+					flex: 0 0 100%;
+					width: 45px;
+					height: 45px;
+					color: #909090;
+					padding: 4px 8px;
+					@include font-size( 2 );
+				}
+
+				li {
+					flex: 0 0 100%;
+					padding: 4px 8px;
+				}
+			}
+
 			header.entry-header {
 				padding: 15px;
 			}
 
 			div.entry-content {
 				margin: 0;
-				padding: 15px;
+				padding: 0px;
 			}
 		}
 

@@ -1,6 +1,5 @@
 ( function($)
 {
-	"use strict";
 
 	/*===============================================
 	=            vars set for script use            =
@@ -61,17 +60,18 @@
 
 				billing_to_radios.forEach( function( item, i ) 
 					{
-						
 						item.addEventListener( 'change', function( event ) 
 							{
 								var target = event.target;
 								if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
 								{
+									wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=billing' );
 									billing_address_form.classList.add( 'active' );
 										copy_to_billing();
 								}
 								else
 								{
+									wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=shipping' );
 									if ( billing_address_form.classList.contains( 'active' ) ) 
 									{
 										billing_address_form.classList.remove( 'active' );
@@ -82,37 +82,6 @@
 							});
 					});
 				/*=====  End of Copying Shipping info to Billing info  ======*/
-
-				// var shippping_radios = document.querySelectorAll( 'input[name="shipping_method[0]"]' );
-				// shippping_radios.forEach( function( item, i ) {
-				// 	if ( item.checked ){
-				// 		var shipping_label = item.nextSibling.innerText;
-				// 		var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
-				// 		var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
-				// 		var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
-				// 	}
-				// });
-
-			// ship_ul.addEventListener('load', function( event ) {
-			// 	ship_method.forEach( function( item, i ) {
-			// 		item.addEventListener( 'change', function( event ) {
-			// 			var target = event.target;
-
-			// 			if (target.checked){
-			// 				var shipping_label = item.nextSibling.innerText;
-			// 				var ship_to_cells = document.querySelectorAll( '.ship-method-cell' );
-			// 				var checkout_total = document.querySelector( '.order-total td .woocommerce-Price-amount' );
-			// 				var money_symbol = document.querySelector( '.order-total td .woocommerce-Price-currencySymbol' );
-
-			// 				ship_to_cells.forEach( function( item, i ) 
-			// 				{
-			// 					item.innerHTML = shipping_label;
-			// 				});
-			// 			}	
-			// 		});
-			// 	});	
-			// });
-
 		});
 	}
 		
@@ -406,12 +375,14 @@
 											if ( input.reportValidity() === false ) 
 											{
 												input.classList.add( 'is-invalid' );
+												input.style.width = 100 + 'px';
 											}
 											else
 											{
 												if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
 												{
 													input.classList.remove( 'is-invalid' );
+													input.style.width = '';
 												}
 											}
 										}
@@ -492,8 +463,9 @@
 								var billing_form_fields = document.querySelectorAll( '.woocommerce-billing-fields__field-wrapper input' );
 								var billing_form_selects = document.querySelectorAll( '.woocommerce-billing-fields__field-wrapper select' );
 								var billing_field_count = billing_form_fields.length;
-								next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 								var validation_billing_checker = true;
+
+
 
 								billing_form_selects.forEach( function( select, i ) 
 									{
@@ -533,9 +505,14 @@
 
 										if ( i === field_count - 1 && validation_billing_checker )
 										{
-											next_tab.submit();
+											next_tab.click();
 										}
 									});
+							}
+
+							if ( document.querySelector( '#bill-to-different-address-checkbox1' ).checked ) 
+							{
+								next_tab.click();
 							}
 						}
 						/*=====  End of This is for validation from clicking the place order button  ======*/
@@ -636,8 +613,9 @@
 			});
 		}
 		
-		if ( action === "shipping_field_validation" ) 
+		if ( action === "shipping_to_billing" ) 
 		{
+
 			xhr.onreadystatechange = function() {
 
 				if ( this.readyState == 4 && this.status == 200 ) 
@@ -645,7 +623,7 @@
 					var response = JSON.parse( this.responseText );
 				}
 			};
-			xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + "&security=" + wonkasoft_request.security);
+			xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + data + "&security=" + wonkasoft_request.security);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhr.send();
 		}
@@ -655,7 +633,9 @@
 	function scrollToSection( scroll_to_id, adjustment ) 
 	{
 		var current_el = document.querySelector( '#' + scroll_to_id );
-  		current_el.scrollIntoView( { behavior: "smooth" } );
+		$('body,html').animate({
+			scrollTop : $('#' + scroll_to_id).offset().top                     // Scroll to top of body
+		}, 1000);
 	}
 
 	function load_page_vars() 
@@ -688,7 +668,7 @@
 		adjustment = window.innerHeight,
 		height_set;
 
-		img_for_sizing.src = 'https:' + top_slide_img_holder.getAttribute( 'data-img-url' );
+		img_for_sizing.src = top_slide_img_holder.getAttribute( 'data-img-url' );
 		img_for_sizing.style.width = window.innerWidth + 'px';
 		if ( document.querySelector( '#wpadminbar' ) )
 		{
@@ -964,7 +944,7 @@
 	function setup_for_reviews( comment_list )
 	{
 		var first_three_height = 0;
-		for (var i = 0; i < comment_list.children.length; i++) 
+		for ( var i = 0; i < comment_list.children.length; i++ ) 
 		{
 			first_three_height += comment_list.children[i].offsetHeight;
 			if ( i === 2 ) 
@@ -1025,16 +1005,20 @@
 
 		if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
 		{
-			document.getElementsByName("billing_email")[0].value = '';
-			document.getElementsByName("billing_first_name")[0].value = '';
-			document.getElementsByName("billing_last_name")[0].value = '';
-			document.getElementsByName("billing_company")[0].value = '';
-			document.getElementsByName("billing_address_1")[0].value = '';
-			document.getElementsByName("billing_address_2")[0].value = '';
-			document.getElementsByName("billing_city")[0].value = '';
-			document.getElementById("billing_state").value = '';
-			document.getElementsByName("billing_postcode")[0].value = '';
-			document.getElementsByName("billing_phone")[0].value = '';
+			document.getElementById( "billing_address_1" ).classList.remove( 'input-text' );
+			document.getElementById( "billing_address_1" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_address_1" ).removeEventListener( 'keydown', function() { return; }, true );
+			document.getElementById( "billing_address_2" ).classList.remove( 'input-text' );
+			document.getElementById( "billing_address_2" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_address_2" ).removeEventListener( 'keydown', function() { return; }, true );
+			document.getElementById( "billing_city" ).classList.remove( 'input-text' );
+			document.getElementById( "billing_city" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_city" ).removeEventListener( 'keydown', function() { return; }, true );
+
+			document.getElementById( "billing_state" ).addEventListener( 'change', function( e ) { e.stopImmediatePropagation(); return; } );
+			document.getElementById( "billing_postcode" ).classList.remove( 'input-text' );
+			document.getElementById( "billing_postcode" ).removeEventListener( 'change', function() { return; }, true );
+			document.getElementById( "billing_postcode" ).removeEventListener( 'keydown', function() { return; }, true );
 		}
 		else
 		{
@@ -1123,14 +1107,27 @@
 
 				item.addEventListener( 'click', function( event ) 
 				{
-
 					var variant = event.target;
+					console.log(variant);
 					if ( variant.nodeName === 'SPAN' ) 
 					{
 						variant = variant.parentElement;
 					}
-					
-					variant_selected = variant.getAttribute( 'data-value' );
+
+					if ( variant.getAttribute( 'data-value' ) ) 
+					{
+						variant_selected = variant.getAttribute( 'data-value' );
+					}
+
+					if ( variant.nodeName === 'A' ) 
+					{
+						variant = variant.parentElement;
+					}
+
+					if ( window.innerWidth < 480 ) 
+					{
+						$( '.wonka-image-viewer' ).slick( 'unslick' );
+					}
 
 					if ( variant_selected !== null ) 
 					{
@@ -1168,10 +1165,33 @@
 									img_tainers.classList.remove( 'variant-show' );
 								}
 							});
+
+						if ( window.innerWidth < 480 ) 
+						{
+							setTimeout( function() 
+								{
+									$( '.wonka-image-viewer' ).slick({
+										slidesToShow: 1,
+										slidesToScroll: 1,
+										adaptiveHeight: true,
+										mobileFirst: true,
+										dots: false,
+										prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+										nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+										responsive: [
+											{
+											  breakpoint: 768,
+											  settings: 'unslick',
+											},
+										],
+									});
+								}, 10 );
+						}
 					}
 
-					if ( variant.classList.contains( 'reset_variations' ) ) 
+					if ( variant.firstElementChild.classList.contains( 'reset_variations' ) ) 
 					{
+
 						full_imgs_parent.innerHTML = '';
 						full_imgs.forEach( function( img_tainers, i ) 
 							{
@@ -1185,7 +1205,31 @@
 								img_tainers.classList.add( 'variant-show' );
 								thumb_lis_parent.appendChild( img_tainers );
 							});
+
+						if ( window.innerWidth < 480 ) 
+						{
+							setTimeout( function() 
+								{
+									$( '.wonka-image-viewer' ).slick({
+										slidesToShow: 1,
+										slidesToScroll: 1,
+										adaptiveHeight: true,
+										mobileFirst: true,
+										dots: false,
+										prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+										nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+										responsive: [
+											{
+											  breakpoint: 768,
+											  settings: 'unslick',
+											},
+										],
+									});
+								}, 20 );
+						}
 					}
+					
+					
 				});
 			});
 
@@ -1343,7 +1387,17 @@
 		===============================================================================*/
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 		{
-
+			if ( window.location.href.indexOf( '?add-to-cart' ) ) 
+			{
+				window.history.replaceState({}, document.title, window.location.href.split( '?' )[0] );
+				if ( document.querySelector( 'div.woocommerce-message' ) ) 
+				{
+					setTimeout( function() 
+						{
+							document.querySelector( 'div.woocommerce-message' ).style.display = 'none';
+						}, 3500 );
+				}
+			}
 		}
 
 		/*==========================================================
@@ -1355,13 +1409,12 @@
 			comment_form_wrapper = document.querySelector( 'div#review_form_wrapper' ),
 			reviews_top = document.querySelector( '.wonka-section-reviews' ),
 			more_reviews,
-			comment_list,
-			get_custom_height;
+			comment_list;
 
 			if ( document.querySelector( 'ol.commentlist' ) ) 
 			{
 				comment_list = document.querySelector( 'ol.commentlist' );
-				get_custom_height = setup_for_reviews( comment_list );
+				setup_for_reviews( comment_list );
 			}
 
 			if ( document.querySelector( '#more-reviews' ) ) 
@@ -1376,7 +1429,7 @@
 							setup_for_reviews( comment_list );
 							setTimeout( function() 
 								{
-									reviews_top.scrollIntoView({behavior: 'smooth'});
+									reviews_top.scrollIntoView( { behavior: 'smooth' } );
 									more_reviews.innerText = 'More Reviews';
 								}, 500 );
 						}
@@ -1389,17 +1442,18 @@
 			}
 
 			var write_review_initial_text = write_review.innerText;
+			var comment_wrapper_height = comment_form_wrapper.offsetHeight;
 			write_review.addEventListener( 'click', function( e ) 
 				{
 					e.preventDefault();
-					if ( getComputedStyle( comment_form_wrapper ).height === '24px' ) 
+					if ( comment_form_wrapper.offsetHeight <= 25 ) 
 					{
-						comment_form_wrapper.style.height = comment_form_wrapper.firstElementChild.offsetHeight + 'px';
+						comment_form_wrapper.style.height = 100 + '%';
 						write_review.innerText = 'Cancel';
 					}
 					else
 					{
-						comment_form_wrapper.style.height = 24 + 'px';
+						comment_form_wrapper.style.height = comment_wrapper_height + 'px';
 						write_review.innerText = write_review_initial_text;
 					}
 				});
@@ -1409,7 +1463,8 @@
 			 **********************************************************************/
 			var read_more_btn = document.querySelectorAll( 'a.ws-data-comment-btn' );
 
-			read_more_btn.forEach(function( item, i ){
+			read_more_btn.forEach(function( item, i )
+			{
 
 				item.addEventListener( 'click', function( e )
 				{
@@ -1418,52 +1473,106 @@
 					var comment_el = target.previousElementSibling;
 					var inner_comment = comment_el.innerText;
 					var data_comment = comment_el.getAttribute( 'ws-data-comment' );
-					more_reviews = document.querySelector( '#more-reviews' );
-				
-					if ( comment_el.classList.contains( 'full_comment' ) )
-					{
-						comment_el.classList.toggle( 'full_comment' );
-						comment_el.innerText = data_comment;
-						comment_el.setAttribute( 'ws-data-comment', inner_comment );
-						target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
-						
-						if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
-						{
-							setup_for_reviews( comment_list );
-						}
-					} 
-					else 
-					{
-						comment_el.classList.toggle( 'full_comment' );
-						comment_el.innerText = data_comment;
-						comment_el.setAttribute( 'ws-data-comment', inner_comment );
-						target.innerHTML = " <i class='fa fa-angle-up'></i> read less";
-						
-						if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
-						{
-							setup_for_reviews( comment_list );
-						}
 
-						target.addEventListener( 'blur', function( e ) 
+					if ( document.querySelector( '#more-reviews' ) ) 
+					{
+						more_reviews = document.querySelector( '#more-reviews' );
+					
+						if ( comment_el.classList.contains( 'full_comment' ) )
+						{
+							comment_el.classList.toggle( 'full_comment' );
+							comment_el.innerText = data_comment;
+							comment_el.setAttribute( 'ws-data-comment', inner_comment );
+							target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
+							
+							if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
 							{
-								var target = e.target;
-								var comment_el = target.previousElementSibling;
-								var inner_comment = comment_el.innerText;
-								var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+								setup_for_reviews( comment_list );
+							}
+						} 
+						else 
+						{
+							comment_el.classList.toggle( 'full_comment' );
+							comment_el.innerText = data_comment;
+							comment_el.setAttribute( 'ws-data-comment', inner_comment );
+							target.innerHTML = " <i class='fa fa-angle-up'></i> read less";
+							
+							if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
+							{
+								setup_for_reviews( comment_list );
+							}
 
-								if ( comment_el.classList.contains( 'full_comment' ) )
+							target.addEventListener( 'blur', function( e ) 
 								{
-									comment_el.classList.toggle( 'full_comment' );
-									comment_el.innerText = data_comment;
-									comment_el.setAttribute( 'ws-data-comment', inner_comment );
-									target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
-									
-									if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
+									var target = e.target;
+									var comment_el = target.previousElementSibling;
+									var inner_comment = comment_el.innerText;
+									var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+
+									if ( comment_el.classList.contains( 'full_comment' ) )
 									{
-										setup_for_reviews( comment_list );
+										comment_el.classList.toggle( 'full_comment' );
+										comment_el.innerText = data_comment;
+										comment_el.setAttribute( 'ws-data-comment', inner_comment );
+										target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
+										
+										if ( more_reviews.innerText.toLowerCase() === 'more reviews' || comment_list.children.length <= 3 )
+										{
+											setup_for_reviews( comment_list );
+										}
 									}
-								}
-							});
+								});
+						}
+					}
+					else
+					{
+						more_reviews = document.querySelector( '#more-reviews' );
+					
+						if ( comment_el.classList.contains( 'full_comment' ) )
+						{
+							comment_el.classList.toggle( 'full_comment' );
+							comment_el.innerText = data_comment;
+							comment_el.setAttribute( 'ws-data-comment', inner_comment );
+							target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
+							
+							if ( comment_list.children.length <= 3 )
+							{
+								setup_for_reviews( comment_list );
+							}
+						} 
+						else 
+						{
+							comment_el.classList.toggle( 'full_comment' );
+							comment_el.innerText = data_comment;
+							comment_el.setAttribute( 'ws-data-comment', inner_comment );
+							target.innerHTML = " <i class='fa fa-angle-up'></i> read less";
+							
+							if ( comment_list.children.length <= 3 )
+							{
+								setup_for_reviews( comment_list );
+							}
+
+							target.addEventListener( 'blur', function( e ) 
+								{
+									var target = e.target;
+									var comment_el = target.previousElementSibling;
+									var inner_comment = comment_el.innerText;
+									var data_comment = comment_el.getAttribute( 'ws-data-comment' );
+
+									if ( comment_el.classList.contains( 'full_comment' ) )
+									{
+										comment_el.classList.toggle( 'full_comment' );
+										comment_el.innerText = data_comment;
+										comment_el.setAttribute( 'ws-data-comment', inner_comment );
+										target.innerHTML = " <i class='fa fa-angle-down'></i> read more";
+										
+										if ( comment_list.children.length <= 3 )
+										{
+											setup_for_reviews( comment_list );
+										}
+									}
+								});
+						}
 					}
 
 				});
@@ -1472,6 +1581,180 @@
 			 * End of Review length
 			 */
 		}
+
+		/**
+		 *  This function handles the submit reviews form
+		 *  @author Louis Lister
+		 *
+		 * @since  1.0.0
+		 */
+		
+		if ( document.querySelector( '.comment-form-comment' ) )  {
+			    var commentform = document.querySelector( '#commentform' ); // find the comment form
+			    var comment_status = document.createElement( 'DIV' );
+			    var comment_errors = document.createElement( 'DIV' );
+			    comment_status.setAttribute( 'id', 'comment-status' );
+			    comment_errors.setAttribute( 'id', 'comment-errors' );
+			    commentform.insertBefore( comment_status, document.querySelector( '.comment-form-rating' ) ); // add info panel before the form to provide feedback or errors
+			    commentform.insertBefore( comment_errors, document.querySelector( '.comment-form-rating' ) ); // add info panel before the form to provide feedback or errors
+			    var statusdiv = document.querySelector( '#comment-status' );
+			    var status_errors = document.querySelector( '#comment-errors' );
+				var commentform_inputs = commentform.querySelectorAll( 'input' );
+			    var errors;
+			    //serialize and store form data in a variable
+			    var formdata = {};
+			    commentform.onsubmit = function( e ) 
+			    {
+			    	statusdiv.innerHTML = '';
+			    	status_errors.innerHTML = '';
+			    	errors = '';
+			        //Add a status message
+			        statusdiv.innerHTML = '<span class="processing-form">Processing... <div class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div></span>';
+			    	var field_checker = true;
+
+			    	if ( commentform.querySelector( 'select#rating' ).selectedIndex === 0 ) 
+			    	{
+			    		field_checker = false;
+			    		if ( errors !== '' ) 
+			    		{
+			    			errors += '<p class="ajax-error">You must pick your rating before you can submit this review</p>';
+			    		}
+			    		else
+			    		{
+			    			errors = '<p class="ajax-error">You must pick your rating before you can submit this review</p>';
+			    		}
+			    	}
+			    	else
+			    	{
+			    		formdata.rating = commentform.querySelector( 'select#rating' ).value;
+			    	}
+			    	if ( commentform.querySelector( 'textarea#comment' ).value === '' ) 
+			    	{
+			    		field_checker = false;
+			    		commentform.querySelector( 'textarea#comment' ).classList.add( 'form-control', 'is-invalid' );
+			    		if ( errors !== '' ) 
+			    		{
+			    			errors += '<p class="ajax-error">You cannot submit a blank review</p>';
+			    		}
+			    		else
+			    		{
+			    			errors = '<p class="ajax-error">You cannot submit a blank review</p>';
+			    		}
+			    	}
+			    	else
+			    	{
+			    		if ( commentform.querySelector( 'textarea#comment' ).classList.contains( 'is-invalid' ) && commentform.querySelector( 'textarea#comment' ).value !== '' ) 
+			    		{
+			    			commentform.querySelector( 'textarea#comment' ).classList.remove( 'form-control', 'is-invalid' );
+			    			formdata.comment = commentform.querySelector( 'textarea#comment' ).value;
+			    		}
+			    		else
+			    		{
+			    			formdata.comment = commentform.querySelector( 'textarea#comment' ).value;
+			    		}
+			    	}
+
+			    	if ( commentform.querySelectorAll( 'input' ).length ) 
+			    	{
+				    	commentform_inputs.forEach( function( input, i )
+				    		{
+				    			if ( input.id === 'author' ) 
+				    			{
+							    	if ( input.value === '' ) 
+							    	{
+							    		field_checker = false;
+							    		input.classList.add( 'form-control', 'is-invalid' );
+							    		if ( errors !== '' ) 
+							    		{
+							    			errors += '<p class="ajax-error">' + input.id + ' is a required field.</p>';
+							    		}
+							    		else
+							    		{
+							    			errors = '<p class="ajax-error">' + input.id + ' is a required field.</p>';
+							    		}
+							    	}
+
+						    		if ( input.value !== '' && input.classList.contains( 'is-invalid' ) ) 
+						    		{
+						    			input.classList.remove( 'form-control', 'is-invalid' );
+						    			formdata.author = document.querySelector( '#author' ).value;
+						    		}
+						    		else if ( input.value !== '' )
+						    		{
+						    			formdata.author = document.querySelector( '#author' ).value;
+						    		}
+				    			}
+
+				    			if ( input.id === 'email' ) 
+				    			{
+							    	if ( input.value === '' ) 
+							    	{
+							    		field_checker = false;
+							    		input.classList.add( 'form-control', 'is-invalid' );
+							    		if ( errors !== '' ) 
+							    		{
+							    			errors += '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
+							    		}
+							    		else
+							    		{
+							    			errors = '<p class="ajax-error" >' + input.id + ' is a required field.</p>';
+							    		}
+							    	}
+							    	else
+							    	{
+							    		if ( input.value !== '' && input.classList.contains( 'is-invalid' ) ) 
+							    		{
+							    			input.classList.remove( 'form-control', 'is-invalid' );
+							    			formdata.email = document.querySelector( '#email' ).value;
+							    		}
+							    		else
+							    		{
+							    			formdata.email = document.querySelector( '#email' ).value;
+							    		}
+							    	}
+				    			}
+				    		});
+			    	}
+
+			    	formdata.comment_post_ID = commentform.querySelector( 'input[name="comment_post_ID"]').value;
+			    	console.log( formdata );
+			        //Extract action URL from commentform
+			        var formurl = commentform.getAttribute( 'action' );
+			        if ( field_checker ) 
+			        {
+
+				        //Post Form with data
+				        xhr.onreadystatechange = function() {
+					        if ( this.readyState == 4 && this.status == 200 )  {
+					        	var response =   this;
+				                    statusdiv.innerHTML = '<p class="ajax-success" >Thanks for your post. We appreciate your response.</p>';
+				                    setTimeout( function() 
+				                    	{
+				                    		statusdiv.innerHTML = '';
+				                    	}, 3000 );
+
+					        }
+				        };
+				        xhr.open('POST', formurl );
+				        xhr.setRequestHeader("Content-type", "application/json");
+				        xhr.send( formdata );
+	                    
+	                    return true;
+			        }
+
+			        if ( field_checker === false ) 
+			        {
+			        	e.preventDefault();
+				    	setTimeout( function() 
+				    		{
+	                    		statusdiv.innerHTML = '';
+	                    		status_errors.innerHTML = errors;
+				    		}, 3000 );
+
+				    	return false;
+			        }
+			    };
+			}
 		/*=====  End of This is for setting up the reviews  ======*/
 		
 
@@ -1637,7 +1920,7 @@
 			{
 				var rating_div = document.querySelector( '.woocommerce-product-rating' );
 				rating_div.addEventListener( 'click', function( e ) {
-					scrollToSection( 'reviews', null );
+					scrollToSection( 'section-reviews', null );
 				});
 			}
 
@@ -1819,6 +2102,25 @@
 		      ],
 			});
 		}
+
+		if ( document.querySelector( '.wonka-image-viewer' ) ) 
+		{
+			$( '.wonka-image-viewer' ).slick({
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				adaptiveHeight: true,
+				mobileFirst: true,
+				dots: false,
+				prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+				nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+				responsive: [
+					{
+					  breakpoint: 768,
+					  settings: 'unslick',
+					},
+				],
+			});
+		}
 		/*=====  End of For setting up sliders on the front page  ======*/
 
 		// ===== Scroll to Top ==== 
@@ -1848,7 +2150,7 @@
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
 							one_click = false;
-							scrollToSection( 'section-product-statement', 15 );
+							scrollToSection( 'keyfeatures', 15 );
 						}
 					} );
 			}
@@ -1863,7 +2165,7 @@
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
 							one_click = false;
-							scrollToSection( 'section-product-statement', 15 );
+							scrollToSection( 'product-specification', 15 );
 						}
 					} );
 			}
@@ -1878,69 +2180,74 @@
 						if ( e.target.tagName.toLowerCase() === 'a') 
 						{
 							one_click = false;
-							scrollToSection( 'reviews', 15 );
+							scrollToSection( 'section-reviews', 15 );
 						}
 					} );
 			}
 		/*=====  End of This is for single product page short description scrolling  ======*/
 	
 
-		/********************************************************************************
-		 * this is For Checkout validation 
-		 ********************************************************************************/
-			// var checkout_error_ul;
-			// if (document.querySelector( 'main.main-checkout' ))
-			// {
-				 
-				// console.log(document.querySelector( 'main.main-checkout' ));
-				// // checkout_error_ul = document.querySelector( 'ul.woocommerce-error' );
-				// var checkout_error_form = document.querySelector( 'form.woocommerce-checkout' );  
-				// console.log(checkout_error_form);
-
-				// if (checkout_error_form.childElementCount) {
-				// 	checkout_error_ul = checkout_error_form.children;
-				// 	console.log(checkout_error_ul);
-				// // if ( checkout_error_ul ) 
-				// // {	
-				// // 	console.log(checkout_error_ul.innerText);
-				// // }	
-				// }
-		/***********************************************************************************
-		 * End For Checkout validation
-		 * ****************************************************************************** */
-		
-
 		/**
 		 * This is for login form validation
+		 * first if checks for the right pages to validate
 		 * 
 		 */
-		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ) 
+
+		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ||document.querySelector( 'form.woocommerce-ResetPassword' ) ) 
 		{
 			var validation_div = document.querySelector( '.woocommerce-error' );
+			var validation_li = document.querySelectorAll( '.woocommerce-error li' );
+			var password_inputs = document.querySelectorAll( 'input#password_current, input#password_1, input#password_2' );
+			var invalid_text = document.querySelectorAll( 'div.invalid-feedback' );
+			var count = 0;
+
+			/** Form structure for edit my account  */
+			if ( document.querySelector( 'form.woocommerce-EditAccountForm' ) )
+			{
+				var password_one = document.querySelector( 'form.edit-account #password_1' );
+				var password_parent = document.querySelector( 'form.edit-account #password_1' ).parentElement;
+
+				password_one.addEventListener( 'keyup', function ( e ) 
+				{
+					setTimeout( function() 
+						{
+							var i_icon = password_parent.querySelector( '.input-group-append' );
+							var strength_meter = password_parent.querySelector( '.woocommerce-password-strength' );
+							if ( strength_meter ) 
+							{
+								password_parent.insertBefore( i_icon, strength_meter );
+							}
+						}, 10 );
+				}, true );
+			
+			}
+			/** End Form structure for edit my account */
 
 			if ( validation_div ) 
 			{
 				var validation_text = validation_div.innerText.trim();
-				validation_text = validation_text.split(' ').slice(1).join(' ');
-				var validation_text_2 = validation_text.split('.').slice(0,1).join();
-
+				var validation_text_1 = validation_text.split(' ').slice(1).join(' ');
+				var validation_text_2 = validation_text_1.split('.').slice(0,1).join();
 				switch( validation_text_2 )
 				{
-
+					
 					case "Username is required":
 						document.querySelector( 'input#username' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.username' ).innerText = validation_text;
 						break;
+
 					case "The password field is empty":
 						document.querySelector( 'input#password' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.password' ).innerText = validation_text;
 						break;
+
 					case "Too many failed login attempts":
 						document.querySelector( 'input#username' ).classList.add( "is-invalid" );
 						document.querySelector( 'input#password' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.username' ).innerText = validation_text;
 						document.querySelector( 'div.invalid-feedback.password' ).innerText = validation_text;
 						break;
+
 					case "Incorrect username or password":
 						document.querySelector( 'input#username' ).classList.add( "is-invalid" );
 						document.querySelector( 'input#password' ).classList.add( "is-invalid" );
@@ -1962,7 +2269,71 @@
 						document.querySelector( 'input#register_password' ).classList.add( "is-invalid" );
 						document.querySelector( 'div.invalid-feedback.register_password' ).innerText = validation_text;
 						break;
+				}
+				validation_li.forEach(function(item)
+				{
+					validation_text =item.innerText.trim();
+					switch (validation_text)
+					{
+						// Validation for lost password
+						case "Enter a username or email address.":
+							document.querySelector('input#user_login').classList.add("is-invalid");
+							document.querySelector( 'div.invalid-feedback.user_login' ).innerText = validation_text;
+							break;
+
+						case "Invalid username or email.":
+							document.querySelector('input#user_login').classList.add("is-invalid");
+							document.querySelector( 'div.invalid-feedback.user_login' ).innerText = validation_text;
+							break;
+
+						// Validation for account edit page
+						case "First name is a required field.":
+							document.querySelector( 'input#account_first_name' ).classList.add( "is-invalid" );
+							document.querySelector( 'div.invalid-feedback.account_first_name' ).innerText = validation_text;
+							break;
+
+						case "Last name is a required field.":
+							document.querySelector( 'input#account_last_name' ).classList.add( "is-invalid" );
+							document.querySelector( 'div.invalid-feedback.account_last_name' ).innerText = validation_text;
+							break;
+
+						case "Display name is a required field.":
+							document.querySelector( 'input#account_display_name' ).classList.add( "is-invalid" );
+							document.querySelector( 'div.invalid-feedback.account_display_name' ).innerText = validation_text;
+							break;
+
+						case "Email address is a required field.":
+							document.querySelector( 'input#account_email' ).classList.add( "is-invalid" );
+							document.querySelector( 'div.invalid-feedback.account_email' ).innerText = validation_text;
+							break;
+	
+						case "Please fill out all password fields.":
+							password_inputs.forEach( function(item) 
+							{
+								item.classList.add("is-invalid");
+								invalid_text.forEach(function(item)
+								{
+									item.innerText = validation_text;
+								});
+	
+							});
+							break;
+	
+						case "New passwords do not match.":
+							password_inputs.forEach( function(item, i) 
+							{
+								if (i !== 0){
+									item.classList.add("is-invalid");
+									invalid_text.forEach(function(item)
+									{
+										item.innerText = validation_text;
+									});	
+								}
+							});
+							break;
 					}
+				});
+
 
 			}
 		}

@@ -1277,7 +1277,7 @@ function wonka_single_product_image_thumbnail_html_custom( $data, $attachment_id
 	$output = '';
 	ob_start();
 	if ( $post_thumbnail_id === $product->get_image_id() ) :
-		$output .= '<a href="#scroll_image_' . esc_attr__( $post_thumbnail_id ) . '" class="nav-link active woocommerce-product-gallery__image">';
+		$output .= '<a href="#scroll_image_' . esc_attr__( $post_thumbnail_id ) . '_2" class="nav-link active woocommerce-product-gallery__image">';
 		$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'medium' ) . '" class="wp-post-image" alt="' . esc_attr__( get_post_meta( $post_thumbnail_id , '_wp_attachment_image_alt', true) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr__( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr__( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr__( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', true ) ) .'" />';
 		$output .= '</a>';
 	else:
@@ -1324,17 +1324,22 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
 
 add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
 
-function ws_shipping_fields_validation() {
+function ws_shipping_to_billing() {
 	// This is a security check, it validates a random number that is generated on the request.
 	if ( !check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
-	return wp_send_json_error( 'Invalid Nonce' );
+		return wp_send_json_error( 'Invalid Nonce' );
  	}
- 	$address_fields = apply_filters('woocommerce_shipping_fields', $address_fields);
 
-	 wp_send_json_success( $address_fields );
+ 	if ( isset( $_GET['opt_set'] ) ) :
+ 		update_option( 'woocommerce_ship_to_destination', $_GET['opt_set'], false );
+ 		
+		return wp_send_json_success( $_GET['opt_set'] );
+ 	endif;
+
+ 	return false;
 }
-add_action( 'wp_ajax_shipping_field_validation',        'ws_shipping_fields_validation' );
-add_action( 'wp_ajax_nopriv_shipping_field_validation', 'ws_shipping_fields_validation' );
+add_action( 'wp_ajax_shipping_to_billing',        'ws_shipping_to_billing' );
+add_action( 'wp_ajax_nopriv_shipping_to_billing', 'ws_shipping_to_billing' );
 
 /**
  * Filter the except length to 20 words.
@@ -1383,6 +1388,7 @@ function ws_ajax_search() {
 	}
 	wp_send_json_success( $items );
 }
+
 add_action( 'wp_ajax_search_site',        'ws_ajax_search' );
 add_action( 'wp_ajax_nopriv_search_site', 'ws_ajax_search' );
 
@@ -1390,7 +1396,7 @@ add_action( 'wp_ajax_nopriv_search_site', 'ws_ajax_search' );
 function filter_woocommerce_product_review_list_args( $comment ) { 
 	// make filter magic happen here...
 	
-	$length = 40;
+	$length = 43;
 	$str_array = explode( ' ', $comment->comment_content );
 	$comment_word_count = count( (array)$str_array );
 	$output = '';
@@ -1417,7 +1423,6 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 	}
 	echo "</div>";
 	echo ob_get_clean();
-
 }; 
 			 
 // add the filter 
@@ -1500,7 +1505,12 @@ function wonka_woocommerce_review_order_before_submit() {
 
 		var billing_to_radios = document.querySelectorAll( 'input[name="ship_to_different_address"]' );
 		var billing_address_form = document.querySelector( '.billing_address' );
-		copy_to_billing();
+		var xhr = new XMLHttpRequest();
+		if ( document.querySelector( '#bill-to-different-address-radio2' ).checked ) 
+		{
+			billing_address_form.classList.add( 'active' );
+			copy_to_billing();
+		}
 		
 		billing_to_radios.forEach( function( item, i ) 
 			{
@@ -1510,11 +1520,13 @@ function wonka_woocommerce_review_order_before_submit() {
 						var target = event.target;
 						if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
 						{
+							wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=billing' );
 							billing_address_form.classList.add( 'active' );
-								copy_to_billing();
+							copy_to_billing();
 						}
 						else
 						{
+							wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=shipping' );
 							if ( billing_address_form.classList.contains( 'active' ) ) 
 							{
 								billing_address_form.classList.remove( 'active' );
@@ -1550,35 +1562,69 @@ function wonka_woocommerce_review_order_before_submit() {
 					item.innerHTML = '<span class="address-number">' +address_1 + ' ' + address_2 + '</span> <span class="city-state-zip">' + city + ', ' + state + ' ' + postcode + '</span>';
 				});
 
-			if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
+			if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked ) 
 			{
-				document.getElementsByName("billing_email")[0].value = '';
-				document.getElementsByName("billing_first_name")[0].value = '';
-				document.getElementsByName("billing_last_name")[0].value = '';
-				document.getElementsByName("billing_company")[0].value = '';
-				document.getElementsByName("billing_address_1")[0].value = '';
-				document.getElementsByName("billing_address_2")[0].value = '';
-				document.getElementsByName("billing_city")[0].value = '';
-				document.getElementById("billing_state").value = '';
-				document.getElementsByName("billing_postcode")[0].value = '';
-				document.getElementsByName("billing_phone")[0].value = '';
+				document.getElementById( "billing_address_1" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_address_1" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_address_1" ).removeEventListener( 'keydown', function() { return; }, true );
+				document.getElementById( "billing_address_2" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_address_2" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_address_2" ).removeEventListener( 'keydown', function() { return; }, true );
+				document.getElementById( "billing_city" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_city" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_city" ).removeEventListener( 'keydown', function() { return; }, true );
+				document.getElementById( "billing_state" ).addEventListener( 'change', function( e ) { e.stopImmediatePropagation(); return; } );
+				document.getElementById( "billing_postcode" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_postcode" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_postcode" ).removeEventListener( 'keydown', function() { return; }, true );
 			}
 			else
 			{
-				document.getElementsByName("billing_email")[0].value = email;
-				document.getElementsByName("billing_first_name")[0].value = first_name;
-				document.getElementsByName("billing_last_name")[0].value = last_name;
-				document.getElementsByName("billing_company")[0].value = company;
-				document.getElementsByName("billing_address_1")[0].value = address_1;
-				document.getElementsByName("billing_address_2")[0].value = address_2;
-				document.getElementsByName("billing_city")[0].value = city;
-				document.getElementById("billing_state").value = state;
-				document.getElementsByName("billing_postcode")[0].value = postcode;
-				document.getElementsByName("billing_phone")[0].value = phone;
+				document.getElementById( "billing_email" ).value = email;
+				document.getElementById( "billing_first_name" ).value = first_name;
+				document.getElementById( "billing_last_name" ).value = last_name;
+				document.getElementById( "billing_company" ).value = company;
+				document.getElementById( "billing_address_1" ).value = address_1;
+				document.getElementById( "billing_address_2" ).value = address_2;
+				document.getElementById( "billing_city" ).value = city;
+				document.getElementById( "billing_state" ).value = state;
+				document.getElementById( "billing_postcode" ).value = postcode;
+				document.getElementById( "billing_phone" ).value = phone;
 			}
+		}
+
+		function wonka_ajax_request( xhr, action, data ) 
+		{	
+			if ( action === "shipping_to_billing" ) 
+			{
+
+				xhr.onreadystatechange = function() {
+
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+						var response = JSON.parse( this.responseText );
+						console.log( response );
+					}
+				};
+				xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + data + "&security=" + wonkasoft_request.security);
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+			}
+
+		}
+
+		if ( document.querySelector( 'a[data-target="#place_order"]' ) ) 
+		{
+			document.querySelector( 'a[data-target="#place_order"]' ).addEventListener( 'click', function( e ) 
+				{
+					var target = e.target;
+					var for_submit_id = target.getAttribute( 'data-target' );
+					document.querySelector( for_submit_id ).click();
+				});
 		}
 	</script>
 	<?php
 }
 
 add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_order_before_submit', 999 );
+

@@ -206,16 +206,26 @@ if ( !empty( $product_specs_data ) ) : ?>
 						Water and stain resistant fabric (that&#39;s easy to clean)
 					</td>
 				</tr>
-				<tr>
-					<td>
-						Laser-Cut Venting (allows your gear to breathe)
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Water resistant base (protects your gear when sitting on wet and damp surfaces)
-					</td>
-				</tr>
+				<?php 
+					$fit_pockets = ["fit pocket x3 - assorted","fit pocket x2 - large","fit pocket x2 - medium","fit pocket x2 - small"];
+					if ( ! in_array( strtolower( $post->post_title ) , $fit_pockets ) )
+					{
+						$some_features = '';
+						$some_features .= '<tr>';
+						$some_features .= '<td>';
+						$some_features .= 'Laser-Cut Venting (allows your gear to breathe)';
+						$some_features .= '</tr>';
+						$some_features .= '</td>';
+
+						$some_features .= '<tr>';
+						$some_features .= '<td>';
+						$some_features .= 'Water resistant base (protects your gear when sitting on wet and damp surfaces)';
+						$some_features .= '</td>';
+						$some_features .= '</tr>';
+
+						echo $some_features;
+					}
+				?>
 			</tbody>
 		</table>
 	</div>

@@ -26,6 +26,8 @@ table.shop_table_responsive {
 			}
 
 			&.product-remove {
+				padding-top: .5rem;
+
 				a {
 					text-align: left;
 					@include font-size( 2.5 );
@@ -38,8 +40,8 @@ table.shop_table_responsive {
 
 			&.product-thumbnail {
 				img {
-					width: auto;
-					height: 100px;
+					width: 100%;
+					height: auto;
 				}
 			}
 

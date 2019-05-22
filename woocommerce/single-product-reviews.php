@@ -60,7 +60,7 @@ if ( ! comments_open() ) {
 							'email'  => '<p class="comment-form-email form-group wonka-form-group"><label for="email" class="sr-only">' . esc_html__( 'Email', 'woocommerce' ) . '&nbsp;<span class="required">*</span></label> ' .
 										'<input id="email" class="form-control wonka-form-control" placeholder="' . esc_html__( 'Email *', 'woocommerce' ) . '" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30" required /></p>',
 						),
-						'label_submit'  => __( 'Send', 'woocommerce' ),
+						'label_submit'  => __( 'Post', 'woocommerce' ),
 						'logged_in_as'  => '',
 						'comment_field' => '',
 						'class_submit' => 'wonka-btn',

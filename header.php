@@ -15,6 +15,7 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="google-site-verification" content="eYMU9wHvI9cwK4rHA5VmPSE4SXRoAbXD6XCFlDQi4Vk" />
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
 	<?php wp_head(); ?>
@@ -34,7 +35,7 @@
 			</div><!-- topbar-notice -->
 		<?php endif; ?>
 		<div class="row brand-nav-bar">
-			<div class="col col-6 col-lg-3">
+			<div class="col col-6 col-lg-3 branding">
 				<div class="site-branding">
 					<?php
 						the_custom_logo();
@@ -65,7 +66,7 @@
 					) );
 				?>
 			</div><!-- .cart-mobile-col -->
-			<div class="col col-12 col-lg-9">
+			<div class="col col-12 col-lg-9 div-nav">
 
 				<nav id="site-navigation" class="main-navigation">
 					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
