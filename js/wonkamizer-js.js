@@ -640,6 +640,16 @@
 
 	function load_page_vars() 
 	{
+		if ( document.querySelector( '.wonka-cart-open a' ) ) 
+		{
+			var cart_btn = document.querySelector( '#cart-menu-desktop .wonka-cart-open a' );
+			cart_btn.addEventListener( 'click', function( e ) 
+				{
+					e.preventDefault();
+					console.log( e.target );
+				});
+		}
+
 		if ( document.querySelector( '.product-img-section' ) ) 
 		{
 			product_img_section = document.querySelector( '.product-img-section' );
@@ -692,7 +702,7 @@
 	}
 
 	// Open the full screen search box 
-	function openSearch( e ) 
+	function openSearch( e )
 	{
 		e.preventDefault();
 	  	document.getElementById( "search_overlay" ).style.display = "block";
@@ -1797,7 +1807,6 @@
 			clear_li.appendChild( clear_btn );
 			table.classList.add( 'table' );
 			entry_summary.classList.add( 'loaded' );
-
 		}
 		/*=====  End of This is for reordering the placement of elements in add to cart area  ======*/
 
