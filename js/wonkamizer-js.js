@@ -1278,6 +1278,21 @@
 	};
 	/*=====  End of This is for loading calls on window resizing  ======*/
 	
+	/*=================================================
+	=            Setup for the compare widget css            =
+	=================================================*/
+
+		if ( document.querySelector('a.compare.button') )
+		{
+			compare_btn = document.querySelectorAll('a.compare.button');
+			compare_btn.forEach( function( item, i ) 
+			{
+				item.classList.add('wonka-btn');
+			});
+		}
+
+	/*=====  End of Setup for the compare widget css  ======*/
+
 	/*===================================================================
 	=            This is for running after document is ready            =
 	===================================================================*/
@@ -2355,6 +2370,21 @@
 	=================================================*/
 	wonka_ajax_request( xhr, "search_site", null);
 	/*=====  End of Setup for the search form  ======*/
+
+	// /*=================================================
+	// =            Setup for the compare widget css            =
+	// =================================================*/
+
+	// 	if ( document.querySelector('a.compare.button') )
+	// 	{
+	// 		compare_btn = document.querySelectorAll('a.compare.button');
+	// 		compare_btn.forEach( function( item, i ) 
+	// 		{
+	// 			item.classList.add('wonka-btn');
+	// 		});
+	// 	}
+
+	// /*=====  End of Setup for the compare widget css  ======*/
 };
 	/*=====  End of This is for running after document is ready  ======*/
 
