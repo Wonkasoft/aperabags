@@ -693,12 +693,15 @@
 
 	function footer_adjustment()
 	{
-		var footer_height = document.querySelector( 'footer#colophon' ).offsetHeight,
-		new_space;
+		if ( document.querySelector( 'footer#colophon' ) ) 
+		{
+			var footer_height = document.querySelector( 'footer#colophon' ).offsetHeight,
+			new_space;
 
-		new_space = document.getElementById( 'footer-spacer' );
-		new_space.style.width = '100%';
-		new_space.style.height = footer_height + 'px';
+			new_space = document.getElementById( 'footer-spacer' );
+			new_space.style.width = '100%';
+			new_space.style.height = footer_height + 'px';
+		}
 	}
 
 	// Open the full screen search box 
@@ -1275,6 +1278,21 @@
 	};
 	/*=====  End of This is for loading calls on window resizing  ======*/
 	
+	/*=================================================
+	=            Setup for the compare widget css            =
+	=================================================*/
+
+		if ( document.querySelector('a.compare.button') )
+		{
+			compare_btn = document.querySelectorAll('a.compare.button');
+			compare_btn.forEach( function( item, i ) 
+			{
+				item.classList.add('wonka-btn');
+			});
+		}
+
+	/*=====  End of Setup for the compare widget css  ======*/
+
 	/*===================================================================
 	=            This is for running after document is ready            =
 	===================================================================*/
@@ -2352,6 +2370,21 @@
 	=================================================*/
 	wonka_ajax_request( xhr, "search_site", null);
 	/*=====  End of Setup for the search form  ======*/
+
+	// /*=================================================
+	// =            Setup for the compare widget css            =
+	// =================================================*/
+
+	// 	if ( document.querySelector('a.compare.button') )
+	// 	{
+	// 		compare_btn = document.querySelectorAll('a.compare.button');
+	// 		compare_btn.forEach( function( item, i ) 
+	// 		{
+	// 			item.classList.add('wonka-btn');
+	// 		});
+	// 	}
+
+	// /*=====  End of Setup for the compare widget css  ======*/
 };
 	/*=====  End of This is for running after document is ready  ======*/
 

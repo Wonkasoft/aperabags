@@ -61,8 +61,17 @@ ul.products {
 				font-family: $font__main_jose;
 				text-align: center;
 				margin-bottom: 4px;
+				height: 25px;
 				letter-spacing: -1px;
 				@include font-size( .8 );
+				
+				@include media-breakpoint( md ) {
+					height: 45px;
+				}
+
+				@include media-breakpoint( xl ) {
+					height: 25px;
+				}
 			}
 
 			span.price {
