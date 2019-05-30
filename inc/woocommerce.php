@@ -1629,3 +1629,16 @@ function wonka_woocommerce_review_order_before_submit() {
 
 add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_order_before_submit', 999 );
 
+ /**
+	* Styles for compare plugin 
+	*
+	* @author Carlos
+	* @return    [return description]
+	*/
+function compare_styles() {
+	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
+	wp_enqueue_script( 'apera-bags-wonkamizer-js', get_template_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'apera-bags-slick-js' ), time(), true );
+}
+
+add_action( 'enqueue_scripts', 'compare_styles' );
+add_action( 'remove_all_styles', 'compare_styles', 1 );
