@@ -693,12 +693,15 @@
 
 	function footer_adjustment()
 	{
-		var footer_height = document.querySelector( 'footer#colophon' ).offsetHeight,
-		new_space;
+		if ( document.querySelector( 'footer#colophon' ) ) 
+		{
+			var footer_height = document.querySelector( 'footer#colophon' ).offsetHeight,
+			new_space;
 
-		new_space = document.getElementById( 'footer-spacer' );
-		new_space.style.width = '100%';
-		new_space.style.height = footer_height + 'px';
+			new_space = document.getElementById( 'footer-spacer' );
+			new_space.style.width = '100%';
+			new_space.style.height = footer_height + 'px';
+		}
 	}
 
 	// Open the full screen search box 

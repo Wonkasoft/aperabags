@@ -36,6 +36,7 @@
 	@include prefix( transition, $trans_25, o moz webkit );
 
 	main#main {
+		width: 100%;
 		max-width: 1200px;
 		margin: 15px auto;
 		padding: 0 15px;
@@ -47,9 +48,9 @@
 		}
 	}
 
-	main.main-shop-instagram {
-		width: 1500px;
-		max-width: 100%;
+	main#main.main-shop-instagram {
+		width: 100%;
+		max-width: 1500px;
 	}
 
 	main.main-contact-us {
