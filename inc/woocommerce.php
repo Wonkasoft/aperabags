@@ -1628,9 +1628,18 @@ function wonka_woocommerce_review_order_before_submit() {
 
 add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_order_before_submit', 999 );
 
+
+ /**
+	* Styles for compare plugin 
+	*
+	* @author Carlos
+	* @return    [return description]
+	*/
 function add_theme_style_to_compare() {
 	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
-	wp_enqueue_script( 'apera-bags-wonkamizer-js', get_template_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'apera-bags-slick-js' ), time(), true );
+	// wp_enqueue_script( 'apera-bags-wonkamizer-js', get_template_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'apera-bags-slick-js' ), time(), true );
 }
 
+if( class_exists( 'YITH_Woocompare_Frontend' ) ) {
 add_action('wp_print_styles', 'add_theme_style_to_compare', 101);
+}

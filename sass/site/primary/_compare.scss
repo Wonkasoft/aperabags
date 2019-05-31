@@ -18,11 +18,22 @@ table.compare-list tr.add-to-cart td {
     padding-bottom: 0px;
     padding-top: 0px;
 
+    &:visited {
+      color: rgba( #fff, .8);
+      border: 2px solid #52abf6;
+      background: rgba( #52abf6, 1 );
+    }
+  
     &:hover {
-      background: rgba( #5858e4, 1 );
-      border-color: #5858e4;
-      color: rgba(255, 255, 255, .8);
-      @include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
+      background: rgba( #78bdf7, 1 );
+      border-color: #78bdf7;
+      color: rgba(255, 255, 255, 1);
+    }
+  
+    &:active,
+    &:focus {
+      outline: 0;
+      color: rgba(255, 255, 255, 1);
     }
   }
 }
@@ -60,4 +71,21 @@ body #yith-woocompare.woocommerce {
   thead {
     display: none;
   }
+}
+
+.no-scroll {
+  overflow: hidden;
+  display: flex;
+}
+
+#colorbox {
+  align-self: center!important;
+  position: fixed!important;
+  top: 30px!important;
+  margin: auto!important;
+  z-index: 99999;
+  height: 100%!important;
+  display: flex!important;
+  align-items: center!important;
+  justify-content: center!important;
 }
