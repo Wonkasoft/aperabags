@@ -6,7 +6,6 @@ table.compare-list tr.add-to-cart td {
     border-radius: 100px;
     background: rgba( #52abf6, 1 );
     border: 2px solid #52abf6;
-    // opacity: 0;
     @include font-size( 1 );
     @include prefix( box-shadow, $box_shadow_4, o moz webkit );
     @include prefix( text-shadow, 1px 1px 3px rgba(#000, 0 ), o moz webkit );
@@ -39,34 +38,21 @@ table.compare-list tr.add-to-cart td {
 }
 
 body.home,
-body.archive { 
+body.archive,
+body.single-product { 
 
   a.wonka-btn.compare {
-    margin: 10px 3px;
-    @include font-size( .8 );
-    line-height: .9;
-    color: #fff;
-    padding-bottom: 0px;
-    padding-top: 0px;
-
-    @include media-breakpoint( xs ) {
-      margin: 10px 25px;
-    }
-
-    @include media-breakpoint( lg ) {
-      margin: 10px 70px;
-    }
+    width: 100%;
+    margin: 8px 0px;
   }  
 }
 
 iframe body h1{
   background: #646371;
-  
 }
 
 body #yith-woocompare.woocommerce {
   overflow-x: auto;
-  
 
   thead {
     display: none;

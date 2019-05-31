@@ -2376,10 +2376,6 @@
 			}
 		}
 
-	/**
-	 *  
-	 */
-
 /**
  * Settup for the compare plugin No Scroll
  *
@@ -2393,11 +2389,16 @@
 			
 			compare_btns.forEach( function( item )
 			{
+				
 				item.addEventListener( 'click', function ( e ) 
 				{
+				
 					e.preventDefault();
-					body_element.classList.add('no-scroll');
-					console.log(body_element);
+					if ( document.querySelector('div.cboxWrapper') )
+					{
+						body_element.classList.add('no-scroll');	
+					}
+					
 					var cboxOverlay_element = document.querySelector('#cboxOverlay');
 					var close_btn = document.querySelector('#cboxClose');
 
@@ -2408,7 +2409,7 @@
 							body_element.classList.remove( 'no-scroll' );
 						}
 					});
-
+					console.log(close_btn);
 					close_btn.addEventListener( 'click', function( e )
 					{
 						if ( body_element.classList.contains( 'no-scroll' ) )
