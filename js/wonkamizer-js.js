@@ -1049,6 +1049,13 @@
 
 	} 
 
+
+	/**
+	 * Single Product variant set up for images
+	 * @author Rudy
+	 * @return {[type]} [description]
+	 * @since  1.0.0
+	 */
 	function single_product_variants_setup()
 	{
 		var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
@@ -1147,6 +1154,7 @@
 						full_imgs_parent.innerHTML = '';
 						full_imgs.forEach( function( img_tainers, i ) 
 							{
+								console.log(img_tainers);
 								if ( i === 0 ) 
 								{
 									img_tainers.setAttribute( 'data-variant-color', variant_selected );
