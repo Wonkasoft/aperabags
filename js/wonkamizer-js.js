@@ -1927,14 +1927,17 @@
 		/*==========================================
 		=            Search btn actions            =
 		==========================================*/
-		var search_btn = document.querySelectorAll( 'li.top-menu-s-btn i' ),
-		close_btn = document.querySelector( 'span.closebtn' );
-		
-
-		search_btn.forEach( function( item, i ) {
-			item.addEventListener( 'click', openSearch );
-		} );
-		close_btn.addEventListener( 'click', closeSearch );
+		if (document.querySelector('span.closebtn'))
+		{
+			var search_btn = document.querySelectorAll( 'li.top-menu-s-btn i' ),
+			close_btn = document.querySelector( 'span.closebtn' );
+			
+	
+			search_btn.forEach( function( item, i ) {
+				item.addEventListener( 'click', openSearch );
+			} );
+			close_btn.addEventListener( 'click', closeSearch );
+		}
 		/*=====  End of Search btn actions  ======*/
 		
 		/*===============================================
@@ -2365,26 +2368,62 @@
 			}
 		}
 
+	/**
+	 *  
+	 */
+
+/**
+ * Settup for the compare plugin No Scroll
+ *
+ * @author Carlos
+ * @return  {[type]}  [return description]
+ */
+		if ( document.querySelector('a.compare.button') ) 
+		{
+			var compare_btns = document.querySelectorAll('a.compare.button');
+			var body_element = document.querySelectorAll('body')[0];
+			
+			compare_btns.forEach( function( item )
+			{
+				item.addEventListener( 'click', function ( e ) 
+				{
+					e.preventDefault();
+					body_element.classList.add('no-scroll');
+					console.log(body_element);
+					var cboxOverlay_element = document.querySelector('#cboxOverlay');
+					var close_btn = document.querySelector('#cboxClose');
+
+					cboxOverlay_element.addEventListener( 'click', function( e )
+					{
+						if ( body_element.classList.contains( 'no-scroll' ) )
+						{
+							body_element.classList.remove( 'no-scroll' );
+						}
+					});
+
+					close_btn.addEventListener( 'click', function( e )
+					{
+						if ( body_element.classList.contains( 'no-scroll' ) )
+						{
+							body_element.classList.remove( 'no-scroll' );
+						}
+					});
+
+				});
+				
+			});
+		}
+
+
 	/*=================================================
 	=            Setup for the search form            =
 	=================================================*/
+	if ( document.querySelector('input#s') )
+	{
 	wonka_ajax_request( xhr, "search_site", null);
+	}
 	/*=====  End of Setup for the search form  ======*/
 
-	// /*=================================================
-	// =            Setup for the compare widget css            =
-	// =================================================*/
-
-	// 	if ( document.querySelector('a.compare.button') )
-	// 	{
-	// 		compare_btn = document.querySelectorAll('a.compare.button');
-	// 		compare_btn.forEach( function( item, i ) 
-	// 		{
-	// 			item.classList.add('wonka-btn');
-	// 		});
-	// 	}
-
-	// /*=====  End of Setup for the compare widget css  ======*/
 };
 	/*=====  End of This is for running after document is ready  ======*/
 
