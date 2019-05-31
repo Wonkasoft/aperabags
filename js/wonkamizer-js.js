@@ -2386,7 +2386,7 @@
 				{
 				
 					e.preventDefault();
-					if ( document.querySelector(div.cboxWrapper) )
+					if ( document.querySelector('div.cboxWrapper') )
 					{
 						body_element.classList.add('no-scroll');	
 					}
@@ -2401,7 +2401,7 @@
 							body_element.classList.remove( 'no-scroll' );
 						}
 					});
-
+					console.log(close_btn);
 					close_btn.addEventListener( 'click', function( e )
 					{
 						if ( body_element.classList.contains( 'no-scroll' ) )
