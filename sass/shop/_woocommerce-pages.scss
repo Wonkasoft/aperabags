@@ -532,7 +532,7 @@
 									justify-content: space-between;
 
 									&:after {
-										content: "+";
+										content: "-";
 										display: inline-block;
 										@include font-size( 1.6 );
 										@include prefix( transition, $trans_25, o moz webkit );
