@@ -308,7 +308,7 @@ function wonka_customized_shop_loop() {
 		$attachment_ids     = array_values( $attachment_ids );
 		$secondary_image_id = $attachment_ids['0'];
 		$secondary_image_alt = get_post_meta( $secondary_image_id, '_wp_attachment_image_alt', true );
-		$secondary_image_title = get_the_title($secondary_image_id);
+		$secondary_image_title = get_the_title( $secondary_image_id );
 	endif;
 
 	/*=====  End of For setting up the image flipper  ======*/
@@ -736,7 +736,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 						<tr class="cart-promo">
 							<td colspan="3">
 								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-									<div class="panel panel-default activate-panel" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+									<div class="panel panel-default activate-panel" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 										<div class="panel-heading" role="tab" id="headingOne">
 											<span class="panel-title">
 													Add Promo Code (Optional)
@@ -1219,31 +1219,10 @@ add_action( 'woocommerce_after_add_to_cart_button', 'wonka_express_checkout_add'
 function wonka_before_comment_meta_add( $comment ) {
 	?>
 		<div class="wonka-rating-and-meta-wrap col-12 col-md-4">
-		<?php
-		/*
-		 * The woocommerce_review_before hook
-		 *
-		 * @hooked woocommerce_review_display_gravatar - 10
-		 */
-		do_action( 'woocommerce_review_before', $comment );
-		?>
 	<?php
 }
 
 add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta_add', 5 );
-
-/**
- * This is to add a custom gravatar from the site icon 
- * @param  array $avatar_defaults site defaults
- * @return array                  filtered defaults
- */
-function ws_custom_new_gravatar ( $avatar_defaults ) {
-	$customavatar = get_site_icon_url();
-	$avatar_defaults[$customavatar] = "Site Default Gravatar";
-	return $avatar_defaults;
-}
-
-// add_filter( 'avatar_defaults', 'ws_custom_new_gravatar' );
 
 function wonka_before_comment_text_add( $comment ) {
 	?>
@@ -1298,7 +1277,7 @@ function wonka_single_product_image_scroll_html_custom( $data, $attachment_id ) 
 	ob_start();
 	$output .= '<div id="scroll_image_' . esc_attr__($post_thumbnail_id) . '" class="woocommerce-product-gallery__image" data-variant-check="true" data-variant-color="' . esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '">';
 	$output .= '<a href="#scroll_image_' . esc_attr__($post_thumbnail_id) . '">';
-	$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'full' ) . '" class="wp-post-image" alt="' . esc_attr__( get_post_meta( $post_thumbnail_id , '_wp_attachment_image_alt', true) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr__( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . wp_get_attachment_image_src( $post_thumbnail_id, 'full' ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr__( wp_get_attachment_image_srcset( $post_thumbnail_id, 'full', true ) ) .'" />';
+	$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'medium' ) . '" class="wp-post-image" alt="' . esc_attr__( get_post_meta( $post_thumbnail_id , '_wp_attachment_image_alt', true) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr__( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . wp_get_attachment_image_src( $post_thumbnail_id, 'full' ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr__( wp_get_attachment_image_srcset( $post_thumbnail_id, 'full', true ) ) .'" />';
 	$output .= '</a></div>';
 	$output .= ob_get_clean();
 

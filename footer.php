@@ -18,7 +18,7 @@ $footer_section = get_section_mods( 'footer' );
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
 			<div class="row upper-footer wonka-row-footer">
-				<div class="col col-12 col-md-3">
+				<div class="col col-12 col-lg-3">
 					<div class="social-components-wrap">
 						<h4 class="footer-title"><?php echo $footer_section->footer_mods->footer_social_title; ?></h4>
 						<div class="social-icons-btns">
@@ -52,10 +52,10 @@ $footer_section = get_section_mods( 'footer' );
 						<?php endif; ?>
 					</div><!-- .social-components-wrap -->
 				</div><!-- .col -->
-				<div class="col col-12 col-md-9">
+				<div class="col col-12 col-lg-9">
 					<div class="row wonka-row-footer">
 						<?php if ( ! empty( $footer_section->footer_titles->footer_title_1 ) ) : ?>
-							<div class="col-6 col-md">
+							<div class="col-6 col-lg">
 								<h5 class="footer-title menu-title-shop"><?php echo $footer_section->footer_titles->footer_title_1; ?></h5>
 								<?php
 									wp_nav_menu( array(
@@ -66,7 +66,7 @@ $footer_section = get_section_mods( 'footer' );
 							</div><!-- .col -->
 						<?php endif; ?>
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_2 ) ) : ?>
-							<div class="col-6 col-md">
+							<div class="col-6 col-lg">
 								<h5 class="footer-title menu-title-contact-us"><?php echo $footer_section->footer_titles->footer_title_2; ?></h5>
 								<?php
 									wp_nav_menu( array(
@@ -77,7 +77,7 @@ $footer_section = get_section_mods( 'footer' );
 							</div><!-- .col -->
 						<?php endif; ?>
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_3 ) ) : ?>
-							<div class="col-6 col-md">
+							<div class="col-6 col-lg">
 								<h5 class="footer-title menu-title-account"><?php echo $footer_section->footer_titles->footer_title_3; ?></h5>
 								<?php
 									wp_nav_menu( array(
@@ -88,7 +88,7 @@ $footer_section = get_section_mods( 'footer' );
 							</div><!-- .col -->
 						<?php endif; ?>
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_4 ) ) : ?>
-						<div class="col-6 col-md">
+						<div class="col-6 col-lg">
 							<h5 class="footer-title menu-title-company"><?php echo $footer_section->footer_titles->footer_title_4; ?></h5>
 							<?php
 								wp_nav_menu( array(
@@ -99,7 +99,7 @@ $footer_section = get_section_mods( 'footer' );
 						</div><!-- .col -->
 						<?php endif; ?>
 						<?php if ( !empty( $footer_section->footer_titles->footer_title_5 ) ) : ?>
-						<div class="col-6 col-md">
+						<div class="col-6 col-lg">
 							<h5 class="footer-title menu-title-programs"><?php echo $footer_section->footer_titles->footer_title_5; ?></h5>
 							<?php
 								wp_nav_menu( array(
@@ -112,7 +112,7 @@ $footer_section = get_section_mods( 'footer' );
 					</div><!-- .row -->
 					<div class="row align-items-center justify-content-end wonka-email-form">
 						<?php if ( !empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
-							<div class="col col-12 col-md-8">
+							<div class="col col-12 col-lg-8">
 								<?php
 									_e( do_shortcode( $footer_section->footer_mods->footer_form_shortcode ) );
 									_e( "<small>Sign up for our email newsletter and receive a 10% discount on today's purchase!</small><br />" );

@@ -552,26 +552,38 @@
 
 							div#collapseOne {
 
-                                input {
-                                    width: 55%;
-                                    line-height: 1.1;
-                                    padding: 8px;
-                                    border-radius: 100px 0 0 100px;
-                                    @include font-size( 1.1 );
+			                    input {
+			                        flex: 0 1 54%;
+			                        width: unset;
+			                        line-height: 1.1;
+			                        padding: 8px;
+			                        border-radius: 100px 0 0 100px;
+			                        @include font-size( .6 );
 
-                                    &::placeholder {
-                                        font-style: italic;
-                                    }
-                                }
+			                        &::placeholder {
+			                            font-style: italic;
+			                        }
+			                    }
 
-                                button.wonka-btn {
-                                    margin-left: -3px;
-                                    padding: 8px;
-                                    border-radius: 0 100px 100px 0;
-                                    line-height: 1.1;
-                                    @include font-size( 1.1 );
-                                }
-                            }
+			                    button.wonka-btn {
+			                        margin-left: -3px;
+			                        padding: 8px;
+			                        border-radius: 0 100px 100px 0;
+			                        line-height: 1.1;
+			                        @include font-size( .6 );
+			                    }
+
+			                    @include media-breakpoint( lg ) {
+
+			                    	input {
+			                    	    @include font-size( .9 );
+			                    	}
+
+			                    	button.wonka-btn {
+			                    	    @include font-size( .9 );
+			                    	}
+			                    }
+			                }
 						}
 					}
 				}
@@ -653,11 +665,11 @@
                 div#collapseOne {
 
                     input {
-                        width: 55%;
+                        flex: 0 1 54%;
                         line-height: 1.1;
                         padding: 8px;
                         border-radius: 100px 0 0 100px;
-                        @include font-size( 1.1 );
+                        @include font-size( .6 );
 
                         &::placeholder {
                             font-style: italic;
@@ -669,7 +681,18 @@
                         padding: 8px;
                         border-radius: 0 100px 100px 0;
                         line-height: 1.1;
-                        @include font-size( 1.1 );
+                        @include font-size( .6 );
+                    }
+
+                    @include media-breakpoint( lg ) {
+
+                    	input {
+                    	    @include font-size( .9 );
+                    	}
+
+                    	button.wonka-btn {
+                    	    @include font-size( .9 );
+                    	}
                     }
                 }
             }
