@@ -566,7 +566,7 @@
 
                                 button.wonka-btn {
                                     margin-left: -3px;
-                                    padding: 8px;
+                                    padding: 10px;
                                     border-radius: 0 100px 100px 0;
                                     line-height: 1.1;
                                     @include font-size( 1.1 );
@@ -669,7 +669,8 @@
                         padding: 8px;
                         border-radius: 0 100px 100px 0;
                         line-height: 1.1;
-                        @include font-size( 1.1 );
+                        // @include font-size( 1.1 );
+                        font-size: 14.6px
                     }
                 }
             }
