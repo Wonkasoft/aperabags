@@ -135,13 +135,13 @@ gulp.task('imgPress', function() {
 
 gulp.task('watch', function() {
 
-	gulp.watch('**/*.php').on('change', browserSync.reload);
+	gulp.watch('./**/*.php').on('change', browserSync.reload);
 
-	gulp.watch('./**/*.scss', gulp.series(gulp.parallel('sass', 'sass2'))).on('change', browserSync.reload);
+	gulp.watch('./sass/**/*.scss', gulp.series(gulp.parallel('sass', 'sass2'))).on('change', browserSync.reload);
 
-	gulp.watch('./js/*.*', gulp.series('js')).on('change', browserSync.reload);
+	gulp.watch('./js/**/*.js', gulp.series(gulp.parallel('js'))).on('change', browserSync.reload);
 
-	gulp.watch('./images/*.{png,jpg,gif,jpeg,PNG,JPG,GIF,JPEG}', gulp.series('imgPress')).on('change', browserSync.reload);
+	gulp.watch('./images/*.{png,jpg,gif,jpeg,PNG,JPG,GIF,JPEG}', gulp.series(gulp.parallel('imgPress'))).on('change', browserSync.reload);
 
 });
 

@@ -4,6 +4,7 @@ a.button.wc-backward,
 a.restore-item,
 a.showlogin,
 .xoo-wsc-footer a.xoo-wsc-ft-btn,
+.xoo-wsc-coupon-trigger,
 a.btn.btn-primary,
 a.wonka-btn,
 button.woocommerce-Button,
@@ -18,14 +19,14 @@ input[type="submit"] {
 	line-height: 1.2;
 	letter-spacing: .1rem;
 	text-align: center;
-	border: 2px solid #52abf6;
+	border: 1px solid #52abf6;
 	background: rgba( #52abf6, 1 );
 	@include prefix( transition, $trans_25, webkit moz o);
 
 
 	&:visited {
 		color: rgba( #fff, .8);
-		border: 2px solid #52abf6;
+		border: 1px solid #52abf6;
 		background: rgba( #52abf6, 1 );
 	}
 
@@ -47,6 +48,7 @@ a.button.wc-backward,
 a.restore-item,
 a.showlogin,
 .xoo-wsc-footer a.xoo-wsc-ft-btn,
+.xoo-wsc-coupon-trigger,
 a.wonka-btn,
 button.woocommerce-Button,
 button.wonka-btn,
@@ -57,14 +59,14 @@ input[type="submit"].wonka-btn {
 	text-align: center;
 	border-radius: 100px;
 	background: rgba( #52abf6, 1 );
-	border: 2px solid #52abf6;
+	border: 1px solid #52abf6;
 	color: rgba(255, 255, 255, 1);
     @include font-size( 1 );
     @include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
     &:visited {
     	color: rgba( #fff, .8);
-    	border: 2px solid #52abf6;
+    	border: 1px solid #52abf6;
     	background: rgba( #52abf6, 1 );
     }
     
@@ -77,7 +79,7 @@ input[type="submit"].wonka-btn {
     &:active,
     &:focus {
     	outline: 0;
-			color: rgba(255, 255, 255, 1);
+		color: rgba(255, 255, 255, 1);
     }
 }
 
@@ -122,6 +124,8 @@ a.showlogin {
 	@include font-size( .8 );
 }
 
-.xoo-wsc-footer a.xoo-wsc-ft-btn {
+.xoo-wsc-footer a.xoo-wsc-ft-btn,
+.xoo-wsc-coupon-trigger {
 	width: 100%;
+	color: #fff;
 }

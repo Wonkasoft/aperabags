@@ -1,76 +1,87 @@
 /*#
  * Side Cart
  */
-.xoo-wsc-header,
-.xoo-wsc-body,
-.xoo-wsc-footer {
-	@include prefix( transition, $trans_3, o moz webkit );
-}
+.xoo-wsc-modal {
 
-.xoo-wsc-footer {
-
-	.wonka-btn-container {
-		position: relative;
-		margin-bottom: 15px;
-		width: 100%;
-		opacity: 0;
+	.xoo-wsc-header,
+	.xoo-wsc-body,
+	.xoo-wsc-footer {
 		@include prefix( transition, $trans_3, o moz webkit );
-
-		.wonka-btn {
-			position: relative;
-			display: block;
-			margin: 0;
-			width: 100%;
-		}
 	}
-}
 
-.xoo-wsc-tools {
+	.xoo-wsc-footer {
 
-	> div.xoo-wsc-tool {
-		margin: auto;
-	}
-}
+		.xoo-wsc-tools {
 
-.xoo-wsc-ft-btn {
-	border-radius: 100px;
-}
-
-.xoo-wsc-rp-products {
-	display: flex;
-	align-items: center;
-
-	.xoo-wsc-rp-item {
-		align-items: center;
-		justify-content: center;
-
-		.xoo-wsc-rp-left-area {
-			flex: 0 0 20%;
+			> div.xoo-wsc-tool {
+				margin: auto;
+			}
 		}
 
-		.xoo-wsc-rp-right-area {
-			flex: 0 0 30%;
+		#xoo-wsc-coupon-code {
+			border-radius: 100px 0 0 100px;
 
-			span.price {
-				display: flex;
-			    align-items: center;
-			    justify-content: flex-start;
-			    width: 100%;
-			    margin: 0;
-			    color: #333333;
-			    @include font-size( 1.1 );
+			&:focus {
+				outline: 0;
+				@include prefix( box-shadow, 0 1px 6px 0 rgba( #52abf6, .7 ), webkit moz o);
+			}
+		}
 
-			    ins {
-			    	margin-left: 8px;
-			    	color: #e81409;
-			    	background: transparent;
-			    }
+		.xoo-wsc-coupon-submit.button.btn {
+			border-radius: 0 100px 100px 0;
+			text-transform: uppercase;
+			display: flex;
+			color: rgba( #fff, 1 );
+			font-weight: 700;
+			line-height: 1.1;
+			letter-spacing: .1rem;
+			text-align: center;
+			border: 1px solid #52abf6;
+			background: rgba( #52abf6, 1 );
+			@include prefix( transition, $trans_25, webkit moz o);
+		}
+
+		.xoo-wsc-ft-btn {
+			border-radius: 100px;
+		}
+
+		.xoo-wsc-rp-products {
+			display: flex;
+			align-items: center;
+
+			.xoo-wsc-rp-item {
+				align-items: center;
+				justify-content: center;
+
+				.xoo-wsc-rp-left-area {
+					flex: 0 0 20%;
+				}
+
+				.xoo-wsc-rp-right-area {
+					flex: 0 0 30%;
+
+					span.price {
+						display: flex;
+					    align-items: center;
+					    justify-content: flex-start;
+					    width: 100%;
+					    margin: 0;
+					    color: #333333;
+					    @include font-size( 1.1 );
+
+					    ins {
+					    	margin-left: 8px;
+					    	color: #e81409;
+					    	background: transparent;
+					    }
+					}
+				}
 			}
 		}
 	}
 }
 
-@media screen and  ( max-width: 992px ) {
+@media screen and ( max-width: 992px ) {
 	.xoo-wsc-container {
 		max-width: 100%;
 	}

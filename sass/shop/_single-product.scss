@@ -63,15 +63,19 @@
 					height: 100%;
 					max-height: 100%;
 					margin: 0 -15px;
-					overflow-x: auto;
+					overflow: hidden;
 					cursor: zoom-in;
 					@include prefix( transition, $trans_25, o moz webkit );
+
+					a {
+						display: block;
+					}
 
 					.slick-prev {
 						left: 0px;
 
 						&:before {
-							color: #52abf6;
+							color: #fff;
 						}
 					}
 
@@ -79,7 +83,7 @@
 						right: 0px;
 
 						&:before {
-							color: #52abf6;
+							color: #fff;
 						}
 					}
 

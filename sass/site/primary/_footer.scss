@@ -37,12 +37,14 @@ footer#colophon {
 
 		.social-components-wrap {
 			margin: auto;
-			width: 225px;
+			width: 100%;
+		    max-width: 225px;
 
 			.social-icons-btns {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
+				flex-wrap: wrap;
 				margin-bottom: 1.5rem;
 				@include font-size( 1.4 );
 			}
@@ -167,7 +169,7 @@ footer#colophon {
 		}
 	}
 
-	@include media-breakpoint( md ) {
+	@include media-breakpoint( lg ) {
 		.wonka-email-form {
 
 			.wonka-newsletter-form_wrapper {
