@@ -250,8 +250,12 @@ function apera_bags_scripts() {
 	wp_localize_script( 'apera-bags-wonkamizer-js', 'wonkasoft_request', array( 'ajax' => admin_url( 'admin-ajax.php' ), 'security' => wp_create_nonce( 'ws-request-nonce' ), ) );
 
 
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) :
 		wp_enqueue_script( 'comment-reply' );
-	}
+	endif;
+
+	if ( is_page('checkout') ) :
+			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCNlXBt6ORkwhaH--chD3JJVUt9OhdsKfs&libraries=places&callback=initAutocomplete', array( 'keepcalm-homebuyers-js' ), null, true );
+	endif;
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 200 );
