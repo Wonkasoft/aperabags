@@ -288,3 +288,144 @@ if (!function_exists('is_admin_page')) {
   }
 
 }
+
+function aperabags_add_theme_options() {
+	add_options_page( 
+		'Aperabags Theme Options', 
+		'Theme Options', 
+		'manage_options', 
+		'aperabags-theme-options', 
+		'aperabags_theme_options_page' 
+	);
+
+	$google_api_key_args = array(
+		'type'				=>		'string',
+		'description'		=>		'holds google api key for this site.',
+		'sanitize_callback'	=>		'aperabags_options_sanitize',
+		'show_in_rest'		=>		false,
+	);
+
+	$facebook_api_key_args = array(
+		'type'				=>		'string',
+		'description'		=>		'holds facebook api key for this site.',
+		'sanitize_callback'	=>		'aperabags_options_sanitize',
+		'show_in_rest'		=>		false,
+	);
+
+	$twitter_api_key_args = array(
+		'type'				=>		'string',
+		'description'		=>		'holds twitter api key for this site.',
+		'sanitize_callback'	=>		'aperabags_options_sanitize',
+		'show_in_rest'		=>		false,
+	);
+
+	register_setting( 'aperabags-theme-options-group', 'google_api_key', $google_api_key_args );
+	register_setting( 'aperabags-theme-options-group', 'facebook_api_key', $facebook_api_key_args );
+	register_setting( 'aperabags-theme-options-group', 'twitter_api_key', $twitter_api_key_args );
+}
+
+add_action( 'admin_menu', 'aperabags_add_theme_options');
+
+function aperabags_options_sanitize( $option ) {
+	$option = esc_html( $option );
+	return $option;
+}
+
+function aperabags_theme_options_page() {
+	?>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 title-column">
+					<h3 class="title-header"><?php echo get_admin_page_title(); ?></h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 options column">
+					<div class="card w-100">
+						<div class="card-body">
+							<?php
+								$current_google_api_key = ( ! empty ( get_option( 'google_api_key' ) ) ) ? get_option( 'google_api_key' ): '';
+								wonkasoft_theme_option_parse( array(
+			                        'id'                => 'google_api_key',
+			                        'label'             => __( 'Google API Key', 'apera-bags' ),
+			                        'value'             => $current_google_api_key,
+			                        'desc_tip'          => true,
+			                        'description'       => __( 'Place Google API Key here.', 'apera-bags' ),
+			                        'wrapper_class'     => 'form-row form-row-full form-group',
+			                        'class'     		=> 'form-control',
+			                        'api'				=> 'google'
+			                        )
+			                      );
+
+								$current_facebook_api_key = ( ! empty ( get_option( 'facebook_api_key' ) ) ) ? get_option( 'facebook_api_key' ): '';
+								wonkasoft_theme_option_parse( array(
+			                        'id'                => 'facebook_api_key',
+			                        'label'             => __( 'Facebook API Key', 'apera-bags' ),
+			                        'value'             => $current_google_api_key,
+			                        'desc_tip'          => true,
+			                        'description'       => __( 'Place Facebook API Key here.', 'apera-bags' ),
+			                        'wrapper_class'     => 'form-row form-row-full form-group',
+			                        'class'     		=> 'form-control',
+			                        'api'				=> 'facebook'
+			                        )
+			                      );
+
+								$current_twitter_api_key = ( ! empty ( get_option( 'twitter_api_key' ) ) ) ? get_option( 'twitter_api_key' ): '';
+								wonkasoft_theme_option_parse( array(
+			                        'id'                => 'google_api_key',
+			                        'label'             => __( 'Twitter API Key', 'apera-bags' ),
+			                        'value'             => $current_google_api_key,
+			                        'desc_tip'          => true,
+			                        'description'       => __( 'Place Twitter API Key here.', 'apera-bags' ),
+			                        'wrapper_class'     => 'form-row form-row-full form-group',
+			                        'class'     		=> 'form-control',
+			                        'api'				=> 'twitter'
+			                        )
+			                      );
+		                      ?>
+		                  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<?php
+}
+
+function wonkasoft_theme_option_parse( $field ) {
+
+		$field['class']         = 	isset( $field['class'] ) ? $field['class'] : 'select short';
+		$field['style']         = 	isset( $field['style'] ) ? $field['style'] : '';
+		$field['wrapper_class'] = 	isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
+		$field['value']         = 	isset( $field['value'] ) ? $field['value'] : '';
+		$field['name']          = 	isset( $field['name'] ) ? $field['name'] : $field['id'];
+		$field['desc_tip']      = 	isset( $field['desc_tip'] ) ? $field['desc_tip'] : false;
+		$styles_set = ( ! empty ( $field['style'] ) ) ? ' style="' . esc_attr( $field['style'] ) . '" ': '';
+
+		// Custom attribute handling
+		$custom_attributes = array();
+		$output = '';
+
+		if ( ! empty( $field['custom_attributes'] ) && is_array( $field['custom_attributes'] ) ) {
+
+			foreach ( $field['custom_attributes'] as $attribute => $value ) {
+				$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $value ) . '"';
+			}
+		}
+
+		$output .= '<p class="form-field ' . esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ) . '">
+			<label for="' . esc_attr( $field['id'] ) . '">' . wp_kses_post( $field['label'] ) . '</label>';
+
+		if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
+			$output .= wc_help_tip( $field['description'] );
+		}
+
+		$output .= '<input id="' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $field['name'] ) . '" class="' . esc_attr( $field['class'] ) . '" ' . $styles_set . implode( ' ', $custom_attributes ) . ' value="' . esc_attr( $field['value'] ) . '" placeholder="Paste api key..." /> ';
+
+		if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
+			$output .= '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
+		}
+
+		$output .= '</p>';
+
+		_e( $output );
+	}
