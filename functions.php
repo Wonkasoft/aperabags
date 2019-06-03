@@ -253,12 +253,13 @@ function apera_bags_scripts() {
 			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'google_api_key' ) . '&libraries=places', array( 'apera-bags-wonkamizer-js' ), null, true );
 	endif;
 
+	if ( is_page('checkout') && ! empty ( get_option( 'google_api_key' ) ) ) :
+			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key='. get_option( 'google_api_key' ) . '&libraries=places', array( 'apera-bags-wonkamizer-js' ), null, true );
+	endif;
+
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) :
 		wp_enqueue_script( 'comment-reply' );
 	endif;
 
-	if ( is_page('checkout') ) :
-			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCNlXBt6ORkwhaH--chD3JJVUt9OhdsKfs&libraries=places&callback=initAutocomplete', array( 'keepcalm-homebuyers-js' ), null, true );
-	endif;
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 200 );
