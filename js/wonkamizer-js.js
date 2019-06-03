@@ -524,35 +524,12 @@
 	/*=======================================================
 	=            This is for the google maps api            =
 	=======================================================*/
-	if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
-	{
-
-		// This example displays an address form, using the autocomplete feature
-		// of the Google Places API to help users fill in the information.
-
-		// This example requires the Places library. Include the libraries=places
-		// parameter when you first load the API. For example:
-		// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-		var placeSearch, autocomplete;
-	    var componentForm = 
-	    {
-	        street_number: 'short_name', // Numbers only
-	        route: 'long_name', // Street Name only
-	        locality: 'long_name', // City Name
-	        administrative_area_level_1: 'short_name', // State
-	        country: 'long_name', // Country
-	        postal_code: 'short_name' // Zip Code
-	    };
-
-
-	}
 	function initAutocomplete() 
 	{
 	  // Create the autocomplete object, restricting the search to geographical
 	  // location types.
 	  autocomplete = new google.maps.places.Autocomplete(
-	      /** @type {!HTMLInputElement} */( document.getElementById( 'shipping_address_1' ) ),
+	      /** @type {!HTMLInputElement} */( document.getElementById( 'autocomplete' ) ),
 	      {types: ['geocode']});
 
 	    // When the user selects an address from the dropdown, populate the address
@@ -572,7 +549,7 @@
 			if ( componentForm[addressType] ) 
 			{
 				var val = place.address_components[i][componentForm[addressType]];
-				document.getElementById(addressType).value = val;
+				document.getElementById( addressType ).value = val;
 			}
 		}
 
@@ -1545,6 +1522,26 @@
 						}, 3500 );
 				}
 			}
+
+			google.maps.event.addDomListener(window, 'load', initAutocomplete);
+
+			// This example displays an address form, using the autocomplete feature
+			// of the Google Places API to help users fill in the information.
+
+			// This example requires the Places library. Include the libraries=places
+			// parameter when you first load the API. For example:
+			// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+			var placeSearch, autocomplete;
+		    var componentForm = 
+		    {
+		        street_number: 'short_name', // Numbers only
+		        route: 'long_name', // Street Name only
+		        locality: 'long_name', // City Name
+		        administrative_area_level_1: 'short_name', // State
+		        country: 'long_name', // Country
+		        postal_code: 'short_name' // Zip Code
+		    };
 		}
 		/*==========================================================
 		=            This is for setting up the reviews            =
