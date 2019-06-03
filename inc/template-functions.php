@@ -343,6 +343,12 @@ function aperabags_theme_options_page() {
 				<div class="col-12 options column">
 					<div class="card w-100">
 						<div class="card-body">
+					<form method="post" action="options.php">
+
+					  <?php settings_fields( 'aperabags-theme-options-group' ); ?>
+
+					  <?php do_settings_sections( 'aperabags-theme-options-group' ); ?>
+
 							<?php
 								$current_google_api_key = ( ! empty ( get_option( 'google_api_key' ) ) ) ? get_option( 'google_api_key' ): '';
 								wonkasoft_theme_option_parse( array(
@@ -361,7 +367,7 @@ function aperabags_theme_options_page() {
 								wonkasoft_theme_option_parse( array(
 			                        'id'                => 'facebook_api_key',
 			                        'label'             => __( 'Facebook API Key', 'apera-bags' ),
-			                        'value'             => $current_google_api_key,
+			                        'value'             => $current_facebook_api_key,
 			                        'desc_tip'          => true,
 			                        'description'       => __( 'Place Facebook API Key here.', 'apera-bags' ),
 			                        'wrapper_class'     => 'form-row form-row-full form-group',
@@ -372,9 +378,9 @@ function aperabags_theme_options_page() {
 
 								$current_twitter_api_key = ( ! empty ( get_option( 'twitter_api_key' ) ) ) ? get_option( 'twitter_api_key' ): '';
 								wonkasoft_theme_option_parse( array(
-			                        'id'                => 'google_api_key',
+			                        'id'                => 'twitter_api_key',
 			                        'label'             => __( 'Twitter API Key', 'apera-bags' ),
-			                        'value'             => $current_google_api_key,
+			                        'value'             => $current_twitter_api_key,
 			                        'desc_tip'          => true,
 			                        'description'       => __( 'Place Twitter API Key here.', 'apera-bags' ),
 			                        'wrapper_class'     => 'form-row form-row-full form-group',
@@ -383,8 +389,14 @@ function aperabags_theme_options_page() {
 			                        )
 			                      );
 		                      ?>
+                <div class="submitter">
+
+					              <?php submit_button( 'Save Settings' ); ?>
+
+                </div>
+				</form>
 		                  </div>
-					</div>
+					</div><!-- card w-100 -->
 				</div>
 			</div>
 		</div>
@@ -419,7 +431,7 @@ function wonkasoft_theme_option_parse( $field ) {
 			$output .= wc_help_tip( $field['description'] );
 		}
 
-		$output .= '<input id="' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $field['name'] ) . '" class="' . esc_attr( $field['class'] ) . '" ' . $styles_set . implode( ' ', $custom_attributes ) . ' value="' . esc_attr( $field['value'] ) . '" placeholder="Paste api key..." /> ';
+		$output .= '<input type="password" id="' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $field['name'] ) . '" class="' . esc_attr( $field['class'] ) . '" ' . $styles_set . implode( ' ', $custom_attributes ) . ' value="' . esc_attr( $field['value'] ) . '" placeholder="Paste api key..." /> ';
 
 		if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
 			$output .= '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
