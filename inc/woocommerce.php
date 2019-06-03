@@ -1180,9 +1180,13 @@ add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
 function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
     if ( $post_post_excerpt == ' ' || $post_post_excerpt == null ) :
     	return $post_post_excerpt;
-    else: 
-    	$add_links ='<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>';
-    	$post_post_excerpt = $post_post_excerpt . $add_links;
+		else:
+			ob_start();
+			$YITH_Woocompare_Frontend_compare_link = new YITH_Woocompare_Frontend;
+			$add_links ='<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a> | ' . $YITH_Woocompare_Frontend_compare_link->add_compare_link();
+			;
+			$post_post_excerpt = $post_post_excerpt . $add_links . ob_get_clean();
+			
     	return $post_post_excerpt;
     endif;
 };
@@ -1609,7 +1613,7 @@ add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_
 
 
  /**
-	* Styles for compare plugin 
+	* Styles and Code for compare plugin 
 	*
 	* @author Carlos
 	* @return    [return description]
@@ -1622,3 +1626,24 @@ function add_theme_style_to_compare() {
 if( class_exists( 'YITH_Woocompare_Frontend' ) ) {
 add_action('wp_print_styles', 'add_theme_style_to_compare', 101);
 }
+
+function filter_yith_woocompare_compare_added_label( $var ) { 
+	$var = 'Compare Bags'; 
+	return $var; 
+}; 
+			 
+// add the filter 
+add_filter( 'yith_woocompare_compare_added_label', 'filter_yith_woocompare_compare_added_label', 10, 1 ); 
+
+function jcar_yith_woocompare_compare_added_label( $var ) { 
+	
+	$pieces = explode("<a", html_entity_decode($var));
+
+	return $pieces[0]; 
+}; 
+			 
+// add the filter 
+add_filter( 'yith_woocompare_products_description', 'jcar_yith_woocompare_compare_added_label', 10, 1 ); 
+global $YITH_Woocompare_Frontend;
+
+// add_action( 'wonka_filter_woocommerce_short_description', array( $YITH_Woocompare_Frontend, 'add_compare_link' ), 35 );
