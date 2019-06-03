@@ -254,8 +254,8 @@ function apera_bags_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	endif;
 
-	if ( is_page('checkout') ) :
+	// if ( is_page('checkout') ) :
 			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCNlXBt6ORkwhaH--chD3JJVUt9OhdsKfs&libraries=places&callback=initAutocomplete', array( 'apera-bags-js' ), null, true );
-	endif;
+	// endif;
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 200 );
