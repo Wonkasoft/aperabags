@@ -1182,8 +1182,12 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
     	return $post_post_excerpt;
 		else:
 			ob_start();
-			$YITH_Woocompare_Frontend_compare_link = new YITH_Woocompare_Frontend;
-			$add_links ='<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a> | ' . $YITH_Woocompare_Frontend_compare_link->add_compare_link();
+			$compare_link_set = '';
+			if ( class_exists( 'YITH_Woocompare_Frontend' ) ) :
+				$YITH_Woocompare_Frontend_compare_link = new YITH_Woocompare_Frontend;
+				$compare_link_set = ' | ' . $YITH_Woocompare_Frontend_compare_link->add_compare_link();
+			endif;
+			$add_links ='<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>' . $compare_link_set;
 			;
 			$post_post_excerpt = $post_post_excerpt . $add_links . ob_get_clean();
 			
