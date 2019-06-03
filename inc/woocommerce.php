@@ -1624,16 +1624,17 @@ function add_theme_style_to_compare() {
 }
 
 if( class_exists( 'YITH_Woocompare_Frontend' ) ) {
-add_action('wp_print_styles', 'add_theme_style_to_compare', 101);
+	add_action('wp_print_styles', 'add_theme_style_to_compare', 101);
 }
+
 
 function filter_yith_woocompare_compare_added_label( $var ) { 
 	$var = 'Compare Bags'; 
 	return $var; 
 }; 
 			 
-// add the filter 
 add_filter( 'yith_woocompare_compare_added_label', 'filter_yith_woocompare_compare_added_label', 10, 1 ); 
+
 
 function jcar_yith_woocompare_compare_added_label( $var ) { 
 	
@@ -1642,8 +1643,4 @@ function jcar_yith_woocompare_compare_added_label( $var ) {
 	return $pieces[0]; 
 }; 
 			 
-// add the filter 
 add_filter( 'yith_woocompare_products_description', 'jcar_yith_woocompare_compare_added_label', 10, 1 ); 
-global $YITH_Woocompare_Frontend;
-
-// add_action( 'wonka_filter_woocommerce_short_description', array( $YITH_Woocompare_Frontend, 'add_compare_link' ), 35 );
