@@ -39,7 +39,7 @@
 	background: #646371;
 	margin-bottom: 15px;
 	height: 110px;
-	z-index: 99999;
+	z-index: 9999;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
 	.brand-nav-bar {
