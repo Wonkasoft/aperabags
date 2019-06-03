@@ -535,15 +535,16 @@
 		// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
 		var placeSearch, autocomplete;
-		 var componentForm = {
-		        street_number: 'short_name', // Numbers only
-		        route: 'long_name', // Street Name only
-		        locality: 'long_name', // City Name
-		        administrative_area_level_1: 'short_name', // State
-		        country: 'long_name', // Country
-		        postal_code: 'short_name' // Zip Code
-		      };
-	    document.getElementById('street_number').value = place.address_components[0].long_name + ' ' + place.address_components[1].long_name;
+	    var componentForm = 
+	    {
+	        street_number: 'short_name', // Numbers only
+	        route: 'long_name', // Street Name only
+	        locality: 'long_name', // City Name
+	        administrative_area_level_1: 'short_name', // State
+	        country: 'long_name', // Country
+	        postal_code: 'short_name' // Zip Code
+	    };
+
 
 	}
 	function initAutocomplete() 
@@ -551,7 +552,7 @@
 	  // Create the autocomplete object, restricting the search to geographical
 	  // location types.
 	  autocomplete = new google.maps.places.Autocomplete(
-	      /** @type {!HTMLInputElement} */(document.getElementById('shipping_address_1')),
+	      /** @type {!HTMLInputElement} */( document.getElementById( 'shipping_address_1' ) ),
 	      {types: ['geocode']});
 
 	    // When the user selects an address from the dropdown, populate the address
@@ -575,6 +576,7 @@
 			}
 		}
 
+	    document.getElementById('street_number').value = place.address_components[0].long_name + ' ' + place.address_components[1].long_name;
 	}
 
 	// Bias the autocomplete object to the user's geographical location,
