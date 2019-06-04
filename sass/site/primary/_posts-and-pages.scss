@@ -82,7 +82,15 @@
 section {
 
 	&.error-404 {
-		max-width: 1180px;
+		max-width: 1200px;
+
+		.widget {
+
+			ul {
+				list-style: none;
+				margin: 0;
+			}
+		}
 	}
 }
 
