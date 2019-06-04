@@ -1419,6 +1419,11 @@ add_action( 'woocommerce_review_comment_text', 'filter_woocommerce_product_revie
 function wonka_woocommerce_review_order_before_submit() {
 	?>
 	<script>
+		document.querySelector( '#shipping_address_1' ).addEventListener( 'onfocus', function( e ) 
+			{
+				e.stopImmediatePropagation();
+			} );
+
 		var cybersource_form_field_group = document.querySelectorAll( '.payment_box.payment_method_cybersource .form-row' );
 		cybersource_form_field_group.forEach( function( field_group, i ) 
 			{

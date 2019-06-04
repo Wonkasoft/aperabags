@@ -31,6 +31,10 @@ body {
  * Remove the margin in all browsers.
  */
 
+*, :before, :after {
+	box-sizing: border-box;
+}
+
 * html body,
 * html,
 body, html {
