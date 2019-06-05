@@ -2526,7 +2526,7 @@ if ( document.querySelector( 'body.woocommerce-checkout' ) )
         street_number: 'long_name', // Address_1 Numbers only
         route: 'short_name', // Street only
         locality: 'long_name', // City Name
-        administrative_area_level_1: 'short_name', // State
+        administrative_area_level_1: 'long_name', // State
         postal_code: 'long_name', // Zip Code
         postal_code_suffix: 'long_name', // Zip Code
     };	
@@ -2555,6 +2555,7 @@ function fillInAddress()
 	var place = autocomplete.getPlace();
 	var addressType = '';
 	var val = '';
+	var current_street_number = '';
 	document.getElementById( 'shipping_address_1' ).value = '';
 	document.getElementById( 'shipping_city' ).value = '';
 	document.getElementById( 'shipping_state' ).value = '';
@@ -2568,13 +2569,13 @@ function fillInAddress()
 		if ( addressType === 'street_number' ) 
 		{
 			val = place.address_components[i][componentForm[addressType]];
-			document.getElementById( 'shipping_address_1' ).value = val;
+			current_street_number = val;
 		}
 
 		if ( addressType === 'route' ) 
 		{
 			val = place.address_components[i][componentForm[addressType]];
-			document.getElementById( 'shipping_address_1' ).value += ' ' + val;
+			document.getElementById( 'shipping_address_1' ).value = current_street_number + ' ' + val;
 		}
 
 		if ( addressType === 'locality' ) 
