@@ -2556,7 +2556,10 @@ function fillInAddress()
 	var addressType = '';
 	var val = '';
 	var current_street_number = '';
-	document.getElementById( 'shipping_address_1' ).value = '';
+	if ( place.address_components[0].types[0] === 'street_number' ) 
+	{
+		document.getElementById( 'shipping_address_1' ).value = '';
+	}
 	document.getElementById( 'shipping_city' ).value = '';
 	document.getElementById( 'shipping_state' ).value = '';
 	document.getElementById( 'shipping_postcode' ).value = '';
@@ -2576,7 +2579,14 @@ function fillInAddress()
 		if ( addressType === 'route' ) 
 		{
 			val = place.address_components[i][componentForm[addressType]];
-			document.getElementById( 'shipping_address_1' ).value = current_street_number + ' ' + val;
+			if ( i === 0 ) 
+			{
+				document.getElementById( 'shipping_address_1' ).value += ' ' + val;
+			}
+			else
+			{
+				document.getElementById( 'shipping_address_1' ).value = current_street_number + ' ' + val;
+			}
 		}
 
 		if ( addressType === 'locality' ) 
