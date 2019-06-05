@@ -19,6 +19,11 @@
 			{
 				e.stopImmediatePropagation();
 			});
+
+		$( '#shipping_address_1' ).on( 'keydown', function( e ) 
+			{
+				e.stopImmediatePropagation();
+			});
 		
 		document.querySelector( '#shipping_address_1' ).addEventListener( 'blur', function( e ) 
 			{
@@ -2519,12 +2524,12 @@ if ( document.querySelector( 'body.woocommerce-checkout' ) )
 	var placeSearch, autocomplete;
     var componentForm = 
     {
-        shipping_address_1: 'long_name', // Address_1 Numbers and Street only
-        shipping_address_2: 'long_name', // Address_2 Continued only
-        shipping_city: 'long_name', // City Name
-        shipping_state: 'short_name', // State
-        shipping_country: 'long_name', // Country
-        shipping_postcode: 'short_name' // Zip Code
+        street_number: 'long_name', // Address_1 Numbers only
+        route: 'short_name', // Street only
+        locality: 'long_name', // City Name
+        administrative_area_level_1: 'short_name', // State
+        postal_code: 'long_name', // Zip Code
+        postal_code_suffix: 'long_name', // Zip Code
     };	
 }
 
@@ -2549,17 +2554,47 @@ function fillInAddress()
 {
 	// Get the place details from the autocomplete object.
 	var place = autocomplete.getPlace();
-	console.log( place );
+	var addressType = '';
+	var val = '';
 	// Get each component of the address from the place details
 	// and fill the corresponding field on the form.
 	for (var i = 0; i < place.address_components.length; i++) 
 	{
-		var addressType = place.address_components[i].types[0];
-		if ( componentForm[addressType] ) 
+		addressType = place.address_components[i].types[0];
+		if ( addressType === 'street_number' ) 
 		{
+			val = place.address_components[i][componentForm[addressType]];
+			document.getElementById( 'shipping_address_1' ).value = val;
+		}
 
-			var val = place.address_components[i][componentForm[addressType]];
-			document.getElementById(addressType).value = val;
+		if ( addressType === 'route' ) 
+		{
+			val = place.address_components[i][componentForm[addressType]];
+			document.getElementById( 'shipping_address_1' ).value += ' ' + val;
+		}
+
+		if ( addressType === 'locality' ) 
+		{
+			val = place.address_components[i][componentForm[addressType]];
+			document.getElementById( 'shipping_city' ).value = val;
+		}
+
+		if ( addressType === 'administrative_area_level_1' ) 
+		{
+			val = place.address_components[i][componentForm[addressType]];
+			document.getElementById( 'shipping_state' ).value = val;
+		}
+
+		if ( addressType === 'postal_code' ) 
+		{
+			val = place.address_components[i][componentForm[addressType]];
+			document.getElementById( 'shipping_postcode' ).value = val;
+		}
+
+		if ( addressType === 'postal_code_suffix' ) 
+		{
+			val = place.address_components[i][componentForm[addressType]];
+			document.getElementById( 'shipping_postcode' ).value += '-' + val;
 		}
 	}
 }
