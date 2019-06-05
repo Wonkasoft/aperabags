@@ -27,7 +27,10 @@
 		
 		document.querySelector( '#shipping_address_1' ).addEventListener( 'blur', function( e ) 
 			{
-				document.querySelector( '.pac-container' ).style.display = 'none';
+				if ( document.querySelector( '.pac-container' ) ) 
+				{
+					document.querySelector( '.pac-container' ).style.display = 'none';
+				}
 			});
 
 		document.querySelector( '#shipping_address_1' ).addEventListener( 'focus', function( e ) 
