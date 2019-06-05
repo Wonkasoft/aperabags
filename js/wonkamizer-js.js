@@ -2556,13 +2556,22 @@ function fillInAddress()
 	var addressType = '';
 	var val = '';
 	var current_street_number = '';
-	if ( place.address_components[0].types[0] === 'street_number' ) 
+	var shipping_address_1 = document.getElementById( 'shipping_address_1' );
+	var shipping_city = document.getElementById( 'shipping_city' );
+	var shipping_state = document.getElementById( 'shipping_state' );
+	var select2_shipping_state = document.getElementById( 'select2-shipping_state-container' );
+	var shipping_postcode = document.getElementById( 'shipping_postcode' );
+	if ( place.address_components[0].types[0] !== 'street_number' ) 
 	{
-		document.getElementById( 'shipping_address_1' ).value = '';
+		shipping_address_1.value = shipping_address_1.value.split( ' ' )[0];
 	}
-	document.getElementById( 'shipping_city' ).value = '';
-	document.getElementById( 'shipping_state' ).value = '';
-	document.getElementById( 'shipping_postcode' ).value = '';
+	else
+	{
+		shipping_address_1.value = '';
+	}
+	shipping_city.value = '';
+	shipping_state.value = '';
+	shipping_postcode.value = '';
 	// Get each component of the address from the place details
 	// and fill the corresponding field on the form.
 	for (var i = 0; i < place.address_components.length; i++) 
@@ -2581,36 +2590,38 @@ function fillInAddress()
 			val = place.address_components[i][componentForm[addressType]];
 			if ( i === 0 ) 
 			{
-				document.getElementById( 'shipping_address_1' ).value += ' ' + val;
+				shipping_address_1.value += ' ' + val;
 			}
 			else
 			{
-				document.getElementById( 'shipping_address_1' ).value = current_street_number + ' ' + val;
+				shipping_address_1.value = current_street_number + ' ' + val;
 			}
 		}
 
 		if ( addressType === 'locality' ) 
 		{
 			val = place.address_components[i][componentForm[addressType]];
-			document.getElementById( 'shipping_city' ).value = val;
+			shipping_city.value = val;
 		}
 
 		if ( addressType === 'administrative_area_level_1' ) 
 		{
 			val = place.address_components[i][componentForm[addressType]];
-			document.getElementById( 'shipping_state' ).value = val;
+			shipping_state.value = val;
+			select2_shipping_state.title = shipping_state.options[shipping_state.selectedIndex].innerText;
+			select2_shipping_state.innerText = shipping_state.options[shipping_state.selectedIndex].innerText;
 		}
 
 		if ( addressType === 'postal_code' ) 
 		{
 			val = place.address_components[i][componentForm[addressType]];
-			document.getElementById( 'shipping_postcode' ).value = val;
+			shipping_postcode.value = val;
 		}
 
 		if ( addressType === 'postal_code_suffix' ) 
 		{
 			val = place.address_components[i][componentForm[addressType]];
-			document.getElementById( 'shipping_postcode' ).value += '-' + val;
+			shipping_postcode.value += '-' + val;
 		}
 	}
 }
