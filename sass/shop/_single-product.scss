@@ -161,7 +161,7 @@
 						top: 25px;
 					}
 
-					@include media-breakpoint( md ) {
+					@include media-breakpoint( lg ) {
 						display: flex;
 					}
 				}
@@ -250,7 +250,7 @@
 				div.woocommerce-product-gallery {
 					height: 100%;
 					width: 100%;
-					max-width: 715px;
+					// max-width: 715px;
 
 					.woocommerce-product-gallery__wrapper {
 						margin: 0 -15px;
@@ -315,7 +315,7 @@
 					max-width: 100%;
 
 					p.price {
-						flex: 0 0 40%;
+						flex: 0 0 20%;
 						display: flex;
 					    align-items: center;
 					    justify-content: space-between;
@@ -375,6 +375,7 @@
 							}
 
 							th.label {
+									width: 85%;
 
 								label {
 									display: flex;
@@ -483,7 +484,7 @@
 				}
 			}
 
-			@include media-breakpoint( md ) {
+			@include media-breakpoint( lg ) {
 				
 				div.wonka-single-product-img-area {
 					position: relative;

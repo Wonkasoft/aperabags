@@ -111,7 +111,7 @@ body.post-template-single-w-sidebar {
 					padding: 0;
 					min-height: 85px;
 					background: rgba( #78bdf7, .4 );
-					@include prefix( box-shadow, 0 1px 4px 0 rgba( #000000, .4 ), o moz webkit );
+					@include prefix( box-shadow, 0 1px 4px 0 rgba( #000000, .2 ), o moz webkit );
 
 					div.title-wrap {
 						position: absolute;
@@ -153,7 +153,7 @@ body.post-template-single-w-sidebar {
 					    padding: 8px;
 					    width: 35%;
 					    height: 65px;
-					    background: #efefef;
+					    background: #f1f1f1;
 					    z-index: 50;
 
 					    .entry-meta {
@@ -169,7 +169,7 @@ body.post-template-single-w-sidebar {
 					    	right: 100%;
 					    	width: 32.5px;
 					    	height: 32.5px;
-					    	border: 32.5px solid #efefef;
+					    	border: 32.5px solid #f1f1f1;
 					    	border-top-color: transparent;
 					    	border-left-color: transparent;
 					    }
@@ -192,12 +192,11 @@ body.post-template-single-w-sidebar {
 						height: 15px;
 						bottom: 0;
 						width: 100%;
-						background: #efefef;
+						background: #f1f1f1;
 					}
 				}
 
 				div.post-thumbnail {
-					@include prefix( box-shadow, 0 1px 4px 0 rgba( #000000, .4 ), o moz webkit );
 				}
 			}
 
