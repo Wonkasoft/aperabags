@@ -2566,7 +2566,7 @@ function fillInAddress()
 	{
 		addressType = '';
 		addressType = place.address_components[i].types[0];
-		console.log( addressType );
+		console.log( addressType + ' ' + i );
 		if ( addressType === 'street_number' ) 
 		{
 			val = place.address_components[i][componentForm[addressType]];
