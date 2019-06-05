@@ -24,6 +24,12 @@
 			{
 				e.stopImmediatePropagation();
 			});
+		
+		document.querySelector( '#shipping_address_1' ).addEventListener( 'blur', function( e ) 
+			{
+				document.querySelector( '.pac-container' ).style.display = 'none';
+			});
+		
 		document.querySelector( '#shipping_address_1' ).addEventListener( 'focus', function( e ) 
 			{
 				if ( document.querySelector( '.pac-container' ).style.display === 'none' ) 
@@ -32,10 +38,6 @@
 				}
 			});
 
-		document.querySelector( '#shipping_address_1' ).addEventListener( 'blur', function( e ) 
-			{
-				document.querySelector( '.pac-container' ).style.display = 'none';
-			});
 	}
 
 	/* vars set for single product page */
