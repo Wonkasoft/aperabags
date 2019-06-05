@@ -2526,7 +2526,7 @@ if ( document.querySelector( 'body.woocommerce-checkout' ) )
         street_number: 'long_name', // Address_1 Numbers only
         route: 'short_name', // Street only
         locality: 'long_name', // City Name
-        administrative_area_level_1: 'long_name', // State
+        administrative_area_level_1: 'short_name', // State
         postal_code: 'long_name', // Zip Code
         postal_code_suffix: 'long_name', // Zip Code
     };	
@@ -2566,6 +2566,7 @@ function fillInAddress()
 	{
 		addressType = '';
 		addressType = place.address_components[i].types[0];
+		console.log( addressType );
 		if ( addressType === 'street_number' ) 
 		{
 			val = place.address_components[i][componentForm[addressType]];
