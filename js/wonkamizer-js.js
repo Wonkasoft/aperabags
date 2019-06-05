@@ -2556,6 +2556,10 @@ function fillInAddress()
 	var place = autocomplete.getPlace();
 	var addressType = '';
 	var val = '';
+	document.getElementById( 'shipping_address_1' ).value = '';
+	document.getElementById( 'shipping_city' ).value = '';
+	document.getElementById( 'shipping_state' ).value = '';
+	document.getElementById( 'shipping_postcode' ).value = '';
 	// Get each component of the address from the place details
 	// and fill the corresponding field on the form.
 	for (var i = 0; i < place.address_components.length; i++) 
