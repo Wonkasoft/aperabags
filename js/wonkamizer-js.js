@@ -13,7 +13,13 @@
 	admin_height,
 	xhr = new XMLHttpRequest();
 
-
+	if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
+	{
+		$( docmuent.body ).on( 'update_checkout', function( e ) 
+			{
+				e.stopImmediatePropagation();
+			});
+	}
 
 	/* vars set for single product page */
 	if ( document.querySelector( '.product-img-section' ) ) 
@@ -2486,6 +2492,7 @@
 =======================================================*/
 if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 {
+
 	// This example displays an address form, using the autocomplete feature
 	// of the Google Places API to help users fill in the information.
 
