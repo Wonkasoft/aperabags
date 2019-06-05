@@ -2561,17 +2561,6 @@ function fillInAddress()
 	var shipping_state = document.getElementById( 'shipping_state' );
 	var select2_shipping_state = document.getElementById( 'select2-shipping_state-container' );
 	var shipping_postcode = document.getElementById( 'shipping_postcode' );
-	if ( place.address_components[0].types[0] !== 'street_number' ) 
-	{
-		shipping_address_1.value = shipping_address_1.value.split( ' ' )[0];
-	}
-	else
-	{
-		shipping_address_1.value = '';
-	}
-	shipping_city.value = '';
-	shipping_state.value = '';
-	shipping_postcode.value = '';
 	// Get each component of the address from the place details
 	// and fill the corresponding field on the form.
 	for (var i = 0; i < place.address_components.length; i++) 
@@ -2590,6 +2579,7 @@ function fillInAddress()
 			val = place.address_components[i][componentForm[addressType]];
 			if ( i === 0 ) 
 			{
+				shipping_address_1.value = shipping_address_1.value.split( ' ' )[0];
 				shipping_address_1.value += ' ' + val;
 			}
 			else
@@ -2600,12 +2590,14 @@ function fillInAddress()
 
 		if ( addressType === 'locality' ) 
 		{
+			shipping_city.value = '';
 			val = place.address_components[i][componentForm[addressType]];
 			shipping_city.value = val;
 		}
 
 		if ( addressType === 'administrative_area_level_1' ) 
 		{
+			shipping_state.value = '';
 			val = place.address_components[i][componentForm[addressType]];
 			shipping_state.value = val;
 			select2_shipping_state.title = shipping_state.options[shipping_state.selectedIndex].innerText;
@@ -2614,6 +2606,7 @@ function fillInAddress()
 
 		if ( addressType === 'postal_code' ) 
 		{
+			shipping_postcode.value = '';
 			val = place.address_components[i][componentForm[addressType]];
 			shipping_postcode.value = val;
 		}
