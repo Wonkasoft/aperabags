@@ -2441,6 +2441,8 @@
 		{
 			var compare_btns = document.querySelector('a.compare.button');
 			var body_element = document.querySelectorAll('body')[0];
+			var html_element = document.querySelectorAll('html')[0];
+
 			
 				compare_btns.addEventListener( 'click', function ( e ) 
 				{
@@ -2455,6 +2457,7 @@
 							var compare_close_btn = document.querySelector('#cboxClose');
 
 							body_element.classList.add('no-scroll');
+							html_element.classList.add('no-scroll');
 
 							if ( compare_close_btn )
 							{
@@ -2465,6 +2468,7 @@
 									if ( body_element.classList.contains( 'no-scroll' ) )
 									{
 										body_element.classList.remove( 'no-scroll' );
+										html_element.classList.remove( 'no-scroll' );
 									}
 								});
 							}
@@ -2474,6 +2478,7 @@
 								if ( body_element.classList.contains( 'no-scroll' ) )
 								{
 									body_element.classList.remove( 'no-scroll' );
+									html_element.classList.remove( 'no-scroll' );
 								}
 							});
 							

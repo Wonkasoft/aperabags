@@ -1,52 +1,90 @@
-table.compare-list tr.add-to-cart td {
-
-  a.button.product_type_variable.add_to_cart_button {
-    padding: .5rem 1rem;
-    text-align: center;
-    border-radius: 100px;
-    background: rgba( #52abf6, 1 );
-    border: 2px solid #52abf6;
-    @include font-size( 1 );
-    @include prefix( box-shadow, $box_shadow_4, o moz webkit );
-    @include prefix( text-shadow, 1px 1px 3px rgba(#000, 0 ), o moz webkit );
-    @include prefix( transition, $trans_25, o moz webkit );
-    margin: 10px 3px;
-    @include font-size( .8 );
-    line-height: .9;
-    color: #fff;
-    padding-bottom: 0px;
-    padding-top: 0px;
-
-    &:visited {
-      color: rgba( #fff, .8);
-      border: 2px solid #52abf6;
-      background: rgba( #52abf6, 1 );
-    }
-  
-    &:hover {
-      background: rgba( #78bdf7, 1 );
-      border-color: #78bdf7;
-      color: rgba(255, 255, 255, 1);
-    }
-  
-    &:active,
-    &:focus {
-      outline: 0;
-      color: rgba(255, 255, 255, 1);
-    }
-  }
-}
-
-
-iframe body h1{
+body.home h1{
   background: #646371;
+  padding: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  a.close {
+    margin: 0 0 0 1rem;
+    position: relative;
+  }
+  // @include media-breakpoint( md ) {
+  //   display: block;
+  //   justify-content: center;
+  // }
+  @include media-breakpoint( lg ) {
+    padding: 1%;
+  }
+
 }
 
 body #yith-woocompare.woocommerce {
-  overflow-x: auto;
+  overflow-x: scroll;
+  height: 100%;
 
-  thead {
-    display: none;
+  table.compare-list {
+    height: 100%;
+    overflow-x: auto;
+
+    tr th {
+      padding: 5px 0 5px 0.5rem;
+    }
+    
+    thead {
+      display: none;
+    }
+  
+    tr.price td {
+      text-decoration: none;
+    
+      ins {
+        background: unset;
+        color: #DC143C;
+      }
+    }
+
+    tr.add-to-cart td a.button.product_type_variable.add_to_cart_button {
+      padding: .5rem 1rem;
+      text-align: center;
+      border-radius: 100px;
+      background: rgba( #52abf6, 1 );
+      border: 2px solid #52abf6;
+      @include font-size( 1 );
+      @include prefix( box-shadow, $box_shadow_4, o moz webkit );
+      @include prefix( text-shadow, 1px 1px 3px rgba(#000, 0 ), o moz webkit );
+      @include prefix( transition, $trans_25, o moz webkit );
+      margin: 10px 3px;
+      @include font-size( .8 );
+      line-height: .9;
+      color: #fff;
+      padding-bottom: 0px;
+      padding-top: 0px;
+  
+      &:visited {
+        color: rgba( #fff, .8);
+        border: 2px solid #52abf6;
+        background: rgba( #52abf6, 1 );
+      }
+    
+      &:hover {
+        background: rgba( #78bdf7, 1 );
+        border-color: #78bdf7;
+        color: rgba(255, 255, 255, 1);
+      }
+    
+      &:active,
+      &:focus {
+        outline: 0;
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+  
+
+
+  @include media-breakpoint( md ) {
+  overflow-x: unset;
   }
 }
 
