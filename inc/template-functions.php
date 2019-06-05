@@ -405,39 +405,47 @@ function aperabags_theme_options_page() {
 
 function wonkasoft_theme_option_parse( $field ) {
 
-		$field['class']         = 	isset( $field['class'] ) ? $field['class'] : 'select short';
-		$field['style']         = 	isset( $field['style'] ) ? $field['style'] : '';
-		$field['wrapper_class'] = 	isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
-		$field['value']         = 	isset( $field['value'] ) ? $field['value'] : '';
-		$field['name']          = 	isset( $field['name'] ) ? $field['name'] : $field['id'];
-		$field['desc_tip']      = 	isset( $field['desc_tip'] ) ? $field['desc_tip'] : false;
-		$styles_set = ( ! empty ( $field['style'] ) ) ? ' style="' . esc_attr( $field['style'] ) . '" ': '';
+	$field['class']         = 	isset( $field['class'] ) ? $field['class'] : 'select short';
+	$field['style']         = 	isset( $field['style'] ) ? $field['style'] : '';
+	$field['wrapper_class'] = 	isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
+	$field['value']         = 	isset( $field['value'] ) ? $field['value'] : '';
+	$field['name']          = 	isset( $field['name'] ) ? $field['name'] : $field['id'];
+	$field['desc_tip']      = 	isset( $field['desc_tip'] ) ? $field['desc_tip'] : false;
+	$styles_set = ( ! empty ( $field['style'] ) ) ? ' style="' . esc_attr( $field['style'] ) . '" ': '';
 
-		// Custom attribute handling
-		$custom_attributes = array();
-		$output = '';
+	// Custom attribute handling
+	$custom_attributes = array();
+	$output = '';
 
-		if ( ! empty( $field['custom_attributes'] ) && is_array( $field['custom_attributes'] ) ) {
+	if ( ! empty( $field['custom_attributes'] ) && is_array( $field['custom_attributes'] ) ) {
 
-			foreach ( $field['custom_attributes'] as $attribute => $value ) {
-				$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $value ) . '"';
-			}
+		foreach ( $field['custom_attributes'] as $attribute => $value ) {
+			$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $value ) . '"';
 		}
-
-		$output .= '<p class="form-field ' . esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ) . '">
-			<label for="' . esc_attr( $field['id'] ) . '">' . wp_kses_post( $field['label'] ) . '</label>';
-
-		if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
-			$output .= wc_help_tip( $field['description'] );
-		}
-
-		$output .= '<input type="password" id="' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $field['name'] ) . '" class="' . esc_attr( $field['class'] ) . '" ' . $styles_set . implode( ' ', $custom_attributes ) . ' value="' . esc_attr( $field['value'] ) . '" placeholder="Paste api key..." /> ';
-
-		if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
-			$output .= '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
-		}
-
-		$output .= '</p>';
-
-		_e( $output );
 	}
+
+	$output .= '<p class="form-field ' . esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ) . '">
+		<label for="' . esc_attr( $field['id'] ) . '">' . wp_kses_post( $field['label'] ) . '</label>';
+
+	if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
+		$output .= wc_help_tip( $field['description'] );
+	}
+
+	$output .= '<input type="password" id="' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $field['name'] ) . '" class="' . esc_attr( $field['class'] ) . '" ' . $styles_set . implode( ' ', $custom_attributes ) . ' value="' . esc_attr( $field['value'] ) . '" placeholder="Paste api key..." /> ';
+
+	if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
+		$output .= '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
+	}
+
+	$output .= '</p>';
+
+	_e( $output );
+}
+
+function wonkasoft_add_author_remove_box( $post_type, $post ) {
+	global $wp_meta_boxes;
+
+	
+}
+
+// add_action('add_meta_boxes', 'wonkasoft_add_author_remove_box', 5, 2);
