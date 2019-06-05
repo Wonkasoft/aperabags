@@ -24,14 +24,6 @@
 			{
 				e.stopImmediatePropagation();
 			});
-		
-		document.querySelector( '#shipping_address_1' ).addEventListener( 'blur', function( e ) 
-			{
-				if ( document.querySelector( '.pac-container' ) ) 
-				{
-					document.querySelector( '.pac-container' ).style.display = 'none';
-				}
-			});
 
 		document.querySelector( '#shipping_address_1' ).addEventListener( 'focus', function( e ) 
 			{
@@ -329,6 +321,10 @@
 									{
 										next_tab.classList.remove( 'disabled' );
 										next_tab.click();
+										if ( document.querySelector( '.pac-container' ) ) 
+										{
+											document.querySelector( '.pac-container' ).style.display = 'none';
+										}
 									}
 								});
 						}
@@ -2567,6 +2563,7 @@ function fillInAddress()
 	// and fill the corresponding field on the form.
 	for (var i = 0; i < place.address_components.length; i++) 
 	{
+		addressType = '';
 		addressType = place.address_components[i].types[0];
 		if ( addressType === 'street_number' ) 
 		{
