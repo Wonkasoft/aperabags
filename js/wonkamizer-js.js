@@ -321,12 +321,12 @@
 									{
 										next_tab.classList.remove( 'disabled' );
 										next_tab.click();
-										ga('send', {
+										/*ga('send', {
 										  hitType: 'event',
 										  eventCategory: 'checkout-step',
 										  eventAction: 'click',
 										  eventLabel: 'Shipping Method'
-										});
+										});*/
 										if ( document.querySelector( '.pac-container' ) ) 
 										{
 											document.querySelector( '.pac-container' ).style.display = 'none';
@@ -345,12 +345,12 @@
 									{
 										next_tab.classList.remove( 'disabled' );
 										next_tab.click();
-										ga('send', {
+										/*ga('send', {
 										  hitType: 'event',
 										  eventCategory: 'checkout-step',
 										  eventAction: 'click',
 										  eventLabel: 'Payment Method'
-										});
+										});*/
 									}
 								});
 						}
@@ -360,12 +360,12 @@
 							e.preventDefault();
 							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 							next_tab.click();
-							ga('send', {
+							/*ga('send', {
 							  hitType: 'event',
 							  eventCategory: 'checkout-back-step',
 							  eventAction: 'click',
 							  eventLabel: 'Customer Information'
-							});
+							});*/
 						}
 
 						/*===================================================================================
@@ -549,12 +549,12 @@
 										if ( i === field_count - 1 && validation_billing_checker )
 										{
 											next_tab.click();
-											ga('send', {
+											/*ga('send', {
 											  hitType: 'event',
 											  eventCategory: 'checkout-place-order',
 											  eventAction: 'click',
 											  eventLabel: 'Place Order'
-											});
+											});*/
 										}
 									});
 							}
@@ -562,12 +562,12 @@
 							if ( document.querySelector( '#bill-to-different-address-checkbox1' ).checked ) 
 							{
 								next_tab.click();
-								ga('send', {
+								/*ga('send', {
 								  hitType: 'event',
 								  eventCategory: 'checkout-place-order',
 								  eventAction: 'click',
 								  eventLabel: 'Place Order'
-								});
+								});*/
 							}
 						}
 						/*=====  End of This is for validation from clicking the place order button  ======*/
