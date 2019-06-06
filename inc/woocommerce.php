@@ -1160,8 +1160,8 @@ function wonka_woo_add_custom_general_fields( $product_type ) {
 	    $product_type['enable_wonka_express_button'] = array(
 	            'id'            => '_enable_wonka_express_button',
 	            'wrapper_class' => '',
-	            'label'         => __( 'Enable Wonka Express Checkout Button', 'aperabags' ),
-	            'description'   => __( 'Adds the Wonka Express Checkout button to the product page allowing buyers to go directly to the checkout directly from the product page.', 'aperabags' ),
+	            'label'         => __( 'Enable Wonka Express Checkout Button', 'apera-bags' ),
+	            'description'   => __( 'Adds the Wonka Express Checkout button to the product page allowing buyers to go directly to the checkout directly from the product page.', 'apera-bags' ),
 	            'default'       => 'yes'
 	    );
 	    return $product_type;

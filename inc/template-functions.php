@@ -442,10 +442,49 @@ function wonkasoft_theme_option_parse( $field ) {
 	_e( $output );
 }
 
-function wonkasoft_add_author_remove_box( $post_type, $post ) {
-	global $wp_meta_boxes;
-
-	
+function wonkasoft_get_meta_boxes( $post_type, $post ) {
+	add_meta_box( 'authorshowdiv', 'Author Display', 'author_display_meta_box', 'post', 'side', 'high', array( 'label' => 'Author Display Off', 'option_name' => 'author_no_display' ) );
 }
 
-// add_action('add_meta_boxes', 'wonkasoft_add_author_remove_box', 5, 2);
+add_action('add_meta_boxes', 'wonkasoft_get_meta_boxes', 10, 2);
+
+function author_display_meta_box( $post, $option ) {
+	wp_nonce_field( 'author_display_option', 'author_display_wpnonce', true, true );
+	$checked = ( get_post_meta( $post->ID, $option['args']['option_name'], false ) ) ? ' checked="true"': '';
+	$output = '';
+
+	$output .= '<div class="form-check">';
+	$output .= '<input type="checkbox" name="' . esc_attr( $option['args']['option_name'] ) . '" id="' . esc_attr( $option['args']['option_name'] ) . '" class="form-check-input"' . $checked . ' />';
+	$output .= '<label class="option-title form-check-label">' . __( $option['args']['label'], 'apera-bags' ) . '</label>';
+	$output .= '</div>';
+
+	_e( $output );
+}
+
+function wonkasoft_save_author_display( $post_id, $post ) {
+	// Add nonce for security and authentication.
+    $nonce_name   = isset( $_POST['author_display_wpnonce'] ) ? $_POST['author_display_wpnonce'] : '';
+    $nonce_action = 'author_display_option';
+
+    // Check if nonce is valid.
+    if ( ! wp_verify_nonce( $nonce_name, $nonce_action ) ) {
+        return;
+    }
+
+    // Check if user has permissions to save data.
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    // Check if not an autosave.
+    if ( wp_is_post_autosave( $post_id ) ) {
+        return;
+    }
+
+    // Check if not a revision.
+    if ( wp_is_post_revision( $post_id ) ) {
+        return;
+    }
+}
+
+add_action( 'save_post', 'wonkasoft_save_author_display', 10, 2 );
