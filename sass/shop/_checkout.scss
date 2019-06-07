@@ -1,6 +1,12 @@
 /**
  * Checkout
  */
+
+ // Hides login error message on Account login page also
+div.woocommerce-notices-wrapper {
+	display: none;
+}
+
 main.main-checkout {
 
 	.wonka-btn {
