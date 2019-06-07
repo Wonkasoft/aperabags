@@ -31,13 +31,19 @@ if ( is_user_logged_in() ) {
 	<div class="form-row form-row-first form-group wonka-form-group">
 
 		<label for="username" class="sr-only"><?php esc_html_e( 'Username or email', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-		<input type="text" class="input-text form-control wonka-form-control" name="username" id="username" autocomplete="username" placeholder="<?php esc_html_e( 'Username or email', 'woocommerce' ); ?>" />
-		<div class="invalid-feedback username"></div>
+		<div class="input-group">
+			<input type="text" class="input-text form-control wonka-form-control" name="username" id="username" autocomplete="username" placeholder="<?php esc_html_e( 'Username or email', 'woocommerce' ); ?>" />
+			<div class="invalid-feedback username"></div>
+		</div>
 	</div>
+
 	<div class="form-row form-row-last form-group wonka-form-group">
+
 		<label for="password" class="sr-only"><?php esc_html_e( 'Password', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-		<input class="input-text form-control wonka-form-control" type="password" name="password" id="password" autocomplete="current-password" placeholder="<?php esc_html_e( 'Password', 'woocommerce' ); ?>" />
-		<div class="invalid-feedback password"></div>
+		<div class="input-group">
+			<input class="input-text form-control wonka-form-control" type="password" name="password" id="password" autocomplete="current-password" placeholder="<?php esc_html_e( 'Password', 'woocommerce' ); ?>" /><div class="input-group-append"><div class="input-group-text"><i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i></div></div>
+			<div class="invalid-feedback password"></div>
+		</div>
 	</div>
 
 	<?php do_action( 'woocommerce_login_form' ); ?>
