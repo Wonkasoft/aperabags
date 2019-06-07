@@ -1304,7 +1304,7 @@ if ( wonkasoft_request.ga_id !== '' )
 		full_imgs.forEach( function( item, i ) 
 			{
 				// working on image zoom here
-				// 
+
 				// item.addEventListener( 'mouseover', function( event )
 				// {
 				// 	var target = event.target;
