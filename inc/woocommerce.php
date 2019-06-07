@@ -675,16 +675,16 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	?>
 	<div id="wonka-checkout-step-buttons" class="wonka-step-buttons tab-content">
 		<div class="tab-pane fade show active" id="wonka_customer_information_buttons" role="tabpanel">
-			<a href="<?php echo get_permalink( wc_get_page_id( 'cart' ) ); ?>" data-target="#cart" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to cart</a>
-			<a href="#" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to shipping method</a>
+			<a href="<?php echo get_permalink( wc_get_page_id( 'cart' ) ); ?>" onclick="ga( 'send', { hitType: 'event', eventCategory: 'checkout-back-to-cart', eventAction: 'click', eventLabel: 'Return to Cart' } );" data-target="#cart" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to cart</a>
+			<a href="#" data-target="#wonka_shipping_method_tab" onclick="ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to shipping method</a>
 		</div>
 		<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
-			<a href="#wonka_customer_information_tab"  data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Customer information</a>
-			<a href="#wonka_payment_method_tab" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to payment method</a>
+			<a href="#wonka_customer_information_tab" onclick="ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Customer Information' } );" data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Customer information</a>
+			<a href="#wonka_payment_method_tab" onclick="ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Payment Method' } );" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to payment method</a>
 		</div>
 		<div class="tab-pane fade" id="wonka_payment_method_buttons" role="tabpanel">
-			<a href="#wonka_shipping_method_tab" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Shipping Method</a>
-			<a href="#place_order" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn">Place Order</a>
+			<a href="#wonka_shipping_method_tab" onclick="ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Shipping Method' } );" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Shipping Method</a>
+			<a href="#place_order" onclick="ga( 'send', { hitType: 'event', eventCategory: 'checkout-place-order', eventAction: 'click', eventLabel: 'Place Order' } );" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn">Place Order</a>
 		</div>
 	</div><!-- #wonka-checkout-step-buttons -->
 		</div><!-- .checkout-form-left-side -->
@@ -875,7 +875,7 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '<div class="col col-12">';
 	$output .= '<div class="row below-express-checkout-btns no-gutters"><div class="col-12 col-md"><hr /></div><!-- .col-12 --><div class="col-12 col-md">';
 	$output .= '<span class="continue-past-btns-text">';
-	$output .= _x( 'Or continue below to pay with a credit card', 'aperabags');
+	$output .= _x( 'Or continue below to pay with a credit card', 'apera-bags');
 	$output .= '</span></div><!-- .col-12 -->';
 	$output .= '<div class="col-12 col-md"><hr /></div><!-- .col-12 --></div><!-- .below-express-checkout-btns -->';
 	$output .= '</div><!-- .col-12 -->';
@@ -912,7 +912,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td colspan="3" class="contact-email-cell">';
 	$output .= '</td>';
 	$output .= '<td class="contact-email-change">';
-	$output .= _x( '<a href="#" class="contact-email-change-link">Change</a>', 'aperabags' );
+	$output .= _x( '<a href="#" class="contact-email-change-link">Change</a>', 'apera-bags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
@@ -927,7 +927,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td colspan="3" class="ship-to-address-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-to-address-change">';
-	$output .= _x( '<a href="#" class="ship-to-address-change-link">Change</a>', 'aperabags' );
+	$output .= _x( '<a href="#" class="ship-to-address-change-link">Change</a>', 'apera-bags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '</tbody><!-- tbody -->';
@@ -950,7 +950,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td colspan="3" class="contact-email-cell">';
 	$output .= '</td>';
 	$output .= '<td class="contact-email-change">';
-	$output .= _x( '<a href="#" class="contact-email-change-link">Change</a>', 'aperabags' );
+	$output .= _x( '<a href="#" class="contact-email-change-link">Change</a>', 'apera-bags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
@@ -965,7 +965,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td colspan="3" class="ship-to-address-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-to-address-change">';
-	$output .= _x( '<a href="#" class="ship-to-address-change-link">Change</a>', 'aperabags' );
+	$output .= _x( '<a href="#" class="ship-to-address-change-link">Change</a>', 'apera-bags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
@@ -982,7 +982,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td colspan="1" class="ship-method-cost-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-method-change">';
-	$output .= _x( '<a href="" class="ship-method-change-link">Change</a>', 'aperabags' );
+	$output .= _x( '<a href="" class="ship-method-change-link">Change</a>', 'apera-bags' );
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '</tbody><!-- tbody -->';
@@ -1160,8 +1160,8 @@ function wonka_woo_add_custom_general_fields( $product_type ) {
 	    $product_type['enable_wonka_express_button'] = array(
 	            'id'            => '_enable_wonka_express_button',
 	            'wrapper_class' => '',
-	            'label'         => __( 'Enable Wonka Express Checkout Button', 'aperabags' ),
-	            'description'   => __( 'Adds the Wonka Express Checkout button to the product page allowing buyers to go directly to the checkout directly from the product page.', 'aperabags' ),
+	            'label'         => __( 'Enable Wonka Express Checkout Button', 'apera-bags' ),
+	            'description'   => __( 'Adds the Wonka Express Checkout button to the product page allowing buyers to go directly to the checkout directly from the product page.', 'apera-bags' ),
 	            'default'       => 'yes'
 	    );
 	    return $product_type;

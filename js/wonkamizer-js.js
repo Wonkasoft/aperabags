@@ -1,7 +1,20 @@
-( function($)
+/*============================================
+=            For Google Analytics            =
+============================================*/
+if ( wonkasoft_request.ga_id !== '' ) 
 {
-	"use strict";
+	(function(i,s,o,g,r,a,m){i.GoogleAnalyticsObject=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments);},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m);
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+	ga('create', wonkasoft_request.ga_id, 'auto');
+	ga('send', 'pageview');
+}
+/*=====  End of For Google Analytics  ======*/
+( function( $ )
+{
+	
 	/*===============================================
 	=            vars set for script use            =
 	===============================================*/
@@ -15,22 +28,26 @@
 
 	if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 	{
-		$( 'docmuent body' ).on( 'update_checkout', function( e ) 
-			{
-				e.stopImmediatePropagation();
-			});
-		document.querySelector( '#shipping_address_1' ).addEventListener( 'focus', function( e ) 
-			{
-				if ( document.querySelector( '.pac-container' ).style.display === 'none' ) 
+		if ( document.querySelector( '#shipping_address_1' ) ) 
+		{
+			$( 'docmuent body' ).on( 'update_checkout', function( e ) 
 				{
-					document.querySelector( '.pac-container' ).style.display = 'block';
-				}
-			});
+					e.stopImmediatePropagation();
+				});
 
-		document.querySelector( '#shipping_address_1' ).addEventListener( 'blur', function( e ) 
-			{
-				document.querySelector( '.pac-container' ).style.display = 'none';
-			});
+			$( '#shipping_address_1' ).on( 'keydown', function( e ) 
+				{
+					e.stopImmediatePropagation();
+				});
+
+			document.querySelector( '#shipping_address_1' ).addEventListener( 'focus', function( e ) 
+				{
+					if ( document.querySelector( '.pac-container' ).style.display === 'none' ) 
+					{
+						document.querySelector( '.pac-container' ).style.display = 'block';
+					}
+				});
+		}
 	}
 
 	/* vars set for single product page */
@@ -319,6 +336,10 @@
 									{
 										next_tab.classList.remove( 'disabled' );
 										next_tab.click();
+										if ( document.querySelector( '.pac-container' ) ) 
+										{
+											document.querySelector( '.pac-container' ).style.display = 'none';
+										}
 									}
 								});
 						}
@@ -2504,7 +2525,7 @@
 };
 	/*=====  End of This is for running after document is ready  ======*/
 
-})(jQuery);
+})( jQuery );
 
 /*=======================================================
 =            This is for the google maps api            =
@@ -2522,12 +2543,12 @@ if ( document.querySelector( 'body.woocommerce-checkout' ) )
 	var placeSearch, autocomplete;
     var componentForm = 
     {
-        shipping_address_1: 'long_name', // Address_1 Numbers and Street only
-        shipping_address_2: 'long_name', // Address_2 Continued only
-        shipping_city: 'long_name', // City Name
-        shipping_state: 'short_name', // State
-        shipping_country: 'long_name', // Country
-        shipping_postcode: 'short_name' // Zip Code
+        street_number: 'long_name', // Address_1 Numbers only
+        route: 'short_name', // Street only
+        locality: 'long_name', // City Name
+        administrative_area_level_1: 'short_name', // State
+        postal_code: 'long_name', // Zip Code
+        postal_code_suffix: 'long_name', // Zip Code
     };	
 }
 
@@ -2552,16 +2573,67 @@ function fillInAddress()
 {
 	// Get the place details from the autocomplete object.
 	var place = autocomplete.getPlace();
+	var addressType = '';
+	var val = '';
+	var current_street_number = '';
+	var shipping_address_1 = document.getElementById( 'shipping_address_1' );
+	var shipping_city = document.getElementById( 'shipping_city' );
+	var shipping_state = document.getElementById( 'shipping_state' );
+	var select2_shipping_state = document.getElementById( 'select2-shipping_state-container' );
+	var shipping_postcode = document.getElementById( 'shipping_postcode' );
 	// Get each component of the address from the place details
 	// and fill the corresponding field on the form.
 	for (var i = 0; i < place.address_components.length; i++) 
 	{
-		var addressType = place.address_components[i].types[0];
-		if ( componentForm[addressType] ) 
+		addressType = '';
+		addressType = place.address_components[i].types[0];
+		if ( addressType === 'street_number' ) 
 		{
+			val = place.address_components[i][componentForm[addressType]];
+			current_street_number = val;
+		}
 
-			var val = place.address_components[i][componentForm[addressType]];
-			document.getElementById(addressType).value = val;
+		if ( addressType === 'route' ) 
+		{
+			val = place.address_components[i][componentForm[addressType]];
+			if ( i === 0 ) 
+			{
+				shipping_address_1.value = shipping_address_1.value.split( ' ' )[0];
+				shipping_address_1.value += ' ' + val;
+			}
+			else
+			{
+				shipping_address_1.value = current_street_number + ' ' + val;
+			}
+		}
+
+		if ( addressType === 'locality' ) 
+		{
+			shipping_city.value = '';
+			val = place.address_components[i][componentForm[addressType]];
+			shipping_city.value = val;
+		}
+
+		if ( addressType === 'administrative_area_level_1' ) 
+		{
+			shipping_state.value = '';
+			val = place.address_components[i][componentForm[addressType]];
+			shipping_state.value = val;
+			select2_shipping_state.title = shipping_state.options[shipping_state.selectedIndex].innerText;
+			select2_shipping_state.innerText = shipping_state.options[shipping_state.selectedIndex].innerText;
+		}
+
+		if ( addressType === 'postal_code' ) 
+		{
+			shipping_postcode.value = '';
+			val = place.address_components[i][componentForm[addressType]];
+			shipping_postcode.value = val;
+		}
+
+		if ( addressType === 'postal_code_suffix' ) 
+		{
+			val = place.address_components[i][componentForm[addressType]];
+			shipping_postcode.value += '-' + val;
 		}
 	}
 }

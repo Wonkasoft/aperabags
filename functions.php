@@ -247,7 +247,12 @@ function apera_bags_scripts() {
 
 	wp_enqueue_script( 'apera-bags-wonkamizer-js', get_template_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'apera-bags-slick-js' ), time(), true );
 
-	wp_localize_script( 'apera-bags-wonkamizer-js', 'wonkasoft_request', array( 'ajax' => admin_url( 'admin-ajax.php' ), 'security' => wp_create_nonce( 'ws-request-nonce' ), ) );
+	$ga_id = ( ! empty( get_option( 'wonkasoft_ga_id' ) ) ) ? get_option( 'wonkasoft_ga_id' ): '';
+	wp_localize_script( 'apera-bags-wonkamizer-js', 'wonkasoft_request', array( 
+		'ajax' => admin_url( 'admin-ajax.php' ), 
+		'ga_id' => $ga_id, 
+		'security' => wp_create_nonce( 'ws-request-nonce' ), 
+	) );
 
 	if ( is_page('checkout') && ! empty ( get_option( 'google_api_key' ) ) ) :
 			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key='. get_option( 'google_api_key' ) . '&libraries=places&callback=initAutocomplete', array( 'apera-bags-wonkamizer-js' ), null, true );
