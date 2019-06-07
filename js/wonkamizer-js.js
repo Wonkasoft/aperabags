@@ -1,7 +1,20 @@
-( function($)
+/*============================================
+=            For Google Analytics            =
+============================================*/
+if ( wonkasoft_request.ga_id !== '' ) 
 {
-	"use strict";
+	(function(i,s,o,g,r,a,m){i.GoogleAnalyticsObject=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments);},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m);
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+	ga('create', wonkasoft_request.ga_id, 'auto');
+	ga('send', 'pageview');
+}
+/*=====  End of For Google Analytics  ======*/
+( function( $ )
+{
+	
 	/*===============================================
 	=            vars set for script use            =
 	===============================================*/
@@ -15,24 +28,26 @@
 
 	if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 	{
-		$( 'docmuent body' ).on( 'update_checkout', function( e ) 
-			{
-				e.stopImmediatePropagation();
-			});
-
-		$( '#shipping_address_1' ).on( 'keydown', function( e ) 
-			{
-				e.stopImmediatePropagation();
-			});
-
-		document.querySelector( '#shipping_address_1' ).addEventListener( 'focus', function( e ) 
-			{
-				if ( document.querySelector( '.pac-container' ).style.display === 'none' ) 
+		if ( document.querySelector( '#shipping_address_1' ) ) 
+		{
+			$( 'docmuent body' ).on( 'update_checkout', function( e ) 
 				{
-					document.querySelector( '.pac-container' ).style.display = 'block';
-				}
-			});
+					e.stopImmediatePropagation();
+				});
 
+			$( '#shipping_address_1' ).on( 'keydown', function( e ) 
+				{
+					e.stopImmediatePropagation();
+				});
+
+			document.querySelector( '#shipping_address_1' ).addEventListener( 'focus', function( e ) 
+				{
+					if ( document.querySelector( '.pac-container' ).style.display === 'none' ) 
+					{
+						document.querySelector( '.pac-container' ).style.display = 'block';
+					}
+				});
+		}
 	}
 
 	/* vars set for single product page */
@@ -321,12 +336,6 @@
 									{
 										next_tab.classList.remove( 'disabled' );
 										next_tab.click();
-										/*ga('send', {
-										  hitType: 'event',
-										  eventCategory: 'checkout-step',
-										  eventAction: 'click',
-										  eventLabel: 'Shipping Method'
-										});*/
 										if ( document.querySelector( '.pac-container' ) ) 
 										{
 											document.querySelector( '.pac-container' ).style.display = 'none';
@@ -345,12 +354,6 @@
 									{
 										next_tab.classList.remove( 'disabled' );
 										next_tab.click();
-										/*ga('send', {
-										  hitType: 'event',
-										  eventCategory: 'checkout-step',
-										  eventAction: 'click',
-										  eventLabel: 'Payment Method'
-										});*/
 									}
 								});
 						}
@@ -360,12 +363,6 @@
 							e.preventDefault();
 							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 							next_tab.click();
-							/*ga('send', {
-							  hitType: 'event',
-							  eventCategory: 'checkout-back-step',
-							  eventAction: 'click',
-							  eventLabel: 'Customer Information'
-							});*/
 						}
 
 						/*===================================================================================
@@ -549,12 +546,6 @@
 										if ( i === field_count - 1 && validation_billing_checker )
 										{
 											next_tab.click();
-											/*ga('send', {
-											  hitType: 'event',
-											  eventCategory: 'checkout-place-order',
-											  eventAction: 'click',
-											  eventLabel: 'Place Order'
-											});*/
 										}
 									});
 							}
@@ -562,12 +553,6 @@
 							if ( document.querySelector( '#bill-to-different-address-checkbox1' ).checked ) 
 							{
 								next_tab.click();
-								/*ga('send', {
-								  hitType: 'event',
-								  eventCategory: 'checkout-place-order',
-								  eventAction: 'click',
-								  eventLabel: 'Place Order'
-								});*/
 							}
 						}
 						/*=====  End of This is for validation from clicking the place order button  ======*/
@@ -2535,7 +2520,7 @@
 };
 	/*=====  End of This is for running after document is ready  ======*/
 
-})(jQuery);
+})( jQuery );
 
 /*=======================================================
 =            This is for the google maps api            =
