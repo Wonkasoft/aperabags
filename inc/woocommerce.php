@@ -247,15 +247,31 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 		if ( $current_method === $method_id ) :
 			$rate_label = $rate->label;
 			$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+			if ( $rate->label === 'FedEx SmartPost Ground: FREE' ) :
+				$shipping_eta = '2-7 business days';
+			endif;
+
+			if ( $rate->label === 'FedEx 2 Day' ) :
+				$shipping_eta = '2 business days (weekends excluded)';
+			endif;
+
+			if ( $rate->label === 'FedEx Standard Overnight' ) :
+				$shipping_eta = 'next business day (weekends excluded)';
+			endif;
 		endif;
 	endforeach;
+	
 	if ( ! empty( $rate_label ) ) :
 		$fragments['td.ship-method-cell'] = '<td colspan="2" class="ship-method-cell">' . $rate_label . '</td>';
 	endif;
+	
 	if ( ! empty( $rate_cost ) ) :
 		$fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
 	endif;
+	
 	$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
+
+	$fragments['td.shipping-eta-disclosure'] = '<td colspan="3" class="shipping-eta-disclosure text-center">' . $shipping_eta . '</td>';
 	ob_get_clean();
 	
 	return $fragments;
@@ -675,16 +691,16 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	?>
 	<div id="wonka-checkout-step-buttons" class="wonka-step-buttons tab-content">
 		<div class="tab-pane fade show active" id="wonka_customer_information_buttons" role="tabpanel">
-			<a href="<?php echo get_permalink( wc_get_page_id( 'cart' ) ); ?>" onclick="ga( 'send', { hitType: 'event', eventCategory: 'checkout-back-to-cart', eventAction: 'click', eventLabel: 'Return to Cart' } );" data-target="#cart" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to cart</a>
-			<a href="#" data-target="#wonka_shipping_method_tab" onclick="ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to shipping method</a>
+			<a href="<?php echo get_permalink( wc_get_page_id( 'cart' ) ); ?>" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-back-to-cart', eventAction: 'click', eventLabel: 'Return to Cart' } );" data-target="#cart" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to cart</a>
+			<a href="#" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to shipping method</a>
 		</div>
 		<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
-			<a href="#wonka_customer_information_tab" onclick="ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Customer Information' } );" data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Customer information</a>
-			<a href="#wonka_payment_method_tab" onclick="ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Payment Method' } );" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to payment method</a>
+			<a href="#wonka_customer_information_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Customer Information' } );" data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Customer information</a>
+			<a href="#wonka_payment_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Payment Method' } );" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to payment method</a>
 		</div>
 		<div class="tab-pane fade" id="wonka_payment_method_buttons" role="tabpanel">
-			<a href="#wonka_shipping_method_tab" onclick="ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Shipping Method' } );" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Shipping Method</a>
-			<a href="#place_order" onclick="ga( 'send', { hitType: 'event', eventCategory: 'checkout-place-order', eventAction: 'click', eventLabel: 'Place Order' } );" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn">Place Order</a>
+			<a href="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Shipping Method' } );" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Shipping Method</a>
+			<a href="#place_order" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-place-order', eventAction: 'click', eventLabel: 'Place Order' } );" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn">Place Order</a>
 		</div>
 	</div><!-- #wonka-checkout-step-buttons -->
 		</div><!-- .checkout-form-left-side -->
@@ -789,6 +805,17 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 									<?php if ( WC()->session->get( 'chosen_shipping_methods')[0] === $method_id ) :
 										$rate_label = $rate->label;
 										$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+										if ( $rate->label === 'FedEx SmartPost Ground: FREE' ) :
+											$shipping_eta = '2-7 business days';
+										endif;
+
+										if ( $rate->label === 'FedEx 2 Day' ) :
+											$shipping_eta = '2 business days (weekends excluded)';
+										endif;
+
+										if ( $rate->label === 'FedEx Standard Overnight' ) :
+											$shipping_eta = 'next business day (weekends excluded)';
+										endif;
 									?>
 									<td colspan="2" class="ship-method-cell">
 										<?php echo $rate_label ?>
@@ -796,6 +823,9 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 									<td colspan="1" class="ship-method-cost-cell">
 										<?php echo sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) ?>
 									</td>
+									</tr>
+									<tr>
+										<td colspan="3" class="shipping-eta-disclosure text-center"><?php echo $shipping_eta; ?></td>
 									<?php endif; ?>
 								<?php endforeach; ?>
 								<?php 

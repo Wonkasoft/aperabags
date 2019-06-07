@@ -942,7 +942,12 @@ if ( wonkasoft_request.ga_id !== '' )
 	  img = imgID;
 	  result = document.getElementById( resultID );
 	  /*create lens:*/
+	  if ( document.querySelector( '#img-zoom-lens-id' ) ) 
+	  {
+	  	document.querySelector( '#img-zoom-lens-id' ).parentElement.removeChild( document.querySelector( '#img-zoom-lens-id' ) );
+	  }
 	  lens = document.createElement( "DIV" );
+	  lens.id = 'img-zoom-lens-id';
 	  lens.setAttribute( "class", "img-zoom-lens" );
 	  /*insert lens:*/
 	  img.parentElement.insertBefore( lens, img );
@@ -1298,17 +1303,61 @@ if ( wonkasoft_request.ga_id !== '' )
 
 		full_imgs.forEach( function( item, i ) 
 			{
+				// working on image zoom here
+				// 
+				// item.addEventListener( 'mouseover', function( event )
+				// {
+				// 	var target = event.target;
+				// 	var my_result;
+				// 	if ( document.querySelector( '#myresult' ) ) 
+				// 	{
+				// 		document.querySelector( '#myresult' ).parentElement.removeChild( document.querySelector( '#myresult' ) );
+				// 	}
+				// 	my_result = document.createElement( 'DIV' );
+				// 	my_result.id = 'myresult';
+				// 	my_result.classList.add( 'img-zoom-result' );
 
-				item.addEventListener( 'mouseover', function( event )
-				{
-					var target = event.target;
-					if ( target.nodeName === 'DIV' ) 
-					{
+				// 	if ( target.nodeName === 'DIV' ) 
+				// 	{
+				// 		target = target.querySelector( 'img' );
+				// 	}
+				// 	console.log(target);
+				// 	if ( target !== null ) 
+				// 	{
+				// 		target.parentElement.appendChild( my_result );
+				// 	}
+				// 	my_result.style.height = target.offsetHeight + 'px';
+				// 	my_result.style.width = target.offsetWidth + 'px';
+				// 	my_result.style.position = 'absolute';
+				// 	my_result.style.top = '0';
+				// 	// target.classList.add( 'vanish' );
+				// 	// imageZoom( target, 'myresult' );
+				// });   
+				
+				// item.addEventListener( 'mouseleave', function( event ) 
+				// {
+				// 	var target = event.target;
 
-						target = target.querySelector( 'img' );
-					}
-						console.log( target );
-				});   
+				// 	if ( target.nodeName === 'DIV' ) 
+				// 	{
+				// 		target = target.querySelector( 'img' );
+				// 	}
+
+				// 	if ( target.classList.contains( 'vanish' ) ) 
+				// 	{
+				// 		target.classList.remove( 'vanish' );
+				// 	}
+
+				// 	if ( document.querySelector( '#myresult' ) ) 
+				// 	{
+				// 		document.querySelector( '#myresult' ).parentElement.removeChild( document.querySelector( '#myresult' ) );
+				// 	}
+
+				// 	if ( document.querySelector( '#img-zoom-lens-id' ) ) 
+				// 	{
+				// 		document.querySelector( '#img-zoom-lens-id' ).parentElement.removeChild( document.querySelector( '#img-zoom-lens-id' ) );
+				// 	}
+				// } );
 
 				item.addEventListener( 'click', function( event )                   
 					{
@@ -1508,9 +1557,17 @@ if ( wonkasoft_request.ga_id !== '' )
 			/*===============================================================
 			=            This is for the geolocate of google api            =
 			===============================================================*/
-		    document.querySelector( '#shipping_address_1' ).setAttribute( 'onfocus', 'geolocate()' );
+			if ( document.querySelector( '#shipping_address_1' ) ) 
+			{
+		    	document.querySelector( '#shipping_address_1' ).setAttribute( 'onfocus', 'geolocate()' );
+			}
 			/*=====  End of This is for the geolocate of google api  ======*/
-			
+			if ( document.querySelector( 'label[for="shipping_method_free_shipping:4_free_shipping4"]' ) ) 
+			{
+				var free_shipping_label = document.querySelector( 'label[for="shipping_method_free_shipping:4_free_shipping4"]' );
+				var free_text = free_shipping_label.innerText.split( ' ' )[3];
+				free_shipping_label.innerHTML = free_shipping_label.innerText.replace( free_text, '<span id="free-shipping-label">' + free_text + '</span>' );
+			}
 		}
 		/*==========================================================
 		=            This is for setting up the reviews            =
