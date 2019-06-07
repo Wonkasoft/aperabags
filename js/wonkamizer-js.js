@@ -2436,44 +2436,42 @@
  *
  * @author Carlos
  * @return  {[type]}  [return description]
- */
+ */		
+
+ 		if(document.querySelector('table.compare-list')) {
+ 			var compare_table = document.querySelector('table.compare-list');
+
+			console.log(compare_table);
+			compare_table.classList.add('table');
+		}
+
 		if ( document.querySelector('a.compare.button') ) 
 		{
 			var compare_btns = document.querySelector('a.compare.button');
 			var body_element = document.querySelectorAll('body')[0];
 			var html_element = document.querySelectorAll('html')[0];
 
-			
-				compare_btns.addEventListener( 'click', function ( e ) 
+
+			compare_btns.addEventListener( 'click', function ( e ) 
+			{
+
+				$(document).bind( 'DOMNodeInserted', function( e )
 				{
 
-					$(document).bind( 'DOMNodeInserted', function( e )
+					if ( document.querySelector('#colorbox').style.display == 'block'  )
 					{
 
-						if ( document.querySelector('#colorbox').style.display == 'block'  )
+						var cboxOverlay_element = document.querySelector('#cboxOverlay');
+						var compare_close_btn = document.querySelector('#cboxClose');
+
+						body_element.classList.add('no-scroll');
+						html_element.classList.add('no-scroll');
+
+						if ( compare_close_btn )
 						{
+							// console.log(compare_close_btn);
 
-							var cboxOverlay_element = document.querySelector('#cboxOverlay');
-							var compare_close_btn = document.querySelector('#cboxClose');
-
-							body_element.classList.add('no-scroll');
-							html_element.classList.add('no-scroll');
-
-							if ( compare_close_btn )
-							{
-								// console.log(compare_close_btn);
-
-								compare_close_btn.addEventListener( 'click', function( e )
-								{
-									if ( body_element.classList.contains( 'no-scroll' ) )
-									{
-										body_element.classList.remove( 'no-scroll' );
-										html_element.classList.remove( 'no-scroll' );
-									}
-								});
-							}
-							
-							cboxOverlay_element.addEventListener( 'click', function( e )
+							compare_close_btn.addEventListener( 'click', function( e )
 							{
 								if ( body_element.classList.contains( 'no-scroll' ) )
 								{
@@ -2481,12 +2479,22 @@
 									html_element.classList.remove( 'no-scroll' );
 								}
 							});
-							
 						}
-
-					});
+						
+						cboxOverlay_element.addEventListener( 'click', function( e )
+						{
+							if ( body_element.classList.contains( 'no-scroll' ) )
+							{
+								body_element.classList.remove( 'no-scroll' );
+								html_element.classList.remove( 'no-scroll' );
+							}
+						});
+						
+					}
 
 				});
+
+			});
 				
 		}
 		/**********  End of Settup for the compare plugin No Scroll  *********/
