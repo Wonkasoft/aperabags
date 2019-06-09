@@ -899,17 +899,17 @@ if ( wonkasoft_request.ga_id !== '' )
 		target_stop = wonka_single_product_img_area.offsetHeight - summary_section.offsetHeight;
 		win_y = window.pageYOffset;
 
-		if ( window.innerWidth > 792 && win_y < img_area_top ) 
+		if ( window.innerWidth > 767 && win_y < img_area_top ) 
 		{
 			summary_section.classList.remove( 'sticky-on' );
 			summary_section.removeAttribute( 'style' );
 		}
-		else if ( window.innerWidth > 792 && win_y - img_area_top > target_stop ) 
+		else if ( window.innerWidth > 767 && win_y - img_area_top > target_stop ) 
 		{
 			summary_section.style.top = target_stop + 'px';
 			summary_section.classList.remove( 'sticky-on' );
 		}
-		else if ( window.innerWidth > 792 )
+		else if ( window.innerWidth > 767 )
 		{
 			if ( document.querySelector( '#wpadminbar' ) ) 
 			{
@@ -1304,7 +1304,7 @@ if ( wonkasoft_request.ga_id !== '' )
 		full_imgs.forEach( function( item, i ) 
 			{
 				// working on image zoom here
-				// 
+
 				// item.addEventListener( 'mouseover', function( event )
 				// {
 				// 	var target = event.target;
