@@ -12,9 +12,9 @@ if ( wonkasoft_request.ga_id !== '' )
 	ga('send', 'pageview');
 }
 /*=====  End of For Google Analytics  ======*/
+
 ( function( $ )
 {
-	
 	/*===============================================
 	=            vars set for script use            =
 	===============================================*/
