@@ -53,22 +53,22 @@ function the_mods_for_section( $section ) {
 	$mods_class = new stdClass();
 	$count = 0;
 	if ( $section == 'top' ) :
-		$mods_class->slides = new stdClass();
+		$mods_class->slides 											= new stdClass();
 		for ($i=1; $i <= 5; $i++) 
 		{
 			if ( !empty( get_theme_mod( 'slider_'.$i ) ) ) : 
 				$count++;
-				$slide 												=	new stdClass();
-				$slide->slide_img									=	get_theme_mod( 'slider_'.$i );
-				$slide->slide_text_position 						=	get_theme_mod( 'slider_text_position_'.$i );
-				$slide->slide_header_message						=	get_theme_mod( 'slider_header_'.$i );
+				$slide 																=	new stdClass();
+				$slide->slide_img											=	get_theme_mod( 'slider_'.$i );
+				$slide->slide_text_position 					=	get_theme_mod( 'slider_text_position_'.$i );
+				$slide->slide_header_message					=	get_theme_mod( 'slider_header_'.$i );
 				$slide->slide_subheader								=	get_theme_mod( 'slider_subheader_'.$i );
 				$slide->slide_link_btn								=	get_theme_mod( 'slider_btn_text_'.$i );
-				$slide->slide_link									=	get_theme_mod( 'slider_btn_link_'.$i );
+				$slide->slide_link										=	get_theme_mod( 'slider_btn_link_'.$i );
 				// Mobile theme mod
 				$slide->slide_mobile_img							=	get_theme_mod( 'slider_mobile_'.$i );
 
-				$mods_class->slides->{"slide_{$i}"} = $slide;
+				$mods_class->slides->{"slide_{$i}"} 	= $slide;
 			endif;
 		}
 
@@ -81,15 +81,15 @@ function the_mods_for_section( $section ) {
 
 		if ( !empty( get_theme_mod( 'shop_title' ) ) ) : 
 			$count++;
-			$shop 												=	new stdClass();
-			$shop->shop_title									=	get_theme_mod( 'shop_title' );
+			$shop 																	=	new stdClass();
+			$shop->shop_title												=	get_theme_mod( 'shop_title' );
 			$shop->shop_background_image 						=	get_theme_mod( 'shop_background_image' );
-			$shop->enable_sale_banner							=	get_theme_mod( 'enable_sale_banner' );
+			$shop->enable_sale_banner								=	get_theme_mod( 'enable_sale_banner' );
 			$shop->shop_product_per_row							=	get_theme_mod( 'shop_product_per_row');
 			$shop->shop_num_of_products							=	get_theme_mod( 'shop_num_of_products');
 
 			$mods_class->{"shop_mods"} = $shop;
-			$mods_class->{"shop_mods"}->count = $count;
+			$mods_class->{"shop_mods"}->count 			= $count;
 		endif;
 
 		return $mods_class;
@@ -101,16 +101,16 @@ function the_mods_for_section( $section ) {
 		{ 
 			if ( !empty( get_theme_mod( 'cta_slider_'.$i ) ) ) :
 				$count++;
-				$slide 												=	new stdClass();
-				$slide->slide_img									=	get_theme_mod( 'cta_slider_'.$i );
-				$slide->slide_text_position 						=	get_theme_mod( 'cta_slider_text_position_'.$i );
-				$slide->slide_text_message							=	get_theme_mod( 'cta_slider_text_'.$i );
+				$slide 																=	new stdClass();
+				$slide->slide_img											=	get_theme_mod( 'cta_slider_'.$i );
+				$slide->slide_text_position 					=	get_theme_mod( 'cta_slider_text_position_'.$i );
+				$slide->slide_text_message						=	get_theme_mod( 'cta_slider_text_'.$i );
 				$slide->slide_link_btn								=	get_theme_mod( 'cta_slider_btn_text_'.$i  );
-				$slide->slide_link									=	get_theme_mod( 'cta_slider_btn_link_'.$i );
+				$slide->slide_link										=	get_theme_mod( 'cta_slider_btn_link_'.$i );
 				// Mobile Theme mod
 				$slide->slide_mobile_img							=	get_theme_mod( 'cta_slider_mobile_'.$i );
 
-				$mods_class->slides->{"slide_{$i}"} = $slide;
+				$mods_class->slides->{"slide_{$i}"} 	= $slide;
 			endif;
 		}
 		
@@ -124,27 +124,27 @@ function the_mods_for_section( $section ) {
 		if ( !empty( get_theme_mod( 'cause_section_title' ) ) ) :
 
 			$count++;
-			$cause 									=	new stdClass();
-			$cause->cause_section_title				=	get_theme_mod( 'cause_section_title');
-			$cause->cause_section_background		=	get_theme_mod( 'cause_section_background');
+			$cause 																	=	new stdClass();
+			$cause->cause_section_title							=	get_theme_mod( 'cause_section_title');
+			$cause->cause_section_background				=	get_theme_mod( 'cause_section_background');
 
 			$mods_class->{"cause_mods"} = $cause;
-			$mods_class->{"cause_mods"}->count = $count;
+			$mods_class->{"cause_mods"}->count 			= $count;
 		endif;
 
-		$count = 0;
-		$mods_class->causes = new stdClass();
+		$count = 0;	
+		$mods_class->causes 											= new stdClass();
 		for ($i=1; $i <= 3; $i++) 
 		{ 
 			if ( !empty( get_theme_mod( 'cause_image_'.$i ) ) ) :
 				$count++;
-				${"cause_$i"} = new stdClass();
-				${"cause_$i"}->img			=	get_theme_mod( 'cause_image_'.$i );
-				${"cause_$i"}->position		=	get_theme_mod( 'cause_message_position_'.$i );
-				${"cause_$i"}->header		=	get_theme_mod( 'cause_header_'.$i );
-				${"cause_$i"}->message		=	get_theme_mod( 'cause_message_'.$i );
+				${"cause_$i"} 												= new stdClass();
+				${"cause_$i"}->img										=	get_theme_mod( 'cause_image_'.$i );
+				${"cause_$i"}->position								=	get_theme_mod( 'cause_message_position_'.$i );
+				${"cause_$i"}->header									=	get_theme_mod( 'cause_header_'.$i );
+				${"cause_$i"}->message								=	get_theme_mod( 'cause_message_'.$i );
 
-				$mods_class->causes->{"cause_$i"} = ${"cause_$i"};
+				$mods_class->causes->{"cause_$i"} 		= ${"cause_$i"};
 
 			endif;
 		}
@@ -157,15 +157,15 @@ function the_mods_for_section( $section ) {
 	if ( $section == 'about' ) :
 		if ( !empty( get_theme_mod( 'about_the_brand_header' ) ) ) :
 			$count++;
-			$about 										=	new stdClass();
-			$about->about_header						=	get_theme_mod( 'about_the_brand_header' );
-			$about->about_subheader						=	get_theme_mod( 'about_the_brand_subheader' );
-			$about->about_message 						=	get_theme_mod( 'about_the_brand_message' );
-			$about->about_the_brand_btn_text			=	get_theme_mod( 'about_the_brand_btn_text' );
+			$about 																	=	new stdClass();
+			$about->about_header										=	get_theme_mod( 'about_the_brand_header' );
+			$about->about_subheader									=	get_theme_mod( 'about_the_brand_subheader' );
+			$about->about_message 									=	get_theme_mod( 'about_the_brand_message' );
+			$about->about_the_brand_btn_text				=	get_theme_mod( 'about_the_brand_btn_text' );
 			$about->about_the_brand_button_link			=	get_permalink( get_theme_mod( 'about_the_brand_button_link' ) );
 			$about->about_the_brand_second_image		=	get_theme_mod( 'about_the_brand_second_image' );
 
-			$mods_class->{"about_the_brand"} = $about;
+			$mods_class->{"about_the_brand"} 				= $about;
 			$mods_class->{"about_the_brand"}->count = $count;
 		endif;
 
@@ -176,17 +176,17 @@ function the_mods_for_section( $section ) {
 	if ( $section == 'social' ) :
 		if ( !empty( get_theme_mod( 'social_section_title' ) ) ) :
 			$count++;
-			$social 									=	new stdClass();
-			$social->social_title						=	get_theme_mod( 'social_section_title' );
-			$social->social_message						=	get_theme_mod( 'social_section_message' );
-			$social->social_shortcode					=	get_theme_mod( 'social_shortcode' );
-			$social->social_btn_text 					=	get_theme_mod( 'social_btn_text' );
-			$social->social_shop_button					=	get_permalink( get_theme_mod( 'social_shop_button' ) );
+			$social 																=	new stdClass();
+			$social->social_title										=	get_theme_mod( 'social_section_title' );
+			$social->social_message									=	get_theme_mod( 'social_section_message' );
+			$social->social_shortcode								=	get_theme_mod( 'social_shortcode' );
+			$social->social_btn_text 								=	get_theme_mod( 'social_btn_text' );
+			$social->social_shop_button							=	get_permalink( get_theme_mod( 'social_shop_button' ) );
 
-			$mods_class->{"social_mods"} = $social;
+			$mods_class->{"social_mods"} 						= $social;
 		endif;
 
-		$mods_class->count = $count;
+		$mods_class->count 												= $count;
 
 		return $mods_class;
 	endif;
@@ -194,19 +194,19 @@ function the_mods_for_section( $section ) {
 	if ( $section == 'footer' ) :
 		if ( !empty( get_theme_mod( 'footer_social_instagram' ) ) ) :
 			$count++;
-			$footer 									=	new stdClass();
-			$footer->footer_social_title				=	get_theme_mod( 'footer_social_title' );
-			$footer->footer_social_instagram			=	get_theme_mod( 'footer_social_instagram' );
-			$footer->footer_social_twitter				=	get_theme_mod( 'footer_social_twitter' );
-			$footer->footer_social_facebook 			=	get_theme_mod( 'footer_social_facebook' );
-			$footer->footer_social_pinterest			=	get_theme_mod( 'footer_social_pinterest' );
-			$footer->footer_contact_message				=	get_theme_mod( 'footer_contact_message' );
+			$footer 																=	new stdClass();
+			$footer->footer_social_title						=	get_theme_mod( 'footer_social_title' );
+			$footer->footer_social_instagram				=	get_theme_mod( 'footer_social_instagram' );
+			$footer->footer_social_twitter					=	get_theme_mod( 'footer_social_twitter' );
+			$footer->footer_social_facebook 				=	get_theme_mod( 'footer_social_facebook' );
+			$footer->footer_social_pinterest				=	get_theme_mod( 'footer_social_pinterest' );
+			$footer->footer_contact_message					=	get_theme_mod( 'footer_contact_message' );
 			$footer->footer_contact_support_email		=	get_theme_mod( 'footer_contact_support_email' );
-			$footer->footer_logo						=	get_theme_mod( 'footer_logo' );
-			$footer->footer_form_shortcode				=	get_theme_mod( 'footer_form_shortcode' );
+			$footer->footer_logo										=	get_theme_mod( 'footer_logo' );
+			$footer->footer_form_shortcode					=	get_theme_mod( 'footer_form_shortcode' );
 
-			$mods_class->{"footer_mods"} = $footer;
-			$mods_class->{"footer_mods"}->count = $count;
+			$mods_class->{"footer_mods"} 						= $footer;
+			$mods_class->{"footer_mods"}->count 		= $count;
 		endif;
 		
 		$count = 0;
@@ -219,7 +219,26 @@ function the_mods_for_section( $section ) {
 			endif;
 		}
 
-		$mods_class->footer_titles->count = $count;
+		$mods_class->footer_titles->count 				= $count;
+
+		return $mods_class;
+	endif;
+
+	if ( $section === 'newsletter' ) :
+		if ( !empty( get_theme_mod( 'enable_newsletter_popup' ) ) ) :
+			$count++;
+			$newsletter 														=	new stdClass();
+			$newsletter->enable_popup								=	get_theme_mod( 'enable_newsletter_popup' );
+			$newsletter->message_text								=	get_theme_mod( 'newsletter_popup_message_text' );
+			$newsletter->background_image						=	get_theme_mod( 'newsletter_background_image' );
+			$newsletter->background_color						=	get_theme_mod( 'newsletter_background_color' );
+			$newsletter->popup_form_select					=	get_theme_mod( 'newsletter_popup_form_select' );
+			$newsletter->session_length							=	get_theme_mod( 'newsletter_popup_message_session_length' );
+			
+			$mods_class->{"newsletter_mods"} 				= $newsletter;
+		endif;
+
+		$mods_class->count 												= $count;
 
 		return $mods_class;
 	endif;

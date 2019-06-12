@@ -144,6 +144,43 @@ $footer_section = get_section_mods( 'footer' );
 			</div><!-- .col -->
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
+<?php
+$newsletter_section = get_section_mods( 'newsletter' );
+$user_id = get_current_user_id();
+$dismissed = ( get_user_option( 'newsletter_dismissed', $user_id ) ) ? true: false;
+if ( ! empty ( $newsletter_section ) && $newsletter_section->newsletter_mods->enable_popup && $dismissed === false ) : 
+	$bg_img = ( ! empty ( $newsletter_section->newsletter_mods->background_image ) ) ? $newsletter_section->newsletter_mods->background_image: '';
+	$bg_color = ( ! empty ( $newsletter_section->newsletter_mods->background_color ) ) ? $newsletter_section->newsletter_mods->background_color: '';
+	if ( ! empty ( $newsletter_section->newsletter_mods->background_color ) ) :
+		$wrap_styles = ' style="background: ' . $newsletter_section->newsletter_mods->background_color . ';"';
+	elseif ( ! empty ( $newsletter_section->newsletter_mods->background_image ) ):
+		$wrap_styles = ' style="background: url(' . $newsletter_section->newsletter_mods->background_image . ');"';
+	else:
+		$wrap_styles = '';
+	endif;
+	?>
+	<div class="wonka-newsletter-wrap"<?php echo $wrap_styles; ?>>
+		<div class="wonka-newsletter-content">
+			<a href="#" class="wonka-newsletter-close-btn">
+				<span class="newsletter-close-btn">X</span>
+			</a>
+			<header class="wonka-newsletter-header">
+				<h4 class="popup-header-text"><?php echo $newsletter_section->newsletter_mods->message_text; ?></h4>
+			</header>
+			<main class="wonka-newsletter-body">
+				<?php if ( ! empty ( $newsletter_section->newsletter_mods->popup_form_select ) ) : ?>
+					<div class="wonka-newsletter-form-wrap">
+						<?php echo do_shortcode( '[gravityform id="' . $newsletter_section->newsletter_mods->popup_form_select . '" title="false" description="false" ajax="true"]' ); ?>
+					</div>
+				<?php endif; ?>
+			</main>
+			<footer class="wonka-newsletter-footer">
+			</footer>
+		</div>
+	</div>
+<?php 
+endif;
+?>
 </div><!-- #page -->
 <!-- Return to Top -->
 <a href="javascript:" id="return-to-top"><i class="fa fa-angle-up"></i></a>
