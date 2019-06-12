@@ -541,7 +541,6 @@ function wonkasoft_dismiss_popup() {
 	print_r( $_POST );
 	check_ajax_referer( 'ws-request-nonce', 'security' );
 
-
 }
 
 add_action( 'wp_ajax_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
