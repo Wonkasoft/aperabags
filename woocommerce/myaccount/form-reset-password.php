@@ -27,7 +27,7 @@ do_action( 'woocommerce_before_reset_password_form' );
 	<div class="woocommerce-form-row woocommerce-form-row--first form-row form-group form-row-first">
 		<label for="password_1"><?php esc_html_e( 'New password', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
 		<div class="input-group woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-			<input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password_1" id="password_1" autocomplete="new-password" />
+			<input type="password" class="woocommerce-Input woocommerce-Input--text form-control input-text" name="password_1" id="password_1" autocomplete="new-password" />
 			<div class="input-group-append">
 				<div class="input-group-text">
 					<i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i>
@@ -40,7 +40,7 @@ do_action( 'woocommerce_before_reset_password_form' );
 	<div class="woocommerce-form-row woocommerce-form-row--last form-group form-row form-row-last">
 		<label for="password_2"><?php esc_html_e( 'Re-enter new password', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
 		<div class="input-group woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-			<input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password_2" id="password_2" autocomplete="new-password" />
+			<input type="password" class="woocommerce-Input woocommerce-Input--text form-control input-text" name="password_2" id="password_2" autocomplete="new-password" />
 			<div class="input-group-append">
 				<div class="input-group-text">
 					<i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i>
