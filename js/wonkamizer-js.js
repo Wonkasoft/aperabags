@@ -1491,6 +1491,44 @@ if ( wonkasoft_request.ga_id !== '' )
 		footer_adjustment();
 		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
 
+		/*=================================
+		=            For Popup            =
+		=================================*/
+		if ( document.querySelector( 'div.wonka-newsletter-wrap' ) ) 
+		{
+			var popup_wrap = document.querySelector( 'div.wonka-newsletter-wrap' );
+			var popup_dismiss_btn = document.querySelector( 'a.wonka-newsletter-close-btn' );
+			setTimeout( function() 
+				{
+					popup_wrap.classList.add( 'popped-up' );
+				}, 5000 );
+			popup_dismiss_btn.addEventListener( 'click', function( e ) 
+				{
+					e.preventDefault();
+					var el = e.target;
+					var data = {};
+					data.action = 'wonkasoft_dismiss_popup';
+					data.security = wonkasoft_request.security;
+
+					if ( el.nodeName === 'SPAN' ) 
+					{
+						el = el.parentElement;
+					}
+	        xhr.onreadystatechange = function() {
+		        if ( this.readyState == 4 && this.status == 200 )  {
+		        	var response =   this;
+							console.log( response );
+		        }
+	        };
+	        xhr.open('POST', wonkasoft_request.ajax );
+	        xhr.setRequestHeader("Content-type", "application/json");
+	        xhr.send( data );
+
+				});
+		}
+		/*=====  End of For Popup  ======*/
+		
+
 		/**************************************************************************
 		 * This allow the user to view their password in the the sign in form CARLOS
 		 **************************************************************************/
@@ -2583,7 +2621,7 @@ if ( wonkasoft_request.ga_id !== '' )
 	=================================================*/
 	if ( document.querySelector('input#s') )
 	{
-	wonka_ajax_request( xhr, "search_site", null);
+		wonka_ajax_request( xhr, "search_site", null);
 	}
 	/*=====  End of Setup for the search form  ======*/
 

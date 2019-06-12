@@ -161,9 +161,11 @@ if ( ! empty ( $newsletter_section ) && $newsletter_section->newsletter_mods->en
 	?>
 	<div class="wonka-newsletter-wrap"<?php echo $wrap_styles; ?>>
 		<div class="wonka-newsletter-content">
-			<a href="#" class="wonka-newsletter-close-btn">
-				<span class="newsletter-close-btn">X</span>
-			</a>
+			<div class="wonka-newsletter-close-btn-wrap">
+				<a href="#" class="wonka-newsletter-close-btn">
+					<span class="newsletter-close-btn">X</span>
+				</a>
+			</div>
 			<header class="wonka-newsletter-header">
 				<h4 class="popup-header-text"><?php echo $newsletter_section->newsletter_mods->message_text; ?></h4>
 			</header>

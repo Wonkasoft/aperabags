@@ -254,14 +254,14 @@ add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
  * customize gravity forms
  */
 function add_bootstrap_container_class( $form, $ajax, $field_values ) {
-	$inline_forms = array( 2 );
+	$inline_forms = array( 'Sign Up', 'Popup' );
 	if ( !empty( $form['cssClass'] ) ) :
 		$form['cssClass'] .= ' wonka-gform wonka-gform-' . $form['id'];
 	else:
 		$form['cssClass'] = 'wonka-gform wonka-gform-' . $form['id'];
 	endif;
 
-	if ( in_array( $form['id'], $inline_forms ) ) :
+	if ( in_array( $form['title'], $inline_forms ) ) :
 		$form['cssClass'] .= ' form-inline wonka-newsletter-form';
 	endif;
 
@@ -533,3 +533,17 @@ function wonkasoft_save_author_display( $post_id, $post ) {
 }
 
 add_action( 'save_post', 'wonkasoft_save_author_display', 10, 2 );
+
+/*======================================================================
+=            This is the ajax call for the newsletter popup            =
+======================================================================*/
+function wonkasoft_dismiss_popup() {
+	print_r( $_POST );
+	check_ajax_referer( 'ws-request-nonce', 'security' );
+
+
+}
+
+add_action( 'wp_ajax_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
+add_action( 'wp_ajax_nopriv_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
+/*=====  End of This is the ajax call for the newsletter popup  ======*/
