@@ -20,23 +20,34 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_before_reset_password_form' );
 ?>
 
-<form method="post" class="woocommerce-ResetPassword lost_reset_password">
+<form method="post" class="woocommerce-ResetPassword lost_reset_password strength-checker">
 
 	<p><?php echo apply_filters( 'woocommerce_reset_password_message', esc_html__( 'Enter a new password below.', 'woocommerce' ) ); ?></p><?php // @codingStandardsIgnoreLine ?>
 
-	<p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+	<div class="woocommerce-form-row woocommerce-form-row--first form-row form-group form-row-first">
 		<label for="password_1"><?php esc_html_e( 'New password', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-		<input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password_1" id="password_1" autocomplete="new-password" />
-	</p>
-	<p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last">
+		<div class="input-group woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+			<input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password_1" id="password_1" autocomplete="new-password" />
+			<div class="input-group-append">
+				<div class="input-group-text">
+					<i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i>
+				</div>
+			</div>
+			<div class="invalid-feedback password-1"></div>
+		</div>
+	</div>
+	
+	<div class="woocommerce-form-row woocommerce-form-row--last form-group form-row form-row-last">
 		<label for="password_2"><?php esc_html_e( 'Re-enter new password', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-		<input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password_2" id="password_2" autocomplete="new-password" />
-		<div class="input-group-append">
-			<div class="input-group-text">
-				<i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i>
+		<div class="input-group woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+			<input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password_2" id="password_2" autocomplete="new-password" />
+			<div class="input-group-append">
+				<div class="input-group-text">
+					<i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i>
+				</div>
 			</div>
 		</div>
-	</p>
+	</div>
 
 	<input type="hidden" name="reset_key" value="<?php echo esc_attr( $args['key'] ); ?>" />
 	<input type="hidden" name="reset_login" value="<?php echo esc_attr( $args['login'] ); ?>" />
