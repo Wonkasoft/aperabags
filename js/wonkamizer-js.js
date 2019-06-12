@@ -2373,10 +2373,10 @@ if ( wonkasoft_request.ga_id !== '' )
 			var count = 0;
 
 			/** Form structure for edit my account  */
-			if ( document.querySelector( 'form.woocommerce-EditAccountForm' ) )
+			if ( document.querySelector( 'form.woocommerce-EditAccountForm' ) || document.querySelector('form.woocommerce-ResetPassword') )
 			{
-				var password_one = document.querySelector( 'form.edit-account #password_1' );
-				var password_parent = document.querySelector( 'form.edit-account #password_1' ).parentElement;
+				var password_one = document.querySelector( 'form.strength-checker #password_1' );
+				var password_parent = document.querySelector( 'form.strength-checker #password_1' ).parentElement;
 
 				password_one.addEventListener( 'keyup', function ( e ) 
 				{
