@@ -227,3 +227,124 @@ footer#colophon {
 		}
 	}
 }
+
+div.wonka-newsletter-wrap {
+	position: fixed;
+	padding: 15px;
+	bottom: 0;
+	width: 100%;
+	z-index: 1099;
+	@include prefix( box-shadow, 0 2px 35px 0 inset rgba( #000, .6 ), o moz webkit );
+
+	a.wonka-newsletter-close-btn {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		width: 100%;
+
+		span.newsletter-close-btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 2px solid rgba( #000, .8 );
+			border-radius: 50%;
+			width: 25px;
+			height: 25px;
+			font-weight: 700;
+		}
+	}
+
+	header.wonka-newsletter-header {
+		margin: auto;
+		width: 100%;
+		max-width: 600px;
+		text-align: center;
+	}
+
+	main.wonka-newsletter-body {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 8px auto;
+
+		.wonka-newsletter-form-wrap {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex: 1 .5 65%;
+		}
+
+		.wonka-newsletter-form_wrapper {
+			flex: 0 0 55%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		form.wonka-newsletter-form {
+			flex: 0 .5 65%;
+			align-items: stretch;
+	    justify-content: center;
+
+	    .gform_body {
+	    	flex: .5 .5 80%;
+	    	height: 70px;
+	    	
+	    	ul {
+	    		margin: 0;
+	    		padding: 0;
+
+	    		label {
+	    			display: none;
+	    		}
+
+	    		li.wonka-form-group {
+	    			margin-bottom: 0;
+	    		}
+
+	    		div.ginput_container_email {
+	    			width: 100%;
+	    		}
+
+	    		input[type=email].wonka-form-control {
+	    			width: 100%;
+	    			color: #bfc0c2;
+	    			background: transparent;
+	    			padding: 8px 15px;
+	    			font-weight: 600;
+	    			border-radius: 100px 0 0 100px;
+	    			height: 49px;
+	    			letter-spacing: 1px;
+	    			@include prefix( transition, $trans_25, webkit moz o);
+
+	    			&::placeholder {
+	    				font-style: italic;
+	    				font-weight: 300;
+	    				color: #444444
+	    			}
+	    		}
+	    	}
+	    }
+
+	    .gform_footer {
+	    	flex: 0 0 20%;
+	    	height: 70px;
+
+	    	input[type=submit].wonka-btn {
+	    		display: flex;
+	    		align-items: center;
+	    		justify-content: center;
+	    		font-family: $font__main;
+	    		font-weight: 800;
+	    		color: #ffffff;
+	    		margin-left: 0;
+	    		width: 100%;
+	    		height: 49px;
+	    		border-radius: 0 100px 100px 0;
+	    		@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+	    	}
+	    }
+		}
+	}
+}
