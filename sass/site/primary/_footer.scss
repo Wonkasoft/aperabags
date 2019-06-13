@@ -244,11 +244,12 @@ div.wonka-newsletter-wrap {
 	&.popped-up {
 		padding: 15px;
 		opacity: 1;
-		height: 225px;
+		height: 215px;
 	}
 
 	div.wonka-newsletter-content {
 		margin: auto;
+		height: 100%;
 		flex: 1 0 100%;
 		display: flex;
 		align-items: center;
@@ -285,7 +286,7 @@ div.wonka-newsletter-wrap {
 		margin: auto;
 		text-align: center;
 
-		h4.popup-header-text {
+		h5.popup-header-text {
 			margin: auto;
 			max-width: 600px;
 		}

@@ -1509,7 +1509,6 @@ if ( wonkasoft_request.ga_id !== '' )
 					var data = {};
 					data.action = 'wonkasoft_dismiss_popup';
 					data.security = wonkasoft_request.security;
-
 					if ( el.nodeName === 'SPAN' ) 
 					{
 						el = el.parentElement;
@@ -1520,9 +1519,9 @@ if ( wonkasoft_request.ga_id !== '' )
 							console.log( response );
 		        }
 	        };
-	        xhr.open('POST', wonkasoft_request.ajax );
-	        xhr.setRequestHeader("Content-type", "application/json");
-	        xhr.send( data );
+	        xhr.open('POST', wonkasoft_request.ajax + '?action=' + data.action + '&security=' + data.security );
+	        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	        xhr.send();
 
 				});
 		}
@@ -1806,7 +1805,7 @@ if ( wonkasoft_request.ga_id !== '' )
 			    commentform.insertBefore( comment_errors, document.querySelector( '.comment-form-rating' ) ); // add info panel before the form to provide feedback or errors
 			    var statusdiv = document.querySelector( '#comment-status' );
 			    var status_errors = document.querySelector( '#comment-errors' );
-				var commentform_inputs = commentform.querySelectorAll( 'input' );
+					var commentform_inputs = commentform.querySelectorAll( 'input' );
 			    var errors;
 			    //serialize and store form data in a variable
 			    var formdata = {};

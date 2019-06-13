@@ -538,11 +538,59 @@ add_action( 'save_post', 'wonkasoft_save_author_display', 10, 2 );
 =            This is the ajax call for the newsletter popup            =
 ======================================================================*/
 function wonkasoft_dismiss_popup() {
-	print_r( $_POST );
+
 	check_ajax_referer( 'ws-request-nonce', 'security' );
 
+	$wonkasoft_popup_cookie = array(
+		'user_id'							=> get_current_user_id(),
+		'show'								=> false,
+		'time_of_visit'				=> time(),
+	);
+
+	$wonkasoft_popup_cookie = json_encode( $wonkasoft_popup_cookie );
+
+	if ( isset ( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
+		unset( $_COOKIE['wonkasoft_newsletter_popup'] );
+		setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * get_theme_mod( 'newsletter_popup_message_session_length' ), '/' );
+	endif;
+
+	if ( ! isset ( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
+		setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * get_theme_mod( 'newsletter_popup_message_session_length' ), '/' );
+	endif;
+
+	wp_send_json_success( $wonkasoft_popup_cookie );
 }
 
 add_action( 'wp_ajax_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
 add_action( 'wp_ajax_nopriv_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
+
+function wonkasoft_theme_popup_cookie() {
+
+	if ( ! empty ( get_theme_mod( 'enable_newsletter_popup' ) ) ) :
+		
+		$wonkasoft_popup_cookie = array(
+			'user_id'							=> get_current_user_id(),
+			'show'								=> true,
+			'time_of_visit'				=> time(),
+		);
+
+		$wonkasoft_popup_cookie = json_encode( $wonkasoft_popup_cookie );
+
+		if ( ! isset ( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
+			setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * get_theme_mod( 'newsletter_popup_message_session_length' ), '/' );
+		endif;
+	endif;
+
+}
+
+add_action( 'init', 'wonkasoft_theme_popup_cookie', 10 );
+
+function wonkasoft_newsletter_popup_entry( $entry, $form ) {
+	if ( $form['title'] === 'Popup' ) :
+		$user_id = get_current_user_id();
+		update_user_option( $user_id, 'newsletter_dismissed', true );
+	endif;
+}
+
+add_action( 'gform_after_submission', 'wonkasoft_newsletter_popup_entry', 10, 2 );
 /*=====  End of This is the ajax call for the newsletter popup  ======*/
