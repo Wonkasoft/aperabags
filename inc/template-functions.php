@@ -586,7 +586,9 @@ function wonkasoft_theme_popup_cookie() {
 add_action( 'init', 'wonkasoft_theme_popup_cookie', 10 );
 
 function wonkasoft_newsletter_popup_entry( $entry, $form ) {
+	
 	$user_id = get_current_user_id();
+
 	if ( $form['title'] === 'Popup' ) :
 		update_user_option( $user_id, 'newsletter_dismissed', true );
 	endif;
@@ -594,6 +596,8 @@ function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 	if ( $form['title'] === 'Sign Up' ) :
 		update_user_option( $user_id, 'newsletter_dismissed', true );
 	endif;
+
+	return;
 }
 
 add_action( 'gform_after_submission', 'wonkasoft_newsletter_popup_entry', 10, 2 );

@@ -169,6 +169,12 @@ footer#colophon {
 		}
 	}
 
+	.validation_error,
+	.validation_message {
+		line-height: 1.2;
+		@include font-size( .8 );
+	}
+
 	@include media-breakpoint( lg ) {
 		.wonka-email-form {
 

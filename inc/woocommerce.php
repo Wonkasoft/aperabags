@@ -105,6 +105,7 @@ add_filter( 'loop_shop_columns', 'apera_bags_woocommerce_loop_columns' );
  * @return array $args related products args.
  */
 function apera_bags_woocommerce_related_products_args( $args ) {
+	
 	$defaults = array(
 		'posts_per_page' => 3,
 		'columns'        => 3,
