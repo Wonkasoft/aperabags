@@ -2548,26 +2548,22 @@ if ( wonkasoft_request.ga_id !== '' )
 						case "Please enter your password.":
 							password_inputs.forEach( function(item, i) 
 							{
-								if (i !== 0){
 									item.classList.add("is-invalid");
 									invalid_text.forEach(function(item)
 									{
 										item.innerText = validation_text;
 									});	
-								}
 							});
 							break;
 
 						case "Passwords do not match.":
 							password_inputs.forEach( function(item, i) 
 							{
-								if (i !== 0){
 									item.classList.add("is-invalid");
 									invalid_text.forEach(function(item)
 									{
 										item.innerText = validation_text;
 									});	
-								}
 							});
 							break;
 					}

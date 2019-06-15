@@ -46,6 +46,7 @@ do_action( 'woocommerce_before_reset_password_form' );
 					<i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i>
 				</div>
 			</div>
+			<div class="invalid-feedback password-2"></div>
 		</div>
 	</div>
 
