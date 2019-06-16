@@ -231,9 +231,9 @@ function the_mods_for_section( $section ) {
 			$newsletter->enable_popup								=	get_theme_mod( 'enable_newsletter_popup' );
 			$newsletter->message_text								=	get_theme_mod( 'newsletter_popup_message_text' );
 			$newsletter->background_image						=	get_theme_mod( 'newsletter_background_image' );
-			$newsletter->background_color						=	get_theme_mod( 'newsletter_background_color' );
+			$newsletter->background_color						=	( ! empty ( get_theme_mod( 'newsletter_background_color' ) ) ) ? get_theme_mod( 'newsletter_background_color' ): '#ffffff';
 			$newsletter->popup_form_select					=	get_theme_mod( 'newsletter_popup_form_select' );
-			$newsletter->session_length							=	get_theme_mod( 'newsletter_popup_message_session_length' );
+			$newsletter->session_length							=	( ! empty ( get_theme_mod( 'newsletter_popup_message_session_length' ) ) ) ? get_theme_mod( 'newsletter_popup_message_session_length' ): 24;
 			
 			$mods_class->{"newsletter_mods"} 				= $newsletter;
 		endif;
@@ -295,10 +295,10 @@ add_filter( 'gform_submit_button', 'wonka_add_classes_to_button', 8, 2 );
 /**
  * This will check is screen is an admin screen
  */
-if (!function_exists('is_admin_page')) {
+if ( ! function_exists( 'is_admin_page' ) ) {
 
   function is_admin_page() {
-    if (function_exists('check_admin_referer')) {
+    if ( function_exists( 'check_admin_referer' ) ) {
       return true;
     }
     else {
@@ -588,13 +588,52 @@ add_action( 'init', 'wonkasoft_theme_popup_cookie', 10 );
 function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 	
 	$user_id = get_current_user_id();
+	$form_title = str_replace( ' ', '-', strtolower( $form['title'] ) );
 
-	if ( $form['title'] === 'Popup' ) :
-		update_user_option( $user_id, 'newsletter_dismissed', true );
+	if ( $form_title === 'popup' ) :
+		if ( $user_id !== 0 ) :
+			update_user_option( $user_id, 'newsletter_dismissed', true );
+		endif;
+
+		$wonkasoft_popup_cookie = array(
+			'user_id'							=> get_current_user_id(),
+			'show'								=> false,
+			'time_of_visit'				=> time(),
+		);
+
+		$wonkasoft_popup_cookie = json_encode( $wonkasoft_popup_cookie );
+
+		if ( isset ( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
+			unset( $_COOKIE['wonkasoft_newsletter_popup'] );
+			setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * 24 * 365, '/' );
+		endif;
+
+		if ( ! isset ( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
+			setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * 24 * 365, '/' );
+		endif;
 	endif;
 
-	if ( $form['title'] === 'Sign Up' ) :
-		update_user_option( $user_id, 'newsletter_dismissed', true );
+	if ( $form_title === 'sign-up' ) :
+		if ( $user_id !== 0 ) :
+			update_user_option( $user_id, 'newsletter_dismissed', true );
+		endif;
+
+		$wonkasoft_popup_cookie = array(
+			'user_id'							=> get_current_user_id(),
+			'show'								=> false,
+			'time_of_visit'				=> time(),
+		);
+
+		$wonkasoft_popup_cookie = json_encode( $wonkasoft_popup_cookie );
+
+		if ( isset ( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
+			unset( $_COOKIE['wonkasoft_newsletter_popup'] );
+			setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * 24 * 365, '/' );
+		endif;
+
+		if ( ! isset ( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
+			setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * 24 * 365, '/' );
+		endif;
 	endif;
 
 	return;
