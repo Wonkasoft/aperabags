@@ -2406,6 +2406,8 @@ if ( wonkasoft_request.ga_id !== '' )
 
 		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ||document.querySelector( 'form.woocommerce-ResetPassword' ) ) 
 		{
+			console.log('helo');
+			
 			var validation_div = document.querySelector( '.woocommerce-error' );
 			var validation_li = document.querySelectorAll( '.woocommerce-error li' );
 			var password_inputs = document.querySelectorAll( 'input#password_current, input#password_1, input#password_2' );
@@ -2540,6 +2542,28 @@ if ( wonkasoft_request.ga_id !== '' )
 										item.innerText = validation_text;
 									});	
 								}
+							});
+							break;
+
+						case "Please enter your password.":
+							password_inputs.forEach( function(item, i) 
+							{
+									item.classList.add("is-invalid");
+									invalid_text.forEach(function(item)
+									{
+										item.innerText = validation_text;
+									});	
+							});
+							break;
+
+						case "Passwords do not match.":
+							password_inputs.forEach( function(item, i) 
+							{
+									item.classList.add("is-invalid");
+									invalid_text.forEach(function(item)
+									{
+										item.innerText = validation_text;
+									});	
 							});
 							break;
 					}
