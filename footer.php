@@ -152,8 +152,7 @@ if ( isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
 	$user_cookie = str_replace( "\\", "", $user_cookie );
 	$user_cookie = json_decode( $user_cookie );
 endif;
-$dismissed = ( ! empty ( get_user_option( 'newsletter_dismissed', $user_id ) ) ) ? get_user_option( 'newsletter_dismissed', $user_id ): false;
-if ( ! empty ( $newsletter_section ) && $newsletter_section->newsletter_mods->enable_popup && $user_cookie->show && !$dismissed ) :
+if ( ! empty ( $newsletter_section ) && $newsletter_section->newsletter_mods->enable_popup && $user_cookie->show ) :
 	$bg_img = ( ! empty ( $newsletter_section->newsletter_mods->background_image ) ) ? $newsletter_section->newsletter_mods->background_image: '';
 	$bg_color = ( ! empty ( $newsletter_section->newsletter_mods->background_color ) ) ? $newsletter_section->newsletter_mods->background_color: '';
 	if ( ! empty ( $newsletter_section->newsletter_mods->background_color ) ) :

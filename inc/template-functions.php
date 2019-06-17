@@ -591,9 +591,6 @@ function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 	$form_title = str_replace( ' ', '-', strtolower( $form['title'] ) );
 
 	if ( $form_title === 'popup' ) :
-		if ( $user_id !== 0 ) :
-			update_user_option( $user_id, 'newsletter_dismissed', true );
-		endif;
 
 		$wonkasoft_popup_cookie = array(
 			'user_id'							=> get_current_user_id(),
@@ -614,9 +611,6 @@ function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 	endif;
 
 	if ( $form_title === 'sign-up' ) :
-		if ( $user_id !== 0 ) :
-			update_user_option( $user_id, 'newsletter_dismissed', true );
-		endif;
 
 		$wonkasoft_popup_cookie = array(
 			'user_id'							=> get_current_user_id(),

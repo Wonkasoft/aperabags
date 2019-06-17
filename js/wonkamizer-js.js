@@ -1498,10 +1498,11 @@ if ( wonkasoft_request.ga_id !== '' )
 		{
 			var popup_wrap = document.querySelector( 'div.wonka-newsletter-wrap' );
 			var popup_dismiss_btn = document.querySelector( 'a.wonka-newsletter-close-btn' );
+			var popup_form = document.querySelector( 'div.wonka-newsletter-wrap form' );
 			setTimeout( function() 
 				{
 					popup_wrap.classList.add( 'popped-up' );
-				}, 5000 );
+				}, 3000 );
 			popup_dismiss_btn.addEventListener( 'click', function( e ) 
 				{
 					e.preventDefault();
@@ -1526,6 +1527,11 @@ if ( wonkasoft_request.ga_id !== '' )
 	        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 	        xhr.send();
 
+				});
+
+			popup_form.addEventListener( 'submit', function( e ) 
+				{
+					console.log( e );
 				});
 		}
 		/*=====  End of For Popup  ======*/
@@ -1981,13 +1987,14 @@ if ( wonkasoft_request.ga_id !== '' )
 			var color_label = document.querySelector( '.variations .label label' );
 			var color_new_swatches_row = document.createElement( 'TR' );
 			var color_swatches_cell = document.querySelector( '.variations .value' );
+			var colors_ul;
 			var qty_label = document.createElement( 'TH' );
 			var qty_label_text = '<span>Quantity</span>';
 			var qty_cell = document.createElement( 'TD' );
 			var qty_box = document.querySelector( '.woocommerce-variation-add-to-cart .quantity' );
-			var colors_ul = document.querySelector( '.variations .value .color-variable-wrapper' );
 			var clear_li = document.createElement( 'LI' );
 			var clear_btn = document.querySelector( '.variations .value .reset_variations' );
+
 
 			color_label_cell.className = "label";
 			qty_label.className = "qty-label";
@@ -2001,9 +2008,13 @@ if ( wonkasoft_request.ga_id !== '' )
 			color_new_swatches_row.appendChild( qty_cell );
 			qty_cell.appendChild( qty_box );
 
+			if ( document.querySelector( '.variations .value .color-variable-wrapper' ) ) 
+			{
+				colors_ul = document.querySelector( '.variations .value .color-variable-wrapper' );
+				colors_ul.appendChild( clear_li );
+				clear_li.appendChild( clear_btn );
+			}
 			table_body.appendChild( color_new_swatches_row );
-			colors_ul.appendChild( clear_li );
-			clear_li.appendChild( clear_btn );
 			table.classList.add( 'table' );
 			entry_summary.classList.add( 'loaded' );
 		}
