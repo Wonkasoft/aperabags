@@ -42,9 +42,12 @@ if ( wonkasoft_request.ga_id !== '' )
 
 			document.querySelector( '#shipping_address_1' ).addEventListener( 'focus', function( e ) 
 				{
-					if ( document.querySelector( '.pac-container' ).style.display === 'none' ) 
+					if ( document.querySelector( '.pac-container' ) ) 
 					{
-						document.querySelector( '.pac-container' ).style.display = 'block';
+						if ( document.querySelector( '.pac-container' ).style.display === 'none' ) 
+						{
+							document.querySelector( '.pac-container' ).style.display = 'block';
+						}
 					}
 				});
 		}
