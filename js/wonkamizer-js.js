@@ -1067,35 +1067,38 @@ if ( wonkasoft_request.ga_id !== '' )
 				item.innerHTML = '<span class="address-number">' +address_1 + ' ' + address_2 + '</span> <span class="city-state-zip">' + city + ', ' + state + ' ' + postcode + '</span>';
 			});
 
-		if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
+		if ( document.getElementById( 'bill-to-different-address-checkbox2' ) ) 
 		{
-			document.getElementById( "billing_address_1" ).classList.remove( 'input-text' );
-			document.getElementById( "billing_address_1" ).removeEventListener( 'change', function() { return; }, true );
-			document.getElementById( "billing_address_1" ).removeEventListener( 'keydown', function() { return; }, true );
-			document.getElementById( "billing_address_2" ).classList.remove( 'input-text' );
-			document.getElementById( "billing_address_2" ).removeEventListener( 'change', function() { return; }, true );
-			document.getElementById( "billing_address_2" ).removeEventListener( 'keydown', function() { return; }, true );
-			document.getElementById( "billing_city" ).classList.remove( 'input-text' );
-			document.getElementById( "billing_city" ).removeEventListener( 'change', function() { return; }, true );
-			document.getElementById( "billing_city" ).removeEventListener( 'keydown', function() { return; }, true );
+			if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
+			{
+				document.getElementById( "billing_address_1" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_address_1" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_address_1" ).removeEventListener( 'keydown', function() { return; }, true );
+				document.getElementById( "billing_address_2" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_address_2" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_address_2" ).removeEventListener( 'keydown', function() { return; }, true );
+				document.getElementById( "billing_city" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_city" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_city" ).removeEventListener( 'keydown', function() { return; }, true );
 
-			document.getElementById( "billing_state" ).addEventListener( 'change', function( e ) { e.stopImmediatePropagation(); return; } );
-			document.getElementById( "billing_postcode" ).classList.remove( 'input-text' );
-			document.getElementById( "billing_postcode" ).removeEventListener( 'change', function() { return; }, true );
-			document.getElementById( "billing_postcode" ).removeEventListener( 'keydown', function() { return; }, true );
-		}
-		else
-		{
-			document.getElementsByName("billing_email")[0].value = email;
-			document.getElementsByName("billing_first_name")[0].value = first_name;
-			document.getElementsByName("billing_last_name")[0].value = last_name;
-			document.getElementsByName("billing_company")[0].value = company;
-			document.getElementsByName("billing_address_1")[0].value = address_1;
-			document.getElementsByName("billing_address_2")[0].value = address_2;
-			document.getElementsByName("billing_city")[0].value = city;
-			document.getElementById("billing_state").value = state;
-			document.getElementsByName("billing_postcode")[0].value = postcode;
-			document.getElementsByName("billing_phone")[0].value = phone;
+				document.getElementById( "billing_state" ).addEventListener( 'change', function( e ) { e.stopImmediatePropagation(); return; } );
+				document.getElementById( "billing_postcode" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_postcode" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_postcode" ).removeEventListener( 'keydown', function() { return; }, true );
+			}
+			else
+			{
+				document.getElementsByName("billing_email")[0].value = email;
+				document.getElementsByName("billing_first_name")[0].value = first_name;
+				document.getElementsByName("billing_last_name")[0].value = last_name;
+				document.getElementsByName("billing_company")[0].value = company;
+				document.getElementsByName("billing_address_1")[0].value = address_1;
+				document.getElementsByName("billing_address_2")[0].value = address_2;
+				document.getElementsByName("billing_city")[0].value = city;
+				document.getElementById("billing_state").value = state;
+				document.getElementsByName("billing_postcode")[0].value = postcode;
+				document.getElementsByName("billing_phone")[0].value = phone;
+			}
 		}
 
 	} 
