@@ -314,7 +314,7 @@ if ( wonkasoft_request.ga_id !== '' )
 							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 							shipping_form_fields.forEach( function( input, i ) 
 								{
-									if ( input.name !== 'shipping_company' && input.name !== 'shipping_address_2' ) 
+									if ( input.name !== 'shipping_company' && input.name !== 'shipping_address_2'  && input.name !== 'mc4wp-subscribe' ) 
 									{
 										input.required = true;
 										if ( input.reportValidity() === false ) 
@@ -1531,7 +1531,16 @@ if ( wonkasoft_request.ga_id !== '' )
 
 			popup_form.addEventListener( 'submit', function( e ) 
 				{
-					console.log( e );
+					e.path.forEach( function( item, i ) 
+						{
+							if ( item.LOG_LEVEL === 'success' ) 
+							{
+								if ( popup_wrap.classList.contains( 'popped-up' ) ) 
+								{
+									popup_wrap.classList.remove( 'popped-up' );
+								}
+							}
+						});
 				});
 		}
 		/*=====  End of For Popup  ======*/
@@ -2417,7 +2426,6 @@ if ( wonkasoft_request.ga_id !== '' )
 
 		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ||document.querySelector( 'form.woocommerce-ResetPassword' ) ) 
 		{
-			console.log('helo');
 			
 			var validation_div = document.querySelector( '.woocommerce-error' );
 			var validation_li = document.querySelectorAll( '.woocommerce-error li' );
