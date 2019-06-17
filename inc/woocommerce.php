@@ -1529,7 +1529,7 @@ function wonka_woocommerce_review_order_before_submit() {
 		var billing_to_radios = document.querySelectorAll( 'input[name="ship_to_different_address"]' );
 		var billing_address_form = document.querySelector( '.billing_address' );
 		var xhr = new XMLHttpRequest();
-		if ( document.querySelector( '#bill-to-different-address-radio2' ).checked ) 
+		if ( document.querySelector( '#bill-to-different-address-checkbox2' ).checked ) 
 		{
 			billing_address_form.classList.add( 'active' );
 			copy_to_billing();
