@@ -1135,7 +1135,7 @@ if ( wonkasoft_request.ga_id !== '' )
 								img_tainers.setAttribute( 'data-variant-color', variant_selected );
 							}
 
-							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) <?php else : ?>
+							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected )
 							{
 								img_tainers.classList.add( 'variant-show' );
 								full_imgs_parent.appendChild( img_tainers );
