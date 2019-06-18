@@ -317,7 +317,7 @@ if ( wonkasoft_request.ga_id !== '' )
 							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 							shipping_form_fields.forEach( function( input, i ) 
 								{
-									if ( input.name !== 'shipping_company' && input.name !== 'shipping_address_2'  && input.name !== 'mc4wp-subscribe' ) 
+									if ( ( input.name !== 'shipping_company' && input.name !== 'shipping_address_2'  && input.name !== 'mc4wp-subscribe' ) || ( input.name !== 'billing_company' && input.name !== 'billing_address_2'  && input.name !== 'mc4wp-subscribe' )  
 									{
 										input.required = true;
 										if ( input.reportValidity() === false ) 
