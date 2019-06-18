@@ -2011,6 +2011,10 @@ if ( wonkasoft_request.ga_id !== '' )
 			var clear_btn = document.querySelector( '.variations .value .reset_variations' );
 
 
+			if ( document.querySelector( '.variations .value .color-variable-wrapper' ) ) 
+			{
+				colors_ul = document.querySelector( '.variations .value .color-variable-wrapper' );
+			}
 			color_label_cell.className = "label";
 			qty_label.className = "qty-label";
 			qty_cell.className = "qty-cell";
@@ -2023,12 +2027,8 @@ if ( wonkasoft_request.ga_id !== '' )
 			color_new_swatches_row.appendChild( qty_cell );
 			qty_cell.appendChild( qty_box );
 
-			if ( document.querySelector( '.variations .value .color-variable-wrapper' ) ) 
-			{
-				colors_ul = document.querySelector( '.variations .value .color-variable-wrapper' );
-				colors_ul.appendChild( clear_li );
-				clear_li.appendChild( clear_btn );
-			}
+			colors_ul.appendChild( clear_li );
+			clear_li.appendChild( clear_btn );
 			table_body.appendChild( color_new_swatches_row );
 			table.classList.add( 'table' );
 			entry_summary.classList.add( 'loaded' );
