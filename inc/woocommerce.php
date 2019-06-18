@@ -417,6 +417,7 @@ add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25
  * 
  */
 function wonka_override_checkout_fields( $fields ) {
+
 	$fields['shipping']['shipping_phone'] = array(
         'label'    	 	=> __('Phone', 'woocommerce'),
 	    'placeholder'   => _x('Phone', 'placeholder', 'woocommerce'),
@@ -433,7 +434,47 @@ function wonka_override_checkout_fields( $fields ) {
 		'clear'     	=> true,
 		'type'			=> 'email'
 		 );
-	
+
+	foreach ( $fields['billing'] as $key => &$field ) {
+		if ( $key === 'billing_country' ) :
+			$field['priority'] = 95;
+		endif;
+
+		if ( !isset($field['placeholder'] ) ) :
+			$field['placeholder'] = $field['label'];
+		endif;
+
+		$field['class'] = array( 'wonka-form-group', 'form-group' );
+
+		$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
+
+		$field['input_class'] = array( 'wonka-form-control', 'form-control' );
+	}
+
+	foreach ( $fields['shipping'] as $key => &$field ) {
+		if ( $key !== 'shipping_company' || $key !== 'shipping_address_2' ) :
+			$field['required'] = true;
+		endif;
+
+		if ( $key === 'shipping_first_name' ) :
+			$field['priority'] = 5;
+		endif;
+
+		if ( $key === 'shipping_country' ) :
+			$field['priority'] = 95;
+		endif;
+		
+		if ( !isset( $field['placeholder'] ) ) :
+			$field['placeholder'] = $field['label'];
+		endif;
+
+		$field['class'] = array( 'wonka-form-group', 'form-group' );
+
+		$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
+
+		$field['input_class'] = array( 'wonka-form-control', 'form-control' );
+	}
+
 	return $fields;
 }
 
@@ -1450,10 +1491,13 @@ add_action( 'woocommerce_review_comment_text', 'filter_woocommerce_product_revie
 function wonka_woocommerce_review_order_before_submit() {
 	?>
 	<script>
-		document.querySelector( '#shipping_address_1' ).addEventListener( 'onfocus', function( e ) 
-			{
-				e.stopImmediatePropagation();
-			} );
+		if ( document.querySelector( '#shipping_address_1' ) ) 
+		{
+			document.querySelector( '#shipping_address_1' ).addEventListener( 'onfocus', function( e ) 
+				{
+					e.stopImmediatePropagation();
+				} );
+		}
 
 		var cybersource_form_field_group = document.querySelectorAll( '.payment_box.payment_method_cybersource .form-row' );
 		cybersource_form_field_group.forEach( function( field_group, i ) 

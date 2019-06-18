@@ -317,7 +317,7 @@ if ( wonkasoft_request.ga_id !== '' )
 							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 							shipping_form_fields.forEach( function( input, i ) 
 								{
-									if ( ( input.name !== 'shipping_company' && input.name !== 'shipping_address_2'  && input.name !== 'mc4wp-subscribe' ) || ( input.name !== 'billing_company' && input.name !== 'billing_address_2'  && input.name !== 'mc4wp-subscribe' )  )
+									if ( input.name !== 'shipping_company' && input.name !== 'shipping_address_2'  && input.name !== 'mc4wp-subscribe'  )
 									{
 										input.required = true;
 										if ( input.reportValidity() === false ) 
@@ -501,7 +501,7 @@ if ( wonkasoft_request.ga_id !== '' )
 									});
 							}
 
-							if ( document.querySelector( '#bill-to-different-address-checkbox2' ).checked ) 
+							if ( document.querySelector( '.woocommerce-billing-fields__field-wrapper' ) ) 
 							{
 								var billing_form_fields = document.querySelectorAll( '.woocommerce-billing-fields__field-wrapper input' );
 								var billing_form_selects = document.querySelectorAll( '.woocommerce-billing-fields__field-wrapper select' );
