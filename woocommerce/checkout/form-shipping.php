@@ -67,16 +67,54 @@ defined( 'ABSPATH' ) || exit;
 					</div>
 
 				<div class="woocommerce-shipping-fields__field-wrapper">
-				<?php if ( wc_ship_to_billing_address_only() && WC()->cart->needs_shipping() ) : ?>
+				<?php if ( wc_ship_to_billing_address_only() && !WC()->cart->needs_shipping() ) : ?>
 
 
 					<h5><?php _e( 'Billing Details', 'woocommerce' ); ?></h5>
 
+					<?php do_action( 'woocommerce_before_checkout_billing_form', $checkout ); ?>
+
+					<div class="woocommerce-billing-fields__field-wrapper">
+						<?php
+						$fields = $checkout->get_checkout_fields( 'billing' );
+
+						foreach ( $fields as $key => $field ) {
+							if ( $key === 'billing_country' ) :
+								$field['priority'] = 95;
+							endif;
+
+							if ( !isset($field['placeholder'] ) ) :
+								$field['placeholder'] = $field['label'];
+							endif;
+
+							if ( isset( $field['class'] ) ) :
+								array_push( $field['class'], 'wonka-form-group', 'form-group' ) ;
+							else:
+								$field['class'] = array( 'wonka-form-group', 'form-group' );
+							endif;
+
+							if ( isset( $field['label_class'] ) ) :
+								array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
+							else:
+								$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
+							endif;
+
+							$field['input_class'] = array( 'wonka-form-control', 'form-control' );
+
+							if ( isset( $field['country_field'], $fields[ $field['country_field'] ] ) ) {
+								$field['country'] = $checkout->get_value( $field['country_field'] );
+							}
+							woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+						}
+						?>
+					</div>
+
+					<?php do_action( 'woocommerce_after_checkout_billing_form', $checkout ); ?>
+
 				<?php else : ?>
 
 					<h5><?php _e( 'Shipping details', 'woocommerce' ); ?></h5>
-
-				<?php endif;
+				<?php
 					foreach ( $fields as $key => $field ) {
 						if ( $key !== 'shipping_email' ) :
 
@@ -119,6 +157,7 @@ defined( 'ABSPATH' ) || exit;
 							woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 						endif;
 					}
+				endif;
 				?>
 			</div>
 

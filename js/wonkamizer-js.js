@@ -2027,8 +2027,11 @@ if ( wonkasoft_request.ga_id !== '' )
 			color_new_swatches_row.appendChild( qty_cell );
 			qty_cell.appendChild( qty_box );
 
-			colors_ul.appendChild( clear_li );
-			clear_li.appendChild( clear_btn );
+			if ( colors_ul ) 
+			{
+				clear_li.appendChild( clear_btn );
+				colors_ul.appendChild( clear_li );
+			}
 			table_body.appendChild( color_new_swatches_row );
 			table.classList.add( 'table' );
 			entry_summary.classList.add( 'loaded' );
@@ -2139,7 +2142,6 @@ if ( wonkasoft_request.ga_id !== '' )
 			var search_btn = document.querySelectorAll( 'li.top-menu-s-btn i' ),
 			close_btn = document.querySelector( 'span.closebtn' );
 			
-	
 			search_btn.forEach( function( item, i ) {
 				item.addEventListener( 'click', openSearch );
 			} );
