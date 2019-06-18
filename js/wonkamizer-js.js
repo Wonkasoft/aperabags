@@ -1135,7 +1135,7 @@ if ( wonkasoft_request.ga_id !== '' )
 								img_tainers.setAttribute( 'data-variant-color', variant_selected );
 							}
 
-							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) <?php else : ?>
 							{
 								img_tainers.classList.add( 'variant-show' );
 								full_imgs_parent.appendChild( img_tainers );
@@ -1539,6 +1539,7 @@ if ( wonkasoft_request.ga_id !== '' )
 				{
 					e.path.forEach( function( item, i ) 
 						{
+							console.log( item );
 							if ( item.LOG_LEVEL === 'success' ) 
 							{
 								if ( popup_wrap.classList.contains( 'popped-up' ) ) 
