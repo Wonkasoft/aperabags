@@ -67,7 +67,7 @@ defined( 'ABSPATH' ) || exit;
 					</div>
 
 				<div class="woocommerce-shipping-fields__field-wrapper">
-				<?php if ( wc_ship_to_billing_address_only() && !WC()->cart->needs_shipping() ) : ?>
+				<?php if ( !WC()->cart->needs_shipping() ) : ?>
 
 
 					<h5><?php _e( 'Billing Details', 'woocommerce' ); ?></h5>
