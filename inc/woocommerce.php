@@ -475,10 +475,6 @@ function wonka_override_checkout_fields( $fields ) {
 		$field['input_class'] = array( 'wonka-form-control', 'form-control' );
 	}
 
-	echo "<pre>\n"; 
-	print_r( $fields ); 
-	echo "</pre>\n";
-
 	return $fields;
 }
 
