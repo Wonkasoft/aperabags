@@ -1746,20 +1746,20 @@ function add_customer_order_notes( $order_id ) {
 	//because I already have the ID from the hook I am using.
 	$order = new WC_Order( $order_id ); 
 
-	$coupon_codes = $order->get_code();
+	$coupon_codes = $order->get_used_coupons();
 
-	// foreach( $coupon_codes as $coupon_code ) {
+	foreach( $coupon_codes as $coupon_code ) {
 
-	// 	$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
+		$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
 
-	// 	if ( $coupon_code === 'clubgreenwood' ) :
+		if ( $coupon_code === 'clubgreenwood' ) :
 
 
-	// 	endif;
+		endif;
 
-	// }
+	}
 // The text for the note
-$note = __( 'This is a club greenwood order, make sure to add custom logo before shipping' ) . $coupon_codes;
+$note = __( 'This is a club greenwood order, make sure to add custom logo before shipping' ) . print_r($coupon_codes);
 
 // Add the note
 $order->add_order_note( $note );
@@ -1768,4 +1768,4 @@ $order->add_order_note( $note );
 $order->save();
 
 }
-add_action( 'woocommerce_new_order', 'add_customer_order_notes',  100, 1  );
+add_action( 'woocommerce_new_order', 'add_customer_order_notes',  500, 1  );
