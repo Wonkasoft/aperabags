@@ -1768,4 +1768,4 @@ function add_customer_order_notes( $order_id ) {
 	}
 
 }
-add_action( 'woocommerce_new_order', 'add_customer_order_notes',  1, 1  );
+add_action( 'woocommerce_new_order', 'add_customer_order_notes',  100, 1  );
