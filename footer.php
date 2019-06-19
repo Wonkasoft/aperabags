@@ -147,10 +147,14 @@ $footer_section = get_section_mods( 'footer' );
 <?php
 $newsletter_section = get_section_mods( 'newsletter' );
 $user_id = get_current_user_id();
+
 if ( isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
 	$user_cookie = $_COOKIE['wonkasoft_newsletter_popup'];
 	$user_cookie = str_replace( "\\", "", $user_cookie );
 	$user_cookie = json_decode( $user_cookie );
+else:
+	$user_cookie = new stdclass();
+	$user_cookie->show = true;
 endif;
 if ( ! empty ( $newsletter_section ) && $newsletter_section->newsletter_mods->enable_popup && $user_cookie->show ) :
 	$bg_img = ( ! empty ( $newsletter_section->newsletter_mods->background_image ) ) ? $newsletter_section->newsletter_mods->background_image: '';

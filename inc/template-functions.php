@@ -549,12 +549,12 @@ function wonkasoft_dismiss_popup() {
 
 	$wonkasoft_popup_cookie = json_encode( $wonkasoft_popup_cookie );
 
-	if ( isset ( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
-		unset( $_COOKIE['wonkasoft_newsletter_popup'] );
+	if ( ! isset ( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
 		setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * get_theme_mod( 'newsletter_popup_message_session_length' ), '/' );
 	endif;
 
-	if ( ! isset ( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
+	if ( isset ( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
+		unset( $_COOKIE['wonkasoft_newsletter_popup'] );
 		setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * get_theme_mod( 'newsletter_popup_message_session_length' ), '/' );
 	endif;
 
