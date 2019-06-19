@@ -1746,7 +1746,7 @@ function add_customer_order_notes( $order_id ) {
 	//because I already have the ID from the hook I am using.
 	$order = new WC_Order( $order_id ); 
 
-	$coupon_codes = $order->get_used_coupons();
+	$coupon_codes = $order->get_code();
 
 	foreach( $coupon_codes as $coupon_code ) {
 
@@ -1759,7 +1759,7 @@ function add_customer_order_notes( $order_id ) {
 
 	}
 // The text for the note
-$note = __( 'This is a club greenwood order, make sure to add custom logo before shipping' ) . var_dump( $coupon_codes );
+$note = __( 'This is a club greenwood order, make sure to add custom logo before shipping' ) . $coupon_codes;
 
 // Add the note
 $order->add_order_note( $note );
