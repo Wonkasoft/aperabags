@@ -1754,18 +1754,18 @@ function add_customer_order_notes( $order_id ) {
 
 		if ( $coupon_code === 'clubgreenwood' ) :
 
-			// The text for the note
-			$note = __( 'This is a club greenwood order, make sure to add custom logo before shipping' );
-
-			// Add the note
-			$order->add_order_note( $note );
-
-			// Save the data
-			$order->save();
 
 		endif;
 
 	}
+// The text for the note
+$note = __( 'This is a club greenwood order, make sure to add custom logo before shipping' );
+
+// Add the note
+$order->add_order_note( $note );
+
+// Save the data
+$order->save();
 
 }
 add_action( 'woocommerce_new_order', 'add_customer_order_notes',  100, 1  );
