@@ -1766,4 +1766,4 @@ function add_customer_order_notes( $order_id ) {
 	}
 
 }
-add_action( 'woocommerce_payment_complete', 'add_customer_order_notes',  10, 1  );
+add_action( 'woocommerce_payment_complete', 'add_customer_order_notes',  2, 1  );
