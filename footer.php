@@ -147,8 +147,16 @@ $footer_section = get_section_mods( 'footer' );
 <?php
 $newsletter_section = get_section_mods( 'newsletter' );
 $user_id = get_current_user_id();
-$dismissed = ( get_user_option( 'newsletter_dismissed', $user_id ) ) ? true: false;
-if ( ! empty ( $newsletter_section ) && $newsletter_section->newsletter_mods->enable_popup && $dismissed === false ) : 
+
+if ( isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
+	$user_cookie = $_COOKIE['wonkasoft_newsletter_popup'];
+	$user_cookie = str_replace( "\\", "", $user_cookie );
+	$user_cookie = json_decode( $user_cookie );
+else:
+	$user_cookie = new stdclass();
+	$user_cookie->show = true;
+endif;
+if ( ! empty ( $newsletter_section ) && $newsletter_section->newsletter_mods->enable_popup && $user_cookie->show ) :
 	$bg_img = ( ! empty ( $newsletter_section->newsletter_mods->background_image ) ) ? $newsletter_section->newsletter_mods->background_image: '';
 	$bg_color = ( ! empty ( $newsletter_section->newsletter_mods->background_color ) ) ? $newsletter_section->newsletter_mods->background_color: '';
 	if ( ! empty ( $newsletter_section->newsletter_mods->background_color ) ) :
@@ -167,7 +175,7 @@ if ( ! empty ( $newsletter_section ) && $newsletter_section->newsletter_mods->en
 				</a>
 			</div>
 			<header class="wonka-newsletter-header">
-				<h4 class="popup-header-text"><?php echo $newsletter_section->newsletter_mods->message_text; ?></h4>
+				<h5 class="popup-header-text"><?php echo $newsletter_section->newsletter_mods->message_text; ?></h5>
 			</header>
 			<main class="wonka-newsletter-body">
 				<?php if ( ! empty ( $newsletter_section->newsletter_mods->popup_form_select ) ) : ?>

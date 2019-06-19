@@ -42,9 +42,12 @@ if ( wonkasoft_request.ga_id !== '' )
 
 			document.querySelector( '#shipping_address_1' ).addEventListener( 'focus', function( e ) 
 				{
-					if ( document.querySelector( '.pac-container' ).style.display === 'none' ) 
+					if ( document.querySelector( '.pac-container' ) ) 
 					{
-						document.querySelector( '.pac-container' ).style.display = 'block';
+						if ( document.querySelector( '.pac-container' ).style.display === 'none' ) 
+						{
+							document.querySelector( '.pac-container' ).style.display = 'block';
+						}
 					}
 				});
 		}
@@ -314,7 +317,7 @@ if ( wonkasoft_request.ga_id !== '' )
 							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 							shipping_form_fields.forEach( function( input, i ) 
 								{
-									if ( input.name !== 'shipping_company' && input.name !== 'shipping_address_2' ) 
+									if ( input.name !== 'shipping_company' && input.name !== 'shipping_address_2'  && input.name !== 'mc4wp-subscribe'  )
 									{
 										input.required = true;
 										if ( input.reportValidity() === false ) 
@@ -498,7 +501,7 @@ if ( wonkasoft_request.ga_id !== '' )
 									});
 							}
 
-							if ( document.querySelector( '#bill-to-different-address-checkbox2' ).checked ) 
+							if ( document.querySelector( '.woocommerce-billing-fields__field-wrapper' ) ) 
 							{
 								var billing_form_fields = document.querySelectorAll( '.woocommerce-billing-fields__field-wrapper input' );
 								var billing_form_selects = document.querySelectorAll( '.woocommerce-billing-fields__field-wrapper select' );
@@ -899,41 +902,43 @@ if ( wonkasoft_request.ga_id !== '' )
 		target_stop = wonka_single_product_img_area.offsetHeight - summary_section.offsetHeight;
 		win_y = window.pageYOffset;
 
-		if ( window.innerWidth > 767 && win_y < img_area_top ) 
+		if ( wonka_single_product_img_area.offsetHeight > summary_section.offsetHeight ) 
 		{
-			summary_section.classList.remove( 'sticky-on' );
-			summary_section.removeAttribute( 'style' );
-		}
-		else if ( window.innerWidth > 767 && win_y - img_area_top > target_stop ) 
-		{
-			summary_section.style.top = target_stop + 'px';
-			summary_section.classList.remove( 'sticky-on' );
-		}
-		else if ( window.innerWidth > 767 )
-		{
-			if ( document.querySelector( '#wpadminbar' ) ) 
+			if ( window.innerWidth > 767 && win_y < img_area_top ) 
 			{
-				admin_bar = document.querySelector( '#wpadminbar' );
-				admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
-				
-				if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+				summary_section.classList.remove( 'sticky-on' );
+				summary_section.removeAttribute( 'style' );
+			}
+			else if ( window.innerWidth > 767 && win_y - img_area_top > target_stop ) 
+			{
+				summary_section.style.top = target_stop + 'px';
+				summary_section.classList.remove( 'sticky-on' );
+			}
+			else if ( window.innerWidth > 767 )
+			{
+				if ( document.querySelector( '#wpadminbar' ) ) 
 				{
-					summary_section.classList.add( 'sticky-on' );
-					summary_section.style.top = 30 + 'px';
+					admin_bar = document.querySelector( '#wpadminbar' );
+					admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+					
+					if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+					{
+						summary_section.classList.add( 'sticky-on' );
+						summary_section.style.top = 30 + 'px';
+					}
+					else
+					{
+						summary_section.classList.add( 'sticky-on' );
+						summary_section.style.top = admin_height + 30 + 'px';
+					}
 				}
 				else
 				{
 					summary_section.classList.add( 'sticky-on' );
-					summary_section.style.top = admin_height + 30 + 'px';
+					summary_section.style.top = 30 + 'px';
 				}
 			}
-			else
-			{
-				summary_section.classList.add( 'sticky-on' );
-				summary_section.style.top = 30 + 'px';
-			}
 		}
-
 	}
 
 	function imageZoom( imgID, resultID ) 
@@ -1064,35 +1069,38 @@ if ( wonkasoft_request.ga_id !== '' )
 				item.innerHTML = '<span class="address-number">' +address_1 + ' ' + address_2 + '</span> <span class="city-state-zip">' + city + ', ' + state + ' ' + postcode + '</span>';
 			});
 
-		if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
+		if ( document.getElementById( 'bill-to-different-address-checkbox2' ) ) 
 		{
-			document.getElementById( "billing_address_1" ).classList.remove( 'input-text' );
-			document.getElementById( "billing_address_1" ).removeEventListener( 'change', function() { return; }, true );
-			document.getElementById( "billing_address_1" ).removeEventListener( 'keydown', function() { return; }, true );
-			document.getElementById( "billing_address_2" ).classList.remove( 'input-text' );
-			document.getElementById( "billing_address_2" ).removeEventListener( 'change', function() { return; }, true );
-			document.getElementById( "billing_address_2" ).removeEventListener( 'keydown', function() { return; }, true );
-			document.getElementById( "billing_city" ).classList.remove( 'input-text' );
-			document.getElementById( "billing_city" ).removeEventListener( 'change', function() { return; }, true );
-			document.getElementById( "billing_city" ).removeEventListener( 'keydown', function() { return; }, true );
+			if ( document.getElementById( 'bill-to-different-address-checkbox2' ).checked === true ) 
+			{
+				document.getElementById( "billing_address_1" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_address_1" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_address_1" ).removeEventListener( 'keydown', function() { return; }, true );
+				document.getElementById( "billing_address_2" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_address_2" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_address_2" ).removeEventListener( 'keydown', function() { return; }, true );
+				document.getElementById( "billing_city" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_city" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_city" ).removeEventListener( 'keydown', function() { return; }, true );
 
-			document.getElementById( "billing_state" ).addEventListener( 'change', function( e ) { e.stopImmediatePropagation(); return; } );
-			document.getElementById( "billing_postcode" ).classList.remove( 'input-text' );
-			document.getElementById( "billing_postcode" ).removeEventListener( 'change', function() { return; }, true );
-			document.getElementById( "billing_postcode" ).removeEventListener( 'keydown', function() { return; }, true );
-		}
-		else
-		{
-			document.getElementsByName("billing_email")[0].value = email;
-			document.getElementsByName("billing_first_name")[0].value = first_name;
-			document.getElementsByName("billing_last_name")[0].value = last_name;
-			document.getElementsByName("billing_company")[0].value = company;
-			document.getElementsByName("billing_address_1")[0].value = address_1;
-			document.getElementsByName("billing_address_2")[0].value = address_2;
-			document.getElementsByName("billing_city")[0].value = city;
-			document.getElementById("billing_state").value = state;
-			document.getElementsByName("billing_postcode")[0].value = postcode;
-			document.getElementsByName("billing_phone")[0].value = phone;
+				document.getElementById( "billing_state" ).addEventListener( 'change', function( e ) { e.stopImmediatePropagation(); return; } );
+				document.getElementById( "billing_postcode" ).classList.remove( 'input-text' );
+				document.getElementById( "billing_postcode" ).removeEventListener( 'change', function() { return; }, true );
+				document.getElementById( "billing_postcode" ).removeEventListener( 'keydown', function() { return; }, true );
+			}
+			else
+			{
+				document.getElementsByName("billing_email")[0].value = email;
+				document.getElementsByName("billing_first_name")[0].value = first_name;
+				document.getElementsByName("billing_last_name")[0].value = last_name;
+				document.getElementsByName("billing_company")[0].value = company;
+				document.getElementsByName("billing_address_1")[0].value = address_1;
+				document.getElementsByName("billing_address_2")[0].value = address_2;
+				document.getElementsByName("billing_city")[0].value = city;
+				document.getElementById("billing_state").value = state;
+				document.getElementsByName("billing_postcode")[0].value = postcode;
+				document.getElementsByName("billing_phone")[0].value = phone;
+			}
 		}
 
 	} 
@@ -1115,90 +1123,14 @@ if ( wonkasoft_request.ga_id !== '' )
 		var thumbs_set;
 		var imgs_set;
 
-		variant_lis.forEach( function( item, i ) 
-			{	
-				if ( item.classList.contains( 'selected' ) ) 
-				{
-					variant_selected = item.getAttribute( 'data-value' );
-
-					full_imgs_parent.innerHTML = '';
-					full_imgs.forEach( function( img_tainers, i ) 
-						{
-							if ( i === 0 ) 
-							{
-								img_tainers.setAttribute( 'data-variant-color', variant_selected );
-							}
-
-							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
-							{
-								img_tainers.classList.add( 'variant-show' );
-								full_imgs_parent.appendChild( img_tainers );
-							}
-
-							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
-							{
-								img_tainers.classList.remove( 'variant-show' );
-							}
-						});
-
-					thumb_lis_parent.innerHTML = '';
-					thumb_lis.forEach( function( img_tainers, i ) 
-						{
-							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
-							{
-								img_tainers.classList.add( 'variant-show' );
-								thumb_lis_parent.appendChild( img_tainers );
-							}
-
-							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
-							{
-								img_tainers.classList.remove( 'variant-show' );
-							}
-						});
-
-				}
-				
-				if ( item.selectedIndex === 0 ) 
-				{
-					full_imgs_parent.innerHTML = '';
-					full_imgs.forEach( function( img_tainers, i ) 
-						{
-							img_tainers.classList.add( 'variant-show' );
-						});
-
-					thumb_lis_parent.innerHTML = '';
-					thumb_lis.forEach( function( img_tainers, i ) 
-						{
-							img_tainers.classList.add( 'variant-show' );
-						});
-				}
-
-				item.addEventListener( 'click', function( event ) 
-				{
-					var variant = event.target;
-
-					if ( variant.nodeName === 'SPAN' ) 
+		if ( variant_lis.length ) 
+		{
+			variant_lis.forEach( function( item, i ) 
+				{	
+					if ( item.classList.contains( 'selected' ) ) 
 					{
-						variant = variant.parentElement;
-					}
+						variant_selected = item.getAttribute( 'data-value' );
 
-					if ( variant.getAttribute( 'data-value' ) ) 
-					{
-						variant_selected = variant.getAttribute( 'data-value' );
-					}
-
-					if ( variant.nodeName === 'A' ) 
-					{
-						variant = variant.parentElement;
-					}
-
-					if ( window.innerWidth < 480 ) 
-					{
-						$( '.wonka-image-viewer' ).slick( 'unslick' );
-					}
-
-					if ( variant_selected !== null ) 
-					{
 						full_imgs_parent.innerHTML = '';
 						full_imgs.forEach( function( img_tainers, i ) 
 							{
@@ -1207,7 +1139,7 @@ if ( wonkasoft_request.ga_id !== '' )
 									img_tainers.setAttribute( 'data-variant-color', variant_selected );
 								}
 
-								if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+								if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected )
 								{
 									img_tainers.classList.add( 'variant-show' );
 									full_imgs_parent.appendChild( img_tainers );
@@ -1234,72 +1166,163 @@ if ( wonkasoft_request.ga_id !== '' )
 								}
 							});
 
-						if ( window.innerWidth < 480 ) 
-						{
-							setTimeout( function() 
-								{
-									$( '.wonka-image-viewer' ).slick({
-										slidesToShow: 1,
-										slidesToScroll: 1,
-										adaptiveHeight: true,
-										mobileFirst: true,
-										dots: false,
-										prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
-										nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
-										responsive: [
-											{
-											  breakpoint: 768,
-											  settings: 'unslick',
-											},
-										],
-									});
-								}, 10 );
-						}
 					}
-
-					if ( variant.firstElementChild.classList.contains( 'reset_variations' ) ) 
+					
+					if ( item.selectedIndex === 0 ) 
 					{
-
 						full_imgs_parent.innerHTML = '';
 						full_imgs.forEach( function( img_tainers, i ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
-								full_imgs_parent.appendChild( img_tainers );
 							});
 
 						thumb_lis_parent.innerHTML = '';
 						thumb_lis.forEach( function( img_tainers, i ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
-								thumb_lis_parent.appendChild( img_tainers );
 							});
+					}
+
+					item.addEventListener( 'click', function( event ) 
+					{
+						var variant = event.target;
+
+						if ( variant.nodeName === 'SPAN' ) 
+						{
+							variant = variant.parentElement;
+						}
+
+						if ( variant.getAttribute( 'data-value' ) )
+						{
+							variant_selected = variant.getAttribute( 'data-value' );
+						}
+
+						if ( variant.nodeName === 'A' ) 
+						{
+							variant = variant.parentElement;
+						}
 
 						if ( window.innerWidth < 480 ) 
 						{
-							setTimeout( function() 
-								{
-									$( '.wonka-image-viewer' ).slick({
-										slidesToShow: 1,
-										slidesToScroll: 1,
-										adaptiveHeight: true,
-										mobileFirst: true,
-										dots: false,
-										prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
-										nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
-										responsive: [
-											{
-											  breakpoint: 768,
-											  settings: 'unslick',
-											},
-										],
-									});
-								}, 20 );
+							$( '.wonka-image-viewer' ).slick( 'unslick' );
 						}
-					}
-					
-					
+
+						if ( variant_selected !== null ) 
+						{
+							full_imgs_parent.innerHTML = '';
+							full_imgs.forEach( function( img_tainers, i ) 
+								{
+									if ( i === 0 ) 
+									{
+										img_tainers.setAttribute( 'data-variant-color', variant_selected );
+									}
+
+									if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+									{
+										img_tainers.classList.add( 'variant-show' );
+										full_imgs_parent.appendChild( img_tainers );
+									}
+
+									if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+									{
+										img_tainers.classList.remove( 'variant-show' );
+									}
+								});
+
+							thumb_lis_parent.innerHTML = '';
+							thumb_lis.forEach( function( img_tainers, i ) 
+								{
+									if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+									{
+										img_tainers.classList.add( 'variant-show' );
+										thumb_lis_parent.appendChild( img_tainers );
+									}
+
+									if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+									{
+										img_tainers.classList.remove( 'variant-show' );
+									}
+								});
+
+							if ( window.innerWidth < 480 ) 
+							{
+								setTimeout( function() 
+									{
+										$( '.wonka-image-viewer' ).slick({
+											slidesToShow: 1,
+											slidesToScroll: 1,
+											adaptiveHeight: true,
+											mobileFirst: true,
+											dots: false,
+											prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+											nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+											responsive: [
+												{
+												  breakpoint: 768,
+												  settings: 'unslick',
+												},
+											],
+										});
+									}, 10 );
+							}
+						}
+
+						if ( variant.firstElementChild.classList.contains( 'reset_variations' ) ) 
+						{
+
+							full_imgs_parent.innerHTML = '';
+							full_imgs.forEach( function( img_tainers, i ) 
+								{
+									img_tainers.classList.add( 'variant-show' );
+									full_imgs_parent.appendChild( img_tainers );
+								});
+
+							thumb_lis_parent.innerHTML = '';
+							thumb_lis.forEach( function( img_tainers, i ) 
+								{
+									img_tainers.classList.add( 'variant-show' );
+									thumb_lis_parent.appendChild( img_tainers );
+								});
+
+							if ( window.innerWidth < 480 ) 
+							{
+								setTimeout( function() 
+									{
+										$( '.wonka-image-viewer' ).slick({
+											slidesToShow: 1,
+											slidesToScroll: 1,
+											adaptiveHeight: true,
+											mobileFirst: true,
+											dots: false,
+											prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+											nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+											responsive: [
+												{
+												  breakpoint: 768,
+												  settings: 'unslick',
+												},
+											],
+										});
+									}, 20 );
+							}
+						}
+						
+						
+					});
 				});
-			});
+		}
+		else 
+		{
+			full_imgs.forEach( function( item, i ) 
+				{
+					item.classList.add( 'variant-show' );
+				});
+
+			thumb_lis.forEach( function( item, i ) 
+				{
+					item.classList.add( 'variant-show' );
+				});
+		}
 
 		full_imgs.forEach( function( item, i ) 
 			{
@@ -1498,10 +1521,11 @@ if ( wonkasoft_request.ga_id !== '' )
 		{
 			var popup_wrap = document.querySelector( 'div.wonka-newsletter-wrap' );
 			var popup_dismiss_btn = document.querySelector( 'a.wonka-newsletter-close-btn' );
+			var popup_form = document.querySelector( 'div.wonka-newsletter-wrap form' );
 			setTimeout( function() 
 				{
 					popup_wrap.classList.add( 'popped-up' );
-				}, 5000 );
+				}, 3000 );
 			popup_dismiss_btn.addEventListener( 'click', function( e ) 
 				{
 					e.preventDefault();
@@ -1509,7 +1533,6 @@ if ( wonkasoft_request.ga_id !== '' )
 					var data = {};
 					data.action = 'wonkasoft_dismiss_popup';
 					data.security = wonkasoft_request.security;
-
 					if ( el.nodeName === 'SPAN' ) 
 					{
 						el = el.parentElement;
@@ -1517,13 +1540,22 @@ if ( wonkasoft_request.ga_id !== '' )
 	        xhr.onreadystatechange = function() {
 		        if ( this.readyState == 4 && this.status == 200 )  {
 		        	var response =   this;
-							console.log( response );
+		        	console.log( response );
+        			if ( popup_wrap.classList.contains( 'popped-up' ) ) 
+        			{
+        				popup_wrap.classList.remove( 'popped-up' );
+        			}
 		        }
 	        };
-	        xhr.open('POST', wonkasoft_request.ajax );
-	        xhr.setRequestHeader("Content-type", "application/json");
-	        xhr.send( data );
+	        xhr.open('POST', wonkasoft_request.ajax + '?action=' + data.action + '&security=' + data.security );
+	        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	        xhr.send();
 
+				});
+
+			popup_form.addEventListener( 'gform_confirmation_loaded', function( e ) 
+				{
+					console.log( e );
 				});
 		}
 		/*=====  End of For Popup  ======*/
@@ -1806,7 +1838,7 @@ if ( wonkasoft_request.ga_id !== '' )
 			    commentform.insertBefore( comment_errors, document.querySelector( '.comment-form-rating' ) ); // add info panel before the form to provide feedback or errors
 			    var statusdiv = document.querySelector( '#comment-status' );
 			    var status_errors = document.querySelector( '#comment-errors' );
-				var commentform_inputs = commentform.querySelectorAll( 'input' );
+					var commentform_inputs = commentform.querySelectorAll( 'input' );
 			    var errors;
 			    //serialize and store form data in a variable
 			    var formdata = {};
@@ -1979,14 +2011,19 @@ if ( wonkasoft_request.ga_id !== '' )
 			var color_label = document.querySelector( '.variations .label label' );
 			var color_new_swatches_row = document.createElement( 'TR' );
 			var color_swatches_cell = document.querySelector( '.variations .value' );
+			var colors_ul;
 			var qty_label = document.createElement( 'TH' );
 			var qty_label_text = '<span>Quantity</span>';
 			var qty_cell = document.createElement( 'TD' );
 			var qty_box = document.querySelector( '.woocommerce-variation-add-to-cart .quantity' );
-			var colors_ul = document.querySelector( '.variations .value .color-variable-wrapper' );
 			var clear_li = document.createElement( 'LI' );
 			var clear_btn = document.querySelector( '.variations .value .reset_variations' );
 
+
+			if ( document.querySelector( '.variations .value .color-variable-wrapper' ) ) 
+			{
+				colors_ul = document.querySelector( '.variations .value .color-variable-wrapper' );
+			}
 			color_label_cell.className = "label";
 			qty_label.className = "qty-label";
 			qty_cell.className = "qty-cell";
@@ -1999,9 +2036,12 @@ if ( wonkasoft_request.ga_id !== '' )
 			color_new_swatches_row.appendChild( qty_cell );
 			qty_cell.appendChild( qty_box );
 
+			if ( colors_ul ) 
+			{
+				clear_li.appendChild( clear_btn );
+				colors_ul.appendChild( clear_li );
+			}
 			table_body.appendChild( color_new_swatches_row );
-			colors_ul.appendChild( clear_li );
-			clear_li.appendChild( clear_btn );
 			table.classList.add( 'table' );
 			entry_summary.classList.add( 'loaded' );
 		}
@@ -2111,7 +2151,6 @@ if ( wonkasoft_request.ga_id !== '' )
 			var search_btn = document.querySelectorAll( 'li.top-menu-s-btn i' ),
 			close_btn = document.querySelector( 'span.closebtn' );
 			
-	
 			search_btn.forEach( function( item, i ) {
 				item.addEventListener( 'click', openSearch );
 			} );
@@ -2404,6 +2443,7 @@ if ( wonkasoft_request.ga_id !== '' )
 
 		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ||document.querySelector( 'form.woocommerce-ResetPassword' ) ) 
 		{
+			
 			var validation_div = document.querySelector( '.woocommerce-error' );
 			var validation_li = document.querySelectorAll( '.woocommerce-error li' );
 			var password_inputs = document.querySelectorAll( 'input#password_current, input#password_1, input#password_2' );
@@ -2538,6 +2578,28 @@ if ( wonkasoft_request.ga_id !== '' )
 										item.innerText = validation_text;
 									});	
 								}
+							});
+							break;
+
+						case "Please enter your password.":
+							password_inputs.forEach( function(item, i) 
+							{
+									item.classList.add("is-invalid");
+									invalid_text.forEach(function(item)
+									{
+										item.innerText = validation_text;
+									});	
+							});
+							break;
+
+						case "Passwords do not match.":
+							password_inputs.forEach( function(item, i) 
+							{
+									item.classList.add("is-invalid");
+									invalid_text.forEach(function(item)
+									{
+										item.innerText = validation_text;
+									});	
 							});
 							break;
 					}
