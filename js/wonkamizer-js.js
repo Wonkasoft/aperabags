@@ -902,41 +902,43 @@ if ( wonkasoft_request.ga_id !== '' )
 		target_stop = wonka_single_product_img_area.offsetHeight - summary_section.offsetHeight;
 		win_y = window.pageYOffset;
 
-		if ( window.innerWidth > 767 && win_y < img_area_top ) 
+		if ( wonka_single_product_img_area.offsetHeight > summary_section.offsetHeight ) 
 		{
-			summary_section.classList.remove( 'sticky-on' );
-			summary_section.removeAttribute( 'style' );
-		}
-		else if ( window.innerWidth > 767 && win_y - img_area_top > target_stop ) 
-		{
-			summary_section.style.top = target_stop + 'px';
-			summary_section.classList.remove( 'sticky-on' );
-		}
-		else if ( window.innerWidth > 767 )
-		{
-			if ( document.querySelector( '#wpadminbar' ) ) 
+			if ( window.innerWidth > 767 && win_y < img_area_top ) 
 			{
-				admin_bar = document.querySelector( '#wpadminbar' );
-				admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
-				
-				if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+				summary_section.classList.remove( 'sticky-on' );
+				summary_section.removeAttribute( 'style' );
+			}
+			else if ( window.innerWidth > 767 && win_y - img_area_top > target_stop ) 
+			{
+				summary_section.style.top = target_stop + 'px';
+				summary_section.classList.remove( 'sticky-on' );
+			}
+			else if ( window.innerWidth > 767 )
+			{
+				if ( document.querySelector( '#wpadminbar' ) ) 
 				{
-					summary_section.classList.add( 'sticky-on' );
-					summary_section.style.top = 30 + 'px';
+					admin_bar = document.querySelector( '#wpadminbar' );
+					admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+					
+					if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+					{
+						summary_section.classList.add( 'sticky-on' );
+						summary_section.style.top = 30 + 'px';
+					}
+					else
+					{
+						summary_section.classList.add( 'sticky-on' );
+						summary_section.style.top = admin_height + 30 + 'px';
+					}
 				}
 				else
 				{
 					summary_section.classList.add( 'sticky-on' );
-					summary_section.style.top = admin_height + 30 + 'px';
+					summary_section.style.top = 30 + 'px';
 				}
 			}
-			else
-			{
-				summary_section.classList.add( 'sticky-on' );
-				summary_section.style.top = 30 + 'px';
-			}
 		}
-
 	}
 
 	function imageZoom( imgID, resultID ) 

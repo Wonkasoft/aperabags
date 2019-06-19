@@ -164,10 +164,10 @@ if ( ! function_exists( 'apera_bags_woocommerce_wrapper_before' ) ) {
 		?>
 		<div id="primary" class="content-area">
 			<main id="main" class="site-main<?php echo esc_attr( $ws_post_slug . $ws_post_type ); ?>" role="main">
-		<?php
+				<?php
+			}
 		}
-}
-add_action( 'woocommerce_before_main_content', 'apera_bags_woocommerce_wrapper_before' );
+		add_action( 'woocommerce_before_main_content', 'apera_bags_woocommerce_wrapper_before' );
 
 		if ( ! function_exists( 'apera_bags_woocommerce_wrapper_after' ) ) {
 	/**
@@ -314,7 +314,7 @@ function wonka_customized_shop_loop() {
 	global $product;
 
 	if ( ! is_a( $product, 'WC_Product' ) ) {
-				return;
+		return;
 	}
 	if ( is_callable( 'WC_Product::get_gallery_image_ids' ) ) {
 		$attachment_ids = $product->get_gallery_image_ids();
@@ -419,21 +419,21 @@ add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25
 function wonka_override_checkout_fields( $fields ) {
 
 	$fields['shipping']['shipping_phone'] = array(
-        'label'    	 	=> __('Phone', 'woocommerce'),
-	    'placeholder'   => _x('Phone', 'placeholder', 'woocommerce'),
-	    'required'  	=> true,
-	    'class'     	=> array('form-row'),
-	    'clear'     	=> true
-	     );
+		'label'    	 	=> __('Phone', 'woocommerce'),
+		'placeholder'   => _x('Phone', 'placeholder', 'woocommerce'),
+		'required'  	=> true,
+		'class'     	=> array('form-row'),
+		'clear'     	=> true
+	);
 
 	$fields['shipping']['shipping_email'] = array(
-        'label'    	 	=> __('Email', 'woocommerce'),
-	    'placeholder'   => _x('Email Address', 'placeholder', 'woocommerce'),
-	    'required'  	=> true,
-	    'class'     	=> array('form-row'),
+		'label'    	 	=> __('Email', 'woocommerce'),
+		'placeholder'   => _x('Email Address', 'placeholder', 'woocommerce'),
+		'required'  	=> true,
+		'class'     	=> array('form-row'),
 		'clear'     	=> true,
 		'type'			=> 'email'
-		 );
+	);
 
 	foreach ( $fields['billing'] as $key => &$field ) {
 		if ( $key === 'billing_country' ) :
@@ -492,234 +492,234 @@ add_filter( 'woocommerce_checkout_fields' , 'wonka_override_checkout_fields' );
  * @return bool
  */
 function ws_restrict_free_shipping( $is_available ) {
-  $restricted = array( 'AK', 'AS', 'GU', 'HI', 'MP', 'PR', 'UM', 'VI' );
+	$restricted = array( 'AK', 'AS', 'GU', 'HI', 'MP', 'PR', 'UM', 'VI' );
 
-  foreach ( WC()->cart->get_shipping_packages() as $package ) {
-    if ( in_array( $package['destination']['state'], $restricted ) ) {
-      return false;
-    }
-  }
-  return $is_available;
+	foreach ( WC()->cart->get_shipping_packages() as $package ) {
+		if ( in_array( $package['destination']['state'], $restricted ) ) {
+			return false;
+		}
+	}
+	return $is_available;
 }
 
 add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free_shipping' );
 
 function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 	$defaults = array(
-			'type'              => 'text',
-			'label'             => '',
-			'description'       => '',
-			'placeholder'       => '',
-			'maxlength'         => false,
-			'required'          => false,
-			'autocomplete'      => false,
-			'id'                => $key,
-			'class'             => array(),
-			'label_class'       => array(),
-			'input_class'       => array(),
-			'return'            => false,
-			'options'           => array(),
-			'custom_attributes' => array(),
-			'validate'          => array(),
-			'default'           => '',
-			'autofocus'         => '',
-			'priority'          => '',
-		);
+		'type'              => 'text',
+		'label'             => '',
+		'description'       => '',
+		'placeholder'       => '',
+		'maxlength'         => false,
+		'required'          => false,
+		'autocomplete'      => false,
+		'id'                => $key,
+		'class'             => array(),
+		'label_class'       => array(),
+		'input_class'       => array(),
+		'return'            => false,
+		'options'           => array(),
+		'custom_attributes' => array(),
+		'validate'          => array(),
+		'default'           => '',
+		'autofocus'         => '',
+		'priority'          => '',
+	);
 
-		$args = wp_parse_args( $args, $defaults );
-		$args = apply_filters( 'woocommerce_form_field_args', $args, $key, $value );
+	$args = wp_parse_args( $args, $defaults );
+	$args = apply_filters( 'woocommerce_form_field_args', $args, $key, $value );
 
-		if ( $args['required'] ) {
-			$args['class'][] = 'validate-required';
-			$required        = '&nbsp;<abbr class="required" title="' . esc_attr__( 'required', 'woocommerce' ) . '">*</abbr>';
-		} else {
-			$required = '&nbsp;<span class="optional">(' . esc_html__( 'optional', 'woocommerce' ) . ')</span>';
-		}
+	if ( $args['required'] ) {
+		$args['class'][] = 'validate-required';
+		$required        = '&nbsp;<abbr class="required" title="' . esc_attr__( 'required', 'woocommerce' ) . '">*</abbr>';
+	} else {
+		$required = '&nbsp;<span class="optional">(' . esc_html__( 'optional', 'woocommerce' ) . ')</span>';
+	}
 
-		if ( is_string( $args['label_class'] ) ) {
-			$args['label_class'] = array( $args['label_class'] );
-		}
+	if ( is_string( $args['label_class'] ) ) {
+		$args['label_class'] = array( $args['label_class'] );
+	}
 
-		if ( is_null( $value ) ) {
-			$value = $args['default'];
-		}
+	if ( is_null( $value ) ) {
+		$value = $args['default'];
+	}
 
 		// Custom attribute handling.
-		$custom_attributes         = array();
-		$args['custom_attributes'] = array_filter( (array) $args['custom_attributes'], 'strlen' );
+	$custom_attributes         = array();
+	$args['custom_attributes'] = array_filter( (array) $args['custom_attributes'], 'strlen' );
 
-		if ( $args['maxlength'] ) {
-			$args['custom_attributes']['maxlength'] = absint( $args['maxlength'] );
+	if ( $args['maxlength'] ) {
+		$args['custom_attributes']['maxlength'] = absint( $args['maxlength'] );
+	}
+
+	if ( ! empty( $args['autocomplete'] ) ) {
+		$args['custom_attributes']['autocomplete'] = $args['autocomplete'];
+	}
+
+	if ( true === $args['autofocus'] ) {
+		$args['custom_attributes']['autofocus'] = 'autofocus';
+	}
+
+	if ( $args['description'] ) {
+		$args['custom_attributes']['aria-describedby'] = $args['id'] . '-description';
+	}
+
+	if ( ! empty( $args['custom_attributes'] ) && is_array( $args['custom_attributes'] ) ) {
+		foreach ( $args['custom_attributes'] as $attribute => $attribute_value ) {
+			$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
+		}
+	}
+
+	if ( ! empty( $args['validate'] ) ) {
+		foreach ( $args['validate'] as $validate ) {
+			$args['class'][] = 'validate-' . $validate;
+		}
+	}
+
+	$field           = '';
+	$label_id        = $args['id'];
+	$sort            = $args['priority'] ? $args['priority'] : '';
+	$field_container = '<div class="form-row %1$s" id="%2$s" data-priority="' . esc_attr( $sort ) . '">%3$s</div>';
+
+	switch ( $args['type'] ) {
+		case 'country':
+		$countries = 'shipping_country' === $key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries();
+
+		if ( 1 === count( $countries ) ) {
+
+			$field .= '<strong>' . current( array_values( $countries ) ) . '</strong>';
+
+			$field .= '<input type="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . current( array_keys( $countries ) ) . '" ' . implode( ' ', $custom_attributes ) . ' class="country_to_state" readonly="readonly" />';
+
+		} else {
+
+			$field = '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="country_to_state country_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . '><option value="">' . esc_html__( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
+
+			foreach ( $countries as $ckey => $cvalue ) {
+				$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
+			}
+
+			$field .= '</select>';
+
+			$field .= '<noscript><button type="submit" name="woocommerce_checkout_update_totals" value="' . esc_attr__( 'Update country', 'woocommerce' ) . '">' . esc_html__( 'Update country', 'woocommerce' ) . '</button></noscript>';
+
 		}
 
-		if ( ! empty( $args['autocomplete'] ) ) {
-			$args['custom_attributes']['autocomplete'] = $args['autocomplete'];
+		break;
+		case 'state':
+		/* Get country this state field is representing */
+		$for_country = isset( $args['country'] ) ? $args['country'] : WC()->checkout->get_value( 'billing_state' === $key ? 'billing_country' : 'shipping_country' );
+		$states      = WC()->countries->get_states( $for_country );
+
+		if ( is_array( $states ) && empty( $states ) ) {
+
+			$field_container = '<p class="form-row %1$s" id="%2$s" style="display: none">%3$s</p>';
+
+			$field .= '<input type="hidden" class="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . esc_attr( $args['placeholder'] ) . '" readonly="readonly" />';
+
+		} elseif ( ! is_null( $for_country ) && is_array( $states ) ) {
+
+			$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="state_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ? $args['placeholder'] : esc_html__( 'Select an option&hellip;', 'woocommerce' ) ) . '">
+			<option value="">' . esc_html__( 'Select an option&hellip;', 'woocommerce' ) . '</option>';
+
+			foreach ( $states as $ckey => $cvalue ) {
+				$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
+			}
+
+			$field .= '</select>';
+
+		} else {
+
+			$field .= '<input type="text" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" value="' . esc_attr( $value ) . '"  placeholder="' . esc_attr( $args['placeholder'] ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" ' . implode( ' ', $custom_attributes ) . ' />';
+
 		}
 
-		if ( true === $args['autofocus'] ) {
-			$args['custom_attributes']['autofocus'] = 'autofocus';
+		break;
+		case 'textarea':
+		$field .= '<textarea name="' . esc_attr( $key ) . '" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . ( empty( $args['custom_attributes']['rows'] ) ? ' rows="2"' : '' ) . ( empty( $args['custom_attributes']['cols'] ) ? ' cols="5"' : '' ) . implode( ' ', $custom_attributes ) . '>' . esc_textarea( $value ) . '</textarea>';
+
+		break;
+		case 'checkbox':
+		$field = '<label class="checkbox ' . implode( ' ', $args['label_class'] ) . '" ' . implode( ' ', $custom_attributes ) . '>
+		<input type="' . esc_attr( $args['type'] ) . '" class="input-checkbox ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="1" ' . checked( $value, 1, false ) . ' /> ' . $args['label'] . $required . '</label>';
+
+		break;
+		case 'text':
+		case 'password':
+		case 'datetime':
+		case 'datetime-local':
+		case 'date':
+		case 'month':
+		case 'time':
+		case 'week':
+		case 'number':
+		case 'email':
+		case 'url':
+		case 'tel':
+		$field .= '<input type="' . esc_attr( $args['type'] ) . '" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '"  value="' . esc_attr( $value ) . '" ' . implode( ' ', $custom_attributes ) . ' />';
+
+		break;
+		case 'select':
+		$field   = '';
+		$options = '';
+
+		if ( ! empty( $args['options'] ) ) {
+			foreach ( $args['options'] as $option_key => $option_text ) {
+				if ( '' === $option_key ) {
+							// If we have a blank option, select2 needs a placeholder.
+					if ( empty( $args['placeholder'] ) ) {
+						$args['placeholder'] = $option_text ? $option_text : __( 'Choose an option', 'woocommerce' );
+					}
+					$custom_attributes[] = 'data-allow_clear="true"';
+				}
+				$options .= '<option value="' . esc_attr( $option_key ) . '" ' . selected( $value, $option_key, false ) . '>' . esc_attr( $option_text ) . '</option>';
+			}
+
+			$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ) . '">
+			' . $options . '
+			</select>';
+		}
+
+		break;
+		case 'radio':
+		$label_id .= '_' . current( array_keys( $args['options'] ) );
+
+		if ( ! empty( $args['options'] ) ) {
+			foreach ( $args['options'] as $option_key => $option_text ) {
+				$field .= '<input type="radio" class="input-radio ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" value="' . esc_attr( $option_key ) . '" name="' . esc_attr( $key ) . '" ' . implode( ' ', $custom_attributes ) . ' id="' . esc_attr( $args['id'] ) . '_' . esc_attr( $option_key ) . '"' . checked( $value, $option_key, false ) . ' />';
+				$field .= '<label for="' . esc_attr( $args['id'] ) . '_' . esc_attr( $option_key ) . '" class="radio ' . implode( ' ', $args['label_class'] ) . '">' . $option_text . '</label>';
+			}
+		}
+
+		break;
+	}
+
+	if ( ! empty( $field ) ) {
+		$field_html = '';
+
+		if ( $args['label'] && 'checkbox' !== $args['type'] ) {
+			$field_html .= '<label for="' . esc_attr( $label_id ) . '" class="' . esc_attr( implode( ' ', $args['label_class'] ) ) . '">' . $args['label'] . $required . '</label>';
+		}
+
+		$field_html .= $field;
+
+		if ( $args['required'] ) {
+			$field_html .= '<div class="error invalid-feedback">';
+			$field_html .= sprintf( __( '%s is a required field.', 'woocommerce' ), $args['label'] );
+			$field_html .= '</div>';
 		}
 
 		if ( $args['description'] ) {
-			$args['custom_attributes']['aria-describedby'] = $args['id'] . '-description';
+			$field_html .= '<span class="description" id="' . esc_attr( $args['id'] ) . '-description" aria-hidden="true">' . wp_kses_post( $args['description'] ) . '</span>';
 		}
 
-		if ( ! empty( $args['custom_attributes'] ) && is_array( $args['custom_attributes'] ) ) {
-			foreach ( $args['custom_attributes'] as $attribute => $attribute_value ) {
-				$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
-			}
-		}
 
-		if ( ! empty( $args['validate'] ) ) {
-			foreach ( $args['validate'] as $validate ) {
-				$args['class'][] = 'validate-' . $validate;
-			}
-		}
+		$container_class = esc_attr( implode( ' ', $args['class'] ) );
+		$container_id    = esc_attr( $args['id'] ) . '_field';
+		$field           = sprintf( $field_container, $container_class, $container_id, $field_html );
+	}
 
-		$field           = '';
-		$label_id        = $args['id'];
-		$sort            = $args['priority'] ? $args['priority'] : '';
-		$field_container = '<div class="form-row %1$s" id="%2$s" data-priority="' . esc_attr( $sort ) . '">%3$s</div>';
-
-		switch ( $args['type'] ) {
-			case 'country':
-				$countries = 'shipping_country' === $key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries();
-
-				if ( 1 === count( $countries ) ) {
-
-					$field .= '<strong>' . current( array_values( $countries ) ) . '</strong>';
-
-					$field .= '<input type="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . current( array_keys( $countries ) ) . '" ' . implode( ' ', $custom_attributes ) . ' class="country_to_state" readonly="readonly" />';
-
-				} else {
-
-					$field = '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="country_to_state country_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . '><option value="">' . esc_html__( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
-
-					foreach ( $countries as $ckey => $cvalue ) {
-						$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
-					}
-
-					$field .= '</select>';
-
-					$field .= '<noscript><button type="submit" name="woocommerce_checkout_update_totals" value="' . esc_attr__( 'Update country', 'woocommerce' ) . '">' . esc_html__( 'Update country', 'woocommerce' ) . '</button></noscript>';
-
-				}
-
-				break;
-			case 'state':
-				/* Get country this state field is representing */
-				$for_country = isset( $args['country'] ) ? $args['country'] : WC()->checkout->get_value( 'billing_state' === $key ? 'billing_country' : 'shipping_country' );
-				$states      = WC()->countries->get_states( $for_country );
-
-				if ( is_array( $states ) && empty( $states ) ) {
-
-					$field_container = '<p class="form-row %1$s" id="%2$s" style="display: none">%3$s</p>';
-
-					$field .= '<input type="hidden" class="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . esc_attr( $args['placeholder'] ) . '" readonly="readonly" />';
-
-				} elseif ( ! is_null( $for_country ) && is_array( $states ) ) {
-
-					$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="state_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ? $args['placeholder'] : esc_html__( 'Select an option&hellip;', 'woocommerce' ) ) . '">
-						<option value="">' . esc_html__( 'Select an option&hellip;', 'woocommerce' ) . '</option>';
-
-					foreach ( $states as $ckey => $cvalue ) {
-						$field .= '<option value="' . esc_attr( $ckey ) . '" ' . selected( $value, $ckey, false ) . '>' . $cvalue . '</option>';
-					}
-
-					$field .= '</select>';
-
-				} else {
-
-					$field .= '<input type="text" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" value="' . esc_attr( $value ) . '"  placeholder="' . esc_attr( $args['placeholder'] ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" ' . implode( ' ', $custom_attributes ) . ' />';
-
-				}
-
-				break;
-			case 'textarea':
-				$field .= '<textarea name="' . esc_attr( $key ) . '" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '" ' . ( empty( $args['custom_attributes']['rows'] ) ? ' rows="2"' : '' ) . ( empty( $args['custom_attributes']['cols'] ) ? ' cols="5"' : '' ) . implode( ' ', $custom_attributes ) . '>' . esc_textarea( $value ) . '</textarea>';
-
-				break;
-			case 'checkbox':
-				$field = '<label class="checkbox ' . implode( ' ', $args['label_class'] ) . '" ' . implode( ' ', $custom_attributes ) . '>
-						<input type="' . esc_attr( $args['type'] ) . '" class="input-checkbox ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="1" ' . checked( $value, 1, false ) . ' /> ' . $args['label'] . $required . '</label>';
-
-				break;
-			case 'text':
-			case 'password':
-			case 'datetime':
-			case 'datetime-local':
-			case 'date':
-			case 'month':
-			case 'time':
-			case 'week':
-			case 'number':
-			case 'email':
-			case 'url':
-			case 'tel':
-				$field .= '<input type="' . esc_attr( $args['type'] ) . '" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" placeholder="' . esc_attr( $args['placeholder'] ) . '"  value="' . esc_attr( $value ) . '" ' . implode( ' ', $custom_attributes ) . ' />';
-
-				break;
-			case 'select':
-				$field   = '';
-				$options = '';
-
-				if ( ! empty( $args['options'] ) ) {
-					foreach ( $args['options'] as $option_key => $option_text ) {
-						if ( '' === $option_key ) {
-							// If we have a blank option, select2 needs a placeholder.
-							if ( empty( $args['placeholder'] ) ) {
-								$args['placeholder'] = $option_text ? $option_text : __( 'Choose an option', 'woocommerce' );
-							}
-							$custom_attributes[] = 'data-allow_clear="true"';
-						}
-						$options .= '<option value="' . esc_attr( $option_key ) . '" ' . selected( $value, $option_key, false ) . '>' . esc_attr( $option_text ) . '</option>';
-					}
-
-					$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ) . '">
-							' . $options . '
-						</select>';
-				}
-
-				break;
-			case 'radio':
-				$label_id .= '_' . current( array_keys( $args['options'] ) );
-
-				if ( ! empty( $args['options'] ) ) {
-					foreach ( $args['options'] as $option_key => $option_text ) {
-						$field .= '<input type="radio" class="input-radio ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" value="' . esc_attr( $option_key ) . '" name="' . esc_attr( $key ) . '" ' . implode( ' ', $custom_attributes ) . ' id="' . esc_attr( $args['id'] ) . '_' . esc_attr( $option_key ) . '"' . checked( $value, $option_key, false ) . ' />';
-						$field .= '<label for="' . esc_attr( $args['id'] ) . '_' . esc_attr( $option_key ) . '" class="radio ' . implode( ' ', $args['label_class'] ) . '">' . $option_text . '</label>';
-					}
-				}
-
-				break;
-		}
-
-		if ( ! empty( $field ) ) {
-			$field_html = '';
-
-			if ( $args['label'] && 'checkbox' !== $args['type'] ) {
-				$field_html .= '<label for="' . esc_attr( $label_id ) . '" class="' . esc_attr( implode( ' ', $args['label_class'] ) ) . '">' . $args['label'] . $required . '</label>';
-			}
-
-			$field_html .= $field;
-
-			if ( $args['required'] ) {
-			  $field_html .= '<div class="error invalid-feedback">';
-			  $field_html .= sprintf( __( '%s is a required field.', 'woocommerce' ), $args['label'] );
-			  $field_html .= '</div>';
-			 }
-
-			if ( $args['description'] ) {
-				$field_html .= '<span class="description" id="' . esc_attr( $args['id'] ) . '-description" aria-hidden="true">' . wp_kses_post( $args['description'] ) . '</span>';
-			}
-
-
-			$container_class = esc_attr( implode( ' ', $args['class'] ) );
-			$container_id    = esc_attr( $args['id'] ) . '_field';
-			$field           = sprintf( $field_container, $container_class, $container_id, $field_html );
-		}
-
-		return $field;
+	return $field;
 }
 
 add_filter( 'woocommerce_form_field', 'wonka_woocommerce_form_field', 99, 4 );
@@ -745,42 +745,42 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 			<a href="#place_order" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-place-order', eventAction: 'click', eventLabel: 'Place Order' } );" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn">Place Order</a>
 		</div>
 	</div><!-- #wonka-checkout-step-buttons -->
-		</div><!-- .checkout-form-left-side -->
-		<div class="col-12 col-md-5 checkout-order-details">
-			<div class="table-responsive">
-			<table class="table table-hover">
-				<tbody>
-					<?php
-						foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-							$_product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-							if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
-								?>
-								<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
-									<td class="product-thumbnail">
-									<?php
-									$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
+</div><!-- .checkout-form-left-side -->
+<div class="col-12 col-md-5 checkout-order-details">
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<tbody>
+				<?php
+				foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+					$_product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+					if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
+						?>
+						<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
+							<td class="product-thumbnail">
+								<?php
+								$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
 
-									if ( ! $product_permalink ) {
+								if ( ! $product_permalink ) {
 										echo $thumbnail; // PHPCS: XSS ok.
 										echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity badge wonka-badge">' . sprintf( '%s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key );
 									} else {
 										printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail ); // PHPCS: XSS ok.
 									}
 									?>
-									</td>
-									<td class="product-name">
-										<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;'; ?>
-										
-										<?php echo wc_get_formatted_cart_item_data( $cart_item ); ?>
-									</td>
-									<td class="product-total">
-										<?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); ?>
-									</td>
-								</tr>
-								<?php
-							}
+								</td>
+								<td class="product-name">
+									<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;'; ?>
+
+									<?php echo wc_get_formatted_cart_item_data( $cart_item ); ?>
+								</td>
+								<td class="product-total">
+									<?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); ?>
+								</td>
+							</tr>
+							<?php
 						}
-						do_action( 'woocommerce_review_order_after_cart_contents' );
+					}
+					do_action( 'woocommerce_review_order_after_cart_contents' );
 					?>
 				</tbody>
 				<tfoot>
@@ -797,7 +797,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 									<div class="panel panel-default activate-panel" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 										<div class="panel-heading" role="tab" id="headingOne">
 											<span class="panel-title">
-													Add Promo Code (Optional)
+												Add Promo Code (Optional)
 											</span>
 										</div>
 									</div>
@@ -815,96 +815,96 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 					<?php endif; ?>
 
 					<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
-						<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
-							<th><?php wc_cart_totals_coupon_label( $coupon ); ?></th>
-							<td colspan="2"><?php wc_cart_totals_coupon_html( $coupon ); ?></td>
-						</tr>
-					<?php endforeach; ?>
-
-					<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
-						<tr class="fee">
-							<th><?php echo esc_html( $fee->name ); ?></th>
-							<td colspan="2"><?php wc_cart_totals_fee_html( $fee ); ?></td>
-						</tr>
-					<?php endforeach; ?>
-						<?php 
-						$current_method = WC()->session->get('chosen_shipping_methods')[0];
-						if ( ! $current_method ) : ?>
-							<tr class="woocommerce-shipping-totals shipping">
-								<th colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php _e( '(US only)', 'woocommerce' ); ?></span></th>
-							</tr>
-							<tr class="shipping-methods">
-								<td colspan="3" class="ship-method-cell">
-									This will be calculated on the next step.
-								</td>
-							</tr>
-						<?php else: ?>
-							<tr class="woocommerce-shipping-totals shipping">
-								<th colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php _e( '(US only)', 'woocommerce' ); ?></span></th>
-							</tr>
-							<tr class="shipping-methods">
-								<?php foreach ( WC()->session->get( 'shipping_for_package_0')['rates'] as $method_id => $rate ) : ?>
-									<?php if ( WC()->session->get( 'chosen_shipping_methods')[0] === $method_id ) :
-										$rate_label = $rate->label;
-										$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
-										if ( $rate->label === 'FedEx SmartPost Ground: FREE' ) :
-											$shipping_eta = '2-7 business days';
-										endif;
-
-										if ( $rate->label === 'FedEx 2 Day' ) :
-											$shipping_eta = '2 business days (weekends excluded)';
-										endif;
-
-										if ( $rate->label === 'FedEx Standard Overnight' ) :
-											$shipping_eta = 'next business day (weekends excluded)';
-										endif;
-									?>
-									<td colspan="2" class="ship-method-cell">
-										<?php echo $rate_label ?>
-									</td>
-									<td colspan="1" class="ship-method-cost-cell">
-										<?php echo sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) ?>
-									</td>
-									</tr>
-									<tr>
-										<td colspan="3" class="shipping-eta-disclosure text-center"><?php echo $shipping_eta; ?></td>
-									<?php endif; ?>
-								<?php endforeach; ?>
-								<?php 
-								?>
-							</tr>
-						<?php endif; ?>
-					<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
-						<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
-							<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
-								<tr class="tax-rate tax-rate-<?php echo sanitize_title( $code ); ?>">
-									<th><?php echo esc_html( $tax->label ); ?></th>
-									<td colspan="2"><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
-								</tr>
-							<?php endforeach; ?>
-						<?php else : ?>
-							<tr class="tax-total">
-								<th><?php echo esc_html( WC()->countries->tax_or_vat() ); ?></th>
-								<td colspan="2"><?php wc_cart_totals_taxes_total_html(); ?></td>
-							</tr>
-						<?php endif; ?>
-					<?php endif; ?>
-
-					<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
-
-					<tr class="order-total">
-						<th><?php _e( 'Total', 'woocommerce' ); ?></th>
-						<td colspan="2"><?php wc_cart_totals_order_total_html(); ?></td>
+					<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
+						<th><?php wc_cart_totals_coupon_label( $coupon ); ?></th>
+						<td colspan="2"><?php wc_cart_totals_coupon_html( $coupon ); ?></td>
 					</tr>
+				<?php endforeach; ?>
 
-					<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
+				<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
+				<tr class="fee">
+					<th><?php echo esc_html( $fee->name ); ?></th>
+					<td colspan="2"><?php wc_cart_totals_fee_html( $fee ); ?></td>
+				</tr>
+			<?php endforeach; ?>
+			<?php 
+			$current_method = WC()->session->get('chosen_shipping_methods')[0];
+			if ( ! $current_method ) : ?>
+				<tr class="woocommerce-shipping-totals shipping">
+					<th colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php _e( '(US only)', 'woocommerce' ); ?></span></th>
+				</tr>
+				<tr class="shipping-methods">
+					<td colspan="3" class="ship-method-cell">
+						This will be calculated on the next step.
+					</td>
+				</tr>
+				<?php else: ?>
+					<tr class="woocommerce-shipping-totals shipping">
+						<th colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php _e( '(US only)', 'woocommerce' ); ?></span></th>
+					</tr>
+					<tr class="shipping-methods">
+						<?php foreach ( WC()->session->get( 'shipping_for_package_0')['rates'] as $method_id => $rate ) : ?>
+						<?php if ( WC()->session->get( 'chosen_shipping_methods')[0] === $method_id ) :
+						$rate_label = $rate->label;
+						$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+						if ( $rate->label === 'FedEx SmartPost Ground: FREE' ) :
+							$shipping_eta = '2-7 business days';
+						endif;
 
-				</tfoot>
-			</table>
-		</div><!-- .table-responsive -->
-		</div><!-- .checkout-order-details -->
-		</div><!-- .row -->
-		<?php
+						if ( $rate->label === 'FedEx 2 Day' ) :
+							$shipping_eta = '2 business days (weekends excluded)';
+						endif;
+
+						if ( $rate->label === 'FedEx Standard Overnight' ) :
+							$shipping_eta = 'next business day (weekends excluded)';
+						endif;
+						?>
+						<td colspan="2" class="ship-method-cell">
+							<?php echo $rate_label ?>
+						</td>
+						<td colspan="1" class="ship-method-cost-cell">
+							<?php echo sprintf( __( "<span class='woocommerce-Price-amount amount'>%1s%2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) ?>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" class="shipping-eta-disclosure text-center"><?php echo $shipping_eta; ?></td>
+					<?php endif; ?>
+				<?php endforeach; ?>
+				<?php 
+				?>
+			</tr>
+		<?php endif; ?>
+		<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
+		<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
+			<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
+			<tr class="tax-rate tax-rate-<?php echo sanitize_title( $code ); ?>">
+				<th><?php echo esc_html( $tax->label ); ?></th>
+				<td colspan="2"><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
+			</tr>
+		<?php endforeach; ?>
+		<?php else : ?>
+			<tr class="tax-total">
+				<th><?php echo esc_html( WC()->countries->tax_or_vat() ); ?></th>
+				<td colspan="2"><?php wc_cart_totals_taxes_total_html(); ?></td>
+			</tr>
+		<?php endif; ?>
+	<?php endif; ?>
+
+	<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
+
+	<tr class="order-total">
+		<th><?php _e( 'Total', 'woocommerce' ); ?></th>
+		<td colspan="2"><?php wc_cart_totals_order_total_html(); ?></td>
+	</tr>
+
+	<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
+
+</tfoot>
+</table>
+</div><!-- .table-responsive -->
+</div><!-- .checkout-order-details -->
+</div><!-- .row -->
+<?php
 }
 
 add_action( 'wonka_checkout_after_checkout_form_custom', 'wonka_checkout_after_checkout_form_custom', 50 );
@@ -954,7 +954,7 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '</div><!-- .wonka-row-express-checkout-btns -->';
 
 	$output .= do_action( 'wonka_checkout_login_form' );
-				
+
 	$output .= ob_get_clean();
 
 	echo $output;
@@ -1063,7 +1063,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '</div><!-- .card -->';
 	$output .= '</div><!-- .wonka-row -->';
 	$output .= '</div><!-- #wonka_payment_method_top -->';
-			
+
 	$output .= '</div><!-- #wonka-checkout-steps2 -->';
 
 	echo $output;
@@ -1166,11 +1166,11 @@ add_action( 'woocommerce_review_order_after_payment', 'wonka_woocommerce_review_
  * 
  */
 function ws_remove_product_page_skus( $enabled ) {
-    if ( ! is_admin() && is_product() ) {
-        return false;
-    }
+	if ( ! is_admin() && is_product() ) {
+		return false;
+	}
 
-    return $enabled;
+	return $enabled;
 }
 add_filter( 'wc_product_sku_enabled', 'ws_remove_product_page_skus' );
 
@@ -1187,12 +1187,12 @@ remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_singl
  * @return [type]          [description]
  */
 function wonka_product_carousel_options($options) {
-  $options['animation'] = 'slide';
-  $options['animationSpeed'] = 1500;
-  $options['useCSS'] = true;
-  $options['easing'] = 'swing';
-  $options['direction'] = 'vertical';
-  return $options;
+	$options['animation'] = 'slide';
+	$options['animationSpeed'] = 1500;
+	$options['useCSS'] = true;
+	$options['easing'] = 'swing';
+	$options['direction'] = 'vertical';
+	return $options;
 }
 
 add_filter("woocommerce_single_product_carousel_options", "wonka_product_carousel_options", 10);
@@ -1211,34 +1211,34 @@ function wonka_product_meta_add( $post_id ) {
 	$key_features = ( get_metadata( 'product', $post_id, 'key_features' ) ) ? get_metadata( 'product', $post_id, 'key_features', true ): '';
 
 	$_enable_wonka_express_button = isset( $_POST['_enable_wonka_express_button'] ) ? 'yes' : 'no';
-            update_post_meta( $post_id, '_enable_wonka_express_button', $_enable_wonka_express_button );
+	update_post_meta( $post_id, '_enable_wonka_express_button', $_enable_wonka_express_button );
 	
 	if ( ! add_post_meta( $post_id, 'product_statement', '', true ) ) { 
-	   update_metadata( 'product', $post_id, 'product_statement', $product_statement );
+		update_metadata( 'product', $post_id, 'product_statement', $product_statement );
 	}
 
 	if ( ! add_post_meta( $post_id, 'product_specs', '', true ) ) { 
-	   update_metadata( 'product', $post_id, 'product_specs', $product_specs );
+		update_metadata( 'product', $post_id, 'product_specs', $product_specs );
 	}
 
 	if ( ! add_post_meta( $post_id, 'key_features', '', true ) ) { 
-	   update_metadata( 'product', $post_id, 'key_features', $key_features );
+		update_metadata( 'product', $post_id, 'key_features', $key_features );
 	}
 }
 add_action( 'woocommerce_process_product_meta', 'wonka_product_meta_add', 11, 1 );
 
 function wonka_woo_add_custom_general_fields( $product_type ) {
 	if( isset($product_type) && !empty($product_type) ) {
-	    $product_type['enable_wonka_express_button'] = array(
-	            'id'            => '_enable_wonka_express_button',
-	            'wrapper_class' => '',
-	            'label'         => __( 'Enable Wonka Express Checkout Button', 'apera-bags' ),
-	            'description'   => __( 'Adds the Wonka Express Checkout button to the product page allowing buyers to go directly to the checkout directly from the product page.', 'apera-bags' ),
-	            'default'       => 'yes'
-	    );
-	    return $product_type;
+		$product_type['enable_wonka_express_button'] = array(
+			'id'            => '_enable_wonka_express_button',
+			'wrapper_class' => '',
+			'label'         => __( 'Enable Wonka Express Checkout Button', 'apera-bags' ),
+			'description'   => __( 'Adds the Wonka Express Checkout button to the product page allowing buyers to go directly to the checkout directly from the product page.', 'apera-bags' ),
+			'default'       => 'yes'
+		);
+		return $product_type;
 	} else {
-	        return $product_type;
+		return $product_type;
 	}
 	
 }
@@ -1250,21 +1250,21 @@ add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
  * @since 1.0.0
  */
 function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
-    if ( $post_post_excerpt == ' ' || $post_post_excerpt == null ) :
-    	return $post_post_excerpt;
-		else:
-			ob_start();
-			$compare_link_set = '';
-			if ( class_exists( 'YITH_Woocompare_Frontend' ) ) :
-				$YITH_Woocompare_Frontend_compare_link = new YITH_Woocompare_Frontend;
-				$compare_link_set = ' | ' . $YITH_Woocompare_Frontend_compare_link->add_compare_link();
-			endif;
-			$add_links ='<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>' . $compare_link_set;
-			;
-			$post_post_excerpt = $post_post_excerpt . $add_links . ob_get_clean();
-			
-    	return $post_post_excerpt;
-    endif;
+	if ( $post_post_excerpt == ' ' || $post_post_excerpt == null ) :
+		return $post_post_excerpt;
+	else:
+		ob_start();
+		$compare_link_set = '';
+		if ( class_exists( 'YITH_Woocompare_Frontend' ) ) :
+			$YITH_Woocompare_Frontend_compare_link = new YITH_Woocompare_Frontend;
+			$compare_link_set = ' | ' . $YITH_Woocompare_Frontend_compare_link->add_compare_link();
+		endif;
+		$add_links ='<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>' . $compare_link_set;
+		;
+		$post_post_excerpt = $post_post_excerpt . $add_links . ob_get_clean();
+
+		return $post_post_excerpt;
+	endif;
 };
 
 
@@ -1281,14 +1281,14 @@ function wonka_express_checkout_add() {
 	$variation_id = $product->get_variation_id();
 	$post_id = get_the_ID();
 	if ( get_post_meta( $post_id, '_enable_wonka_express_button', true ) === 'yes' ) :
-	?>
-	<div class="wonka-express-checkout-wrap">
-		<a href="<?php _e( get_site_url() . '/checkout/?add-to-cart=' );?>" id="express_checkout_btn" class="wonka-btn">Express Checkout</a>
-	</div>
-	<?php
+		?>
+		<div class="wonka-express-checkout-wrap">
+			<a href="<?php _e( get_site_url() . '/checkout/?add-to-cart=' );?>" id="express_checkout_btn" class="wonka-btn">Express Checkout</a>
+		</div>
+		<?php
 	endif;
 }
-	
+
 add_action( 'woocommerce_after_add_to_cart_button', 'wonka_express_checkout_add', 10 );
 
 /**
@@ -1298,23 +1298,23 @@ add_action( 'woocommerce_after_add_to_cart_button', 'wonka_express_checkout_add'
  */
 function wonka_before_comment_meta_add( $comment ) {
 	?>
-		<div class="wonka-rating-and-meta-wrap col-12 col-md-4">
-	<?php
-}
+	<div class="wonka-rating-and-meta-wrap col-12 col-md-4">
+		<?php
+	}
 
-add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta_add', 5 );
+	add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta_add', 5 );
 
-function wonka_before_comment_text_add( $comment ) {
-	?>
-		</div><!-- .wonka-rating-and-meta-wrap -->
-		<div class="wonka-review-text-wrap col-12 col-md-7">
-	<?php
-}
-add_action( 'woocommerce_review_before_comment_text', 'wonka_before_comment_text_add', 5 );
+	function wonka_before_comment_text_add( $comment ) {
+		?>
+	</div><!-- .wonka-rating-and-meta-wrap -->
+	<div class="wonka-review-text-wrap col-12 col-md-7">
+		<?php
+	}
+	add_action( 'woocommerce_review_before_comment_text', 'wonka_before_comment_text_add', 5 );
 
-function wonka_after_comment_text_add( $comment ) {
-	?>
-		</div><!-- .wonka-review-text-wrap -->
+	function wonka_after_comment_text_add( $comment ) {
+		?>
+	</div><!-- .wonka-review-text-wrap -->
 	<?php
 }
 add_action( 'woocommerce_review_after_comment_text', 'wonka_after_comment_text_add', 5 );
@@ -1371,14 +1371,14 @@ add_filter( 'wonka_single_product_scroll_image_html', 'wonka_single_product_imag
 /*=====  End of This is filtering the first thumbnail on single product page  ======*/
 
 function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
-   if ( strpos( $field, '</label>' ) !== false && $args['required'] ) {
-      $error = '<span class="error" style="display:none">';
-      $error .= sprintf( __( '%s is a required field.', 'woocommerce' ), $args['label'] );
-      $error .= '</span>';
-      $field = substr_replace( $field, $error, strpos( $field, '</p>' ), 0);
-	 }
+	if ( strpos( $field, '</label>' ) !== false && $args['required'] ) {
+		$error = '<span class="error" style="display:none">';
+		$error .= sprintf( __( '%s is a required field.', 'woocommerce' ), $args['label'] );
+		$error .= '</span>';
+		$field = substr_replace( $field, $error, strpos( $field, '</p>' ), 0);
+	}
 
-   return $field;
+	return $field;
 }
 
 add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
@@ -1387,15 +1387,15 @@ function ws_shipping_to_billing() {
 	// This is a security check, it validates a random number that is generated on the request.
 	if ( !check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
 		return wp_send_json_error( 'Invalid Nonce' );
- 	}
+	}
 
- 	if ( isset( $_GET['opt_set'] ) ) :
- 		update_option( 'woocommerce_ship_to_destination', $_GET['opt_set'], false );
- 		
+	if ( isset( $_GET['opt_set'] ) ) :
+		update_option( 'woocommerce_ship_to_destination', $_GET['opt_set'], false );
+
 		return wp_send_json_success( $_GET['opt_set'] );
- 	endif;
+	endif;
 
- 	return false;
+	return false;
 }
 add_action( 'wp_ajax_shipping_to_billing',        'ws_shipping_to_billing' );
 add_action( 'wp_ajax_nopriv_shipping_to_billing', 'ws_shipping_to_billing' );
@@ -1421,7 +1421,7 @@ function wonka_custom_excerpt_length( $text ) {
 
 		_e( $output, 'aperabags' );
 	else:
-    	return $text;
+		return $text;
 	endif;
 
 }
@@ -1431,8 +1431,8 @@ add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );
 function ws_ajax_search() {
 	// This is a security check, it validates a random number that is generated on the request.
 	if ( !check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
-	return wp_send_json_error( 'Invalid Nonce' );
- }
+		return wp_send_json_error( 'Invalid Nonce' );
+	}
 	$results = new WP_Query( array(
 		'post_type'     => array( 'product' ),
 		'post_status'   => 'publish',
@@ -1460,14 +1460,14 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 	$comment_word_count = count( (array)$str_array );
 	$output = '';
 
-		for( $i = 0; $i < $length; $i++ ) :
+	for( $i = 0; $i < $length; $i++ ) :
 		
-			if ( $i == ($length - 1) && $comment_word_count > $length ) :
-				$output .= $str_array[$i] . '...';
-			else:
-				$output .= $str_array[$i] . ' ';
-			endif;
-		endfor;
+		if ( $i == ($length - 1) && $comment_word_count > $length ) :
+			$output .= $str_array[$i] . '...';
+		else:
+			$output .= $str_array[$i] . ' ';
+		endif;
+	endfor;
 
 	// $output = explode(' ', $comment->comment_content, 21);
 
@@ -1483,7 +1483,7 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 	echo "</div>";
 	echo ob_get_clean();
 }; 
-			 
+
 // add the filter 
 remove_action('woocommerce_review_comment_text', 'woocommerce_review_display_comment_text', 10, 1 );
 add_action( 'woocommerce_review_comment_text', 'filter_woocommerce_product_review_list_args', 10, 1 ); 
@@ -1494,81 +1494,81 @@ function wonka_woocommerce_review_order_before_submit() {
 		if ( document.querySelector( '#shipping_address_1' ) ) 
 		{
 			document.querySelector( '#shipping_address_1' ).addEventListener( 'onfocus', function( e ) 
-				{
-					e.stopImmediatePropagation();
-				} );
+			{
+				e.stopImmediatePropagation();
+			} );
 		}
 
 		var cybersource_form_field_group = document.querySelectorAll( '.payment_box.payment_method_cybersource .form-row' );
 		cybersource_form_field_group.forEach( function( field_group, i ) 
+		{
+			var new_container, new_row_container;
+			if ( i === 0 )
 			{
-				var new_container, new_row_container;
-				if ( i === 0 )
-				{
-					new_container = document.createElement( 'DIV' );
-					new_container.classList.add( 'form-group', 'form-row' );
-					new_container.innerHTML = field_group.innerHTML;
-					field_group.parentElement.insertBefore( new_container, field_group );
-					field_group.remove();
-				}
+				new_container = document.createElement( 'DIV' );
+				new_container.classList.add( 'form-group', 'form-row' );
+				new_container.innerHTML = field_group.innerHTML;
+				field_group.parentElement.insertBefore( new_container, field_group );
+				field_group.remove();
+			}
 
-				if ( i === 1 ) 
-				{
-					new_row_container = document.createElement( 'DIV' );
-					new_row_container.classList.add( 'form-row', 'form-inline', 'justify-content-between', 'wonka-form-row' );
-					new_container = document.createElement( 'DIV' );
-					new_container.classList.add( 'form-group' );
-					new_container.innerHTML = field_group.innerHTML;
-					new_row_container.appendChild( new_container );
-					field_group.parentElement.insertBefore( new_row_container, field_group );
-					field_group.remove();
-				}
+			if ( i === 1 ) 
+			{
+				new_row_container = document.createElement( 'DIV' );
+				new_row_container.classList.add( 'form-row', 'form-inline', 'justify-content-between', 'wonka-form-row' );
+				new_container = document.createElement( 'DIV' );
+				new_container.classList.add( 'form-group' );
+				new_container.innerHTML = field_group.innerHTML;
+				new_row_container.appendChild( new_container );
+				field_group.parentElement.insertBefore( new_row_container, field_group );
+				field_group.remove();
+			}
 
-				if ( i > 1 ) 
-				{
-					new_container = document.createElement( 'DIV' );
-					new_container.classList.add( 'form-group', 'form-inline' );
-					new_container.innerHTML = field_group.innerHTML;
-					field_group.parentElement.querySelector( '.wonka-form-row' ).appendChild( new_container );
-					field_group.parentElement.querySelector( '.clear' ).remove();
-					field_group.remove();
-				}
-			});
+			if ( i > 1 ) 
+			{
+				new_container = document.createElement( 'DIV' );
+				new_container.classList.add( 'form-group', 'form-inline' );
+				new_container.innerHTML = field_group.innerHTML;
+				field_group.parentElement.querySelector( '.wonka-form-row' ).appendChild( new_container );
+				field_group.parentElement.querySelector( '.clear' ).remove();
+				field_group.remove();
+			}
+		});
 		
 		var cybersource_labels = document.querySelectorAll( '.payment_box.payment_method_cybersource label' );
 		cybersource_labels.forEach( function( label, i ) 
-			{
-				label.classList.add( 'sr-only' );
-			});
+		{
+			label.classList.add( 'sr-only' );
+		});
 		
 		var cybersource_inputs = document.querySelectorAll( '.payment_box.payment_method_cybersource input' );
 		cybersource_inputs.forEach( function( input, i ) 
+		{
+			input.classList.add( 'form-control' );
+			if ( input.id === 'cybersource_cvNumber' ) 
 			{
-				input.classList.add( 'form-control' );
-				if ( input.id === 'cybersource_cvNumber' ) 
-				{
-					input.setAttribute( 'placeholder', 'CCV' );
-				}
-				else
-				{
-					input.setAttribute( 'placeholder', input.parentElement.querySelector( 'label' ).innerText );
-				}
-			});
+				input.setAttribute( 'placeholder', 'CCV' );
+			}
+			else
+			{
+				input.setAttribute( 'placeholder', input.parentElement.querySelector( 'label' ).innerText );
+			}
+		});
 
 		var cybersource_select_boxes = document.querySelectorAll( '.payment_box.payment_method_cybersource select' );
 		cybersource_select_boxes.forEach( function( select, i ) 
+		{
+			select.classList.add( 'form-control' );
+			if ( select.name === 'cybersource_cardType' ) 
 			{
-				select.classList.add( 'form-control' );
-				if ( select.name === 'cybersource_cardType' ) 
-				{
-					select.firstElementChild.innerText = select.parentElement.querySelector( 'label' ).innerText;
-				}
+				select.firstElementChild.innerText = select.parentElement.querySelector( 'label' ).innerText;
+			}
 
-				if ( select.name === 'cybersource_expirationMonth' ) 
-				{
-					select.style.marginRight = 15 + 'px';
-				}
-			});
+			if ( select.name === 'cybersource_expirationMonth' ) 
+			{
+				select.style.marginRight = 15 + 'px';
+			}
+		});
 
 		var billing_to_radios = document.querySelectorAll( 'input[name="ship_to_different_address"]' );
 		var billing_address_form = document.querySelector( '.billing_address' );
@@ -1583,29 +1583,29 @@ function wonka_woocommerce_review_order_before_submit() {
 		}
 		
 		billing_to_radios.forEach( function( item, i ) 
+		{
+
+			item.addEventListener( 'change', function( event ) 
 			{
-				
-				item.addEventListener( 'change', function( event ) 
+				var target = event.target;
+				if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
+				{
+					wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=billing' );
+					billing_address_form.classList.add( 'active' );
+					copy_to_billing();
+				}
+				else
+				{
+					wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=shipping' );
+					if ( billing_address_form.classList.contains( 'active' ) ) 
 					{
-						var target = event.target;
-						if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
-						{
-							wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=billing' );
-							billing_address_form.classList.add( 'active' );
-							copy_to_billing();
-						}
-						else
-						{
-							wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=shipping' );
-							if ( billing_address_form.classList.contains( 'active' ) ) 
-							{
-								billing_address_form.classList.remove( 'active' );
-								copy_to_billing();
-							}
-						}
-						
-					});
+						billing_address_form.classList.remove( 'active' );
+						copy_to_billing();
+					}
+				}
+
 			});
+		});
 
 		function copy_to_billing() {
 
@@ -1623,14 +1623,14 @@ function wonka_woocommerce_review_order_before_submit() {
 			var ship_to_cells = document.querySelectorAll( '.ship-to-address-cell' );
 
 			contact_cells.forEach( function( item, i ) 
-				{
-					item.innerText = email;
-				});
+			{
+				item.innerText = email;
+			});
 
 			ship_to_cells.forEach( function( item, i ) 
-				{
-					item.innerHTML = '<span class="address-number">' +address_1 + ' ' + address_2 + '</span> <span class="city-state-zip">' + city + ', ' + state + ' ' + postcode + '</span>';
-				});
+			{
+				item.innerHTML = '<span class="address-number">' +address_1 + ' ' + address_2 + '</span> <span class="city-state-zip">' + city + ', ' + state + ' ' + postcode + '</span>';
+			});
 
 			if ( document.getElementById( 'bill-to-different-address-checkbox2' ) ) 
 			{
@@ -1689,11 +1689,11 @@ function wonka_woocommerce_review_order_before_submit() {
 		if ( document.querySelector( 'a[data-target="#place_order"]' ) ) 
 		{
 			document.querySelector( 'a[data-target="#place_order"]' ).addEventListener( 'click', function( e ) 
-				{
-					var target = e.target;
-					var for_submit_id = target.getAttribute( 'data-target' );
-					document.querySelector( for_submit_id ).click();
-				});
+			{
+				var target = e.target;
+				var for_submit_id = target.getAttribute( 'data-target' );
+				document.querySelector( for_submit_id ).click();
+			});
 		}
 	</script>
 	<?php
@@ -1708,29 +1708,64 @@ add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_
 	* @author Carlos
 	* @return    [return description]
 	*/
-function add_theme_style_to_compare() {
-	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
+	function add_theme_style_to_compare() {
+		wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
 	// wp_enqueue_script( 'apera-bags-wonkamizer-js', get_template_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'apera-bags-slick-js' ), time(), true );
+	}
+
+	if( class_exists( 'YITH_Woocompare_Frontend' ) ) {
+		add_action('wp_print_styles', 'add_theme_style_to_compare', 101);
+	}
+
+
+	function filter_yith_woocompare_compare_added_label( $var ) { 
+		$var = 'Compare Bags'; 
+		return $var; 
+	}; 
+
+	add_filter( 'yith_woocompare_compare_added_label', 'filter_yith_woocompare_compare_added_label', 10, 1 ); 
+
+
+	function jcar_yith_woocompare_compare_added_label( $var ) { 
+
+		$pieces = explode("<a", html_entity_decode($var));
+
+		return $pieces[0]; 
+	}; 
+
+	add_filter( 'yith_woocompare_products_description', 'jcar_yith_woocompare_compare_added_label', 10, 1 ); 
+
+/**
+ * This is for making special note added for club greenwoood coupons
+ * 
+ * @since 1.0.0
+ */
+function add_customer_order_notes( $order_id ) {
+
+	//note this line is different 
+	//because I already have the ID from the hook I am using.
+	$order = new WC_Order( $order_id ); 
+
+	$coupon_codes = $order->get_used_coupons();
+
+	foreach( $coupon_codes as $coupon_code ) {
+
+		$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
+
+		if ( $coupon_code === 'clubgreenwood' ) :
+
+			// The text for the note
+			$note = __( 'This is a club greenwood order, make sure to add custom logo before shipping' );
+
+			// Add the note
+			$order->add_order_note( $note );
+
+			// Save the data
+			$order->save();
+
+		endif;
+
+	}
+
 }
-
-if( class_exists( 'YITH_Woocompare_Frontend' ) ) {
-	add_action('wp_print_styles', 'add_theme_style_to_compare', 101);
-}
-
-
-function filter_yith_woocompare_compare_added_label( $var ) { 
-	$var = 'Compare Bags'; 
-	return $var; 
-}; 
-			 
-add_filter( 'yith_woocompare_compare_added_label', 'filter_yith_woocompare_compare_added_label', 10, 1 ); 
-
-
-function jcar_yith_woocompare_compare_added_label( $var ) { 
-	
-	$pieces = explode("<a", html_entity_decode($var));
-
-	return $pieces[0]; 
-}; 
-			 
-add_filter( 'yith_woocompare_products_description', 'jcar_yith_woocompare_compare_added_label', 10, 1 ); 
+add_action( 'woocommerce_new_order', 'add_customer_order_notes',  1, 1  );
