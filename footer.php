@@ -115,7 +115,7 @@ $footer_section = get_section_mods( 'footer' );
 							<div class="col col-12 col-lg-8">
 								<?php
 									_e( do_shortcode( $footer_section->footer_mods->footer_form_shortcode ) );
-									_e( "<small>Sign up for our email newsletter and receive a 10% discount on today's purchase!</small><br />" );
+									_e( "<small>Sign up for our email newsletter and receive an extra 10% discount on today's purchase!</small><br />" );
 								?>
 							</div> <!-- .col -->
 						<?php endif; ?>
