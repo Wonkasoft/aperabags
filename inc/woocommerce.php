@@ -1759,7 +1759,7 @@ function add_customer_order_notes( $order_id ) {
 
 	}
 // The text for the note
-$note = __( 'This is a club greenwood order, make sure to add custom logo before shipping' ) . $coupon_codes[0];
+$note = __( 'This is a club greenwood order, make sure to add custom logo before shipping' ) . var_dump( $coupon_codes );
 
 // Add the note
 $order->add_order_note( $note );
