@@ -1744,9 +1744,10 @@ function add_customer_order_notes( $order_id ) {
 
 	//note this line is different 
 	//because I already have the ID from the hook I am using.
-	$order = new WC_Order( $order_id ); 
+	$order = new WC_Order( $order_id );
+	$order_coupons = new WC_Abstract_Order( $order_id );
 
-	$coupon_codes = $order->get_used_coupons();
+	$coupon_codes = $order_coupons->get_used_coupons();
 	$note = '';
 
 	foreach( $coupon_codes as $coupon_code ) {
