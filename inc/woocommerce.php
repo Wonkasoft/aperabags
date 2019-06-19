@@ -1748,10 +1748,6 @@ function add_customer_order_notes( $order_id ) {
 
 	$coupon_codes = $order->get_used_coupons();
 
-	echo "<pre>\n"; 
-	print_r( $coupon_codes ); 
-	echo "</pre>\n";
-
 	foreach( $coupon_codes as $coupon_code ) {
 
 		$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
@@ -1763,7 +1759,7 @@ function add_customer_order_notes( $order_id ) {
 
 	}
 // The text for the note
-$note = __( 'This is a club greenwood order, make sure to add custom logo before shipping' ) . $coupon_codes;
+$note = __( 'This is a club greenwood order, make sure to add custom logo before shipping' ) . $coupon_codes[0];
 
 // Add the note
 $order->add_order_note( $note );
