@@ -452,8 +452,8 @@ function wonka_override_checkout_fields( $fields ) {
 	}
 
 	foreach ( $fields['shipping'] as $key => &$field ) {
-		if ( $key !== 'shipping_company' || $key !== 'shipping_address_2' ) :
-			$field['required'] = true;
+		if ( $key === 'shipping_company' || $key === 'shipping_address_2' ) :
+			$field['required'] = false;
 		endif;
 
 		if ( $key === 'shipping_first_name' ) :

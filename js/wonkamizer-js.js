@@ -1121,90 +1121,14 @@ if ( wonkasoft_request.ga_id !== '' )
 		var thumbs_set;
 		var imgs_set;
 
-		variant_lis.forEach( function( item, i ) 
-			{	
-				if ( item.classList.contains( 'selected' ) ) 
-				{
-					variant_selected = item.getAttribute( 'data-value' );
-
-					full_imgs_parent.innerHTML = '';
-					full_imgs.forEach( function( img_tainers, i ) 
-						{
-							if ( i === 0 ) 
-							{
-								img_tainers.setAttribute( 'data-variant-color', variant_selected );
-							}
-
-							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected )
-							{
-								img_tainers.classList.add( 'variant-show' );
-								full_imgs_parent.appendChild( img_tainers );
-							}
-
-							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
-							{
-								img_tainers.classList.remove( 'variant-show' );
-							}
-						});
-
-					thumb_lis_parent.innerHTML = '';
-					thumb_lis.forEach( function( img_tainers, i ) 
-						{
-							if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
-							{
-								img_tainers.classList.add( 'variant-show' );
-								thumb_lis_parent.appendChild( img_tainers );
-							}
-
-							if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
-							{
-								img_tainers.classList.remove( 'variant-show' );
-							}
-						});
-
-				}
-				
-				if ( item.selectedIndex === 0 ) 
-				{
-					full_imgs_parent.innerHTML = '';
-					full_imgs.forEach( function( img_tainers, i ) 
-						{
-							img_tainers.classList.add( 'variant-show' );
-						});
-
-					thumb_lis_parent.innerHTML = '';
-					thumb_lis.forEach( function( img_tainers, i ) 
-						{
-							img_tainers.classList.add( 'variant-show' );
-						});
-				}
-
-				item.addEventListener( 'click', function( event ) 
-				{
-					var variant = event.target;
-
-					if ( variant.nodeName === 'SPAN' ) 
+		if ( variant_lis.length ) 
+		{
+			variant_lis.forEach( function( item, i ) 
+				{	
+					if ( item.classList.contains( 'selected' ) ) 
 					{
-						variant = variant.parentElement;
-					}
+						variant_selected = item.getAttribute( 'data-value' );
 
-					if ( variant.getAttribute( 'data-value' ) ) 
-					{
-						variant_selected = variant.getAttribute( 'data-value' );
-					}
-
-					if ( variant.nodeName === 'A' ) 
-					{
-						variant = variant.parentElement;
-					}
-
-					if ( window.innerWidth < 480 ) 
-					{
-						$( '.wonka-image-viewer' ).slick( 'unslick' );
-					}
-
-					if ( variant_selected !== null ) 
-					{
 						full_imgs_parent.innerHTML = '';
 						full_imgs.forEach( function( img_tainers, i ) 
 							{
@@ -1213,7 +1137,7 @@ if ( wonkasoft_request.ga_id !== '' )
 									img_tainers.setAttribute( 'data-variant-color', variant_selected );
 								}
 
-								if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+								if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected )
 								{
 									img_tainers.classList.add( 'variant-show' );
 									full_imgs_parent.appendChild( img_tainers );
@@ -1240,72 +1164,163 @@ if ( wonkasoft_request.ga_id !== '' )
 								}
 							});
 
-						if ( window.innerWidth < 480 ) 
-						{
-							setTimeout( function() 
-								{
-									$( '.wonka-image-viewer' ).slick({
-										slidesToShow: 1,
-										slidesToScroll: 1,
-										adaptiveHeight: true,
-										mobileFirst: true,
-										dots: false,
-										prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
-										nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
-										responsive: [
-											{
-											  breakpoint: 768,
-											  settings: 'unslick',
-											},
-										],
-									});
-								}, 10 );
-						}
 					}
-
-					if ( variant.firstElementChild.classList.contains( 'reset_variations' ) ) 
+					
+					if ( item.selectedIndex === 0 ) 
 					{
-
 						full_imgs_parent.innerHTML = '';
 						full_imgs.forEach( function( img_tainers, i ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
-								full_imgs_parent.appendChild( img_tainers );
 							});
 
 						thumb_lis_parent.innerHTML = '';
 						thumb_lis.forEach( function( img_tainers, i ) 
 							{
 								img_tainers.classList.add( 'variant-show' );
-								thumb_lis_parent.appendChild( img_tainers );
 							});
+					}
+
+					item.addEventListener( 'click', function( event ) 
+					{
+						var variant = event.target;
+
+						if ( variant.nodeName === 'SPAN' ) 
+						{
+							variant = variant.parentElement;
+						}
+
+						if ( variant.getAttribute( 'data-value' ) )
+						{
+							variant_selected = variant.getAttribute( 'data-value' );
+						}
+
+						if ( variant.nodeName === 'A' ) 
+						{
+							variant = variant.parentElement;
+						}
 
 						if ( window.innerWidth < 480 ) 
 						{
-							setTimeout( function() 
-								{
-									$( '.wonka-image-viewer' ).slick({
-										slidesToShow: 1,
-										slidesToScroll: 1,
-										adaptiveHeight: true,
-										mobileFirst: true,
-										dots: false,
-										prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
-										nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
-										responsive: [
-											{
-											  breakpoint: 768,
-											  settings: 'unslick',
-											},
-										],
-									});
-								}, 20 );
+							$( '.wonka-image-viewer' ).slick( 'unslick' );
 						}
-					}
-					
-					
+
+						if ( variant_selected !== null ) 
+						{
+							full_imgs_parent.innerHTML = '';
+							full_imgs.forEach( function( img_tainers, i ) 
+								{
+									if ( i === 0 ) 
+									{
+										img_tainers.setAttribute( 'data-variant-color', variant_selected );
+									}
+
+									if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+									{
+										img_tainers.classList.add( 'variant-show' );
+										full_imgs_parent.appendChild( img_tainers );
+									}
+
+									if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+									{
+										img_tainers.classList.remove( 'variant-show' );
+									}
+								});
+
+							thumb_lis_parent.innerHTML = '';
+							thumb_lis.forEach( function( img_tainers, i ) 
+								{
+									if ( img_tainers.getAttribute( 'data-variant-color' ) === variant_selected ) 
+									{
+										img_tainers.classList.add( 'variant-show' );
+										thumb_lis_parent.appendChild( img_tainers );
+									}
+
+									if ( img_tainers.getAttribute( 'data-variant-color' ) !== variant_selected && img_tainers.classList.contains( 'variant-show' ) ) 
+									{
+										img_tainers.classList.remove( 'variant-show' );
+									}
+								});
+
+							if ( window.innerWidth < 480 ) 
+							{
+								setTimeout( function() 
+									{
+										$( '.wonka-image-viewer' ).slick({
+											slidesToShow: 1,
+											slidesToScroll: 1,
+											adaptiveHeight: true,
+											mobileFirst: true,
+											dots: false,
+											prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+											nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+											responsive: [
+												{
+												  breakpoint: 768,
+												  settings: 'unslick',
+												},
+											],
+										});
+									}, 10 );
+							}
+						}
+
+						if ( variant.firstElementChild.classList.contains( 'reset_variations' ) ) 
+						{
+
+							full_imgs_parent.innerHTML = '';
+							full_imgs.forEach( function( img_tainers, i ) 
+								{
+									img_tainers.classList.add( 'variant-show' );
+									full_imgs_parent.appendChild( img_tainers );
+								});
+
+							thumb_lis_parent.innerHTML = '';
+							thumb_lis.forEach( function( img_tainers, i ) 
+								{
+									img_tainers.classList.add( 'variant-show' );
+									thumb_lis_parent.appendChild( img_tainers );
+								});
+
+							if ( window.innerWidth < 480 ) 
+							{
+								setTimeout( function() 
+									{
+										$( '.wonka-image-viewer' ).slick({
+											slidesToShow: 1,
+											slidesToScroll: 1,
+											adaptiveHeight: true,
+											mobileFirst: true,
+											dots: false,
+											prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
+											nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
+											responsive: [
+												{
+												  breakpoint: 768,
+												  settings: 'unslick',
+												},
+											],
+										});
+									}, 20 );
+							}
+						}
+						
+						
+					});
 				});
-			});
+		}
+		else 
+		{
+			full_imgs.forEach( function( item, i ) 
+				{
+					item.classList.add( 'variant-show' );
+				});
+
+			thumb_lis.forEach( function( item, i ) 
+				{
+					item.classList.add( 'variant-show' );
+				});
+		}
 
 		full_imgs.forEach( function( item, i ) 
 			{
