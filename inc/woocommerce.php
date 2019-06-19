@@ -1748,16 +1748,16 @@ function add_customer_order_notes( $order_id ) {
 
 	$coupon_codes = $order->get_code();
 
-	foreach( $coupon_codes as $coupon_code ) {
+	// foreach( $coupon_codes as $coupon_code ) {
 
-		$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
+	// 	$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
 
-		if ( $coupon_code === 'clubgreenwood' ) :
+	// 	if ( $coupon_code === 'clubgreenwood' ) :
 
 
-		endif;
+	// 	endif;
 
-	}
+	// }
 // The text for the note
 $note = __( 'This is a club greenwood order, make sure to add custom logo before shipping' ) . $coupon_codes;
 
