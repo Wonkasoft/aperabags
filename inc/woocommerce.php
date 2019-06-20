@@ -1755,6 +1755,7 @@ function add_customer_order_notes( $order_id ) {
 			$free_logo_id = $product_data['id'];
 		endif;
 	}
+	$product = wc_get_product( $free_logo_id );
 
 	$coupon_codes = $order->get_used_coupons();
 
@@ -1762,8 +1763,8 @@ function add_customer_order_notes( $order_id ) {
 		$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
 
 		if ( $coupon_code === 'clubgreenwood' ) :
-			if ( ! empty ( $free_logo_id ) ) {
-				$order->add_product( $free_logo_id, 1 );
+			if ( ! empty ( $product ) ) {
+				$order->add_product( $product, 1 );
 			}
 			// The text for the note
 			$note = __( ' This is a club greenwood order, make sure to add custom logo before shipping' );
