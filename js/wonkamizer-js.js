@@ -1542,7 +1542,6 @@ if ( wonkasoft_request.ga_id !== '' )
 	        xhr.onreadystatechange = function() {
 		        if ( this.readyState == 4 && this.status == 200 )  {
 		        	var response =   this;
-		        	console.log( response );
         			if ( popup_wrap.classList.contains( 'popped-up' ) ) 
         			{
         				popup_wrap.classList.remove( 'popped-up' );
@@ -1555,7 +1554,7 @@ if ( wonkasoft_request.ga_id !== '' )
 
 				});
 
-			popup_form.addEventListener( 'submit', function( e ) 
+			popup_form.addEventListener( 'gform_post_render', function( e ) 
 				{
 					console.log( e );
 				});

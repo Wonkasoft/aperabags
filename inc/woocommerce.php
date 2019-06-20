@@ -1745,7 +1745,7 @@ function add_customer_order_notes( $order_id ) {
 	//because I already have the ID from the hook I am using.
 	$order = new WC_Order( $order_id );
 	$free_logo_id = '';
-	
+
 	$query = new WC_Product_Query();
 	$products = $query->get_products();
 
@@ -1762,8 +1762,9 @@ function add_customer_order_notes( $order_id ) {
 		$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
 
 		if ( $coupon_code === 'clubgreenwood' ) :
-			
-			$order->add_product( $free_logo_id, 1 );
+			if ( ! empty ( $free_logo_id ) ) {
+				$order->add_product( $free_logo_id, 1 );
+			}
 			// The text for the note
 			$note = __( ' This is a club greenwood order, make sure to add custom logo before shipping' );
 
