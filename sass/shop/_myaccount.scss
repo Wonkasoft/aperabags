@@ -25,3 +25,10 @@ main.main-my-account {
   width: 100%;
   text-align: left;
 }
+
+body.woocommerce-lost-password {
+  
+  div.woocommerce-notices-wrapper {
+    display: none;
+  }
+}
