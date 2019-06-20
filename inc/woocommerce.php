@@ -1710,7 +1710,6 @@ add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_
 	*/
 	function add_theme_style_to_compare() {
 		wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
-	// wp_enqueue_script( 'apera-bags-wonkamizer-js', get_template_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'apera-bags-slick-js' ), time(), true );
 	}
 
 	if( class_exists( 'YITH_Woocompare_Frontend' ) ) {
@@ -1745,6 +1744,17 @@ function add_customer_order_notes( $order_id ) {
 	//note this line is different 
 	//because I already have the ID from the hook I am using.
 	$order = new WC_Order( $order_id );
+	$free_logo_id = '';
+	
+	$query = new WC_Product_Query();
+	$products = $query->get_products();
+
+	foreach ( $products as $product ) {
+		$product_data = $product->get_data();
+		if ( $product_data['slug'] === 'free-custom-logo' ) :
+			$free_logo_id = $product_data['id'];
+		endif;
+	}
 
 	$coupon_codes = $order->get_used_coupons();
 
@@ -1752,6 +1762,8 @@ function add_customer_order_notes( $order_id ) {
 		$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
 
 		if ( $coupon_code === 'clubgreenwood' ) :
+			
+			$order->add_product( $free_logo_id, 1 );
 			// The text for the note
 			$note = __( ' This is a club greenwood order, make sure to add custom logo before shipping' );
 

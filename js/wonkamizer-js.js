@@ -1533,10 +1533,12 @@ if ( wonkasoft_request.ga_id !== '' )
 					var data = {};
 					data.action = 'wonkasoft_dismiss_popup';
 					data.security = wonkasoft_request.security;
+					
 					if ( el.nodeName === 'SPAN' ) 
 					{
 						el = el.parentElement;
 					}
+					
 	        xhr.onreadystatechange = function() {
 		        if ( this.readyState == 4 && this.status == 200 )  {
 		        	var response =   this;
@@ -1553,7 +1555,7 @@ if ( wonkasoft_request.ga_id !== '' )
 
 				});
 
-			popup_form.addEventListener( 'gform_confirmation_loaded', function( e ) 
+			popup_form.addEventListener( 'submit', function( e ) 
 				{
 					console.log( e );
 				});
