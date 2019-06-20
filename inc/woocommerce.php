@@ -1755,7 +1755,10 @@ function add_customer_order_notes( $order_id ) {
 			$free_logo_id = $product_data['id'];
 		endif;
 	}
-	$product = wc_get_product( $free_logo_id );
+
+	if ( ! empty ( $free_logo_id ) ) {
+		$product = wc_get_product( $free_logo_id );
+	}
 
 	$coupon_codes = $order->get_used_coupons();
 
