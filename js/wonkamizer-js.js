@@ -1522,7 +1522,7 @@ if ( wonkasoft_request.ga_id !== '' )
 		{
 			var popup_wrap = document.querySelector( 'div.wonka-newsletter-wrap' );
 			var popup_dismiss_btn = document.querySelector( 'a.wonka-newsletter-close-btn' );
-			var popup_form = document.querySelector( 'div.wonka-newsletter-wrap form' );
+			var popup_form_wrapper = document.querySelector( 'div.wonka-newsletter-wrap .wonka-gform_wrapper' );
 			setTimeout( function() 
 				{
 					popup_wrap.classList.add( 'popped-up' );
@@ -1555,7 +1555,7 @@ if ( wonkasoft_request.ga_id !== '' )
 
 				});
 
-			popup_form.addEventListener( 'gform_post_render', function( e ) 
+			popup_form_wrapper.addEventListener( 'change', function( e ) 
 				{
 					console.log( e );
 				});
