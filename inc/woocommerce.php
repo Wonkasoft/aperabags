@@ -1747,10 +1747,10 @@ function add_customer_order_notes( $order_id ) {
 	$free_logo_id = '';
 
 	$query = new WC_Product_Query();
-	$products = $query->get_products();
+	$query_products = $query->get_products();
 
-	foreach ( $products as $product ) {
-		$product_data = $product->get_data();
+	foreach ( $query_products as $single_product ) {
+		$product_data = $single_product->get_data();
 		if ( $product_data['slug'] === 'free-custom-logo' ) :
 			$free_logo_id = $product_data['id'];
 		endif;
