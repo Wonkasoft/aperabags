@@ -339,6 +339,7 @@ if ( wonkasoft_request.ga_id !== '' )
 									{
 										next_tab.classList.remove( 'disabled' );
 										next_tab.click();
+										scrollToSection( 'wonka_shipping_method_tab', 15 );
 										if ( document.querySelector( '.pac-container' ) ) 
 										{
 											document.querySelector( '.pac-container' ).style.display = 'none';
