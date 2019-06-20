@@ -1522,7 +1522,7 @@ if ( wonkasoft_request.ga_id !== '' )
 		{
 			var popup_wrap = document.querySelector( 'div.wonka-newsletter-wrap' );
 			var popup_dismiss_btn = document.querySelector( 'a.wonka-newsletter-close-btn' );
-			var popup_form_wrapper = document.querySelector( 'div.wonka-newsletter-wrap .wonka-gform_wrapper' );
+			var popup_form = document.querySelector( 'div.wonka-newsletter-wrap form' );
 			setTimeout( function() 
 				{
 					popup_wrap.classList.add( 'popped-up' );
@@ -1555,9 +1555,18 @@ if ( wonkasoft_request.ga_id !== '' )
 
 				});
 
-			popup_form_wrapper.addEventListener( 'change', function( e ) 
+			popup_form.addEventListener( 'submit', function( e ) 
 				{
-					console.log( e );
+					setTimeout( function() 
+						{
+							if ( document.querySelector( 'div.wonka-newsletter-wrap .gform_confirmation_wrapper' ) ) 
+							{
+								if ( popup_wrap.classList.contains( 'popped-up' ) ) 
+								{
+									popup_wrap.classList.remove( 'popped-up' );
+								}
+							}
+						}, 2000 );
 				});
 		}
 		/*=====  End of For Popup  ======*/
