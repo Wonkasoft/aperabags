@@ -1751,7 +1751,7 @@ function add_customer_order_notes( $order_id ) {
 
 	foreach ( $query_products as $single_product ) {
 		$product_data = $single_product->get_data();
-		if ( $product_data['slug'] === 'free-custom-logo' ) :
+		if ( $product_data['slug'] === 'free-custom-club-greenwood-logo' ) :
 			$free_logo_id = $product_data['id'];
 		endif;
 	}
