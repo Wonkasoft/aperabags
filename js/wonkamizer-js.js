@@ -1540,13 +1540,14 @@ if ( wonkasoft_request.ga_id !== '' )
 						el = el.parentElement;
 					}
 					
+					if ( popup_wrap.classList.contains( 'popped-up' ) ) 
+					{
+						popup_wrap.classList.remove( 'popped-up' );
+					}
+					
 	        xhr.onreadystatechange = function() {
 		        if ( this.readyState == 4 && this.status == 200 )  {
 		        	var response =   this;
-        			if ( popup_wrap.classList.contains( 'popped-up' ) ) 
-        			{
-        				popup_wrap.classList.remove( 'popped-up' );
-        			}
 		        }
 	        };
 	        xhr.open('POST', wonkasoft_request.ajax + '?action=' + data.action + '&security=' + data.security );
