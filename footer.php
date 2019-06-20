@@ -115,7 +115,7 @@ $footer_section = get_section_mods( 'footer' );
 							<div class="col col-12 col-lg-8">
 								<?php
 									_e( do_shortcode( $footer_section->footer_mods->footer_form_shortcode ) );
-									_e( "<small>Sign up for our email newsletter and receive a 10% discount on today's purchase!</small><br />" );
+									_e( "<small>Sign up for our email newsletter and receive an extra 10% discount on today's purchase!</small><br />" );
 								?>
 							</div> <!-- .col -->
 						<?php endif; ?>
@@ -147,13 +147,16 @@ $footer_section = get_section_mods( 'footer' );
 <?php
 $newsletter_section = get_section_mods( 'newsletter' );
 $user_id = get_current_user_id();
+
 if ( isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
 	$user_cookie = $_COOKIE['wonkasoft_newsletter_popup'];
 	$user_cookie = str_replace( "\\", "", $user_cookie );
 	$user_cookie = json_decode( $user_cookie );
+else:
+	$user_cookie = new stdclass();
+	$user_cookie->show = true;
 endif;
-$dismissed = ( ! empty ( get_user_option( 'newsletter_dismissed', $user_id ) ) ) ? get_user_option( 'newsletter_dismissed', $user_id ): false;
-if ( ! empty ( $newsletter_section ) && $newsletter_section->newsletter_mods->enable_popup && $user_cookie->show && !$dismissed ) :
+if ( ! empty ( $newsletter_section ) && $newsletter_section->newsletter_mods->enable_popup && $user_cookie->show ) :
 	$bg_img = ( ! empty ( $newsletter_section->newsletter_mods->background_image ) ) ? $newsletter_section->newsletter_mods->background_image: '';
 	$bg_color = ( ! empty ( $newsletter_section->newsletter_mods->background_color ) ) ? $newsletter_section->newsletter_mods->background_color: '';
 	if ( ! empty ( $newsletter_section->newsletter_mods->background_color ) ) :

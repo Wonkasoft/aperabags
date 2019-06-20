@@ -33,10 +33,10 @@ if ( post_password_required() ) {
 ?>
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class( '', $product ); ?>>
 	<section class="product-img-section">
-		<div class="product-on-sale">
+		
 		<?php remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 ); ?>
 		<?php do_action( 'woocommerce_before_single_product_summary' ); ?>
-		</div>
+		
 	<div class="wonka-single-product-img-area">
 		<?php remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10 ); ?>
 		<?php add_action( 'wonka_mobile_title_place', 'woocommerce_template_single_title', 5 ); ?>

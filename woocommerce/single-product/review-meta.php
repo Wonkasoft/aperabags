@@ -35,7 +35,6 @@ if ( '0' === $comment->comment_approved ) { ?>
 		<?php
 		if ( 'yes' === get_option( 'woocommerce_review_rating_verification_label' ) && $verified ) : ?>
 			<span class="wonka-verified-time-wrap">
-			<?php echo '<em class="woocommerce-review__verified verified">(' . esc_attr__( 'verified owner', 'woocommerce' ) . ')</em> '; ?>
 			<span class="woocommerce-review__dash">&ndash;</span> <time class="woocommerce-review__published-date" datetime="<?php echo esc_attr( get_comment_date( 'c' ) ); ?>"><?php echo esc_html( get_comment_date( wc_date_format() ) ); ?></time>
 			</span>
 		<?php else: ?>

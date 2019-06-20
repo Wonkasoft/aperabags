@@ -47,27 +47,6 @@ defined( 'ABSPATH' ) || exit;
 						$fields = $checkout->get_checkout_fields( 'billing' );
 
 						foreach ( $fields as $key => $field ) {
-							if ( $key === 'billing_country' ) :
-								$field['priority'] = 95;
-							endif;
-
-							if ( !isset($field['placeholder'] ) ) :
-								$field['placeholder'] = $field['label'];
-							endif;
-
-							if ( isset( $field['class'] ) ) :
-								array_push( $field['class'], 'wonka-form-group', 'form-group' ) ;
-							else:
-								$field['class'] = array( 'wonka-form-group', 'form-group' );
-							endif;
-
-							if ( isset( $field['label_class'] ) ) :
-								array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
-							else:
-								$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
-							endif;
-
-							$field['input_class'] = array( 'wonka-form-control', 'form-control' );
 
 							if ( isset( $field['country_field'], $fields[ $field['country_field'] ] ) ) {
 								$field['country'] = $checkout->get_value( $field['country_field'] );
