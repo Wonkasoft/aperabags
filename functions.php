@@ -125,6 +125,20 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 			'flex-width'  => true,
 			'flex-height' => true,
 		) );
+
+		/**
+		 * This is for jpeg quality adjustment for faster image parsing.
+		 *
+		 * @since 1.0.0
+		 */
+		add_filter('jpeg_quality', function($arg){return 40;});
+
+		/**
+		 * This is for custom image sizes for faster image parsing.
+		 *
+		 * @since 1.0.0
+		 */
+		add_image_size( 'custom_products_size', 367, 551, false );
 	}
 endif;
 add_action( 'after_setup_theme', 'apera_bags_setup' );

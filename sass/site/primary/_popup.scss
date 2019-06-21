@@ -1,0 +1,168 @@
+div.wonka-newsletter-wrap {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  padding: 0;
+  opacity: 0;
+  bottom: 0;
+  height: 0;
+  width: 100%;
+  z-index: 1099;
+  @include prefix( box-shadow, 0 1px 6px 0 rgba( #000, .6 ), o moz webkit );
+  @include prefix( transition, all .4s ease-in-out, o moz webkit );
+
+  &.popped-up {
+    padding: 15px;
+    opacity: 1;
+    height: 225px;
+  }
+
+  div.wonka-newsletter-content {
+    margin: auto;
+    height: 100%;
+    flex: 1 0 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  div.wonka-newsletter-close-btn-wrap {
+    flex: 1 0 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+
+    a.wonka-newsletter-close-btn {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      width: 25px;
+
+      span.newsletter-close-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid rgba( #000, .8 );
+        border-radius: 2px;
+        width: 25px;
+        height: 25px;
+        font-weight: 700;
+      }
+    }
+  }
+
+  header.wonka-newsletter-header {
+    flex: 1 0 100%;
+    margin: auto;
+    text-align: center;
+
+    h5.popup-header-text {
+      margin: auto;
+      max-width: 600px;
+      line-height: 1.1;
+      @include font-size( .9 );
+
+      @include media-breakpoint( md ) {
+        @include font-size( 1.3 );
+      }
+    }
+  }
+
+  main.wonka-newsletter-body {
+    flex: 1 0 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px auto;
+
+    .wonka-newsletter-form-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1 0 100%;
+    }
+
+    .wonka-newsletter-form_wrapper {
+      flex: 1 0 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    form.wonka-newsletter-form {
+      flex: 1 0 100%;
+      align-items: stretch;
+      justify-content: center;
+
+      .validation_error {
+        flex: 1 0 100%;
+        margin: auto;
+        text-align: center;
+      }
+
+      .gform_body {
+        height: 70px;
+        flex: auto;
+        max-width: 450px;
+
+        ul {
+          margin: 0;
+          padding: 0;
+
+          label {
+            display: none;
+          }
+
+          li.wonka-form-group {
+            margin-bottom: 0;
+          }
+
+          div.ginput_container_email {
+            width: 100%;
+          }
+
+          input[type=email].wonka-form-control {
+            width: 100%;
+            color: #bfc0c2;
+            background: transparent;
+            padding: 8px 15px;
+            font-weight: 600;
+            border-radius: 100px 0 0 100px;
+            height: 40px;
+            @include font-size( .9 );
+            letter-spacing: 1px;
+            @include prefix( transition, $trans_25, webkit moz o);
+
+            &::placeholder {
+              font-style: italic;
+              font-weight: 300;
+              color: #444444
+            }
+          }
+        }
+      }
+
+      .gform_footer {
+        flex: 0 0 12%;
+        height: 70px;
+
+        input[type=submit].wonka-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: $font__main;
+          font-weight: 800;
+          color: #ffffff;
+          margin-left: 0;
+          width: 100%;
+          height: 40px;
+          @include font-size( .9 );
+          border-radius: 0 100px 100px 0;
+          @include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+        }
+      }
+    }
+  }
+}
