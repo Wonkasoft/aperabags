@@ -1786,21 +1786,16 @@ function add_customer_order_notes( $order_id ) {
 
 add_action( 'woocommerce_payment_complete', 'add_customer_order_notes',  10, 1  );
 
-<<<<<<< HEAD
 function wonkasoft_single_product_archive_thumbnail_size( $size ) {
 	$size = 'custom_products_size';
 	return $size;
 }
 
 add_filter( 'single_product_archive_thumbnail_size', 'wonkasoft_single_product_archive_thumbnail_size' );
-=======
-// define the yith_woocompare_filter_table_fields callback 
-function filter_yith_woocompare_filter_table_fields( $fields, $products ) { 
-	// make filter magic happen here... 
+
+function wonkasoft_filter_yith_woocompare_filter_table_fields( $fields, $products ) { 
 	$fields["title"] = "Product";
 	return $fields; 
 }; 
 			 
-// add the filter 
-add_filter( 'yith_woocompare_filter_table_fields', 'filter_yith_woocompare_filter_table_fields', 10, 2 ); 
->>>>>>> jcar2013
+add_filter( 'yith_woocompare_filter_table_fields', 'wonkasoft_filter_yith_woocompare_filter_table_fields', 10, 2 ); 
