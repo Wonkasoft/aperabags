@@ -641,4 +641,4 @@ add_action( 'gform_after_submission', 'wonkasoft_newsletter_popup_entry', 10, 2 
  *
  * @since 1.0.0
  */
-add_filter('jpeg_quality', function($arg){return 60;});
+add_filter('jpeg_quality', function($arg){return 40;});
