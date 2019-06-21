@@ -635,3 +635,10 @@ function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 
 add_action( 'gform_after_submission', 'wonkasoft_newsletter_popup_entry', 10, 2 );
 /*=====  End of This is the ajax call for the newsletter popup  ======*/
+
+/**
+ * This is for jpeg quality adjustment. for faster image parsing.
+ *
+ * @since 1.0.0
+ */
+add_filter('jpeg_quality', function($arg){return 60;});
