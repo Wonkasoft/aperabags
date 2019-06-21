@@ -637,8 +637,15 @@ add_action( 'gform_after_submission', 'wonkasoft_newsletter_popup_entry', 10, 2 
 /*=====  End of This is the ajax call for the newsletter popup  ======*/
 
 /**
- * This is for jpeg quality adjustment. for faster image parsing.
+ * This is for jpeg quality adjustment for faster image parsing.
  *
  * @since 1.0.0
  */
-add_filter('jpeg_quality', function($arg){return 60;});
+add_filter('jpeg_quality', function($arg){return 40;});
+
+/**
+ * This is for custom image sizes for faster image parsing.
+ *
+ * @since 1.0.0
+ */
+add_image_size( 'custom_products_size', 367, 551, false );

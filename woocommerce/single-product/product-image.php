@@ -51,7 +51,7 @@ $wrapper_classes   = apply_filters( 'woocommerce_single_product_image_gallery_cl
 			echo apply_filters( 'wonka_single_product_scroll_image_html', $html, $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
 			if ( $attachment_ids && $product->get_image_id() ) {
 				foreach ( $attachment_ids as $attachment_id ) {
-					echo apply_filters( 'wonka_single_product_scroll_image_html', wc_get_gallery_image_html( $attachment_id, 'full' ), $attachment_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
+					echo apply_filters( 'wonka_single_product_scroll_image_html', wc_get_gallery_image_html( $attachment_id, 'custom_products_size' ), $attachment_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
 				}
 			}
 		?>
