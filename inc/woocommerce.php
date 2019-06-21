@@ -1785,3 +1785,13 @@ function add_customer_order_notes( $order_id ) {
 }
 
 add_action( 'woocommerce_payment_complete', 'add_customer_order_notes',  10, 1  );
+
+// define the yith_woocompare_filter_table_fields callback 
+function filter_yith_woocompare_filter_table_fields( $fields, $products ) { 
+	// make filter magic happen here... 
+	$fields["title"] = "Product";
+	return $fields; 
+}; 
+			 
+// add the filter 
+add_filter( 'yith_woocompare_filter_table_fields', 'filter_yith_woocompare_filter_table_fields', 10, 2 ); 
