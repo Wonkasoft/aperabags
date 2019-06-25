@@ -801,7 +801,7 @@ if ( wonkasoft_request.ga_id !== '' )
 		=======================================================================*/
 		if ( window.pageYOffset > top_slider_section.offsetTop && window.pageYOffset < top_slider_section.offsetTop + top_slider_section.offsetHeight ) 
 		{
-			parallax_adjust = parseFloat( (window.pageYOffset - top_slider_section.offsetTop ) / ( top_slider_section.offsetHeight / 2 ) ).toFixed( 5 );
+			parallax_adjust = parseFloat( ( window.pageYOffset - top_slider_section.offsetTop ) / ( top_slider_section.offsetHeight / 8 ) ).toFixed( 5 );
 			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
 				{
@@ -824,7 +824,7 @@ if ( wonkasoft_request.ga_id !== '' )
 		=======================================================================*/
 		if ( window.pageYOffset > cta_section.offsetTop && window.pageYOffset < cta_section.offsetTop + cta_section.offsetHeight ) 
 		{
-			parallax_adjust = parseFloat( (window.pageYOffset - cta_section.offsetTop ) / ( cta_section.offsetHeight / 2 ) ).toFixed( 5 );
+			parallax_adjust = parseFloat( (window.pageYOffset - cta_section.offsetTop ) / ( cta_section.offsetHeight / 8 ) ).toFixed( 5 );
 			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
 				{
@@ -1428,21 +1428,6 @@ if ( wonkasoft_request.ga_id !== '' )
 		footer_adjustment();
 	};
 	/*=====  End of This is for loading calls on window resizing  ======*/
-	
-	// /*=================================================
-	// =            Setup for the compare widget css            =
-	// =================================================*/
-
-	// 	if ( document.querySelector('a.compare.button') )
-	// 	{
-	// 		compare_btn = document.querySelectorAll('a.compare.button');
-	// 		compare_btn.forEach( function( item, i ) 
-	// 		{
-	// 			item.classList.add('wonka-btn');
-	// 		});
-	// 	}
-
-	// /*=====  End of Setup for the compare widget css  ======*/
 
 	/*===================================================================
 	=            This is for running after document is ready            =
@@ -1503,6 +1488,19 @@ if ( wonkasoft_request.ga_id !== '' )
 		// 				}, 350, side_cart_body );
 		// 		});
 		// }
+		
+		/*==========================================================
+		=            For parallax on front page sliders            =
+		==========================================================*/
+		if ( document.querySelector( '.home' ) ) 
+		{
+			window.onscroll = function()
+			{
+				shifting_parallax();
+			};
+		}
+		/*=====  End of For parallax on front page sliders  ======*/
+		
 		/*========================================================
 		=            This loads the vars for the page            =
 		========================================================*/
