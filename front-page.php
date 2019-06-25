@@ -37,7 +37,10 @@ get_header();
 						?>
 						<div class="top-page-slide">
 							<?php
+							$edge_class = ( preg_match( '/Edge/', $_SERVER['HTTP_USER_AGENT'] ) ) ? ' is-edge': '';
+
 							$ios_class = ( preg_match( '/iPad|iPod|iPhone/', $_SERVER['HTTP_USER_AGENT'] ) ) ? ' is-ios': '';
+							$browser_classes = $edge_class . "" . $ios_class;
 							if ( wp_is_mobile() && ! preg_match( '/iPad/', $_SERVER['HTTP_USER_AGENT'] ) ) :
 								?>
 							<div class="top-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
@@ -128,11 +131,11 @@ get_header();
 								<?php
 								if ( wp_is_mobile() && ! preg_match( '/iPad/', $_SERVER['HTTP_USER_AGENT'] ) ) :
 								?>
-								<div class="cta-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
+								<div class="cta-slide-img-holder<?php esc_attr_e( $browser_classes ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php
 								else:
 								?>
-								<div class="cta-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+								<div class="cta-slide-img-holder<?php esc_attr_e( $browser_classes ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
 								<?php
 								endif;
 								/* Checks for an message set in the slide object */
