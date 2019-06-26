@@ -801,11 +801,11 @@ if ( wonkasoft_request.ga_id !== '' )
 		=======================================================================*/
 		if ( window.pageYOffset > top_slider_section.offsetTop && window.pageYOffset < top_slider_section.offsetTop + top_slider_section.offsetHeight ) 
 		{
-			parallax_adjust = parseFloat( ( window.pageYOffset - top_slider_section.offsetTop ) / ( top_slider_section.offsetHeight / 8 ) ).toFixed( 5 );
+			parallax_adjust = parseFloat( ( window.pageYOffset - top_slider_section.offsetTop ) / ( top_slider_section.offsetHeight / 50 ) ).toFixed( 5 );
 			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
 				{
-					el.style.backgroundPosition = 'center ' + parallax_adjust + 'vh';
+					el.style.backgroundPositionY = parallax_adjust + 'px';
 				});
 		}
 
@@ -814,7 +814,7 @@ if ( wonkasoft_request.ga_id !== '' )
 			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
 				{
-					el.style.backgroundPosition = '';
+					el.style.backgroundPositionY = '';
 				});
 		}
 		/*=====  End of This is for the top slider section for parallax  ======*/
@@ -824,11 +824,11 @@ if ( wonkasoft_request.ga_id !== '' )
 		=======================================================================*/
 		if ( window.pageYOffset > cta_section.offsetTop && window.pageYOffset < cta_section.offsetTop + cta_section.offsetHeight ) 
 		{
-			parallax_adjust = parseFloat( (window.pageYOffset - cta_section.offsetTop ) / ( cta_section.offsetHeight / 8 ) ).toFixed( 5 );
+			parallax_adjust = parseFloat( (window.pageYOffset - cta_section.offsetTop ) / ( cta_section.offsetHeight / 50 ) ).toFixed( 5 );
 			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
 				{
-					el.style.backgroundPosition = 'center ' + parallax_adjust + 'vh';
+					el.style.backgroundPositionY = parallax_adjust + 'px';
 				});
 		}
 
@@ -837,7 +837,7 @@ if ( wonkasoft_request.ga_id !== '' )
 			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
 				{
-					el.style.backgroundPosition = '';
+					el.style.backgroundPositionY = '';
 				});
 		}
 		/*=====  End of This is for the top slider section for parallax  ======*/
@@ -1494,6 +1494,17 @@ if ( wonkasoft_request.ga_id !== '' )
 		==========================================================*/
 		if ( document.querySelector( '.home' ) ) 
 		{
+			// var top_slider_section_positionY, cta_section_positionY;
+			// if ( document.querySelector( '.header-slider-section' ) ) 
+			// {
+			// 	top_slider_section_positionY = ( parseInt( getComputedStyle( document.querySelector( '.header-slider-section .top-slide-img-holder' ) ).backgroundPositionY ) / 100 ) * ( document.querySelector( '.header-slider-section' ).offsetHeight / -2 );
+			// }
+
+			// if ( document.querySelector( '.desirable-slider-section' ) ) 
+			// {
+			// 	cta_section_positionY = ( parseInt( getComputedStyle( document.querySelector( '.desirable-slider-section .cta-slide-img-holder' ) ).backgroundPositionY ) / 100 ) * ( document.querySelector( '.desirable-slider-section' ).offsetHeight / -2 );
+			// }
+
 			window.onscroll = function()
 			{
 				shifting_parallax();

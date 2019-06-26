@@ -34,7 +34,7 @@ section.header-slider-section {
 			@include prefix( transition, $trans_25, o moz webkit );
 
 			div.top-slide-img-holder {
-				background-position: center 0.01vh;
+				background-position: center .5vh;
 				background-repeat: no-repeat;
 				@include prefix( background-attachment, unset, o moz webkit );
 				@include prefix( background-size, cover, o moz webkit );
@@ -283,8 +283,8 @@ section.desirable-slider-section {
 
 	.cta-section-slider-wrap {
 		position: relative;
-	    height: 100%;
-	    width: 100%;
+    height: 100%;
+    width: 100%;
 
 		.cta-section-slide {
 			position: relative;
@@ -294,10 +294,10 @@ section.desirable-slider-section {
 			@include prefix( transition, $trans_25, o moz webkit );
 
 			div.cta-slide-img-holder {
-				background-position: center 0.01vh;
+				background-position: center .5vh;
+				background-repeat: no-repeat;
 				@include prefix( background-attachment, unset, o moz webkit );
 				@include prefix( background-size, cover, o moz webkit );
-				background-repeat: no-repeat;
 				width: 100%;
 				height: 100%;
 				@include prefix( transition, $trans_25, o moz webkit );
