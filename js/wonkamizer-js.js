@@ -805,7 +805,7 @@ if ( wonkasoft_request.ga_id !== '' )
 			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
 				{
-					el.style.backgroundPositionY = parallax_adjust + 'px';
+					el.style.backgroundPositionY = parallax_adjust + 'vh';
 				});
 		}
 
@@ -828,7 +828,7 @@ if ( wonkasoft_request.ga_id !== '' )
 			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
 				{
-					el.style.backgroundPositionY = parallax_adjust + 'px';
+					el.style.backgroundPositionY = parallax_adjust + 'vh';
 				});
 		}
 
