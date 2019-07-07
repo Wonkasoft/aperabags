@@ -1808,21 +1808,21 @@ add_filter( 'yith_woocompare_filter_table_fields', 'wonkasoft_filter_yith_woocom
  * @return filter         filtered content
  * @since 1.0.1 New requests
  */
-function ws_add_wc_order_email_images( $output, $order ) {
-   $run = 0;
-   if ( $run ) {
-        return $output;
-    }
-   $args = array(
-        'order'                 => $order,
-        'items'                 => $order->get_items(),
-        'show_download_links'   => $show_download_links,
-        'show_sku'              => $show_sku,
-        'show_purchase_note'    => $show_purchase_note,
-        'show_image'   	=> true,
-        'image_size'    => array( 100, 50 )
-    );
-   $run++;
-   return $order->email_order_items_table( $args );
+function ws_add_wc_order_email_images( $table, $order ) {
+  
+	ob_start();
+	
+	$template = $plain_text ? 'emails/plain/email-order-items.php' : 'emails/email-order-items.php';
+	wc_get_template( $template, array(
+		'order'                 => $order,
+		'items'                 => $order->get_items(),
+		'show_download_links'   => $show_download_links,
+		'show_sku'              => $show_sku,
+		'show_purchase_note'    => $show_purchase_note,
+		'show_image'            => true,
+		'image_size'            => $image_size
+	) );
+   
+	return ob_get_clean();
 }
-add_filter( 'woocommerce_email_order_items_table', 'ws_add_wc_order_email_images' );
+add_filter( 'woocommerce_email_order_items_table', 'ws_add_wc_order_email_images', 10, 2 );
