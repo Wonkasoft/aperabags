@@ -1826,3 +1826,8 @@ function ws_add_wc_order_email_images( $table, $order ) {
 	return ob_get_clean();
 }
 add_filter( 'woocommerce_email_order_items_table', 'ws_add_wc_order_email_images', 10, 2 );
+
+function ws_edit_order_item_name( $name ) {
+    return '<div>'. $name . '</div>';
+}
+add_filter( 'woocommerce_order_item_name', 'ws_edit_order_item_name' );
