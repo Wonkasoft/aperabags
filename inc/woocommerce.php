@@ -1799,3 +1799,30 @@ function wonkasoft_filter_yith_woocompare_filter_table_fields( $fields, $product
 }; 
 			 
 add_filter( 'yith_woocompare_filter_table_fields', 'wonkasoft_filter_yith_woocompare_filter_table_fields', 10, 2 ); 
+
+
+/**
+ * This is to add images to the new order email template
+ * @param  string $output filtered out
+ * @param  object $order  Order information
+ * @return filter         filtered content
+ * @since 1.0.1 New requests
+ */
+function ws_add_wc_order_email_images( $output, $order ) {
+   static $run = 0;
+   if ( $run ) {
+        return $output;
+    }
+   $args = array(
+        'order'                 => $order,
+        'items'                 => $order->get_items(),
+        'show_download_links'   => $show_download_links,
+        'show_sku'              => $show_sku,
+        'show_purchase_note'    => $show_purchase_note,
+        'show_image'   	=> true,
+        'image_size'    => array( 100, 50 )
+    );
+   $run++;
+   return $order->email_order_items_table( $args );
+}
+add_filter( 'woocommerce_email_order_items_table', 'ws_add_wc_order_email_images' );
