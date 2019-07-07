@@ -1820,7 +1820,7 @@ function ws_add_wc_order_email_images( $table, $order ) {
 		'show_sku'              => $show_sku,
 		'show_purchase_note'    => $show_purchase_note,
 		'show_image'            => true,
-		'image_size'            => array( 150, 150 )
+		'image_size'            => array( 100, 100 )
 	) );
    
 	return ob_get_clean();
