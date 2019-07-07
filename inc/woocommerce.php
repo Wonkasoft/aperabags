@@ -1231,3 +1231,29 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 // add the filter 
 remove_action('woocommerce_review_comment_text', 'woocommerce_review_display_comment_text', 10, 1 );
 add_action( 'woocommerce_review_comment_text', 'filter_woocommerce_product_review_list_args', 10, 1 ); 
+
+
+/**
+ * Add images to email template
+ * @since 1.0.1 New requests
+ */
+
+function ws_add_wc_order_email_images( $output, $order ) {
+   static $run = 0;
+   if ( $run ) {
+        return $output;
+    }
+   $args = array(
+        'order'                 => $order,
+        'items'                 => $order->get_items(),
+        'show_download_links'   => $show_download_links,
+        'show_sku'              => $show_sku,
+        'show_purchase_note'    => $show_purchase_note,
+        'show_image'   	=> true,
+        'image_size'    => array( 100, 50 )
+    );
+   $run++;
+   return $order->email_order_items_table( $args );
+}
+add_filter( 'woocommerce_email_order_items_table', 'ws_add_wc_order_email_images' );
+
