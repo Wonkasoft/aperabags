@@ -1799,3 +1799,156 @@ function wonkasoft_filter_yith_woocompare_filter_table_fields( $fields, $product
 }; 
 			 
 add_filter( 'yith_woocompare_filter_table_fields', 'wonkasoft_filter_yith_woocompare_filter_table_fields', 10, 2 ); 
+
+
+/**
+ * This is to add images to the new order email template
+ * @param  string $output filtered out
+ * @param  object $order  Order information
+ * @return filter         filtered content
+ * @since 1.0.1 New requests
+ */
+function ws_add_wc_order_email_images( $table, $order ) {
+  
+	ob_start();
+	
+	$template = $plain_text ? 'emails/plain/email-order-items.php' : 'emails/email-order-items.php';
+	wc_get_template( $template, array(
+		'order'                 => $order,
+		'items'                 => $order->get_items(),
+		'show_download_links'   => $show_download_links,
+		'show_sku'              => $show_sku,
+		'show_purchase_note'    => $show_purchase_note,
+		'show_image'            => true,
+		'image_size'            => array( 120, 120 )
+	) );
+   
+	return ob_get_clean();
+}
+add_filter( 'woocommerce_email_order_items_table', 'ws_add_wc_order_email_images', 10, 2 );
+
+function ws_edit_order_item_name( $name ) {
+    return '<div>'. $name . '</div>';
+}
+add_filter( 'woocommerce_order_item_name', 'ws_edit_order_item_name' );
+
+
+/**
+ * Add new custom shipping methods
+ * @since 1.0.1 New Requests
+ *
+ */
+
+/*
+ * Check if WooCommerce is active
+ */
+if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+	function ws_shipping_method_init() {
+		if ( ! class_exists( 'WC_2_Day_Shipping_Method' ) ) {
+			class WC_2_Day_Shipping_Method extends WC_Shipping_Method {
+				/**
+				 * Constructor for your shipping class
+				 *
+				 * @access public
+				 * @return void
+				 */
+				public function __construct() {
+					$this->id                 = 'FedEx_2_Day'; // Id for your shipping method. Should be uunique.
+					$this->method_title       = __( 'FedEx 2 Day' );  // Title shown in admin
+					$this->method_description = __( 'FedEx 2 Day Flat Rate' ); // Description shown in admin
+					$this->enabled            = "yes"; // This can be added as an setting but for this example its forced enabled
+					$this->title              = "FedEx 2 Day"; // This can be added as an setting but for this example its forced.
+					$this->init();
+				}
+				/**
+				 * Init your settings
+				 *
+				 * @access public
+				 * @return void
+				 */
+				function init() {
+					// Load the settings API
+					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
+					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
+					// Save settings in admin if you have any defined
+					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+				}
+				/**
+				 * calculate_shipping function.
+				 *
+				 * @access public
+				 * @param mixed $package
+				 * @return void
+				 */
+				public function calculate_shipping( $package ) {
+					$rate = array(
+						'id' => $this->id,
+						'label' => $this->title,
+						'cost' => '20.00',
+						'calc_tax' => 'per_item'
+					);
+					// Register the rate
+					$this->add_rate( $rate );
+				}
+			}
+		}
+
+		if ( ! class_exists( 'WC_Overnight_Shipping_Method' ) ) {
+			class WC_Overnight_Shipping_Method extends WC_Shipping_Method {
+				/**
+				 * Constructor for your shipping class
+				 *
+				 * @access public
+				 * @return void
+				 */
+				public function __construct() {
+					$this->id                 = 'FedEx_Standard_Overnight'; // Id for your shipping method. Should be uunique.
+					$this->method_title       = __( 'FedEx Standard Overnight' );  // Title shown in admin
+					$this->method_description = __( 'FedEx Standard Overnight Flat Rate' ); // Description shown in admin
+					$this->enabled            = "yes"; // This can be added as an setting but for this example its forced enabled
+					$this->title              = "FedEx Standard Overnight"; // This can be added as an setting but for this example its forced.
+					$this->init();
+				}
+				/**
+				 * Init your settings
+				 *
+				 * @access public
+				 * @return void
+				 */
+				function init() {
+					// Load the settings API
+					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
+					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
+					// Save settings in admin if you have any defined
+					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+				}
+				/**
+				 * calculate_shipping function.
+				 *
+				 * @access public
+				 * @param mixed $package
+				 * @return void
+				 */
+				public function calculate_shipping( $package ) {
+					$rate = array(
+						'id' => $this->id,
+						'label' => $this->title,
+						'cost' => '50.00',
+						'calc_tax' => 'per_item'
+					);
+					// Register the rate
+					$this->add_rate( $rate );
+				}
+			}
+		}
+	}
+
+	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
+	
+	function add_ws_shipping_methods( $methods ) {
+		$methods['FedEx_2_Day'] = 'WC_2_Day_Shipping_Method';
+		$methods['FedEx_Standard_Overnight'] = 'WC_Overnight_Shipping_Method';
+		return $methods;
+	}
+	add_filter( 'woocommerce_shipping_methods', 'add_ws_shipping_methods' );
+}
