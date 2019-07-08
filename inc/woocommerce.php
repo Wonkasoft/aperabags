@@ -1836,7 +1836,10 @@ add_filter( 'woocommerce_order_item_name', 'ws_edit_order_item_name' );
 /**
  * Add new custom shipping methods
  * @since 1.0.1 New Requests
- * 
+ *
+ */
+
+/*
  * Check if WooCommerce is active
  */
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
