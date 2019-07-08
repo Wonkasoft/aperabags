@@ -1836,16 +1836,7 @@ add_filter( 'woocommerce_order_item_name', 'ws_edit_order_item_name' );
 /**
  * Add new custom shipping methods
  * @since 1.0.1 New Requests
- */
-
-<?php
-/*
-Description: Add custom shipping methods
-Version: 1.0.0
-Author: Wonkasoft
-Author URI: https://woocommerce.com/
-*/
-/**
+ * 
  * Check if WooCommerce is active
  */
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
@@ -1947,7 +1938,6 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				}
 			}
 		}
-
 	}
 
 	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
