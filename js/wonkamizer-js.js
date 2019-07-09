@@ -2021,7 +2021,7 @@ if ( wonkasoft_request.ga_id !== '' )
 		/*============================================================================================
 		=            This is for reordering the placement of elements in add to cart area            =
 		============================================================================================*/
-		if ( document.querySelector( '.summary.entry-summary' ) ) 
+		if ( document.querySelector( '.variations .label' ) ) 
 		{
 			var entry_summary = document.querySelector( '.summary.entry-summary' );
 			var table = document.querySelector( '.variations' );
@@ -2065,6 +2065,11 @@ if ( wonkasoft_request.ga_id !== '' )
 			table_body.appendChild( color_new_swatches_row );
 			table.classList.add( 'table' );
 			entry_summary.classList.add( 'loaded' );
+		}
+
+		if ( document.querySelector( '.stock.out-of-stock' ) ) 
+		{
+			document.querySelector( '.summary.entry-summary' ).classList.add( 'loaded' );
 		}
 		/*=====  End of This is for reordering the placement of elements in add to cart area  ======*/
 

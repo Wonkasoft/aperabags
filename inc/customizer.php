@@ -54,7 +54,7 @@ function apera_bags_customize_register( $wp_customize ) {
 * @since  1.0.0
 */
 $wp_customize->add_section(
-  'topbar_messgae_section',
+  'topbar_message_section',
   array(
 	'capability'     => 'edit_theme_options',
 	'theme_supports' => '',
@@ -84,7 +84,7 @@ $wp_customize->add_control( new WP_Customize_Control(
   'enable_topbar_control', 
   array(
 	'label'       => __( 'Topbar Message Option', 'apera-bags' ),
-	'section'     => 'topbar_messgae_section',
+	'section'     => 'topbar_message_section',
 	'settings'    => 'enable_topbar',
 	'type'        => 'checkbox',
 	'description' => 'Enable Topbar',
@@ -105,7 +105,7 @@ $wp_customize->add_control( new WP_Customize_Control(
   'topbar_color_control', 
   array(
 	'label'       => __( 'Topbar Color Option', 'apera-bags' ),
-	'section'     => 'topbar_messgae_section',
+	'section'     => 'topbar_message_section',
 	'settings'    => 'topbar_color',
 	'type'        => 'color',
 	'description' => 'Topbar color',
@@ -126,7 +126,7 @@ $wp_customize->add_control( new WP_Customize_Control(
   'topbar_message_control', 
   array(
 	'label'       => __( 'Topbar Message Option', 'apera-bags' ),
-	'section'     => 'topbar_messgae_section',
+	'section'     => 'topbar_message_section',
 	'settings'    => 'topbar_message',
 	'type'        => 'text',
 	'description' => 'Topbar message',
