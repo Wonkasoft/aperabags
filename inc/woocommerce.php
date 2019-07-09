@@ -1868,8 +1868,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				 */
 				function init() {
 					// Load the settings API
-					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
 					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
+					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
 					// Save settings in admin if you have any defined
 					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 				}
@@ -1943,14 +1943,14 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 	}
 
-	// add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
+	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
 	
 	function add_ws_shipping_methods( $methods ) {
 		$methods['FedEx_2_Day'] = 'WC_2_Day_Shipping_Method';
 		$methods['FedEx_Standard_Overnight'] = 'WC_Overnight_Shipping_Method';
 		return $methods;
 	}
-	// add_filter( 'woocommerce_shipping_methods', 'add_ws_shipping_methods' );
+	add_filter( 'woocommerce_shipping_methods', 'add_ws_shipping_methods' );
 }
 
 function get_sale_price_custom($sale_price, $product) {
