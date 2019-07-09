@@ -95,11 +95,11 @@ ul.products {
 				}
 
 				.woocommerce-loop-product__title {
-					@include font-size( 1.2 );
+					@include font-size( 1 );
 				}
 
 				span.price {
-					@include font-size( 1.2 );
+					@include font-size( 1.1 );
 				}
 			}
 		}
