@@ -1917,8 +1917,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				 */
 				function init() {
 					// Load the settings API
-					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
 					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
+					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
 					// Save settings in admin if you have any defined
 					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 				}
@@ -1943,12 +1943,71 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		}
 	}
 
-	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
+	// add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
 	
 	function add_ws_shipping_methods( $methods ) {
 		$methods['FedEx_2_Day'] = 'WC_2_Day_Shipping_Method';
 		$methods['FedEx_Standard_Overnight'] = 'WC_Overnight_Shipping_Method';
 		return $methods;
 	}
-	add_filter( 'woocommerce_shipping_methods', 'add_ws_shipping_methods' );
+	// add_filter( 'woocommerce_shipping_methods', 'add_ws_shipping_methods' );
 }
+
+function get_sale_price_custom($sale_price, $product) {
+  //We're still in the init_globals() so we don't need to run yet
+  if (!defined('WAD_INITIALIZED') )
+      return $sale_price;
+  global $wad_discounts;
+
+  if (isset($product->aelia_cs_conversion_in_progress) && !empty($product->aelia_cs_conversion_in_progress))
+      return $sale_price;
+
+  if (is_admin() && !is_ajax() /* || empty($sale_price) */)
+      return $sale_price;
+
+  $pid = wad_get_product_id_to_use($product);
+
+  global $wad_ignore_product_prices_calculations;
+  $previous_value=$wad_ignore_product_prices_calculations;
+  $wad_ignore_product_prices_calculations=TRUE;
+  $regular_price = $product->get_regular_price();
+  $sale_price= $regular_price;
+  $wad_ignore_product_prices_calculations=$previous_value;
+
+  foreach ($wad_discounts["product"] as $discount_id => $discount_obj) {
+      $list_products = $discount_obj->products_list->get_products();
+      $disable_on_products_pages = get_proper_value($discount_obj->settings, "disable-on-product-pages", "no");
+      //Even If the discount is disabled on the shop pages, we force it to be enabled in the minicart even if this minicart is on the shop pages
+      if($disable_on_products_pages && did_action('woocommerce_before_mini_cart_contents') && !did_action('woocommerce_after_mini_cart'))
+          $disable_on_products_pages=false;
+			// if ($disable_on_products_pages == "yes" && (is_singular("product") || is_shop() || is_product_category() || is_front_page()))
+      if($disable_on_products_pages == "yes" && (!is_cart() && !is_checkout()))
+          continue;
+      if ($discount_obj->is_applicable($pid) && is_array($list_products) && in_array($pid, $list_products)) {
+          $sale_price = floatval($sale_price) - $discount_obj->get_discount_amount(floatval($sale_price));
+          //We save the discount in the session to use it later when completing the payment
+          if (!in_array($discount_id, $_SESSION["active_discounts"]))
+              array_push($_SESSION["active_discounts"], $discount_id);
+      }
+  }
+
+  //We check if there is a quantity pricing in order to apply that discount in the cart or checkout pages
+  if ( !is_product() && !is_shop() ) {
+      $sale_price = $this->apply_quantity_based_discount_if_needed($product, $sale_price);
+      // If product's sale price changed, we must update the product too,
+      // so that other parties can access it
+      $product->sale_price = $sale_price;
+   }
+  $product->sale_price = $sale_price;
+  return $sale_price;
+}
+
+
+	// add_filter( 'woocommerce_product_get_sale_price', 'get_sale_price_custom', 99, 2 );
+	// add_filter( 'woocommerce_product_get_price', 'get_sale_price_custom', 99, 2 );
+
+	// // Variations prices
+	// add_filter( 'woocommerce_product_variation_get_sale_price', 'get_sale_price_custom', 99, 2 );
+	// add_filter( 'woocommerce_product_variation_get_price', 'get_sale_price_custom', 99, 2 );
+
+	// add_filter( 'woocommerce_variation_prices_sale_price', 'get_sale_price_custom', 99, 2 );
