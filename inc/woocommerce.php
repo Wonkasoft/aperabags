@@ -1952,3 +1952,26 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	}
 	add_filter( 'woocommerce_shipping_methods', 'add_ws_shipping_methods' );
 }
+
+
+function wonka_woocommerce_product_get_image( $image, $obj, $size, $attr, $placeholder ) {
+
+	$size = array("220", "264");
+
+	if ( $obj->get_image_id() ) {
+		$image = wp_get_attachment_image( $obj->get_image_id(), $size, false, $attr );
+	} elseif ( $obj->get_parent_id() ) {
+		$parent_product = wc_get_product( $obj->get_parent_id() );
+		if ( $parent_product ) {
+			$image = $parent_product->get_image( $size, $attr, $placeholder );
+		}
+	}
+
+	if ( ! $image && $placeholder ) {
+		$image = wc_placeholder_img( $size );
+	}
+
+	return $image;
+}
+add_filter( 'woocommerce_product_get_image', 'wonka_woocommerce_product_get_image', 10, 5);
+
