@@ -155,7 +155,7 @@ for ( $i=1; $i <= 5; $i++ ) :
 ) );
 
 // Slider Setting Control
-  $wp_customize->add_control( new WP_Customize_Image_Control( 
+  $wp_customize->add_control( new WP_Customize_Media_Control( 
 	$wp_customize, 
 	'slider_'.$i.'_control', 
 	array(

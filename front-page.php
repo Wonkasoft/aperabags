@@ -47,7 +47,11 @@ get_header();
 								<?php
 							else:
 								?>
-							<div class="top-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+							<div class="top-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-video-url="<?php esc_attr_e( $slide->slide_img ); ?>">
+								<video autoplay loop muted controls class="top-slide-img-holder cta-slide">
+									<source src="<?php esc_attr_e( $slide->slide_img ); ?>" type="video/mp4">
+									Your browser does not support the video tag.
+								</video>
 							<?php 
 							endif;
 							/* Checks for an message set in the slide object */
@@ -132,7 +136,6 @@ get_header();
 							<?php if ( strpos($slide->slide_img, ".mp4") !== false ) { ?>
 								<video autoplay loop muted controls class="cta-slide">
 								  <source src="<?php esc_attr_e( $slide->slide_img ); ?>" type="video/mp4">
-								  <source src="<?php esc_attr_e( $slide->slide_img ); ?>" type="video/ogg">
 								  Your browser does not support the video tag.
 								</video>
 								<?php
