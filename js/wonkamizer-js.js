@@ -2321,12 +2321,13 @@ if ( wonkasoft_request.ga_id !== '' )
 		{
 			
 			$( '.cta-section-slider-wrap' ).slick({
+			  // adaptiveHeight: true,
 			  slidesToShow: 1,
 			  slidesToScroll: 1,
 			  autoplay: true,
 			  autoplaySpeed: 4000,
-			  pauseOnFocus: false,
-			  pauseOnHover: false,
+			  pauseOnFocus: true,
+			  pauseOnHover: true,
 			  fade: true,
 			  dots: false,
 			  prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',

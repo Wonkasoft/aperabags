@@ -290,6 +290,14 @@ section.desirable-slider-section {
 			height: 100%;
 			@include prefix( transition, $trans_1, o moz webkit );
 
+			video.cta-slide {
+				position: absolute;
+				object-fit: cover;
+				height: 100%;
+			 	width: 100%; 
+				min-height: 100%;
+			}
+
 			div.cta-slide-img-holder {
 				background-position: center .5vh;
 				background-repeat: no-repeat;
