@@ -37,38 +37,46 @@ get_header();
 						?>
 						<div class="top-page-slide">
 							<?php
-							$edge_class = ( preg_match( '/Edge/', $_SERVER['HTTP_USER_AGENT'] ) ) ? ' is-edge': '';
+							$edge_class = ( preg_match( '/Edge/', $_SERVER['HTTP_USER_AGENT'] ) ) ? ' is-edge' : '';
 
-							$ios_class = ( preg_match( '/iPad|iPod|iPhone/', $_SERVER['HTTP_USER_AGENT'] ) ) ? ' is-ios': '';
-							$browser_classes = $edge_class . "" . $ios_class;
+							$ios_class = ( preg_match( '/iPad|iPod|iPhone/', $_SERVER['HTTP_USER_AGENT'] ) ) ? ' is-ios' : '';
+							$browser_classes = $edge_class . '' . $ios_class;
 							if ( wp_is_mobile() && ! preg_match( '/iPad/', $_SERVER['HTTP_USER_AGENT'] ) ) :
 								?>
 							<div class="top-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
 								<?php
-							else:
+							else :
 								?>
 							<div class="top-slide-img-holder<?php esc_attr_e( $ios_class ); ?>" data-video-url="<?php esc_attr_e( $slide->slide_img ); ?>">
 								<video autoplay loop muted controls class="top-slide-img-holder cta-slide">
 									<source src="<?php esc_attr_e( $slide->slide_img ); ?>" type="video/mp4">
 									Your browser does not support the video tag.
 								</video>
-							<?php 
+								<?php
 							endif;
 							/* Checks for an message set in the slide object */
-							if ( ! empty( $slide->slide_header_message ) ) : ?>
+							if ( ! empty( $slide->slide_header_message ) ) :
+								?>
 								<div class="row img-header-text-wrap">
 									<div class="col col-12 img-header-text-container">
-										<div class="text-box text-center<?php $set_text_align = ( !empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position: ' set-align-center'; echo $set_text_align; ?>">
+										<div class="text-box text-center
+										<?php
+										$set_text_align = ( ! empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position : ' set-align-center';
+										echo $set_text_align;
+										?>
+										">
 											<h2 class="img-header-text text-center"><?php _e( $slide->slide_header_message ); ?></h2>
 											<?php
 											/* Checks for an subheader set in the slide object */
-											if ( !empty( $slide->slide_subheader ) ) : ?>
+											if ( ! empty( $slide->slide_subheader ) ) :
+												?>
 												<h4 class="img-subheader-text text-center"><?php _e( $slide->slide_subheader ); ?></h4>
 											<?php endif; ?>
 											<?php
 											/* Checks for an link set in the slide object */
-											if ( !empty( $slide->slide_link ) ) : ?>
-												<a href="<?php echo sprintf( esc_html__( "%1s", "aperabags"), get_permalink( $slide->slide_link ) ); ?>" class="wonka-btn img-head-slider-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
+											if ( ! empty( $slide->slide_link ) ) :
+												?>
+												<a href="<?php echo sprintf( esc_html__( '%1s', 'aperabags' ), get_permalink( $slide->slide_link ) ); ?>" class="wonka-btn img-head-slider-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
 											<?php endif; ?>
 										</div><!-- .text-box -->
 									</div><!-- .img-header-text-container -->
@@ -85,15 +93,15 @@ get_header();
 			</section><!-- .header-slider-section -->
 		<?php endif; ?>
 
-		<?php 
+		<?php
 
 			do_action( 'get_mods_before_section', 'shop' );
 
 			$shop_section = get_section_mods( 'shop' );
-			if ( !empty( $shop_section->shop_mods->shop_title ) ) : 
-		?>
+		if ( ! empty( $shop_section->shop_mods->shop_title ) ) :
+			?>
 
-			<section class="shop-section container-fluid" style="background-image:url(<?php echo esc_url( $shop_section->shop_mods->shop_background_image );?>);">
+			<section class="shop-section container-fluid" style="background-image:url(<?php echo esc_url( $shop_section->shop_mods->shop_background_image ); ?>);">
 				<div class="row wonka-row align-items-center justify-content-center">
 					<div class="col-12">
 					<div class="row">
@@ -105,62 +113,71 @@ get_header();
 					</div>
 					<div class="row">
 						<div class="col-12">
-							<?php
-								$shop_shortcode = '[products limit="' . $shop_section->shop_mods->shop_num_of_products . '" columns="' . $shop_section->shop_mods->shop_product_per_row . '" visibility="featured"]';
-								echo do_shortcode( $shop_shortcode );
-							?>
+						<?php
+							$shop_shortcode = '[products limit="' . $shop_section->shop_mods->shop_num_of_products . '" columns="' . $shop_section->shop_mods->shop_product_per_row . '" visibility="featured"]';
+							echo do_shortcode( $shop_shortcode );
+						?>
 						</div><!-- .col-12 -->
 					</div><!-- .row -->
 					<div class="row">
 						<div class="col col-12 text-center">
-							<a href="<?php echo get_site_url() . '/shop'; ?>" class="wonka-btn" target="_self"><?php _e( __( 'Shop All' ) ) ?></a>
+							<a href="<?php echo get_site_url() . '/shop'; ?>" class="wonka-btn" target="_self"><?php _e( __( 'Shop All' ) ); ?></a>
 						</div><!-- .col -->
 					</div><!-- .row -->
 					</div><!-- .col -->
 				</div><!-- .wonka-row -->
 			</section><!-- .shop-section -->
 		<?php endif; ?>
-		<?php do_action( 'get_mods_before_section', 'cta' );
+		<?php
+		do_action( 'get_mods_before_section', 'cta' );
 			$cta_slider = get_section_mods( 'cta' );
-		if ( !empty( $cta_slider ) ) : ?>
+		if ( ! empty( $cta_slider ) ) :
+			?>
 				<section class="desirable-slider-section">
 					<div class="cta-section-slider-wrap">
-					<?php 
+					<?php
 					/* Foreach loop to build slider according to slides entered in the customizer */
 					foreach ( $cta_slider->slides as $slide ) :
-						
+
 						/* Checks for an img set in the slide object */
-						if ( !empty( $slide->slide_img ) ) : ?>
+						if ( ! empty( $slide->slide_img ) ) :
+							?>
 							<div class="cta-section-slide">
 							
-							<?php if ( strpos($slide->slide_img, ".mp4") !== false ) { ?>
+							<?php if ( strpos( $slide->slide_img, '.mp4' ) !== false ) { ?>
 								<video autoplay loop muted controls class="cta-slide">
 								  <source src="<?php esc_attr_e( $slide->slide_img ); ?>" type="video/mp4">
 								  Your browser does not support the video tag.
 								</video>
 								<?php
-							}
-							else {
+							} else {
 
 								if ( wp_is_mobile() && ! preg_match( '/iPad/', $_SERVER['HTTP_USER_AGENT'] ) ) :
-								?>
+									?>
 								<div class="cta-slide-img-holder<?php esc_attr_e( $browser_classes ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
-								<?php
-								else:
-								?>
+									<?php
+								else :
+									?>
 								<div class="cta-slide-img-holder<?php esc_attr_e( $browser_classes ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
-								<?php
+									<?php
 								endif;
 								/* Checks for an message set in the slide object */
-								if ( !empty( $slide->slide_text_message ) ) : ?>
+								if ( ! empty( $slide->slide_text_message ) ) :
+									?>
 									<div class="row img-header-text-wrap">
 										<div class="col col-12 img-header-text-container">
-											<div class="text-box text-center<?php $set_text_align = ( !empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position: ' set-align-center'; echo $set_text_align; ?>">
+											<div class="text-box text-center
+											<?php
+											$set_text_align = ( ! empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position : ' set-align-center';
+											echo $set_text_align;
+											?>
+											">
 												<h2 class="img-header-text text-center"><?php echo $slide->slide_text_message; ?></h2>
 												<?php
 												/* Checks for an link set in the slide object */
-												if ( !empty( $slide->slide_link ) ) : ?>
-													<a href="<?php echo sprintf( esc_html__( "%1s", "aperabags"), get_permalink( $slide->slide_link ) ); ?>" class="wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
+												if ( ! empty( $slide->slide_link ) ) :
+													?>
+													<a href="<?php echo sprintf( esc_html__( '%1s', 'aperabags' ), get_permalink( $slide->slide_link ) ); ?>" class="wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
 												<?php endif; ?>
 											</div><!-- .text-box -->
 										</div><!-- .img-header-text-container -->
@@ -170,18 +187,20 @@ get_header();
 								<?php endif; ?>
 
 								</div><!-- .cta-slide-img-holder -->
-							<?php }?>
+							<?php } ?>
 							</div><!-- .cta-section-slide -->
 						<?php endif; ?>
 					<?php endforeach; ?>
 					</div><!-- .cta-section-slider-wrap -->
 				</section><!-- .desirable-slider-section -->
 		<?php endif; ?>
-		<?php do_action( 'get_mods_before_section', 'cause' );
+		<?php
+		do_action( 'get_mods_before_section', 'cause' );
 		$cause_section = get_section_mods( 'cause' );
 
 		/* Check for Cause object */
-		if ( !empty( $cause_section->cause_mods->cause_section_title ) ) : ?>
+		if ( ! empty( $cause_section->cause_mods->cause_section_title ) ) :
+			?>
 			<section class="container-fluid our-cause-section">
 				<div class="row wonka-row">
 				<div class="col-12 text-center title-wrap">
@@ -191,8 +210,8 @@ get_header();
 				<div class="row wonka-row">
 					<?php
 					foreach ( $cause_section->causes as $cause ) :
-					if ( !empty( $cause->img ) ) :
-					?>
+						if ( ! empty( $cause->img ) ) :
+							?>
 						<div class="col-12 col-md-4">
 							<div class="cause-section-module">
 								<div class="module-component-wrap">
@@ -208,22 +227,24 @@ get_header();
 					<?php endforeach; ?>
 				</div>
 				<?php
-					$cause_video = get_theme_mod( 'cause_modal_video');
-					if ( ! empty( $cause_video ) ) : ?> 
+					$cause_video = get_theme_mod( 'cause_modal_video' );
+				if ( ! empty( $cause_video ) ) :
+					?>
+					 
 				<!-- Modal -->
 					<div class="modal fade" id="videoModalpop" tabindex="-1" role="dialog" aria-labelledby="causeAperaModal" aria-hidden="true">
 					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-body">
-					        <!-- 16:9 aspect ratio -->
+						<div class="modal-content">
+						  <div class="modal-body">
+							<!-- 16:9 aspect ratio -->
 							<div class="embed-responsive embed-responsive-16by9">
 							<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php esc_attr_e( $cause_video ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
 							</div>
-					       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">X</span>
-					        </button>        
-					      </div>
-					    </div>
+						   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span aria-hidden="true">X</span>
+							</button>        
+						  </div>
+						</div>
 					  </div>
 					</div> 
 				<?php endif; ?>
@@ -232,10 +253,12 @@ get_header();
 
 
 
-		<?php do_action( 'get_mods_before_section', 'about' );
+		<?php
+		do_action( 'get_mods_before_section', 'about' );
 		$about_section = get_section_mods( 'about' );
 
-		if ( !empty( $about_section ) ) : ?>
+		if ( ! empty( $about_section ) ) :
+			?>
 			<section class="container-fluid about-brand-section align-items-center justify-content-around">
 				<div class="row wonka-row">
 				<div class="col-12 col-sm-6 text-center">
@@ -248,38 +271,40 @@ get_header();
 							$videoplaceholder = ( get_theme_mod( 'about_the_brand_video_placeholder' ) ) ? get_theme_mod( 'about_the_brand_video_placeholder' ) : '';
 							$videocode = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
 							if ( ! empty( $videoplaceholder ) ) :
-							?>
+								?>
 							<a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" data-target="#videoModal" class="video-img-link">
 								<img src="<?php _e( $videoplaceholder ); ?>" />
 								<span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="fa fa-play-circle"></i></span>
 							</a>
 							
-							<?php
+								<?php
 								endif;
-								?>
+							?>
 						</div>
 						<?php
-						if ( ! empty( $videoplaceholder ) ) : ?>
+						if ( ! empty( $videoplaceholder ) ) :
+							?>
 							
 						<!-- Modal -->
 							<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="aboutAperaModal" aria-hidden="true">
 							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
-							      <div class="modal-body">
-							        <!-- 16:9 aspect ratio -->
+								<div class="modal-content">
+								  <div class="modal-body">
+									<!-- 16:9 aspect ratio -->
 									<div class="embed-responsive embed-responsive-16by9">
 									<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
 									</div>
-							       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">X</span>
-							        </button>        
-							      </div>
-							    </div>
+								   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">X</span>
+									</button>        
+								  </div>
+								</div>
 							  </div>
 							</div> 
 						<?php endif; ?>
 						<?php
-						if ( ! empty( $about_section->about_the_brand->about_the_brand_button_link ) ) : ?>
+						if ( ! empty( $about_section->about_the_brand->about_the_brand_button_link ) ) :
+							?>
 							<a class="wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
 						<?php endif; ?>
 					</div><!-- .about-components-wrap -->
@@ -295,10 +320,12 @@ get_header();
 			</section>
 		<?php endif; ?>
 
-		<?php do_action( 'get_mods_before_section', 'social' );
+		<?php
+		do_action( 'get_mods_before_section', 'social' );
 		$social_section = get_section_mods( 'social' );
 
-		if ( !empty( $social_section->social_mods->social_title ) ) : ?>
+		if ( ! empty( $social_section->social_mods->social_title ) ) :
+			?>
 			<section class="container-fluid social-section">
 				<div class="row wonka-row align-items-center justify-content-around">
 				<div class="col-12 text-center">
@@ -311,12 +338,12 @@ get_header();
 					<?php _e( do_shortcode( $social_section->social_mods->social_shortcode ) ); ?>
 				</div>
 				<div class="col-12 shop-social-btn text-center">
-					<a class="wonka-btn" href="<?php _e( $social_section->social_mods->social_shop_button);?>"><?php _e($social_section->social_mods->social_btn_text); ?></a>
+					<a class="wonka-btn" href="<?php _e( $social_section->social_mods->social_shop_button ); ?>"><?php _e( $social_section->social_mods->social_btn_text ); ?></a>
 				</div> <!-- .col -->
 				</div>
 			</section><!-- .instagram-section -->
 		<?php endif; ?>
-	<?php else: ?>
+	<?php else : ?>
 		<div id="primary" class="content-area row">
 			<main id="main" class="site-main col col-12">
 			<?php

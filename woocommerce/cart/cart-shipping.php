@@ -61,7 +61,7 @@ $calculator_text          = '';
 					?>
 				</p>
 			<?php endif; ?>
-		<?php
+			<?php
 		elseif ( ! $has_calculated_shipping || ! $formatted_destination ) :
 			echo wp_kses_post( apply_filters( 'woocommerce_shipping_may_be_available_html', __( 'Enter your address to view shipping options.', 'woocommerce' ) ) );
 		elseif ( ! is_cart() ) :

@@ -25,40 +25,41 @@ defined( 'ABSPATH' ) || exit;
 
 	<?php do_action( 'woocommerce_before_checkout_shipping_form', $checkout ); ?>
 
-				<?php if ( !WC()->cart->needs_shipping() ) : ?>
-				<?php
+				<?php if ( ! WC()->cart->needs_shipping() ) : ?>
+					<?php
 					_e( '<h5 class="wonka-contact-information">Contact Information</h5>', 'aperabags' );
 					$fields = $checkout->get_checkout_fields( 'billing' );
 					foreach ( $fields as $key => $field ) :
 						if ( strtolower( $key ) === 'billing_email' ) :
-							if ( !isset($field['placeholder'] ) ) :
+							if ( ! isset( $field['placeholder'] ) ) :
 								$field['placeholder'] = $field['label'];
 								$field['required'] = true;
 							endif;
 
 							$field['priority'] = 1;
 
-						woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+							woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 						endif;
-					endforeach; 
-				else: ?>
-				<?php
+					endforeach;
+				else :
+					?>
+					<?php
 					_e( '<h5 class="wonka-contact-information">Contact Information</h5>', 'aperabags' );
 					$fields = $checkout->get_checkout_fields( 'shipping' );
 					foreach ( $fields as $key => $field ) :
 						if ( strtolower( $key ) === 'shipping_email' ) :
-							if ( !isset($field['placeholder'] ) ) :
+							if ( ! isset( $field['placeholder'] ) ) :
 								$field['placeholder'] = $field['label'];
 								$field['required'] = true;
 							endif;
 
 							$field['priority'] = 1;
 
-						woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+							woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 						endif;
-					endforeach; 
+					endforeach;
 				endif;
-					?>
+				?>
 
 					<div class="wonka-newletter-form-check checkbox">
 						<label for="mc4wp-subscribe">
@@ -67,7 +68,7 @@ defined( 'ABSPATH' ) || exit;
 					</div>
 
 				<div class="woocommerce-shipping-fields__field-wrapper">
-				<?php if ( !WC()->cart->needs_shipping() ) : ?>
+				<?php if ( ! WC()->cart->needs_shipping() ) : ?>
 
 
 					<h5><?php _e( 'Billing Details', 'woocommerce' ); ?></h5>
@@ -93,7 +94,7 @@ defined( 'ABSPATH' ) || exit;
 				<?php else : ?>
 
 					<h5><?php _e( 'Shipping details', 'woocommerce' ); ?></h5>
-				<?php
+					<?php
 					foreach ( $fields as $key => $field ) {
 						if ( $key !== 'shipping_email' ) :
 
@@ -120,27 +121,29 @@ defined( 'ABSPATH' ) || exit;
 		<?php _e( '<h5>Memo</h5>', 'woocommerce' ); ?>
 
 		<div class="woocommerce-additional-fields__field-wrapper">
-			<?php foreach ( $checkout->get_checkout_fields( 'order' ) as $key => $field ) :
+			<?php
+			foreach ( $checkout->get_checkout_fields( 'order' ) as $key => $field ) :
 				if ( $key === 'order_comments' ) :
-					
+
 					if ( isset( $field['class'] ) && is_array( $field['class'] ) ) :
 						array_push( $field['class'], 'wonka-form-group', 'form-group' );
-					else:
+					else :
 						$field['class'] = array( 'wonka-form-group', 'form-group' );
 					endif;
 
 					if ( isset( $field['label_class'] ) ) :
-						array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' ) ;
-					else:
+						array_push( $field['label_class'], 'wonka-sr-only', 'sr-only' );
+					else :
 						$field['label_class'] = array( 'wonka-sr-only', 'sr-only' );
 					endif;
 
 					if ( isset( $field['input_class'] ) ) :
-						array_push( $field['input_class'], 'wonka-form-control', 'form-control' ) ;
-					else:
+						array_push( $field['input_class'], 'wonka-form-control', 'form-control' );
+					else :
 						$field['input_class'] = array( 'wonka-form-control', 'form-control' );
 					endif;
-					woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
+					woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+					?>
 				<?php endif; ?>
 					
 			<?php endforeach; ?>
@@ -158,7 +161,7 @@ defined( 'ABSPATH' ) || exit;
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item">
 			<div class="custom-control custom-checkbox">
-					<input class="woocommerce-form__input woocommerce-form__input-checkbox custom-control-input" id="createaccount" <?php checked( ( true === $checkout->get_value( 'createaccount' ) || ( true === apply_filters( 'woocommerce_create_account_default_checked', false ) ) ), true ) ?> type="checkbox" name="createaccount" value="1" /> 
+					<input class="woocommerce-form__input woocommerce-form__input-checkbox custom-control-input" id="createaccount" <?php checked( ( true === $checkout->get_value( 'createaccount' ) || ( true === apply_filters( 'woocommerce_create_account_default_checked', false ) ) ), true ); ?> type="checkbox" name="createaccount" value="1" /> 
 				<label class="woocommerce-form__label custom-control-label" for="createaccount"><span><?php _e( 'Create an account?', 'woocommerce' ); ?></span></label>
 			</div><!-- .custom-control -->
 					</li>

@@ -68,13 +68,13 @@ if ( ! comments_open() ) {
 					);
 
 					$account_page_url = wc_get_page_permalink( 'myaccount' );
-					if ( $account_page_url ) {
-						/* translators: %s opening and closing link tags respectively */
-						$comment_form['must_log_in'] = '<p class="must-log-in">' . sprintf( esc_html__( 'You must be %slogged in%S to post a review.', 'woocommerce' ), '<a href="' . esc_url( $account_page_url ) . '">', '</a>' ) . '</p>';
-					}
+				if ( $account_page_url ) {
+					/* translators: %s opening and closing link tags respectively */
+					$comment_form['must_log_in'] = '<p class="must-log-in">' . sprintf( esc_html__( 'You must be %slogged in%S to post a review.', 'woocommerce' ), '<a href="' . esc_url( $account_page_url ) . '">', '</a>' ) . '</p>';
+				}
 
-					if ( wc_review_ratings_enabled() ) {
-						$comment_form['comment_field'] = '<div class="comment-form-rating"><label for="rating">' . esc_html__( 'Your rating', 'woocommerce' ) . '</label><select name="rating" id="rating" required>
+				if ( wc_review_ratings_enabled() ) {
+					$comment_form['comment_field'] = '<div class="comment-form-rating"><label for="rating">' . esc_html__( 'Your rating', 'woocommerce' ) . '</label><select name="rating" id="rating" required>
 							<option value="">' . esc_html__( 'Rate&hellip;', 'woocommerce' ) . '</option>
 							<option value="5">' . esc_html__( 'Perfect', 'woocommerce' ) . '</option>
 							<option value="4">' . esc_html__( 'Good', 'woocommerce' ) . '</option>
@@ -82,7 +82,7 @@ if ( ! comments_open() ) {
 							<option value="2">' . esc_html__( 'Not that bad', 'woocommerce' ) . '</option>
 							<option value="1">' . esc_html__( 'Very poor', 'woocommerce' ) . '</option>
 						</select></div>';
-					}
+				}
 
 					$comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . esc_html__( 'Your review', 'woocommerce' ) . '&nbsp;<span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="8" required></textarea></p>';
 
@@ -99,15 +99,22 @@ if ( ! comments_open() ) {
 			<?php wp_list_comments( apply_filters( 'woocommerce_product_review_list_args', array( 'callback' => 'woocommerce_comments' ) ) ); ?>
 		</ol>
 
-		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
+		<?php
+		if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
 			echo '<nav class="woocommerce-pagination">';
-			paginate_comments_links( apply_filters( 'woocommerce_comment_pagination_args', array(
-				'prev_text' => '&larr;',
-				'next_text' => '&rarr;',
-				'type'      => 'list',
-			) ) );
+			paginate_comments_links(
+				apply_filters(
+					'woocommerce_comment_pagination_args',
+					array(
+						'prev_text' => '&larr;',
+						'next_text' => '&rarr;',
+						'type'      => 'list',
+					)
+				)
+			);
 			echo '</nav>';
-		endif; ?>
+		endif;
+		?>
 
 		<?php if ( $count > 3 ) : ?>
 			<div class="row wonka-row wonka-more-reviews">

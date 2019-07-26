@@ -30,6 +30,6 @@ if ( $attachment_ids && $product->get_image_id() ) {
 	foreach ( $attachment_ids as $attachment_id ) {
 		echo '<li class="nav-item" data-variant-check="true" data-variant-color="' . esc_attr__( get_post_meta( $attachment_id, 'ws_variant_name', true ) ) . '">';
 		echo apply_filters( 'wonka_single_product_image_thumbnail_html', wc_get_gallery_image_html( $attachment_id ), $attachment_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
-		echo "</li>";
+		echo '</li>';
 	}
 }

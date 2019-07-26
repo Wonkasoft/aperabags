@@ -10,9 +10,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	    https://docs.woocommerce.com/document/template-structure/
- * @author 		WooThemes
- * @package 	WooCommerce/Templates
+ * @see         https://docs.woocommerce.com/document/template-structure/
+ * @author      WooThemes
+ * @package     WooCommerce/Templates
  * @version     2.0.0
  */
 
@@ -40,8 +40,10 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 <div class="row wonka-row-product-specs">
 	<?php $post_id = get_the_ID(); ?>
 
-	<?php $key_feature_data = json_decode( get_post_meta( $post_id, 'key_features', true ) );
-	if ( !empty( $key_feature_data ) ) : ?>
+	<?php
+	$key_feature_data = json_decode( get_post_meta( $post_id, 'key_features', true ) );
+	if ( ! empty( $key_feature_data ) ) :
+		?>
 		<div id="keyfeatures" class="col">
 			<div class="table-responsive">
 			<table class="table table-hover wonka-key-features-table">
@@ -53,22 +55,28 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 					</tr>
 				</thead>
 				<tbody>
-					<?php 
-					foreach ( $key_feature_data as $feature ) : 
-						if ( is_object( $feature ) ) : ?>
-							<?php if ( !empty( $feature->feature_header ) ) : ?>
+					<?php
+					foreach ( $key_feature_data as $feature ) :
+						if ( is_object( $feature ) ) :
+							?>
+							<?php if ( ! empty( $feature->feature_header ) ) : ?>
 								<tr>
 									<th colspan="3">
 										<?php _e( $feature->feature_header ); ?>
 									</th>
 								</tr>
 							<?php endif; ?>
-							<?php if ( !empty( $feature->feature_options ) && is_array( $feature->feature_options ) ) :
-							$feature_options_count = 0; ?>
+							<?php
+							if ( ! empty( $feature->feature_options ) && is_array( $feature->feature_options ) ) :
+								$feature_options_count = 0;
+								?>
 							<tr>
 								<td colspan="3">
 									<ul class="key-feature-points">
-										<?php foreach ( $feature->feature_options as $option ) : $feature_options_count++ ?>
+										<?php
+										foreach ( $feature->feature_options as $option ) :
+											$feature_options_count++;
+											?>
 											<li>
 												<div class="feature-option-<?php _e( $feature_options_count ); ?>">
 													<?php _e( $option ); ?>
@@ -79,7 +87,7 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 								</td>
 							</tr>
 						<?php endif; ?>
-						<?php if ( !empty( $feature->feature_options ) && is_string( $feature->feature_options ) ) : ?>
+							<?php if ( ! empty( $feature->feature_options ) && is_string( $feature->feature_options ) ) : ?>
 						<tr>
 							<td colspan="3">
 								<?php _e( $option ); ?>
@@ -88,7 +96,7 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 					<?php endif; ?>
 				<?php endif; ?>
 
-				<?php if ( is_string( $feature ) ) : ?>
+						<?php if ( is_string( $feature ) ) : ?>
 					<tr>
 						<th colspan="3">
 							<?php _e( $feature ); ?>
@@ -102,8 +110,10 @@ $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', _
 </div>
 <?php endif; ?>
 
-<?php $product_specs_data = json_decode( get_post_meta( $post_id, 'product_specs', true ) ); 
-if ( !empty( $product_specs_data ) ) : ?>
+<?php
+$product_specs_data = json_decode( get_post_meta( $post_id, 'product_specs', true ) );
+if ( ! empty( $product_specs_data ) ) :
+	?>
 	<div id="product-specification" class="col">
 		<table class="table table-hover wonka-product-specs-table">
 			<thead>
@@ -114,8 +124,9 @@ if ( !empty( $product_specs_data ) ) : ?>
 				</tr>
 			</thead>
 			<tbody>
-				<?php 
-				foreach ( $product_specs_data as $spec ) : ?>
+				<?php
+				foreach ( $product_specs_data as $spec ) :
+					?>
 					<?php if ( is_string( $spec ) ) : ?>
 						<tr>
 							<th colspan="2">
@@ -125,17 +136,20 @@ if ( !empty( $product_specs_data ) ) : ?>
 					<?php endif; ?>
 
 					<?php if ( is_object( $spec ) ) : ?>
-						<?php if ( !empty( $spec ) && !$spec->disclosure ) : ?>
+						<?php if ( ! empty( $spec ) && ! $spec->disclosure ) : ?>
 							<tr>
 								<th>	
 
 									<?php _e( $spec->spec_header ); ?>
 								</th>
-								<?php if ( !empty( $spec->points ) && is_array( $spec->points ) ) : ?>
+								<?php if ( ! empty( $spec->points ) && is_array( $spec->points ) ) : ?>
 								<td>
 									<ul class="product-spec-points">
-										<?php $spec_count = 0;
-										foreach ( $spec->points as $point ) : $spec_count++; ?>
+										<?php
+										$spec_count = 0;
+										foreach ( $spec->points as $point ) :
+											$spec_count++;
+											?>
 											<li class="spec-point-<?php _e( $spec_count ); ?>">
 												<?php _e( $point ); ?>
 											</li>
@@ -143,7 +157,7 @@ if ( !empty( $product_specs_data ) ) : ?>
 									</ul>
 								</td>
 							<?php endif; ?>
-							<?php if ( !empty( $spec->points ) && is_string( $spec->points ) ) : ?>
+							<?php if ( ! empty( $spec->points ) && is_string( $spec->points ) ) : ?>
 							<td>
 								<?php _e( $spec->points ); ?>
 							</td>
@@ -151,12 +165,15 @@ if ( !empty( $product_specs_data ) ) : ?>
 					</tr>
 				<?php endif; ?>
 			<?php endif; ?>
-		<?php if ( !empty( $spec->disclosure ) && is_object( $spec->disclosure ) ) : ?>
+					<?php if ( ! empty( $spec->disclosure ) && is_object( $spec->disclosure ) ) : ?>
 								<tr>
 								<td colspan="2" class="product-disclosures">
 									<ul class="product-spec-disclosures">
-										<?php $disclosure_count = 0;
-										foreach ( $spec->disclosure as $disclosure ) : $disclosure_count++; ?>
+										<?php
+										$disclosure_count = 0;
+										foreach ( $spec->disclosure as $disclosure ) :
+											$disclosure_count++;
+											?>
 											<li class="disclosure-point-<?php _e( $disclosure_count ); ?>">
 												<?php _e( $disclosure ); ?>
 											</li>
@@ -165,7 +182,7 @@ if ( !empty( $product_specs_data ) ) : ?>
 								</td>
 								</tr>
 							<?php endif; ?>
-							<?php if ( !empty( $spec->disclosure ) && is_string( $spec->disclosure ) ) : ?>
+							<?php if ( ! empty( $spec->disclosure ) && is_string( $spec->disclosure ) ) : ?>
 							<tr>
 								<td colspan="2" class="product-disclosures">
 									<?php _e( $spec->disclosure ); ?>
@@ -206,25 +223,24 @@ if ( !empty( $product_specs_data ) ) : ?>
 						Water and stain resistant fabric (that&#39;s easy to clean)
 					</td>
 				</tr>
-				<?php 
-					$fit_pockets = ["fit pocket x3 - assorted","fit pocket x2 - large","fit pocket x2 - medium","fit pocket x2 - small"];
-					if ( ! in_array( strtolower( $post->post_title ) , $fit_pockets ) )
-					{
-						$some_features = '';
-						$some_features .= '<tr>';
-						$some_features .= '<td>';
-						$some_features .= 'Laser-Cut Venting (allows your gear to breathe)';
-						$some_features .= '</tr>';
-						$some_features .= '</td>';
+				<?php
+					$fit_pockets = [ 'fit pocket x3 - assorted', 'fit pocket x2 - large', 'fit pocket x2 - medium', 'fit pocket x2 - small' ];
+				if ( ! in_array( strtolower( $post->post_title ), $fit_pockets ) ) {
+					$some_features = '';
+					$some_features .= '<tr>';
+					$some_features .= '<td>';
+					$some_features .= 'Laser-Cut Venting (allows your gear to breathe)';
+					$some_features .= '</tr>';
+					$some_features .= '</td>';
 
-						$some_features .= '<tr>';
-						$some_features .= '<td>';
-						$some_features .= 'Water resistant base (protects your gear when sitting on wet and damp surfaces)';
-						$some_features .= '</td>';
-						$some_features .= '</tr>';
+					$some_features .= '<tr>';
+					$some_features .= '<td>';
+					$some_features .= 'Water resistant base (protects your gear when sitting on wet and damp surfaces)';
+					$some_features .= '</td>';
+					$some_features .= '</tr>';
 
-						echo $some_features;
-					}
+					echo $some_features;
+				}
 				?>
 			</tbody>
 		</table>

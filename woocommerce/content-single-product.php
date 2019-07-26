@@ -57,17 +57,18 @@ if ( post_password_required() ) {
 	<div class="summary entry-summary">
 		<?php
 
-			/* Just changing the order of loading */
+			/*
+			 Just changing the order of loading */
 			/* Removing filters */
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10);
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10);
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10 );
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
 
 			/* adding them back in different order */
-			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 10);
-			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 11);
-			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 20);
-			
+			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 10 );
+			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 11 );
+			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 20 );
+
 			/**
 			 * Hook: woocommerce_single_product_summary.
 			 *

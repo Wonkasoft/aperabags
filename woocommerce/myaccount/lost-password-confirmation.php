@@ -24,4 +24,4 @@ wc_print_notice( __( 'Password reset email has been sent.', 'woocommerce' ) );
 
 <p><?php echo esc_html( apply_filters( 'woocommerce_lost_password_confirmation_message', __( 'A password reset email has been sent to the email address on file for your account, but may take several minutes to show up in your inbox. Please wait at least 10 minutes before attempting another reset.', 'woocommerce' ) ) ); ?></p>
 
-<a href="<?php echo get_site_url() . '/my-account'; ?>" class="wonka-btn" target="_self"><?php _e( __( 'Return to Log in Page' ) ) ?></a>
+<a href="<?php echo get_site_url() . '/my-account'; ?>" class="wonka-btn" target="_self"><?php _e( __( 'Return to Log in Page' ) ); ?></a>

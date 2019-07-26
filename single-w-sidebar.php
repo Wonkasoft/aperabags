@@ -2,7 +2,7 @@
 /**
  * Template Name: posts-with-sidebar
  * Template Post Type: post
- * 
+ *
  * The template for displaying all single posts with sidebar
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
@@ -11,8 +11,8 @@
  */
 
 global $post;
-$ws_post_type = ( !empty( $post->post_type ) ) ? ' main-' . $post->post_type: '';
-$ws_post_slug = ( !empty( $post->post_name ) ) ? ' main-' . $post->post_name: '';
+$ws_post_type = ( ! empty( $post->post_type ) ) ? ' main-' . $post->post_type : '';
+$ws_post_slug = ( ! empty( $post->post_name ) ) ? ' main-' . $post->post_name : '';
 
 get_header();
 ?>

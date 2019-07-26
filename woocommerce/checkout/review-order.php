@@ -10,9 +10,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	    https://docs.woocommerce.com/document/template-structure/
- * @author 		WooThemes
- * @package 	WooCommerce/Templates
+ * @see         https://docs.woocommerce.com/document/template-structure/
+ * @author      WooThemes
+ * @package     WooCommerce/Templates
  * @version     3.3.0
  */
 
@@ -22,8 +22,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="wonka checkout-form-section-title"><h5 class="wonka wonka-h5">Shipping Method <span>(US only)</span></h5></div>
 <div class="card wonka-card wonka-card-shipping-selection">
-<?php $available_methods = WC()->session->get( 'shipping_for_package_0')['rates'];
-	$chosen_method = WC()->session->get( 'chosen_shipping_methods')[0]; ?>
+<?php
+$available_methods = WC()->session->get( 'shipping_for_package_0' )['rates'];
+	$chosen_method = WC()->session->get( 'chosen_shipping_methods' )[0];
+?>
 <?php if ( $available_methods ) : ?>
 		<ul id="shipping_method" class="woocommerce-shipping-methods list-group list-group-flush">
 			<?php foreach ( $available_methods as $index => $method ) : ?>
@@ -40,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					if ( $method->label === 'FedEx Standard Overnight' ) :
 						$shipping_eta = 'next business day (weekends excluded)';
 					endif;
-					
+
 					if ( 1 < count( $available_methods ) ) {
 						printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
 					} else {

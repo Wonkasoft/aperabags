@@ -26,7 +26,8 @@
 
 	<header id="masthead" class="container-fluid site-header">
 		<?php
-		if ( get_theme_mod( 'enable_topbar' ) ) : ?>
+		if ( get_theme_mod( 'enable_topbar' ) ) :
+			?>
 			<div class="row topbar-notice" style="background:<?php echo get_theme_mod( 'topbar_color', '#000' ); ?>;">
 				<div class="col col-12">
 					<span class="topbar-message-text"><?php echo get_theme_mod( 'topbar_message', 'Please set notice in customizer.' ); ?> </span>
@@ -57,13 +58,15 @@
 			<div class="col col-5 d-lg-none cart-mobile-col">
 				<?php
 					$count = WC()->cart->cart_contents_count;
-					wp_nav_menu( array(
-						'theme_location' 	=> 'menu-cart',
-						'menu_id'        	=> 'cart-menu-mobile',
-						'menu_class'        => 'wonka-cart-menu header-cart-menu',
-						'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s<li class="menu-item menu-item-type-post"><a href="#" class="wonka-cart-open"><span class="cart-contents-count wonka-cart-badge badge badge-light">' . esc_html( $count ) . '</span></a></li></ul>',
-					) );
-				?>
+					wp_nav_menu(
+						array(
+							'theme_location'    => 'menu-cart',
+							'menu_id'           => 'cart-menu-mobile',
+							'menu_class'        => 'wonka-cart-menu header-cart-menu',
+							'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s<li class="menu-item menu-item-type-post"><a href="#" class="wonka-cart-open"><span class="cart-contents-count wonka-cart-badge badge badge-light">' . esc_html( $count ) . '</span></a></li></ul>',
+						)
+					);
+					?>
 			</div><!-- .cart-mobile-col -->
 			<div class="col col-12 col-lg-9 div-nav">
 
@@ -74,21 +77,25 @@
 						<span class="hang-a-bur hang-a-bur-bottom"></span>
 					</button> -->
 					<?php
-					wp_nav_menu( array(
-						'theme_location' 		=> 'menu-primary',
-						'menu_id'        		=> 'primary-menu',
-						'menu_class'        	=> 'nav-menu header-menu',
-					) );
-					wp_nav_menu( array(
-						'theme_location' 	=> 'menu-cart',
-						'menu_id'        	=> 'cart-menu-desktop',
-						'menu_class'        => 'wonka-cart-menu header-cart-menu d-none d-md-flex',
-						'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s<li class="menu-item menu-item-type-post"><a href="#" class="wonka-cart-open"><span class="cart-contents-count wonka-cart-badge badge badge-light">' . esc_html( $count ) . '</span></a></li></ul>',
-					) );
+					wp_nav_menu(
+						array(
+							'theme_location'        => 'menu-primary',
+							'menu_id'               => 'primary-menu',
+							'menu_class'            => 'nav-menu header-menu',
+						)
+					);
+					wp_nav_menu(
+						array(
+							'theme_location'    => 'menu-cart',
+							'menu_id'           => 'cart-menu-desktop',
+							'menu_class'        => 'wonka-cart-menu header-cart-menu d-none d-md-flex',
+							'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s<li class="menu-item menu-item-type-post"><a href="#" class="wonka-cart-open"><span class="cart-contents-count wonka-cart-badge badge badge-light">' . esc_html( $count ) . '</span></a></li></ul>',
+						)
+					);
 					?>
 				</nav><!-- #site-navigation -->
 			</div> <!-- .col-8 -->
 		</div> <!-- .row -->
 	</header><!-- #masthead -->
-	                                                                                                                                                 
+																																					 
 	<div id="content" class="site-content">
