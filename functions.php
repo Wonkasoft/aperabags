@@ -250,7 +250,8 @@ function ws_apera_search_woocommerce_only( $query ) {
  * Enqueue scripts and styles.
  */
 function apera_bags_scripts() {
-	 /**
+
+	/**
 	 * For enqueues of styles
 	 */
 	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' );

@@ -131,8 +131,8 @@ get_header();
 		<?php
 		do_action( 'get_mods_before_section', 'cta' );
 			$cta_slider = get_section_mods( 'cta' );
-		if ( ! empty( $cta_slider ) ) :
-			?>
+		if ( !empty( $cta_slider ) ) : 
+		?>
 				<section class="desirable-slider-section">
 					<div class="cta-section-slider-wrap">
 					<?php
@@ -140,26 +140,31 @@ get_header();
 					foreach ( $cta_slider->slides as $slide ) :
 
 						/* Checks for an img set in the slide object */
-						if ( ! empty( $slide->slide_img ) ) :
-							?>
+						if ( !empty( $slide->slide_img ) ) : 
+						?>
 							<div class="cta-section-slide">
 							
-							<?php if ( strpos( $slide->slide_img, '.mp4' ) !== false ) { ?>
-								<video autoplay loop muted controls class="cta-slide">
-								  <source src="<?php esc_attr_e( $slide->slide_img ); ?>" type="video/mp4">
-								  Your browser does not support the video tag.
-								</video>
-								<?php
-							} else {
+							<?php 
 
 								if ( wp_is_mobile() && ! preg_match( '/iPad/', $_SERVER['HTTP_USER_AGENT'] ) ) :
-									?>
-								<div class="cta-slide-img-holder<?php esc_attr_e( $browser_classes ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
-									<?php
+								?>
+									<div class="cta-slide-img-holder<?php esc_attr_e( $browser_classes ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
+								<?php
 								else :
-									?>
-								<div class="cta-slide-img-holder<?php esc_attr_e( $browser_classes ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
-									<?php
+									if ( strpos( $slide->slide_img, '.mp4' ) !== false ) {
+										?>
+										<div class="cta-slide-img-holder<?php esc_attr_e( $browser_classes ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>">
+										<video autoplay loop muted controls class="cta-slide">
+											<source src="<?php esc_attr_e( $slide->slide_img ); ?>" type="video/mp4">
+											Your browser does not support the video tag.
+										</video>
+										<?php
+									}
+									else {
+										?>
+										<div class="cta-slide-img-holder<?php esc_attr_e( $browser_classes ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+										<?php
+									}
 								endif;
 								/* Checks for an message set in the slide object */
 								if ( ! empty( $slide->slide_text_message ) ) :
@@ -187,7 +192,6 @@ get_header();
 								<?php endif; ?>
 
 								</div><!-- .cta-slide-img-holder -->
-							<?php } ?>
 							</div><!-- .cta-section-slide -->
 						<?php endif; ?>
 					<?php endforeach; ?>
