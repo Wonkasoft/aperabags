@@ -322,20 +322,96 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		// Slider link or page Setting Control
-		$wp_customize->add_control(
-			new WP_Customize_Control(
-				$wp_customize,
-				'slider_btn_link_' . $i . '_control',
-				array(
-					'label'       => __( 'Slider Button Link', 'apera-bags' ),
-					'section'     => 'slider_section',
-					'settings'    => 'slider_btn_link_' . $i,
-					'type'        => 'dropdown-pages',
-					'description' => 'Slider button link',
-				)
-			)
-		);
+// Array for Product links using query
+$args = array(
+  'post_type' => 'product',
+  'post_per_page' => -1,
+  'ignore_sticky_posts' => 0,
+);
+$the_query = new WP_Query( $args );
+$products = array();
+
+if ($the_query->have_posts()) 
+{
+  while ($the_query->have_posts()){
+    $the_query->the_post();
+    $products[get_the_ID()] = get_the_title();
+  }
+}
+/**
+* Loop for all items and options
+* @since 1.0.0
+*/
+for ( $i=1; $i <= 3; $i++ ) : 
+
+// Cause Option Setting
+  $wp_customize->add_setting( 'cause_image_'.$i , array(
+	'default'           => '',
+	'transport'         => 'refresh',
+) );
+
+// Cause Option Control
+  $wp_customize->add_control( new WP_Customize_Image_Control( 
+	$wp_customize, 
+	'cause_image_'.$i.'_control', 
+	array(
+	  'label'       =>'Image for cause '.$i,
+	  'section'     => 'cause_section',
+	  'settings'    => 'cause_image_'.$i,
+	  'type'        => 'image',
+	  'description' => 'Add image for cause '.$i,
+  ) ) );
+
+/**
+* Cause section image link settings Section
+* @since  1.0.0
+* @author Carlos
+*/
+$wp_customize->add_setting( 
+  'cause_image_link_' . $i, 
+  array(
+  'default'           => '0',
+  'transport'         => 'refresh',
+) );
+
+// About the brand button Link Setting Control
+$wp_customize->add_control( new WP_Customize_Control( 
+  $wp_customize, 
+  'cause_image_link_' . $i . '_control', 
+  array(
+	'label'       => 'Cause image link' . $i,
+	'section'     => 'cause_section',
+	'settings'    => 'cause_image_link_' . $i,
+	'type'        => 'select',
+  'description' => 'Image link',
+  'choices'     => $products,
+) ) );
+
+/** 
+* Cause message position settings Section
+* @since  1.0.0
+*/
+$wp_customize->add_setting( 'cause_message_position_'.$i, array(
+  'default'           => '',
+  'transport'         => 'refresh',
+) );
+
+// Cause message position Setting Control
+$wp_customize->add_control( new WP_Customize_Control( 
+  $wp_customize, 
+  'cause_message_position_'.$i.'_control', 
+  array(
+	'label'       => __( 'Cause message position '.$i, 'apera-bags' ),
+	'section'     => 'cause_section',
+	'settings'    => 'cause_message_position_'.$i,
+	'description' => 'Text alignment '.$i,
+	'type'      => 'select',
+	'choices' => array(
+	  'left' => 'left',
+	  'center' => 'center',
+	  'right' => 'right',
+  )
+) ) );
 
 		// Slider Mobile Setting
 		$wp_customize->add_setting(
@@ -544,10 +620,34 @@ endfor;
 		)
 	);
 
-	/**
-	 Loop for all sliders and options
- *
-	 @since 1.0.0
+/**
+* About the brand second image link settings Section
+* @since  1.0.0
+* @author Carlos
+*/
+$wp_customize->add_setting( 
+  'about_the_brand_second_image_link', 
+  array(
+  'default'           => '0',
+  'transport'         => 'refresh',
+) );
+
+// About the brand button Link Setting Control
+$wp_customize->add_control( new WP_Customize_Control( 
+  $wp_customize, 
+  'about_the_brand_second_image_link_control', 
+  array(
+	'label'       => __( 'About the brand image link', 'apera-bags' ),
+	'section'     => 'about_section',
+	'settings'    => 'about_the_brand_second_image_link',
+	'type'        => 'select',
+  'description' => 'About the brand button link',
+  'choices'     => $products,
+) ) );
+
+/**
+* Social settings Section
+* @since  1.0.0
 */
 	for ( $i = 1; $i <= 5; $i++ ) :
 
