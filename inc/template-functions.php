@@ -249,7 +249,11 @@ add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
 =            Customizing of Gravity forms            =
 ====================================================*/
 /**
- * customize gravity forms
+ * adding bootstrap classes to the form elements
+ *
+ * @param array $form         contains the form elements to work with
+ * @param array $ajax
+ * @param array $field_values this is an array of the field values
  */
 function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	$inline_forms = array( 'Sign Up', 'Popup' );
@@ -276,6 +280,13 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 }
 add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );
 
+/**
+ * adding classes to gform buttons
+ *
+ * @param  object $button contains the html of the button
+ * @param  object $form   contains the html of the form
+ * @return string         returns the classes that are set for the button
+ */
 function wonka_add_classes_to_button( $button, $form ) {
 	$dom = new DOMDocument();
 	$dom->loadHTML( $button );
