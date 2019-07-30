@@ -39,8 +39,8 @@ add_action( 'wp_head', 'apera_bags_pingback_header' );
 /**
  * This will return an object of the section mods
  *
- * @param  string $section pass in the section for the mods desired
- * @return object          returns an object of the mods for the passed section
+ * @param  string $section pass in the section for the mods desired.
+ * @return object          returns an object of the mods for the passed section.
  */
 function get_section_mods( $section ) {
 	return the_mods_for_section( $section );
@@ -48,13 +48,13 @@ function get_section_mods( $section ) {
 /**
  * This grabs all slides that are set in the customizer for the section that is passed in.
  *
- * @param  string $section should be a section reference example: top, cta, cause
- * @return bool/object    returns false if no slides are set in customizer
+ * @param  string $section should be a section reference example: top, cta, cause.
+ * @return bool/object    returns false if no slides are set in customizer.
  */
 function the_mods_for_section( $section ) {
 	$mods_class = new stdClass();
 	$count = 0;
-	if ( $section == 'top' ) :
+	if ( 'top' === $section ) :
 		$mods_class->slides                                             = new stdClass();
 		for ( $i = 1; $i <= 5; $i++ ) {
 			if ( ! empty( get_theme_mod( 'slider_' . $i ) ) ) :
@@ -66,7 +66,7 @@ function the_mods_for_section( $section ) {
 				$slide->slide_subheader                             = get_theme_mod( 'slider_subheader_' . $i );
 				$slide->slide_link_btn                              = get_theme_mod( 'slider_btn_text_' . $i );
 				$slide->slide_link                                      = get_theme_mod( 'slider_btn_link_' . $i );
-				// Mobile theme mod
+				// Mobile theme mod.
 				$slide->slide_mobile_img                            = get_theme_mod( 'slider_mobile_' . $i );
 
 				$mods_class->slides->{"slide_{$i}"}     = $slide;
@@ -78,7 +78,7 @@ function the_mods_for_section( $section ) {
 		return $mods_class;
 	endif;
 
-	if ( $section == 'shop' ) :
+	if ( 'shop' === $section ) :
 
 		if ( ! empty( get_theme_mod( 'shop_title' ) ) ) :
 			$count++;
@@ -96,7 +96,7 @@ function the_mods_for_section( $section ) {
 		return $mods_class;
 	endif;
 
-	if ( $section == 'cta' ) :
+	if ( 'cta' === $section ) :
 		$mods_class->slides = new stdClass();
 		for ( $i = 1; $i <= 5; $i++ ) {
 			if ( ! empty( get_theme_mod( 'cta_slider_' . $i ) ) ) :
@@ -107,7 +107,7 @@ function the_mods_for_section( $section ) {
 				$slide->slide_text_message                      = get_theme_mod( 'cta_slider_text_' . $i );
 				$slide->slide_link_btn                              = get_theme_mod( 'cta_slider_btn_text_' . $i );
 				$slide->slide_link                                      = get_theme_mod( 'cta_slider_btn_link_' . $i );
-				// Mobile Theme mod
+				// Mobile Theme mod.
 				$slide->slide_mobile_img                            = get_theme_mod( 'cta_slider_mobile_' . $i );
 
 				$mods_class->slides->{"slide_{$i}"}     = $slide;
@@ -119,7 +119,7 @@ function the_mods_for_section( $section ) {
 		return $mods_class;
 	endif;
 
-	if ( $section == 'cause' ) :
+	if ( 'cause' === $section ) :
 
 		if ( ! empty( get_theme_mod( 'cause_section_title' ) ) ) :
 
@@ -139,6 +139,7 @@ function the_mods_for_section( $section ) {
 				$count++;
 				${"cause_$i"}                                               = new stdClass();
 				${"cause_$i"}->img                                      = get_theme_mod( 'cause_image_' . $i );
+				${"cause_$i"}->img_link                             = get_permalink( get_theme_mod( 'cause_image_link_' . $i ) );
 				${"cause_$i"}->position                             = get_theme_mod( 'cause_message_position_' . $i );
 				${"cause_$i"}->header                                   = get_theme_mod( 'cause_header_' . $i );
 				${"cause_$i"}->message                              = get_theme_mod( 'cause_message_' . $i );
@@ -153,7 +154,7 @@ function the_mods_for_section( $section ) {
 		return $mods_class;
 	endif;
 
-	if ( $section == 'about' ) :
+	if ( 'about' === $section ) :
 		if ( ! empty( get_theme_mod( 'about_the_brand_header' ) ) ) :
 			$count++;
 			$about                                                                  = new stdClass();
@@ -163,6 +164,7 @@ function the_mods_for_section( $section ) {
 			$about->about_the_brand_btn_text                = get_theme_mod( 'about_the_brand_btn_text' );
 			$about->about_the_brand_button_link         = get_permalink( get_theme_mod( 'about_the_brand_button_link' ) );
 			$about->about_the_brand_second_image        = get_theme_mod( 'about_the_brand_second_image' );
+			$about->about_the_brand_image_link          = get_permalink( get_theme_mod( 'about_the_brand_second_image_link' ) );
 
 			$mods_class->{'about_the_brand'}                = $about;
 			$mods_class->{'about_the_brand'}->count = $count;
@@ -171,7 +173,7 @@ function the_mods_for_section( $section ) {
 		return $mods_class;
 	endif;
 
-	if ( $section == 'social' ) :
+	if ( 'social' === $section ) :
 		if ( ! empty( get_theme_mod( 'social_section_title' ) ) ) :
 			$count++;
 			$social                                                                 = new stdClass();
@@ -189,7 +191,7 @@ function the_mods_for_section( $section ) {
 		return $mods_class;
 	endif;
 
-	if ( $section == 'footer' ) :
+	if ( 'footer' === $section ) :
 		if ( ! empty( get_theme_mod( 'footer_social_instagram' ) ) ) :
 			$count++;
 			$footer                                                                 = new stdClass();
@@ -221,7 +223,7 @@ function the_mods_for_section( $section ) {
 		return $mods_class;
 	endif;
 
-	if ( $section === 'newsletter' ) :
+	if ( 'newsletter' === $section ) :
 		if ( ! empty( get_theme_mod( 'enable_newsletter_popup' ) ) ) :
 			$count++;
 			$newsletter                                                         = new stdClass();
@@ -244,16 +246,14 @@ function the_mods_for_section( $section ) {
 }
 add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
 
-/*
-====================================================
-=            Customizing of Gravity forms            =
-====================================================*/
 /**
- * adding bootstrap classes to the form elements
+ * Adding bootstrap classes to the form elements
  *
- * @param array $form         contains the form elements to work with
- * @param array $ajax
- * @param array $field_values this is an array of the field values
+ * Customizing of Gravity forms.
+ *
+ * @param array $form         contains the form elements to work with.
+ * @param array $ajax         ajax callback.
+ * @param array $field_values this is an array of the field values.
  */
 function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	$inline_forms = array( 'Sign Up', 'Popup' );
@@ -281,11 +281,11 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );
 
 /**
- * adding classes to gform buttons
+ * Adding classes to gform buttons
  *
- * @param  object $button contains the html of the button
- * @param  object $form   contains the html of the form
- * @return string         returns the classes that are set for the button
+ * @param  object $button contains the html of the button.
+ * @param  object $form   contains the html of the form.
+ * @return string         returns the classes that are set for the button.
  */
 function wonka_add_classes_to_button( $button, $form ) {
 	$dom = new DOMDocument();
@@ -306,6 +306,11 @@ add_filter( 'gform_submit_button', 'wonka_add_classes_to_button', 8, 2 );
  */
 if ( ! function_exists( 'is_admin_page' ) ) {
 
+	/**
+	 * This is an admin referer check.
+	 *
+	 * @return boolean [description]
+	 */
 	function is_admin_page() {
 		if ( function_exists( 'check_admin_referer' ) ) {
 			return true;
@@ -315,6 +320,9 @@ if ( ! function_exists( 'is_admin_page' ) ) {
 	}
 }
 
+/**
+ * Addition of apera-bags theme options.
+ */
 function aperabags_add_theme_options() {
 	add_options_page(
 		'Aperabags Theme Options',
@@ -360,17 +368,29 @@ function aperabags_add_theme_options() {
 
 add_action( 'admin_menu', 'aperabags_add_theme_options' );
 
+/**
+ * Used to sanitize the options
+ *
+ * @param  string $option contains the value within the option.
+ * @return string         returns the sanitized option value.
+ */
 function aperabags_options_sanitize( $option ) {
 	$option = esc_html( $option );
 	return $option;
 }
 
+/**
+ * This builds the display of the options page.
+ */
 function aperabags_theme_options_page() {
 	?>
 		<div class="container">
 			<div class="row">
 				<div class="col-12 title-column">
-					<h3 class="title-header"><?php echo get_admin_page_title(); ?></h3>
+					<?php
+					$title_text = get_admin_page_title();
+					echo '<h3 class="title-header">' . wp_kses_post( $title_text ) . '</h3>';
+					?>
 				</div>
 			</div>
 			<div class="row">
@@ -454,6 +474,11 @@ function aperabags_theme_options_page() {
 	<?php
 }
 
+/**
+ * For the parsing of option fields.
+ *
+ * @param  array $field array of the fields.
+ */
 function wonkasoft_theme_option_parse( $field ) {
 
 	$field['class']         = isset( $field['class'] ) ? $field['class'] : 'select short';
@@ -464,7 +489,7 @@ function wonkasoft_theme_option_parse( $field ) {
 	$field['desc_tip']      = isset( $field['desc_tip'] ) ? $field['desc_tip'] : false;
 	$styles_set = ( ! empty( $field['style'] ) ) ? ' style="' . esc_attr( $field['style'] ) . '" ' : '';
 
-	// Custom attribute handling
+	// Custom attribute handling.
 	$custom_attributes = array();
 	$output = '';
 
@@ -482,7 +507,7 @@ function wonkasoft_theme_option_parse( $field ) {
 		$output .= wc_help_tip( $field['description'] );
 	}
 
-	if ( $field['api'] === 'ga' ) :
+	if ( 'ga' === $field['api'] ) :
 		$place_holder = ' placeholder="UA-XXXXXX-X"';
 	else :
 		$place_holder = ' placeholder="Paste api key..."';
@@ -495,9 +520,15 @@ function wonkasoft_theme_option_parse( $field ) {
 
 	$output .= '</p>';
 
-	_e( $output );
+	sanitize_post( $output, 'display' );
 }
 
+/**
+ * The adding of meta boxes
+ *
+ * @param  string|array $post_type contains the post_types for option to display on.
+ * @param  object       $post      contains the current post.
+ */
 function wonkasoft_get_meta_boxes( $post_type, $post ) {
 	add_meta_box(
 		'authorshowdiv',
@@ -512,29 +543,36 @@ function wonkasoft_get_meta_boxes( $post_type, $post ) {
 		)
 	);
 }
-
 add_action( 'add_meta_boxes', 'wonkasoft_get_meta_boxes', 10, 2 );
 
+/**
+ * Display of the author in the meta box.
+ *
+ * @param  object $post   contains the current post.
+ * @param  string $option contains the current option value.
+ */
 function author_display_meta_box( $post, $option ) {
 	wp_nonce_field( 'author_display_option', 'author_display_wpnonce', true, true );
 	$checked = ( get_post_meta( $post->ID, $option['args']['option_name'], false ) ) ? ' checked="true"' : '';
 	$output = '';
 
-	$output .= '<div class="form-check">';
 	$output .= '<input type="checkbox" name="' . esc_attr( $option['args']['option_name'] ) . '" id="' . esc_attr( $option['args']['option_name'] ) . '" class="form-check-input"' . $checked . ' />';
-	$output .= '<label class="option-title form-check-label">' . __( $option['args']['label'], 'apera-bags' ) . '</label>';
-	$output .= '</div>';
+	$output .= '<label class="option-title form-check-label">' . $option['args']['label'] . '</label>';
 
-	_e( $output );
+	echo '<div class="form-check">' . wp_kses_post( $output ) . '</div>';
 }
 
+/**
+ * For saving the author display
+ *
+ * @param  integer $post_id contains the post ID.
+ * @param  object  $post    contains the current post.
+ */
 function wonkasoft_save_author_display( $post_id, $post ) {
-	// Add nonce for security and authentication.
-	$nonce_name   = isset( $_POST['author_display_wpnonce'] ) ? $_POST['author_display_wpnonce'] : '';
 	$nonce_action = 'author_display_option';
 
 	// Check if nonce is valid.
-	if ( ! wp_verify_nonce( $nonce_name, $nonce_action ) ) {
+	if ( ! wp_verify_nonce( isset( $_POST['author_display_wpnonce'] ), $nonce_action ) ) {
 		return;
 	}
 
@@ -553,13 +591,11 @@ function wonkasoft_save_author_display( $post_id, $post ) {
 		return;
 	}
 }
-
 add_action( 'save_post', 'wonkasoft_save_author_display', 10, 2 );
 
-/*
-======================================================================
-=            This is the ajax call for the newsletter popup            =
-======================================================================*/
+/**
+ * This is the ajax call for the newsletter popup.
+ */
 function wonkasoft_dismiss_popup() {
 
 	check_ajax_referer( 'ws-request-nonce', 'security' );
@@ -587,6 +623,9 @@ function wonkasoft_dismiss_popup() {
 add_action( 'wp_ajax_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
 add_action( 'wp_ajax_nopriv_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
 
+/**
+ * For the theme popup cookie.
+ */
 function wonkasoft_theme_popup_cookie() {
 
 	if ( ! empty( get_theme_mod( 'enable_newsletter_popup' ) ) ) :
@@ -608,12 +647,19 @@ function wonkasoft_theme_popup_cookie() {
 
 add_action( 'init', 'wonkasoft_theme_popup_cookie', 10 );
 
+/**
+ * Newsletter popup entry or form submission.
+ *
+ * @param  array $entry contains the data from the entry.
+ * @param  array $form  array of the form fields.
+ * @return blank
+ */
 function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 
 	$user_id = get_current_user_id();
 	$form_title = str_replace( ' ', '-', strtolower( $form['title'] ) );
 
-	if ( $form_title === 'popup' ) :
+	if ( 'popup' === $form_title ) :
 
 		$wonkasoft_popup_cookie = array(
 			'user_id'                           => get_current_user_id(),
@@ -633,7 +679,7 @@ function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 		endif;
 	endif;
 
-	if ( $form_title === 'sign-up' ) :
+	if ( 'sign-up' === $form_title ) :
 
 		$wonkasoft_popup_cookie = array(
 			'user_id'                           => get_current_user_id(),
@@ -661,20 +707,24 @@ add_action( 'gform_after_submission', 'wonkasoft_newsletter_popup_entry', 10, 2 
 
 /**
  * Allow to remove method for an hook when, it's a class method used and class don't have global for instanciation !
+ *
+ * @param string  $hook_name hook name that is passed in.
+ * @param string  $method_name method or callback name that is passed in.
+ * @param integer $priority contains the priority of when to run.
  */
 function ws_remove_filters_with_method_name( $hook_name = '', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
-	// Take only filters on right hook name and priority
+	// Take only filters on right hook name and priority.
 	if ( ! isset( $wp_filter[ $hook_name ][ $priority ] ) || ! is_array( $wp_filter[ $hook_name ][ $priority ] ) ) {
 		return false;
 	}
-	// Loop on filters registered
+	// Loop on filters registered.
 	foreach ( (array) $wp_filter[ $hook_name ][ $priority ] as $unique_id => $filter_array ) {
-		// Test if filter is an array ! (always for class/method)
+		// Test if filter is an array ! (always for class/method).
 		if ( isset( $filter_array['function'] ) && is_array( $filter_array['function'] ) ) {
-			// Test if object is a class and method is equal to param !
+			// Test if object is a class and method is equal to param.
 			if ( is_object( $filter_array['function'][0] ) && get_class( $filter_array['function'][0] ) && $filter_array['function'][1] == $method_name ) {
-				// Test for WordPress >= 4.7 WP_Hook class (https://make.wordpress.org/core/2016/09/08/wp_hook-next-generation-actions-and-filters/)
+				// Test for WordPress >= 4.7 WP_Hook class (https://make.wordpress.org/core/2016/09/08/wp_hook-next-generation-actions-and-filters/).
 				if ( is_a( $wp_filter[ $hook_name ], 'WP_Hook' ) ) {
 					unset( $wp_filter[ $hook_name ]->callbacks[ $priority ][ $unique_id ] );
 				} else {
@@ -687,20 +737,25 @@ function ws_remove_filters_with_method_name( $hook_name = '', $method_name = '',
 }
 /**
  * Allow to remove method for an hook when, it's a class method used and class don't have variable, but you know the class name :)
+ *
+ * @param string  $hook_name hook name that is passed in.
+ * @param string  $class_name class name of where to find the method that is passed in.
+ * @param string  $method_name method or callback name that is passed in.
+ * @param integer $priority contains the priority of when to run.
  */
 function ws_remove_filters_for_anonymous_class( $hook_name = '', $class_name = '', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
-	// Take only filters on right hook name and priority
+	// Take only filters on right hook name and priority.
 	if ( ! isset( $wp_filter[ $hook_name ][ $priority ] ) || ! is_array( $wp_filter[ $hook_name ][ $priority ] ) ) {
 		return false;
 	}
-	// Loop on filters registered
+	// Loop on filters registered.
 	foreach ( (array) $wp_filter[ $hook_name ][ $priority ] as $unique_id => $filter_array ) {
-		// Test if filter is an array ! (always for class/method)
+		// Test if filter is an array ! (always for class/method).
 		if ( isset( $filter_array['function'] ) && is_array( $filter_array['function'] ) ) {
 			// Test if object is a class, class and method is equal to param !
 			if ( is_object( $filter_array['function'][0] ) && get_class( $filter_array['function'][0] ) && get_class( $filter_array['function'][0] ) == $class_name && $filter_array['function'][1] == $method_name ) {
-				// Test for WordPress >= 4.7 WP_Hook class (https://make.wordpress.org/core/2016/09/08/wp_hook-next-generation-actions-and-filters/)
+				// Test for WordPress >= 4.7 WP_Hook class (https://make.wordpress.org/core/2016/09/08/wp_hook-next-generation-actions-and-filters/).
 				if ( is_a( $wp_filter[ $hook_name ], 'WP_Hook' ) ) {
 					unset( $wp_filter[ $hook_name ]->callbacks[ $priority ][ $unique_id ] );
 				} else {

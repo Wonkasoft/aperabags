@@ -71,11 +71,11 @@
 			<div class="col col-12 col-lg-9 div-nav">
 
 				<nav id="site-navigation" class="main-navigation">
-					<!-- <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
 						<span class="hang-a-bur hang-a-bur-top"></span>
 						<span class="hang-a-bur hang-a-bur-mid"></span>
 						<span class="hang-a-bur hang-a-bur-bottom"></span>
-					</button> -->
+					</button>
 					<?php
 					wp_nav_menu(
 						array(

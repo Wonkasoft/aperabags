@@ -48,11 +48,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	/**
-	 Top bar message settings Section
-
-	 @since  1.0.0
-*/
+	 /**
+	  * Top bar message settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_section(
 		'topbar_message_section',
 		array(
@@ -65,11 +65,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	/**
-	 Enable topbar message settings Section
-
-	 @since  1.0.0
-*/
+	 /**
+	  * Enable topbar message settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_setting(
 		'enable_topbar',
 		array(
@@ -78,7 +78,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Enable topbar message Setting Control
+	// Enable topbar message Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -93,11 +93,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	/**
-	 Topbar color settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * Topbar color settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_setting(
 		'topbar_color',
 		array(
@@ -106,7 +106,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Topbar color Setting Control
+	// Topbar color Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -121,11 +121,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	/**
-	 Topbar message settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * Topbar message settings
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_setting(
 		'topbar_message',
 		array(
@@ -134,7 +134,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Topbar color Setting Control
+	// Topbar color Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -149,11 +149,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	/**
-	 Slider settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * Slider settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_section(
 		'slider_section',
 		array(
@@ -168,7 +168,7 @@ function apera_bags_customize_register( $wp_customize ) {
 
 	for ( $i = 1; $i <= 5; $i++ ) :
 
-		// Slider Setting
+		// Slider Setting.
 		$wp_customize->add_setting(
 			'slider_' . $i,
 			array(
@@ -177,13 +177,13 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		// Slider Setting Control
+		// Slider Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Media_Control(
 				$wp_customize,
 				'slider_' . $i . '_control',
 				array(
-					'label'       => __( 'Slider Image ' . $i, 'apera-bags' ),
+					'label'       => 'Slider Image ' . $i,
 					'section'     => 'slider_section',
 					'settings'    => 'slider_' . $i,
 					'type'      => 'image',
@@ -192,11 +192,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		/**
-		 Slider message position settings Section
-	 *
-		 @since  1.0.0
-*/
+		 /**
+		  * Slider message position settings Section
+		  *
+		  * @since  1.0.0
+		  */
 		$wp_customize->add_setting(
 			'slider_text_position_' . $i,
 			array(
@@ -205,7 +205,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		// Slider message position Setting Control
+		// Slider message position Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
@@ -225,11 +225,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		/**
-		 Slider header message settings Section
-	 *
-		 @since  1.0.0
-*/
+		 /**
+		  * Slider header message settings Section
+		  *
+		  * @since  1.0.0
+		  */
 		$wp_customize->add_setting(
 			'slider_header_' . $i,
 			array(
@@ -238,7 +238,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		// Slider header message Setting Control
+		// Slider header message Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
@@ -253,11 +253,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		/**
-		 Slider subheader message settings Section
-	 *
-		 @since  1.0.0
-*/
+		 /**
+		  * Slider subheader message settings Section
+		  *
+		  * @since  1.0.0
+		  */
 		$wp_customize->add_setting(
 			'slider_subheader_' . $i,
 			array(
@@ -266,7 +266,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		// Slider subheader message Setting Control
+		// Slider subheader message Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
@@ -281,11 +281,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		/**
-		 Slider button text settings Section
-	 *
-		 @since  1.0.0
-*/
+		 /**
+		  * Slider button text settings Section
+		  *
+		  * @since  1.0.0
+		  */
 		$wp_customize->add_setting(
 			'slider_btn_text_' . $i,
 			array(
@@ -294,7 +294,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		// Slider button text Setting Control
+		// Slider button text Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
@@ -309,11 +309,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		/**
-		 Slider link or page settings Section
-	 *
-		 @since  1.0.0
-*/
+		 /**
+		  * Slider link or page settings Section
+		  *
+		  * @since  1.0.0
+		  */
 		$wp_customize->add_setting(
 			'slider_btn_link_' . $i,
 			array(
@@ -322,7 +322,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		// Slider link or page Setting Control
+		// Slider link or page Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
@@ -337,7 +337,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		// Slider Mobile Setting
+		// Slider Mobile Setting.
 		$wp_customize->add_setting(
 			'slider_mobile_' . $i,
 			array(
@@ -346,13 +346,13 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		// Slider Mobile Setting Control
+		// Slider Mobile Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Image_Control(
 				$wp_customize,
 				'slider_mobile_' . $i . '_control',
 				array(
-					'label'       => __( 'Slider Mobile Image ' . $i, 'apera-bags' ),
+					'label'       => 'Slider Mobile Image ' . $i,
 					'section'     => 'slider_section',
 					'settings'    => 'slider_mobile_' . $i,
 					'type'        => 'image',
@@ -363,11 +363,11 @@ function apera_bags_customize_register( $wp_customize ) {
 
 endfor;
 
-	/**
-	 Shop settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * Shop settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_section(
 		'shop_section',
 		array(
@@ -380,7 +380,7 @@ endfor;
 		)
 	);
 
-	// Shop Title for Section Setting
+	// Shop Title for Section Setting.
 	$wp_customize->add_setting(
 		'shop_title',
 		array(
@@ -389,7 +389,7 @@ endfor;
 		)
 	);
 
-	// Shop Title for Section Setting Control
+	// Shop Title for Section Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -404,7 +404,7 @@ endfor;
 		)
 	);
 
-	// Shop background image Setting
+	// Shop background image Setting.
 	$wp_customize->add_setting(
 		'shop_background_image',
 		array(
@@ -413,7 +413,7 @@ endfor;
 		)
 	);
 
-	// Shop background image Setting Control
+	// Shop background image Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Image_Control(
 			$wp_customize,
@@ -441,7 +441,7 @@ endfor;
 		)
 	);
 
-	// Enable sale banner Setting Control
+	// Enable sale banner Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -456,11 +456,11 @@ endfor;
 		)
 	);
 
-	/**
-	 Shop options for product per row settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * Shop options for product per row settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_setting(
 		'shop_product_per_row',
 		array(
@@ -469,7 +469,7 @@ endfor;
 		)
 	);
 
-	// Shop option Setting Control
+	// Shop option Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -490,11 +490,11 @@ endfor;
 		)
 	);
 
-	/**
-	 Shop options for number of products settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * Shop options for number of products settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_setting(
 		'shop_num_of_products',
 		array(
@@ -503,7 +503,7 @@ endfor;
 		)
 	);
 
-	// Shop for number of products option Setting Control
+	// Shop for number of products option Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -527,11 +527,11 @@ endfor;
 		)
 	);
 
-	/**
-	 Large CTA settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * Large CTA settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_section(
 		'lg_cta_section',
 		array(
@@ -551,7 +551,7 @@ endfor;
 */
 	for ( $i = 1; $i <= 5; $i++ ) :
 
-		// Slider Setting
+		// Slider Setting.
 		$wp_customize->add_setting(
 			'cta_slider_' . $i,
 			array(
@@ -560,13 +560,13 @@ endfor;
 			)
 		);
 
-		// Slider Setting Control
+		// Slider Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Media_Control(
 				$wp_customize,
 				'cta_slider_' . $i . '_control',
 				array(
-					'label'       => __( 'Slider Image ' . $i, 'apera-bags' ),
+					'label'       => 'Slider Image ' . $i,
 					'section'     => 'lg_cta_section',
 					'settings'    => 'cta_slider_' . $i,
 					'type'      => 'image',
@@ -575,11 +575,11 @@ endfor;
 			)
 		);
 
-		/**
-		 Slider message position settings Section
-	 *
-		 @since  1.0.0
-*/
+		 /**
+		  * Slider message position settings Section
+		  *
+		  * @since  1.0.0
+		  */
 		$wp_customize->add_setting(
 			'cta_slider_text_position_' . $i,
 			array(
@@ -588,13 +588,13 @@ endfor;
 			)
 		);
 
-		// Slider message position Setting Control
+		// Slider message position Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
 				'cta_slider_text_position_' . $i . '_control',
 				array(
-					'label'       => __( 'Slider message position ' . $i, 'apera-bags' ),
+					'label'       => 'Slider message position ' . $i,
 					'section'     => 'lg_cta_section',
 					'settings'    => 'cta_slider_text_position_' . $i,
 					'description' => 'Text alignment ' . $i,
@@ -608,11 +608,11 @@ endfor;
 			)
 		);
 
-		/**
-		 Slider message settings Section
-	 *
-		 @since  1.0.0
-*/
+		 /**
+		  * Slider message settings Section
+		  *
+		  * @since  1.0.0
+		  */
 		$wp_customize->add_setting(
 			'cta_slider_text_' . $i,
 			array(
@@ -621,13 +621,13 @@ endfor;
 			)
 		);
 
-		// Slider message Setting Control
+		// Slider message Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
 				'cta_slider_text_' . $i . '_control',
 				array(
-					'label'       => __( 'Slider message ' . $i, 'apera-bags' ),
+					'label'       => 'Slider message ' . $i,
 					'section'     => 'lg_cta_section',
 					'settings'    => 'cta_slider_text_' . $i,
 					'type'        => 'text',
@@ -636,11 +636,11 @@ endfor;
 			)
 		);
 
-		/**
-		 CTA Slider button text settings Section
-	 *
-		 @since  1.0.0
-*/
+		 /**
+		  * CTA Slider button text settings Section
+		  *
+		  * @since  1.0.0
+		  */
 		$wp_customize->add_setting(
 			'cta_slider_btn_text_' . $i,
 			array(
@@ -649,13 +649,13 @@ endfor;
 			)
 		);
 
-		// Slider button text Setting Control
+		// Slider button text Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
 				'cta_slider_btn_text_' . $i . '_control',
 				array(
-					'label'       => __( 'CTA Button Text ' . $i, 'apera-bags' ),
+					'label'       => 'CTA Button Text ' . $i,
 					'section'     => 'lg_cta_section',
 					'settings'    => 'cta_slider_btn_text_' . $i,
 					'type'        => 'text',
@@ -664,11 +664,11 @@ endfor;
 			)
 		);
 
-		/**
-		 CTA Slider link settings Section
-	 *
-		 @since  1.0.0
-*/
+		 /**
+		  * CTA Slider link settings Section
+		  *
+		  * @since  1.0.0
+		  */
 		$wp_customize->add_setting(
 			'cta_slider_btn_link_' . $i,
 			array(
@@ -677,13 +677,13 @@ endfor;
 			)
 		);
 
-		// CTA Slider link Setting Control
+		// CTA Slider link Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
 				'cta_slider_btn_link_' . $i . '_control',
 				array(
-					'label'       => __( 'CTA Button Link ' . $i, 'apera-bags' ),
+					'label'       => 'CTA Button Link ' . $i,
 					'section'     => 'lg_cta_section',
 					'settings'    => 'cta_slider_btn_link_' . $i,
 					'type'        => 'dropdown-pages',
@@ -692,7 +692,7 @@ endfor;
 			)
 		);
 
-		// CTA Slider mobile Setting
+		// CTA Slider mobile Setting.
 		$wp_customize->add_setting(
 			'cta_slider_mobile_' . $i,
 			array(
@@ -701,13 +701,13 @@ endfor;
 			)
 		);
 
-		// CTA Slider mobile Setting Control
+		// CTA Slider mobile Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Image_Control(
 				$wp_customize,
 				'cta_slider_mobile_' . $i . '_control',
 				array(
-					'label'       => __( 'CTA Slider Mobile Image ' . $i, 'apera-bags' ),
+					'label'       => 'CTA Slider Mobile Image ' . $i,
 					'section'     => 'lg_cta_section',
 					'settings'    => 'cta_slider_mobile_' . $i,
 					'type'        => 'image',
@@ -718,11 +718,11 @@ endfor;
 
 endfor;
 
-	/**
-	 Our Cause / About Us settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * Our Cause / About Us settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_section(
 		'cause_section',
 		array(
@@ -735,11 +735,11 @@ endfor;
 		)
 	);
 
-	/**
-	 Cause section header settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * Cause section header settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_setting(
 		'cause_section_title',
 		array(
@@ -748,7 +748,7 @@ endfor;
 		)
 	);
 
-	// Cause section header Setting Control
+	// Cause section header Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -763,11 +763,11 @@ endfor;
 		)
 	);
 
-	/**
-	 Cause section background settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * Cause section background settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_setting(
 		'cause_section_background',
 		array(
@@ -776,7 +776,7 @@ endfor;
 		)
 	);
 
-	// Cause section background Setting Control
+	// Cause section background Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Image_Control(
 			$wp_customize,
@@ -791,14 +791,36 @@ endfor;
 		)
 	);
 
-	/**
-	 Loop for all items and options
- *
-	 @since 1.0.0
-*/
+	// Array for Product links using query.
+	$args = array(
+		'post_type' => 'product',
+		'post_per_page' => -1,
+		'ignore_sticky_posts' => 0,
+	);
+	$the_query = new WP_Query( $args );
+	$products = array();
+
+	if ( $the_query->have_posts() ) {
+		while ( $the_query->have_posts() ) {
+			$the_query->the_post();
+			$products[ get_the_ID() ] = get_the_title();
+		}
+	}
+
+	 /**
+	  * Loop for all items and options
+	  *
+	  * @since 1.0.0
+	  */
+
+	 /**
+	  * Count for looping through settings to add
+	  *
+	  * @var integer $i
+	  */
 	for ( $i = 1; $i <= 3; $i++ ) :
 
-		// Cause Option Setting
+		// Cause Option Setting.
 		$wp_customize->add_setting(
 			'cause_image_' . $i,
 			array(
@@ -807,13 +829,13 @@ endfor;
 			)
 		);
 
-		// Cause Option Control
+		// Cause Option Control.
 		$wp_customize->add_control(
 			new WP_Customize_Image_Control(
 				$wp_customize,
 				'cause_image_' . $i . '_control',
 				array(
-					'label'       => __( 'Image for cause ' . $i, 'apera-bags' ),
+					'label'       => 'Image for cause ' . $i,
 					'section'     => 'cause_section',
 					'settings'    => 'cause_image_' . $i,
 					'type'        => 'image',
@@ -822,11 +844,41 @@ endfor;
 			)
 		);
 
-		/**
-		 Cause message position settings Section
-	 *
-		 @since  1.0.0
-*/
+		 /**
+		  * Cause section image link settings Section
+		  *
+		  * @since  1.0.0
+		  * @author Carlos
+		  */
+		$wp_customize->add_setting(
+			'cause_image_link_' . $i,
+			array(
+				'default'           => '0',
+				'transport'         => 'refresh',
+			)
+		);
+
+		// About the brand button Link Setting Control.
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'cause_image_link_' . $i . '_control',
+				array(
+					'label'       => 'Cause image link' . $i,
+					'section'     => 'cause_section',
+					'settings'    => 'cause_image_link_' . $i,
+					'type'        => 'select',
+					'description' => 'Image link',
+					'choices'     => $products,
+				)
+			)
+		);
+
+		 /**
+		  * Cause message position settings Section
+		  *
+		  * @since  1.0.0
+		  */
 		$wp_customize->add_setting(
 			'cause_message_position_' . $i,
 			array(
@@ -835,13 +887,13 @@ endfor;
 			)
 		);
 
-		// Cause message position Setting Control
+		// Cause message position Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
 				'cause_message_position_' . $i . '_control',
 				array(
-					'label'       => __( 'Cause message position ' . $i, 'apera-bags' ),
+					'label'       => 'Cause message position ' . $i,
 					'section'     => 'cause_section',
 					'settings'    => 'cause_message_position_' . $i,
 					'description' => 'Text alignment ' . $i,
@@ -855,11 +907,11 @@ endfor;
 			)
 		);
 
-		/**
-		 Cause header settings Section
-	 *
-		 @since  1.0.0
-*/
+		 /**
+		  * Cause header settings Section
+		  *
+		  * @since  1.0.0
+		  */
 		$wp_customize->add_setting(
 			'cause_header_' . $i,
 			array(
@@ -868,13 +920,13 @@ endfor;
 			)
 		);
 
-		// Cause message Setting Control
+		// Cause message Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
 				'cause_header_' . $i . '_control',
 				array(
-					'label'       => __( 'Cause header ' . $i, 'apera-bags' ),
+					'label'       => 'Cause header ' . $i,
 					'section'     => 'cause_section',
 					'settings'    => 'cause_header_' . $i,
 					'type'        => 'text',
@@ -883,11 +935,11 @@ endfor;
 			)
 		);
 
-		/**
-		 Cause message settings Section
-	 *
-		 @since  1.0.0
-*/
+		 /**
+		  * Cause message settings Section
+		  *
+		  * @since  1.0.0
+		  */
 		$wp_customize->add_setting(
 			'cause_message_' . $i,
 			array(
@@ -896,13 +948,13 @@ endfor;
 			)
 		);
 
-		// Cause message Setting Control
+		// Cause message Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
 				'cause_message_' . $i . '_control',
 				array(
-					'label'       => __( 'Cause message ' . $i, 'apera-bags' ),
+					'label'       => 'Cause message ' . $i,
 					'section'     => 'cause_section',
 					'settings'    => 'cause_message_' . $i,
 					'type'        => 'textarea',
@@ -912,11 +964,11 @@ endfor;
 		);
 endfor;
 
-	/**
-	 Cause video modal settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * Cause video modal settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_setting(
 		'cause_modal_video',
 		array(
@@ -925,7 +977,7 @@ endfor;
 		)
 	);
 
-	// Cause video modal Setting Control
+	// Cause video modal Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -940,11 +992,11 @@ endfor;
 		)
 	);
 
-	/**
-	 About the brand settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * About the brand settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_section(
 		'about_section',
 		array(
@@ -957,11 +1009,11 @@ endfor;
 		)
 	);
 
-	/**
-	 About the brand header settings Section
- *
-	 @since  1.0.0
-*/
+	 /**
+	  * About the brand header settings Section
+	  *
+	  * @since  1.0.0
+	  */
 	$wp_customize->add_setting(
 		'about_the_brand_header',
 		array(
@@ -970,7 +1022,7 @@ endfor;
 		)
 	);
 
-	// About the brand header Setting Control
+	// About the brand header Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -986,10 +1038,10 @@ endfor;
 	);
 
 	/**
-	 About subheader settings Section
- *
-	 @since  1.0.0
-*/
+	 * About subheader settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'about_the_brand_subheader',
 		array(
@@ -998,7 +1050,7 @@ endfor;
 		)
 	);
 
-	// About the brand subheader Setting Control
+	// About the brand subheader Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1014,10 +1066,10 @@ endfor;
 	);
 
 	/**
-	 About the brand message settings Section
- *
-	 @since  1.0.0
-*/
+	 * About the brand message settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'about_the_brand_message',
 		array(
@@ -1026,7 +1078,7 @@ endfor;
 		)
 	);
 
-	// About the brand message Setting Control
+	// About the brand message Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1042,10 +1094,10 @@ endfor;
 	);
 
 	/**
-	* About the brand embeded video placeholder settings Section
+	 * About the brand embeded video placeholder settings Section
 	 *
-	* @since  1.0.0
-	*/
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'about_the_brand_video_placeholder',
 		array(
@@ -1054,7 +1106,7 @@ endfor;
 		)
 	);
 
-	// About the brand embeded video placeholder Setting Control
+	// About the brand embeded video placeholder Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Image_Control(
 			$wp_customize,
@@ -1070,10 +1122,10 @@ endfor;
 	);
 
 	/**
-	 About the brand embeded video settings Section
- *
-	 @since  1.0.0
-*/
+	 * About the brand embeded video settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'about_the_brand_video',
 		array(
@@ -1082,7 +1134,7 @@ endfor;
 		)
 	);
 
-	// About the brand embeded video Setting Control
+	// About the brand embeded video Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1098,10 +1150,10 @@ endfor;
 	);
 
 	/**
-	 About the brand button text settings Section
- *
-	 @since  1.0.0
-*/
+	 * About the brand button text settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'about_the_brand_btn_text',
 		array(
@@ -1110,7 +1162,7 @@ endfor;
 		)
 	);
 
-	// About the brand button text Setting Control
+	// About the brand button text Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1126,10 +1178,10 @@ endfor;
 	);
 
 	/**
-	 About the brand button Link settings Section
- *
-	 @since  1.0.0
-*/
+	 *About the brand button Link settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'about_the_brand_button_link',
 		array(
@@ -1138,7 +1190,7 @@ endfor;
 		)
 	);
 
-	// About the brand button Link Setting Control
+	// About the brand button Link Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1154,10 +1206,10 @@ endfor;
 	);
 
 	/**
-	 About the brand second image settings Section
- *
-	 @since  1.0.0
-*/
+	 * About the brand second image settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'about_the_brand_second_image',
 		array(
@@ -1166,7 +1218,7 @@ endfor;
 		)
 	);
 
-	// About the brand second image Setting Control
+	// About the brand second image Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Image_Control(
 			$wp_customize,
@@ -1182,11 +1234,42 @@ endfor;
 	);
 
 	/**
-	 Social settings Section
- *
-	 @since  1.0.0
-*/
-	// Adding customizer section for Social settings section
+	 * About the brand second image link settings Section
+	 *
+	 * @since  1.0.0
+	 * @author Carlos
+	 */
+	$wp_customize->add_setting(
+		'about_the_brand_second_image_link',
+		array(
+			'default'           => '0',
+			'transport'         => 'refresh',
+		)
+	);
+
+	// About the brand button Link Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+			'about_the_brand_second_image_link_control',
+			array(
+				'label'       => __( 'About the brand image link', 'apera-bags' ),
+				'section'     => 'about_section',
+				'settings'    => 'about_the_brand_second_image_link',
+				'type'        => 'select',
+				'description' => 'About the brand button link',
+				'choices'     => $products,
+			)
+		)
+	);
+
+	/**
+	 * Social settings Section
+	 *
+	 * Adding customizer section for Social settings section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_section(
 		'social_section',
 		array(
@@ -1200,10 +1283,10 @@ endfor;
 	);
 
 	/**
-	 Social section header settings Section
- *
-	 @since  1.0.0
-*/
+	 * Social section header settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'social_section_title',
 		array(
@@ -1212,7 +1295,7 @@ endfor;
 		)
 	);
 
-	// Social section header Setting Control
+	// Social section header Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1228,10 +1311,10 @@ endfor;
 	);
 
 	/**
-	 Social section message settings Section
- *
-	 @since  1.0.0
-*/
+	 * Social section message settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'social_section_message',
 		array(
@@ -1240,7 +1323,7 @@ endfor;
 		)
 	);
 
-	// Social section header Setting Control
+	// Social section header Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1256,10 +1339,10 @@ endfor;
 	);
 
 	/**
-	 Social shortcode settings Section
- *
-	 @since  1.0.0
-*/
+	 * Social shortcode settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'social_shortcode',
 		array(
@@ -1268,7 +1351,7 @@ endfor;
 		)
 	);
 
-	// Social shortcode Setting Control
+	// Social shortcode Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1284,10 +1367,10 @@ endfor;
 	);
 
 	/**
-	 Social button text settings Section
- *
-	 @since  1.0.0
-*/
+	 * Social button text settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'social_btn_text',
 		array(
@@ -1296,7 +1379,7 @@ endfor;
 		)
 	);
 
-	// Social button text Setting Control
+	// Social button text Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1312,10 +1395,10 @@ endfor;
 	);
 
 	/**
-	 Social shop button  settings Section
- *
-	 @since  1.0.0
-*/
+	 * Social shop button  settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'social_shop_button',
 		array(
@@ -1324,7 +1407,7 @@ endfor;
 		)
 	);
 
-	// Social shop button Setting Control
+	// Social shop button Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1340,10 +1423,10 @@ endfor;
 	);
 
 	/**
-	 Footer settings Section
- *
-	 @since  1.0.0
-*/
+	 * Footer settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_section(
 		'footer_section',
 		array(
@@ -1357,10 +1440,10 @@ endfor;
 	);
 
 	/**
-	 Footer social title settings Section
- *
-	 @since  1.0.0
-*/
+	 * Footer social title settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'footer_social_title',
 		array(
@@ -1369,7 +1452,7 @@ endfor;
 		)
 	);
 
-	// Footer social Instagram Setting Control
+	// Footer social Instagram Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1385,10 +1468,10 @@ endfor;
 	);
 
 	/**
-	 Footer social links settings Section
- *
-	 @since  1.0.0
-*/
+	 * Footer social links settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'footer_social_instagram',
 		array(
@@ -1397,7 +1480,7 @@ endfor;
 		)
 	);
 
-	// Footer social Instagram Setting Control
+	// Footer social Instagram Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1412,7 +1495,7 @@ endfor;
 		)
 	);
 
-	// Footer social Twitter link Setting
+	// Footer social Twitter link Setting.
 	$wp_customize->add_setting(
 		'footer_social_twitter',
 		array(
@@ -1421,7 +1504,7 @@ endfor;
 		)
 	);
 
-	// Footer social Twitter Setting Control
+	// Footer social Twitter Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1436,7 +1519,7 @@ endfor;
 		)
 	);
 
-	// Footer social Facebook link Setting
+	// Footer social Facebook link Setting.
 	$wp_customize->add_setting(
 		'footer_social_facebook',
 		array(
@@ -1445,7 +1528,7 @@ endfor;
 		)
 	);
 
-	// Footer social Facebook Setting Control
+	// Footer social Facebook Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1460,7 +1543,7 @@ endfor;
 		)
 	);
 
-	// Footer social Pinterest link Setting
+	// Footer social Pinterest link Setting.
 	$wp_customize->add_setting(
 		'footer_social_pinterest',
 		array(
@@ -1469,7 +1552,7 @@ endfor;
 		)
 	);
 
-	// Footer social Pinterest Setting Control
+	// Footer social Pinterest Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1484,7 +1567,7 @@ endfor;
 		)
 	);
 
-	// Footer contact message Setting
+	// Footer contact message Setting.
 	$wp_customize->add_setting(
 		'footer_contact_message',
 		array(
@@ -1493,7 +1576,7 @@ endfor;
 		)
 	);
 
-	// Footer contact message Setting Control
+	// Footer contact message Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1508,7 +1591,7 @@ endfor;
 		)
 	);
 
-	// Footer support email Setting
+	// Footer support email Setting.
 	$wp_customize->add_setting(
 		'footer_contact_support_email',
 		array(
@@ -1517,7 +1600,7 @@ endfor;
 		)
 	);
 
-	// Footer support email Setting Control
+	// Footer support email Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1533,7 +1616,7 @@ endfor;
 	);
 
 	for ( $i = 1; $i <= 5; $i++ ) :
-		// Footer menu header Setting
+		// Footer menu header Setting.
 		$wp_customize->add_setting(
 			'footer_menu_header_' . $i,
 			array(
@@ -1542,13 +1625,13 @@ endfor;
 			)
 		);
 
-		// Footer menu header Setting Control
+		// Footer menu header Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
 				'footer_menu_header_' . $i . '_control',
 				array(
-					'label'       => __( 'Footer Menu Header ' . $i, 'apera-bags' ),
+					'label'       => 'Footer Menu Header ' . $i,
 					'section'     => 'footer_section',
 					'settings'    => 'footer_menu_header_' . $i,
 					'type'      => 'text',
@@ -1558,10 +1641,10 @@ endfor;
 		);
 endfor;
 	/**
-	 Footer logo settings Section
- *
-	 @since  1.0.0
-*/
+	 * Footer logo settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'footer_logo',
 		array(
@@ -1570,7 +1653,7 @@ endfor;
 		)
 	);
 
-	// Footer form shortcode Setting Control
+	// Footer form shortcode Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Image_Control(
 			$wp_customize,
@@ -1586,10 +1669,10 @@ endfor;
 	);
 
 	/**
-	 Footer form shortcode settings Section
- *
-	 @since  1.0.0
-*/
+	 * Footer form shortcode settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'footer_form_shortcode',
 		array(
@@ -1598,7 +1681,7 @@ endfor;
 		)
 	);
 
-	// Footer form shortcode Setting Control
+	// Footer form shortcode Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1614,10 +1697,10 @@ endfor;
 	);
 
 	/**
-	 Newsletter message settings Section
-
-	 @since  1.0.0
-*/
+	 * Newsletter message settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_section(
 		'newsletter_popup_section',
 		array(
@@ -1631,10 +1714,10 @@ endfor;
 	);
 
 	/**
-	 Enable Newsletter message settings
-
-	 @since  1.0.0
-*/
+	 * Enable Newsletter message settings
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'enable_newsletter_popup',
 		array(
@@ -1643,7 +1726,7 @@ endfor;
 		)
 	);
 
-	// Enable newsletter message Setting Control
+	// Enable newsletter message Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1659,10 +1742,10 @@ endfor;
 	);
 
 	/**
-	 Newsletter text message settings
-
-	 @since  1.0.0
-*/
+	 * Newsletter text message settings
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'newsletter_popup_message_text',
 		array(
@@ -1671,7 +1754,7 @@ endfor;
 		)
 	);
 
-	// Newsletter text message Setting Control
+	// Newsletter text message Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1687,10 +1770,10 @@ endfor;
 	);
 
 	/**
-	 Newsletter image settings Section
-
-	 @since  1.0.0
-*/
+	 * Newsletter image settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'newsletter_background_image',
 		array(
@@ -1699,7 +1782,7 @@ endfor;
 		)
 	);
 
-	// Newsletter image Setting Control
+	// Newsletter image Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Image_Control(
 			$wp_customize,
@@ -1715,10 +1798,10 @@ endfor;
 	);
 
 	/**
-	 Newsletter image settings Section
-
-	 @since  1.0.0
-*/
+	 * Newsletter image settings Section
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'newsletter_background_color',
 		array(
@@ -1727,7 +1810,7 @@ endfor;
 		)
 	);
 
-	// Newsletter image Setting Control
+	// Newsletter image Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Image_Control(
 			$wp_customize,
@@ -1742,15 +1825,13 @@ endfor;
 		)
 	);
 
-	/*
-	====================================================================================================
-	=            This is for the integration of gravity forms for the themes newsletter popup            =
-	====================================================================================================*/
 	/**
-	 Newsletter form select settings
-
-	 @since  1.0.0
-*/
+	 * Newsletter form select settings
+	 *
+	 * This is for the integration of gravity forms for the themes newsletter
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'newsletter_popup_form_select',
 		array(
@@ -1766,7 +1847,7 @@ endfor;
 			$forms_list[ $form['id'] ] = $form['title'];
 		}
 endif;
-	// Newsletter form selection Setting Control
+	// Newsletter form selection Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -1784,10 +1865,10 @@ endif;
 	/*=====  End of This is for the integration of gravity forms for the themes newsletter popup  ======*/
 
 	/**
-	 Newsletter session length settings
-
-	 @since  1.0.0
-*/
+	 * Newsletter session length settings
+	 *
+	 * @since  1.0.0
+	 */
 	$wp_customize->add_setting(
 		'newsletter_popup_message_session_length',
 		array(
@@ -1796,7 +1877,7 @@ endif;
 		)
 	);
 
-	// Newsletter session length Setting Control
+	// Newsletter session length Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,

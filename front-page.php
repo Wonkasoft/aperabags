@@ -114,6 +114,7 @@ Your browser does not support the video tag.
 <div class="row">
 <div class="col-12">
 		<?php
+<<<<<<< HEAD
 		$shop_shortcode = '[products limit="' . $shop_section->shop_mods->shop_num_of_products . '" columns="' . $shop_section->shop_mods->shop_product_per_row . '" visibility="featured"]';
 		echo do_shortcode( $shop_shortcode );
 		?>
@@ -195,6 +196,79 @@ Your browser does not support the video tag.
 	<?php
 	do_action( 'get_mods_before_section', 'cause' );
 	$cause_section = get_section_mods( 'cause' );
+=======
+		do_action( 'get_mods_before_section', 'cta' );
+			$cta_slider = get_section_mods( 'cta' );
+		if ( !empty( $cta_slider ) ) : 
+		?>
+				<section class="desirable-slider-section">
+					<div class="cta-section-slider-wrap">
+					<?php
+					/* Foreach loop to build slider according to slides entered in the customizer */
+					foreach ( $cta_slider->slides as $slide ) :
+
+						/* Checks for an img set in the slide object */
+						if ( !empty( $slide->slide_img ) ) : 
+						?>
+							<div class="cta-section-slide">
+							
+							<?php 
+
+								if ( wp_is_mobile() && ! preg_match( '/iPad/', $_SERVER['HTTP_USER_AGENT'] ) ) :
+								?>
+									<div class="cta-slide-img-holder<?php esc_attr_e( $browser_classes ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo $slide->slide_mobile_img; ?>');">
+								<?php
+								else :
+									if ( strpos( $slide->slide_img, '.mp4' ) !== false ) {
+										?>
+										<div class="cta-slide-img-holder<?php esc_attr_e( $browser_classes ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>">
+										<video autoplay loop muted controls class="cta-slide">
+											<source src="<?php esc_attr_e( $slide->slide_img ); ?>" type="video/mp4">
+											Your browser does not support the video tag.
+										</video>
+										<?php
+									}
+									else {
+										?>
+										<div class="cta-slide-img-holder<?php esc_attr_e( $browser_classes ); ?>" data-img-url="<?php esc_attr_e( $slide->slide_img ); ?>" style="background-image:url('<?php echo $slide->slide_img; ?>');">
+										<?php
+									}
+								endif;
+								/* Checks for an message set in the slide object */
+								if ( ! empty( $slide->slide_text_message ) ) :
+									?>
+									<div class="row img-header-text-wrap">
+										<div class="col col-12 img-header-text-container">
+											<div class="text-box text-center
+											<?php
+											$set_text_align = ( ! empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position : ' set-align-center';
+											echo $set_text_align;
+											?>
+											">
+												<h2 class="img-header-text text-center"><?php echo $slide->slide_text_message; ?></h2>
+												<?php
+												/* Checks for an link set in the slide object */
+												if ( ! empty( $slide->slide_link ) ) :
+													?>
+													<a href="<?php echo sprintf( esc_html__( '%1s', 'aperabags' ), get_permalink( $slide->slide_link ) ); ?>" class="wonka-btn img-cta-link text-center"><?php _e( $slide->slide_link_btn ); ?></a>
+												<?php endif; ?>
+											</div><!-- .text-box -->
+										</div><!-- .img-header-text-container -->
+
+									</div><!-- .img-header-text-wrap -->	
+								<?php endif; ?>
+
+								</div><!-- .cta-slide-img-holder -->
+							</div><!-- .cta-section-slide -->
+						<?php endif; ?>
+					<?php endforeach; ?>
+					</div><!-- .cta-section-slider-wrap -->
+				</section><!-- .desirable-slider-section -->
+		<?php endif; ?>
+		<?php
+		do_action( 'get_mods_before_section', 'cause' );
+		$cause_section = get_section_mods( 'cause' );
+>>>>>>> e023371cc8fda2d309ef4c168c9f6e0e3c77f14f
 
 	/* Check for Cause object */
 	if ( ! empty( $cause_section->cause_mods->cause_section_title ) ) :
@@ -228,6 +302,7 @@ Your browser does not support the video tag.
 		$cause_video = get_theme_mod( 'cause_modal_video' );
 		if ( ! empty( $cause_video ) ) :
 			?>
+<<<<<<< HEAD
 
 <!-- Modal -->
 <div class="modal fade" id="videoModalpop" tabindex="-1" role="dialog" aria-labelledby="causeAperaModal" aria-hidden="true">
@@ -245,6 +320,58 @@ Your browser does not support the video tag.
 </div>
 </div>
 </div> 
+=======
+			<section class="container-fluid our-cause-section">
+				<div class="row wonka-row">
+				<div class="col-12 text-center title-wrap">
+					<h3 class="section-title our-cause-title"><?php echo $cause_section->cause_mods->cause_section_title; ?></h3>
+				</div>
+				</div>
+				<div class="row wonka-row">
+					<?php
+					foreach ( $cause_section->causes as $cause ) :
+						if ( ! empty( $cause->img ) ) :
+							?>
+						<div class="col-12 col-md-4">
+							<div class="cause-section-module">
+								<div class="module-component-wrap">
+									<div class="img-container">
+										<a class="about-second-img-link" href="<?php _e( $cause->img_link ) ?>">
+											<img class="cause-img img-fluid" src="<?php esc_attr_e( $cause->img ); ?>" />
+										</a>
+									</div>
+									<h3 class="cause-title text-<?php esc_attr_e( $cause->position ); ?>"><?php _e( $cause->header ); ?></h3>
+									<p class="cause-message text-<?php esc_attr_e( $cause->position ); ?>"><?php _e( $cause->message ); ?></p>
+								</div><!-- .module-component-wrap -->
+							</div><!-- .cause-section-module -->
+						</div>
+					<?php endif; ?>
+					<?php endforeach; ?>
+				</div>
+				<?php
+					$cause_video = get_theme_mod( 'cause_modal_video' );
+				if ( ! empty( $cause_video ) ) :
+					?>
+					 
+				<!-- Modal -->
+					<div class="modal fade" id="videoModalpop" tabindex="-1" role="dialog" aria-labelledby="causeAperaModal" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-body">
+							<!-- 16:9 aspect ratio -->
+							<div class="embed-responsive embed-responsive-16by9">
+							<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php esc_attr_e( $cause_video ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
+							</div>
+						   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span aria-hidden="true">X</span>
+							</button>        
+						  </div>
+						</div>
+					  </div>
+					</div> 
+				<?php endif; ?>
+			</section><!-- .our-cause-section -->
+>>>>>>> e023371cc8fda2d309ef4c168c9f6e0e3c77f14f
 		<?php endif; ?>
 </section><!-- .our-cause-section -->
 	<?php endif; ?>
@@ -270,10 +397,75 @@ Your browser does not support the video tag.
 		$videocode        = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
 		if ( ! empty( $videoplaceholder ) ) :
 			?>
+<<<<<<< HEAD
 <a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" data-target="#videoModal" class="video-img-link">
 <img src="<?php _e( $videoplaceholder ); ?>" />
 <span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="fa fa-play-circle"></i></span>
 </a>
+=======
+			<section class="container-fluid about-brand-section align-items-center justify-content-around">
+				<div class="row wonka-row">
+				<div class="col-12 col-sm-6 text-center">
+					<div class="about-components-wrap">
+						<h2 class="about-brand-header"><?php _e( $about_section->about_the_brand->about_header ); ?></h2>
+						<h4 class="about-brand-subheader"><?php _e( $about_section->about_the_brand->about_subheader ); ?></h4>
+						<p class="about-brand-message"><?php _e( $about_section->about_the_brand->about_message ); ?></p>
+						<div class="about-brand-video">
+							<?php
+							$videoplaceholder = ( get_theme_mod( 'about_the_brand_video_placeholder' ) ) ? get_theme_mod( 'about_the_brand_video_placeholder' ) : '';
+							$videocode = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
+							if ( ! empty( $videoplaceholder ) ) :
+								?>
+							<a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" data-target="#videoModal" class="video-img-link">
+								<img src="<?php _e( $videoplaceholder ); ?>" />
+								<span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="fa fa-play-circle"></i></span>
+							</a>
+							
+								<?php
+								endif;
+							?>
+						</div>
+						<?php
+						if ( ! empty( $videoplaceholder ) ) :
+							?>
+							
+						<!-- Modal -->
+							<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="aboutAperaModal" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+								<div class="modal-content">
+								  <div class="modal-body">
+									<!-- 16:9 aspect ratio -->
+									<div class="embed-responsive embed-responsive-16by9">
+									<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php _e( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
+									</div>
+								   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">X</span>
+									</button>        
+								  </div>
+								</div>
+							  </div>
+							</div> 
+						<?php endif; ?>
+						<?php
+						if ( ! empty( $about_section->about_the_brand->about_the_brand_button_link ) ) :
+							?>
+							<a class="wonka-btn" href="<?php _e( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php _e( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
+						<?php endif; ?>
+					</div><!-- .about-components-wrap -->
+				</div>
+				<?php if ( ! empty( $about_section->about_the_brand->about_the_brand_second_image ) ) : ?>
+				<div class="col-12 col-sm-6 text-center">
+					<div class="img-container">
+						<a class="about-second-img-link" href="<?php _e( $about_section->about_the_brand->about_the_brand_image_link ) ?>">
+							<img class="about-second-image" src="<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />
+						</a>
+					</div>
+				</div>
+				<?php endif; ?>
+				</div>
+			</section>
+		<?php endif; ?>
+>>>>>>> e023371cc8fda2d309ef4c168c9f6e0e3c77f14f
 
 			<?php
 		endif;
