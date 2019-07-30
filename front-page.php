@@ -172,8 +172,7 @@ get_header();
 											</div><!-- .text-box -->
 										</div><!-- .img-header-text-container -->
 
-									</div><!-- .img-header-text-wrap -->
-									
+									</div><!-- .img-header-text-wrap -->	
 								<?php endif; ?>
 
 								</div><!-- .cta-slide-img-holder -->

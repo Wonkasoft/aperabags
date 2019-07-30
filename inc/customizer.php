@@ -624,7 +624,7 @@ $wp_customize->add_control( new WP_Customize_Image_Control(
 	'description' => 'Add section background image for cause',
 ) ) );
 
-// Array for Product links
+// Array for Product links using query
 $args = array(
   'post_type' => 'product',
   'post_per_page' => -1,
