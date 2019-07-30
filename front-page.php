@@ -203,7 +203,9 @@ get_header();
 							<div class="cause-section-module">
 								<div class="module-component-wrap">
 									<div class="img-container">
-										<img class="cause-img img-fluid" src="<?php esc_attr_e( $cause->img ); ?>" />
+										<a class="about-second-img-link" href="<?php _e( $cause->img_link ) ?>">
+											<img class="cause-img img-fluid" src="<?php esc_attr_e( $cause->img ); ?>" />
+										</a>
 									</div>
 									<h3 class="cause-title text-<?php esc_attr_e( $cause->position ); ?>"><?php _e( $cause->header ); ?></h3>
 									<p class="cause-message text-<?php esc_attr_e( $cause->position ); ?>"><?php _e( $cause->message ); ?></p>
@@ -293,7 +295,9 @@ get_header();
 				<?php if ( ! empty( $about_section->about_the_brand->about_the_brand_second_image ) ) : ?>
 				<div class="col-12 col-sm-6 text-center">
 					<div class="img-container">
-						<img class="about-second-image" src="<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />
+						<a class="about-second-img-link" href="<?php _e( $about_section->about_the_brand->about_the_brand_image_link ) ?>">
+							<img class="about-second-image" src="<?php _e( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />
+						</a>
 					</div>
 				</div>
 				<?php endif; ?>
