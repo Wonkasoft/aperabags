@@ -164,7 +164,7 @@ function the_mods_for_section( $section ) {
 			$about->about_the_brand_btn_text            = get_theme_mod( 'about_the_brand_btn_text' );
 			$about->about_the_brand_button_link         = get_permalink( get_theme_mod( 'about_the_brand_button_link' ) );
 			$about->about_the_brand_second_image        = get_theme_mod( 'about_the_brand_second_image' );
-			$about->about_the_brand_image_link          = get_permalink( get_theme_mod( 'about_the_brand_second_image_link' ) );
+			$about->about_the_brand_image_link          = get_permalink( get_theme_mod( 'about_the_brand_second_image_link', '#' ) );
 
 			$mods_class->{'about_the_brand'}            = $about;
 			$mods_class->{'about_the_brand'}->count     = $count;
@@ -520,7 +520,7 @@ function wonkasoft_theme_option_parse( $field ) {
 
 	$output .= '</p>';
 
-	sanitize_post( $output, 'display' );
+	echo wp_kses_post( $output );
 }
 
 /**

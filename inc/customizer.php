@@ -797,6 +797,7 @@ endfor;
 		'post_per_page' => -1,
 		'ignore_sticky_posts' => 0,
 	);
+
 	$the_query = new WP_Query( $args );
 	$products = array();
 
@@ -868,7 +869,7 @@ endfor;
 					'section'     => 'cause_section',
 					'settings'    => 'cause_image_link_' . $i,
 					'type'        => 'select',
-					'description' => 'Image link',
+					'description' => 'Slect a product to link the image to.',
 					'choices'     => $products,
 				)
 			)
