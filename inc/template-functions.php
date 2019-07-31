@@ -124,25 +124,25 @@ function the_mods_for_section( $section ) {
 		if ( ! empty( get_theme_mod( 'cause_section_title' ) ) ) :
 
 			$count++;
-			$cause                                                                  = new stdClass();
-			$cause->cause_section_title                         = get_theme_mod( 'cause_section_title' );
-			$cause->cause_section_background                = get_theme_mod( 'cause_section_background' );
+			$cause                                      = new stdClass();
+			$cause->cause_section_title                 = get_theme_mod( 'cause_section_title' );
+			$cause->cause_section_background            = get_theme_mod( 'cause_section_background' );
 
 			$mods_class->{'cause_mods'} = $cause;
 			$mods_class->{'cause_mods'}->count          = $count;
 		endif;
 
 		$count = 0;
-		$mods_class->causes                                             = new stdClass();
+		$mods_class->causes                             = new stdClass();
 		for ( $i = 1; $i <= 3; $i++ ) {
 			if ( ! empty( get_theme_mod( 'cause_image_' . $i ) ) ) :
 				$count++;
-				${"cause_$i"}                                               = new stdClass();
-				${"cause_$i"}->img                                      = get_theme_mod( 'cause_image_' . $i );
-				${"cause_$i"}->img_link                             = get_permalink( get_theme_mod( 'cause_image_link_' . $i ) );
-				${"cause_$i"}->position                             = get_theme_mod( 'cause_message_position_' . $i );
-				${"cause_$i"}->header                                   = get_theme_mod( 'cause_header_' . $i );
-				${"cause_$i"}->message                              = get_theme_mod( 'cause_message_' . $i );
+				${"cause_$i"}                           = new stdClass();
+				${"cause_$i"}->img                      = get_theme_mod( 'cause_image_' . $i );
+				${"cause_$i"}->img_link                 = get_permalink( get_theme_mod( 'cause_image_link_' . $i ) );
+				${"cause_$i"}->position                 = get_theme_mod( 'cause_message_position_' . $i );
+				${"cause_$i"}->header                   = get_theme_mod( 'cause_header_' . $i );
+				${"cause_$i"}->message                  = get_theme_mod( 'cause_message_' . $i );
 
 				$mods_class->causes->{"cause_$i"}       = ${"cause_$i"};
 
@@ -157,17 +157,17 @@ function the_mods_for_section( $section ) {
 	if ( 'about' === $section ) :
 		if ( ! empty( get_theme_mod( 'about_the_brand_header' ) ) ) :
 			$count++;
-			$about                                                                  = new stdClass();
-			$about->about_header                                        = get_theme_mod( 'about_the_brand_header' );
-			$about->about_subheader                                 = get_theme_mod( 'about_the_brand_subheader' );
-			$about->about_message                                   = get_theme_mod( 'about_the_brand_message' );
-			$about->about_the_brand_btn_text                = get_theme_mod( 'about_the_brand_btn_text' );
+			$about                                      = new stdClass();
+			$about->about_header                        = get_theme_mod( 'about_the_brand_header' );
+			$about->about_subheader                     = get_theme_mod( 'about_the_brand_subheader' );
+			$about->about_message                       = get_theme_mod( 'about_the_brand_message' );
+			$about->about_the_brand_btn_text            = get_theme_mod( 'about_the_brand_btn_text' );
 			$about->about_the_brand_button_link         = get_permalink( get_theme_mod( 'about_the_brand_button_link' ) );
 			$about->about_the_brand_second_image        = get_theme_mod( 'about_the_brand_second_image' );
 			$about->about_the_brand_image_link          = get_permalink( get_theme_mod( 'about_the_brand_second_image_link' ) );
 
-			$mods_class->{'about_the_brand'}                = $about;
-			$mods_class->{'about_the_brand'}->count = $count;
+			$mods_class->{'about_the_brand'}            = $about;
+			$mods_class->{'about_the_brand'}->count     = $count;
 		endif;
 
 		return $mods_class;
@@ -194,18 +194,18 @@ function the_mods_for_section( $section ) {
 	if ( 'footer' === $section ) :
 		if ( ! empty( get_theme_mod( 'footer_social_instagram' ) ) ) :
 			$count++;
-			$footer                                                                 = new stdClass();
-			$footer->footer_social_title                        = get_theme_mod( 'footer_social_title' );
-			$footer->footer_social_instagram                = get_theme_mod( 'footer_social_instagram' );
-			$footer->footer_social_twitter                  = get_theme_mod( 'footer_social_twitter' );
-			$footer->footer_social_facebook                 = get_theme_mod( 'footer_social_facebook' );
-			$footer->footer_social_pinterest                = get_theme_mod( 'footer_social_pinterest' );
-			$footer->footer_contact_message                 = get_theme_mod( 'footer_contact_message' );
+			$footer                                     = new stdClass();
+			$footer->footer_social_title                = get_theme_mod( 'footer_social_title' );
+			$footer->footer_social_instagram            = get_theme_mod( 'footer_social_instagram' );
+			$footer->footer_social_twitter              = get_theme_mod( 'footer_social_twitter' );
+			$footer->footer_social_facebook             = get_theme_mod( 'footer_social_facebook' );
+			$footer->footer_social_pinterest            = get_theme_mod( 'footer_social_pinterest' );
+			$footer->footer_contact_message             = get_theme_mod( 'footer_contact_message' );
 			$footer->footer_contact_support_email       = get_theme_mod( 'footer_contact_support_email' );
-			$footer->footer_logo                                        = get_theme_mod( 'footer_logo' );
-			$footer->footer_form_shortcode                  = get_theme_mod( 'footer_form_shortcode' );
+			$footer->footer_logo                        = get_theme_mod( 'footer_logo' );
+			$footer->footer_form_shortcode              = get_theme_mod( 'footer_form_shortcode' );
 
-			$mods_class->{'footer_mods'}                        = $footer;
+			$mods_class->{'footer_mods'}                = $footer;
 			$mods_class->{'footer_mods'}->count         = $count;
 		endif;
 
