@@ -42,9 +42,20 @@ get_header();
 							<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_mobile_img ); ?>');">
 								<?php
 							else :
-								?>
-							<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_img ); ?>');">
-								<?php
+
+								if ( strpos( $slide->slide_img, '.mp4' ) !== false ) {
+									?>
+										<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>">
+										<video autoplay loop muted controls class="cta-slide">
+											<source src="<?php echo esc_attr( $slide->slide_img ); ?>" type="video/mp4">
+											Your browser does not support the video tag.
+										</video>
+										<?php
+								} else {
+									?>
+										<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_img ); ?>');">
+										<?php
+								}
 							endif;
 							/* Checks for an message set in the slide object */
 							if ( ! empty( $slide->slide_header_message ) ) :
@@ -137,9 +148,19 @@ get_header();
 								<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_mobile_img ); ?>');">
 									<?php
 								else :
-									?>
-								<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_img ); ?>');">
-									<?php
+									if ( strpos( $slide->slide_img, '.mp4' ) !== false ) {
+										?>
+										<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>">
+										<video autoplay loop muted controls class="cta-slide">
+											<source src="<?php echo esc_attr( $slide->slide_img ); ?>" type="video/mp4">
+											Your browser does not support the video tag.
+										</video>
+										<?php
+									} else {
+										?>
+										<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_img ); ?>');">
+										<?php
+									}
 								endif;
 								/* Checks for an message set in the slide object */
 								if ( ! empty( $slide->slide_text_message ) ) :
@@ -147,16 +168,16 @@ get_header();
 									<div class="row img-header-text-wrap">
 										<div class="col col-12 img-header-text-container">
 											<div class="text-box text-center
-											<?php
-											$set_text_align = ( ! empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position : ' set-align-center';
-											echo wp_kses_data( $set_text_align );
-											?>
+									<?php
+									$set_text_align = ( ! empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position : ' set-align-center';
+									echo wp_kses_data( $set_text_align );
+									?>
 											">
 												<h2 class="img-header-text text-center"><?php echo wp_kses_data( $slide->slide_text_message ); ?></h2>
-												<?php
-												/* Checks for an subheader set in the slide object */
-												if ( ! empty( $slide->slide_link ) ) :
-													?>
+										<?php
+										/* Checks for an subheader set in the slide object */
+										if ( ! empty( $slide->slide_link ) ) :
+											?>
 													<a href="<?php echo esc_url( $slide->slide_link ); ?>" class="wonka-btn img-cta-link text-center"><?php echo wp_kses_data( $slide->slide_link_btn ); ?></a>
 												<?php endif; ?>
 											</div><!-- .text-box -->
@@ -164,7 +185,7 @@ get_header();
 
 									</div><!-- .img-header-text-wrap -->
 									
-								<?php endif; ?>
+										<?php endif; ?>
 
 								</div><!-- .cta-slide-img-holder -->
 							</div><!-- .cta-section-slide -->
@@ -326,7 +347,7 @@ get_header();
 				</div>
 			</section><!-- .instagram-section -->
 		<?php endif; ?>
-	<?php else : ?>
+		<?php else : ?>
 		<div id="primary" class="content-area row">
 			<main id="main" class="site-main col col-12">
 			<?php
@@ -347,5 +368,5 @@ get_header();
 		</div><!-- #primary .row -->
 	<?php endif; ?>
 
-<?php
-get_footer();
+		<?php
+		get_footer();
