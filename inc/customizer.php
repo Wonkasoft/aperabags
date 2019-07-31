@@ -795,7 +795,7 @@ endfor;
 	$args = array(
 		'post_type' => 'product',
 		'post_per_page' => -1,
-		'ignore_sticky_posts' => 0,
+		'product_cat' => 'allbags',
 	);
 
 	$the_query = new WP_Query( $args );
