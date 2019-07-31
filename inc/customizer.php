@@ -795,6 +795,7 @@ endfor;
 	$args = array(
 		'post_type' => 'product',
 		'post_per_page' => -1,
+		'post_status'   => 'publish',
 		'product_cat' => 'allbags',
 	);
 
