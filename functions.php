@@ -85,11 +85,10 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		/**
 		 * Add Varient to media uploader
 		 *
-		 * @param $form_fields array, fields to include in attachment form
-		 * @param $post object, attachment record in database
-		 * @return $form_fields, modified form fields
+		 * @param array  $form_fields array, fields to include in attachment form.
+		 * @param object $post attachment record in database.
+		 * @return $form_fields modified form fields.
 		 */
-
 		function ws_attachment_field_variant( $form_fields, $post ) {
 			$form_value = ( get_post_meta( $post->ID, 'ws_variant_name', true ) ) ? get_post_meta( $post->ID, 'ws_variant_name', true ) : '';
 			$form_fields['variant-name'] = array(
@@ -107,11 +106,10 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		/**
 		 * Save values of Varient to media uploader
 		 *
-		 * @param $post array, the post data for database
-		 * @param $attachment array, attachment fields from $_POST form
-		 * @return $post array, modified post data
+		 * @param array $post the post data for database.
+		 * @param array $attachment attachment fields from $_POST form.
+		 * @return array $post modified post data.
 		 */
-
 		function ws_attachment_field_variant_save( $post, $attachment ) {
 			if ( isset( $attachment['variant-name'] ) ) {
 				update_post_meta( $post['ID'], 'ws_variant_name', $attachment['variant-name'] );
@@ -200,50 +198,50 @@ add_action( 'widgets_init', 'apera_bags_widgets_init' );
 /**
  * Implement the Custom Header feature.
  */
-require get_template_directory() . '/inc/custom-header.php';
+require_once get_template_directory() . '/inc/custom-header.php';
 
 /**
  * Custom template tags for this theme.
  */
-require get_template_directory() . '/inc/template-tags.php';
+require_once get_template_directory() . '/inc/template-tags.php';
 
 /**
  * Functions which enhance the theme by hooking into WordPress.
  */
-require get_template_directory() . '/inc/template-functions.php';
+require_once get_template_directory() . '/inc/template-functions.php';
 
 /**
  * Customizer additions.
  */
-require get_template_directory() . '/inc/customizer.php';
+require_once get_template_directory() . '/inc/customizer.php';
 
 /**
  * Load WooCommerce compatibility file.
  */
 if ( class_exists( 'WooCommerce' ) ) {
-	require get_template_directory() . '/inc/woocommerce.php';
+	require_once get_template_directory() . '/inc/woocommerce.php';
 }
 
 /**
  * Load WC_Gateway_CyberSource compatibility file.
  */
 if ( class_exists( 'WC_Gateway_CyberSource' ) ) {
-	require get_template_directory() . '/inc/wc-cybersource-custom.php';
+	require_once get_template_directory() . '/inc/wc-cybersource-custom.php';
 }
 
 /**
  * Search for only products
  *
  * @since  1.0.0
+ *
+ * @param object $query contains the query to filter.
  */
-
-	add_action( 'pre_get_posts', 'ws_apera_search_woocommerce_only' );
-
 function ws_apera_search_woocommerce_only( $query ) {
 	if ( ! is_admin() && is_search() && $query->is_main_query() ) {
 		$query->set( 'post_type', 'product' );
 	}
 }
+add_action( 'pre_get_posts', 'ws_apera_search_woocommerce_only' );
 
 
 /**
@@ -254,33 +252,34 @@ function apera_bags_scripts() {
 	/**
 	 * For enqueues of styles
 	 */
-	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' );
+	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1', 'all' );
 
 	wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', 'anonymous' ) );
 
-	wp_enqueue_style( 'fontawesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' );
-
-	wp_enqueue_style( 'slick-js-style', get_template_directory_uri() . '/slick/slick.css' );
-
-	wp_enqueue_style( 'slick-js-theme-style', get_template_directory_uri() . '/slick/slick-theme.css' );
+	wp_enqueue_style( 'fontawesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', array(), '4.7.0', 'all' );
 
 	wp_enqueue_style( 'jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css', array(), '1.0.7' );
+
+	wp_enqueue_style( 'slick-js-style', get_template_directory_uri() . '/assets/slick/slick.css', array(), '1.8.0', 'all' );
+
+	wp_enqueue_style( 'slick-js-theme-style', get_template_directory_uri() . '/assets/slick/slick-theme.css', array(), '1.8.0', 'all' );
+
 	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
 
 	/**
 	 * For enqueues of scripts
 	 */
-	wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array( 'jquery' ), 'all', true );
+	wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array( 'jquery' ), '4.3.1', true );
 
 	wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', 'anonymous' ) );
 
-	wp_enqueue_script( 'apera-bags-navigation', get_template_directory_uri() . '/js/navigation.js', array(), time(), true );
+	wp_enqueue_script( 'apera-bags-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '1.0.0', true );
 
-	wp_enqueue_script( 'apera-bags-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), time(), true );
+	wp_enqueue_script( 'apera-bags-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '1.0.0', true );
 
-	wp_enqueue_script( 'apera-bags-slick-js', get_template_directory_uri() . '/slick/slick.min.js', array( 'jquery' ), 'all', true );
+	wp_enqueue_script( 'slick-js', get_template_directory_uri() . '/assets/slick/slick.min.js', array( 'jquery' ), '1.8.0', true );
 
-	wp_enqueue_script( 'apera-bags-wonkamizer-js', get_template_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'apera-bags-slick-js' ), time(), true );
+	wp_enqueue_script( 'apera-bags-wonkamizer-js', get_template_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'slick-js' ), time(), true );
 
 	$ga_id = ( ! empty( get_option( 'wonkasoft_ga_id' ) ) ) ? get_option( 'wonkasoft_ga_id' ) : '';
 	wp_localize_script(
@@ -294,11 +293,11 @@ function apera_bags_scripts() {
 	);
 
 	if ( is_page( 'checkout' ) && ! empty( get_option( 'google_api_key' ) ) ) :
-			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'google_api_key' ) . '&libraries=places&callback=initAutocomplete', array( 'apera-bags-wonkamizer-js' ), null, true );
+			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'google_api_key' ) . '&libraries=places&callback=initAutocomplete', array( 'apera-bags-wonkamizer-js' ), 'all', true );
 	endif;
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) :
 		wp_enqueue_script( 'comment-reply' );
 	endif;
 }
-add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 200 );
+add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 50 );
