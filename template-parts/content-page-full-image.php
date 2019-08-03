@@ -18,7 +18,7 @@
 			<?php apera_bags_post_thumbnail(); ?>
 		</div>
 	</section>
-	<div class="entry-content">
+	<div class="full-width-entry-content">
 		<?php
 		the_content();
 
