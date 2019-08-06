@@ -1,9 +1,15 @@
 form.wonka-gform.wonka-zip-form {
 
-	ul.gfield_radio {
-		list-style: none;
-		margin: 0;
-		padding: 8px;
+	ul.gform_fields {
+		display: grid;
+		grid-auto-columns: 1fr 1fr;
+		grid-auto-flow: row;
+
+		ul.gfield_radio {
+			list-style: none;
+			margin: 0;
+			padding: 8px;
+		}
 	}
 
 	[type=radio] {

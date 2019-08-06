@@ -273,8 +273,8 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 
 	foreach ( $form['fields'] as $field ) :
 		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
-			$field['cssClass'] = 'form-group wonka-form-group';
-			$field['size'] = 'form-control wonka-form-control';
+			$field['cssClass'] .= ' form-group wonka-form-group';
+			$field['size'] .= ' form-control wonka-form-control';
 
 			if ( empty( $field['placeholder'] ) ) :
 				$field['placeholder'] = $field['label'];
