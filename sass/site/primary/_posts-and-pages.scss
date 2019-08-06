@@ -39,12 +39,15 @@
 		width: 100%;
 		max-width: 1200px;
 		margin: 15px auto;
-		padding: 0 15px;
 
 		header.entry-header {
 			display: flex;
 			align-items: center;
 			justify-content: center;
+		}
+
+		article {
+			padding: 0 15px;
 		}
 	}
 
