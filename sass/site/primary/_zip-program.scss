@@ -1,4 +1,5 @@
 form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
+	font-family: $font__main_jose;
 
 	ul.gform_fields {
 		display: grid;
@@ -14,6 +15,7 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 
 		input:not([type=radio]), textarea {
 			@include prefix(box-shadow, 0 1px 6px 0 rgba(0,0,0,.2), o moz webkit );
+			font-family: $font__main_jose;
 		}
 
 		li.zip-name, li.ambassador-name {
