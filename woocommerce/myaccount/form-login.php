@@ -23,7 +23,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 <div class="row" id="customer_login">
 
-	<div class="col">
+	<div class="col-12 col-md-6">
 
 <?php endif; ?>
 
@@ -70,7 +70,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 	</div>
 
-	<div class="col">
+	<div class="col-12 col-md-6">
 
 		<h2><?php esc_html_e( 'Register', 'woocommerce' ); ?></h2>
 

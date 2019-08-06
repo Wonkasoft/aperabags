@@ -1,8 +1,10 @@
+a.wonka-btn.compare,
 a.button.wc-forward,
 a.button.wc-backward,
 a.restore-item,
 a.showlogin,
-a.xoo-wsc-ft-btn,
+.xoo-wsc-footer a.xoo-wsc-ft-btn,
+.xoo-wsc-coupon-trigger,
 a.btn.btn-primary,
 a.wonka-btn,
 button.woocommerce-Button,
@@ -17,23 +19,27 @@ input[type="submit"] {
 	line-height: 1.2;
 	letter-spacing: .1rem;
 	text-align: center;
-	border: 2px outset #eeeeee;
-	background: rgba( #0000FF, 1 );
+	border: 1px solid #52abf6;
+	background: rgba( #52abf6, 1 );
 	@include prefix( transition, $trans_25, webkit moz o);
 
 
 	&:visited {
 		color: rgba( #fff, .8);
+		border: 1px solid #52abf6;
+		background: rgba( #52abf6, 1 );
 	}
 
 	&:hover {
-		background: rgba( #5858e4, 1 );
+		background: rgba( #78bdf7, 1 );
+		border-color: #78bdf7;
 		color: rgba(255, 255, 255, 1);
 	}
 
 	&:active,
 	&:focus {
 		outline: 0;
+		color: rgba(255, 255, 255, 1);
 	}
 }
 
@@ -41,30 +47,39 @@ a.button.wc-forward,
 a.button.wc-backward,
 a.restore-item,
 a.showlogin,
-a.xoo-wsc-ft-btn,
+.xoo-wsc-footer a.xoo-wsc-ft-btn,
+.xoo-wsc-coupon-trigger,
 a.wonka-btn,
 button.woocommerce-Button,
 button.wonka-btn,
 input[type="button"].wonka-btn,
 input[type="reset"].wonka-btn,
 input[type="submit"].wonka-btn {
-	padding: .5rem 1rem;
+	padding: 4px 8px;
 	text-align: center;
 	border-radius: 100px;
-	background: rgba( #0000FF, 1 );
-	border: 2px outset #eeeeee;
+	background: rgba( #52abf6, 1 );
+	border: 1px solid #52abf6;
 	color: rgba(255, 255, 255, 1);
     @include font-size( 1 );
     @include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
+    &:visited {
+    	color: rgba( #fff, .8);
+    	border: 1px solid #52abf6;
+    	background: rgba( #52abf6, 1 );
+    }
+    
     &:hover {
-		background: rgba( #5858e4, 1 );
+		background: rgba( #78bdf7, 1 );
+		border-color: #78bdf7;
 		color: rgba(255, 255, 255, 1);
     }
 
     &:active,
     &:focus {
     	outline: 0;
+		color: rgba(255, 255, 255, 1);
     }
 }
 
@@ -107,4 +122,10 @@ button.slick-arrow {
 a.showlogin {
 	padding: 4px 8px;
 	@include font-size( .8 );
+}
+
+.xoo-wsc-footer a.xoo-wsc-ft-btn,
+.xoo-wsc-coupon-trigger {
+	width: 100%;
+	color: #fff;
 }

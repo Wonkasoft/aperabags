@@ -24,10 +24,13 @@ do_action( 'woocommerce_before_lost_password_form' );
 
 	<p><?php echo apply_filters( 'woocommerce_lost_password_message', esc_html__( 'Lost your password? Please enter your username or email address. You will receive a link to create a new password via email.', 'woocommerce' ) ); ?></p><?php // @codingStandardsIgnoreLine ?>
 
-	<p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+	<div class="form-group form-row">
 		<label for="user_login"><?php esc_html_e( 'Username or email', 'woocommerce' ); ?></label>
-		<input class="woocommerce-Input woocommerce-Input--text input-text" type="text" name="user_login" id="user_login" autocomplete="username" />
-	</p>
+		<div class="woocommerce-form-row input-group woocommerce-form-row--first form-row form-row-first">
+			<input class="woocommerce-Input form-control woocommerce-Input--text input-text" type="text" name="user_login" id="user_login" autocomplete="username" />
+			<div class="invalid-feedback user_login"></div>
+		</div>
+	</div>
 
 	<div class="clear"></div>
 

@@ -224,7 +224,8 @@ p.no-comments {
 }
 
 .woocommerce-error {
-	background-color: $woocommerce__color-error;
+	background-color: #e8fcff;
+	border: 1px solid rgba( #ff0000, .3 );
 }
 
 .demo_store {

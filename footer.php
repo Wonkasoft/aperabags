@@ -18,26 +18,26 @@ $footer_section = get_section_mods( 'footer' );
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
 			<div class="row upper-footer wonka-row-footer">
-				<div class="col col-12 col-md-3">
+				<div class="col col-12 col-lg-3">
 					<div class="social-components-wrap">
 						<h4 class="footer-title"><?php echo $footer_section->footer_mods->footer_social_title; ?></h4>
 						<div class="social-icons-btns">
-							<?php 
-								if ( !empty( $footer_section->footer_mods->footer_social_instagram ) ) {
-									echo '<a href="' . $footer_section->footer_mods->footer_social_instagram . '" target="_blank"><i class="fa fa-instagram"></i></a>';
-								}
+							<?php
+							if ( ! empty( $footer_section->footer_mods->footer_social_instagram ) ) {
+								echo '<a href="' . $footer_section->footer_mods->footer_social_instagram . '" target="_blank"><i class="fa fa-instagram"></i></a>';
+							}
 
-								if ( !empty( $footer_section->footer_mods->footer_social_twitter ) ) {
-									echo '<a href="' . $footer_section->footer_mods->footer_social_twitter . '" target="_blank"><i class="fa fa-twitter"></i></a>';
-								}
+							if ( ! empty( $footer_section->footer_mods->footer_social_twitter ) ) {
+								echo '<a href="' . $footer_section->footer_mods->footer_social_twitter . '" target="_blank"><i class="fa fa-twitter"></i></a>';
+							}
 
-								if ( !empty( $footer_section->footer_mods->footer_social_facebook ) ) {
-									echo '<a href="' . $footer_section->footer_mods->footer_social_facebook . '" target="_blank"><i class="fa fa-facebook"></i></a>';
-								}
+							if ( ! empty( $footer_section->footer_mods->footer_social_facebook ) ) {
+								echo '<a href="' . $footer_section->footer_mods->footer_social_facebook . '" target="_blank"><i class="fa fa-facebook"></i></a>';
+							}
 
-								if ( !empty( $footer_section->footer_mods->footer_social_pinterest ) ) {
-									echo '<a href="' . $footer_section->footer_mods->footer_social_pinterest . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
-								}
+							if ( ! empty( $footer_section->footer_mods->footer_social_pinterest ) ) {
+								echo '<a href="' . $footer_section->footer_mods->footer_social_pinterest . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
+							}
 							?>
 						</div><!-- .social-icons-btns -->
 						<?php if ( ! empty( $footer_section->footer_mods->footer_contact_message ) ) : ?>
@@ -47,75 +47,85 @@ $footer_section = get_section_mods( 'footer' );
 						<?php endif; ?>
 						<?php if ( ! empty( $footer_section->footer_mods->footer_contact_support_email ) ) : ?>
 							<div class="footer-contact-email">
-								<?php echo "<a href='mailto:" . $footer_section->footer_mods->footer_contact_support_email ."'>" . $footer_section->footer_mods->footer_contact_support_email . "</a>"; ?>
+								<?php echo "<a href='mailto:" . $footer_section->footer_mods->footer_contact_support_email . "'>" . $footer_section->footer_mods->footer_contact_support_email . '</a>'; ?>
 							</div> <!-- .col -->
 						<?php endif; ?>
 					</div><!-- .social-components-wrap -->
 				</div><!-- .col -->
-				<div class="col col-12 col-md-9">
+				<div class="col col-12 col-lg-9">
 					<div class="row wonka-row-footer">
 						<?php if ( ! empty( $footer_section->footer_titles->footer_title_1 ) ) : ?>
-							<div class="col-6 col-md">
+							<div class="col-6 col-lg">
 								<h5 class="footer-title menu-title-shop"><?php echo $footer_section->footer_titles->footer_title_1; ?></h5>
 								<?php
-									wp_nav_menu( array(
-									    'theme_location'   => 'menu-shop',
-									    'menu_class'		=> 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_1 ),
-									) );
+									wp_nav_menu(
+										array(
+											'theme_location'   => 'menu-shop',
+											'menu_class'        => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_1 ),
+										)
+									);
 								?>
 							</div><!-- .col -->
 						<?php endif; ?>
-						<?php if ( !empty( $footer_section->footer_titles->footer_title_2 ) ) : ?>
-							<div class="col-6 col-md">
+						<?php if ( ! empty( $footer_section->footer_titles->footer_title_2 ) ) : ?>
+							<div class="col-6 col-lg">
 								<h5 class="footer-title menu-title-contact-us"><?php echo $footer_section->footer_titles->footer_title_2; ?></h5>
 								<?php
-									wp_nav_menu( array(
-									    'theme_location'   => 'menu-contact',
-									    'menu_class'		=> 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_2 ),
-									) );
+									wp_nav_menu(
+										array(
+											'theme_location'   => 'menu-contact',
+											'menu_class'        => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_2 ),
+										)
+									);
 								?>
 							</div><!-- .col -->
 						<?php endif; ?>
-						<?php if ( !empty( $footer_section->footer_titles->footer_title_3 ) ) : ?>
-							<div class="col-6 col-md">
+						<?php if ( ! empty( $footer_section->footer_titles->footer_title_3 ) ) : ?>
+							<div class="col-6 col-lg">
 								<h5 class="footer-title menu-title-account"><?php echo $footer_section->footer_titles->footer_title_3; ?></h5>
 								<?php
-									wp_nav_menu( array(
-									    'theme_location'   => 'menu-account',
-									    'menu_class'		=> 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_3 ),
-									) );
+									wp_nav_menu(
+										array(
+											'theme_location'   => 'menu-account',
+											'menu_class'        => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_3 ),
+										)
+									);
 								?>
 							</div><!-- .col -->
 						<?php endif; ?>
-						<?php if ( !empty( $footer_section->footer_titles->footer_title_4 ) ) : ?>
-						<div class="col-6 col-md">
+						<?php if ( ! empty( $footer_section->footer_titles->footer_title_4 ) ) : ?>
+						<div class="col-6 col-lg">
 							<h5 class="footer-title menu-title-company"><?php echo $footer_section->footer_titles->footer_title_4; ?></h5>
 							<?php
-								wp_nav_menu( array(
-								    'theme_location'   => 'menu-company',
-								    'menu_class'		=> 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_4 ),
-								) );
+								wp_nav_menu(
+									array(
+										'theme_location'   => 'menu-company',
+										'menu_class'        => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_4 ),
+									)
+								);
 							?>
 						</div><!-- .col -->
 						<?php endif; ?>
-						<?php if ( !empty( $footer_section->footer_titles->footer_title_5 ) ) : ?>
-						<div class="col-6 col-md">
+						<?php if ( ! empty( $footer_section->footer_titles->footer_title_5 ) ) : ?>
+						<div class="col-6 col-lg">
 							<h5 class="footer-title menu-title-programs"><?php echo $footer_section->footer_titles->footer_title_5; ?></h5>
 							<?php
-								wp_nav_menu( array(
-								    'theme_location'   => 'menu-programs',
-								    'menu_class'		=> 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_5 ),
-								) );
+								wp_nav_menu(
+									array(
+										'theme_location'   => 'menu-programs',
+										'menu_class'        => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_5 ),
+									)
+								);
 							?>
 						</div><!-- .col -->
 						<?php endif; ?>
 					</div><!-- .row -->
 					<div class="row align-items-center justify-content-end wonka-email-form">
-						<?php if ( !empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
-							<div class="col col-12 col-md-8">
+						<?php if ( ! empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
+							<div class="col col-12 col-lg-8">
 								<?php
 									_e( do_shortcode( $footer_section->footer_mods->footer_form_shortcode ) );
-									_e( "<small>Sign up for our email newsletter and receive a 10% discount on today's purchase!</small><br />" );
+									_e( "<small>Sign up for our email newsletter and receive an extra 10% discount on today's purchase!</small><br />" );
 								?>
 							</div> <!-- .col -->
 						<?php endif; ?>
@@ -126,15 +136,15 @@ $footer_section = get_section_mods( 'footer' );
 		<div class="site-info row align-items-center">
 			<!-- This column is still parsed in order to hold spacing for formating -->
 			<div class="col col-12 col-md-2 offset-md-1 footer-logo">
-				<?php if ( !empty( $footer_section->footer_mods->footer_logo ) ) : ?>
-				<?php echo sprintf( __( '<img src="%1$s" alt="Apera logo" />', 'apera-bags' ), $footer_section->footer_mods->footer_logo ); ?>
+				<?php if ( ! empty( $footer_section->footer_mods->footer_logo ) ) : ?>
+					<?php echo sprintf( __( '<img src="%1$s" alt="Apera logo" />', 'apera-bags' ), $footer_section->footer_mods->footer_logo ); ?>
 				<?php endif; ?>
 			</div> <!-- .col -->
 			<!-- End logo spacing column -->
 			<div class="col col-12 col-md-8 text-right">
 				<?php
 					/* Printing copyright date */
-					echo sprintf( esc_html__( "%s %s Apera LLC, All Rights Reserved", 'apera-bags' ), date('Y'), '&copy;' );
+					echo sprintf( esc_html__( '%1$s %2$s Apera LLC, All Rights Reserved', 'apera-bags' ), date( 'Y' ), '&copy;' );
 				?>
 			<span class="sep"> | </span>
 				<?php
@@ -144,13 +154,60 @@ $footer_section = get_section_mods( 'footer' );
 			</div><!-- .col -->
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
+<?php
+$newsletter_section = get_section_mods( 'newsletter' );
+$user_id = get_current_user_id();
+
+if ( isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
+	$user_cookie = $_COOKIE['wonkasoft_newsletter_popup'];
+	$user_cookie = str_replace( '\\', '', $user_cookie );
+	$user_cookie = json_decode( $user_cookie );
+else :
+	$user_cookie = new stdclass();
+	$user_cookie->show = true;
+endif;
+if ( ! empty( $newsletter_section ) && $newsletter_section->newsletter_mods->enable_popup && $user_cookie->show ) :
+	$bg_img = ( ! empty( $newsletter_section->newsletter_mods->background_image ) ) ? $newsletter_section->newsletter_mods->background_image : '';
+	$bg_color = ( ! empty( $newsletter_section->newsletter_mods->background_color ) ) ? $newsletter_section->newsletter_mods->background_color : '';
+	if ( ! empty( $newsletter_section->newsletter_mods->background_color ) ) :
+		$wrap_styles = ' style="background: ' . $newsletter_section->newsletter_mods->background_color . ';"';
+	elseif ( ! empty( $newsletter_section->newsletter_mods->background_image ) ) :
+		$wrap_styles = ' style="background: url(' . $newsletter_section->newsletter_mods->background_image . ');"';
+	else :
+		$wrap_styles = '';
+	endif;
+	?>
+	<div class="wonka-newsletter-wrap"<?php echo $wrap_styles; ?>>
+		<div class="wonka-newsletter-content">
+			<div class="wonka-newsletter-close-btn-wrap">
+				<a href="#" class="wonka-newsletter-close-btn">
+					<span class="newsletter-close-btn">X</span>
+				</a>
+			</div>
+			<header class="wonka-newsletter-header">
+				<h5 class="popup-header-text"><?php echo $newsletter_section->newsletter_mods->message_text; ?></h5>
+			</header>
+			<main class="wonka-newsletter-body">
+				<?php if ( ! empty( $newsletter_section->newsletter_mods->popup_form_select ) ) : ?>
+					<div class="wonka-newsletter-form-wrap">
+						<?php echo do_shortcode( '[gravityform id="' . $newsletter_section->newsletter_mods->popup_form_select . '" title="false" description="false" ajax="true"]' ); ?>
+					</div>
+				<?php endif; ?>
+			</main>
+			<footer class="wonka-newsletter-footer">
+			</footer>
+		</div>
+	</div>
+	<?php
+endif;
+?>
 </div><!-- #page -->
 <!-- Return to Top -->
 <a href="javascript:" id="return-to-top"><i class="fa fa-angle-up"></i></a>
 <div id="search_overlay" class="overlay">
   <span class="closebtn" title="Close Overlay">x</span>
   <div class="overlay-content">
-    <?php get_search_form(); ?>
+	<?php get_search_form(); ?>
   </div>
 </div>
 <?php wp_footer(); ?>

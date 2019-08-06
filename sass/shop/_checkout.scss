@@ -2,6 +2,13 @@
  * Checkout
  */
 
+main.main-checkout {
+
+	.wonka-btn {
+		padding: 2px 8px;
+	}
+}
+
 .woocommerce-checkout p.woocommerce-invalid-required-field {
 	color: #e2401c;
 
@@ -36,37 +43,48 @@
 	}
 }
 
+#customer_details {
+	margin-top: 0;
+}
+
+.payment_box.payment_method_cybersource {
+
+	.form-control {
+		margin-bottom: 8px;
+	}
+}
+
 .woocommerce-shipping-fields__field-wrapper,
 .woocommerce-billing-fields__field-wrapper {
 	max-width: 100%;
 
-	p {
+	div {
 		clear: both;
 	}
 
-	p#shipping_first_name_field,
-	p#billing_first_name_field {
+	div#shipping_first_name_field,
+	div#billing_first_name_field {
 		width: 49%;
 		float: left;
 		clear: none;
 	}
 
-	p#shipping_last_name_field,
-	p#billing_last_name_field {
+	div#shipping_last_name_field,
+	div#billing_last_name_field {
 		width: 49%;
 		float: right;
 		clear: none;
 	}
 
-	p#shipping_city_field,
-	p#billing_city_field {
+	div#shipping_city_field,
+	div#billing_city_field {
 		width: 49%;
 		float: left;
 		clear: none;
 	}
 
-	p#shipping_state_field,
-	p#billing_state_field {
+	div#shipping_state_field,
+	div#billing_state_field {
 		width: 24%;
 		margin-left: 15px;
 		float: left;
@@ -87,17 +105,35 @@
 				}
 			} 
 		}
+
+		select.state_select {
+			padding: 0px;
+			min-width: 0px;
+			border-radius: 2px;
+			font-size: 1rem;
+			line-height: 1.5;
+		}
 	}
 
-	p#shipping_postcode_field,
-	p#billing_postcode_field {
+	div#shipping_postcode_field,
+	div#billing_postcode_field {
 		width: 25%;
 		float: right;
 		clear: none;
 	}
+
 }
 
-p#billing_email_field {
+div#shipping_email_field {
+	margin-bottom: 4px;
+}
+
+div.wonka-newletter-form-check {
+	margin-bottom: 15px;
+	@include font-size( .8 );
+}
+
+div#billing_email_field {
 	margin-bottom: 8px;
 }
 
@@ -111,7 +147,7 @@ label.checkbox {
 }
 
 div.checkout-order-details {
-	padding: 30px;
+	padding: 0px 15px;
 	background: $color__background_alt;
 
 	tr.cart_item:first-child {
@@ -137,6 +173,10 @@ div.checkout-order-details {
 		}
 	}
 
+	td.product-name {
+		@include font-size( .8 );
+	}
+
 	.cart-subtotal,
 	.fee,
 	.tax-rate,
@@ -145,6 +185,10 @@ div.checkout-order-details {
 		td {
 			text-align: right;
 		}
+	}
+
+	@include media-breakpoint( lg ) {
+		padding: 30px;
 	}
 }
 
@@ -204,4 +248,15 @@ span.wonka-badge {
 	height: 22px;
 	padding: 0;
 	font-family: 'Open Sans';
+}
+
+#free-shipping-label {
+	font-weight: 500;
+}
+
+@media screen and  ( max-width: 992px ) {
+	div.wonka-row {
+		margin-left: 0;
+		margin-right: 0;
+	}
 }

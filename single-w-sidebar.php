@@ -1,6 +1,9 @@
 <?php
 /**
- * The template for displaying all single posts
+ * Template Name: posts-with-sidebar
+ * Template Post Type: post
+ *
+ * The template for displaying all single posts with sidebar
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
  *
@@ -34,6 +37,7 @@ get_header();
 		?>
 
 		</main><!-- #main -->
+		<?php get_sidebar(); ?>
 	</div><!-- #primary -->
 
 <?php

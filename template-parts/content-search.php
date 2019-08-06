@@ -57,7 +57,7 @@
 				get_the_ID(),
 				'wonka-btn'
 			);
-		?>
+			?>
 		</div>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->

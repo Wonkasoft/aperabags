@@ -7,11 +7,15 @@
  * @package aperabags
  */
 
+global $post;
+$ws_post_type = ( ! empty( $post->post_type ) ) ? ' main-' . $post->post_type : '';
+$ws_post_slug = ( ! empty( $post->post_name ) ) ? ' main-' . $post->post_name : '';
+
 get_header();
 ?>
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
+		<main id="main" class="site-main<?php echo esc_attr( $ws_post_slug . $ws_post_type ); ?>">
 
 		<?php if ( have_posts() ) : ?>
 
@@ -46,8 +50,8 @@ get_header();
 		?>
 
 		</main><!-- #main -->
+		<?php get_sidebar(); ?>
 	</div><!-- #primary -->
 
 <?php
-get_sidebar();
 get_footer();

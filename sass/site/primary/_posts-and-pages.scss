@@ -1,3 +1,26 @@
+/* width */
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba( 0, 0, 0, .4); 
+  border-radius: 100px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #52abf6; 
+  border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #78bdf7; 
+}
+
 .sticky {
 	display: block;
 }
@@ -13,6 +36,7 @@
 	@include prefix( transition, $trans_25, o moz webkit );
 
 	main#main {
+		width: 100%;
 		max-width: 1200px;
 		margin: 15px auto;
 		padding: 0 15px;
@@ -24,12 +48,12 @@
 		}
 	}
 
-	.main-shop-instagram {
-		width: 1500px;
-		max-width: 100%;
+	main#main.main-shop-instagram {
+		width: 100%;
+		max-width: 1500px;
 	}
 
-	.main-contact-us {
+	main.main-contact-us {
 
 		.entry-title {
 			display: none;
@@ -58,7 +82,160 @@
 section {
 
 	&.error-404 {
-		max-width: 1180px;
+		max-width: 1200px;
+
+		.widget {
+
+			ul {
+				list-style: none;
+				margin: 0;
+			}
+		}
+	}
+}
+
+body.single-post {
+
+	div#content {
+		position: relative;
+	}
+
+	#primary {
+		position: relative;
+		display: flex;
+		align-items: stretch;
+		justify-content: center;
+		flex-wrap: wrap;
+
+		main#main.main-post {
+			position: relative;
+			flex: .8 0 80%;
+
+			article.post {
+				position: relative;
+
+				header.entry-header {
+					position: relative;
+					padding: 0;
+					min-height: 85px;
+					background: rgba( #78bdf7, .4 );
+					@include prefix( box-shadow, 0 1px 4px 0 rgba( #000000, .2 ), o moz webkit );
+
+					div.title-wrap {
+						position: absolute;
+						display: flex;
+						align-items: center;
+					    top: 0;
+					    left: 0;
+					    padding: 8px;
+					    height: 65px;
+					    background: #fff;
+						
+						.entry-title {
+							margin: 0;
+							padding: 8px;
+						}
+						
+						&:after {
+							content: "";
+							position: absolute;
+							display: block;
+							height: 15px;
+							top: 0;
+							left: 100%;
+							width: 32.5px;
+							height: 32.5px;
+							border: 32.5px solid #fff;
+							border-bottom-color: transparent;
+							border-right-color: transparent;
+						}
+					}
+
+					div.meta-wrap {
+						position: absolute;
+						display: flex;
+						align-items: center;
+						flex-wrap: wrap;
+					    bottom: 0;
+					    right: 0;
+					    padding: 8px;
+					    width: 45%;
+					    height: 65px;
+					    background: #f1f1f1;
+					    z-index: 50;
+
+					    .entry-meta {
+					    	flex: 1 0 70%;
+					    }
+
+					    &:before {
+					    	content: "";
+					    	position: absolute;
+					    	display: block;
+					    	height: 15px;
+					    	bottom: 0;
+					    	right: 100%;
+					    	width: 32.5px;
+					    	height: 32.5px;
+					    	border: 32.5px solid #f1f1f1;
+					    	border-top-color: transparent;
+					    	border-left-color: transparent;
+					    }
+					}
+
+					&:before {
+						content: "";
+						position: absolute;
+						display: block;
+						height: 15px;
+						top: 0;
+						width: 100%;
+						background: #fff;
+					}
+
+					&:after {
+						content: "";
+						position: absolute;
+						display: block;
+						height: 15px;
+						bottom: 0;
+						width: 100%;
+						background: #f1f1f1;
+					}
+				}
+			}
+
+			@include media-breakpoint( md ) {
+				flex: 0 1 60%;
+			}
+		}
+
+		aside#secondary {
+			flex: .8 1 80%;
+			margin: 15px auto;
+			padding: 0 15px;
+
+			ul {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			section.widget {
+				padding: 15px;
+				@include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .2 ), o moz webkit );
+
+				.menu-media-assets-container {
+					padding: 8px;
+					border-top: 1px solid rgba( #000, .2 );
+				}
+			}
+
+			@include media-breakpoint( md ) {
+				flex: .25 1 25%;
+				border-left: 1px solid rgba( #333333, .1 );
+			}
+		}
 	}
 }
 
@@ -74,10 +251,11 @@ body.search {
 
 	input#s {
 		border-radius: 100px;
-		border-width: 2px;
+		border-width: 1px;
 		padding: 8px;
 		line-height: 1.2;
 		height: 100%;
+		border-radius: 100px 0 0 100px;
 		@include font-size( 1.1 );
 
 		&::placeholder {
@@ -86,10 +264,12 @@ body.search {
 	}
 
 	button.wonka-btn {
+		padding: 8px 15px;
 		border-radius: 100px;
 		line-height: 1.2;
 		text-transform: none;
 		height: 100%;
+		border-radius: 0 100px 100px 0;
 		@include font-size( 1.1 );
 
 		i {
@@ -112,6 +292,7 @@ body.search {
 		}
 
 		button.wonka-btn {
+			padding: 8px 15px;
 			border-radius: 0 100px 100px 0;
 		}
 	}
@@ -142,7 +323,7 @@ body.search {
 	justify-content: center;
 	position: relative;
 	top: 46%;
-	width: 80%;
+	width: 100%;
 	text-align: center;
 	margin-top: 30px;
 	margin: auto;
@@ -158,7 +339,7 @@ body.search {
 
 		/* Style the search field */
 		input[type=text] {
-			width: 100%;
+			width: 70%;
 			padding: 13px;
 			@include font-size( 1.1 );
 			@include prefix( transition, $trans_25, o moz webkit );
@@ -169,23 +350,25 @@ body.search {
 		}
 
 		button {
-			width: 100%;
-			margin-top: -2px;
+			width: auto;
+			margin-top: 0px;
 			margin-left: 0;
 			@include prefix( transition, $trans_25, o moz webkit );
 		}
-
-		@include media-breakpoint( md ) {
+	}
+	@include media-breakpoint( md ) {
+		width: 80%;
+		form#searchform {
 			width: 65%;
 
 			input[type=text] {
-					width: 50%;
-				}
+				width: 50%;
+			}
 			button {
-						width: auto;
-						margin-top: 0;
-						margin-left: -2px;
-					}
+				width: auto;
+				margin-top: 0;
+				margin-left: -2px;
+			}
 		}
 	}
 }
@@ -259,3 +442,48 @@ main.main-shipping-returns-warranty {
 	}
 }
 /*=====  End for asterisk in Shipping, Returns, Warranty =====*/
+
+/*==============================================================================
+=            This is for the full width feature image page template            =
+==============================================================================*/
+main#full-width {
+	position: relative;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+
+	header {
+		position: relative;
+		margin: 15px auto;
+		padding: 0 15px;
+		width: 1200px;
+		max-width: 100%;
+	}
+
+	section.post-thumbnail-section {
+		position: relative;
+		margin: 0;
+		padding: 0;
+
+		div.post-thumbnail {
+			position: relative;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+
+			img {
+				width: 100%;
+				@include prefix( box-shadow, 0 1px 6px 0 rgba( #000, .3 ), o moz webkit );
+			}
+		}
+	}
+
+	div.entry-content {
+		position: relative;
+		margin: 15px auto;
+		padding: 0 15px;
+		width: 1200px;
+		max-width: 100%;	
+	}
+}
+/*=====  End of This is for the full width feature image page template  ======*/

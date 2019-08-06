@@ -44,7 +44,7 @@ if ( ! is_ajax() ) {
 
 	<div class="wonka-row">
 	<?php do_action( 'wonka_custom_billing_addition' ); ?>
- 	</div><!-- .wonka-row -->
+	 </div><!-- .wonka-row -->
 
 	<div class="form-row place-order">
 		<noscript>

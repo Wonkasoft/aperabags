@@ -33,12 +33,16 @@ if ( post_password_required() ) {
 ?>
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class( '', $product ); ?>>
 	<section class="product-img-section">
-		<div class="product-on-sale">
+		
 		<?php remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 ); ?>
 		<?php do_action( 'woocommerce_before_single_product_summary' ); ?>
-		</div>
+		
 	<div class="wonka-single-product-img-area">
 		<?php remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10 ); ?>
+		<?php add_action( 'wonka_mobile_title_place', 'woocommerce_template_single_title', 5 ); ?>
+		<div class="d-flex d-md-none">
+			<?php do_action( 'wonka_mobile_title_place' ); ?>
+		</div>
 		<?php add_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 ); ?>
 		<?php
 			/**
@@ -53,17 +57,18 @@ if ( post_password_required() ) {
 	<div class="summary entry-summary">
 		<?php
 
-			/* Just changing the order of loading */
+			/*
+			 Just changing the order of loading */
 			/* Removing filters */
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10);
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10);
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20);
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10 );
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
 
 			/* adding them back in different order */
-			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 10);
-			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 11);
-			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 20);
-			
+			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 10 );
+			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 11 );
+			add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 20 );
+
 			/**
 			 * Hook: woocommerce_single_product_summary.
 			 *

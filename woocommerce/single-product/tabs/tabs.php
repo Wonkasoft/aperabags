@@ -10,7 +10,7 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	https://docs.woocommerce.com/document/template-structure/
+ * @see     https://docs.woocommerce.com/document/template-structure/
  * @author  WooThemes
  * @package WooCommerce/Templates
  * @version 2.4.0
@@ -24,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Filter tabs and allow third parties to add their own.
  *
  * Each tab is an array containing title, callback and priority.
+ *
  * @see woocommerce_default_product_tabs()
  */
 $tabs = apply_filters( 'woocommerce_product_tabs', array() );
@@ -32,17 +33,23 @@ if ( ! empty( $tabs ) ) : ?>
 	<section class="product-tabs-section">
 	<div class="wonka-tabs wonka-tabs-wrapper">
 		<?php foreach ( $tabs as $key => $tab ) : ?>
-			<?php if ( !empty( $tab['section']) ) : ?>
-				<?php $serialize_section_title = str_replace(' ', '-', strtolower( $tab['section'] ) ); ?>
-				<section id="<?php echo esc_attr( $serialize_section_title ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $serialize_section_title ); ?>">
+			<?php if ( ! empty( $tab['section'] ) ) : ?>
+				<?php $serialize_section_title = str_replace( ' ', '-', strtolower( $tab['section'] ) ); ?>
+				<section id="section-<?php echo esc_attr( $serialize_section_title ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $serialize_section_title ); ?>">
 					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $serialize_section_title ); ?> panel entry-content" id="tab-<?php echo esc_attr( $serialize_section_title ); ?>" aria-data="tab-title-<?php echo esc_attr( $serialize_section_title ); ?>">
-						<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
+						<?php
+						if ( isset( $tab['callback'] ) ) {
+							call_user_func( $tab['callback'], $key, $tab ); }
+						?>
 					</div>
 				</section>
-			<?php else: ?>
-				<section id="<?php echo esc_attr( $key ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
+			<?php else : ?>
+				<section id="section-<?php echo esc_attr( $key ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
 					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key ); ?>" aria-data="tab-title-<?php echo esc_attr( $key ); ?>">
-						<?php if ( isset( $tab['callback'] ) ) { call_user_func( $tab['callback'], $key, $tab ); } ?>
+						<?php
+						if ( isset( $tab['callback'] ) ) {
+							call_user_func( $tab['callback'], $key, $tab ); }
+						?>
 					</div>
 				</section>
 			<?php endif; ?>
