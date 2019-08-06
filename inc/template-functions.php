@@ -272,7 +272,7 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	endif;
 
 	if ( in_array( $form['title'], array( 'Ambassador Program' ) ) ) :
-		$form['cssClass'] .= ' inline-form wonka-zambassador-form';
+		$form['cssClass'] .= ' inline-form wonka-ambassador-form';
 	endif;
 
 	foreach ( $form['fields'] as $field ) :
