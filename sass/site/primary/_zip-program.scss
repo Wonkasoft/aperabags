@@ -34,6 +34,10 @@ form.wonka-gform.wonka-zip-form {
 		li.zip-feedback {
 			grid-column-start: 1;
 			grid-column-end: 3;
+
+			textarea.textarea {
+				height: 100px;
+			}
 		}
 	}
 
