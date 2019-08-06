@@ -494,3 +494,7 @@ main#full-width {
 	margin-top: -30px;
 }
 /*=====  End of This is for the full width feature image page template  ======*/
+
+.text-shadow {
+	@include prefix( text-shadow, 1px 1px 2px rgba( #000, .8 ), o moz webkit );
+}
