@@ -48,4 +48,10 @@ form.wonka-gform.wonka-zip-form {
 	.gform_validation_container {
 		display: none;
 	}
+
+	.gform_footer {
+		display: grid;
+		align-items: center;
+		justify-content: center;
+	}
 }
