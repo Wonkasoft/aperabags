@@ -12,8 +12,8 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 			padding: 8px;
 		}
 
-		input:not([type=radio]) {
-			@include prefix(box-shadow, 0 1px 3px 0 rgba(0,0,0,.3), o moz webkit );
+		input:not([type=radio]), textarea {
+			@include prefix(box-shadow, 0 1px 6px 0 rgba(0,0,0,.2), o moz webkit );
 		}
 
 		li.zip-name, li.ambassador-name {
