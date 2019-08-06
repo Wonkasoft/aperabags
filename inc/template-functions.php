@@ -271,16 +271,16 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] .= ' inline-form wonka-zip-form';
 	endif;
 
-	if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
-		foreach ( $form['fields'] as $field ) :
-			$field['cssClass'] = 'form-group wonka-form-group';
-			$field['size'] = 'form-control wonka-form-control';
+	foreach ( $form['fields'] as $field ) :
+		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
+		$field['cssClass'] = 'form-group wonka-form-group';
+		$field['size'] = 'form-control wonka-form-control';
 
 			if ( empty( $field['placeholder'] ) ) :
 				$field['placeholder'] = $field['label'];
 			endif;
-		endforeach;
-	endif;
+		endif;
+	endforeach;
 
 	return $form;
 }
