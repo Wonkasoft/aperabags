@@ -1,4 +1,4 @@
-form.wonka-gform.wonka-zip-form {
+form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 
 	ul.gform_fields {
 		display: grid;
@@ -12,7 +12,7 @@ form.wonka-gform.wonka-zip-form {
 			padding: 8px;
 		}
 
-		li.zip-name {
+		li.zip-name, li.ambassador-name {
 			grid-area: 1 / 1 / 2 / 3;
 
 			> div {
@@ -23,15 +23,15 @@ form.wonka-gform.wonka-zip-form {
 			}
 		}
 
-		li.zip-email {
+		li.zip-email, li.ambassador-email {
 			grid-area: 2 / 1 / 3 / 2;
 		}
 
-		li.zip-phone {
+		li.zip-phone, li.ambassador-phone {
 			grid-area: 2 / 2 / 3 / 3;
 		}
 
-		li.zip-feedback {
+		li.zip-feedback, li.ambassador-feedback {
 			grid-column-start: 1;
 			grid-column-end: 3;
 
