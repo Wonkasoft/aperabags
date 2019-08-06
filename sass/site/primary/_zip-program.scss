@@ -12,6 +12,10 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 			padding: 8px;
 		}
 
+		input:not([type=radio]) {
+			@include prefix(box-shadow, 0 1px 3px 0 rgba(0,0,0,.3), o moz webkit );
+		}
+
 		li.zip-name, li.ambassador-name {
 			grid-area: 1 / 1 / 2 / 3;
 
@@ -27,7 +31,6 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 				> div {
 					grid-auto-flow: column;
 				}
-
 			}
 		}
 
@@ -71,8 +74,13 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 				grid-area: 3 / 1 / 4 / 2;
 			}
 
-			li.zip-org, li.ambassador-org {
+			li.zip-org {
 				grid-area: 3 / 2 / 4 / 3;
+			}
+
+			li.ambassador-org {
+				grid-area: 3 / 1 / 4 / 3;
+
 			}
 		}
 	}
