@@ -10,6 +10,18 @@ form.wonka-gform.wonka-zip-form {
 			margin: 0;
 			padding: 8px;
 		}
+
+		li.zip-name {
+			grid-area: 1 / 1 / 2 / 3;
+		}
+
+		li.zip-email {
+			grid-area: 2 / 1 / 3 / 2;
+		}
+
+		li.zip-phone {
+			grid-area: 2 / 2 / 3 / 3;
+		}
 	}
 
 	[type=radio] {
