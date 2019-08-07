@@ -65,12 +65,20 @@ if ( wonkasoft_request.ga_id !== '' )
 	 * 
 	 */
 	if (document.getElementById("ambassadar-first-name") || document.getElementById("club-name")) {
-		if (document.getElementById("ambassadar-first-name")) {
-		var firstname = getUrlVars().firstname;
-		document.getElementById("ambassadar-first-name").innerHTML = "HI " + firstname + "!";
-		} else {
-		var clubname= getUrlVars().organization;
-		document.getElementById("club-name").innerHTML = "HI " + clubname + "!";
+		if (document.getElementById("ambassadar-first-name")) 
+		{
+			if ( getUrlVars().firstname ) 
+			{
+				var firstname = getUrlVars().firstname;
+				document.getElementById("ambassadar-first-name").innerHTML = "HI " + firstname + "!";
+			}
+		} else 
+		{
+			if ( getUrlVars().organization ) 
+			{
+				var clubname= getUrlVars().organization;
+				document.getElementById("club-name").innerHTML = "HI " + clubname + "!";
+			}
 		}
 	}
 	
