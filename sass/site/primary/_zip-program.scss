@@ -1,5 +1,5 @@
 form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
-	font-family: $font__main_jose;
+	font-family: $font__main;
 
 	ul.gform_fields {
 		display: grid;
@@ -14,8 +14,8 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 		}
 
 		input:not([type=radio]), textarea {
-			@include prefix(box-shadow, 0 1px 6px 0 rgba(0,0,0,.2), o moz webkit );
-			font-family: $font__main_jose;
+			@include prefix(box-shadow, 0 1px 4px 0 rgba(0,0,0,.2), o moz webkit );
+			font-family: $font__main;
 		}
 
 		li.zip-name, li.ambassador-name {
@@ -58,7 +58,7 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 			position: relative;
 
 			textarea.textarea {
-				height: 75px;
+				height: 100px;
 			}
 
 			.charleft.ginput_counter {
@@ -96,6 +96,13 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 			li.ambassador-org {
 				grid-area: 3 / 1 / 4 / 3;
 
+			}
+
+			li.zip-feedback, li.ambassador-feedback {
+
+				textarea.textarea {
+					height: 75px;
+				}
 			}
 		}
 	}
