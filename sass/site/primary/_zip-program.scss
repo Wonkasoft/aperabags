@@ -55,9 +55,22 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 		li.zip-feedback, li.ambassador-feedback {
 			grid-column-start: 1;
 			grid-column-end: 3;
+			position: relative;
 
 			textarea.textarea {
 				height: 75px;
+			}
+
+			.charleft.ginput_counter {
+				background: #fff;
+				text-align: right;
+				padding: 0 8px;
+				font-weight: 300;
+				position: absolute;
+				bottom: 1px;
+				right: 8px;
+				font-size: 1rem;
+				line-height: 1;
 			}
 		}
 
