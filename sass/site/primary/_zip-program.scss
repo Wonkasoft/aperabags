@@ -74,13 +74,6 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 			}
 		}
 
-		.zip-section-header {
-
-			h1 {
-				font-family: "Aclonica", Sans-serif;
-			}
-		}
-
 
 		@include media-breakpoint( md ) {
 			
@@ -127,5 +120,12 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 		display: grid;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.zip-section-header {
+
+		h1 {
+			font-family: "Aclonica", Sans-serif;
+		}
 	}
 }
