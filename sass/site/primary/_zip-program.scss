@@ -74,6 +74,14 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 			}
 		}
 
+		.zip-section-header {
+
+			h1 {
+				font-family: "Aclonica", Sans-serif;
+			}
+		}
+
+
 		@include media-breakpoint( md ) {
 			
 			li.zip-email, li.ambassador-email {
