@@ -146,7 +146,7 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		add_filter(
 			'jpeg_quality',
 			function ( $arg ) {
-				return 40;
+				return 60;
 			}
 		);
 
@@ -156,9 +156,25 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		 * @since 1.0.0
 		 */
 		add_image_size( 'custom_products_size', 367, 551, false );
+
 	}
 endif;
 add_action( 'after_setup_theme', 'apera_bags_setup' );
+
+/**
+ * adding SVG support.
+ * 
+ * @param array $file_types contains the supported file types.
+ * @return  array the array of new file types.
+ */
+function add_file_types_to_uploads( $file_types ) {
+	$new_filetypes = array();
+	$new_filetypes['svg'] = 'image/svg+xml';
+	$file_types = array_merge($file_types, $new_filetypes );
+
+	return $file_types;
+}
+add_action('upload_mimes', 'add_file_types_to_uploads');
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
