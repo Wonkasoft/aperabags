@@ -31,7 +31,6 @@ get_header();
 				<?php
 				/* Foreach loop to build slider according to slides entered in the customizer */
 				foreach ( $top_slider->slides as $slide ) :
-
 					/* Checks for an img set in the slide object */
 					if ( ! empty( $slide->slide_img ) ) :
 						?>
@@ -42,7 +41,6 @@ get_header();
 							<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_mobile_img ); ?>');">
 								<?php
 							else :
-
 								if ( strpos( $slide->slide_img, '.mp4' ) !== false ) {
 									?>
 										<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>">
@@ -137,7 +135,6 @@ get_header();
 					<?php
 					/* Foreach loop to build slider according to slides entered in the customizer */
 					foreach ( $cta_slider->slides as $slide ) :
-
 						/* Checks for an img set in the slide object */
 						if ( ! empty( $slide->slide_img ) ) :
 							?>
@@ -178,14 +175,14 @@ get_header();
 										/* Checks for an subheader set in the slide object */
 										if ( ! empty( $slide->slide_link ) ) :
 											?>
-													<a href="<?php echo esc_url( $slide->slide_link ); ?>" class="wonka-btn img-cta-link text-center"><?php echo wp_kses_data( $slide->slide_link_btn ); ?></a>
-												<?php endif; ?>
+													<a href="<?php echo esc_url( get_the_permalink( $slide->slide_link, false ) ); ?>" class="wonka-btn img-cta-link text-center"><?php echo wp_kses_data( $slide->slide_link_btn ); ?></a>
+										<?php endif; ?>
 											</div><!-- .text-box -->
 										</div><!-- .img-header-text-container -->
 
 									</div><!-- .img-header-text-wrap -->
 									
-										<?php endif; ?>
+								<?php endif; ?>
 
 								</div><!-- .cta-slide-img-holder -->
 							</div><!-- .cta-section-slide -->
@@ -225,7 +222,7 @@ get_header();
 								</div><!-- .module-component-wrap -->
 							</div><!-- .cause-section-module -->
 						</div>
-					<?php endif; ?>
+						<?php endif; ?>
 					<?php endforeach; ?>
 				</div>
 				<?php
@@ -280,7 +277,7 @@ get_header();
 							</a>
 							
 								<?php
-								endif;
+							endif;
 							?>
 						</div>
 						<?php
@@ -347,7 +344,7 @@ get_header();
 				</div>
 			</section><!-- .instagram-section -->
 		<?php endif; ?>
-		<?php else : ?>
+	<?php else : ?>
 		<div id="primary" class="content-area row">
 			<main id="main" class="site-main col col-12">
 			<?php
@@ -360,7 +357,6 @@ get_header();
 				if ( comments_open() || get_comments_number() ) :
 					comments_template();
 				endif;
-
 			endwhile; // End of the loop.
 			?>
 
