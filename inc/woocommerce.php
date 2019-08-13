@@ -28,8 +28,8 @@ add_action( 'after_setup_theme', 'apera_bags_woocommerce_setup' );
  * @return void
  */
 function apera_bags_woocommerce_scripts() {
-	   wp_enqueue_style( 'apera-bags-woocommerce-style', get_stylesheet_directory_uri() . '/woocommerce.css', array(), time() );
-	$font_path   = WC()->plugin_url() . '/assets/fonts/';
+		wp_enqueue_style( 'apera-bags-woocommerce-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/woocommerce.css' ), array(), time() );
+	$font_path   = str_replace( array( 'http:', 'https:' ), '', WC()->plugin_url() . '/assets/fonts/' );
 	$inline_font = '@font-face {
 		font-family: "star";
 		src: url("' . $font_path . 'star.eot");
@@ -306,7 +306,7 @@ add_filter( 'post_class', 'setting_up_image_flipper_class', 8 );
  * This function is to override the parsing of the images during a shop loop
  */
 function wonka_customized_shop_loop() {
-	   /*
+		/*
 	========================================================
 	=            For setting up the image flipper            =
 	========================================================*/
@@ -392,7 +392,7 @@ add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
 
 
 function wonka_add_continue_shopping_notice_to_cart() {
-	   $shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ), esc_html__( 'Continue shopping', 'woocommerce' ) );
+		$shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ), esc_html__( 'Continue shopping', 'woocommerce' ) );
 
 	echo $shopping;
 }
@@ -1097,7 +1097,7 @@ if ( function_exists( 'wc_stripe_show_payment_request_on_checkout' ) ) :
 endif;
 
 function wonka_checkout_before_customer_details() {
-	   $output = '';
+		$output = '';
 
 	$output .= '<div class="tab-content" id="wonka-checkout-steps">';
 	$output .= '<div class="tab-pane fade show active" id="wonka_customer_information" role="tabpanel">';
@@ -1118,7 +1118,7 @@ function wonka_checkout_after_customer_details() {
 add_action( 'woocommerce_checkout_after_customer_details', 'wonka_checkout_after_customer_details' );
 
 function wonka_woocommerce_checkout_before_order_review() {
-	   $output = '';
+		$output = '';
 
 	$output .= '<div class="tab-pane fade" id="wonka_shipping_method" role="tabpanel">';
 
@@ -1137,7 +1137,7 @@ function wonka_woocommerce_review_order_before_payment() {
 add_action( 'woocommerce_review_order_before_payment', 'wonka_woocommerce_review_order_before_payment' );
 
 function wonka_woocommerce_review_order_before_payment2() {
-	   do_action( 'woocommerce_checkout_billing' );
+		do_action( 'woocommerce_checkout_billing' );
 }
 add_action( 'wonka_custom_billing_addition', 'wonka_woocommerce_review_order_before_payment2' );
 
@@ -1266,7 +1266,7 @@ add_filter( 'woocommerce_short_description', 'wonka_filter_woocommerce_short_des
  * This adds a custom express checkout button to the product page
  */
 function wonka_express_checkout_add() {
-	   global $post;
+		global $post;
 	global $product;
 	$variation_id = $product->get_variation_id();
 	$post_id = get_the_ID();
@@ -1376,7 +1376,7 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
 add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
 
 function ws_shipping_to_billing() {
-	   // This is a security check, it validates a random number that is generated on the request.
+		// This is a security check, it validates a random number that is generated on the request.
 	if ( ! check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
 		return wp_send_json_error( 'Invalid Nonce' );
 	}
@@ -1420,7 +1420,7 @@ add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );
 
 
 function ws_ajax_search() {
-	   // This is a security check, it validates a random number that is generated on the request.
+		// This is a security check, it validates a random number that is generated on the request.
 	if ( ! check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
 		return wp_send_json_error( 'Invalid Nonce' );
 	}
@@ -1700,7 +1700,7 @@ add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_
   * @return    [return description]
   */
 function add_theme_style_to_compare() {
-	   wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
+		wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
 }
 
 if ( class_exists( 'YITH_Woocompare_Frontend' ) ) {
