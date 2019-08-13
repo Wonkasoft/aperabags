@@ -60,6 +60,27 @@ if ( wonkasoft_request.ga_id !== '' )
 	}
 	/*=====  End of vars set for script use  ======*/
 
+	/**
+	 * This is for the zip and ambassador thank you pages.
+	 * 
+	 */
+	if (document.getElementById("ambassadar-first-name") || document.getElementById("club-name")) {
+		if (document.getElementById("ambassadar-first-name")) 
+		{
+			if ( getUrlVars().firstname ) 
+			{
+				var firstname = getUrlVars().firstname;
+				document.getElementById("ambassadar-first-name").innerHTML = "HI " + firstname + "!";
+			}
+		} else 
+		{
+			if ( getUrlVars().organization ) 
+			{
+				var clubname= getUrlVars().organization;
+				document.getElementById("club-name").innerHTML = "HI " + clubname + "!";
+			}
+		}
+	}
 	
 	/**
 	 * This is for the checkout multistep tabs 
@@ -775,6 +796,13 @@ if ( wonkasoft_request.ga_id !== '' )
 		}, 300);
 	}
 
+	function getUrlVars() {
+	   var vars = {};
+	   var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+	       vars[key] = value;
+	   });
+	   return vars;
+	}
 
 	function shifting_parallax() 
 	{	
@@ -1580,7 +1608,6 @@ if ( wonkasoft_request.ga_id !== '' )
 				});
 		}
 		/*=====  End of For Popup  ======*/
-		
 
 		/**************************************************************************
 		 * This allow the user to view their password in the the sign in form CARLOS

@@ -39,12 +39,15 @@
 		width: 100%;
 		max-width: 1200px;
 		margin: 15px auto;
-		padding: 0 15px;
 
 		header.entry-header {
 			display: flex;
 			align-items: center;
 			justify-content: center;
+		}
+
+		article .woocommerce {
+			padding: 0 15px;
 		}
 	}
 
@@ -68,9 +71,8 @@
 .page-content,
 .entry-content,
 .entry-summary {
-	margin: 1.5em 0 0;
 	p {
-		line-height: 1.8;
+		line-height: 1.1;
 	}
 }
 
@@ -454,7 +456,6 @@ main#full-width {
 
 	header {
 		position: relative;
-		margin: 15px auto;
 		padding: 0 15px;
 		width: 1200px;
 		max-width: 100%;
@@ -487,3 +488,11 @@ main#full-width {
 	}
 }
 /*=====  End of This is for the full width feature image page template  ======*/
+
+.text-shadow {
+	@include prefix( text-shadow, 1px 1px 2px rgba( #000, .8 ), o moz webkit );
+}
+
+.letter-space strong {
+	letter-spacing: .12rem;
+}
