@@ -28,7 +28,7 @@ add_action( 'after_setup_theme', 'apera_bags_woocommerce_setup' );
  * @return void
  */
 function apera_bags_woocommerce_scripts() {
-	wp_enqueue_style( 'apera-bags-woocommerce-style', get_template_directory_uri() . '/woocommerce.css', array(), time() );
+	   wp_enqueue_style( 'apera-bags-woocommerce-style', get_stylesheet_directory_uri() . '/woocommerce.css', array(), time() );
 	$font_path   = WC()->plugin_url() . '/assets/fonts/';
 	$inline_font = '@font-face {
 		font-family: "star";
@@ -41,7 +41,6 @@ function apera_bags_woocommerce_scripts() {
 		font-style: normal;
 	}';
 	wp_add_inline_style( 'apera-bags-woocommerce-style', $inline_font );
-
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_woocommerce_scripts' );
 
@@ -299,7 +298,6 @@ function setting_up_image_flipper_class( $classes ) {
 		}
 	}
 	return $classes;
-
 }
 
 add_filter( 'post_class', 'setting_up_image_flipper_class', 8 );
@@ -308,7 +306,7 @@ add_filter( 'post_class', 'setting_up_image_flipper_class', 8 );
  * This function is to override the parsing of the images during a shop loop
  */
 function wonka_customized_shop_loop() {
-	/*
+	   /*
 	========================================================
 	=            For setting up the image flipper            =
 	========================================================*/
@@ -375,16 +373,15 @@ add_filter( 'woocommerce_product_tabs', 'wonka_product_tabs_retitle', 98 );
  * This is for moving the cross sells items on the cart page setting the display of how many items and columns to show
  */
 function wonka_cart_cross_sells() {
-
 	add_filter(
 		'woocommerce_cross_sells_columns',
-		function() {
+		function () {
 			return 3;
 		}
 	);
 	add_filter(
 		'woocommerce_cross_sells_total',
-		function() {
+		function () {
 			return 3;
 		}
 	);
@@ -395,7 +392,7 @@ add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
 
 
 function wonka_add_continue_shopping_notice_to_cart() {
-	$shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ), esc_html__( 'Continue shopping', 'woocommerce' ) );
+	   $shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ), esc_html__( 'Continue shopping', 'woocommerce' ) );
 
 	echo $shopping;
 }
@@ -593,13 +590,10 @@ function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 			$countries = 'shipping_country' === $key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries();
 
 			if ( 1 === count( $countries ) ) {
-
 				$field .= '<strong>' . current( array_values( $countries ) ) . '</strong>';
 
 				$field .= '<input type="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . current( array_keys( $countries ) ) . '" ' . implode( ' ', $custom_attributes ) . ' class="country_to_state" readonly="readonly" />';
-
 			} else {
-
 				$field = '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="country_to_state country_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . '><option value="">' . esc_html__( 'Select a country&hellip;', 'woocommerce' ) . '</option>';
 
 				foreach ( $countries as $ckey => $cvalue ) {
@@ -609,7 +603,6 @@ function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 				$field .= '</select>';
 
 				$field .= '<noscript><button type="submit" name="woocommerce_checkout_update_totals" value="' . esc_attr__( 'Update country', 'woocommerce' ) . '">' . esc_html__( 'Update country', 'woocommerce' ) . '</button></noscript>';
-
 			}
 
 			break;
@@ -619,13 +612,10 @@ function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 			$states      = WC()->countries->get_states( $for_country );
 
 			if ( is_array( $states ) && empty( $states ) ) {
-
 				$field_container = '<p class="form-row %1$s" id="%2$s" style="display: none">%3$s</p>';
 
 				$field .= '<input type="hidden" class="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" value="" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . esc_attr( $args['placeholder'] ) . '" readonly="readonly" />';
-
 			} elseif ( ! is_null( $for_country ) && is_array( $states ) ) {
-
 				$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="state_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" ' . implode( ' ', $custom_attributes ) . ' data-placeholder="' . esc_attr( $args['placeholder'] ? $args['placeholder'] : esc_html__( 'Select an option&hellip;', 'woocommerce' ) ) . '">
 			<option value="">' . esc_html__( 'Select an option&hellip;', 'woocommerce' ) . '</option>';
 
@@ -634,11 +624,8 @@ function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 				}
 
 				$field .= '</select>';
-
 			} else {
-
 				$field .= '<input type="text" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) . '" value="' . esc_attr( $value ) . '"  placeholder="' . esc_attr( $args['placeholder'] ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" ' . implode( ' ', $custom_attributes ) . ' />';
-
 			}
 
 			break;
@@ -825,14 +812,14 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 						<th><?php wc_cart_totals_coupon_label( $coupon ); ?></th>
 						<td colspan="2"><?php wc_cart_totals_coupon_html( $coupon ); ?></td>
 					</tr>
-				<?php endforeach; ?>
+					<?php endforeach; ?>
 
 				<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
 				<tr class="fee">
 					<th><?php echo esc_html( $fee->name ); ?></th>
 					<td colspan="2"><?php wc_cart_totals_fee_html( $fee ); ?></td>
 				</tr>
-			<?php endforeach; ?>
+				<?php endforeach; ?>
 			<?php
 			$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
 			if ( ! $current_method ) :
@@ -845,7 +832,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 						This will be calculated on the next step.
 					</td>
 				</tr>
-				<?php else : ?>
+			<?php else : ?>
 					<tr class="woocommerce-shipping-totals shipping">
 						<th colspan="3"><?php _e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php _e( '(US only)', 'woocommerce' ); ?></span></th>
 					</tr>
@@ -857,15 +844,15 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 								$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
 								if ( $rate->label === 'FedEx SmartPost Ground: FREE' ) :
 									$shipping_eta = '2-7 business days';
-							endif;
+								endif;
 
 								if ( $rate->label === 'FedEx 2 Day' ) :
 									$shipping_eta = '2 business days (weekends excluded)';
-							endif;
+								endif;
 
 								if ( $rate->label === 'FedEx Standard Overnight' ) :
 									$shipping_eta = 'next business day (weekends excluded)';
-							endif;
+								endif;
 								?>
 						<td colspan="2" class="ship-method-cell">
 								<?php echo $rate_label; ?>
@@ -876,10 +863,10 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 					</tr>
 					<tr>
 						<td colspan="3" class="shipping-eta-disclosure text-center"><?php echo $shipping_eta; ?></td>
-						<?php endif; ?>
-				<?php endforeach; ?>
+							<?php endif; ?>
+						<?php endforeach; ?>
 								</tr>
-		<?php endif; ?>
+			<?php endif; ?>
 		<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
 			<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
 				<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
@@ -887,14 +874,14 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 				<th><?php echo esc_html( $tax->label ); ?></th>
 				<td colspan="2"><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
 			</tr>
-		<?php endforeach; ?>
-		<?php else : ?>
+				<?php endforeach; ?>
+			<?php else : ?>
 			<tr class="tax-total">
 				<th><?php echo esc_html( WC()->countries->tax_or_vat() ); ?></th>
 				<td colspan="2"><?php wc_cart_totals_taxes_total_html(); ?></td>
 			</tr>
+			<?php endif; ?>
 		<?php endif; ?>
-	<?php endif; ?>
 
 	<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
 
@@ -1107,11 +1094,10 @@ if ( function_exists( 'wc_stripe_show_payment_request_on_checkout' ) ) :
 	 * @since  1.0.0 Remove Stripe buttons on the cart page
 	 */
 	remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
-
 endif;
 
 function wonka_checkout_before_customer_details() {
-	$output = '';
+	   $output = '';
 
 	$output .= '<div class="tab-content" id="wonka-checkout-steps">';
 	$output .= '<div class="tab-pane fade show active" id="wonka_customer_information" role="tabpanel">';
@@ -1132,7 +1118,7 @@ function wonka_checkout_after_customer_details() {
 add_action( 'woocommerce_checkout_after_customer_details', 'wonka_checkout_after_customer_details' );
 
 function wonka_woocommerce_checkout_before_order_review() {
-	$output = '';
+	   $output = '';
 
 	$output .= '<div class="tab-pane fade" id="wonka_shipping_method" role="tabpanel">';
 
@@ -1151,7 +1137,7 @@ function wonka_woocommerce_review_order_before_payment() {
 add_action( 'woocommerce_review_order_before_payment', 'wonka_woocommerce_review_order_before_payment' );
 
 function wonka_woocommerce_review_order_before_payment2() {
-	do_action( 'woocommerce_checkout_billing' );
+	   do_action( 'woocommerce_checkout_billing' );
 }
 add_action( 'wonka_custom_billing_addition', 'wonka_woocommerce_review_order_before_payment2' );
 
@@ -1246,7 +1232,6 @@ function wonka_woo_add_custom_general_fields( $product_type ) {
 	} else {
 		return $product_type;
 	}
-
 }
 add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
 
@@ -1281,7 +1266,7 @@ add_filter( 'woocommerce_short_description', 'wonka_filter_woocommerce_short_des
  * This adds a custom express checkout button to the product page
  */
 function wonka_express_checkout_add() {
-	global $post;
+	   global $post;
 	global $product;
 	$variation_id = $product->get_variation_id();
 	$post_id = get_the_ID();
@@ -1391,7 +1376,7 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
 add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
 
 function ws_shipping_to_billing() {
-	// This is a security check, it validates a random number that is generated on the request.
+	   // This is a security check, it validates a random number that is generated on the request.
 	if ( ! check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
 		return wp_send_json_error( 'Invalid Nonce' );
 	}
@@ -1427,16 +1412,15 @@ function wonka_custom_excerpt_length( $text ) {
 		endfor;
 
 		_e( $output, 'aperabags' );
-	else :
-		return $text;
-	endif;
-
+		else :
+			return $text;
+		endif;
 }
 add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );
 
 
 function ws_ajax_search() {
-	// This is a security check, it validates a random number that is generated on the request.
+	   // This is a security check, it validates a random number that is generated on the request.
 	if ( ! check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
 		return wp_send_json_error( 'Invalid Nonce' );
 	}
@@ -1470,7 +1454,6 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 	$output = '';
 
 	for ( $i = 0; $i < $length; $i++ ) :
-
 		if ( $i == ( $length - 1 ) && $comment_word_count > $length ) :
 			$output .= $str_array[ $i ] . '...';
 		else :
@@ -1675,7 +1658,7 @@ function wonka_woocommerce_review_order_before_submit() {
 		}
 
 		function wonka_ajax_request( xhr, action, data ) 
-		{	
+		{   
 			if ( action === "shipping_to_billing" ) 
 			{
 
@@ -1717,7 +1700,7 @@ add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_
   * @return    [return description]
   */
 function add_theme_style_to_compare() {
-	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
+	   wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
 }
 
 if ( class_exists( 'YITH_Woocompare_Frontend' ) ) {
@@ -1785,11 +1768,8 @@ function add_customer_order_notes( $order_id ) {
 
 			// Save the data
 			$order->save();
-
 		endif;
-
 	}
-
 }
 
 add_action( 'woocommerce_payment_complete', 'add_customer_order_notes', 10, 1 );
@@ -1858,6 +1838,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	function ws_shipping_method_init() {
 		if ( ! class_exists( 'WC_2_Day_Shipping_Method' ) ) {
 			class WC_2_Day_Shipping_Method extends WC_Shipping_Method {
+
 				/**
 				 * Constructor for your shipping class
 				 *
@@ -1907,6 +1888,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 		if ( ! class_exists( 'WC_Overnight_Shipping_Method' ) ) {
 			class WC_Overnight_Shipping_Method extends WC_Shipping_Method {
+
 				/**
 				 * Constructor for your shipping class
 				 *
