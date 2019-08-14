@@ -649,7 +649,7 @@ function wonkasoft_theme_popup_cookie() {
 
 		if ( ! isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
 			setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * get_theme_mod( 'newsletter_popup_message_session_length' ), '/' );
-		endif;
+		 endif;
 	endif;
 }
 
