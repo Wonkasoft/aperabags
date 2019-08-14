@@ -583,4 +583,68 @@ main#full-width {
 			padding-left: 4px;
 		}
 	}
+
+	.validation_error,
+	.validation_message {
+		line-height: 1.2;
+		@include font-size( .8 );
+	}
+
+	@include media-breakpoint( lg ) {
+		.wonka-email-form {
+
+			.wonka-newsletter-form_wrapper {
+
+				form.wonka-newsletter-form {
+
+					.gform_body {
+						width: 75%;
+
+						ul {
+
+							li {
+
+								input[type=email].wonka-form-control {
+									flex: 1 100%;
+									border-radius: 100px 0  0 100px;
+
+									&:active,
+									&:focus {
+										outline: 0;
+									}
+								}
+
+								div {
+
+									&:active,
+									&:focus {
+										outline: 0;
+									}
+								}
+
+								&:active,
+								&:focus {
+									outline: 0;
+								}
+							}
+						}
+					}
+
+					.gform_footer {
+						width: 22%;
+						margin-left: -3px;
+
+						input[type=submit].wonka-btn {
+							border-radius: 0 100px 100px 0;
+
+							&:active,
+							&:focus {
+								outline: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
