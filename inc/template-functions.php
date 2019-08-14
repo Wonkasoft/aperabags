@@ -79,7 +79,6 @@ function the_mods_for_section( $section ) {
 	endif;
 
 	if ( 'shop' === $section ) :
-
 		if ( ! empty( get_theme_mod( 'shop_title' ) ) ) :
 			$count++;
 			$shop                                                                   = new stdClass();
@@ -120,9 +119,7 @@ function the_mods_for_section( $section ) {
 	endif;
 
 	if ( 'cause' === $section ) :
-
 		if ( ! empty( get_theme_mod( 'cause_section_title' ) ) ) :
-
 			$count++;
 			$cause                                      = new stdClass();
 			$cause->cause_section_title                 = get_theme_mod( 'cause_section_title' );
@@ -145,7 +142,6 @@ function the_mods_for_section( $section ) {
 				${"cause_$i"}->message                  = get_theme_mod( 'cause_message_' . $i );
 
 				$mods_class->causes->{"cause_$i"}       = ${"cause_$i"};
-
 			endif;
 		}
 
@@ -256,7 +252,7 @@ add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
  * @param array $field_values this is an array of the field values.
  */
 function add_bootstrap_container_class( $form, $ajax, $field_values ) {
-	$inline_forms = array( 'Sign Up', 'Popup' );
+	$inline_forms = array( 'Sign Up', 'Popup', 'Promotion Sign Up' );
 	if ( ! empty( $form['cssClass'] ) ) :
 		$form['cssClass'] .= ' wonka-gform wonka-gform-' . $form['id'];
 	else :
@@ -277,14 +273,14 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 
 	foreach ( $form['fields'] as $field ) :
 		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
-			if ( ! empty( $field['cssClass'] ) ) : 
+			if ( ! empty( $field['cssClass'] ) ) :
 				$field['cssClass'] .= ' form-group wonka-form-group';
-			else:
+			else :
 				$field['cssClass'] = 'form-group wonka-form-group';
 			endif;
-			if ( ! empty( $field['size'] ) ) : 
+			if ( ! empty( $field['size'] ) ) :
 				$field['size'] .= ' form-control wonka-form-control';
-			else:
+			else :
 				$field['size'] = 'form-control wonka-form-control';
 			endif;
 
@@ -400,8 +396,7 @@ function aperabags_options_sanitize( $option ) {
 /**
  * This builds the display of the options page.
  */
-function aperabags_theme_options_page() {
-	?>
+function aperabags_theme_options_page() {   ?>
 		<div class="container">
 			<div class="row">
 				<div class="col-12 title-column">
@@ -512,7 +507,6 @@ function wonkasoft_theme_option_parse( $field ) {
 	$output = '';
 
 	if ( ! empty( $field['custom_attributes'] ) && is_array( $field['custom_attributes'] ) ) {
-
 		foreach ( $field['custom_attributes'] as $attribute => $value ) {
 			$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $value ) . '"';
 		}
@@ -615,7 +609,6 @@ add_action( 'save_post', 'wonkasoft_save_author_display', 10, 2 );
  * This is the ajax call for the newsletter popup.
  */
 function wonkasoft_dismiss_popup() {
-
 	check_ajax_referer( 'ws-request-nonce', 'security' );
 
 	$wonkasoft_popup_cookie = array(
@@ -645,9 +638,7 @@ add_action( 'wp_ajax_nopriv_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup',
  * For the theme popup cookie.
  */
 function wonkasoft_theme_popup_cookie() {
-
 	if ( ! empty( get_theme_mod( 'enable_newsletter_popup' ) ) ) :
-
 		$wonkasoft_popup_cookie = array(
 			'user_id'                           => get_current_user_id(),
 			'show'                              => true,
@@ -660,7 +651,6 @@ function wonkasoft_theme_popup_cookie() {
 			setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * get_theme_mod( 'newsletter_popup_message_session_length' ), '/' );
 		endif;
 	endif;
-
 }
 
 add_action( 'init', 'wonkasoft_theme_popup_cookie', 10 );
@@ -678,7 +668,6 @@ function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 	$form_title = str_replace( ' ', '-', strtolower( $form['title'] ) );
 
 	if ( 'popup' === $form_title ) :
-
 		$wonkasoft_popup_cookie = array(
 			'user_id'                           => get_current_user_id(),
 			'show'                              => false,
@@ -698,7 +687,6 @@ function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 	endif;
 
 	if ( 'sign-up' === $form_title ) :
-
 		$wonkasoft_popup_cookie = array(
 			'user_id'                           => get_current_user_id(),
 			'show'                              => false,
