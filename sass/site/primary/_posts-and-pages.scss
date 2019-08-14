@@ -571,11 +571,6 @@ main#full-width {
 						@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
 					}
 				}
-				@media screen and  ( max-width: 992px ) {
-					> .top_label {
-						display: none;
-					}
-				}
 			}
 		}
 		
