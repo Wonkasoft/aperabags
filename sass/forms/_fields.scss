@@ -43,17 +43,20 @@ textarea {
 }
 
 // Validation in ZIP and Ambassador
-.validation_error,
-.validation_message {
-	font-size: 15px;
-	color:red;
-}
-input[aria-invalid="true"] {
-	border-color: #dc3545;
-	box-shadow: 0 0 5px rgba(226,64,28,.6);
-}
-.validation_error {
-	padding-bottom: 10px;
+.elementor-page-8062,
+.elementor-page-8245 {
+	.validation_error,
+	.validation_message {
+		font-size: 15px;
+		color:#dc3545;
+	}
+	input[aria-invalid="true"] {
+		border-color: #dc3545;
+		box-shadow: 0 0 5px rgba(226,64,28,.6);
+	}
+	.validation_error {
+		padding-bottom: 10px;
+	}
 }
 
 input.input-text.is-invalid {
