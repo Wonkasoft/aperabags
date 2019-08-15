@@ -69,14 +69,14 @@ if ( wonkasoft_request.ga_id !== '' )
 		{
 			if ( getUrlVars().firstname ) 
 			{
-				var firstname = decodeURIComponent( getUrlVars().firstname.replace( /\+/gi, ' ' ) );
+				var firstname = decodeURIComponent( getUrlVars().firstname ).replace( /\+/gi, ' ' );
 				document.getElementById("ambassadar-first-name").innerHTML = "HI " + firstname + "!";
 			}
 		} else 
 		{
 			if ( getUrlVars().organization ) 
 			{
-				var clubname= decodeURIComponent( getUrlVars().organization.replace( /\+/gi, ' ' ) );
+				var clubname= decodeURIComponent( getUrlVars().organization ).replace( /\+/gi, ' ' );
 				document.getElementById("club-name").innerHTML = "HI " + clubname + "!";
 			}
 		}
