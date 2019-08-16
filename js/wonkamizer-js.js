@@ -64,21 +64,23 @@ if ( wonkasoft_request.ga_id !== '' )
 	 * This is for the zip and ambassador thank you pages.
 	 * 
 	 */
-	if (document.getElementById("ambassadar-first-name") || document.getElementById("club-name")) {
-		if (document.getElementById("ambassadar-first-name")) 
+	if (document.getElementById("ambassadar-first-name") || document.getElementById("club-name") || document.getElementById("confirm-email") ) {
+		if ( getUrlVars().firstname ) 
 		{
-			if ( getUrlVars().firstname ) 
-			{
-				var firstname = decodeURIComponent( getUrlVars().firstname ).replace( /\+/gi, ' ' );
-				document.getElementById("ambassadar-first-name").innerHTML = "HI " + firstname + "!";
-			}
-		} else 
+			var firstname = decodeURIComponent( getUrlVars().firstname ).replace( /\+/gi, ' ' );
+			document.getElementById("ambassadar-first-name").innerHTML = "HI " + firstname + "!";
+		}
+
+		if ( getUrlVars().organization ) 
 		{
-			if ( getUrlVars().organization ) 
-			{
-				var clubname= decodeURIComponent( getUrlVars().organization ).replace( /\+/gi, ' ' );
-				document.getElementById("club-name").innerHTML = "HI " + clubname + "!";
-			}
+			var clubname = decodeURIComponent( getUrlVars().organization ).replace( /\+/gi, ' ' );
+			document.getElementById("club-name").innerHTML = "HI " + clubname + "!";
+		}
+
+		if ( getUrlVars().email ) 
+		{
+			var confirm_email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("confirm-email").innerHTML = confirm_email;
 		}
 	}
 	
