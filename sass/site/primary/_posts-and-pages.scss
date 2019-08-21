@@ -497,3 +497,149 @@ main#full-width {
 .letter-space strong {
 	letter-spacing: .12rem;
 }
+
+#promo-sign-up-form {
+
+	.wonka-email-form {
+		margin: 15px 0;
+		
+		.wonka-newsletter-form_wrapper {
+			margin-bottom: 8px;
+
+			form.wonka-newsletter-form {
+
+				.gform_heading {
+					display: none;
+				}
+
+				.gform_body {
+					width: 100%;
+					height: 70px;
+					
+					ul {
+						margin: 0;
+						padding: 0;
+
+						label {
+							display: none;
+						}
+
+						li.wonka-form-group {
+							margin-bottom: 0;
+						}
+
+						div.ginput_container_email {
+							width: 100%;
+						}
+
+						input[type=email].wonka-form-control {
+							color: #bfc0c2;
+							background: transparent;
+							padding: 8px 15px;
+							font-weight: 600;
+							width: 100%;
+							border-radius: 100px;
+							height: 49px;
+							letter-spacing: 1px;
+							width: 100%;
+							@include prefix( transition, $trans_25, webkit moz o);
+
+							&::placeholder {
+								font-style: italic;
+								font-weight: 300;
+								color: #ffffff
+							}
+						}
+					}
+				}
+
+				.gform_footer {
+					width: 100%;
+					height: 70px;
+
+					input[type=submit].wonka-btn {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						font-family: $font__main;
+						font-weight: 800;
+						color: #ffffff;
+						margin-left: 0;
+						width: 100%;
+						height: 49px;
+						border-radius: 100px;
+						@include prefix( transition, all 0.3s ease-in-out, webkit moz o);
+					}
+				}
+			}
+		}
+		
+		small {
+			padding-left: 4px;
+		}
+	}
+
+	.validation_error,
+	.validation_message {
+		line-height: 1.2;
+		@include font-size( .8 );
+	}
+
+	@include media-breakpoint( lg ) {
+		.wonka-email-form {
+
+			.wonka-newsletter-form_wrapper {
+
+				form.wonka-newsletter-form {
+
+					.gform_body {
+						width: 75%;
+
+						ul {
+
+							li {
+
+								input[type=email].wonka-form-control {
+									flex: 1 100%;
+									border-radius: 100px 0  0 100px;
+
+									&:active,
+									&:focus {
+										outline: 0;
+									}
+								}
+
+								div {
+
+									&:active,
+									&:focus {
+										outline: 0;
+									}
+								}
+
+								&:active,
+								&:focus {
+									outline: 0;
+								}
+							}
+						}
+					}
+
+					.gform_footer {
+						width: 22%;
+						margin-left: -3px;
+
+						input[type=submit].wonka-btn {
+							border-radius: 0 100px 100px 0;
+
+							&:active,
+							&:focus {
+								outline: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
