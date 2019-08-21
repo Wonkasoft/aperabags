@@ -167,7 +167,6 @@ function apera_bags_customize_register( $wp_customize ) {
 	);
 
 	for ( $i = 1; $i <= 5; $i++ ) :
-
 		// Slider Setting.
 		$wp_customize->add_setting(
 			'slider_' . $i,
@@ -360,8 +359,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				)
 			)
 		);
-
-endfor;
+	endfor;
 
 	 /**
 	  * Shop settings Section
@@ -550,7 +548,6 @@ endfor;
 	 @since 1.0.0
 */
 	for ( $i = 1; $i <= 5; $i++ ) :
-
 		// Slider Setting.
 		$wp_customize->add_setting(
 			'cta_slider_' . $i,
@@ -715,8 +712,7 @@ endfor;
 				)
 			)
 		);
-
-endfor;
+	endfor;
 
 	 /**
 	  * Our Cause / About Us settings Section
@@ -821,7 +817,6 @@ endfor;
 	  * @var integer $i
 	  */
 	for ( $i = 1; $i <= 3; $i++ ) :
-
 		// Cause Option Setting.
 		$wp_customize->add_setting(
 			'cause_image_' . $i,
@@ -964,7 +959,7 @@ endfor;
 				)
 			)
 		);
-endfor;
+	endfor;
 
 	 /**
 	  * Cause video modal settings Section
@@ -1641,7 +1636,7 @@ endfor;
 				)
 			)
 		);
-endfor;
+	endfor;
 	/**
 	 * Footer logo settings Section
 	 *
@@ -1848,7 +1843,7 @@ endfor;
 		foreach ( $gforms_forms as $form ) {
 			$forms_list[ $form['id'] ] = $form['title'];
 		}
-endif;
+	endif;
 	// Newsletter form selection Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
@@ -1893,7 +1888,6 @@ endif;
 			)
 		)
 	);
-
 }
 add_action( 'customize_register', 'apera_bags_customize_register' );
 
@@ -1919,6 +1913,6 @@ function apera_bags_customize_partial_blogdescription() {
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function apera_bags_customize_preview_js() {
-	wp_enqueue_script( 'apera-bags-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), '20151215', true );
+	wp_enqueue_script( 'apera-bags-customizer', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/inc/js/customizer.js' ), array( 'customize-preview' ), '20190819', true );
 }
 add_action( 'customize_preview_init', 'apera_bags_customize_preview_js' );

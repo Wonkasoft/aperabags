@@ -24,7 +24,7 @@ function apera_bags_body_classes( $classes ) {
 
 	return $classes;
 }
-add_filter( 'body_class', 'apera_bags_body_classes' );
+add_filter( 'body_class', 'apera_bags_body_classe' );
 
 /**
  * Add a pingback url auto-discovery header for single posts, pages, or attachments.
@@ -346,38 +346,18 @@ function aperabags_add_theme_options() {
 		'aperabags_theme_options_page'
 	);
 
-	$google_api_key_args = array(
-		'type'              => 'string',
-		'description'       => 'holds google api key for this site.',
-		'sanitize_callback' => 'aperabags_options_sanitize',
-		'show_in_rest'      => false,
-	);
+	$registered_options = ( ! empty( get_option( 'custom_options_added' ) ) ) ? get_option( 'custom_options_added' ) : '';
 
-	$facebook_api_key_args = array(
-		'type'              => 'string',
-		'description'       => 'holds facebook api key for this site.',
-		'sanitize_callback' => 'aperabags_options_sanitize',
-		'show_in_rest'      => false,
-	);
+	foreach ( $registered_options as $register_option ) {
+		$set_args = array(
+			'type'              => 'string',
+			'description'       => $register_option['description'],
+			'sanitize_callback' => 'aperabags_options_sanitize',
+			'show_in_rest'      => false,
+		);
 
-	$twitter_api_key_args = array(
-		'type'              => 'string',
-		'description'       => 'holds twitter api key for this site.',
-		'sanitize_callback' => 'aperabags_options_sanitize',
-		'show_in_rest'      => false,
-	);
-
-	$wonkasoft_ga_id = array(
-		'type'              => 'string',
-		'description'       => 'holds google analytics id.',
-		'sanitize_callback' => 'aperabags_options_sanitize',
-		'show_in_rest'      => false,
-	);
-
-	register_setting( 'aperabags-theme-options-group', 'google_api_key', $google_api_key_args );
-	register_setting( 'aperabags-theme-options-group', 'facebook_api_key', $facebook_api_key_args );
-	register_setting( 'aperabags-theme-options-group', 'twitter_api_key', $twitter_api_key_args );
-	register_setting( 'aperabags-theme-options-group', 'wonkasoft_ga_id', $wonkasoft_ga_id );
+		register_setting( 'aperabags-theme-options-group', $register_option['id'], $set_args );
+	}
 }
 
 add_action( 'admin_menu', 'aperabags_add_theme_options' );
@@ -402,76 +382,45 @@ function aperabags_theme_options_page() {   ?>
 				<div class="col-12 title-column">
 					<?php
 					$title_text = get_admin_page_title();
-					echo '<h3 class="title-header">' . wp_kses_post( $title_text ) . '</h3>';
 					?>
+					<h3 class="title-header"><?php echo wp_kses_post( $title_text ); ?></h3>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-12 options column">
 					<div class="card w-100">
+						<div class="card-title">
+							<h3><?php esc_html_e( 'Add an option', 'aperabags' ); ?></h3>
+							<button type="button" id="theme_option_add" class="wonka-btn" data-toggle="modal" data-target="#add_option_modal">OPTION <i class="fa fa-plus"></i></button>
+						</div>
 						<div class="card-body">
-					<form method="post" action="options.php">
+					<form id="custom-options-form" method="post" action="options.php">
 
 					  <?php settings_fields( 'aperabags-theme-options-group' ); ?>
 
 					  <?php do_settings_sections( 'aperabags-theme-options-group' ); ?>
 
 							<?php
-								$current_google_api_key = ( ! empty( get_option( 'google_api_key' ) ) ) ? get_option( 'google_api_key' ) : '';
-								wonkasoft_theme_option_parse(
-									array(
-										'id'                => 'google_api_key',
-										'label'             => __( 'Google API Key', 'apera-bags' ),
-										'value'             => $current_google_api_key,
-										'desc_tip'          => true,
-										'description'       => __( 'Place Google API Key here.', 'apera-bags' ),
-										'wrapper_class'     => 'form-row form-row-full form-group',
-										'class'             => 'form-control',
-										'api'               => 'google',
-									)
-								);
+								$registered_options = ( ! empty( get_option( 'custom_options_added' ) ) ) ? get_option( 'custom_options_added' ) : '';
 
-								$current_facebook_api_key = ( ! empty( get_option( 'facebook_api_key' ) ) ) ? get_option( 'facebook_api_key' ) : '';
-								wonkasoft_theme_option_parse(
-									array(
-										'id'                => 'facebook_api_key',
-										'label'             => __( 'Facebook API Key', 'apera-bags' ),
-										'value'             => $current_facebook_api_key,
-										'desc_tip'          => true,
-										'description'       => __( 'Place Facebook API Key here.', 'apera-bags' ),
-										'wrapper_class'     => 'form-row form-row-full form-group',
-										'class'             => 'form-control',
-										'api'               => 'facebook',
-									)
-								);
+							if ( ! empty( $registered_options ) ) :
+								foreach ( $registered_options as $register_option ) {
+									$current_option = ( ! empty( get_option( $register_option['id'] ) ) ) ? get_option( $register_option['id'] ) : '';
 
-								$current_twitter_api_key = ( ! empty( get_option( 'twitter_api_key' ) ) ) ? get_option( 'twitter_api_key' ) : '';
-								wonkasoft_theme_option_parse(
-									array(
-										'id'                => 'twitter_api_key',
-										'label'             => __( 'Twitter API Key', 'apera-bags' ),
-										'value'             => $current_twitter_api_key,
-										'desc_tip'          => true,
-										'description'       => __( 'Place Twitter API Key here.', 'apera-bags' ),
-										'wrapper_class'     => 'form-row form-row-full form-group',
-										'class'             => 'form-control',
-										'api'               => 'twitter',
-									)
-								);
-
-								$current_wonkasoft_ga_id = ( ! empty( get_option( 'wonkasoft_ga_id' ) ) ) ? get_option( 'wonkasoft_ga_id' ) : '';
-								wonkasoft_theme_option_parse(
-									array(
-										'id'                => 'wonkasoft_ga_id',
-										'label'             => __( 'Google Analytics ID', 'apera-bags' ),
-										'value'             => $current_wonkasoft_ga_id,
-										'desc_tip'          => true,
-										'description'       => __( 'Place Google Analytics ID here.', 'apera-bags' ),
-										'wrapper_class'     => 'form-row form-row-full form-group',
-										'class'             => 'form-control',
-										'api'               => 'ga',
-									)
-								);
+									wonkasoft_theme_option_parse(
+										array(
+											'id'                => $register_option['id'],
+											'label'             => $register_option['label'],
+											'value'             => $current_option,
+											'desc_tip'          => true,
+											'description'       => $register_option['description'],
+											'wrapper_class'     => 'form-row form-row-full form-group',
+											'class'             => 'form-control',
+											'api'               => $register_option['api'],
+										)
+									);
+								}
+							endif;
 							?>
 				<div class="submitter">
 
@@ -482,10 +431,123 @@ function aperabags_theme_options_page() {   ?>
 						  </div>
 					</div><!-- card w-100 -->
 				</div>
+				<!-- Modal -->
+				<div id="add_option_modal" class="modal fade" role="dialog">
+				  <div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+					  <div class="modal-header">
+						<h4 class="modal-title">Add Option</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					  </div>
+					  <div class="modal-body">
+							<div class="input-group mb-3">
+								<input class="form-control" type="text" id="new_option_name" name="new_option_name" placeholder="enter option name..." value="" />
+							</div>
+							<div class="input-group mb-3">
+								<input class="form-control" type="text" id="new_option_description" name="new_option_description" placeholder="enter option description..." value="" />
+							</div>
+							<div class="input-group mb-3">
+								<input class="form-control" type="text" id="new_option_api" name="new_option_api" placeholder="whos api..." value="" />
+							</div>
+							<?php wp_nonce_field( -1, 'new_option_nonce', true, true ); ?>
+					  </div>
+					  <div class="modal-footer">
+							<button type="button" class="btn wonka-btn btn-success" data-dismiss="modal" id="add_option_name">Add option <i class="fa fa-plus"></i></button>
+					  </div>
+					</div>
+
+				  </div>
+				</div>
 			</div>
 		</div>
 	<?php
 }
+
+/**
+ * Handles the theme options ajax requests.
+ */
+function theme_options_ajax_post() {
+	// Check if nonce is valid.
+	if ( ! wp_verify_nonce( isset( $_POST['new_option_nonce'] ), $nonce_action ) ) {
+		return;
+	}
+
+	$data = ( isset( $_POST['data'] ) ) ? wp_kses_post( wp_unslash( $_POST['data'] ) ) : null;
+	if ( ! empty( $data ) ) :
+		return;
+	endif;
+
+	// Pattern for option name sanitize.
+	$pattern = '/([ -])/';
+
+	// Checking for passed in data.
+	$data = json_decode( $data );
+	unset( $data->action );
+	$current_options = ( ! empty( get_option( 'custom_options_added' ) ) ) ? get_option( 'custom_options_added' ) : array();
+	if ( $data->remove ) :
+		foreach ( $current_options as $key => $current_option ) :
+			if ( $data->option_id === $current_option['id'] ) :
+				unset( $current_options[ $key ] );
+			endif;
+		endforeach;
+		delete_option( $data->option_id );
+		unregister_setting( 'aperabags-theme-options-group', $data->option_id );
+		$data->current_options = $current_options;
+		update_option( 'custom_options_added', $current_options );
+		$data->msg = $data->option_id . ' option was deleted, unregistered as a setting, and the database has been updated.';
+		else :
+			$data->option_label = $data->option_name;
+			$data->option_name = preg_replace( $pattern, '_', strtolower( $data->option_name ) );
+
+			if ( ! in_array( $data->option_name, $current_options ) ) :
+				array_push(
+					$current_options,
+					array(
+						'id' => $data->option_name,
+						'label' => $data->option_label,
+						'description' => $data->option_description,
+						'api' => $data->option_api,
+					)
+				);
+				$set_args = array(
+					'type'              => 'string',
+					'description'       => $data->option_description,
+					'sanitize_callback' => 'aperabags_options_sanitize',
+					'show_in_rest'      => false,
+				);
+				register_setting( 'aperabags-theme-options-group', $data->option_name, $set_args );
+				update_option( 'custom_options_added', $current_options );
+				$data->current_options = $current_options;
+
+				ob_start();
+				wonkasoft_theme_option_parse(
+					array(
+						'id'                => $data->option_name,
+						'label'             => $data->option_label,
+						'value'             => '',
+						'desc_tip'          => true,
+						'description'       => $data->option_description,
+						'wrapper_class'     => 'form-row form-row-full form-group',
+						'class'             => 'form-control',
+						'api'               => $data->option_api,
+					)
+				);
+
+				$data->new_elements = ob_get_clean();
+
+				$data->msg = 'Current options have been updated';
+				else :
+					$data->current_options = $current_options;
+					$data->msg = $data->option_name . ' is already a current option.';
+					endif;
+		endif;
+
+			wp_send_json_success( $data );
+}
+add_action( 'wp_ajax_theme_options_ajax_post', 'theme_options_ajax_post', 10 );
+add_action( 'wp_ajax_nopriv_theme_options_ajax_post', 'theme_options_ajax_post', 10 );
 
 /**
  * For the parsing of option fields.
@@ -512,7 +574,7 @@ function wonkasoft_theme_option_parse( $field ) {
 		}
 	}
 
-	$output .= '<p class="form-field ' . esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ) . '">
+	$output .= '<div class="' . esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ) . '">
 		<label for="' . esc_attr( $field['id'] ) . '">' . wp_kses_post( $field['label'] ) . '</label>';
 
 	if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
@@ -524,23 +586,77 @@ function wonkasoft_theme_option_parse( $field ) {
 	else :
 		$place_holder = ' placeholder="Paste api key..."';
 	endif;
+	$output .= '<div class="input-group">';
 	$output .= '<input type="password" id="' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $field['name'] ) . '" class="' . esc_attr( $field['class'] ) . '" ' . $styles_set . implode( ' ', $custom_attributes ) . ' value="' . esc_attr( $field['value'] ) . '"' . $place_holder . ' /> ';
-
+	$output .= '<div class="input-group-append">';
+	$output .= '<button class="btn wonka-btn btn-danger" type="button" id="remove-' . esc_attr( $field['id'] ) . '"><i class="fa fa-minus"></i></button>';
+	$output .= '</div>';
+	$output .= '</div>';
 	if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
 		$output .= '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
 	}
 
-	$output .= '</p>';
+	$output .= '</div>';
 
-	echo wp_kses_post( $output );
+	echo wp_kses(
+		$output,
+		array(
+			'label'         => array(
+				'for'           => array(),
+			),
+			'input'         => array(
+				'class'                     => array(),
+				'name'                      => array(),
+				'id'                        => array(),
+				'type'                      => array(),
+				'value'                     => array(),
+				'placeholder'               => array(),
+			),
+			'span'          => array(
+				'class'         => array(),
+			),
+			'div'          => array(
+				'class'         => array(),
+			),
+			'button'          => array(
+				'class'         => array(),
+				'type'          => array(),
+				'id'            => array(),
+			),
+			'i'          => array(
+				'class'         => array(),
+			),
+		)
+	);
 }
 
 /**
- * The adding of meta boxes
+ * This is for enqueuing the script for the theme options page only.
  *
- * @param  string|array $post_type contains the post_types for option to display on.
- * @param  object       $post      contains the current post.
+ * @param  string $page contains the page name.
  */
+function theme_options_js( $page ) {
+
+	if ( 'settings_page_aperabags-theme-options' === $page ) :
+		wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1', 'all' );
+
+		wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', 'anonymous' ) );
+
+		wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array( 'jquery' ), '4.3.1', true );
+
+		wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', 'anonymous' ) );
+
+		wp_enqueue_script( 'theme-options-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/inc/js/theme-options-js.js' ), array( 'jquery' ), '20190819', true );
+	endif;
+}
+			add_action( 'admin_enqueue_scripts', 'theme_options_js', 10, 1 );
+
+			/**
+			 * The adding of meta boxes
+			 *
+			 * @param  string|array $post_type contains the post_types for option to display on.
+			 * @param  object       $post      contains the current post.
+			 */
 function wonkasoft_get_meta_boxes( $post_type, $post ) {
 	add_meta_box(
 		'authorshowdiv',
@@ -555,14 +671,14 @@ function wonkasoft_get_meta_boxes( $post_type, $post ) {
 		)
 	);
 }
-add_action( 'add_meta_boxes', 'wonkasoft_get_meta_boxes', 10, 2 );
+			add_action( 'add_meta_boxes', 'wonkasoft_get_meta_boxes', 10, 2 );
 
-/**
- * Display of the author in the meta box.
- *
- * @param  object $post   contains the current post.
- * @param  string $option contains the current option value.
- */
+			/**
+			 * Display of the author in the meta box.
+			 *
+			 * @param  object $post   contains the current post.
+			 * @param  string $option contains the current option value.
+			 */
 function author_display_meta_box( $post, $option ) {
 	wp_nonce_field( 'author_display_option', 'author_display_wpnonce', true, true );
 	$checked = ( get_post_meta( $post->ID, $option['args']['option_name'], false ) ) ? ' checked="true"' : '';
@@ -574,12 +690,12 @@ function author_display_meta_box( $post, $option ) {
 	echo '<div class="form-check">' . wp_kses_post( $output ) . '</div>';
 }
 
-/**
- * For saving the author display
- *
- * @param  integer $post_id contains the post ID.
- * @param  object  $post    contains the current post.
- */
+			/**
+			 * For saving the author display
+			 *
+			 * @param  integer $post_id contains the post ID.
+			 * @param  object  $post    contains the current post.
+			 */
 function wonkasoft_save_author_display( $post_id, $post ) {
 	$nonce_action = 'author_display_option';
 
@@ -603,11 +719,11 @@ function wonkasoft_save_author_display( $post_id, $post ) {
 		return;
 	}
 }
-add_action( 'save_post', 'wonkasoft_save_author_display', 10, 2 );
+			add_action( 'save_post', 'wonkasoft_save_author_display', 10, 2 );
 
-/**
- * This is the ajax call for the newsletter popup.
- */
+			/**
+			 * This is the ajax call for the newsletter popup.
+			 */
 function wonkasoft_dismiss_popup() {
 	check_ajax_referer( 'ws-request-nonce', 'security' );
 
@@ -631,12 +747,12 @@ function wonkasoft_dismiss_popup() {
 	wp_send_json_success( $wonkasoft_popup_cookie );
 }
 
-add_action( 'wp_ajax_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
-add_action( 'wp_ajax_nopriv_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
+			add_action( 'wp_ajax_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
+			add_action( 'wp_ajax_nopriv_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
 
-/**
- * For the theme popup cookie.
- */
+			/**
+			 * For the theme popup cookie.
+			 */
 function wonkasoft_theme_popup_cookie() {
 	if ( ! empty( get_theme_mod( 'enable_newsletter_popup' ) ) ) :
 		$wonkasoft_popup_cookie = array(
@@ -653,15 +769,15 @@ function wonkasoft_theme_popup_cookie() {
 	endif;
 }
 
-add_action( 'init', 'wonkasoft_theme_popup_cookie', 10 );
+			add_action( 'init', 'wonkasoft_theme_popup_cookie', 10 );
 
-/**
- * Newsletter popup entry or form submission.
- *
- * @param  array $entry contains the data from the entry.
- * @param  array $form  array of the form fields.
- * @return blank
- */
+			/**
+			 * Newsletter popup entry or form submission.
+			 *
+			 * @param  array $entry contains the data from the entry.
+			 * @param  array $form  array of the form fields.
+			 * @return blank
+			 */
 function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 
 	$user_id = get_current_user_id();
@@ -708,16 +824,16 @@ function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 	return;
 }
 
-add_action( 'gform_after_submission', 'wonkasoft_newsletter_popup_entry', 10, 2 );
-/*=====  End of This is the ajax call for the newsletter popup  ======*/
+			add_action( 'gform_after_submission', 'wonkasoft_newsletter_popup_entry', 10, 2 );
+			/*=====  End of This is the ajax call for the newsletter popup  ======*/
 
-/**
- * Allow to remove method for an hook when, it's a class method used and class don't have global for instanciation !
- *
- * @param string  $hook_name hook name that is passed in.
- * @param string  $method_name method or callback name that is passed in.
- * @param integer $priority contains the priority of when to run.
- */
+			/**
+			 * Allow to remove method for an hook when, it's a class method used and class don't have global for instanciation !
+			 *
+			 * @param string  $hook_name hook name that is passed in.
+			 * @param string  $method_name method or callback name that is passed in.
+			 * @param integer $priority contains the priority of when to run.
+			 */
 function ws_remove_filters_with_method_name( $hook_name = '', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
 	// Take only filters on right hook name and priority.
@@ -741,14 +857,14 @@ function ws_remove_filters_with_method_name( $hook_name = '', $method_name = '',
 	}
 	return false;
 }
-/**
- * Allow to remove method for an hook when, it's a class method used and class don't have variable, but you know the class name :)
- *
- * @param string  $hook_name hook name that is passed in.
- * @param string  $class_name class name of where to find the method that is passed in.
- * @param string  $method_name method or callback name that is passed in.
- * @param integer $priority contains the priority of when to run.
- */
+			/**
+			 * Allow to remove method for an hook when, it's a class method used and class don't have variable, but you know the class name :)
+			 *
+			 * @param string  $hook_name hook name that is passed in.
+			 * @param string  $class_name class name of where to find the method that is passed in.
+			 * @param string  $method_name method or callback name that is passed in.
+			 * @param integer $priority contains the priority of when to run.
+			 */
 function ws_remove_filters_for_anonymous_class( $hook_name = '', $class_name = '', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
 	// Take only filters on right hook name and priority.
