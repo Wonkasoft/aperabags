@@ -1554,6 +1554,51 @@ if ( wonkasoft_request.ga_id !== '' )
 		footer_adjustment();
 		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
 
+		/*===================================================================
+		=            This is for engaging with the Refersion API            =
+		===================================================================*/
+		if ( document.querySelector( '.wonka-refersion-form' ) ) 
+		{
+			var action = 'refersion_api_calls';
+			var refersion_form = document.querySelector( '.wonka-refersion-form' );
+			var submit_btn = refersion_form.querySelector( 'input[type="submit"]' );
+
+			// submit_btn.onclick = function( e ) 
+			// {
+
+			// 	var form_inputs = refersion_form.querySelectorAll( 'input' );
+			// 	var data = {};
+			// 	form_inputs.forEach( function( input, i ) 
+			// 		{
+			// 			if ( 'submit' !== input.type ) 
+			// 			{
+			// 				var key = input.id;
+			// 				var value = input.value;
+			// 				data[key] = value;
+			// 			}
+			// 		});
+			// 	console.log( data );
+			// 	if ( data.password === data.reenter_password ) 
+			// 	{
+			// 		xhr.onreadystatechange = function() {
+		 //        if ( this.readyState == 4 && this.status == 200 )  {
+		 //        	var response =   this.responseText;
+		 //        	console.log( response );
+		 //        }
+	  //       };
+	  //       xhr.open('POST', wonkasoft_request.ajax );
+	  //       xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	  //       xhr.send( 'action=' + action + '&data=' + JSON.stringify( data ) + '&security=' + data.gform_unique_id );
+			// 	}
+			// 	else
+			// 	{
+			// 		refersion_form.validate();
+			// 	}
+			// };
+
+		}
+		/*=====  End of This is for engaging with the Refersion API  ======*/
+		
 		/*=================================
 		=            For Popup            =
 		=================================*/
@@ -1565,7 +1610,7 @@ if ( wonkasoft_request.ga_id !== '' )
 			setTimeout( function() 
 				{
 					popup_wrap.classList.add( 'popped-up' );
-				}, 3000 );
+				}, 15000 );
 			popup_dismiss_btn.addEventListener( 'click', function( e ) 
 				{
 					e.preventDefault();

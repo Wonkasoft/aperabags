@@ -11,8 +11,9 @@
       var new_option_api_input = document.querySelector( '#new_option_api' );
       var remove_option_btns = document.querySelectorAll( '#custom-options-form .form-group button' );
       var options_form = document.querySelector( '#custom-options-form' );
+      var security = document.querySelector( '#new_option_nonce' );
       var data = {};
-      data.action = 'theme_options_ajax_post';
+      var action = 'theme_options_ajax_post';
       var xhr = new XMLHttpRequest();
 
       
@@ -54,17 +55,18 @@
             new_option_api_input.value = '';
             xhr.onreadystatechange = function() {
                 if ( this.readyState == 4 && this.status == 200 ) {
-                  var response = JSON.parse( this.responseText );
-                  console.log(response);
-                  options_form.insertAdjacentHTML( 'beforeend', response.data.new_elements );
-                  options_form.append( options_form.querySelector( '.submitter' ) );
-                  remove_option_btns = document.querySelectorAll( '#custom-options-form .form-group button' );
-                  load_remove_btn_event_listeners();
+                  if ( this.responseText && 'nonce failed' !== this.responseText ) 
+                  {
+                    var response = JSON.parse( this.responseText );
+                    options_form.insertAdjacentHTML( 'beforeend', response.data.new_elements );
+                    options_form.append( options_form.querySelector( '.submitter' ) );
+                    load_remove_btn_event_listeners();
+                  }
                 }
               };
             xhr.open("POST", ajaxurl, true );
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.send( 'action=' + data.action + '&data=' + JSON.stringify( data ) );
+            xhr.send( 'action=' + action + '&data=' + JSON.stringify( data ) + '&security=' + security.value );
 
           }
         });
@@ -74,6 +76,7 @@
     
     function load_remove_btn_event_listeners() 
     {
+      remove_option_btns = document.querySelectorAll( '#custom-options-form .form-group button' );
       remove_option_btns.forEach( function( btn, i ) 
       {
         btn.onclick = function( e ) 
@@ -95,7 +98,7 @@
               };
             xhr.open("POST", ajaxurl, true );
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.send( 'action=' + data.action + '&data=' + JSON.stringify( data ) );
+            xhr.send( 'action=' + action + '&data=' + JSON.stringify( data ) + '&security=' + security.value );
           }
         };
       });

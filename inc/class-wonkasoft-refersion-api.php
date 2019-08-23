@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * This is the class for Refersion integration
  */
-class Wonkasoft_Refersion_API {
+class Wonkasoft_Refersion_Api {
 
 	/**
 	 * Will hold passed in args
@@ -44,9 +44,9 @@ class Wonkasoft_Refersion_API {
 	 *
 	 * Specifc Offer ID to opt affiliate into, otherwise your default offer is used.
 	 *
-	 * @var int
+	 * @var string
 	 */
-	protected $offer = 0;
+	protected $offer = '';
 
 	/**
 	 * Affiliate first name.
@@ -131,7 +131,7 @@ class Wonkasoft_Refersion_API {
 	 *
 	 * @var string
 	 */
-	protected $country = '';
+	protected $country = 'US';
 
 	/**
 	 * Affiliate state.
@@ -256,6 +256,13 @@ class Wonkasoft_Refersion_API {
 	protected $report_id = '';
 
 	/**
+	 * An array of custom fields.
+	 *
+	 * @var array
+	 */
+	protected $custom_fields = array();
+
+	/**
 	 * Class Init constructor.
 	 *
 	 * @param array $data array of data for setting instance variables.
@@ -263,58 +270,33 @@ class Wonkasoft_Refersion_API {
 	public function __construct( $data = null ) {
 
 		$this->data = ( ! empty( $data ) ) ? $data : null;
-
 		$this->refersion_public_key = ( ! empty( get_option( 'refersion_public_key' ) ) ) ? get_option( 'refersion_public_key' ) : null;
-
 		$this->refersion_secret_key = ( ! empty( get_option( 'refersion_secret_key' ) ) ) ? get_option( 'refersion_secret_key' ) : null;
-
 		$this->offer = ( ! empty( $data['offer'] ) ) ? $data['offer'] : null;
-
-		$this->first_name = ( ! empty( $data['first_name'] ) ) ? $data['first_name'] : null;
-
-		$this->last_name = ( ! empty( $data['last_name'] ) ) ? $data['last_name'] : null;
-
+		$this->first_name = ( ! empty( $data['first'] ) ) ? $data['first'] : null;
+		$this->last_name = ( ! empty( $data['last'] ) ) ? $data['last'] : null;
 		$this->company = ( ! empty( $data['company'] ) ) ? $data['company'] : null;
-
 		$this->email = ( ! empty( $data['email'] ) ) ? $data['email'] : null;
-
 		$this->paypal_email = ( ! empty( $data['paypal_email'] ) ) ? $data['paypal_email'] : null;
-
 		$this->password = ( ! empty( $data['password'] ) ) ? $data['password'] : null;
-
-		$this->address1 = ( ! empty( $data['address1'] ) ) ? $data['address1'] : null;
-
-		$this->address2 = ( ! empty( $data['address2'] ) ) ? $data['address2'] : null;
-
+		$this->address1 = ( ! empty( $data['street_address'] ) ) ? $data['street_address'] : null;
+		$this->address2 = ( ! empty( $data['address_2'] ) ) ? $data['address_2'] : null;
 		$this->city = ( ! empty( $data['city'] ) ) ? $data['city'] : null;
-
-		$this->zip = ( ! empty( $data['zip'] ) ) ? $data['zip'] : null;
-
-		$this->country = ( ! empty( $data['country'] ) ) ? $data['country'] : null;
-
-		$this->state = ( ! empty( $data['state'] ) ) ? $data['state'] : null;
-
+		$this->zip = ( ! empty( $data['zip_postal_code'] ) ) ? $data['zip_postal_code'] : null;
+		$this->country = ( ! empty( $data['country'] ) ) ? $data['country'] : 'US';
+		$this->state = ( ! empty( $data['state_province'] ) ) ? $data['state_province'] : null;
 		$this->phone = ( ! empty( $data['phone'] ) ) ? $data['phone'] : null;
-
-		$this->send_welcome = ( ! empty( $data['send_welcome'] ) ) ? $data['send_welcome'] : false;
-
+		$this->send_welcome = ( ! empty( $data['send_welcome'] ) ) ? true : false;
 		$this->affiliate_code = ( ! empty( $data['affiliate_code'] ) ) ? $data['affiliate_code'] : null;
-
 		$this->keyword = ( ! empty( $data['keyword'] ) ) ? $data['keyword'] : null;
-
 		$this->limit = ( ! empty( $data['limit'] ) ) ? $data['limit'] : null;
-
 		$this->page = ( ! empty( $data['page'] ) ) ? $data['page'] : null;
-
 		$this->type = ( ! empty( $data['type'] ) ) ? $data['type'] : null;
-
 		$this->trigger = ( ! empty( $data['trigger'] ) ) ? $data['trigger'] : null;
-
 		$this->offer_id = ( ! empty( $data['offer_id'] ) ) ? $data['offer_id'] : null;
-
 		$this->conversion_ids = ( ! empty( $data['conversion_ids'] ) ) ? $data['conversion_ids'] : null;
-
 		$this->report_id = ( ! empty( $data['report_id'] ) ) ? $data['report_id'] : null;
+		$this->custom_fields = ( ! empty( $data['custom_fields'] ) ) ? $data['custom_fields'] : null;
 	}
 
 	/**
@@ -343,9 +325,15 @@ class Wonkasoft_Refersion_API {
 
 		if ( false === $response ) :
 			curl_close( $ch );
-			return 'cURL Error: ' . curl_error( $ch );
+			$error_obj = array(
+				'error' => curl_error( $ch ),
+				'status'    => 'failed',
+			);
+			$error_obj = json_decode( $error_obj );
+			return $error_obj;
 		else :
 			curl_close( $ch );
+			$response = json_decode( $response );
 			return $response;
 		endif;
 	}
@@ -377,7 +365,6 @@ class Wonkasoft_Refersion_API {
 			'phone'                 => $this->phone,
 			'send_welcome'          => $this->send_welcome,
 		);
-
 		$data = json_encode( $data );
 		curl_setopt( $ch, CURLOPT_URL, 'https://www.refersion.com/api/new_affiliate' );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: text/html' ) );
@@ -391,9 +378,15 @@ class Wonkasoft_Refersion_API {
 
 		if ( false === $response ) :
 			curl_close( $ch );
-			return 'cURL Error: ' . curl_error( $ch );
+			$error_obj = array(
+				'error' => curl_error( $ch ),
+				'status'    => 'failed',
+			);
+			$error_obj = json_decode( $error_obj );
+			return $error_obj;
 		else :
 			curl_close( $ch );
+			$response = json_decode( $response );
 			return $response;
 		endif;
 	}
@@ -427,9 +420,15 @@ class Wonkasoft_Refersion_API {
 
 		if ( false === $response ) :
 			curl_close( $ch );
-			return 'cURL Error: ' . curl_error( $ch );
+			$error_obj = array(
+				'error' => curl_error( $ch ),
+				'status'    => 'failed',
+			);
+			$error_obj = json_decode( $error_obj );
+			return $error_obj;
 		else :
 			curl_close( $ch );
+			$response = json_decode( $response );
 			return $response;
 		endif;
 	}
@@ -463,9 +462,15 @@ class Wonkasoft_Refersion_API {
 
 		if ( false === $response ) :
 			curl_close( $ch );
-			return 'cURL Error: ' . curl_error( $ch );
+			$error_obj = array(
+				'error' => curl_error( $ch ),
+				'status'    => 'failed',
+			);
+			$error_obj = json_decode( $error_obj );
+			return $error_obj;
 		else :
 			curl_close( $ch );
+			$response = json_decode( $response );
 			return $response;
 		endif;
 	}
@@ -498,9 +503,15 @@ class Wonkasoft_Refersion_API {
 
 		if ( false === $response ) :
 			curl_close( $ch );
-			return 'cURL Error: ' . curl_error( $ch );
+			$error_obj = array(
+				'error' => curl_error( $ch ),
+				'status'    => 'failed',
+			);
+			$error_obj = json_decode( $error_obj );
+			return $error_obj;
 		else :
 			curl_close( $ch );
+			$response = json_decode( $response );
 			return $response;
 		endif;
 	}
@@ -534,9 +545,15 @@ class Wonkasoft_Refersion_API {
 
 		if ( false === $response ) :
 			curl_close( $ch );
-			return 'cURL Error: ' . curl_error( $ch );
+			$error_obj = array(
+				'error' => curl_error( $ch ),
+				'status'    => 'failed',
+			);
+			$error_obj = json_decode( $error_obj );
+			return $error_obj;
 		else :
 			curl_close( $ch );
+			$response = json_decode( $response );
 			return $response;
 		endif;
 	}
@@ -569,9 +586,15 @@ class Wonkasoft_Refersion_API {
 
 		if ( false === $response ) :
 			curl_close( $ch );
-			return 'cURL Error: ' . curl_error( $ch );
+			$error_obj = array(
+				'error' => curl_error( $ch ),
+				'status'    => 'failed',
+			);
+			$error_obj = json_decode( $error_obj );
+			return $error_obj;
 		else :
 			curl_close( $ch );
+			$response = json_decode( $response );
 			return $response;
 		endif;
 	}
@@ -604,10 +627,16 @@ class Wonkasoft_Refersion_API {
 
 		if ( false === $response ) :
 			curl_close( $ch );
-			return 'cURL Error: ' . curl_error( $ch );
+			$error_obj = array(
+				'error' => curl_error( $ch ),
+				'status'    => 'failed',
+			);
+			$error_obj = json_decode( $error_obj );
+			return $error_obj;
 		else :
 			curl_close( $ch );
-			return true;
+			$response = json_decode( $response );
+			return $response;
 		endif;
 	}
 
@@ -638,10 +667,16 @@ class Wonkasoft_Refersion_API {
 
 		if ( false === $response ) :
 			curl_close( $ch );
-			return 'cURL Error: ' . curl_error( $ch );
+			$error_obj = array(
+				'error' => curl_error( $ch ),
+				'status'    => 'failed',
+			);
+			$error_obj = json_decode( $error_obj );
+			return $error_obj;
 		else :
 			curl_close( $ch );
-			return true;
+			$response = json_decode( $response );
+			return $response;
 		endif;
 	}
 }

@@ -263,6 +263,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] .= ' form-inline wonka-newsletter-form';
 	endif;
 
+	if ( in_array( $form['title'], array( 'Refersion Registration' ) ) ) :
+		$form['cssClass'] .= ' inline-form wonka-refersion-form';
+	endif;
+
 	if ( in_array( $form['title'], array( 'ZIP Program' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-zip-form';
 	endif;
@@ -270,7 +274,6 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	if ( in_array( $form['title'], array( 'Ambassador Program' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-ambassador-form';
 	endif;
-
 	foreach ( $form['fields'] as $field ) :
 		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
 			if ( ! empty( $field['cssClass'] ) ) :
@@ -293,6 +296,8 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	return $form;
 }
 add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );
+
+add_filter( 'gform_enable_password_field', '__return_true' );
 
 /**
  * Adding classes to gform buttons
@@ -451,7 +456,14 @@ function aperabags_theme_options_page() {   ?>
 							<div class="input-group mb-3">
 								<input class="form-control" type="text" id="new_option_api" name="new_option_api" placeholder="whos api..." value="" />
 							</div>
-							<?php wp_nonce_field( -1, 'new_option_nonce', true, true ); ?>
+							<?php
+							wp_nonce_field(
+								'theme_options_ajax_post',
+								'new_option_nonce',
+								true,
+								true
+							);
+							?>
 					  </div>
 					  <div class="modal-footer">
 							<button type="button" class="btn wonka-btn btn-success" data-dismiss="modal" id="add_option_name">Add option <i class="fa fa-plus"></i></button>
@@ -469,14 +481,15 @@ function aperabags_theme_options_page() {   ?>
  * Handles the theme options ajax requests.
  */
 function theme_options_ajax_post() {
+	$nonce = ( isset( $_REQUEST['security'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['security'] ) ) : null;
 	// Check if nonce is valid.
-	if ( ! wp_verify_nonce( isset( $_POST['new_option_nonce'] ), $nonce_action ) ) {
-		return;
+	if ( ! wp_verify_nonce( $nonce, 'theme_options_ajax_post' ) ) {
+		die( esc_html__( 'nonce failed', 'aperabags' ) );
 	}
 
 	$data = ( isset( $_POST['data'] ) ) ? wp_kses_post( wp_unslash( $_POST['data'] ) ) : null;
-	if ( ! empty( $data ) ) :
-		return;
+	if ( empty( $data ) ) :
+		return false;
 	endif;
 
 	// Pattern for option name sanitize.
@@ -497,6 +510,7 @@ function theme_options_ajax_post() {
 		$data->current_options = $current_options;
 		update_option( 'custom_options_added', $current_options );
 		$data->msg = $data->option_id . ' option was deleted, unregistered as a setting, and the database has been updated.';
+		wp_send_json_success( $data );
 		else :
 			$data->option_label = $data->option_name;
 			$data->option_name = preg_replace( $pattern, '_', strtolower( $data->option_name ) );
@@ -538,13 +552,14 @@ function theme_options_ajax_post() {
 				$data->new_elements = ob_get_clean();
 
 				$data->msg = 'Current options have been updated';
-				else :
-					$data->current_options = $current_options;
-					$data->msg = $data->option_name . ' is already a current option.';
-					endif;
-		endif;
+				wp_send_json_success( $data );
+			else :
+				$data->current_options = $current_options;
+				$data->msg = $data->option_name . ' is already a current option.';
+				wp_send_json_success( $data );
+			endif;
+	endif;
 
-			wp_send_json_success( $data );
 }
 add_action( 'wp_ajax_theme_options_ajax_post', 'theme_options_ajax_post', 10 );
 add_action( 'wp_ajax_nopriv_theme_options_ajax_post', 'theme_options_ajax_post', 10 );
@@ -649,14 +664,14 @@ function theme_options_js( $page ) {
 		wp_enqueue_script( 'theme-options-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/inc/js/theme-options-js.js' ), array( 'jquery' ), '20190819', true );
 	endif;
 }
-			add_action( 'admin_enqueue_scripts', 'theme_options_js', 10, 1 );
+add_action( 'admin_enqueue_scripts', 'theme_options_js', 10, 1 );
 
-			/**
-			 * The adding of meta boxes
-			 *
-			 * @param  string|array $post_type contains the post_types for option to display on.
-			 * @param  object       $post      contains the current post.
-			 */
+/**
+ * The adding of meta boxes
+ *
+ * @param  string|array $post_type contains the post_types for option to display on.
+ * @param  object       $post      contains the current post.
+ */
 function wonkasoft_get_meta_boxes( $post_type, $post ) {
 	add_meta_box(
 		'authorshowdiv',
@@ -671,14 +686,14 @@ function wonkasoft_get_meta_boxes( $post_type, $post ) {
 		)
 	);
 }
-			add_action( 'add_meta_boxes', 'wonkasoft_get_meta_boxes', 10, 2 );
+add_action( 'add_meta_boxes', 'wonkasoft_get_meta_boxes', 10, 2 );
 
-			/**
-			 * Display of the author in the meta box.
-			 *
-			 * @param  object $post   contains the current post.
-			 * @param  string $option contains the current option value.
-			 */
+/**
+ * Display of the author in the meta box.
+ *
+ * @param  object $post   contains the current post.
+ * @param  string $option contains the current option value.
+ */
 function author_display_meta_box( $post, $option ) {
 	wp_nonce_field( 'author_display_option', 'author_display_wpnonce', true, true );
 	$checked = ( get_post_meta( $post->ID, $option['args']['option_name'], false ) ) ? ' checked="true"' : '';
@@ -719,11 +734,11 @@ function wonkasoft_save_author_display( $post_id, $post ) {
 		return;
 	}
 }
-			add_action( 'save_post', 'wonkasoft_save_author_display', 10, 2 );
+add_action( 'save_post', 'wonkasoft_save_author_display', 10, 2 );
 
-			/**
-			 * This is the ajax call for the newsletter popup.
-			 */
+/**
+ * This is the ajax call for the newsletter popup.
+ */
 function wonkasoft_dismiss_popup() {
 	check_ajax_referer( 'ws-request-nonce', 'security' );
 
@@ -747,12 +762,12 @@ function wonkasoft_dismiss_popup() {
 	wp_send_json_success( $wonkasoft_popup_cookie );
 }
 
-			add_action( 'wp_ajax_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
-			add_action( 'wp_ajax_nopriv_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
+add_action( 'wp_ajax_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
+add_action( 'wp_ajax_nopriv_wonkasoft_dismiss_popup', 'wonkasoft_dismiss_popup', 10 );
 
-			/**
-			 * For the theme popup cookie.
-			 */
+/**
+ * For the theme popup cookie.
+ */
 function wonkasoft_theme_popup_cookie() {
 	if ( ! empty( get_theme_mod( 'enable_newsletter_popup' ) ) ) :
 		$wonkasoft_popup_cookie = array(
@@ -769,15 +784,15 @@ function wonkasoft_theme_popup_cookie() {
 	endif;
 }
 
-			add_action( 'init', 'wonkasoft_theme_popup_cookie', 10 );
+add_action( 'init', 'wonkasoft_theme_popup_cookie', 10 );
 
-			/**
-			 * Newsletter popup entry or form submission.
-			 *
-			 * @param  array $entry contains the data from the entry.
-			 * @param  array $form  array of the form fields.
-			 * @return blank
-			 */
+/**
+ * Newsletter popup entry or form submission.
+ *
+ * @param  array $entry contains the data from the entry.
+ * @param  array $form  array of the form fields.
+ * @return blank
+ */
 function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 
 	$user_id = get_current_user_id();
@@ -824,16 +839,16 @@ function wonkasoft_newsletter_popup_entry( $entry, $form ) {
 	return;
 }
 
-			add_action( 'gform_after_submission', 'wonkasoft_newsletter_popup_entry', 10, 2 );
-			/*=====  End of This is the ajax call for the newsletter popup  ======*/
+add_action( 'gform_after_submission', 'wonkasoft_newsletter_popup_entry', 10, 2 );
+/*=====  End of This is the ajax call for the newsletter popup  ======*/
 
-			/**
-			 * Allow to remove method for an hook when, it's a class method used and class don't have global for instanciation !
-			 *
-			 * @param string  $hook_name hook name that is passed in.
-			 * @param string  $method_name method or callback name that is passed in.
-			 * @param integer $priority contains the priority of when to run.
-			 */
+/**
+ * Allow to remove method for an hook when, it's a class method used and class don't have global for instanciation !
+ *
+ * @param string  $hook_name hook name that is passed in.
+ * @param string  $method_name method or callback name that is passed in.
+ * @param integer $priority contains the priority of when to run.
+ */
 function ws_remove_filters_with_method_name( $hook_name = '', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
 	// Take only filters on right hook name and priority.
@@ -857,14 +872,15 @@ function ws_remove_filters_with_method_name( $hook_name = '', $method_name = '',
 	}
 	return false;
 }
-			/**
-			 * Allow to remove method for an hook when, it's a class method used and class don't have variable, but you know the class name :)
-			 *
-			 * @param string  $hook_name hook name that is passed in.
-			 * @param string  $class_name class name of where to find the method that is passed in.
-			 * @param string  $method_name method or callback name that is passed in.
-			 * @param integer $priority contains the priority of when to run.
-			 */
+
+/**
+ * Allow to remove method for an hook when, it's a class method used and class don't have variable, but you know the class name :)
+ *
+ * @param string  $hook_name hook name that is passed in.
+ * @param string  $class_name class name of where to find the method that is passed in.
+ * @param string  $method_name method or callback name that is passed in.
+ * @param integer $priority contains the priority of when to run.
+ */
 function ws_remove_filters_for_anonymous_class( $hook_name = '', $class_name = '', $method_name = '', $priority = 0 ) {
 	global $wp_filter;
 	// Take only filters on right hook name and priority.
@@ -888,3 +904,255 @@ function ws_remove_filters_for_anonymous_class( $hook_name = '', $class_name = '
 	}
 	return false;
 }
+
+/**
+ * This function fires after Refersion Registration form is ssubmitted.
+ *
+ * @param  array $entry contains the data from surrent.
+ * @param  array $form  Contains an array of the form.
+ */
+function make_refersion_api_calls( $entry, $form ) {
+	// Get current user object.
+	$current_user = wp_get_current_user();
+	// Get current user ID.
+	$user_id = $current_user->ID;
+
+	$entry_fields = array();
+	$entry_fields['custom_fields'] = array();
+	$set_labels = array(
+		'First',
+		'Last',
+		'Company',
+		'Email',
+		'Paypal Email',
+		'Password',
+		'Street Address',
+		'Address Line 2',
+		'City',
+		'State / Province',
+		'ZIP / Postal Code',
+		'Phone',
+	);
+	$custom_fields = array();
+
+	$pattern = '/([ \/]{1,5})/';
+
+	foreach ( $form['fields'] as $field ) {
+		if ( 'honeypot' !== $field['type'] ) :
+			if ( in_array( $field['label'], $set_labels ) ) :
+				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
+			endif;
+
+			if ( in_array( $field['label'], $custom_fields ) ) :
+				$current_label = strtolower( preg_replace( $pattern, $field['label'] ) );
+					array_push(
+						$entry_fields['custom_fields'],
+						array(
+							'label' => $current_label,
+							'value' => $entry[ $field['id'] ],
+						)
+					);
+			endif;
+
+			if ( ! empty( $field->inputs ) ) :
+				foreach ( $field->inputs as $input ) {
+					if ( in_array( $input['label'], $set_labels ) ) :
+						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
+					endif;
+				}
+			endif;
+		endif;
+	}
+
+	if ( 0 === $user_id ) :
+		// Check if email has user account already.
+		if ( email_exists( $entry_fields['email'] ) ) {
+			wp_enqueue_script( 'registration_script', get_stylesheet_directory_uri() . '/inc/js/registration-login-js.js', array( 'jquery' ), '20190822', true );
+
+			wp_localize_script(
+				'registration_script',
+				'REG_LINKS',
+				array(
+					'loader_gif'    => get_stylesheet_directory_uri() . '/assets/slick/ajax-loader.gif',
+					'data'                  => $entry_fields,
+				)
+			);
+		} else {
+			// Setting time stamp.
+			$ts = time();
+			$date = new DateTime( "@$ts" );
+			$date->setTimezone( new DateTimeZone( get_option( 'timezone_string' ) ) );
+
+			// Setting new user args.
+			$userdata = array(
+				'user_pass'             => $entry_fields['password'],   // (string) The plain-text user password.
+				'user_login'            => $entry_fields['email'],   // (string) The user's login username.
+				'user_nicename'         => $entry_fields['first'],   // (string) The URL-friendly user name.
+				'user_email'            => $entry_fields['email'],   // (string) The user email address.
+				'display_name'          => $entry_fields['first'] . ' ' . $entry_fields['last'],   // (string) The user's display name. Default is the user's username.
+				'first_name'            => $entry_fields['first'],   // (string) The user's first name. For new users, will be used to build the first part of the user's display name if $display_name is not specified.
+				'last_name'             => $entry_fields['last'],   // (string) The user's last name. For new users, will be used to build the second part of the user's display name if $display_name is not specified.
+				'use_ssl'               => true,   // (bool) Whether the user should always access the admin over https. Default false.
+				'user_registered'       => $date->format( 'Y-m-d H:i:s' ),   // (string) Date the user registered. Format is 'Y-m-d H:i:s'.
+				'show_admin_bar_front'  => false,   // (string|bool) Whether to display the Admin Bar for the user on the site's front end. Default true.
+				'role'                  => 'Apera Affiliate',   // (string) User's role.
+			);
+
+			// Inserting new user and getting user id.
+			$user_id = wp_insert_user( $userdata );
+
+			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
+
+			$response = $new_affiliate_created->add_new_affiliate();
+
+			if ( ! empty( $response->errors ) ) :
+				update_user_meta( $user_id, 'refersion_data', $response->errors );
+			else :
+				update_user_meta( $user_id, 'refersion_data', $response );
+			endif;
+		}
+		else :
+			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
+
+			$response = $new_affiliate_created->add_new_affiliate();
+
+			if ( ! empty( $response->errors ) ) :
+				update_user_meta( $user_id, 'refersion_data', $response->errors );
+			else :
+				update_user_meta( $user_id, 'refersion_data', $response );
+			endif;
+	endif;
+
+}
+add_action( 'gform_after_submission', 'make_refersion_api_calls', 10, 2 );
+
+/**
+ * Registration login by ajax.
+ */
+function registration_ajax_login() {
+	// First check the nonce, if it fails the function will break.
+	check_ajax_referer( 'ws-request-nonce', 'security' );
+
+	// Nonce is checked, get the POST data and sign user on.
+	$credentials = ( isset( $_POST['data'] ) ) ? wp_kses_post( wp_unslash( $_POST['data'] ) ) : null;
+	$credentials = json_decode( $credentials );
+	$form_data = $credentials->form_data;
+	$form_data = json_decode( json_encode( $form_data ), true );
+
+	$creds = array();
+	$creds['user_login'] = $credentials->user_name;
+	$creds['user_password'] = $credentials->user_password;
+	$creds['remember'] = true;
+
+	$user_signon = wp_signon( $creds, false );
+	if ( is_wp_error( $user_signon ) ) {
+		$response = array(
+			'loggedin'  => false,
+			'message'       => __( 'Wrong username or password.' ),
+			'user_info'     => $user_signon,
+		);
+		wp_send_json_error( $response );
+	} else {
+		$user_id = $user_signon->ID;
+		$user = new WP_User( $user_id );
+		$user->add_role( 'Apera Affiliate' );
+
+		$new_affiliate_created = new Wonkasoft_Refersion_Api( $form_data );
+
+		$response = $new_affiliate_created->add_new_affiliate();
+
+		if ( 'failed' !== $response->status ) :
+			if ( ! empty( $response->errors ) ) :
+				update_user_meta( $user_id, 'refersion_data', $response->errors );
+			else :
+				update_user_meta( $user_id, 'refersion_data', $response );
+			endif;
+		endif;
+
+		$response = array(
+			'loggedin'  => false,
+			'message'       => __( 'Login successful, completing registration...' ),
+			'user_info'     => $user_signon,
+			'refersion_response'    => $response,
+		);
+		wp_send_json_success( $response );
+	}
+	die();
+}
+add_action( 'wp_ajax_registration_ajax_login', 'registration_ajax_login' );
+add_action( 'wp_ajax_nopriv_registration_ajax_login', 'registration_ajax_login' );
+
+/**
+ * This function is filtering the states to abbriviations.
+ *
+ * @param  array $address_types An array of address types.
+ * @param  int   $form_id The ID of the form being filtered.
+ * @return array $address_types A modified array of address types.
+ */
+function filter_states_to_abbriviations( $address_types, $form_id ) {
+	$address_types['us'] = array(
+		'label' => 'United States',
+		'country' => 'US',
+		'zip_label' => 'Zip Code',
+		'state_label' => 'State',
+		'states' => array(
+			'' => '',
+			'AL' => 'Alabama',
+			'AK' => 'Alaska',
+			'AZ' => 'Arizona',
+			'AR' => 'Arkansas',
+			'CA' => 'California',
+			'CO' => 'Colorado',
+			'CT' => 'Connecticut',
+			'DE' => 'Delaware',
+			'DC' => 'District of Columbia',
+			'FL' => 'Florida',
+			'GA' => 'Georgia',
+			'GU' => 'Guam',
+			'HI' => 'Hawaii',
+			'ID' => 'Idaho',
+			'IL' => 'Illinois',
+			'IN' => 'Indiana',
+			'IA' => 'Iowa',
+			'KS' => 'Kansas',
+			'KY' => 'Kentucky',
+			'LA' => 'Louisiana',
+			'ME' => 'Maine',
+			'MD' => 'Maryland',
+			'MA' => 'Massachusetts',
+			'MI' => 'Michigan',
+			'MN' => 'Minnesota',
+			'MS' => 'Mississippi',
+			'MO' => 'Missouri',
+			'MT' => 'Montana',
+			'NE' => 'Nebraska',
+			'NV' => 'Nevada',
+			'NH' => 'New Hampshire',
+			'NJ' => 'New Jersey',
+			'NM' => 'New Mexico',
+			'NY' => 'New York',
+			'NC' => 'North Carolina',
+			'ND' => 'North Dakota',
+			'OH' => 'Ohio',
+			'OK' => 'Oklahoma',
+			'OR' => 'Oregon',
+			'PA' => 'Pennsylvania',
+			'PR' => 'Puerto Rico',
+			'RI' => 'Rhode Island',
+			'SC' => 'South Carolina',
+			'SD' => 'South Dakota',
+			'TN' => 'Tennessee',
+			'TX' => 'Texas',
+			'UT' => 'Utah',
+			'VT' => 'Vermont',
+			'VA' => 'Virginia',
+			'WA' => 'Washington',
+			'WV' => 'West Virginia',
+			'WI' => 'Wisconsin',
+			'WY' => 'Wyoming',
+		),
+	);
+	return $address_types;
+}
+add_filter( 'gform_address_types', 'filter_states_to_abbriviations', 10, 2 );
+

@@ -28,6 +28,10 @@
 	width: map-get( $columns, $numberColumns ) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
 }
 
+@mixin box-shadow( $value ) {
+  @include prefix( box-shadow, $value, o moz webkit );
+}
+
 // Set the prefixes
 @mixin prefix($property, $value, $prefixes: ()) {
   @each $prefix in $prefixes {
