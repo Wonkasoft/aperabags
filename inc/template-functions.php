@@ -1155,4 +1155,3 @@ function filter_states_to_abbriviations( $address_types, $form_id ) {
 	return $address_types;
 }
 add_filter( 'gform_address_types', 'filter_states_to_abbriviations', 10, 2 );
-
