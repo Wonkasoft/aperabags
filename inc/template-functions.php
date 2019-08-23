@@ -263,7 +263,7 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] .= ' form-inline wonka-newsletter-form';
 	endif;
 
-	if ( in_array( $form['title'], array( 'Refersion Registration' ) ) ) :
+	if ( in_array( $form['title'], array( 'Refersion Registration Ambassador', 'Refersion Registration Zip' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-refersion-form';
 	endif;
 
@@ -1006,7 +1006,7 @@ function make_refersion_api_calls( $entry, $form ) {
 			$response = $new_affiliate_created->add_new_affiliate();
 
 			if ( ! empty( $response->errors ) ) :
-				update_user_meta( $user_id, 'refersion_data', $response->errors );
+				update_user_meta( $user_id, 'refersion_error', $response->errors );
 			else :
 				update_user_meta( $user_id, 'refersion_data', $response );
 			endif;
@@ -1017,7 +1017,7 @@ function make_refersion_api_calls( $entry, $form ) {
 			$response = $new_affiliate_created->add_new_affiliate();
 
 			if ( ! empty( $response->errors ) ) :
-				update_user_meta( $user_id, 'refersion_data', $response->errors );
+				update_user_meta( $user_id, 'refersion_error', $response->errors );
 			else :
 				update_user_meta( $user_id, 'refersion_data', $response );
 			endif;
@@ -1063,7 +1063,7 @@ function registration_ajax_login() {
 
 		if ( 'failed' !== $response->status ) :
 			if ( ! empty( $response->errors ) ) :
-				update_user_meta( $user_id, 'refersion_data', $response->errors );
+				update_user_meta( $user_id, 'refersion_error', $response->errors );
 			else :
 				update_user_meta( $user_id, 'refersion_data', $response );
 			endif;
