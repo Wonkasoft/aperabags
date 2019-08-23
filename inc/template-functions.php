@@ -912,6 +912,16 @@ function ws_remove_filters_for_anonymous_class( $hook_name = '', $class_name = '
  * @param  array $form  Contains an array of the form.
  */
 function make_refersion_api_calls( $entry, $form ) {
+	$set_forms = array(
+		'Refersion Registration Ambassador',
+		'Refersion Registration Zip',
+	);
+
+	// Check to see if form should be processed here.
+	if ( ! in_array( $form['title'], $set_forms ) ) :
+		return;
+	endif;
+
 	// Get current user object.
 	$current_user = wp_get_current_user();
 	// Get current user ID.
