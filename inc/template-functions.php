@@ -1019,6 +1019,9 @@ function make_refersion_api_calls( $entry, $form ) {
 				update_user_meta( $user_id, 'refersion_error', $response->errors );
 			else :
 				update_user_meta( $user_id, 'refersion_data', $response );
+
+				// Send to getResponse.
+
 			endif;
 		}
 		else :
@@ -1052,7 +1055,7 @@ function registration_ajax_login() {
 	$creds = array();
 	$creds['user_login'] = $credentials->user_name;
 	$creds['user_password'] = $credentials->user_password;
-	$creds['remember'] = true;
+	$creds['remember'] = false;
 
 	$user_signon = wp_signon( $creds, false );
 	if ( is_wp_error( $user_signon ) ) {
@@ -1069,21 +1072,21 @@ function registration_ajax_login() {
 
 		$new_affiliate_created = new Wonkasoft_Refersion_Api( $form_data );
 
-		$response = $new_affiliate_created->add_new_affiliate();
+		$refersion_response = $new_affiliate_created->add_new_affiliate();
 
-		if ( 'failed' !== $response->status ) :
-			if ( ! empty( $response->errors ) ) :
-				update_user_meta( $user_id, 'refersion_error', $response->errors );
+		if ( 'failed' !== $refersion_response->status ) :
+			if ( ! empty( $refersion_response->errors ) ) :
+				update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
 			else :
-				update_user_meta( $user_id, 'refersion_data', $response );
+				update_user_meta( $user_id, 'refersion_data', $refersion_response );
 			endif;
 		endif;
 
 		$response = array(
-			'loggedin'  => false,
+			'loggedin'  => true,
 			'message'       => __( 'Login successful, completing registration...' ),
 			'user_info'     => $user_signon,
-			'refersion_response'    => $response,
+			'refersion_response'    => $refersion_response,
 		);
 		wp_send_json_success( $response );
 	}
