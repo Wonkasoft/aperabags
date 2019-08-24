@@ -365,6 +365,7 @@ class Wonkasoft_Refersion_Api {
 			'phone'                 => $this->phone,
 			'send_welcome'          => $this->send_welcome,
 		);
+
 		$data = json_encode( $data );
 		curl_setopt( $ch, CURLOPT_URL, 'https://www.refersion.com/api/new_affiliate' );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: text/html' ) );

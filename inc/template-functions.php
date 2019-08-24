@@ -922,6 +922,28 @@ function make_refersion_api_calls( $entry, $form ) {
 		return;
 	endif;
 
+	// Setting the campaign name.
+	if ( 'Refersion Registration Ambassador' === $form['title'] ) :
+		$campaign_name = 'ambassador_program_signups';
+		$set_tag = 'ambassador_completed';
+	endif;
+
+	if ( 'Refersion Registration Zip' === $form['title'] ) :
+		$campaign_name = 'zip_program_signups';
+		$set_tag = 'zip_completed';
+	endif;
+
+	// Setting getResponse api args.
+	$api_args = array(
+		'update_contact'      => false,
+		'tag'                 => $set_tag,
+		'campaign_name'       => $campaign_name,
+		'custom_field_code'   => 'affiliate_code',
+		'affiliate_code'      => '',
+		'custom_field_link'   => 'affiliate_link',
+		'affiliate_link'      => '',
+	);
+
 	// Get current user object.
 	$current_user = wp_get_current_user();
 	// Get current user ID.
@@ -984,9 +1006,11 @@ function make_refersion_api_calls( $entry, $form ) {
 				'REG_LINKS',
 				array(
 					'loader_gif'    => get_stylesheet_directory_uri() . '/assets/slick/ajax-loader.gif',
-					'data'                  => $entry_fields,
+					'data'          => $entry_fields,
+					'api_args'      => $api_args,
 				)
 			);
+
 		} else {
 			// Setting time stamp.
 			$ts = time();
@@ -1020,8 +1044,11 @@ function make_refersion_api_calls( $entry, $form ) {
 			else :
 				update_user_meta( $user_id, 'refersion_data', $response );
 
+				// Setting affiliate code and link to send to getResponse.
+				$api_args['affiliate_code'] = $response->id;
+				$api_args['affiliate_link'] = $response->link;
 				// Send to getResponse.
-
+				get_response_api_call( $api_args );
 			endif;
 		}
 		else :
@@ -1033,6 +1060,12 @@ function make_refersion_api_calls( $entry, $form ) {
 				update_user_meta( $user_id, 'refersion_error', $response->errors );
 			else :
 				update_user_meta( $user_id, 'refersion_data', $response );
+
+				// Setting affiliate code and link to send to getResponse.
+				$api_args['affiliate_code'] = $response->id;
+				$api_args['affiliate_link'] = $response->link;
+				// Send to getResponse.
+				get_response_api_call( $api_args );
 			endif;
 	endif;
 
@@ -1048,6 +1081,7 @@ function registration_ajax_login() {
 
 	// Nonce is checked, get the POST data and sign user on.
 	$credentials = ( isset( $_POST['data'] ) ) ? wp_kses_post( wp_unslash( $_POST['data'] ) ) : null;
+	$api_args = ( isset( $_POST['api_args'] ) ) ? wp_kses_post( wp_unslash( $_POST['api_args'] ) ) : null;
 	$credentials = json_decode( $credentials );
 	$form_data = $credentials->form_data;
 	$form_data = json_decode( json_encode( $form_data ), true );
@@ -1079,6 +1113,12 @@ function registration_ajax_login() {
 				update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
 			else :
 				update_user_meta( $user_id, 'refersion_data', $refersion_response );
+
+				// Setting affiliate code and link to send to getResponse.
+				$api_args['affiliate_code'] = $response->id;
+				$api_args['affiliate_link'] = $response->link;
+				// Send to getResponse.
+				get_response_api_call( $api_args );
 			endif;
 		endif;
 
@@ -1168,3 +1208,33 @@ function filter_states_to_abbriviations( $address_types, $form_id ) {
 	return $address_types;
 }
 add_filter( 'gform_address_types', 'filter_states_to_abbriviations', 10, 2 );
+
+
+function get_response_api_call( $api_args ) {
+	$ch = curl_init();
+
+	$api_args = json_decode( json_encode( $api_args ) );
+	$api_args = http_build_query( $api_args );
+
+	curl_setopt( $ch, CURLOPT_URL, 'https://aperabags.com/getresponse-api/?' . $api_args );
+	curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/x-www-form-urlencoded' ) );
+	curl_setopt( $ch, CURLOPT_HEADER, false );
+	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+	curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+	$response = curl_exec( $ch );
+
+	if ( false === $response ) :
+		curl_close( $ch );
+		$error_obj = array(
+			'error' => curl_error( $ch ),
+			'status'    => 'failed',
+		);
+		$error_obj = json_decode( $error_obj );
+		return $error_obj;
+	else :
+		curl_close( $ch );
+		$response = json_decode( $response );
+		return $response;
+	endif;
+}
