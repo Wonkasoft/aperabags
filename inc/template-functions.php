@@ -1049,8 +1049,8 @@ function make_refersion_api_calls( $entry, $form ) {
 				// Setting affiliate code and link to send to getResponse.
 				$user_info = get_userdata( $user_id );
 				$api_args['email'] = $user_info->user_email;
-				$api_args['affiliate_code'] = $response->id;
-				$api_args['affiliate_link'] = $response->link;
+				$api_args['affiliate_code'] = ( ! empty( $response->id ) ) ? $response->id : '';
+				$api_args['affiliate_link'] = ( ! empty( $response->link ) ) ? $response->link : '';
 				// Send to getResponse.
 				get_response_api_call( $api_args );
 			endif;
@@ -1068,8 +1068,8 @@ function make_refersion_api_calls( $entry, $form ) {
 				// Setting affiliate code and link to send to getResponse.
 				$user_info = get_userdata( $user_id );
 				$api_args['email'] = $user_info->user_email;
-				$api_args['affiliate_code'] = $response->id;
-				$api_args['affiliate_link'] = $response->link;
+				$api_args['affiliate_code'] = ( ! empty( $response->id ) ) ? $response->id : '';
+				$api_args['affiliate_link'] = ( ! empty( $response->link ) ) ? $response->link : '';
 				// Send to getResponse.
 				get_response_api_call( $api_args );
 			endif;
@@ -1123,8 +1123,8 @@ function registration_ajax_login() {
 				// Setting affiliate code and link to send to getResponse.
 				$user_info = get_userdata( $user_id );
 				$api_args['email'] = $user_info->user_email;
-				$api_args['affiliate_code'] = $response->id;
-				$api_args['affiliate_link'] = $response->link;
+				$api_args['affiliate_code'] = ( ! empty( $response->id ) ) ? $response->id : '';
+				$api_args['affiliate_link'] = ( ! empty( $response->link ) ) ? $response->link : '';
 				// Send to getResponse.
 				get_response_api_call( $api_args );
 			endif;
