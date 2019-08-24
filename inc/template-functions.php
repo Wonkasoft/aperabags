@@ -942,6 +942,7 @@ function make_refersion_api_calls( $entry, $form ) {
 		'affiliate_code'      => '',
 		'custom_field_link'   => 'affiliate_link',
 		'affiliate_link'      => '',
+		'nonce'               => 'ubHk73twHt6L',
 	);
 
 	// Get current user object.
@@ -1216,7 +1217,7 @@ function get_response_api_call( $api_args ) {
 	$api_args = json_decode( json_encode( $api_args ) );
 	$api_args = http_build_query( $api_args );
 
-	curl_setopt( $ch, CURLOPT_URL, 'https://aperabags.com/getresponse-api/?' . $api_args );
+	curl_setopt( $ch, CURLOPT_URL, 'https://aperabags.com/getresponse-api?' . $api_args );
 	curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/x-www-form-urlencoded' ) );
 	curl_setopt( $ch, CURLOPT_HEADER, false );
 	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
