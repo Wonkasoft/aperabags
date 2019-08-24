@@ -933,9 +933,15 @@ function make_refersion_api_calls( $entry, $form ) {
 		$set_tag = 'zip_completed';
 	endif;
 
+	// Get current user object.
+	$current_user = wp_get_current_user();
+	// Get current user ID.
+	$user_id = $current_user->ID;
+
 	// Setting getResponse api args.
 	$api_args = array(
 		'update_contact'      => false,
+		'email'               => $current_user->user_email,
 		'tag'                 => $set_tag,
 		'campaign_name'       => $campaign_name,
 		'custom_field_code'   => 'affiliate_code',
@@ -944,11 +950,6 @@ function make_refersion_api_calls( $entry, $form ) {
 		'affiliate_link'      => '',
 		'nonce'               => 'ubHk73twHt6L',
 	);
-
-	// Get current user object.
-	$current_user = wp_get_current_user();
-	// Get current user ID.
-	$user_id = $current_user->ID;
 
 	$entry_fields = array();
 	$entry_fields['custom_fields'] = array();
