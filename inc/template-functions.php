@@ -1243,6 +1243,9 @@ function get_response_api_call( $api_args ) {
 	else :
 		curl_close( $ch );
 		$response = json_decode( $response );
+		echo "<pre>\n";
+		print_r( $response );
+		echo "</pre>\n";
 		return $response;
 	endif;
 }
