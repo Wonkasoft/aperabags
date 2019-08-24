@@ -941,7 +941,7 @@ function make_refersion_api_calls( $entry, $form ) {
 	// Setting getResponse api args.
 	$api_args = array(
 		'update_contact'      => false,
-		'email'               => $current_user->user_email,
+		'email'               => '',
 		'tag'                 => $set_tag,
 		'campaign_name'       => $campaign_name,
 		'custom_field_code'   => 'affiliate_code',
@@ -1047,6 +1047,8 @@ function make_refersion_api_calls( $entry, $form ) {
 				update_user_meta( $user_id, 'refersion_data', $response );
 
 				// Setting affiliate code and link to send to getResponse.
+				$user_info = get_userdata( $user_id );
+				$api_args['email'] = $user_info->user_email;
 				$api_args['affiliate_code'] = $response->id;
 				$api_args['affiliate_link'] = $response->link;
 				// Send to getResponse.
@@ -1064,6 +1066,8 @@ function make_refersion_api_calls( $entry, $form ) {
 				update_user_meta( $user_id, 'refersion_data', $response );
 
 				// Setting affiliate code and link to send to getResponse.
+				$user_info = get_userdata( $user_id );
+				$api_args['email'] = $user_info->user_email;
 				$api_args['affiliate_code'] = $response->id;
 				$api_args['affiliate_link'] = $response->link;
 				// Send to getResponse.
@@ -1117,6 +1121,8 @@ function registration_ajax_login() {
 				update_user_meta( $user_id, 'refersion_data', $refersion_response );
 
 				// Setting affiliate code and link to send to getResponse.
+				$user_info = get_userdata( $user_id );
+				$api_args['email'] = $user_info->user_email;
 				$api_args['affiliate_code'] = $response->id;
 				$api_args['affiliate_link'] = $response->link;
 				// Send to getResponse.
