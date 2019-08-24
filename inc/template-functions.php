@@ -925,12 +925,12 @@ function make_refersion_api_calls( $entry, $form ) {
 	// Setting the campaign name.
 	if ( 'Refersion Registration Ambassador' === $form['title'] ) :
 		$campaign_name = 'ambassador_program_signups';
-		$set_tag = 'ambassador_completed';
+		$set_tag = 'ambassadorcompleted';
 	endif;
 
 	if ( 'Refersion Registration Zip' === $form['title'] ) :
 		$campaign_name = 'zip_program_signups';
-		$set_tag = 'zip_completed';
+		$set_tag = 'zipcompleted';
 	endif;
 
 	// Get current user object.
