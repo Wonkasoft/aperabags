@@ -916,7 +916,9 @@ function make_refersion_api_calls( $entry, $form ) {
 		'Refersion Registration Ambassador',
 		'Refersion Registration Zip',
 	);
-
+	echo "<pre>\n";
+	print_r( $form );
+	echo "</pre>\n";
 	// Check to see if form should be processed here.
 	if ( ! in_array( $form['title'], $set_forms ) ) :
 		return;
