@@ -1427,7 +1427,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 	echo "<pre>\n";
 	print_r( $data_send );
 	echo "</pre>\n";
-	header( "Location: https://aperabags.com/response-page/?$data_send" );
+	// header( "Location: https://aperabags.com/response-page/?$data_send" );
 	return null;
 }
 
