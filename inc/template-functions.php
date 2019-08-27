@@ -1430,7 +1430,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		header( 'Location: ' . $url );
 	endif;
 
-	return null;
+	return $getresponse;
 }
 
 function wonka_rest_api( $api ) {
