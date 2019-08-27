@@ -1418,8 +1418,8 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		}
 		$response = $getresponse->upsert_the_tags_of_contact();
 	endif;
-
-	// header( "Location: https://aperabags.com/response-page/?email=$email&tag=$tag" );
+	$email = urlencode( $email );
+	header( "Location: https://aperabags.com/response-page/?email=$email&tag=$tag" );
 	return $response;
 }
 
