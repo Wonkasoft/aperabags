@@ -1446,7 +1446,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		header( 'Location: ' . $url );
 	endif;
 
-	return json_decode( $getresponse, true );
+	return $getresponse;
 }
 
 function wonka_rest_api( $api ) {
