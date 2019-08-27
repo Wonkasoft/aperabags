@@ -1345,11 +1345,7 @@ function get_response_api_call( $api_args ) {
 		endforeach;
 	endif;
 
-	if ( count( $getresponse->contact_list ) < 2 ) :
-		$contact_list = array_shift( $getresponse->contact_list );
-
-		$getresponse->contact_id = $contact_list->contactId;
-	else :
+	if ( empty( $getresponse->contact_id ) ) :
 		foreach ( $getresponse->contact_list as $contact ) :
 			if ( $getresponse->campaign_id === $contact->campaign->campaignId ) :
 				$getresponse->contact_id = $contact->contactId;
@@ -1441,11 +1437,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		endforeach;
 	endif;
 
-	if ( count( $getresponse->contact_list ) < 2 ) :
-		$contact_list = array_shift( $getresponse->contact_list );
-
-		$getresponse->contact_id = $contact_list->contactId;
-	else :
+	if ( empty( $getresponse->contact_id ) ) :
 		foreach ( $getresponse->contact_list as $contact ) :
 			if ( $getresponse->campaign_id === $contact->campaign->campaignId ) :
 				$getresponse->contact_id = $contact->contactId;
