@@ -1419,7 +1419,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		$response = $getresponse->upsert_the_tags_of_contact();
 	endif;
 	$url = 'https://aperabags.com/response-page/?email=' . $email . '&tag=' . $tag;
-	header( 'Content-Type: text/plain' );
+	header( 'Content-Type: application/x-www-form-urlencoded' );
 	header( 'Location: ' . $url );
 	return null;
 }
