@@ -1424,6 +1424,8 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		'tag' => $_GET['tag'],
 		'response' => $response,
 	);
+	$data_send = json_decode( json_encode( $data_send ) );
+	$data_send = http_build_query( $data_send );
 	$url = 'https://aperabags.com/response-page/?' . $data_send;
 	header( 'Content-Type: application/x-www-form-urlencoded' );
 	header( 'Location: ' . $url );
