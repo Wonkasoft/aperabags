@@ -1405,7 +1405,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		$getresponse->contact_id = $contact_list->contactId;
 	endif;
 
-	if ( ! empty( $getresponse->tags ) ) :
+	if ( ! empty( $getresponse->tags ) && ! empty( $getresponse->contact_id ) ) :
 		$getresponse->tags_to_update = array();
 		foreach ( $getresponse->tag_list as $tag ) {
 			if ( in_array( $tag->name, $getresponse->tags ) ) :
@@ -1416,17 +1416,20 @@ function wonkasoft_getresponse_endpoint( $data ) {
 			endif;
 		}
 		$response = $getresponse->upsert_the_tags_of_contact();
+
+		$data_send = array(
+			'email' => $_GET['email'],
+			'tag' => $_GET['tag'],
+			'contact_id'    => $getresponse->contact_id,
+		);
+
+		$data_send = json_decode( json_encode( $data_send ) );
+		$data_send = http_build_query( $data_send );
+		$url = 'https://aperabags.com/response-page/?' . $data_send;
+		header( 'Content-Type: application/x-www-form-urlencoded' );
+		header( 'Location: ' . $url );
 	endif;
 
-	$data_send = array(
-		'email' => $_GET['email'],
-		'tag' => $_GET['tag'],
-	);
-	$data_send = json_decode( json_encode( $data_send ) );
-	$data_send = http_build_query( $data_send );
-	$url = 'https://aperabags.com/response-page/?' . $data_send;
-	header( 'Content-Type: application/x-www-form-urlencoded' );
-	header( 'Location: ' . $url );
 	return null;
 }
 
