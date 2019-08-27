@@ -1417,13 +1417,8 @@ function wonkasoft_getresponse_endpoint( $data ) {
 			endif;
 		}
 
-		$output = '';
-		$output .= '<div align="center">The Tags ' . $getresponse->tags_to_update . ' for ';
-		$output .= $getresponse->email . ' have been updated.</div>';
-
-		// echo $output;
 	endif;
-	return $output;
+	return $getresponse->upsert_the_tags_of_contact();
 }
 
 function wonka_rest_api( $api ) {
