@@ -97,6 +97,12 @@ if ( wonkasoft_request.ga_id !== '' )
 			var tag = decodeURIComponent( getUrlVars().tag ).replace( /\+/gi, ' ' );
 			document.getElementById("tag").innerHTML = tag;
 		}
+
+		if ( getUrlVars().response ) 
+		{
+			var response = decodeURIComponent( getUrlVars().response ).replace( /\+/gi, ' ' );
+			document.getElementById("resp").innerHTML = response;
+		}
 	}
 	
 	/**
