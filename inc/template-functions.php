@@ -1031,7 +1031,6 @@ function make_refersion_api_calls( $entry, $form ) {
 			$refersion_response = $new_affiliate_created->add_new_affiliate();
 
 			if ( ! empty( $refersion_response->errors ) ) :
-				update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
 				// Setting affiliate code and link to send to getResponse.
 				$user_info = get_userdata( $user_id );
 				$api_args['email']  = $entry_fields['email'];
@@ -1043,8 +1042,10 @@ function make_refersion_api_calls( $entry, $form ) {
 				);
 				// Send to getResponse.
 				$getresponse = get_response_api_call( $api_args );
+
+				update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+				update_user_meta( $user_id, 'getResponse_data', $getresponse );
 			else :
-				update_user_meta( $user_id, 'refersion_data', $refersion_response );
 
 				// Setting affiliate code and link to send to getResponse.
 				$user_info = get_userdata( $user_id );
@@ -1059,6 +1060,9 @@ function make_refersion_api_calls( $entry, $form ) {
 				);
 				// Send to getResponse.
 				$getresponse = get_response_api_call( $api_args );
+
+				update_user_meta( $user_id, 'refersion_data', $refersion_response );
+				update_user_meta( $user_id, 'getResponse_data', $getresponse );
 			endif;
 		}
 		else :
@@ -1067,7 +1071,6 @@ function make_refersion_api_calls( $entry, $form ) {
 			$refersion_response = $new_affiliate_created->add_new_affiliate();
 
 			if ( ! empty( $refersion_response->errors ) ) :
-				update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
 				// Setting affiliate code and link to send to getResponse.
 				$user_info = get_userdata( $user_id );
 				$api_args['email']  = $entry_fields['email'];
@@ -1079,8 +1082,10 @@ function make_refersion_api_calls( $entry, $form ) {
 				);
 				// Send to getResponse.
 				$getresponse = get_response_api_call( $api_args );
+
+				update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+				update_user_meta( $user_id, 'getResponse_data', $getresponse );
 			else :
-				update_user_meta( $user_id, 'refersion_data', $refersion_response );
 
 				// Setting affiliate code and link to send to getResponse.
 				$user_info = get_userdata( $user_id );
@@ -1095,14 +1100,11 @@ function make_refersion_api_calls( $entry, $form ) {
 				);
 				// Send to getResponse.
 				$getresponse = get_response_api_call( $api_args );
-			endif;
-				echo "<pre>\n";
-				print_r( $getresponse );
-				echo "</pre>\n";
 
-				echo "<pre>\n";
-				print_r( $refersion_response );
-				echo "</pre>\n";
+				update_user_meta( $user_id, 'refersion_data', $refersion_response );
+				update_user_meta( $user_id, 'getResponse_data', $getresponse );
+			endif;
+
 	endif;
 
 }
@@ -1148,7 +1150,6 @@ function registration_ajax_login() {
 
 			if ( 'failed' !== $refersion_response->status ) :
 				if ( ! empty( $refersion_response->errors ) ) :
-					update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
 					// Setting affiliate code and link to send to getResponse.
 					$user_info = get_userdata( $user_id );
 					$api_args['email'] = $user_info->user_email;
@@ -1160,8 +1161,10 @@ function registration_ajax_login() {
 					);
 					// Send to getResponse.
 					$getresponse = get_response_api_call( $api_args );
+
+					update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+					update_user_meta( $user_id, 'getResponse_data', $getresponse );
 				else :
-					update_user_meta( $user_id, 'refersion_data', $refersion_response );
 
 					// Setting affiliate code and link to send to getResponse.
 					$user_info = get_userdata( $user_id );
@@ -1176,6 +1179,9 @@ function registration_ajax_login() {
 					);
 					// Send to getResponse.
 					$getresponse = get_response_api_call( $api_args );
+
+					update_user_meta( $user_id, 'refersion_data', $refersion_response );
+					update_user_meta( $user_id, 'getResponse_data', $getresponse );
 				endif;
 			endif;
 
@@ -1197,7 +1203,6 @@ function registration_ajax_login() {
 
 			if ( 'failed' !== $refersion_response->status ) :
 				if ( ! empty( $refersion_response->errors ) ) :
-					update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
 					// Setting affiliate code and link to send to getResponse.
 					$user_info = get_userdata( $user_id );
 					$api_args['email'] = $form_data['email'];
@@ -1209,8 +1214,10 @@ function registration_ajax_login() {
 					);
 					// Send to getResponse.
 					$getresponse = get_response_api_call( $api_args );
+
+					update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+					update_user_meta( $user_id, 'getResponse_data', $getresponse );
 				else :
-					update_user_meta( $user_id, 'refersion_data', $refersion_response );
 
 					// Setting affiliate code and link to send to getResponse.
 					$user_info = get_userdata( $user_id );
@@ -1225,6 +1232,9 @@ function registration_ajax_login() {
 					);
 					// Send to getResponse.
 					$getresponse = get_response_api_call( $api_args );
+
+					update_user_meta( $user_id, 'refersion_data', $refersion_response );
+					update_user_meta( $user_id, 'getResponse_data', $getresponse );
 				endif;
 			endif;
 
@@ -1347,19 +1357,6 @@ function get_response_api_call( $api_args ) {
 		endforeach;
 	endif;
 
-	if ( ! empty( $getresponse->tags ) ) :
-		$getresponse->tags_to_update = array();
-		foreach ( $getresponse->tag_list as $tag ) {
-			if ( in_array( $tag->name, $getresponse->tags ) ) :
-				$tag_id = array(
-					'tagId' => $tag->tagId,
-				);
-				array_push( $getresponse->tags_to_update, $tag_id );
-			endif;
-		}
-		$this_response = $getresponse->upsert_the_tags_of_contact();
-		array_push( $response, $this_response );
-	endif;
 	if ( ! empty( $getresponse->custom_fields ) ) :
 		$getresponse->custom_fields_list = $getresponse->get_a_list_of_custom_fields();
 		$getresponse->custom_fields_to_update = array();
@@ -1375,6 +1372,20 @@ function get_response_api_call( $api_args ) {
 			endif;
 		}
 		$this_response = $getresponse->upsert_the_custom_fields_of_a_contact();
+		array_push( $response, $this_response );
+	endif;
+
+	if ( ! empty( $getresponse->tags ) ) :
+		$getresponse->tags_to_update = array();
+		foreach ( $getresponse->tag_list as $tag ) {
+			if ( in_array( $tag->name, $getresponse->tags ) ) :
+				$tag_id = array(
+					'tagId' => $tag->tagId,
+				);
+				array_push( $getresponse->tags_to_update, $tag_id );
+			endif;
+		}
+		$this_response = $getresponse->upsert_the_tags_of_contact();
 		array_push( $response, $this_response );
 	endif;
 
