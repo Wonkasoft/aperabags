@@ -1042,7 +1042,7 @@ function make_refersion_api_calls( $entry, $form ) {
 					'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
 				);
 				// Send to getResponse.
-				$getResponse = get_response_api_call( $api_args );
+				$getresponse = get_response_api_call( $api_args );
 			else :
 				update_user_meta( $user_id, 'refersion_data', $refersion_response );
 
@@ -1058,7 +1058,7 @@ function make_refersion_api_calls( $entry, $form ) {
 					'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
 				);
 				// Send to getResponse.
-				$getResponse = get_response_api_call( $api_args );
+				$getresponse = get_response_api_call( $api_args );
 			endif;
 		}
 		else :
@@ -1078,7 +1078,7 @@ function make_refersion_api_calls( $entry, $form ) {
 					'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
 				);
 				// Send to getResponse.
-				$getResponse = get_response_api_call( $api_args );
+				$getresponse = get_response_api_call( $api_args );
 			else :
 				update_user_meta( $user_id, 'refersion_data', $refersion_response );
 
@@ -1094,8 +1094,15 @@ function make_refersion_api_calls( $entry, $form ) {
 					'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
 				);
 				// Send to getResponse.
-				$getResponse = get_response_api_call( $api_args );
+				$getresponse = get_response_api_call( $api_args );
 			endif;
+				echo "<pre>\n";
+				print_r( $getresponse );
+				echo "</pre>\n";
+
+				echo "<pre>\n";
+				print_r( $refersion_response );
+				echo "</pre>\n";
 	endif;
 
 }
@@ -1152,7 +1159,7 @@ function registration_ajax_login() {
 						'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
 					);
 					// Send to getResponse.
-					$getResponse = get_response_api_call( $api_args );
+					$getresponse = get_response_api_call( $api_args );
 				else :
 					update_user_meta( $user_id, 'refersion_data', $refersion_response );
 
@@ -1168,7 +1175,7 @@ function registration_ajax_login() {
 						'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
 					);
 					// Send to getResponse.
-					$getResponse = get_response_api_call( $api_args );
+					$getresponse = get_response_api_call( $api_args );
 				endif;
 			endif;
 
@@ -1177,7 +1184,7 @@ function registration_ajax_login() {
 				'message'       => __( 'Login successful, completing registration...' ),
 				'user_info'     => $user_signon,
 				'refersion_response'    => $refersion_response,
-				'getResponse'    => $getResponse,
+				'getResponse'    => $getresponse,
 			);
 			wp_send_json_success( $response );
 		}
@@ -1201,7 +1208,7 @@ function registration_ajax_login() {
 						'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
 					);
 					// Send to getResponse.
-					$getResponse = get_response_api_call( $api_args );
+					$getresponse = get_response_api_call( $api_args );
 				else :
 					update_user_meta( $user_id, 'refersion_data', $refersion_response );
 
@@ -1217,7 +1224,7 @@ function registration_ajax_login() {
 						'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
 					);
 					// Send to getResponse.
-					$getResponse = get_response_api_call( $api_args );
+					$getresponse = get_response_api_call( $api_args );
 				endif;
 			endif;
 
@@ -1226,7 +1233,7 @@ function registration_ajax_login() {
 				'message'       => __( 'Login successful, completing registration...' ),
 				'user_info'     => $user_signon,
 				'refersion_response'    => $refersion_response,
-				'getResponse'    => $getResponse,
+				'getResponse'    => $getresponse,
 			);
 			wp_send_json_success( $response );
 endif;
@@ -1320,10 +1327,24 @@ function get_response_api_call( $api_args ) {
 	$response = array();
 	$getresponse = new Wonkasoft_GetResponse_Api( $api_args );
 
+	if ( empty( $getresponse->campaign_id ) ) :
+		foreach ( $getresponse->campaign_list as $campaign ) :
+			if ( $api_args['campaign_name'] === $campaign->name ) :
+				$getresponse->campaign_id = $campaign->campaignId;
+			endif;
+		endforeach;
+	endif;
+
 	if ( count( $getresponse->contact_list ) < 2 ) :
 		$contact_list = array_shift( $getresponse->contact_list );
 
 		$getresponse->contact_id = $contact_list->contactId;
+	else :
+		foreach ( $getresponse->contact_list as $contact ) :
+			if ( $getresponse->campaign_id === $contact->campaign->campaignId ) :
+				$getresponse->contact_id = $contact->contactId;
+			endif;
+		endforeach;
 	endif;
 
 	if ( ! empty( $getresponse->tags ) ) :

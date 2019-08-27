@@ -126,4 +126,4 @@
       xhr.send( "action=" + action + '&data=' +JSON.stringify( data ) + "&security=" + wonkasoft_request.security );
     };
   }
-})();
+})( jQuery );

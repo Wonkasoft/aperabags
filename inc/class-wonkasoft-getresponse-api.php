@@ -145,9 +145,19 @@ class Wonkasoft_GetResponse_Api {
 	 */
 	public function upsert_the_tags_of_contact() {
 
+		if ( ! empty( $this->tag_id ) ) :
+			$payload    = array(
+				'tags'      => array(
+					array(
+						'tagId' => $this->tag_id,
+					),
+				),
+			);
+	else :
 		$payload    = array(
 			'tags'      => $this->tags_to_update,
 		);
+	endif;
 
 		$payload  = json_encode( $payload );
 
@@ -163,17 +173,17 @@ class Wonkasoft_GetResponse_Api {
 
 		$response = curl_exec( $ch );
 
-		if ( false === $response ) :
-			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
-			);
+	if ( false === $response ) :
+		$error_obj = array(
+			'error' => curl_error( $ch ),
+			'status'    => 'failed',
+		);
 
-			curl_close( $ch );
+		curl_close( $ch );
 
-			$error_obj = json_decode( json_encode( $error_obj ) );
+		$error_obj = json_decode( json_encode( $error_obj ) );
 
-			return $error_obj;
+		return $error_obj;
 	else :
 		curl_close( $ch );
 		$response = json_decode( $response );
