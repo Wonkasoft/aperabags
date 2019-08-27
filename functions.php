@@ -332,3 +332,12 @@ function apera_bags_scripts() {
 	endif;
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 50 );
+
+
+/**
+ * This loads the theme styles on the admin side.
+ */
+function admin_styles() {
+	wp_enqueue_style( 'apera-bags-style' );
+}
+add_action( 'admin_enqueue_scripts', 'admin_styles', 50 );
