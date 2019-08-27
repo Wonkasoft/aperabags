@@ -66,6 +66,7 @@ input.input-text.is-invalid {
 .form-inline {
 	align-items: stretch;
 	justify-content: center;
+	flex-flow: row nowrap;
 
 	input {
 

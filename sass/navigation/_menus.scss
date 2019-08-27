@@ -118,6 +118,14 @@
 						background: rgba( #777, .9 );
 					}
 				}
+
+				&.account-menu-icon>a {
+					background-image: url('https://localhost/aperabags.com/wp-content/uploads/2019/08/apera_logo_A_only_white.svg');
+					background-repeat: no-repeat;
+					background-position: left top;
+					background-size: 22px 22px;
+					padding-left: 5px;
+				}
 			}
 
 			li {
@@ -151,7 +159,7 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
-					font-family: 'Open Sans';
+					font-family: $font__main_jose;
 					font-weight: 800;
 					background: #ffffff;
 					width: 20px;
@@ -162,6 +170,14 @@
 					@include font-size( .9 );
 					text-shadow: none;
 					@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
+				}
+
+				svg {
+					color: #ffffff;
+
+					&:hover {
+						color: #dad3a2;
+					}
 				}
 
 				&:hover {
@@ -376,7 +392,7 @@
 					background: #ffffff;
 					width: 24px;
 					height: 24px;
-				    line-height: 1.5;
+				    line-height: 1;
 				    text-shadow: none;
 				    color: #333333;
 					@include font-size( .9 );

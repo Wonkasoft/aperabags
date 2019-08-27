@@ -23,6 +23,11 @@ footer#colophon {
 
 		div.col {
 			margin-bottom: 15px;
+
+			.menu-footer-main-container {
+				display: flex;
+				justify-content: center
+			}
 		}
 
 		.footer-title {
@@ -183,7 +188,7 @@ footer#colophon {
 				form.wonka-newsletter-form {
 
 					.gform_body {
-						width: 75%;
+						width: 70%;
 
 						ul {
 
@@ -216,7 +221,8 @@ footer#colophon {
 					}
 
 					.gform_footer {
-						width: 22%;
+						// width: 25%;
+						flex: 1 30%;
 						margin-left: -3px;
 
 						input[type=submit].wonka-btn {

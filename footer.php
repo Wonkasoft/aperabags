@@ -18,7 +18,25 @@ $footer_section = get_section_mods( 'footer' );
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
 			<div class="row upper-footer wonka-row-footer">
-				<div class="col col-12 col-lg-3">
+				<div class="col col-12 col-lg-4 col-sm-6">
+					<div class="row wonka-row-footer">
+						<?php if ( ! empty( $footer_section->footer_titles->footer_title_1 ) ) : ?>
+							<div class="col-12 col-lg">
+								<?php
+									wp_nav_menu(
+										array(
+											'theme_location'   => 'menu-footer',
+											'menu_class'        => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_1 ),
+										)
+									);
+								?>
+							</div><!-- .col -->
+						<?php endif; ?>
+
+					</div><!-- .row -->
+				</div><!-- .col-4 -->
+
+				<div class="col col-12 col-lg-4 col-sm-6 order-lg-3 order-2">
 					<div class="social-components-wrap">
 						<h4 class="footer-title"><?php echo $footer_section->footer_mods->footer_social_title; ?></h4>
 						<div class="social-icons-btns">
@@ -52,85 +70,19 @@ $footer_section = get_section_mods( 'footer' );
 						<?php endif; ?>
 					</div><!-- .social-components-wrap -->
 				</div><!-- .col -->
-				<div class="col col-12 col-lg-9">
-					<div class="row wonka-row-footer">
-						<?php if ( ! empty( $footer_section->footer_titles->footer_title_1 ) ) : ?>
-							<div class="col-6 col-lg">
-								<h5 class="footer-title menu-title-shop"><?php echo $footer_section->footer_titles->footer_title_1; ?></h5>
-								<?php
-									wp_nav_menu(
-										array(
-											'theme_location'   => 'menu-shop',
-											'menu_class'        => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_1 ),
-										)
-									);
-								?>
-							</div><!-- .col -->
-						<?php endif; ?>
-						<?php if ( ! empty( $footer_section->footer_titles->footer_title_2 ) ) : ?>
-							<div class="col-6 col-lg">
-								<h5 class="footer-title menu-title-contact-us"><?php echo $footer_section->footer_titles->footer_title_2; ?></h5>
-								<?php
-									wp_nav_menu(
-										array(
-											'theme_location'   => 'menu-contact',
-											'menu_class'        => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_2 ),
-										)
-									);
-								?>
-							</div><!-- .col -->
-						<?php endif; ?>
-						<?php if ( ! empty( $footer_section->footer_titles->footer_title_3 ) ) : ?>
-							<div class="col-6 col-lg">
-								<h5 class="footer-title menu-title-account"><?php echo $footer_section->footer_titles->footer_title_3; ?></h5>
-								<?php
-									wp_nav_menu(
-										array(
-											'theme_location'   => 'menu-account',
-											'menu_class'        => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_3 ),
-										)
-									);
-								?>
-							</div><!-- .col -->
-						<?php endif; ?>
-						<?php if ( ! empty( $footer_section->footer_titles->footer_title_4 ) ) : ?>
-						<div class="col-6 col-lg">
-							<h5 class="footer-title menu-title-company"><?php echo $footer_section->footer_titles->footer_title_4; ?></h5>
-							<?php
-								wp_nav_menu(
-									array(
-										'theme_location'   => 'menu-company',
-										'menu_class'        => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_4 ),
-									)
-								);
-							?>
-						</div><!-- .col -->
-						<?php endif; ?>
-						<?php if ( ! empty( $footer_section->footer_titles->footer_title_5 ) ) : ?>
-						<div class="col-6 col-lg">
-							<h5 class="footer-title menu-title-programs"><?php echo $footer_section->footer_titles->footer_title_5; ?></h5>
-							<?php
-								wp_nav_menu(
-									array(
-										'theme_location'   => 'menu-programs',
-										'menu_class'        => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_5 ),
-									)
-								);
-							?>
-						</div><!-- .col -->
-						<?php endif; ?>
-					</div><!-- .row -->
-					<div class="row align-items-center justify-content-end wonka-email-form">
+				<div class="col col-12 col-lg-4 order-3 order-sm-2">
+					<div class="row align-items-end justify-content-center wonka-email-form">
+					<?php _e('<h5 class="footer-title menu-title-shop pb-2">KEEP IN TOUCH!</h5>') ?>
 						<?php if ( ! empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
-							<div class="col col-12 col-lg-8">
+							<div class="col col-12">
 								<?php
 									_e( do_shortcode( $footer_section->footer_mods->footer_form_shortcode ) );
-									_e( "<small>Sign up for our email newsletter and receive an extra 10% discount on today's purchase!</small><br />" );
+
 								?>
 							</div> <!-- .col -->
 						<?php endif; ?>
 					</div> <!-- .row -->
-				</div><!-- .col-9 -->
+				</div>
 		</div> <!-- .row -->
 
 		<div class="site-info row align-items-center">
