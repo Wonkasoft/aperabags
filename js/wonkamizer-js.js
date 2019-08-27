@@ -98,13 +98,8 @@ if ( wonkasoft_request.ga_id !== '' )
 			document.getElementById("tag").innerHTML = tag;
 		}
 
-		if ( getUrlVars().response ) 
-		{
-			var response = decodeURIComponent( getUrlVars().response ).replace( /\+/gi, ' ' );
-			document.getElementById("resp").innerHTML = response;
-		}
 	}
-	
+
 	/**
 	 * This is for the checkout multistep tabs 
 	 * @author Rudy
