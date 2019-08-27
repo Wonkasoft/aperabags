@@ -1426,7 +1426,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 	$data_send = json_decode( json_encode( $data_send ) );
 	$data_send = http_build_query( $data_send );
 
-	header( "Location: https://aperabags.com/response-page/?$data_send" );
+	header( 'Location: https://aperabags.com/response-page/?' . $data_send );
 	return $response;
 }
 
