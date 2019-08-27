@@ -1421,7 +1421,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 	$data_send = array(
 		'email' => $email,
 		'tag'   => $tag,
-		'response'  => $response,
+		'response'  => json_decode( $response, true ),
 	);
 
 	$data_send = json_decode( json_encode( $data_send ) );
