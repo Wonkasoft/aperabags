@@ -244,8 +244,12 @@ if ( class_exists( 'WC_Gateway_CyberSource' ) ) {
 	require_once get_stylesheet_directory() . '/inc/wc-cybersource-custom.php';
 }
 
-if ( ! class_exists( 'Wonkasoft_Refersion_API' ) ) {
+if ( ! class_exists( 'Wonkasoft_Refersion_Api' ) ) {
 	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-refersion-api.php';
+}
+
+if ( ! class_exists( 'Wonkasoft_GetResponse_Api' ) ) {
+	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-getresponse-api.php';
 }
 
 /**
@@ -267,7 +271,8 @@ add_action( 'pre_get_posts', 'ws_apera_search_woocommerce_only' );
  * Enqueue scripts and styles.
  */
 function apera_bags_scripts() {
-			  /**
+
+	/**
 	 * For enqueues of styles
 	 */
 	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1', 'all' );
@@ -312,6 +317,18 @@ function apera_bags_scripts() {
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) :
 		wp_enqueue_script( 'comment-reply' );
+	endif;
+
+	if ( is_page( 'ambassador-registration' ) || is_page( 'zip-registration' ) && get_option( 'registration_passing_args' ) !== null ) :
+		wp_enqueue_script( 'registration_script', get_stylesheet_directory_uri() . '/inc/js/registration-login-js.js', array( 'jquery' ), time(), true );
+
+		wp_localize_script(
+			'registration_script',
+			'REG_LINKS',
+			array(
+				'loader_gif'    => get_stylesheet_directory_uri() . '/assets/slick/ajax-loader.gif',
+			)
+		);
 	endif;
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 50 );

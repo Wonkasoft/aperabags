@@ -916,9 +916,9 @@ function make_refersion_api_calls( $entry, $form ) {
 		'Refersion Registration Ambassador',
 		'Refersion Registration Zip',
 	);
-	echo "<pre>\n";
-	print_r( $form );
-	echo "</pre>\n";
+
+	update_option( 'registration_passing_args', null );
+
 	// Check to see if form should be processed here.
 	if ( ! in_array( $form['title'], $set_forms ) ) :
 		return;
@@ -944,13 +944,10 @@ function make_refersion_api_calls( $entry, $form ) {
 	$api_args = array(
 		'update_contact'      => false,
 		'email'               => '',
-		'tag'                 => $set_tag,
+		'tags'                 => array(
+			$set_tag,
+		),
 		'campaign_name'       => $campaign_name,
-		'custom_field_code'   => 'affiliate_code',
-		'affiliate_code'      => '',
-		'custom_field_link'   => 'affiliate_link',
-		'affiliate_link'      => '',
-		'nonce'               => 'ubHk73twHt6L',
 	);
 
 	$entry_fields = array();
@@ -1003,17 +1000,8 @@ function make_refersion_api_calls( $entry, $form ) {
 	if ( 0 === $user_id ) :
 		// Check if email has user account already.
 		if ( email_exists( $entry_fields['email'] ) ) {
-			wp_enqueue_script( 'registration_script', get_stylesheet_directory_uri() . '/inc/js/registration-login-js.js', array( 'jquery' ), '20190822', true );
-
-			wp_localize_script(
-				'registration_script',
-				'REG_LINKS',
-				array(
-					'loader_gif'    => get_stylesheet_directory_uri() . '/assets/slick/ajax-loader.gif',
-					'data'          => $entry_fields,
-					'api_args'      => $api_args,
-				)
-			);
+			$api_args['form_fields'] = $entry_fields;
+			update_option( 'registration_passing_args', $api_args );
 
 		} else {
 			// Setting time stamp.
@@ -1041,39 +1029,73 @@ function make_refersion_api_calls( $entry, $form ) {
 
 			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
 
-			$response = $new_affiliate_created->add_new_affiliate();
+			$refersion_response = $new_affiliate_created->add_new_affiliate();
 
-			if ( ! empty( $response->errors ) ) :
-				update_user_meta( $user_id, 'refersion_error', $response->errors );
+			if ( ! empty( $refersion_response->errors ) ) :
+				update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+				// Setting affiliate code and link to send to getResponse.
+				$user_info = get_userdata( $user_id );
+				$api_args['email'] = $user_info->user_email;
+				$api_args['custom_fields'] = array(
+					'affiliate_error_code',
+				);
+				$api_args['custom_fields_values'] = array(
+					'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
+				);
+				// Send to getResponse.
+				$getResponse = get_response_api_call( $api_args );
 			else :
-				update_user_meta( $user_id, 'refersion_data', $response );
+				update_user_meta( $user_id, 'refersion_data', $refersion_response );
 
 				// Setting affiliate code and link to send to getResponse.
 				$user_info = get_userdata( $user_id );
 				$api_args['email'] = $user_info->user_email;
-				$api_args['affiliate_code'] = ( ! empty( $response->id ) ) ? $response->id : '';
-				$api_args['affiliate_link'] = ( ! empty( $response->link ) ) ? $response->link : '';
+				$api_args['custom_fields'] = array(
+					'affiliate_code',
+					'affiliate_link',
+				);
+				$api_args['custom_fields_values'] = array(
+					'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+					'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+				);
 				// Send to getResponse.
-				get_response_api_call( $api_args );
+				$getResponse = get_response_api_call( $api_args );
 			endif;
 		}
 		else :
 			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
 
-			$response = $new_affiliate_created->add_new_affiliate();
+			$refersion_response = $new_affiliate_created->add_new_affiliate();
 
-			if ( ! empty( $response->errors ) ) :
-				update_user_meta( $user_id, 'refersion_error', $response->errors );
+			if ( ! empty( $refersion_response->errors ) ) :
+				update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+				// Setting affiliate code and link to send to getResponse.
+				$user_info = get_userdata( $user_id );
+				$api_args['email'] = $user_info->user_email;
+				$api_args['custom_fields'] = array(
+					'affiliate_error_code',
+				);
+				$api_args['custom_fields_values'] = array(
+					'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
+				);
+				// Send to getResponse.
+				$getResponse = get_response_api_call( $api_args );
 			else :
-				update_user_meta( $user_id, 'refersion_data', $response );
+				update_user_meta( $user_id, 'refersion_data', $refersion_response );
 
 				// Setting affiliate code and link to send to getResponse.
 				$user_info = get_userdata( $user_id );
 				$api_args['email'] = $user_info->user_email;
-				$api_args['affiliate_code'] = ( ! empty( $response->id ) ) ? $response->id : '';
-				$api_args['affiliate_link'] = ( ! empty( $response->link ) ) ? $response->link : '';
+				$api_args['custom_fields'] = array(
+					'affiliate_code',
+					'affiliate_link',
+				);
+				$api_args['custom_fields_values'] = array(
+					'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+					'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+				);
 				// Send to getResponse.
-				get_response_api_call( $api_args );
+				$getResponse = get_response_api_call( $api_args );
 			endif;
 	endif;
 
@@ -1089,58 +1111,127 @@ function registration_ajax_login() {
 
 	// Nonce is checked, get the POST data and sign user on.
 	$credentials = ( isset( $_POST['data'] ) ) ? wp_kses_post( wp_unslash( $_POST['data'] ) ) : null;
-	$api_args = ( isset( $_POST['api_args'] ) ) ? wp_kses_post( wp_unslash( $_POST['api_args'] ) ) : null;
+	$get_args = get_option( 'registration_passing_args' );
+	$form_data = $get_args['form_fields'];
+	unset( $get_args['form_fields'] );
+	$api_args = $get_args;
+
 	$credentials = json_decode( $credentials );
-	$form_data = $credentials->form_data;
-	$form_data = json_decode( json_encode( $form_data ), true );
 
 	$creds = array();
 	$creds['user_login'] = $credentials->user_name;
 	$creds['user_password'] = $credentials->user_password;
-	$creds['remember'] = false;
 
-	$user_signon = wp_signon( $creds, false );
-	if ( is_wp_error( $user_signon ) ) {
-		$response = array(
-			'loggedin'  => false,
-			'message'       => __( 'Wrong username or password.' ),
-			'user_info'     => $user_signon,
-		);
-		wp_send_json_error( $response );
-	} else {
-		$user_id = $user_signon->ID;
-		$user = new WP_User( $user_id );
-		$user->add_role( 'Apera Affiliate' );
+	if ( ! is_user_logged_in() ) :
+		$user_signon = wp_signon( $creds, false );
+		if ( is_wp_error( $user_signon ) ) {
+			$response = array(
+				'loggedin'  => false,
+				'message'       => __( 'Wrong username or password.' ),
+				'user_info'     => $user_signon,
+			);
+			wp_send_json_error( $response );
+		} else {
+			$user_id = $user_signon->ID;
+			$user = new WP_User( $user_id );
+			$user->add_role( 'Apera Affiliate' );
 
-		$new_affiliate_created = new Wonkasoft_Refersion_Api( $form_data );
+			$new_affiliate_created = new Wonkasoft_Refersion_Api( $form_data );
 
-		$refersion_response = $new_affiliate_created->add_new_affiliate();
+			$refersion_response = $new_affiliate_created->add_new_affiliate();
 
-		if ( 'failed' !== $refersion_response->status ) :
-			if ( ! empty( $refersion_response->errors ) ) :
-				update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
-			else :
-				update_user_meta( $user_id, 'refersion_data', $refersion_response );
+			if ( 'failed' !== $refersion_response->status ) :
+				if ( ! empty( $refersion_response->errors ) ) :
+					update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+					// Setting affiliate code and link to send to getResponse.
+					$user_info = get_userdata( $user_id );
+					$api_args['email'] = $user_info->user_email;
+					$api_args['custom_fields'] = array(
+						'affiliate_error_code',
+					);
+					$api_args['custom_fields_values'] = array(
+						'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
+					);
+					// Send to getResponse.
+					$getResponse = get_response_api_call( $api_args );
+				else :
+					update_user_meta( $user_id, 'refersion_data', $refersion_response );
 
-				// Setting affiliate code and link to send to getResponse.
-				$user_info = get_userdata( $user_id );
-				$api_args['email'] = $user_info->user_email;
-				$api_args['affiliate_code'] = ( ! empty( $response->id ) ) ? $response->id : '';
-				$api_args['affiliate_link'] = ( ! empty( $response->link ) ) ? $response->link : '';
-				// Send to getResponse.
-				get_response_api_call( $api_args );
+					// Setting affiliate code and link to send to getResponse.
+					$user_info = get_userdata( $user_id );
+					$api_args['email'] = $user_info->user_email;
+					$api_args['custom_fields'] = array(
+						'affiliate_code',
+						'affiliate_link',
+					);
+					$api_args['custom_fields_values'] = array(
+						'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+						'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+					);
+					// Send to getResponse.
+					$getResponse = get_response_api_call( $api_args );
+				endif;
 			endif;
-		endif;
 
-		$response = array(
-			'loggedin'  => true,
-			'message'       => __( 'Login successful, completing registration...' ),
-			'user_info'     => $user_signon,
-			'refersion_response'    => $refersion_response,
-		);
-		wp_send_json_success( $response );
-	}
-	die();
+			$response = array(
+				'loggedin'  => true,
+				'message'       => __( 'Login successful, completing registration...' ),
+				'user_info'     => $user_signon,
+				'refersion_response'    => $refersion_response,
+				'getResponse'    => $getResponse,
+			);
+			wp_send_json_success( $response );
+		}
+
+		else :
+
+			$new_affiliate_created = new Wonkasoft_Refersion_Api( $form_data );
+
+			$refersion_response = $new_affiliate_created->add_new_affiliate();
+
+			if ( 'failed' !== $refersion_response->status ) :
+				if ( ! empty( $refersion_response->errors ) ) :
+					update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+					// Setting affiliate code and link to send to getResponse.
+					$user_info = get_userdata( $user_id );
+					$api_args['email'] = $user_info->user_email;
+					$api_args['custom_fields'] = array(
+						'affiliate_error_code',
+					);
+					$api_args['custom_fields_values'] = array(
+						'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
+					);
+					// Send to getResponse.
+					$getResponse = get_response_api_call( $api_args );
+				else :
+					update_user_meta( $user_id, 'refersion_data', $refersion_response );
+
+					// Setting affiliate code and link to send to getResponse.
+					$user_info = get_userdata( $user_id );
+					$api_args['email'] = $user_info->user_email;
+					$api_args['custom_fields'] = array(
+						'affiliate_code',
+						'affiliate_link',
+					);
+					$api_args['custom_fields_values'] = array(
+						'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+						'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+					);
+					// Send to getResponse.
+					$getResponse = get_response_api_call( $api_args );
+				endif;
+			endif;
+
+			$response = array(
+				'loggedin'  => true,
+				'message'       => __( 'Login successful, completing registration...' ),
+				'user_info'     => $user_signon,
+				'refersion_response'    => $refersion_response,
+				'getResponse'    => $getResponse,
+			);
+			wp_send_json_success( $response );
+endif;
+		die();
 }
 add_action( 'wp_ajax_registration_ajax_login', 'registration_ajax_login' );
 add_action( 'wp_ajax_nopriv_registration_ajax_login', 'registration_ajax_login' );
@@ -1219,35 +1310,120 @@ function filter_states_to_abbriviations( $address_types, $form_id ) {
 }
 add_filter( 'gform_address_types', 'filter_states_to_abbriviations', 10, 2 );
 
-
+/**
+ * This function handles the api request to send data to getResponse.
+ *
+ * @param  array $api_args an array of args for the api call.
+ * @return object           returns error or response from the api call.
+ */
 function get_response_api_call( $api_args ) {
-	$ch = curl_init();
 
-	$api_args = json_decode( json_encode( $api_args ) );
-	$api_args = http_build_query( $api_args );
+	$response = array();
+	$getresponse = new Wonkasoft_GetResponse_Api( $api_args );
 
-	curl_setopt( $ch, CURLOPT_URL, 'https://aperabags.com/getresponse-api/?' . $api_args );
-	curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/x-www-form-urlencoded' ) );
-	curl_setopt( $ch, CURLOPT_HEADER, false );
-	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt( $ch, CURLPROTO_HTTPS, true );
+	if ( count( $getresponse->contact_list ) < 2 ) :
+		$contact_list = array_shift( $getresponse->contact_list );
 
-	$response = curl_exec( $ch );
-
-	if ( false === $response ) :
-		curl_close( $ch );
-		$error_obj = array(
-			'error' => curl_error( $ch ),
-			'status'    => 'failed',
-		);
-		$error_obj = json_decode( $error_obj );
-		return $error_obj;
-	else :
-		curl_close( $ch );
-		$response = json_decode( $response );
-		echo "<pre>\n";
-		print_r( $response );
-		echo "</pre>\n";
-		return $response;
+		$getresponse->contact_id = $contact_list->contactId;
 	endif;
+
+	if ( ! empty( $getresponse->tags ) ) :
+		$getresponse->tags_to_update = array();
+		foreach ( $getresponse->tag_list as $tag ) {
+			if ( in_array( $tag->name, $getresponse->tags ) ) :
+				$tag_id = array(
+					'tagId' => $tag->tagId,
+				);
+				array_push( $getresponse->tags_to_update, $tag_id );
+			endif;
+		}
+		$this_response = $getresponse->upsert_the_tags_of_contact();
+		array_push( $response, $this_response );
+	endif;
+	if ( ! empty( $getresponse->custom_fields ) ) :
+		$getresponse->custom_fields_list = $getresponse->get_a_list_of_custom_fields();
+		$getresponse->custom_fields_to_update = array();
+		foreach ( $getresponse->custom_fields_list as $field ) {
+			if ( in_array( $field->name, $getresponse->custom_fields ) ) :
+				$add_field = array(
+					'customFieldId' => $field->customFieldId,
+					'value' => array(
+						$getresponse->custom_fields_values[ $field->name ],
+					),
+				);
+				array_push( $getresponse->custom_fields_to_update, $add_field );
+			endif;
+		}
+		$this_response = $getresponse->upsert_the_custom_fields_of_a_contact();
+		array_push( $response, $this_response );
+	endif;
+
+	return $response;
 }
+
+/**
+ * This function registers the custom api route.
+ */
+function wonkasoft_register_custom_api() {
+	register_rest_route(
+		'wonkasoft/v1',
+		'/getresponse-api/',
+		array(
+			'methods'   => 'GET',
+			'callback'  => 'wonkasoft_getresponse_endpoint',
+		),
+		false
+	);
+}
+add_action( 'rest_api_init', 'wonkasoft_register_custom_api' );
+
+/**
+ * This function handles the rest api endpoint for getResponse.
+ *
+ * @param  array $data contains params send in the url.
+ * @return json    returns the response data.
+ */
+function wonkasoft_getresponse_endpoint( $data ) {
+
+	$email = wp_kses_post( wp_unslash( $_GET['email'] ) );
+	$tag = wp_kses_post( wp_unslash( $_GET['tag'] ) );
+
+	$prep_data = array(
+		'email' => $email,
+		'tags'   => array(
+			$tag,
+		),
+	);
+
+	$getresponse = new Wonkasoft_GetResponse_Api( $prep_data );
+
+	if ( count( $getresponse->contact_list ) < 2 ) :
+		$contact_list = array_shift( $getresponse->contact_list );
+
+		$getresponse->contact_id = $contact_list->contactId;
+	endif;
+
+	if ( ! empty( $getresponse->tags ) ) :
+		$getresponse->tags_to_update = array();
+		foreach ( $getresponse->tag_list as $tag ) {
+			if ( in_array( $tag->name, $getresponse->tags ) ) :
+				$tag_id = array(
+					'tagId' => $tag->tagId,
+				);
+				array_push( $getresponse->tags_to_update, $tag_id );
+			endif;
+		}
+
+		$output = '';
+		$output .= '<div align="center">The Tags ' . $getresponse->tags_to_update . ' for ';
+		$output .= $getresponse->email . ' have been updated.</div>';
+
+		// echo $output;
+	endif;
+	return $getresponse->get_a_list_of_custom_fields();
+}
+
+function wonka_rest_api( $api ) {
+	return 'api';
+}
+add_filter( 'rest_url_prefix', 'wonka_rest_api' );

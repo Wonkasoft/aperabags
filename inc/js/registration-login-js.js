@@ -57,6 +57,7 @@
 
     login_btn.onclick = function ( e ) 
     {
+      e.preventDefault();
       loading_box.classList.add( 'loading');
       var action = 'registration_ajax_login';
       var data = {
@@ -101,6 +102,9 @@
                 success_msgs += response.data.refersion_response.errors[refersion_error];
                 success_msgs += '</p>';
               }
+              success_msgs += '<p>';
+              success_msgs += 'We will look into this issue and contact you soon.';
+              success_msgs += '</p>';
               response_msg.innerHTML = success_msgs;
               loading_box.appendChild( response_msg );
             }
