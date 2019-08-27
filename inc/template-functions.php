@@ -1418,16 +1418,9 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		}
 		$response = $getresponse->upsert_the_tags_of_contact();
 	endif;
-	$data_send = array(
-		'email' => $email,
-		'tag'   => $tag,
-	);
-
-	$data_send = json_decode( json_encode( $data_send ) );
-	$data_send = http_build_query( $data_send );
 
 	header( 'Content-type: application/x-www-form-urlencoded' );
-	header( 'Location: https://aperabags.com/response-page/?' . $data_send );
+	header( 'Location: https://aperabags.com/response-page/?email=' . $email . '&tag=' . $tag );
 	return $response;
 }
 
