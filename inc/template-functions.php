@@ -593,7 +593,7 @@ function wonkasoft_theme_option_parse( $field ) {
 		<label for="' . esc_attr( $field['id'] ) . '">' . wp_kses_post( $field['label'] ) . '</label>';
 
 	if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
-		$output .= wc_help_tip( $field['description'] );
+		$output .= '<span class="woocommerce-help-tip" data-toggle="tooltip" data-placement="top" title="' . $field['description'] . '"></span>';
 	}
 
 	if ( 'ga' === $field['api'] ) :
