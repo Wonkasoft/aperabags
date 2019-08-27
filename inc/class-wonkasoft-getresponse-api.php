@@ -28,21 +28,25 @@ class Wonkasoft_GetResponse_Api {
 
 	protected $getresponse_url = null; // Will be set with api url.
 
-	public $email      = null; // Contacts email address.
+	public $email = null; // Contacts email address.
 
-	public $tag_list        = array();  // The tag list to be fetched.
+	public $tag_list = array();  // The tag list to be fetched.
 
-	public $contact_list        = array();  // The contact list to be fetched.
+	public $contact_list = array();  // The contact list to be fetched.
 
-	public $tags        = array();  // Array of tag names passed in.
+	public $tags = array();  // Array of tag names passed in.
 
-	public $tags_to_update  = array();  // The tag to be updated on contact.
+	public $tags_to_update = array();  // The tag to be updated on contact.
 
-	public $campaign_name   = null; // For the name of the campaign.
+	public $campaign_name = null; // For the name of the campaign.
 
-	public $custom_fields_list  = array(); // Custom fields list.
+	public $campaign_list = array(); // Campaign list.
 
-	public $custom_fields  = array(); // Custom field names to find ids for.
+	public $campaign_id = null; // Set to correct campaign id.
+
+	public $custom_fields_list = array(); // Custom fields list.
+
+	public $custom_fields = array(); // Custom field names to find ids for.
 
 	public $custom_fields_values  = array(); // Custom field values.
 
@@ -74,6 +78,8 @@ class Wonkasoft_GetResponse_Api {
 		$this->tags        = ( ! empty( $data['tags'] ) ) ? $data['tags'] : null;
 		$this->tags_to_update  = ( ! empty( $data['tags_to_update'] ) ) ? $data['tags_to_update'] : null;
 		$this->campaign_name   = ( ! empty( $data['campaign_name'] ) ) ? $data['campaign_name'] : null;
+		$this->campaign_list   = ( ! empty( $data['campaign_list'] ) ) ? $data['campaign_list'] : null;
+		$this->campaign_id   = ( ! empty( $data['campaign_id'] ) ) ? $data['campaign_id'] : null;
 		$this->custom_fields  = ( ! empty( $data['custom_fields'] ) ) ? $data['custom_fields'] : null;
 		$this->custom_fields_values  = ( ! empty( $data['custom_fields_values'] ) ) ? $data['custom_fields_values'] : null;
 		$this->custom_fields_list  = ( ! empty( $data['custom_fields_list'] ) ) ? $data['custom_fields_list'] : null;
@@ -82,6 +88,7 @@ class Wonkasoft_GetResponse_Api {
 		$this->tag_id = ( ! empty( $data['tag_id'] ) ) ? $data['tag_id'] : null;
 		$this->contact_list = $this->get_contact_list();
 		$this->tag_list = $this->get_the_list_of_tags();
+		$this->campaign_list = $this->get_a_list_of_campaigns();
 	}
 
 	/**

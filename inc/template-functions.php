@@ -1383,26 +1383,42 @@ add_action( 'rest_api_init', 'wonkasoft_register_custom_api' );
  * @return json    returns the response data.
  */
 function wonkasoft_getresponse_endpoint( $data ) {
-	if ( ! isset( $_GET['email'] ) && ! isset( $_GET['tag'] ) ) :
+	if ( ! isset( $_GET['email'] ) || ! isset( $_GET['tag'] || ! isset( $_GET['tag'] ) ) :
 		return 'Invalid request, contact support for more information.';
 	endif;
 
 	$email = wp_kses_post( wp_unslash( $_GET['email'] ) );
 	$tag = wp_kses_post( wp_unslash( $_GET['tag'] ) );
+	$campaign_name = wp_kses_post( wp_unslash( $_GET['campaign_name'] ) );
 
 	$prep_data = array(
 		'email' => $email,
 		'tags'   => array(
 			$tag,
 		),
+		'campaign_name' => $campaign_name,
 	);
 
 	$getresponse = new Wonkasoft_GetResponse_Api( $prep_data );
+
+	if ( empty( $getresponse->campaign_id ) ) :
+		foreach ( $getresponse->campaign_list as $campaign ) :
+			if ( $campaign_name === $campaign->name ) :
+				$getresponse->campaign_id = $campaign->campaignId;
+			endif;
+		endforeach;
+	endif;
 
 	if ( count( $getresponse->contact_list ) < 2 ) :
 		$contact_list = array_shift( $getresponse->contact_list );
 
 		$getresponse->contact_id = $contact_list->contactId;
+	else :
+		foreach ( $getresponse->contact_list as $contact ) :
+			if ( $getresponse->campaign_id === $contact->campaign->campaignId ) :
+				$getresponse->contact_id = $contact->contactId;
+			endif;
+		endforeach;
 	endif;
 
 	if ( ! empty( $getresponse->tags ) && ! empty( $getresponse->contact_id ) ) :
@@ -1430,7 +1446,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		header( 'Location: ' . $url );
 	endif;
 
-	return $getresponse;
+	return json_decode( $getresponse, true );
 }
 
 function wonka_rest_api( $api ) {
