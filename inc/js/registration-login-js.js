@@ -63,7 +63,6 @@
       var data = {
         'user_name': document.querySelector( '#user_name' ).value,
         'user_password': document.querySelector( '#user_password' ).value,
-        'form_data': REG_LINKS.data
       };
 
       xhr.onreadystatechange = function() {

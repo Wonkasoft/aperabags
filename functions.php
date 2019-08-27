@@ -319,7 +319,7 @@ function apera_bags_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	endif;
 
-	if ( is_page( 'ambassador-registration' ) || is_page( 'zip-registration' ) && get_option( 'registration_passing_args' ) !== null ) :
+	if ( is_page( 'ambassador-registration' ) || is_page( 'zip-registration' ) ) :
 		wp_enqueue_script( 'registration_script', get_stylesheet_directory_uri() . '/inc/js/registration-login-js.js', array( 'jquery' ), time(), true );
 
 		wp_localize_script(
