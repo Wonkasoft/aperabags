@@ -83,6 +83,21 @@ if ( wonkasoft_request.ga_id !== '' )
 			document.getElementById("confirm-email").innerHTML = confirm_email;
 		}
 	}
+
+	if ( document.querySelector( '#tag' ) ) 
+	{
+		if ( getUrlVars().email ) 
+		{
+			var email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("email").innerHTML = email;
+		}
+
+		if ( getUrlVars().tag ) 
+		{
+			var tag = decodeURIComponent( getUrlVars().tag ).replace( /\+/gi, ' ' );
+			document.getElementById("tag").innerHTML = tag;
+		}
+	}
 	
 	/**
 	 * This is for the checkout multistep tabs 
