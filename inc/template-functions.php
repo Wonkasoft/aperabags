@@ -1383,7 +1383,7 @@ add_action( 'rest_api_init', 'wonkasoft_register_custom_api' );
  * @return json    returns the response data.
  */
 function wonkasoft_getresponse_endpoint( $data ) {
-	if ( ! isset( $_GET['email'] ) || ! isset( $_GET['tag'] || ! isset( $_GET['campaign_name'] ) ) :
+	if ( ! isset( $_GET['email'] ) && ! isset( $_GET['tag'] ) && ! isset( $_GET['campaign_name'] ) ) :
 		return 'Invalid request, contact support for more information.';
 	endif;
 
