@@ -1384,6 +1384,9 @@ add_action( 'rest_api_init', 'wonkasoft_register_custom_api' );
  * @return json    returns the response data.
  */
 function wonkasoft_getresponse_endpoint( $data ) {
+	if ( ! isset( $_GET['email'] ) && ! isset( $_GET['tag'] ) ) :
+		return 'Invalid request, contact support for more information.';
+	endif;
 
 	$email = wp_kses_post( wp_unslash( $_GET['email'] ) );
 	$tag = wp_kses_post( wp_unslash( $_GET['tag'] ) );
@@ -1420,7 +1423,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 
 		// echo $output;
 	endif;
-	return $getresponse->get_a_list_of_custom_fields();
+	return $output;
 }
 
 function wonka_rest_api( $api ) {

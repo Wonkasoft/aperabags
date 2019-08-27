@@ -287,7 +287,7 @@ function apera_bags_scripts() {
 
 	wp_enqueue_style( 'slick-js-theme-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick-theme.css' ), array(), '1.8.0', 'all' );
 
-	wp_enqueue_style( 'apera-bags-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_uri() ), array(), time() );
+	wp_enqueue_style( 'apera-bags-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_uri() ), array(), '1.0.0' );
 
 	/**
 	 * For enqueues of scripts
@@ -338,6 +338,6 @@ add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 50 );
  * This loads the theme styles on the admin side.
  */
 function admin_styles() {
-	wp_enqueue_style( 'apera-bags-style' );
+	wp_enqueue_style( 'apera-bags-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_uri() ), array(), '1.0.0' );
 }
 add_action( 'admin_enqueue_scripts', 'admin_styles', 50 );
