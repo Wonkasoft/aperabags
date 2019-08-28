@@ -1074,6 +1074,7 @@ function make_refersion_api_calls( $entry, $form ) {
 
 		// Check if email has user account already.
 		if ( email_exists( $entry_fields['email'] ) ) {
+
 			$api_args['form_fields'] = $entry_fields;
 			update_option( 'registration_passing_args', $api_args );
 
