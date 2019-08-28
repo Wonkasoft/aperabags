@@ -1103,7 +1103,7 @@ function make_refersion_api_calls( $entry, $form ) {
 			// Inserting new user and getting user id.
 			$user_id = wp_insert_user( $userdata );
 			$user = new WP_User( $user_id );
-			if ( ! in_array( 'Apera Affiliate', $user->roles ) ) :
+			if ( ! in_array( 'apera_affiliate', $user->roles ) ) :
 				$user->add_role( 'Apera Affiliate' );
 			endif;
 
