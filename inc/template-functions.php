@@ -906,6 +906,80 @@ function ws_remove_filters_for_anonymous_class( $hook_name = '', $class_name = '
 }
 
 /**
+ * This function is filtering the states to abbriviations.
+ *
+ * @param  array $address_types An array of address types.
+ * @param  int   $form_id The ID of the form being filtered.
+ * @return array $address_types A modified array of address types.
+ */
+function filter_states_to_abbriviations( $address_types, $form_id ) {
+	$address_types['us'] = array(
+		'label' => 'United States',
+		'country' => 'US',
+		'zip_label' => 'Zip Code',
+		'state_label' => 'State',
+		'states' => array(
+			'' => '',
+			'AL' => 'Alabama',
+			'AK' => 'Alaska',
+			'AZ' => 'Arizona',
+			'AR' => 'Arkansas',
+			'CA' => 'California',
+			'CO' => 'Colorado',
+			'CT' => 'Connecticut',
+			'DE' => 'Delaware',
+			'DC' => 'District of Columbia',
+			'FL' => 'Florida',
+			'GA' => 'Georgia',
+			'GU' => 'Guam',
+			'HI' => 'Hawaii',
+			'ID' => 'Idaho',
+			'IL' => 'Illinois',
+			'IN' => 'Indiana',
+			'IA' => 'Iowa',
+			'KS' => 'Kansas',
+			'KY' => 'Kentucky',
+			'LA' => 'Louisiana',
+			'ME' => 'Maine',
+			'MD' => 'Maryland',
+			'MA' => 'Massachusetts',
+			'MI' => 'Michigan',
+			'MN' => 'Minnesota',
+			'MS' => 'Mississippi',
+			'MO' => 'Missouri',
+			'MT' => 'Montana',
+			'NE' => 'Nebraska',
+			'NV' => 'Nevada',
+			'NH' => 'New Hampshire',
+			'NJ' => 'New Jersey',
+			'NM' => 'New Mexico',
+			'NY' => 'New York',
+			'NC' => 'North Carolina',
+			'ND' => 'North Dakota',
+			'OH' => 'Ohio',
+			'OK' => 'Oklahoma',
+			'OR' => 'Oregon',
+			'PA' => 'Pennsylvania',
+			'PR' => 'Puerto Rico',
+			'RI' => 'Rhode Island',
+			'SC' => 'South Carolina',
+			'SD' => 'South Dakota',
+			'TN' => 'Tennessee',
+			'TX' => 'Texas',
+			'UT' => 'Utah',
+			'VT' => 'Vermont',
+			'VA' => 'Virginia',
+			'WA' => 'Washington',
+			'WV' => 'West Virginia',
+			'WI' => 'Wisconsin',
+			'WY' => 'Wyoming',
+		),
+	);
+	return $address_types;
+}
+add_filter( 'gform_address_types', 'filter_states_to_abbriviations', 10, 2 );
+
+/**
  * This function fires after Refersion Registration form is ssubmitted.
  *
  * @param  array $entry contains the data from surrent.
@@ -1264,80 +1338,6 @@ add_action( 'wp_ajax_registration_ajax_login', 'registration_ajax_login' );
 add_action( 'wp_ajax_nopriv_registration_ajax_login', 'registration_ajax_login' );
 
 /**
- * This function is filtering the states to abbriviations.
- *
- * @param  array $address_types An array of address types.
- * @param  int   $form_id The ID of the form being filtered.
- * @return array $address_types A modified array of address types.
- */
-function filter_states_to_abbriviations( $address_types, $form_id ) {
-	$address_types['us'] = array(
-		'label' => 'United States',
-		'country' => 'US',
-		'zip_label' => 'Zip Code',
-		'state_label' => 'State',
-		'states' => array(
-			'' => '',
-			'AL' => 'Alabama',
-			'AK' => 'Alaska',
-			'AZ' => 'Arizona',
-			'AR' => 'Arkansas',
-			'CA' => 'California',
-			'CO' => 'Colorado',
-			'CT' => 'Connecticut',
-			'DE' => 'Delaware',
-			'DC' => 'District of Columbia',
-			'FL' => 'Florida',
-			'GA' => 'Georgia',
-			'GU' => 'Guam',
-			'HI' => 'Hawaii',
-			'ID' => 'Idaho',
-			'IL' => 'Illinois',
-			'IN' => 'Indiana',
-			'IA' => 'Iowa',
-			'KS' => 'Kansas',
-			'KY' => 'Kentucky',
-			'LA' => 'Louisiana',
-			'ME' => 'Maine',
-			'MD' => 'Maryland',
-			'MA' => 'Massachusetts',
-			'MI' => 'Michigan',
-			'MN' => 'Minnesota',
-			'MS' => 'Mississippi',
-			'MO' => 'Missouri',
-			'MT' => 'Montana',
-			'NE' => 'Nebraska',
-			'NV' => 'Nevada',
-			'NH' => 'New Hampshire',
-			'NJ' => 'New Jersey',
-			'NM' => 'New Mexico',
-			'NY' => 'New York',
-			'NC' => 'North Carolina',
-			'ND' => 'North Dakota',
-			'OH' => 'Ohio',
-			'OK' => 'Oklahoma',
-			'OR' => 'Oregon',
-			'PA' => 'Pennsylvania',
-			'PR' => 'Puerto Rico',
-			'RI' => 'Rhode Island',
-			'SC' => 'South Carolina',
-			'SD' => 'South Dakota',
-			'TN' => 'Tennessee',
-			'TX' => 'Texas',
-			'UT' => 'Utah',
-			'VT' => 'Vermont',
-			'VA' => 'Virginia',
-			'WA' => 'Washington',
-			'WV' => 'West Virginia',
-			'WI' => 'Wisconsin',
-			'WY' => 'Wyoming',
-		),
-	);
-	return $address_types;
-}
-add_filter( 'gform_address_types', 'filter_states_to_abbriviations', 10, 2 );
-
-/**
  * This function handles the api request to send data to getResponse.
  *
  * @param  array $api_args an array of args for the api call.
@@ -1488,3 +1488,71 @@ function wonka_rest_api( $api ) {
 	return 'api';
 }
 add_filter( 'rest_url_prefix', 'wonka_rest_api' );
+
+function wonkasoft_api_responses_user_data( $user ) {
+	$user_id = $user->ID;
+	$refersion = ( ! empty( get_user_meta( $user->ID, 'refersion_data', false ) ) ) ? array_shift( array_shift( get_user_meta( $user->ID, 'refersion_data', false ) ) ) : '';
+	if ( ! empty( $refersion ) ) :
+		update_user_meta( $user_id, 'refersion_error', null );
+	endif;
+	$refersion_error = ( ! empty( get_user_meta( $user->ID, 'refersion_error', false ) ) ) ? array_shift( array_shift( get_user_meta( $user->ID, 'refersion_error', false ) ) ) : '';
+	$getresponse = ( ! empty( get_user_meta( $user->ID, 'getResponse_data', false ) ) ) ? array_shift( array_shift( get_user_meta( $user->ID, 'getResponse_data', false ) ) ) : '';
+	echo "<pre>\n";
+	print_r( $refersion );
+	echo "</pre>\n";
+	?>
+	<hr />
+		<div class="header-container"><h3 class="h3 header-text"><?php esc_html_e( 'Apera Affiliate and Contact Info', 'aperabags' ); ?></h3></div>
+		<table class="form-table">
+			<tbody>
+					<?php
+					if ( ! empty( $refersion_error ) ) :
+						?>
+					<tr>
+						<th>
+							<label for="affiliate-error">Refersion Error</label>
+						</th>
+						<td>
+							<p id="affiliate-error"><?php echo wp_kses_post( $refersion_error ); ?></p>
+						</td>
+					</tr>
+					<?php endif; ?>
+					<?php
+					if ( ! empty( $refersion ) ) :
+						?>
+							<tr>
+								<th>
+									<label for="affiliate-id">Affiliate Code</label>
+								</th>
+								<td>
+									<p id="affiliate-id"><?php echo wp_kses_post( $refersion ); ?></p>
+								</td>
+							</tr>
+							<tr>
+								<th>
+									<label for="affiliate-link">Affiliate Link</label>
+								</th>
+								<td>
+									<p id="affiliate-link"><?php echo wp_kses_post( $refersion->link ); ?></p>
+								</td>
+							</tr>
+					<?php endif; ?>
+					<?php
+					if ( ! empty( $getresponse ) ) :
+						?>
+				<tr>
+					<th>
+						<label for="getresponse-data">Data</label>
+					</th>
+					<td>
+						<?php echo wp_kses_post( $getresponse ); ?>
+					</td>
+				</tr>
+					<?php endif; ?>
+			</tbody>
+		</table>
+		<hr />
+	<?php
+}
+	add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 1 );
+	add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 1 );
