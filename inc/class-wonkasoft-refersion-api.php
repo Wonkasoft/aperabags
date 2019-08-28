@@ -46,28 +46,28 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $offer = '';
+	public $offer = '';
 
 	/**
 	 * Affiliate first name.
 	 *
 	 * @var string
 	 */
-	protected $first_name = '';
+	public $first_name = '';
 
 	/**
 	 * Affiliate last name.
 	 *
 	 * @var string
 	 */
-	protected $last_name = '';
+	public $last_name = '';
 
 	/**
 	 * Affiliate Company.
 	 *
 	 * @var string
 	 */
-	protected $company = '';
+	public $company = '';
 
 	/**
 	 * Affiliate email.
@@ -76,7 +76,7 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $email = '';
+	public $email = '';
 
 	/**
 	 * Affiliate paypal email.
@@ -85,7 +85,7 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $paypal_email = '';
+	public $paypal_email = '';
 
 	/**
 	 * Affiliate password.
@@ -94,35 +94,35 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $password = '';
+	public $password = '';
 
 	/**
 	 * Affiliate address 1.
 	 *
 	 * @var string
 	 */
-	protected $address1 = '';
+	public $address1 = '';
 
 	/**
 	 * Affiliate address 2.
 	 *
 	 * @var string
 	 */
-	protected $address2 = '';
+	public $address2 = '';
 
 	/**
 	 * Affiliate city.
 	 *
 	 * @var string
 	 */
-	protected $city = '';
+	public $city = '';
 
 	/**
 	 * Affiliate zip code.
 	 *
 	 * @var string
 	 */
-	protected $zip = '';
+	public $zip = '';
 
 	/**
 	 * Affiliate country.
@@ -131,7 +131,7 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $country = 'US';
+	public $country = 'US';
 
 	/**
 	 * Affiliate state.
@@ -140,14 +140,14 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $state = '';
+	public $state = '';
 
 	/**
 	 * Affiliate phone.
 	 *
 	 * @var string
 	 */
-	protected $phone = '';
+	public $phone = '';
 
 	/**
 	 * Send welcome email.
@@ -156,7 +156,7 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var boolean
 	 */
-	protected $send_welcome = false;
+	public $send_welcome = false;
 
 	/**
 	 * Affiliate code.
@@ -165,7 +165,7 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $affiliate_code = '';
+	public $affiliate_code = '';
 
 	/**
 	 * Affiliate keyword.
@@ -174,7 +174,7 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $keyword = '';
+	public $keyword = '';
 
 	/**
 	 * Search limit.
@@ -183,7 +183,7 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $limit = '';
+	public $limit = '';
 
 	/**
 	 * Set page offset.
@@ -192,7 +192,7 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $page = '';
+	public $page = '';
 
 	/**
 	 * Conversion Trigger Type.
@@ -201,7 +201,7 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $type = '';
+	public $type = '';
 
 	/**
 	 * Trigger.
@@ -210,14 +210,14 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $trigger = '';
+	public $trigger = '';
 
 	/**
 	 * Offer id.
 	 *
 	 * @var string
 	 */
-	protected $offer_id = '';
+	public $offer_id = '';
 
 	/**
 	 * SKUS in an array of objects.
@@ -232,14 +232,14 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var array
 	 */
-	protected $skus = array();
+	public $skus = array();
 
 	/**
 	 * Array of convertion ids.
 	 *
 	 * @var array
 	 */
-	protected $conversion_ids = array();
+	public $conversion_ids = array();
 
 	/**
 	 * For Manual payment method.
@@ -253,14 +253,21 @@ class Wonkasoft_Refersion_Api {
 	 *
 	 * @var string
 	 */
-	protected $report_id = '';
+	public $report_id = '';
 
 	/**
 	 * An array of custom fields.
 	 *
 	 * @var array
 	 */
-	protected $custom_fields = array();
+	public $custom_fields = array();
+
+	/**
+	 * An object of a list of affiliates.
+	 *
+	 * @var object
+	 */
+	public $affiliate_list = null;
 
 	/**
 	 * Class Init constructor.
@@ -297,6 +304,12 @@ class Wonkasoft_Refersion_Api {
 		$this->conversion_ids = ( ! empty( $data['conversion_ids'] ) ) ? $data['conversion_ids'] : null;
 		$this->report_id = ( ! empty( $data['report_id'] ) ) ? $data['report_id'] : null;
 		$this->custom_fields = ( ! empty( $data['custom_fields'] ) ) ? $data['custom_fields'] : null;
+		$this->affiliate_list = $this->list_all_affiliates();
+		foreach ( $this->affiliate_list->results as $affiliate ) {
+			if ( $this->email === $affiliate->email ) :
+				$this->affiliate_code = $affiliate->id;
+			endif;
+		}
 	}
 
 	/**

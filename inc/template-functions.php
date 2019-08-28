@@ -1014,15 +1014,6 @@ function make_refersion_api_calls( $entry, $form ) {
 	// Get current user ID.
 	$user_id = $current_user->ID;
 
-	// Setting getResponse api args.
-	$api_args = array(
-		'email'               => '',
-		'tags'                 => array(
-			$set_tag,
-		),
-		'campaign_name'       => $campaign_name,
-	);
-
 	$entry_fields = array();
 	$entry_fields['custom_fields'] = array();
 	$set_labels = array(
@@ -1070,6 +1061,15 @@ function make_refersion_api_calls( $entry, $form ) {
 		endif;
 	}
 
+	// Setting getResponse api args.
+	$api_args = array(
+		'email'               => $entry_fields['email'],
+		'tags'                 => array(
+			$set_tag,
+		),
+		'campaign_name'       => $campaign_name,
+	);
+
 	if ( 0 === $user_id ) :
 
 		// Check if email has user account already.
@@ -1106,39 +1106,62 @@ function make_refersion_api_calls( $entry, $form ) {
 
 			$refersion_response = $new_affiliate_created->add_new_affiliate();
 
-			if ( ! empty( $refersion_response->errors ) ) :
-				// Setting affiliate code and link to send to getResponse.
-				$user_info = get_userdata( $user_id );
-				$api_args['email']  = $entry_fields['email'];
-				$api_args['custom_fields'] = array(
-					'affiliate_error_code',
-				);
-				$api_args['custom_fields_values'] = array(
-					'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
-				);
-				// Send to getResponse.
-				$getresponse = get_response_api_call( $api_args );
+			if ( 'failed' !== $refersion_response->status ) :
 
-				update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
-				update_user_meta( $user_id, 'getResponse_data', $getresponse );
-			else :
+				if ( ! empty( $refersion_response->errors ) ) :
 
-				// Setting affiliate code and link to send to getResponse.
-				$user_info = get_userdata( $user_id );
-				$api_args['email']  = $entry_fields['email'];
-				$api_args['custom_fields'] = array(
-					'affiliate_code',
-					'affiliate_link',
-				);
-				$api_args['custom_fields_values'] = array(
-					'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
-					'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-				);
-				// Send to getResponse.
-				$getresponse = get_response_api_call( $api_args );
+					if ( ! empty( $refersion_response->affiliate_code ) ) :
 
-				update_user_meta( $user_id, 'refersion_data', $refersion_response );
-				update_user_meta( $user_id, 'getResponse_data', $getresponse );
+						$refersion_response = $new_affiliate_created->get_affiliate();
+
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_code',
+							'affiliate_link',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+						);
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_data', $refersion_response );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+
+					else :
+
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_error_code',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
+						);
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+
+					endif;
+					else :
+
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_code',
+							'affiliate_link',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+						);
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_data', $refersion_response );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+				endif;
 			endif;
 
 		}
@@ -1155,37 +1178,62 @@ function make_refersion_api_calls( $entry, $form ) {
 				$user->add_role( 'Apera Affiliate' );
 			endif;
 
-			if ( ! empty( $refersion_response->errors ) ) :
-				// Setting affiliate code and link to send to getResponse.
-				$api_args['email']  = $entry_fields['email'];
-				$api_args['custom_fields'] = array(
-					'affiliate_error_code',
-				);
-				$api_args['custom_fields_values'] = array(
-					'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
-				);
-				// Send to getResponse.
-				$getresponse = get_response_api_call( $api_args );
+			if ( 'failed' !== $refersion_response->status ) :
 
-				update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
-				update_user_meta( $user_id, 'getResponse_data', $getresponse );
-			else :
+				if ( ! empty( $refersion_response->errors ) ) :
 
-				// Setting affiliate code and link to send to getResponse.
-				$api_args['email']  = $entry_fields['email'];
-				$api_args['custom_fields'] = array(
-					'affiliate_code',
-					'affiliate_link',
-				);
-				$api_args['custom_fields_values'] = array(
-					'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
-					'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-				);
-				// Send to getResponse.
-				$getresponse = get_response_api_call( $api_args );
+					if ( ! empty( $refersion_response->affiliate_code ) ) :
 
-				update_user_meta( $user_id, 'refersion_data', $refersion_response );
-				update_user_meta( $user_id, 'getResponse_data', $getresponse );
+						$refersion_response = $new_affiliate_created->get_affiliate();
+
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_code',
+							'affiliate_link',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+						);
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_data', $refersion_response );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+
+					else :
+
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_error_code',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
+						);
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+
+					endif;
+					else :
+
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_code',
+							'affiliate_link',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+						);
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_data', $refersion_response );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+				endif;
 			endif;
 
 		endif;
@@ -1224,9 +1272,8 @@ function registration_ajax_login() {
 			wp_send_json_error( $response );
 		} else {
 			$user_id = $user_signon->ID;
-			$user = new WP_User( $user_id );
-			if ( ! in_array( 'Apera Affiliate', $user->roles ) ) :
-				$user->add_role( 'Apera Affiliate' );
+			if ( ! in_array( 'apera_affiliate', $user_signon->roles ) ) :
+				$user_signon->add_role( 'Apera Affiliate' );
 			endif;
 
 			$new_affiliate_created = new Wonkasoft_Refersion_Api( $form_data );
@@ -1234,39 +1281,60 @@ function registration_ajax_login() {
 			$refersion_response = $new_affiliate_created->add_new_affiliate();
 
 			if ( 'failed' !== $refersion_response->status ) :
+
 				if ( ! empty( $refersion_response->errors ) ) :
-					// Setting affiliate code and link to send to getResponse.
-					$user_info = get_userdata( $user_id );
-					$api_args['email'] = $user_info->user_email;
-					$api_args['custom_fields'] = array(
-						'affiliate_error_code',
-					);
-					$api_args['custom_fields_values'] = array(
-						'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
-					);
-					// Send to getResponse.
-					$getresponse = get_response_api_call( $api_args );
 
-					update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
-					update_user_meta( $user_id, 'getResponse_data', $getresponse );
-				else :
+					if ( ! empty( $refersion_response->affiliate_code ) ) :
 
-					// Setting affiliate code and link to send to getResponse.
-					$user_info = get_userdata( $user_id );
-					$api_args['email'] = $user_info->user_email;
-					$api_args['custom_fields'] = array(
-						'affiliate_code',
-						'affiliate_link',
-					);
-					$api_args['custom_fields_values'] = array(
-						'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
-						'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-					);
-					// Send to getResponse.
-					$getresponse = get_response_api_call( $api_args );
+						$refersion_response = $new_affiliate_created->get_affiliate();
 
-					update_user_meta( $user_id, 'refersion_data', $refersion_response );
-					update_user_meta( $user_id, 'getResponse_data', $getresponse );
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_code',
+							'affiliate_link',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+						);
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_data', $refersion_response );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+
+					else :
+
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_error_code',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
+						);
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+
+					endif;
+					else :
+
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_code',
+							'affiliate_link',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+						);
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_data', $refersion_response );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
 				endif;
 			endif;
 
@@ -1281,45 +1349,70 @@ function registration_ajax_login() {
 		}
 
 		else :
-
+			$user = wp_get_current_user();
+			$user_id = $user->ID;
+			if ( ! in_array( 'apera_affiliate', $user->roles ) ) :
+				$user->add_role( 'Apera Affiliate' );
+			endif;
 			$new_affiliate_created = new Wonkasoft_Refersion_Api( $form_data );
 
 			$refersion_response = $new_affiliate_created->add_new_affiliate();
 
 			if ( 'failed' !== $refersion_response->status ) :
+
 				if ( ! empty( $refersion_response->errors ) ) :
-					// Setting affiliate code and link to send to getResponse.
-					$user_info = get_userdata( $user_id );
-					$api_args['email'] = $form_data['email'];
-					$api_args['custom_fields'] = array(
-						'affiliate_error_code',
-					);
-					$api_args['custom_fields_values'] = array(
-						'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
-					);
-					// Send to getResponse.
-					$getresponse = get_response_api_call( $api_args );
 
-					update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
-					update_user_meta( $user_id, 'getResponse_data', $getresponse );
-				else :
+					if ( ! empty( $refersion_response->affiliate_code ) ) :
 
-					// Setting affiliate code and link to send to getResponse.
-					$user_info = get_userdata( $user_id );
-					$api_args['email'] = $form_data['email'];
-					$api_args['custom_fields'] = array(
-						'affiliate_code',
-						'affiliate_link',
-					);
-					$api_args['custom_fields_values'] = array(
-						'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
-						'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-					);
-					// Send to getResponse.
-					$getresponse = get_response_api_call( $api_args );
+						$refersion_response = $new_affiliate_created->get_affiliate();
 
-					update_user_meta( $user_id, 'refersion_data', $refersion_response );
-					update_user_meta( $user_id, 'getResponse_data', $getresponse );
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_code',
+							'affiliate_link',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+						);
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_data', $refersion_response );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+
+					else :
+
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_error_code',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
+						);
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+
+					endif;
+					else :
+
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_code',
+							'affiliate_link',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+						);
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_data', $refersion_response );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
 				endif;
 			endif;
 
@@ -1490,17 +1583,21 @@ function wonka_rest_api( $api ) {
 add_filter( 'rest_url_prefix', 'wonka_rest_api' );
 
 function wonkasoft_api_responses_user_data( $user ) {
-	$user_id = $user->ID;
-	$refersion = ( ! empty( get_user_meta( $user->ID, 'refersion_data', false ) ) ) ? array_shift( array_shift( get_user_meta( $user->ID, 'refersion_data', false ) ) ) : '';
-	if ( ! empty( $refersion ) ) :
-		update_user_meta( $user_id, 'refersion_error', null );
+	if ( in_array( 'apera_affiliate', $user->roles ) ) :
+		$user_id = $user->ID;
+		echo "<pre>\n";
+		print_r( $user );
+		echo "</pre>\n";
+		$refersion = ( ! empty( get_user_meta( $user->ID, 'refersion_data', false ) ) ) ? array_shift( array_shift( get_user_meta( $user->ID, 'refersion_data', false ) ) ) : '';
+		if ( ! empty( $refersion ) ) :
+			update_user_meta( $user_id, 'refersion_error', null );
 	endif;
-	$refersion_error = ( ! empty( get_user_meta( $user->ID, 'refersion_error', false ) ) ) ? array_shift( array_shift( get_user_meta( $user->ID, 'refersion_error', false ) ) ) : '';
-	$getresponse = ( ! empty( get_user_meta( $user->ID, 'getResponse_data', false ) ) ) ? array_shift( array_shift( get_user_meta( $user->ID, 'getResponse_data', false ) ) ) : '';
-	echo "<pre>\n";
-	print_r( $refersion );
-	echo "</pre>\n";
-	?>
+		$refersion_error = ( ! empty( get_user_meta( $user->ID, 'refersion_error', false ) ) ) ? array_shift( array_shift( get_user_meta( $user->ID, 'refersion_error', false ) ) ) : '';
+		$getresponse = ( ! empty( get_user_meta( $user->ID, 'getResponse_data', false ) ) ) ? array_shift( array_shift( get_user_meta( $user->ID, 'getResponse_data', false ) ) ) : '';
+		echo "<pre>\n";
+		print_r( $refersion );
+		echo "</pre>\n";
+		?>
 	<hr />
 		<div class="header-container"><h3 class="h3 header-text"><?php esc_html_e( 'Apera Affiliate and Contact Info', 'aperabags' ); ?></h3></div>
 		<table class="form-table">
@@ -1552,7 +1649,8 @@ function wonkasoft_api_responses_user_data( $user ) {
 			</tbody>
 		</table>
 		<hr />
-	<?php
+		<?php
+	endif;
 }
 	add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 1 );
 	add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 1 );
