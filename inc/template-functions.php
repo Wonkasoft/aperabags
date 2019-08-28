@@ -1101,6 +1101,10 @@ function make_refersion_api_calls( $entry, $form ) {
 
 			// Inserting new user and getting user id.
 			$user_id = wp_insert_user( $userdata );
+			$user = new WP_User( $user_id );
+			if ( ! in_array( 'Apera Affiliate', $user->roles ) ) :
+				$user->add_role( 'Apera Affiliate' );
+			endif;
 
 			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
 
