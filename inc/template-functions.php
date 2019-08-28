@@ -1070,56 +1070,238 @@ function make_refersion_api_calls( $entry, $form ) {
 		'campaign_name'       => $campaign_name,
 	);
 
-	$args = array(
-		'post_type' => 'shop_coupon',
-		'post_status' => 'publish',
-		'posts_per_page' => -1,
-	);
-
-	$coupons = new WP_Query( $args );
-	$found = false;
-	foreach ( $coupons->posts as $coupon ) :
-		if ( $entry_fields['company'] === $coupon->post_name ) :
-			$found = true;
-		endif;
-	endforeach;
-	if ( 'Refersion Registration Zip' === $form['title'] && $found ) :
-		/**
-		 * Create a coupon programatically
-		 */
-		$coupon_code = $entry_fields['company']; // Code
-		$amount = '10'; // Amount
-		$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
-
-		$coupon = array(
-			'post_title' => $coupon_code,
-			'post_content' => '',
-			'post_status' => 'publish',
-			'post_author' => 1,
-			'post_type'     => 'shop_coupon',
-		);
-
-		$new_coupon_id = wp_insert_post( $coupon );
-
-		// Add meta
-		update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-		update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
-		update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-		update_post_meta( $new_coupon_id, 'product_ids', '' );
-		update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-		update_post_meta( $new_coupon_id, 'usage_limit', '' );
-		update_post_meta( $new_coupon_id, 'expiry_date', '' );
-		update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-		update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-	endif;
-
 	if ( 0 === $user_id ) :
 
 		// Check if email has user account already.
 		if ( email_exists( $entry_fields['email'] ) ) {
+			$user = get_user_by( 'email', $entry_fields['email'] );
 
-			$api_args['form_fields'] = $entry_fields;
-			update_option( 'registration_passing_args', $api_args );
+			if ( ! in_array( 'apera_affiliate', $user->roles ) ) :
+				wp_update_user(
+					array(
+						'ID' => $user_id,
+						'role' => 'apera_affiliate',
+					)
+				);
+			endif;
+
+			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
+
+			$refersion_response = $new_affiliate_created->add_new_affiliate();
+
+			if ( 'failed' !== $refersion_response->status ) :
+
+				if ( ! empty( $refersion_response->errors ) ) :
+
+					if ( ! empty( $new_affiliate_created->affiliate_code ) ) :
+
+						$refersion_response = $new_affiliate_created->get_affiliate();
+
+						// Setting affiliate code and link to send to getResponse.
+						$api_args['custom_fields'] = array(
+							'affiliate_code',
+							'affiliate_link',
+						);
+						$api_args['custom_fields_values'] = array(
+							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+						);
+
+						$args = array(
+							'post_type' => 'shop_coupon',
+							'post_status' => 'publish',
+							'posts_per_page' => -1,
+						);
+
+						$coupons = new WP_Query( $args );
+						$foundzip = false;
+						$foundambassador = false;
+						foreach ( $coupons->posts as $coupon ) :
+							if ( $entry_fields['company'] === $coupon->post_name ) :
+								$foundzip = true;
+							endif;
+
+							if ( $entry_fields['first'] . $refersion_response->id === $coupon->post_name ) :
+								$foundambassador = true;
+							endif;
+						endforeach;
+						if ( 'Refersion Registration Zip' === $form['title'] && $foundzip ) :
+							/**
+							 * Create a coupon programatically
+							 */
+							$coupon_code = $entry_fields['company']; // Code
+							$amount = '10'; // Amount
+							$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+
+							$coupon = array(
+								'post_title' => $coupon_code,
+								'post_content' => '',
+								'post_status' => 'publish',
+								'post_author' => 1,
+								'post_type'     => 'shop_coupon',
+							);
+
+							$new_coupon_id = wp_insert_post( $coupon );
+
+							// Add meta
+							update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+							update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+							update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+							update_post_meta( $new_coupon_id, 'product_ids', '' );
+							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+							update_post_meta( $new_coupon_id, 'usage_limit', '' );
+							update_post_meta( $new_coupon_id, 'expiry_date', '' );
+							update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+							update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+						endif;
+
+						if ( 'Refersion Registration Ambassador' === $form['title'] && $foundambassador ) :
+							/**
+							 * Create a coupon programatically
+							 */
+							$coupon_code = $entry_fields['first'] . $refersion_response->id; // Code
+							$amount = '10'; // Amount
+							$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+
+							$coupon = array(
+								'post_title' => $coupon_code,
+								'post_content' => '',
+								'post_status' => 'publish',
+								'post_author' => 1,
+								'post_type'     => 'shop_coupon',
+							);
+
+							$new_coupon_id = wp_insert_post( $coupon );
+
+							// Add meta
+							update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+							update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+							update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+							update_post_meta( $new_coupon_id, 'product_ids', '' );
+							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+							update_post_meta( $new_coupon_id, 'usage_limit', '' );
+							update_post_meta( $new_coupon_id, 'expiry_date', '' );
+							update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+							update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+						endif;
+						// Send to getResponse.
+						$getresponse = get_response_api_call( $api_args );
+
+						update_user_meta( $user_id, 'refersion_data', $refersion_response );
+						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+
+						else :
+
+							// Setting affiliate code and link to send to getResponse.
+							$api_args['custom_fields'] = array(
+								'affiliate_error_code',
+							);
+							$api_args['custom_fields_values'] = array(
+								'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
+							);
+							// Send to getResponse.
+							$getresponse = get_response_api_call( $api_args );
+
+							update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+							update_user_meta( $user_id, 'getResponse_data', $getresponse );
+
+					endif;
+						else :
+
+							// Setting affiliate code and link to send to getResponse.
+							$api_args['custom_fields'] = array(
+								'affiliate_code',
+								'affiliate_link',
+							);
+							$api_args['custom_fields_values'] = array(
+								'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+								'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+							);
+
+							$args = array(
+								'post_type' => 'shop_coupon',
+								'post_status' => 'publish',
+								'posts_per_page' => -1,
+							);
+
+							$coupons = new WP_Query( $args );
+							$foundzip = false;
+							$foundambassador = false;
+							foreach ( $coupons->posts as $coupon ) :
+								if ( $entry_fields['company'] === $coupon->post_name ) :
+									$foundzip = true;
+								endif;
+
+								if ( $entry_fields['first'] . $refersion_response->id === $coupon->post_name ) :
+									$foundambassador = true;
+								endif;
+							endforeach;
+							if ( 'Refersion Registration Zip' === $form['title'] && $foundzip ) :
+								/**
+								 * Create a coupon programatically
+								 */
+								$coupon_code = $entry_fields['company']; // Code
+								$amount = '10'; // Amount
+								$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+
+								$coupon = array(
+									'post_title' => $coupon_code,
+									'post_content' => '',
+									'post_status' => 'publish',
+									'post_author' => 1,
+									'post_type'     => 'shop_coupon',
+								);
+
+								$new_coupon_id = wp_insert_post( $coupon );
+
+								// Add meta
+								update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+								update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+								update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+								update_post_meta( $new_coupon_id, 'product_ids', '' );
+								update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+								update_post_meta( $new_coupon_id, 'usage_limit', '' );
+								update_post_meta( $new_coupon_id, 'expiry_date', '' );
+								update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+								update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+							endif;
+
+							if ( 'Refersion Registration Ambassador' === $form['title'] && $foundambassador ) :
+								/**
+								 * Create a coupon programatically
+								 */
+								$coupon_code = $entry_fields['first'] . $refersion_response->id; // Code
+								$amount = '10'; // Amount
+								$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+
+								$coupon = array(
+									'post_title' => $coupon_code,
+									'post_content' => '',
+									'post_status' => 'publish',
+									'post_author' => 1,
+									'post_type'     => 'shop_coupon',
+								);
+
+								$new_coupon_id = wp_insert_post( $coupon );
+
+								// Add meta
+								update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+								update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+								update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+								update_post_meta( $new_coupon_id, 'product_ids', '' );
+								update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+								update_post_meta( $new_coupon_id, 'usage_limit', '' );
+								update_post_meta( $new_coupon_id, 'expiry_date', '' );
+								update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+								update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+							endif;
+							// Send to getResponse.
+							$getresponse = get_response_api_call( $api_args );
+
+							update_user_meta( $user_id, 'refersion_data', $refersion_response );
+							update_user_meta( $user_id, 'getResponse_data', $getresponse );
+				endif;
+			endif;
 
 		} else {
 
@@ -1176,44 +1358,202 @@ function make_refersion_api_calls( $entry, $form ) {
 							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
 							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
 						);
+
+						$args = array(
+							'post_type' => 'shop_coupon',
+							'post_status' => 'publish',
+							'posts_per_page' => -1,
+						);
+
+						$coupons = new WP_Query( $args );
+						$foundzip = false;
+						$foundambassador = false;
+						foreach ( $coupons->posts as $coupon ) :
+							if ( $entry_fields['company'] === $coupon->post_name ) :
+								$foundzip = true;
+							endif;
+
+							if ( $entry_fields['first'] . $refersion_response->id === $coupon->post_name ) :
+								$foundambassador = true;
+							endif;
+						endforeach;
+						if ( 'Refersion Registration Zip' === $form['title'] && $foundzip ) :
+							/**
+							 * Create a coupon programatically
+							 */
+							$coupon_code = $entry_fields['company']; // Code
+							$amount = '10'; // Amount
+							$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+
+							$coupon = array(
+								'post_title' => $coupon_code,
+								'post_content' => '',
+								'post_status' => 'publish',
+								'post_author' => 1,
+								'post_type'     => 'shop_coupon',
+							);
+
+							$new_coupon_id = wp_insert_post( $coupon );
+
+							// Add meta
+							update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+							update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+							update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+							update_post_meta( $new_coupon_id, 'product_ids', '' );
+							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+							update_post_meta( $new_coupon_id, 'usage_limit', '' );
+							update_post_meta( $new_coupon_id, 'expiry_date', '' );
+							update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+							update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+						endif;
+
+						if ( 'Refersion Registration Ambassador' === $form['title'] && $foundambassador ) :
+							/**
+							 * Create a coupon programatically
+							 */
+							$coupon_code = $entry_fields['first'] . $refersion_response->id; // Code
+							$amount = '10'; // Amount
+							$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+
+							$coupon = array(
+								'post_title' => $coupon_code,
+								'post_content' => '',
+								'post_status' => 'publish',
+								'post_author' => 1,
+								'post_type'     => 'shop_coupon',
+							);
+
+							$new_coupon_id = wp_insert_post( $coupon );
+
+							// Add meta
+							update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+							update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+							update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+							update_post_meta( $new_coupon_id, 'product_ids', '' );
+							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+							update_post_meta( $new_coupon_id, 'usage_limit', '' );
+							update_post_meta( $new_coupon_id, 'expiry_date', '' );
+							update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+							update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+						endif;
+
 						// Send to getResponse.
 						$getresponse = get_response_api_call( $api_args );
 
 						update_user_meta( $user_id, 'refersion_data', $refersion_response );
 						update_user_meta( $user_id, 'getResponse_data', $getresponse );
 
-					else :
+						else :
 
-						// Setting affiliate code and link to send to getResponse.
-						$api_args['custom_fields'] = array(
-							'affiliate_error_code',
-						);
-						$api_args['custom_fields_values'] = array(
-							'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
-						);
-						// Send to getResponse.
-						$getresponse = get_response_api_call( $api_args );
+							// Setting affiliate code and link to send to getResponse.
+							$api_args['custom_fields'] = array(
+								'affiliate_error_code',
+							);
+							$api_args['custom_fields_values'] = array(
+								'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
+							);
+							// Send to getResponse.
+							$getresponse = get_response_api_call( $api_args );
 
-						update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
-						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+							update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 
 					endif;
-					else :
+						else :
 
-						// Setting affiliate code and link to send to getResponse.
-						$api_args['custom_fields'] = array(
-							'affiliate_code',
-							'affiliate_link',
-						);
-						$api_args['custom_fields_values'] = array(
-							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
-							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-						);
-						// Send to getResponse.
-						$getresponse = get_response_api_call( $api_args );
+							// Setting affiliate code and link to send to getResponse.
+							$api_args['custom_fields'] = array(
+								'affiliate_code',
+								'affiliate_link',
+							);
+							$api_args['custom_fields_values'] = array(
+								'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+								'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+							);
 
-						update_user_meta( $user_id, 'refersion_data', $refersion_response );
-						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+							$args = array(
+								'post_type' => 'shop_coupon',
+								'post_status' => 'publish',
+								'posts_per_page' => -1,
+							);
+
+							$coupons = new WP_Query( $args );
+							$foundzip = false;
+							$foundambassador = false;
+							foreach ( $coupons->posts as $coupon ) :
+								if ( $entry_fields['company'] === $coupon->post_name ) :
+									$foundzip = true;
+								endif;
+
+								if ( $entry_fields['first'] . $refersion_response->id === $coupon->post_name ) :
+									$foundambassador = true;
+								endif;
+							endforeach;
+							if ( 'Refersion Registration Zip' === $form['title'] && $foundzip ) :
+								/**
+								 * Create a coupon programatically
+								 */
+								$coupon_code = $entry_fields['company']; // Code
+								$amount = '10'; // Amount
+								$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+
+								$coupon = array(
+									'post_title' => $coupon_code,
+									'post_content' => '',
+									'post_status' => 'publish',
+									'post_author' => 1,
+									'post_type'     => 'shop_coupon',
+								);
+
+								$new_coupon_id = wp_insert_post( $coupon );
+
+								// Add meta
+								update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+								update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+								update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+								update_post_meta( $new_coupon_id, 'product_ids', '' );
+								update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+								update_post_meta( $new_coupon_id, 'usage_limit', '' );
+								update_post_meta( $new_coupon_id, 'expiry_date', '' );
+								update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+								update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+							endif;
+
+							if ( 'Refersion Registration Ambassador' === $form['title'] && $foundambassador ) :
+								/**
+								 * Create a coupon programatically
+								 */
+								$coupon_code = $entry_fields['first'] . $refersion_response->id; // Code
+								$amount = '10'; // Amount
+								$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+
+								$coupon = array(
+									'post_title' => $coupon_code,
+									'post_content' => '',
+									'post_status' => 'publish',
+									'post_author' => 1,
+									'post_type'     => 'shop_coupon',
+								);
+
+								$new_coupon_id = wp_insert_post( $coupon );
+
+								// Add meta
+								update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+								update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+								update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+								update_post_meta( $new_coupon_id, 'product_ids', '' );
+								update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+								update_post_meta( $new_coupon_id, 'usage_limit', '' );
+								update_post_meta( $new_coupon_id, 'expiry_date', '' );
+								update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+								update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+							endif;
+
+							// Send to getResponse.
+							$getresponse = get_response_api_call( $api_args );
+
+							update_user_meta( $user_id, 'refersion_data', $refersion_response );
+							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 				endif;
 			endif;
 
@@ -1253,44 +1593,202 @@ function make_refersion_api_calls( $entry, $form ) {
 							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
 							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
 						);
+
+						$args = array(
+							'post_type' => 'shop_coupon',
+							'post_status' => 'publish',
+							'posts_per_page' => -1,
+						);
+
+						$coupons = new WP_Query( $args );
+						$foundzip = false;
+						$foundambassador = false;
+						foreach ( $coupons->posts as $coupon ) :
+							if ( $entry_fields['company'] === $coupon->post_name ) :
+								$foundzip = true;
+							endif;
+
+							if ( $entry_fields['first'] . $refersion_response->id === $coupon->post_name ) :
+								$foundambassador = true;
+							endif;
+						endforeach;
+						if ( 'Refersion Registration Zip' === $form['title'] && $foundzip ) :
+							/**
+							 * Create a coupon programatically
+							 */
+							$coupon_code = $entry_fields['company']; // Code
+							$amount = '10'; // Amount
+							$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+
+							$coupon = array(
+								'post_title' => $coupon_code,
+								'post_content' => '',
+								'post_status' => 'publish',
+								'post_author' => 1,
+								'post_type'     => 'shop_coupon',
+							);
+
+							$new_coupon_id = wp_insert_post( $coupon );
+
+							// Add meta
+							update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+							update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+							update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+							update_post_meta( $new_coupon_id, 'product_ids', '' );
+							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+							update_post_meta( $new_coupon_id, 'usage_limit', '' );
+							update_post_meta( $new_coupon_id, 'expiry_date', '' );
+							update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+							update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+						endif;
+
+						if ( 'Refersion Registration Ambassador' === $form['title'] && $foundambassador ) :
+							/**
+							 * Create a coupon programatically
+							 */
+							$coupon_code = $entry_fields['first'] . $refersion_response->id; // Code
+							$amount = '10'; // Amount
+							$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+
+							$coupon = array(
+								'post_title' => $coupon_code,
+								'post_content' => '',
+								'post_status' => 'publish',
+								'post_author' => 1,
+								'post_type'     => 'shop_coupon',
+							);
+
+							$new_coupon_id = wp_insert_post( $coupon );
+
+							// Add meta
+							update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+							update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+							update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+							update_post_meta( $new_coupon_id, 'product_ids', '' );
+							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+							update_post_meta( $new_coupon_id, 'usage_limit', '' );
+							update_post_meta( $new_coupon_id, 'expiry_date', '' );
+							update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+							update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+						endif;
+
 						// Send to getResponse.
 						$getresponse = get_response_api_call( $api_args );
 
 						update_user_meta( $user_id, 'refersion_data', $refersion_response );
 						update_user_meta( $user_id, 'getResponse_data', $getresponse );
 
-					else :
+						else :
 
-						// Setting affiliate code and link to send to getResponse.
-						$api_args['custom_fields'] = array(
-							'affiliate_error_code',
-						);
-						$api_args['custom_fields_values'] = array(
-							'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
-						);
-						// Send to getResponse.
-						$getresponse = get_response_api_call( $api_args );
+							// Setting affiliate code and link to send to getResponse.
+							$api_args['custom_fields'] = array(
+								'affiliate_error_code',
+							);
+							$api_args['custom_fields_values'] = array(
+								'affiliate_error_code'  => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
+							);
+							// Send to getResponse.
+							$getresponse = get_response_api_call( $api_args );
 
-						update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
-						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+							update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 
 					endif;
-					else :
+						else :
 
-						// Setting affiliate code and link to send to getResponse.
-						$api_args['custom_fields'] = array(
-							'affiliate_code',
-							'affiliate_link',
-						);
-						$api_args['custom_fields_values'] = array(
-							'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
-							'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-						);
-						// Send to getResponse.
-						$getresponse = get_response_api_call( $api_args );
+							// Setting affiliate code and link to send to getResponse.
+							$api_args['custom_fields'] = array(
+								'affiliate_code',
+								'affiliate_link',
+							);
+							$api_args['custom_fields_values'] = array(
+								'affiliate_code'    => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+								'affiliate_link'    => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+							);
 
-						update_user_meta( $user_id, 'refersion_data', $refersion_response );
-						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+							$args = array(
+								'post_type' => 'shop_coupon',
+								'post_status' => 'publish',
+								'posts_per_page' => -1,
+							);
+
+							$coupons = new WP_Query( $args );
+							$foundzip = false;
+							$foundambassador = false;
+							foreach ( $coupons->posts as $coupon ) :
+								if ( $entry_fields['company'] === $coupon->post_name ) :
+									$foundzip = true;
+								endif;
+
+								if ( $entry_fields['first'] . $refersion_response->id === $coupon->post_name ) :
+									$foundambassador = true;
+								endif;
+							endforeach;
+							if ( 'Refersion Registration Zip' === $form['title'] && $foundzip ) :
+								/**
+								 * Create a coupon programatically
+								 */
+								$coupon_code = $entry_fields['company']; // Code
+								$amount = '10'; // Amount
+								$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+
+								$coupon = array(
+									'post_title' => $coupon_code,
+									'post_content' => '',
+									'post_status' => 'publish',
+									'post_author' => 1,
+									'post_type'     => 'shop_coupon',
+								);
+
+								$new_coupon_id = wp_insert_post( $coupon );
+
+								// Add meta
+								update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+								update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+								update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+								update_post_meta( $new_coupon_id, 'product_ids', '' );
+								update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+								update_post_meta( $new_coupon_id, 'usage_limit', '' );
+								update_post_meta( $new_coupon_id, 'expiry_date', '' );
+								update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+								update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+							endif;
+
+							if ( 'Refersion Registration Ambassador' === $form['title'] && $foundambassador ) :
+								/**
+								 * Create a coupon programatically
+								 */
+								$coupon_code = $entry_fields['first'] . $refersion_response->id; // Code
+								$amount = '10'; // Amount
+								$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product
+
+								$coupon = array(
+									'post_title' => $coupon_code,
+									'post_content' => '',
+									'post_status' => 'publish',
+									'post_author' => 1,
+									'post_type'     => 'shop_coupon',
+								);
+
+								$new_coupon_id = wp_insert_post( $coupon );
+
+								// Add meta
+								update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+								update_post_meta( $new_coupon_id, 'coupon_amount', $amount );
+								update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+								update_post_meta( $new_coupon_id, 'product_ids', '' );
+								update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+								update_post_meta( $new_coupon_id, 'usage_limit', '' );
+								update_post_meta( $new_coupon_id, 'expiry_date', '' );
+								update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+								update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+							endif;
+
+							// Send to getResponse.
+							$getresponse = get_response_api_call( $api_args );
+
+							update_user_meta( $user_id, 'refersion_data', $refersion_response );
+							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 				endif;
 			endif;
 
