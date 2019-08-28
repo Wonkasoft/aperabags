@@ -997,12 +997,14 @@ function make_refersion_api_calls( $entry, $form ) {
 	}
 
 	if ( 0 === $user_id ) :
+
 		// Check if email has user account already.
 		if ( email_exists( $entry_fields['email'] ) ) {
 			$api_args['form_fields'] = $entry_fields;
 			update_option( 'registration_passing_args', $api_args );
 
 		} else {
+
 			// Setting time stamp.
 			$ts = time();
 			$date = new DateTime( "@$ts" );
@@ -1064,15 +1066,23 @@ function make_refersion_api_calls( $entry, $form ) {
 				update_user_meta( $user_id, 'refersion_data', $refersion_response );
 				update_user_meta( $user_id, 'getResponse_data', $getresponse );
 			endif;
+
 		}
+
 		else :
+
 			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
 
 			$refersion_response = $new_affiliate_created->add_new_affiliate();
 
+			$user = new WP_User( $user_id );
+
+			if ( ! in_array( 'Apera Affiliate', $user->roles ) ) :
+				$user->add_role( 'Apera Affiliate' );
+			endif;
+
 			if ( ! empty( $refersion_response->errors ) ) :
 				// Setting affiliate code and link to send to getResponse.
-				$user_info = get_userdata( $user_id );
 				$api_args['email']  = $entry_fields['email'];
 				$api_args['custom_fields'] = array(
 					'affiliate_error_code',
@@ -1088,7 +1098,6 @@ function make_refersion_api_calls( $entry, $form ) {
 			else :
 
 				// Setting affiliate code and link to send to getResponse.
-				$user_info = get_userdata( $user_id );
 				$api_args['email']  = $entry_fields['email'];
 				$api_args['custom_fields'] = array(
 					'affiliate_code',
@@ -1105,7 +1114,7 @@ function make_refersion_api_calls( $entry, $form ) {
 				update_user_meta( $user_id, 'getResponse_data', $getresponse );
 			endif;
 
-	endif;
+		endif;
 
 }
 add_action( 'gform_after_submission', 'make_refersion_api_calls', 10, 2 );
@@ -1142,7 +1151,9 @@ function registration_ajax_login() {
 		} else {
 			$user_id = $user_signon->ID;
 			$user = new WP_User( $user_id );
-			$user->add_role( 'Apera Affiliate' );
+			if ( ! in_array( 'Apera Affiliate', $user->roles ) ) :
+				$user->add_role( 'Apera Affiliate' );
+			endif;
 
 			$new_affiliate_created = new Wonkasoft_Refersion_Api( $form_data );
 

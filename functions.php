@@ -320,13 +320,13 @@ function apera_bags_scripts() {
 	endif;
 
 	if ( is_page( 'ambassador-registration' ) || is_page( 'zip-registration' ) ) :
-		wp_enqueue_script( 'registration_script', get_stylesheet_directory_uri() . '/inc/js/registration-login-js.js', array( 'jquery' ), time(), true );
+		wp_enqueue_script( 'registration_script', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/inc/js/registration-login-js.js' ), array( 'jquery' ), '20190827', true );
 
 		wp_localize_script(
 			'registration_script',
 			'REG_LINKS',
 			array(
-				'loader_gif'    => get_stylesheet_directory_uri() . '/assets/slick/ajax-loader.gif',
+				'loader_gif'    => str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/ajax-loader.gif' ),
 			)
 		);
 	endif;
