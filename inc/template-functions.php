@@ -1097,7 +1097,7 @@ function make_refersion_api_calls( $entry, $form ) {
 				'use_ssl'               => true,   // (bool) Whether the user should always access the admin over https. Default false.
 				'user_registered'       => $date->format( 'Y-m-d H:i:s' ),   // (string) Date the user registered. Format is 'Y-m-d H:i:s'.
 				'show_admin_bar_front'  => false,   // (string|bool) Whether to display the Admin Bar for the user on the site's front end. Default true.
-				'role'                  => 'Apera Affiliate',   // (string) User's role.
+				'role'                  => 'apera_affiliate',   // (string) User's role.
 			);
 
 			// Inserting new user and getting user id.
@@ -1588,13 +1588,13 @@ function wonka_rest_api( $api ) {
 add_filter( 'rest_url_prefix', 'wonka_rest_api' );
 
 function wonkasoft_api_responses_user_data( $user ) {
-	// if ( in_array( 'apera_affiliate', $user->roles ) ) :
+	if ( in_array( 'apera_affiliate', $user->roles ) ) :
 		$user_id = $user->ID;
 		$refersion = ( ! empty( get_user_meta( $user->ID, 'refersion_data', true ) ) ) ? get_user_meta( $user->ID, 'refersion_data', true ) : '';
 		$refersion_error = ( ! empty( get_user_meta( $user->ID, 'refersion_error', true ) ) ) ? get_user_meta( $user->ID, 'refersion_error', true ) : '';
 		$getresponse = ( ! empty( get_user_meta( $user->ID, 'getResponse_data', true ) ) ) ? get_user_meta( $user->ID, 'getResponse_data', true ) : '';
 
-	?>
+		?>
 	<hr />
 		<div class="header-container"><h3 class="h3 header-text"><?php esc_html_e( 'Apera Affiliate and Contact Info', 'aperabags' ); ?></h3></div>
 		<table class="form-table">
@@ -1647,7 +1647,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 		</table>
 		<hr />
 		<?php
-		// endif;
+		endif;
 }
 	add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 1 );
 	add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 1 );
