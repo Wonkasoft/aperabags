@@ -1070,7 +1070,20 @@ function make_refersion_api_calls( $entry, $form ) {
 		'campaign_name'       => $campaign_name,
 	);
 
-	if ( 'Refersion Registration Zip' === $form['title'] ) :
+	$args = array(
+		'post_type' => 'shop_coupon',
+		'post_status' => 'publish',
+		'posts_per_page' => -1,
+	);
+
+	$coupons = new WP_Query( $args );
+	$found = false;
+	foreach ( $coupons->posts as $coupon ) :
+		if ( $entry_fields['company'] === $coupon->post_name ) :
+			$found = true;
+		endif;
+	endforeach;
+	if ( 'Refersion Registration Zip' === $form['title'] && $found ) :
 		/**
 		 * Create a coupon programatically
 		 */
