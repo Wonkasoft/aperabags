@@ -1177,7 +1177,7 @@ function make_refersion_api_calls( $entry, $form ) {
 
 			$refersion_response = $new_affiliate_created->add_new_affiliate();
 
-			$user = new WP_User( $user_id );
+			$user = get_user_by( 'email', $entry_fields['email'] );
 
 			if ( ! in_array( 'Apera Affiliate', $user->roles ) ) :
 				$user->add_role( 'Apera Affiliate' );
@@ -1354,7 +1354,7 @@ function registration_ajax_login() {
 		}
 
 		else :
-			$user = wp_get_current_user();
+			$user = get_user_by( 'email', $form_data['email'] );
 			$user_id = $user->ID;
 			if ( ! in_array( 'apera_affiliate', $user->roles ) ) :
 				$user->add_role( 'Apera Affiliate' );
@@ -1588,16 +1588,13 @@ function wonka_rest_api( $api ) {
 add_filter( 'rest_url_prefix', 'wonka_rest_api' );
 
 function wonkasoft_api_responses_user_data( $user ) {
-	if ( in_array( 'apera_affiliate', $user->roles ) ) :
+	// if ( in_array( 'apera_affiliate', $user->roles ) ) :
 		$user_id = $user->ID;
-		$refersion = ( ! empty( get_user_meta( $user->ID, 'refersion_data', false ) ) ) ? get_user_meta( $user->ID, 'refersion_data', false ) : '';
-		if ( ! empty( $refersion ) ) :
-			update_user_meta( $user_id, 'refersion_error', null );
-	endif;
-		$refersion_error = ( ! empty( get_user_meta( $user->ID, 'refersion_error', false ) ) ) ? get_user_meta( $user->ID, 'refersion_error', false ) : '';
-		$getresponse = ( ! empty( get_user_meta( $user->ID, 'getResponse_data', false ) ) ) ? get_user_meta( $user->ID, 'getResponse_data', false ) : '';
+		$refersion = ( ! empty( get_user_meta( $user->ID, 'refersion_data', true ) ) ) ? get_user_meta( $user->ID, 'refersion_data', true ) : '';
+		$refersion_error = ( ! empty( get_user_meta( $user->ID, 'refersion_error', true ) ) ) ? get_user_meta( $user->ID, 'refersion_error', true ) : '';
+		$getresponse = ( ! empty( get_user_meta( $user->ID, 'getResponse_data', true ) ) ) ? get_user_meta( $user->ID, 'getResponse_data', true ) : '';
 
-		?>
+	?>
 	<hr />
 		<div class="header-container"><h3 class="h3 header-text"><?php esc_html_e( 'Apera Affiliate and Contact Info', 'aperabags' ); ?></h3></div>
 		<table class="form-table">
@@ -1650,7 +1647,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 		</table>
 		<hr />
 		<?php
-	endif;
+		// endif;
 }
 	add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 1 );
 	add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 1 );
