@@ -1115,7 +1115,7 @@ function make_refersion_api_calls( $entry, $form ) {
 
 				if ( ! empty( $refersion_response->errors ) ) :
 
-					if ( ! empty( $refersion_response->affiliate_code ) ) :
+					if ( ! empty( $new_affiliate_created->affiliate_code ) ) :
 
 						$refersion_response = $new_affiliate_created->get_affiliate();
 
