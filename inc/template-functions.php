@@ -1104,7 +1104,12 @@ function make_refersion_api_calls( $entry, $form ) {
 			$user_id = wp_insert_user( $userdata );
 			$user = new WP_User( $user_id );
 			if ( ! in_array( 'apera_affiliate', $user->roles ) ) :
-				$user->add_role( 'Apera Affiliate' );
+				wp_update_user(
+					array(
+						'ID' => $user_id,
+						'role' => 'apera_affiliate',
+					)
+				);
 			endif;
 
 			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
@@ -1180,7 +1185,12 @@ function make_refersion_api_calls( $entry, $form ) {
 			$user = get_user_by( 'email', $entry_fields['email'] );
 
 			if ( ! in_array( 'apera_affiliate', $user->roles ) ) :
-				$user->add_role( 'Apera Affiliate' );
+				wp_update_user(
+					array(
+						'ID' => $user->ID,
+						'role' => 'apera_affiliate',
+					)
+				);
 			endif;
 
 			if ( 'failed' !== $refersion_response->status ) :
@@ -1278,7 +1288,12 @@ function registration_ajax_login() {
 		} else {
 			$user_id = $user_signon->ID;
 			if ( ! in_array( 'apera_affiliate', $user_signon->roles ) ) :
-				$user_signon->add_role( 'Apera Affiliate' );
+				wp_update_user(
+					array(
+						'ID' => $user_id,
+						'role' => 'apera_affiliate',
+					)
+				);
 			endif;
 
 			$new_affiliate_created = new Wonkasoft_Refersion_Api( $form_data );
@@ -1357,7 +1372,12 @@ function registration_ajax_login() {
 			$user = get_user_by( 'email', $form_data['email'] );
 			$user_id = $user->ID;
 			if ( ! in_array( 'apera_affiliate', $user->roles ) ) :
-				$user->add_role( 'Apera Affiliate' );
+				wp_update_user(
+					array(
+						'ID' => $user_id,
+						'role' => 'apera_affiliate',
+					)
+				);
 			endif;
 			$new_affiliate_created = new Wonkasoft_Refersion_Api( $form_data );
 
@@ -1525,13 +1545,13 @@ function wonkasoft_getresponse_endpoint( $data ) {
 	endif;
 
 	$email = wp_kses_post( wp_unslash( $_GET['email'] ) );
-	$tag = wp_kses_post( wp_unslash( $_GET['tag'] ) );
+	$passed_tag = wp_kses_post( wp_unslash( $_GET['tag'] ) );
 	$campaign_name = wp_kses_post( wp_unslash( $_GET['campaign_name'] ) );
 
 	$prep_data = array(
 		'email' => $email,
 		'tags'   => array(
-			$tag,
+			$passed_tag,
 		),
 		'campaign_name' => $campaign_name,
 	);
@@ -1567,8 +1587,8 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		$response = $getresponse->upsert_the_tags_of_contact();
 
 		$data_send = array(
-			'email' => $_GET['email'],
-			'tag' => $_GET['tag'],
+			'email' => $email,
+			'tag' => $passed_tag,
 			'contact_id'    => $getresponse->contact_id,
 		);
 
@@ -1582,11 +1602,24 @@ function wonkasoft_getresponse_endpoint( $data ) {
 	return $getresponse;
 }
 
+/**
+ * This function resets the wp-json rest api.
+ *
+ * @param  string $api current base route.
+ * @return string      returns rest api base.
+ */
 function wonka_rest_api( $api ) {
 	return 'api';
 }
 add_filter( 'rest_url_prefix', 'wonka_rest_api' );
 
+
+/**
+ * [wonkasoft_api_responses_user_data description]
+ *
+ * @param  [type] $user [description]
+ * @return [type]       [description]
+ */
 function wonkasoft_api_responses_user_data( $user ) {
 	if ( in_array( 'apera_affiliate', $user->roles ) ) :
 		$user_id = $user->ID;
@@ -1619,7 +1652,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 									<label for="affiliate-id">Affiliate Code</label>
 								</th>
 								<td>
-									<p id="affiliate-id"><?php echo wp_kses_post( $refersion ); ?></p>
+									<p id="affiliate-id"><?php echo wp_kses_post( $refersion->id ); ?></p>
 								</td>
 							</tr>
 							<tr>
@@ -1636,11 +1669,17 @@ function wonkasoft_api_responses_user_data( $user ) {
 						?>
 				<tr>
 					<th>
-						<label for="getresponse-data">Data</label>
+						<label for="getresponse-data">GetResponse Data</label>
 					</th>
-					<td>
-						<?php echo wp_kses_post( $getresponse ); ?>
-					</td>
+						<?php
+						foreach ( $getresponse as $value ) :
+							echo "<td style='background: #333; color: #fff;'>";
+							echo "<pre>\n";
+							print_r( json_encode( $value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
+							echo "</pre>\n";
+							echo '</td>';
+						endforeach;
+						?>
 				</tr>
 					<?php endif; ?>
 			</tbody>
