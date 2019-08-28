@@ -1589,12 +1589,12 @@ add_filter( 'rest_url_prefix', 'wonka_rest_api' );
 function wonkasoft_api_responses_user_data( $user ) {
 	if ( in_array( 'apera_affiliate', $user->roles ) ) :
 		$user_id = $user->ID;
-		$refersion = ( ! empty( get_user_meta( $user->ID, 'refersion_data', false ) ) ) ? array_shift( array_shift( get_user_meta( $user->ID, 'refersion_data', false ) ) ) : '';
+		$refersion = ( ! empty( get_user_meta( $user->ID, 'refersion_data', false ) ) ) ? get_user_meta( $user->ID, 'refersion_data', false ) : '';
 		if ( ! empty( $refersion ) ) :
 			update_user_meta( $user_id, 'refersion_error', null );
 	endif;
-		$refersion_error = ( ! empty( get_user_meta( $user->ID, 'refersion_error', false ) ) ) ? array_shift( array_shift( get_user_meta( $user->ID, 'refersion_error', false ) ) ) : '';
-		$getresponse = ( ! empty( get_user_meta( $user->ID, 'getResponse_data', false ) ) ) ? array_shift( array_shift( get_user_meta( $user->ID, 'getResponse_data', false ) ) ) : '';
+		$refersion_error = ( ! empty( get_user_meta( $user->ID, 'refersion_error', false ) ) ) ? get_user_meta( $user->ID, 'refersion_error', false ) : '';
+		$getresponse = ( ! empty( get_user_meta( $user->ID, 'getResponse_data', false ) ) ) ? get_user_meta( $user->ID, 'getResponse_data', false ) : '';
 
 		?>
 	<hr />
