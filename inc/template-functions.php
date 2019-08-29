@@ -263,6 +263,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] .= ' form-inline wonka-newsletter-form';
 	endif;
 
+	if ( in_array( $form['title'], array( 'Refersion Registration' ) ) ) :
+		$form['cssClass'] .= ' inline-form wonka-refersion-form';
+	endif;
+
 	if ( in_array( $form['title'], array( 'ZIP Program' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-zip-form';
 	endif;
@@ -270,7 +274,6 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	if ( in_array( $form['title'], array( 'Ambassador Program' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-ambassador-form';
 	endif;
-
 	foreach ( $form['fields'] as $field ) :
 		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
 			if ( ! empty( $field['cssClass'] ) ) :
@@ -293,6 +296,8 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	return $form;
 }
 add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );
+
+add_filter( 'gform_enable_password_field', '__return_true' );
 
 /**
  * Adding classes to gform buttons
@@ -346,38 +351,18 @@ function aperabags_add_theme_options() {
 		'aperabags_theme_options_page'
 	);
 
-	$google_api_key_args = array(
-		'type'              => 'string',
-		'description'       => 'holds google api key for this site.',
-		'sanitize_callback' => 'aperabags_options_sanitize',
-		'show_in_rest'      => false,
-	);
+	$registered_options = ( ! empty( get_option( 'custom_options_added' ) ) ) ? get_option( 'custom_options_added' ) : '';
 
-	$facebook_api_key_args = array(
-		'type'              => 'string',
-		'description'       => 'holds facebook api key for this site.',
-		'sanitize_callback' => 'aperabags_options_sanitize',
-		'show_in_rest'      => false,
-	);
+	foreach ( $registered_options as $register_option ) {
+		$set_args = array(
+			'type'              => 'string',
+			'description'       => $register_option['description'],
+			'sanitize_callback' => 'aperabags_options_sanitize',
+			'show_in_rest'      => false,
+		);
 
-	$twitter_api_key_args = array(
-		'type'              => 'string',
-		'description'       => 'holds twitter api key for this site.',
-		'sanitize_callback' => 'aperabags_options_sanitize',
-		'show_in_rest'      => false,
-	);
-
-	$wonkasoft_ga_id = array(
-		'type'              => 'string',
-		'description'       => 'holds google analytics id.',
-		'sanitize_callback' => 'aperabags_options_sanitize',
-		'show_in_rest'      => false,
-	);
-
-	register_setting( 'aperabags-theme-options-group', 'google_api_key', $google_api_key_args );
-	register_setting( 'aperabags-theme-options-group', 'facebook_api_key', $facebook_api_key_args );
-	register_setting( 'aperabags-theme-options-group', 'twitter_api_key', $twitter_api_key_args );
-	register_setting( 'aperabags-theme-options-group', 'wonkasoft_ga_id', $wonkasoft_ga_id );
+		register_setting( 'aperabags-theme-options-group', $register_option['id'], $set_args );
+	}
 }
 
 add_action( 'admin_menu', 'aperabags_add_theme_options' );
@@ -402,76 +387,45 @@ function aperabags_theme_options_page() {   ?>
 				<div class="col-12 title-column">
 					<?php
 					$title_text = get_admin_page_title();
-					echo '<h3 class="title-header">' . wp_kses_post( $title_text ) . '</h3>';
 					?>
+					<h3 class="title-header"><?php echo wp_kses_post( $title_text ); ?></h3>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-12 options column">
 					<div class="card w-100">
+						<div class="card-title">
+							<h3><?php esc_html_e( 'Add an option', 'aperabags' ); ?></h3>
+							<button type="button" id="theme_option_add" class="wonka-btn" data-toggle="modal" data-target="#add_option_modal">OPTION <i class="fa fa-plus"></i></button>
+						</div>
 						<div class="card-body">
-					<form method="post" action="options.php">
+					<form id="custom-options-form" method="post" action="options.php">
 
 					  <?php settings_fields( 'aperabags-theme-options-group' ); ?>
 
 					  <?php do_settings_sections( 'aperabags-theme-options-group' ); ?>
 
 							<?php
-								$current_google_api_key = ( ! empty( get_option( 'google_api_key' ) ) ) ? get_option( 'google_api_key' ) : '';
-								wonkasoft_theme_option_parse(
-									array(
-										'id'                => 'google_api_key',
-										'label'             => __( 'Google API Key', 'apera-bags' ),
-										'value'             => $current_google_api_key,
-										'desc_tip'          => true,
-										'description'       => __( 'Place Google API Key here.', 'apera-bags' ),
-										'wrapper_class'     => 'form-row form-row-full form-group',
-										'class'             => 'form-control',
-										'api'               => 'google',
-									)
-								);
+								$registered_options = ( ! empty( get_option( 'custom_options_added' ) ) ) ? get_option( 'custom_options_added' ) : '';
 
-								$current_facebook_api_key = ( ! empty( get_option( 'facebook_api_key' ) ) ) ? get_option( 'facebook_api_key' ) : '';
-								wonkasoft_theme_option_parse(
-									array(
-										'id'                => 'facebook_api_key',
-										'label'             => __( 'Facebook API Key', 'apera-bags' ),
-										'value'             => $current_facebook_api_key,
-										'desc_tip'          => true,
-										'description'       => __( 'Place Facebook API Key here.', 'apera-bags' ),
-										'wrapper_class'     => 'form-row form-row-full form-group',
-										'class'             => 'form-control',
-										'api'               => 'facebook',
-									)
-								);
+							if ( ! empty( $registered_options ) ) :
+								foreach ( $registered_options as $register_option ) {
+									$current_option = ( ! empty( get_option( $register_option['id'] ) ) ) ? get_option( $register_option['id'] ) : '';
 
-								$current_twitter_api_key = ( ! empty( get_option( 'twitter_api_key' ) ) ) ? get_option( 'twitter_api_key' ) : '';
-								wonkasoft_theme_option_parse(
-									array(
-										'id'                => 'twitter_api_key',
-										'label'             => __( 'Twitter API Key', 'apera-bags' ),
-										'value'             => $current_twitter_api_key,
-										'desc_tip'          => true,
-										'description'       => __( 'Place Twitter API Key here.', 'apera-bags' ),
-										'wrapper_class'     => 'form-row form-row-full form-group',
-										'class'             => 'form-control',
-										'api'               => 'twitter',
-									)
-								);
-
-								$current_wonkasoft_ga_id = ( ! empty( get_option( 'wonkasoft_ga_id' ) ) ) ? get_option( 'wonkasoft_ga_id' ) : '';
-								wonkasoft_theme_option_parse(
-									array(
-										'id'                => 'wonkasoft_ga_id',
-										'label'             => __( 'Google Analytics ID', 'apera-bags' ),
-										'value'             => $current_wonkasoft_ga_id,
-										'desc_tip'          => true,
-										'description'       => __( 'Place Google Analytics ID here.', 'apera-bags' ),
-										'wrapper_class'     => 'form-row form-row-full form-group',
-										'class'             => 'form-control',
-										'api'               => 'ga',
-									)
-								);
+									wonkasoft_theme_option_parse(
+										array(
+											'id'                => $register_option['id'],
+											'label'             => $register_option['label'],
+											'value'             => $current_option,
+											'desc_tip'          => true,
+											'description'       => $register_option['description'],
+											'wrapper_class'     => 'form-row form-row-full form-group',
+											'class'             => 'form-control',
+											'api'               => $register_option['api'],
+										)
+									);
+								}
+							endif;
 							?>
 				<div class="submitter">
 
@@ -482,10 +436,133 @@ function aperabags_theme_options_page() {   ?>
 						  </div>
 					</div><!-- card w-100 -->
 				</div>
+				<!-- Modal -->
+				<div id="add_option_modal" class="modal fade" role="dialog">
+				  <div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+					  <div class="modal-header">
+						<h4 class="modal-title">Add Option</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					  </div>
+					  <div class="modal-body">
+							<div class="input-group mb-3">
+								<input class="form-control" type="text" id="new_option_name" name="new_option_name" placeholder="enter option name..." value="" />
+							</div>
+							<div class="input-group mb-3">
+								<input class="form-control" type="text" id="new_option_description" name="new_option_description" placeholder="enter option description..." value="" />
+							</div>
+							<div class="input-group mb-3">
+								<input class="form-control" type="text" id="new_option_api" name="new_option_api" placeholder="whos api..." value="" />
+							</div>
+							<?php
+							wp_nonce_field(
+								'theme_options_ajax_post',
+								'new_option_nonce',
+								true,
+								true
+							);
+							?>
+					  </div>
+					  <div class="modal-footer">
+							<button type="button" class="btn wonka-btn btn-success" data-dismiss="modal" id="add_option_name">Add option <i class="fa fa-plus"></i></button>
+					  </div>
+					</div>
+
+				  </div>
+				</div>
 			</div>
 		</div>
 	<?php
 }
+
+/**
+ * Handles the theme options ajax requests.
+ */
+function theme_options_ajax_post() {
+	$nonce = ( isset( $_REQUEST['security'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['security'] ) ) : null;
+	// Check if nonce is valid.
+	if ( ! wp_verify_nonce( $nonce, 'theme_options_ajax_post' ) ) {
+		die( esc_html__( 'nonce failed', 'aperabags' ) );
+	}
+
+	$data = ( isset( $_POST['data'] ) ) ? wp_kses_post( wp_unslash( $_POST['data'] ) ) : null;
+	if ( empty( $data ) ) :
+		return false;
+	endif;
+
+	// Pattern for option name sanitize.
+	$pattern = '/([ -])/';
+
+	// Checking for passed in data.
+	$data = json_decode( $data );
+	unset( $data->action );
+	$current_options = ( ! empty( get_option( 'custom_options_added' ) ) ) ? get_option( 'custom_options_added' ) : array();
+	if ( $data->remove ) :
+		foreach ( $current_options as $key => $current_option ) :
+			if ( $data->option_id === $current_option['id'] ) :
+				unset( $current_options[ $key ] );
+			endif;
+		endforeach;
+		delete_option( $data->option_id );
+		unregister_setting( 'aperabags-theme-options-group', $data->option_id );
+		$data->current_options = $current_options;
+		update_option( 'custom_options_added', $current_options );
+		$data->msg = $data->option_id . ' option was deleted, unregistered as a setting, and the database has been updated.';
+		wp_send_json_success( $data );
+		else :
+			$data->option_label = $data->option_name;
+			$data->option_name = preg_replace( $pattern, '_', strtolower( $data->option_name ) );
+
+			if ( ! in_array( $data->option_name, $current_options ) ) :
+				array_push(
+					$current_options,
+					array(
+						'id' => $data->option_name,
+						'label' => $data->option_label,
+						'description' => $data->option_description,
+						'api' => $data->option_api,
+					)
+				);
+				$set_args = array(
+					'type'              => 'string',
+					'description'       => $data->option_description,
+					'sanitize_callback' => 'aperabags_options_sanitize',
+					'show_in_rest'      => false,
+				);
+				register_setting( 'aperabags-theme-options-group', $data->option_name, $set_args );
+				update_option( 'custom_options_added', $current_options );
+				$data->current_options = $current_options;
+
+				ob_start();
+				wonkasoft_theme_option_parse(
+					array(
+						'id'                => $data->option_name,
+						'label'             => $data->option_label,
+						'value'             => '',
+						'desc_tip'          => true,
+						'description'       => $data->option_description,
+						'wrapper_class'     => 'form-row form-row-full form-group',
+						'class'             => 'form-control',
+						'api'               => $data->option_api,
+					)
+				);
+
+				$data->new_elements = ob_get_clean();
+
+				$data->msg = 'Current options have been updated';
+				wp_send_json_success( $data );
+			else :
+				$data->current_options = $current_options;
+				$data->msg = $data->option_name . ' is already a current option.';
+				wp_send_json_success( $data );
+			endif;
+	endif;
+
+}
+add_action( 'wp_ajax_theme_options_ajax_post', 'theme_options_ajax_post', 10 );
+add_action( 'wp_ajax_nopriv_theme_options_ajax_post', 'theme_options_ajax_post', 10 );
 
 /**
  * For the parsing of option fields.
@@ -512,7 +589,7 @@ function wonkasoft_theme_option_parse( $field ) {
 		}
 	}
 
-	$output .= '<p class="form-field ' . esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ) . '">
+	$output .= '<div class="' . esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ) . '">
 		<label for="' . esc_attr( $field['id'] ) . '">' . wp_kses_post( $field['label'] ) . '</label>';
 
 	if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
@@ -524,16 +601,70 @@ function wonkasoft_theme_option_parse( $field ) {
 	else :
 		$place_holder = ' placeholder="Paste api key..."';
 	endif;
+	$output .= '<div class="input-group">';
 	$output .= '<input type="password" id="' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $field['name'] ) . '" class="' . esc_attr( $field['class'] ) . '" ' . $styles_set . implode( ' ', $custom_attributes ) . ' value="' . esc_attr( $field['value'] ) . '"' . $place_holder . ' /> ';
-
+	$output .= '<div class="input-group-append">';
+	$output .= '<button class="btn wonka-btn btn-danger" type="button" id="remove-' . esc_attr( $field['id'] ) . '"><i class="fa fa-minus"></i></button>';
+	$output .= '</div>';
+	$output .= '</div>';
 	if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
 		$output .= '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
 	}
 
-	$output .= '</p>';
+	$output .= '</div>';
 
-	echo wp_kses_post( $output );
+	echo wp_kses(
+		$output,
+		array(
+			'label'         => array(
+				'for'           => array(),
+			),
+			'input'         => array(
+				'class'                     => array(),
+				'name'                      => array(),
+				'id'                        => array(),
+				'type'                      => array(),
+				'value'                     => array(),
+				'placeholder'               => array(),
+			),
+			'span'          => array(
+				'class'         => array(),
+			),
+			'div'          => array(
+				'class'         => array(),
+			),
+			'button'          => array(
+				'class'         => array(),
+				'type'          => array(),
+				'id'            => array(),
+			),
+			'i'          => array(
+				'class'         => array(),
+			),
+		)
+	);
 }
+
+/**
+ * This is for enqueuing the script for the theme options page only.
+ *
+ * @param  string $page contains the page name.
+ */
+function theme_options_js( $page ) {
+
+	if ( 'settings_page_aperabags-theme-options' === $page ) :
+		wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1', 'all' );
+
+		wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', 'anonymous' ) );
+
+		wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array( 'jquery' ), '4.3.1', true );
+
+		wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', 'anonymous' ) );
+
+		wp_enqueue_script( 'theme-options-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/inc/js/theme-options-js.js' ), array( 'jquery' ), '20190819', true );
+	endif;
+}
+add_action( 'admin_enqueue_scripts', 'theme_options_js', 10, 1 );
 
 /**
  * The adding of meta boxes
@@ -574,12 +705,12 @@ function author_display_meta_box( $post, $option ) {
 	echo '<div class="form-check">' . wp_kses_post( $output ) . '</div>';
 }
 
-/**
- * For saving the author display
- *
- * @param  integer $post_id contains the post ID.
- * @param  object  $post    contains the current post.
- */
+			/**
+			 * For saving the author display
+			 *
+			 * @param  integer $post_id contains the post ID.
+			 * @param  object  $post    contains the current post.
+			 */
 function wonkasoft_save_author_display( $post_id, $post ) {
 	$nonce_action = 'author_display_option';
 
@@ -741,6 +872,7 @@ function ws_remove_filters_with_method_name( $hook_name = '', $method_name = '',
 	}
 	return false;
 }
+
 /**
  * Allow to remove method for an hook when, it's a class method used and class don't have variable, but you know the class name :)
  *
@@ -772,3 +904,254 @@ function ws_remove_filters_for_anonymous_class( $hook_name = '', $class_name = '
 	}
 	return false;
 }
+
+/**
+ * This function fires after Refersion Registration form is ssubmitted.
+ *
+ * @param  array $entry contains the data from surrent.
+ * @param  array $form  Contains an array of the form.
+ */
+function make_refersion_api_calls( $entry, $form ) {
+	// Get current user object.
+	$current_user = wp_get_current_user();
+	// Get current user ID.
+	$user_id = $current_user->ID;
+
+	$entry_fields = array();
+	$entry_fields['custom_fields'] = array();
+	$set_labels = array(
+		'First',
+		'Last',
+		'Company',
+		'Email',
+		'Paypal Email',
+		'Password',
+		'Street Address',
+		'Address Line 2',
+		'City',
+		'State / Province',
+		'ZIP / Postal Code',
+		'Phone',
+	);
+	$custom_fields = array();
+
+	$pattern = '/([ \/]{1,5})/';
+
+	foreach ( $form['fields'] as $field ) {
+		if ( 'honeypot' !== $field['type'] ) :
+			if ( in_array( $field['label'], $set_labels ) ) :
+				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
+			endif;
+
+			if ( in_array( $field['label'], $custom_fields ) ) :
+				$current_label = strtolower( preg_replace( $pattern, $field['label'] ) );
+					array_push(
+						$entry_fields['custom_fields'],
+						array(
+							'label' => $current_label,
+							'value' => $entry[ $field['id'] ],
+						)
+					);
+			endif;
+
+			if ( ! empty( $field->inputs ) ) :
+				foreach ( $field->inputs as $input ) {
+					if ( in_array( $input['label'], $set_labels ) ) :
+						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
+					endif;
+				}
+			endif;
+		endif;
+	}
+
+	if ( 0 === $user_id ) :
+		// Check if email has user account already.
+		if ( email_exists( $entry_fields['email'] ) ) {
+			wp_enqueue_script( 'registration_script', get_stylesheet_directory_uri() . '/inc/js/registration-login-js.js', array( 'jquery' ), '20190822', true );
+
+			wp_localize_script(
+				'registration_script',
+				'REG_LINKS',
+				array(
+					'loader_gif'    => get_stylesheet_directory_uri() . '/assets/slick/ajax-loader.gif',
+					'data'                  => $entry_fields,
+				)
+			);
+		} else {
+			// Setting time stamp.
+			$ts = time();
+			$date = new DateTime( "@$ts" );
+			$date->setTimezone( new DateTimeZone( get_option( 'timezone_string' ) ) );
+
+			// Setting new user args.
+			$userdata = array(
+				'user_pass'             => $entry_fields['password'],   // (string) The plain-text user password.
+				'user_login'            => $entry_fields['email'],   // (string) The user's login username.
+				'user_nicename'         => $entry_fields['first'],   // (string) The URL-friendly user name.
+				'user_email'            => $entry_fields['email'],   // (string) The user email address.
+				'display_name'          => $entry_fields['first'] . ' ' . $entry_fields['last'],   // (string) The user's display name. Default is the user's username.
+				'first_name'            => $entry_fields['first'],   // (string) The user's first name. For new users, will be used to build the first part of the user's display name if $display_name is not specified.
+				'last_name'             => $entry_fields['last'],   // (string) The user's last name. For new users, will be used to build the second part of the user's display name if $display_name is not specified.
+				'use_ssl'               => true,   // (bool) Whether the user should always access the admin over https. Default false.
+				'user_registered'       => $date->format( 'Y-m-d H:i:s' ),   // (string) Date the user registered. Format is 'Y-m-d H:i:s'.
+				'show_admin_bar_front'  => false,   // (string|bool) Whether to display the Admin Bar for the user on the site's front end. Default true.
+				'role'                  => 'Apera Affiliate',   // (string) User's role.
+			);
+
+			// Inserting new user and getting user id.
+			$user_id = wp_insert_user( $userdata );
+
+			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
+
+			$response = $new_affiliate_created->add_new_affiliate();
+
+			if ( ! empty( $response->errors ) ) :
+				update_user_meta( $user_id, 'refersion_data', $response->errors );
+			else :
+				update_user_meta( $user_id, 'refersion_data', $response );
+			endif;
+		}
+		else :
+			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
+
+			$response = $new_affiliate_created->add_new_affiliate();
+
+			if ( ! empty( $response->errors ) ) :
+				update_user_meta( $user_id, 'refersion_data', $response->errors );
+			else :
+				update_user_meta( $user_id, 'refersion_data', $response );
+			endif;
+	endif;
+
+}
+add_action( 'gform_after_submission', 'make_refersion_api_calls', 10, 2 );
+
+/**
+ * Registration login by ajax.
+ */
+function registration_ajax_login() {
+	// First check the nonce, if it fails the function will break.
+	check_ajax_referer( 'ws-request-nonce', 'security' );
+
+	// Nonce is checked, get the POST data and sign user on.
+	$credentials = ( isset( $_POST['data'] ) ) ? wp_kses_post( wp_unslash( $_POST['data'] ) ) : null;
+	$credentials = json_decode( $credentials );
+	$form_data = $credentials->form_data;
+	$form_data = json_decode( json_encode( $form_data ), true );
+
+	$creds = array();
+	$creds['user_login'] = $credentials->user_name;
+	$creds['user_password'] = $credentials->user_password;
+	$creds['remember'] = true;
+
+	$user_signon = wp_signon( $creds, false );
+	if ( is_wp_error( $user_signon ) ) {
+		$response = array(
+			'loggedin'  => false,
+			'message'       => __( 'Wrong username or password.' ),
+			'user_info'     => $user_signon,
+		);
+		wp_send_json_error( $response );
+	} else {
+		$user_id = $user_signon->ID;
+		$user = new WP_User( $user_id );
+		$user->add_role( 'Apera Affiliate' );
+
+		$new_affiliate_created = new Wonkasoft_Refersion_Api( $form_data );
+
+		$response = $new_affiliate_created->add_new_affiliate();
+
+		if ( 'failed' !== $response->status ) :
+			if ( ! empty( $response->errors ) ) :
+				update_user_meta( $user_id, 'refersion_data', $response->errors );
+			else :
+				update_user_meta( $user_id, 'refersion_data', $response );
+			endif;
+		endif;
+
+		$response = array(
+			'loggedin'  => false,
+			'message'       => __( 'Login successful, completing registration...' ),
+			'user_info'     => $user_signon,
+			'refersion_response'    => $response,
+		);
+		wp_send_json_success( $response );
+	}
+	die();
+}
+add_action( 'wp_ajax_registration_ajax_login', 'registration_ajax_login' );
+add_action( 'wp_ajax_nopriv_registration_ajax_login', 'registration_ajax_login' );
+
+/**
+ * This function is filtering the states to abbriviations.
+ *
+ * @param  array $address_types An array of address types.
+ * @param  int   $form_id The ID of the form being filtered.
+ * @return array $address_types A modified array of address types.
+ */
+function filter_states_to_abbriviations( $address_types, $form_id ) {
+	$address_types['us'] = array(
+		'label' => 'United States',
+		'country' => 'US',
+		'zip_label' => 'Zip Code',
+		'state_label' => 'State',
+		'states' => array(
+			'' => '',
+			'AL' => 'Alabama',
+			'AK' => 'Alaska',
+			'AZ' => 'Arizona',
+			'AR' => 'Arkansas',
+			'CA' => 'California',
+			'CO' => 'Colorado',
+			'CT' => 'Connecticut',
+			'DE' => 'Delaware',
+			'DC' => 'District of Columbia',
+			'FL' => 'Florida',
+			'GA' => 'Georgia',
+			'GU' => 'Guam',
+			'HI' => 'Hawaii',
+			'ID' => 'Idaho',
+			'IL' => 'Illinois',
+			'IN' => 'Indiana',
+			'IA' => 'Iowa',
+			'KS' => 'Kansas',
+			'KY' => 'Kentucky',
+			'LA' => 'Louisiana',
+			'ME' => 'Maine',
+			'MD' => 'Maryland',
+			'MA' => 'Massachusetts',
+			'MI' => 'Michigan',
+			'MN' => 'Minnesota',
+			'MS' => 'Mississippi',
+			'MO' => 'Missouri',
+			'MT' => 'Montana',
+			'NE' => 'Nebraska',
+			'NV' => 'Nevada',
+			'NH' => 'New Hampshire',
+			'NJ' => 'New Jersey',
+			'NM' => 'New Mexico',
+			'NY' => 'New York',
+			'NC' => 'North Carolina',
+			'ND' => 'North Dakota',
+			'OH' => 'Ohio',
+			'OK' => 'Oklahoma',
+			'OR' => 'Oregon',
+			'PA' => 'Pennsylvania',
+			'PR' => 'Puerto Rico',
+			'RI' => 'Rhode Island',
+			'SC' => 'South Carolina',
+			'SD' => 'South Dakota',
+			'TN' => 'Tennessee',
+			'TX' => 'Texas',
+			'UT' => 'Utah',
+			'VT' => 'Vermont',
+			'VA' => 'Virginia',
+			'WA' => 'Washington',
+			'WV' => 'West Virginia',
+			'WI' => 'Wisconsin',
+			'WY' => 'Wyoming',
+		),
+	);
+	return $address_types;
+}
+add_filter( 'gform_address_types', 'filter_states_to_abbriviations', 10, 2 );
