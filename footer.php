@@ -38,7 +38,7 @@ $footer_section = get_section_mods( 'footer' );
 
 				<div class="col col-12 col-lg-4 col-sm-6 order-lg-3 order-2">
 					<div class="social-components-wrap">
-						<h4 class="footer-title"><?php echo $footer_section->footer_mods->footer_social_title; ?></h4>
+						<h4 class="footer-title text-center"><?php echo $footer_section->footer_mods->footer_social_title; ?></h4>
 						<div class="social-icons-btns">
 							<?php
 							if ( ! empty( $footer_section->footer_mods->footer_social_instagram ) ) {
@@ -72,7 +72,7 @@ $footer_section = get_section_mods( 'footer' );
 				</div><!-- .col -->
 				<div class="col col-12 col-lg-4 order-3 order-sm-2">
 					<div class="row align-items-end justify-content-center wonka-email-form">
-					<?php _e('<h5 class="footer-title menu-title-shop pb-2">KEEP IN TOUCH!</h5>') ?>
+					<?php _e('<h4 class="footer-title menu-title-shop pb-2">KEEP IN TOUCH!</h4>') ?>
 						<?php if ( ! empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
 							<div class="col col-12">
 								<?php

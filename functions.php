@@ -261,35 +261,33 @@ add_action( 'pre_get_posts', 'ws_apera_search_woocommerce_only' );
 
 function wonka_get_nav_menu_object( $items, $args ) {
 
-	$menu_items = apply_filters("wp_nav_menu_items", $item, $args);
-	echo "<pre>\n";
-	print_r( $menu_items );
-	echo "</pre>\n";
-	if( 'menu-primary' === $args->theme_location ) {
+	if ( 'Apera' === $args->name ) {
 		$new_menu_item = '';
+		foreach ( (object) $items as $key => $item ) {
 
-		foreach ($items as $key => $item) {
-			// echo "<pre>\n";
-			// print_r( $item );
-			// echo "</pre>\n";
-			// if( in_array('account-menu-icon', $item->classes) ){
-			// 	$new_menu_item .= '<li id="menu-item-' . $item->ID . '" class="account-menu-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-' . $item->ID . '>';
-			// 	$new_menu_item .= '<a class="account-menu-icon" href="' . $item->url . '">';
-			// 	$new_menu_item .= '&nbsp;&nbsp;';
-			// 	$new_menu_item .= '<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" id="svg2" xml:space="preserve" width="500" height="500" viewBox="0 0 500 500" sodipodi:docname="apera_logo_A_only_white.svg" inkscape:version="0.92.3 (2405546, 2018-03-11)" inkscape:export-filename="/home/lister/Downloads/aperabags/logo/apera_logo_bw200x100.png" inkscape:export-xdpi="96" inkscape:export-ydpi="96"><metadata id="metadata8"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata><defs id="defs6"/><sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="1230" inkscape:window-height="675" id="namedview4" showgrid="false" units="px" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0" inkscape:zoom="0.77083333" inkscape:cx="88.015803" inkscape:cy="242.4555" inkscape:window-x="0" inkscape:window-y="140" inkscape:window-maximized="0" inkscape:current-layer="g12" inkscape:lockguides="false"/><g id="g10" inkscape:groupmode="layer" inkscape:label="ink_ext_XXXXXX" transform="matrix(1.3333333,0,0,-1.3333333,-1.7231138e-4,499.99957)"><g id="g12" transform="matrix(0.18889578,0,0,0.18889578,9.2463299,33.587505)"><path d="m 1472.7964,269.43961 c 0,0 221.5336,-107.34265 419.3909,-261.9102764 13.1318,-10.215312 22.4693,1.5980153 14.85,12.9998264 -7.5784,11.353938 -857.6408,1428.84614 -959.24082,1599.75454 -4.64627,7.7318 -15.40947,7.425 -19.93199,0 C 845.1236,1481.3152 272.04308,510.34465 -19.526687,20.52916 -28.211903,6.1510517 -15.703437,-0.62853237 -6.2751566,6.5585482 398.54964,314.08484 694.543,398.16448 943.15021,398.16448 c 177.33629,0 280.49899,-22.09301 379.69359,-51.6724 3.4568,-1.08205 4.3364,1.23034 1.1966,3.48751 C 1137.5149,483.5297 834.12517,565.93206 600.59504,563.15126 L 938.19202,1122.0404 1472.7964,269.43961" style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.02272987" id="path14" inkscape:connector-curvature="0" inkscape:export-xdpi="96" inkscape:export-ydpi="96"/></g></g></svg>';
-			// 	$new_menu_item .= '</a>';
-			// 	$new_menu_item .= '</li>';
-
-			// 	$same_key = $key;
-			// 	unset($items[$key]);
-			// 	$items[$same_key] = $new_menu_item;
-			// }
+			if( in_array('account-menu-icon', $item->classes) ){
+				echo $item->title;
+				$new_menu_item .= '<li id="menu-item-' . esc_attr( $item->ID ) . ' class="account-menu-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-' . $item->ID . '>';
+				$new_menu_item .= '<a class="account-menu-icon" href="' . $item->url . '">';
+				$new_menu_item .= '&nbsp;&nbsp;hello';
+				$apera_icon = '<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" id="svg2" xml:space="preserve" width="500" height="500" viewBox="0 0 500 500" sodipodi:docname="apera_logo_A_only_white.svg" inkscape:version="0.92.3 (2405546, 2018-03-11)" inkscape:export-filename="/home/lister/Downloads/aperabags/logo/apera_logo_bw200x100.png" inkscape:export-xdpi="96" inkscape:export-ydpi="96"><metadata id="metadata8"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata><defs id="defs6"/><sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="1230" inkscape:window-height="675" id="namedview4" showgrid="false" units="px" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0" inkscape:zoom="0.77083333" inkscape:cx="88.015803" inkscape:cy="242.4555" inkscape:window-x="0" inkscape:window-y="140" inkscape:window-maximized="0" inkscape:current-layer="g12" inkscape:lockguides="false"/><g id="g10" inkscape:groupmode="layer" inkscape:label="ink_ext_XXXXXX" transform="matrix(1.3333333,0,0,-1.3333333,-1.7231138e-4,499.99957)"><g id="g12" transform="matrix(0.18889578,0,0,0.18889578,9.2463299,33.587505)"><path d="m 1472.7964,269.43961 c 0,0 221.5336,-107.34265 419.3909,-261.9102764 13.1318,-10.215312 22.4693,1.5980153 14.85,12.9998264 -7.5784,11.353938 -857.6408,1428.84614 -959.24082,1599.75454 -4.64627,7.7318 -15.40947,7.425 -19.93199,0 C 845.1236,1481.3152 272.04308,510.34465 -19.526687,20.52916 -28.211903,6.1510517 -15.703437,-0.62853237 -6.2751566,6.5585482 398.54964,314.08484 694.543,398.16448 943.15021,398.16448 c 177.33629,0 280.49899,-22.09301 379.69359,-51.6724 3.4568,-1.08205 4.3364,1.23034 1.1966,3.48751 C 1137.5149,483.5297 834.12517,565.93206 600.59504,563.15126 L 938.19202,1122.0404 1472.7964,269.43961" style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.02272987" id="path14" inkscape:connector-curvature="0" inkscape:export-xdpi="96" inkscape:export-ydpi="96"/></g></g></svg>';
+				$new_menu_item .= '</a>';
+				$new_menu_item .= '</li>';
+				// echo $new_menu_item;
+				$same_key = $key;
+				// var_dump($items);
+				// echo "<pre>\n";
+				// print_r( $items[$key] );
+				// echo "</pre>\n";
+				// unset($items[ $key ]);
+				$item->title = $apera_icon;
+				// echo $items[ $same_key ];
+			}
 		}
-
 	}
 	return $items;
 }
-add_filter('wp_get_nav_menu_items', 'wonka_get_nav_menu_object', 10, 2);
+add_filter( 'wp_get_nav_menu_items', 'wonka_get_nav_menu_object', 10, 2 );
 
 
 /**
