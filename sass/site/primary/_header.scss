@@ -36,10 +36,14 @@
 ==================================================*/
 .site-header {
 	position: relative;
-	background: #646371;
+	background: 0 0;
 	height: 110px;
 	z-index: 9999;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
+
+	&.transparent-header {
+		background: #646371;
+	}
 
 	.brand-nav-bar {
 		margin: auto;
@@ -48,7 +52,7 @@
 		justify-content: center;
 		padding-top: 40px;
 		max-width: 1200px;
-		@include prefix( transition, all .3s ease-in-out, o moz webkit );
+		@include prefix( transition, all .6s ease-in-out, o moz webkit );
 
 		.site-branding {
 

@@ -2779,15 +2779,35 @@ if ( wonkasoft_request.ga_id !== '' )
 		/**********  End of Settup for the compare plugin No Scroll  *********/
 
 	
-	/*=================================================
-	=            Setup for the search form            =
-	=================================================*/
-	if ( document.querySelector('input#s') )
-	{
-		wonka_ajax_request( xhr, "search_site", null);
-	}
-	/*=====  End of Setup for the search form  ======*/
+	// /*=================================================
+	// =            Setup for the search form            =
+	// =================================================*/
+	// if ( document.querySelector('input#s') )
+	// {
+	// 	wonka_ajax_request( xhr, "search_site", null);
+	// }
+	// /*=====  End of Setup for the search form  ======*/
 
+	// /*=================================================
+	// =            Setup for the nabar menu transparency           =
+	// ================================================*/
+	// if ( document.querySelector('.header-slider-section') ) {
+	// 	var screen_height = window.innerHeight;
+
+	// 	window.onscroll = function() {
+
+	// 		if ( document.body.scrollTop > screen_height || document.documentElement.scrollTop > screen_height ) {
+	// 			console.log('hello');
+	// 			document.querySelector('#masthead').classList.add('transparent-header');
+	// 		} else {
+	// 			document.querySelector('#masthead').classList.remove('transparent-header');
+	// 		}
+	// 	}
+	// }
+
+
+
+	// /*=====  End of Setup for the nabar menu transparency  ======*/
 };
 	/*=====  End of This is for running after document is ready  ======*/
 
@@ -2927,3 +2947,23 @@ function geolocate()
   }
 }
 /*=====  End of This is for the google maps api  ======*/
+	/*=================================================
+	=            Setup for the nabar menu transparency           =
+	================================================*/
+	if ( document.querySelector('.header-slider-section') ) {
+		var screen_height = window.innerHeight;
+
+		window.onscroll = function() {
+
+			if ( document.body.scrollTop > screen_height || document.documentElement.scrollTop > screen_height ) {
+				console.log('hello');
+				document.querySelector('#masthead').classList.add('transparent-header');
+			} else {
+				document.querySelector('#masthead').classList.remove('transparent-header');
+			}
+		}
+	}
+
+
+
+	/*=====  End of Setup for the nabar menu transparency  ======*/
