@@ -36,7 +36,7 @@
 ==================================================*/
 .site-header {
 	position: relative;
-	background: 0 0;
+	background: #646371;
 	height: 110px;
 	z-index: 9999;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
@@ -84,8 +84,11 @@
 	.site-header {
 		position: fixed;
 		height: 120px;
-		// background: transparent;
+		background: transparent;
 
+		&.transparent-header {
+			background: #646371;
+		}
 		li i.fa-search,
 		li i.fa-shopping-cart {
 			font-size: 20px;
