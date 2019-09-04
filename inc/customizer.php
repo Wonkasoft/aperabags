@@ -427,10 +427,10 @@ function apera_bags_customize_register( $wp_customize ) {
 	);
 
 	/**
-	 Enable sale banner settings Section
- *
-	 @since  1.0.0
-*/
+	* Enable sale banner settings Section
+	*
+	* @since  1.0.0
+	*/
 	$wp_customize->add_setting(
 		'enable_sale_banner',
 		array(
@@ -543,10 +543,10 @@ function apera_bags_customize_register( $wp_customize ) {
 	);
 
 	/**
-	 Loop for all sliders and options
- *
-	 @since 1.0.0
-*/
+	* Loop for all sliders and options
+	*
+	* @since 1.0.0
+	*/
 	for ( $i = 1; $i <= 5; $i++ ) :
 		// Slider Setting.
 		$wp_customize->add_setting(
