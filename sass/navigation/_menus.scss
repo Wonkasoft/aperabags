@@ -12,8 +12,8 @@
 
 	button {
 		position: absolute;
-		top: -3.6rem;
-		left: -2px;
+		top: -3.5rem;
+		left: 10px;
 		background: transparent;
 		border: none;
 		@include prefix( transition, $trans_25, webkit moz o);
@@ -21,9 +21,9 @@
 		.hang-a-bur {
 			position: relative;
 			display: block;
-			width: 38px;
-			height: 5px;
-			margin: 5px 0;
+			width: 34px;
+			height: 3px;
+			margin: 6px 0;
 			opacity: 1;
 			background: #fff;
 			@include prefix( transition, $trans_25, webkit moz o);
