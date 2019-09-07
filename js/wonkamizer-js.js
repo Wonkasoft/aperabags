@@ -596,7 +596,6 @@ if ( wonkasoft_request.ga_id !== '' )
 	function add_transparent( height ) {
 
 		if ( document.body.scrollTop > height || document.documentElement.scrollTop > height ) {
-			console.log('hello');
 			document.querySelector('#masthead').classList.add('transparent-header');
 		} else {
 			document.querySelector('#masthead').classList.remove('transparent-header');
