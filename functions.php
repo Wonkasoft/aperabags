@@ -245,8 +245,12 @@ if ( class_exists( 'WC_Gateway_CyberSource' ) ) {
 	require_once get_stylesheet_directory() . '/inc/wc-cybersource-custom.php';
 }
 
-if ( ! class_exists( 'Wonkasoft_Refersion_API' ) ) {
+if ( ! class_exists( 'Wonkasoft_Refersion_Api' ) ) {
 	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-refersion-api.php';
+}
+
+if ( ! class_exists( 'Wonkasoft_GetResponse_Api' ) ) {
+	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-getresponse-api.php';
 }
 
 /**
@@ -295,7 +299,8 @@ add_filter( 'wp_get_nav_menu_items', 'wonka_get_nav_menu_object', 10, 2 );
  * Enqueue scripts and styles.
  */
 function apera_bags_scripts() {
-			  /**
+
+	/**
 	 * For enqueues of styles
 	 */
 	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1', 'all' );
@@ -310,7 +315,7 @@ function apera_bags_scripts() {
 
 	wp_enqueue_style( 'slick-js-theme-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick-theme.css' ), array(), '1.8.0', 'all' );
 
-	wp_enqueue_style( 'apera-bags-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_uri() ), array(), time() );
+	wp_enqueue_style( 'apera-bags-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_uri() ), array(), '1.0.0' );
 
 	/**
 	 * For enqueues of scripts
@@ -343,3 +348,12 @@ function apera_bags_scripts() {
 	endif;
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 50 );
+
+
+/**
+ * This loads the theme styles on the admin side.
+ */
+function admin_styles() {
+	wp_enqueue_style( 'apera-bags-admin-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/css/admin-styles.css' ), array(), '1.0.0' );
+}
+add_action( 'admin_enqueue_scripts', 'admin_styles', 10 );
