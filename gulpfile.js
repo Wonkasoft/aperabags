@@ -15,6 +15,7 @@ json = require('json-file'),
 jsmin = require('gulp-js-minify'),
 themeName = json.read('./package.json').get('name'),
 siteName = json.read('./package.json').get('siteName'),
+local = ( json.read('./package.json').get('local') ) ? json.read('./package.json').get('local'): 'http://localhost/',
 themeDir = '../' + themeName,
 plumberErrorHandler = { errorHandler: notify.onError({
 
@@ -32,7 +33,7 @@ sass.compiler = require('node-sass');
 // Static server
 gulp.task('browser-sync', function() {
 	browserSync.init({
-		proxy: 'https://localhost/' + siteName,
+		proxy: local + siteName,
 		port: 4000
 	});
 });
