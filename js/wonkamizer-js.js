@@ -71,10 +71,10 @@ if ( wonkasoft_request.ga_id !== '' )
 			document.getElementById("ambassadar-first-name").innerHTML = "HI " + firstname + "!";
 		}
 
-		if ( getUrlVars().organization ) 
+		if ( getUrlVars().fname ) 
 		{
-			var clubname = decodeURIComponent( getUrlVars().organization ).replace( /\+/gi, ' ' );
-			document.getElementById("club-name").innerHTML = "HI " + clubname + "!";
+			var zip_firstname = decodeURIComponent( getUrlVars().fname ).replace( /\+/gi, ' ' );
+			document.getElementById("zip-first-name").innerHTML = "HI " + zip_firstname + "!";
 		}
 
 		if ( getUrlVars().email ) 
@@ -1549,20 +1549,14 @@ if ( wonkasoft_request.ga_id !== '' )
 		==========================================================*/
 		if ( document.querySelector( '.home' ) ) 
 		{
-			// var top_slider_section_positionY, cta_section_positionY;
-			// if ( document.querySelector( '.header-slider-section' ) ) 
-			// {
-			// 	top_slider_section_positionY = ( parseInt( getComputedStyle( document.querySelector( '.header-slider-section .top-slide-img-holder' ) ).backgroundPositionY ) / 100 ) * ( document.querySelector( '.header-slider-section' ).offsetHeight / -2 );
-			// }
 
-			// if ( document.querySelector( '.desirable-slider-section' ) ) 
-			// {
-			// 	cta_section_positionY = ( parseInt( getComputedStyle( document.querySelector( '.desirable-slider-section .cta-slide-img-holder' ) ).backgroundPositionY ) / 100 ) * ( document.querySelector( '.desirable-slider-section' ).offsetHeight / -2 );
-			// }
+			var screen_height = window.innerHeight;
+			add_transparent( screen_height );
 
 			window.onscroll = function()
 			{
 				shifting_parallax();
+				add_transparent( screen_height );
 			};
 		}
 		/*=====  End of For parallax on front page sliders  ======*/
@@ -2735,17 +2729,14 @@ if ( wonkasoft_request.ga_id !== '' )
 			}
 		}
 
-/**
- * Settup for the compare plugin No Scroll
- *
- * @author Carlos
- * @return  {[type]}  [return description]
- */		
-
+		/**
+		 * Settup for the compare plugin No Scroll
+		 *
+		 * @author Carlos
+		 */		
  		if(document.querySelector('table.compare-list')) {
  			var compare_table = document.querySelector('table.compare-list');
 
-			console.log(compare_table);
 			compare_table.classList.add('table');
 		}
 
@@ -2773,7 +2764,6 @@ if ( wonkasoft_request.ga_id !== '' )
 
 						if ( compare_close_btn )
 						{
-							// console.log(compare_close_btn);
 
 							compare_close_btn.addEventListener( 'click', function( e )
 							{
@@ -2804,30 +2794,17 @@ if ( wonkasoft_request.ga_id !== '' )
 		/**********  End of Settup for the compare plugin No Scroll  *********/
 
 	
-	/*=================================================
-	=            Setup for the search form            =
-	=================================================*/
-	if ( document.querySelector('input#s') )
-	{
-		wonka_ajax_request( xhr, "search_site", null);
-	}
-	/*=====  End of Setup for the search form  ======*/
-
-	/*=================================================
-	=     Setup for the nabar menu transparency           =
-	================================================*/
-	if ( document.querySelector('.header-slider-section') ) {
-		var screen_height = window.innerHeight;
-		add_transparent(screen_height);
-
-		window.onscroll = function() {
-			add_transparent(screen_height);
-		};
-	}
-
-	/*=====  End of Setup for the nabar menu transparency  ======*/
-};
-	/*=====  End of This is for running after document is ready  ======*/
+		/*=================================================
+		=            Setup for the search form            =
+		=================================================*/
+		if ( document.querySelector('input#s') )
+		{
+			wonka_ajax_request( xhr, "search_site", null);
+		}
+		/*=====  End of Setup for the search form  ======*/
+		/*=====  End of Setup for the nabar menu transparency  ======*/
+	};
+		/*=====  End of This is for running after document is ready  ======*/
 
 })( jQuery );
 

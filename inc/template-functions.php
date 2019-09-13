@@ -252,6 +252,7 @@ add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
  * @param array $field_values this is an array of the field values.
  */
 function add_bootstrap_container_class( $form, $ajax, $field_values ) {
+
 	$inline_forms = array( 'Sign Up', 'Popup', 'Promotion Sign Up' );
 	if ( ! empty( $form['cssClass'] ) ) :
 		$form['cssClass'] .= ' wonka-gform wonka-gform-' . $form['id'];
@@ -265,6 +266,12 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 
 	if ( in_array( $form['title'], array( 'Refersion Registration Ambassador', 'Refersion Registration Zip' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-refersion-form';
+	endif;
+
+	if ( in_array( $form['title'], array( 'Refersion Registration Zip' ) ) ) :
+		echo "<pre>\n";
+		print_r( $form['fields'] );
+		echo "</pre>\n";
 	endif;
 
 	if ( in_array( $form['title'], array( 'ZIP Program' ) ) ) :
