@@ -268,12 +268,6 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] .= ' inline-form wonka-refersion-form';
 	endif;
 
-	if ( in_array( $form['title'], array( 'Refersion Registration Zip' ) ) ) :
-		echo "<pre>\n";
-		print_r( $form['fields'] );
-		echo "</pre>\n";
-	endif;
-
 	if ( in_array( $form['title'], array( 'ZIP Program' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-zip-form';
 	endif;
@@ -281,13 +275,16 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	if ( in_array( $form['title'], array( 'Ambassador Program' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-ambassador-form';
 	endif;
-	foreach ( $form['fields'] as $field ) :
+
+	foreach ( $form['fields'] as &$field ) :
+
 		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
 			if ( ! empty( $field['cssClass'] ) ) :
 				$field['cssClass'] .= ' form-group wonka-form-group';
 			else :
 				$field['cssClass'] = 'form-group wonka-form-group';
 			endif;
+
 			if ( ! empty( $field['size'] ) ) :
 				$field['size'] .= ' form-control wonka-form-control';
 			else :
@@ -305,6 +302,36 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );
 
 add_filter( 'gform_enable_password_field', '__return_true' );
+
+/**
+ * This is to add a prepend element to a specific field.
+ *
+ * @param  html  $field_content contains the field content in html.
+ * @param  array $field         contains the field data.
+ * @return html                returns the newly constructed field content.
+ */
+function wonka_zip_company_name_icon( $field_content, $field ) {
+
+	if ( 'Company' === $field['label'] ) :
+		$form = GFAPI::get_form( $field['formId'] );
+		if ( 'Refersion Registration Zip' === $form['title'] ) :
+			$slit_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+			$new_content = '';
+			foreach ( $slit_content as $key => $value ) {
+				if ( strpos( $value, 'input name' ) !== false ) :
+					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text">@</span> </div><' . $value . '</div>';
+
+				else :
+					$new_content .= $value;
+				endif;
+			}
+		endif;
+		return $new_content;
+	endif;
+
+	return $field_content;
+}
+  add_filter( 'gform_field_content', 'wonka_zip_company_name_icon', 10, 2 );
 
 /**
  * Adding classes to gform buttons

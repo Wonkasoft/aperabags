@@ -1558,6 +1558,7 @@ if ( wonkasoft_request.ga_id !== '' )
 				shifting_parallax();
 				add_transparent( screen_height );
 			};
+			
 		}
 		/*=====  End of For parallax on front page sliders  ======*/
 		
