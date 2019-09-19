@@ -1,0 +1,4 @@
+form#custom-options-form input:not( #submit ) {
+	margin-top: 0;
+  	width: 85%;
+}

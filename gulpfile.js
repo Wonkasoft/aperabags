@@ -112,7 +112,7 @@ gulp.task('js', function () {
 
 gulp.task('watch', function() {
 
-	gulp.watch('**/sass/*.scss', gulp.series(gulp.parallel('sass', 'woo-sass'))).on('change', browserSync.reload);
+	gulp.watch('**/sass/**/*.scss', gulp.series(gulp.parallel('sass', 'woo-sass'))).on('change', browserSync.reload);
 	gulp.watch('**/*.php').on('change', browserSync.reload);
 	gulp.watch('./js/*.js', gulp.series(gulp.parallel('js'))).on('change', browserSync.reload);
 
