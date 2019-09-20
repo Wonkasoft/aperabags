@@ -40,7 +40,7 @@
 		&[aria-expanded="true"] {
 		
 			.hang-a-bur-top {
-				top: 0.6rem;
+				top: 0.5rem;
 				@include prefix( transform, rotate(220deg), webkit moz o );
 			}
 		

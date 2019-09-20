@@ -86,7 +86,7 @@ gulp.task('woo-sass', function () {
 
 gulp.task('js', function () {
 
-	return gulp.src( './js/wonkamizer-js.js', './js/navigation.js', './js/skip-link-focus-fix.js')
+	return gulp.src( './js/wonkamizer-js.js' )
 
 	.pipe(concat(themeName + '.min.js'))
 

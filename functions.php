@@ -326,6 +326,10 @@ function apera_bags_scripts() {
 
 	wp_enqueue_script( 'slick-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick.min.js' ), array( 'jquery' ), '1.8.0', true );
 
+	wp_enqueue_script( 'apera-bags-navigation-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/js/navigation.js' ), array( 'jquery' ), time(), true );
+
+	wp_enqueue_script( 'apera-bags-skip-link-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/js/skip-link-focus-fix.js' ), array( 'jquery' ), time(), true );
+
 	wp_enqueue_script( 'apera-bags-wonkamizer-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js' ), array( 'jquery', 'slick-js' ), time(), true );
 
 	$ga_id = ( ! empty( get_option( 'google_analytics_id' ) ) ) ? get_option( 'google_analytics_id' ) : '';
