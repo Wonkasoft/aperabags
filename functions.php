@@ -227,6 +227,11 @@ require_once get_stylesheet_directory() . '/inc/template-tags.php';
 require_once get_stylesheet_directory() . '/inc/template-functions.php';
 
 /**
+ * Functions which enhance the theme by ajax requests.
+ */
+require_once get_stylesheet_directory() . '/inc/theme-ajax-functions.php';
+
+/**
  * Customizer additions.
  */
 require_once get_stylesheet_directory() . '/inc/customizer.php';
@@ -271,8 +276,8 @@ add_action( 'pre_get_posts', 'ws_apera_search_woocommerce_only' );
  * Hooks into Apera main menu to add Apera logo to
  * my account link. Adds Svg inline to the menu title
  *
- * @param   [object] $items  grabs the menu items for that menu
- * @param   [array]  $args   Menus
+ * @param   [object] $items  grabs the menu items for that menu.
+ * @param   [array]  $args   Menus.
  *
  * @return  [object] returns the whole menu items object
  * with added icons

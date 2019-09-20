@@ -110,6 +110,15 @@ if ( wonkasoft_request.ga_id !== '' )
 
 	}
 
+	if ( document.querySelector( '#subscriber-email' ) ) 
+	{
+		if ( getUrlVars().email ) 
+		{
+			var subscriber_email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("subscriber-email").innerHTML = subscriber_email;
+		}
+	}
+
 	/**
 	 * This is for the checkout multistep tabs 
 	 * @author Rudy
