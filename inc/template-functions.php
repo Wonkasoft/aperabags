@@ -310,11 +310,11 @@ add_filter( 'gform_enable_password_field', '__return_true' );
  * @param  array $field         contains the field data.
  * @return html                returns the newly constructed field content.
  */
-function wonka_zip_company_name_icon( $field_content, $field ) {
+function wonka_ambassador_company_name_icon( $field_content, $field ) {
+	$form = GFAPI::get_form( $field['formId'] );
+	if ( 'Refersion Registration Ambassador' === $form['title'] ) :
 
-	if ( 'Company' === $field['label'] ) :
-		$form = GFAPI::get_form( $field['formId'] );
-		if ( 'Refersion Registration Zip' === $form['title'] ) :
+		if ( 'Company' === $field['label'] ) :
 			$slit_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
 			$new_content  = '';
 			foreach ( $slit_content as $key => $value ) {
@@ -331,7 +331,7 @@ function wonka_zip_company_name_icon( $field_content, $field ) {
 
 	return $field_content;
 }
-  add_filter( 'gform_field_content', 'wonka_zip_company_name_icon', 10, 2 );
+  add_filter( 'gform_field_content', 'wonka_ambassador_company_name_icon', 10, 2 );
 
 /**
  * Adding classes to gform buttons
@@ -387,15 +387,18 @@ function aperabags_add_theme_options() {
 
 	$registered_options = ( ! empty( get_option( 'custom_options_added' ) ) ) ? get_option( 'custom_options_added' ) : '';
 
-	foreach ( $registered_options as $register_option ) {
-		$set_args = array(
-			'type'              => 'string',
-			'description'       => $register_option['description'],
-			'sanitize_callback' => 'aperabags_options_sanitize',
-			'show_in_rest'      => false,
-		);
+	if ( ! empty( $registered_options ) ) {
 
-		register_setting( 'aperabags-theme-options-group', $register_option['id'], $set_args );
+		foreach ( $registered_options as $register_option ) {
+			$set_args = array(
+				'type'              => 'string',
+				'description'       => $register_option['description'],
+				'sanitize_callback' => 'aperabags_options_sanitize',
+				'show_in_rest'      => false,
+			);
+
+			register_setting( 'aperabags-theme-options-group', $register_option['id'], $set_args );
+		}
 	}
 }
 add_action( 'admin_menu', 'aperabags_add_theme_options' );
@@ -1953,5 +1956,5 @@ function wonkasoft_api_responses_user_data( $user ) {
 		<?php
 		endif;
 }
-	add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 1 );
-	add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 1 );
+add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 1 );
+add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 1 );
