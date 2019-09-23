@@ -325,8 +325,11 @@ function wonka_ambassador_company_name_icon( $field_content, $field ) {
 					$new_content .= $value;
 				endif;
 			}
+
+			return $new_content;
+
 		endif;
-		return $new_content;
+
 	endif;
 
 	return $field_content;
