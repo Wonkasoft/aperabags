@@ -314,10 +314,10 @@ add_filter( 'gform_enable_password_field', '__return_true' );
  * @param  array $field         contains the field data.
  * @return html                returns the newly constructed field content.
  */
-function wonka_zip_company_name_icon( $field_content, $field ) {
+function wonka_gform_field_modifications( $field_content, $field ) {
 	$form        = GFAPI::get_form( $field['formId'] );
 	$new_content = '';
-	if ( 'Refersion Registration Zip' === $form['title'] ) :
+	if ( 'Refersion Registration Ambassador' === $form['title'] ) :
 
 		if ( 'Company' === $field['label'] ) :
 
@@ -374,7 +374,7 @@ function wonka_zip_company_name_icon( $field_content, $field ) {
 
 	return $field_content;
 }
-  add_filter( 'gform_field_content', 'wonka_zip_company_name_icon', 10, 2 );
+  add_filter( 'gform_field_content', 'wonka_gform_field_modifications', 10, 2 );
 
 /**
  * Adding classes to gform buttons
