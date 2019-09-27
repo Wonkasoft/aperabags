@@ -1033,6 +1033,8 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 			wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
 
+			header( 'Refresh:0' );
+
 			return;
 
 		endif;
