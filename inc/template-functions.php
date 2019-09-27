@@ -291,6 +291,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 				$field['size'] = 'form-control wonka-form-control';
 			endif;
 
+			if ( 'fileupload' === $field['type'] ) :
+				$field['size'] = 'custom-file-input';
+			endif;
+
 			if ( empty( $field['placeholder'] ) ) :
 				$field['placeholder'] = $field['label'];
 			endif;
@@ -310,13 +314,14 @@ add_filter( 'gform_enable_password_field', '__return_true' );
  * @param  array $field         contains the field data.
  * @return html                returns the newly constructed field content.
  */
-function wonka_ambassador_company_name_icon( $field_content, $field ) {
-	$form = GFAPI::get_form( $field['formId'] );
-	if ( 'Refersion Registration Ambassador' === $form['title'] ) :
+function wonka_zip_company_name_icon( $field_content, $field ) {
+	$form        = GFAPI::get_form( $field['formId'] );
+	$new_content = '';
+	if ( 'Refersion Registration Zip' === $form['title'] ) :
 
 		if ( 'Company' === $field['label'] ) :
+
 			$slit_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
-			$new_content  = '';
 			foreach ( $slit_content as $key => $value ) {
 				if ( strpos( $value, 'input name' ) !== false ) :
 					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text">@</span> </div><' . $value . '</div>';
@@ -332,9 +337,44 @@ function wonka_ambassador_company_name_icon( $field_content, $field ) {
 
 	endif;
 
+	if ( 'fileupload' === $field['type'] ) :
+
+		$slit_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+		$element      = '';
+		foreach ( $slit_content as $key => $value ) {
+			if ( strpos( $value, 'input name' ) !== false ) :
+				$element   .= '<' . $value;
+				$attributes = simplexml_load_string( $element );
+				$attributes = json_decode( json_encode( $attributes ) );
+				foreach ( $attributes->{'@attributes'} as $key => $str ) :
+					if ( 'id' === $key ) {
+						$for = $str;
+					}
+					if ( 'aria-describedby' === $key ) {
+						$add_id = $str;
+					}
+				endforeach;
+				$new_content .= 'div class="input-group">';
+				$new_content .= '<div class="input-group-prepend">';
+				$new_content .= '<span class="input-group-text" id="' . $add_id . '">Upload</span>';
+				$new_content .= '</div>';
+				$new_content .= '<div class="custom-file"><';
+				$new_content .= $value;
+				$new_content .= '<label class="custom-file-label" for="' . $for . '">Choose file</label>';
+				$new_content .= '</div>';
+				$new_content .= '</div>';
+
+				else :
+					$new_content .= $value;
+			endif;
+		}
+
+		return $new_content;
+	endif;
+
 	return $field_content;
 }
-  add_filter( 'gform_field_content', 'wonka_ambassador_company_name_icon', 10, 2 );
+  add_filter( 'gform_field_content', 'wonka_zip_company_name_icon', 10, 2 );
 
 /**
  * Adding classes to gform buttons
@@ -657,12 +697,12 @@ function author_display_meta_box( $post, $option ) {
 	echo '<div class="form-check">' . wp_kses_post( $output ) . '</div>';
 }
 
-			/**
-			 * For saving the author display
-			 *
-			 * @param  integer $post_id contains the post ID.
-			 * @param  object  $post    contains the current post.
-			 */
+/**
+ * For saving the author display
+ *
+ * @param  integer $post_id contains the post ID.
+ * @param  object  $post    contains the current post.
+ */
 function wonkasoft_save_author_display( $post_id, $post ) {
 	$nonce_action = 'author_display_option';
 
@@ -902,15 +942,17 @@ function filter_states_to_abbriviations( $address_types, $form_id ) {
 add_filter( 'gform_address_types', 'filter_states_to_abbriviations', 10, 2 );
 
 /**
- * This function fires after Refersion Registration form is ssubmitted.
+ * This function fires after Refersion Registration form is submitted.
  *
  * @param  array $entry contains the data from surrent.
  * @param  array $form  Contains an array of the form.
  */
-function make_refersion_api_calls( $entry, $form ) {
+function wonkasoft_after_form_submission( $entry, $form ) {
+
 	$set_forms = array(
 		'Refersion Registration Ambassador',
 		'Refersion Registration Zip',
+		'Media Upload',
 	);
 
 	update_option( 'registration_passing_args', null );
@@ -924,11 +966,13 @@ function make_refersion_api_calls( $entry, $form ) {
 	if ( 'Refersion Registration Ambassador' === $form['title'] ) :
 		$campaign_name = 'ambassador_program_signups';
 		$set_tag       = 'ambassadorcompleted';
+		$role          = 'apera_ambassador_affiliate';
 	endif;
 
 	if ( 'Refersion Registration Zip' === $form['title'] ) :
 		$campaign_name = 'zip_program_signups';
 		$set_tag       = 'zipcompleted';
+		$role          = 'apera_zip_affiliate';
 	endif;
 
 	// Get current user object.
@@ -942,8 +986,8 @@ function make_refersion_api_calls( $entry, $form ) {
 		'First',
 		'Last',
 		'Company',
+		'Logo Upload',
 		'Email',
-		'Paypal Email',
 		'Password',
 		'Street Address',
 		'Address Line 2',
@@ -983,6 +1027,17 @@ function make_refersion_api_calls( $entry, $form ) {
 		endif;
 	}
 
+	if ( 'Media Upload' === $form['title'] ) :
+
+		if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+			wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
+
+			return;
+
+		endif;
+	endif;
+
 	// Setting getResponse api args.
 	$api_args = array(
 		'email'         => $entry_fields['email'],
@@ -996,13 +1051,14 @@ function make_refersion_api_calls( $entry, $form ) {
 
 		// Check if email has user account already.
 		if ( email_exists( $entry_fields['email'] ) ) {
+
 			$user = get_user_by( 'email', $entry_fields['email'] );
 
-			if ( ! in_array( 'apera_affiliate', $user->roles ) ) :
+			if ( ! in_array( $role, $user->roles ) ) :
 				wp_update_user(
 					array(
-						'ID'   => $user_id,
-						'role' => 'apera_affiliate',
+						'ID'   => $user->ID,
+						'role' => $role,
 					)
 				);
 			endif;
@@ -1019,82 +1075,7 @@ function make_refersion_api_calls( $entry, $form ) {
 
 						$refersion_response = $new_affiliate_created->get_affiliate();
 
-						$args = array(
-							'post_type'      => 'shop_coupon',
-							'post_status'    => 'publish',
-							'posts_per_page' => -1,
-						);
-
-						$coupons         = new WP_Query( $args );
-						$foundzip        = false;
-						$foundambassador = false;
-						$percentage      = '10';
-						foreach ( $coupons->posts as $coupon ) :
-							if ( $entry_fields['company'] === $coupon->post_name ) :
-								$foundzip = true;
-							endif;
-
-							if ( substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage === $coupon->post_name ) :
-								$foundambassador = true;
-							endif;
-						endforeach;
-						if ( 'Refersion Registration Zip' === $form['title'] && $foundzip ) :
-							/**
-							 * Create a coupon programatically
-							 */
-							$coupon_code   = $entry_fields['company']; // Code.
-							$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-							$coupon = array(
-								'post_title'   => $coupon_code,
-								'post_content' => '',
-								'post_status'  => 'publish',
-								'post_author'  => 1,
-								'post_type'    => 'shop_coupon',
-							);
-
-							$new_coupon_id = wp_insert_post( $coupon );
-
-							// Add meta.
-							update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-							update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
-							update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-							update_post_meta( $new_coupon_id, 'product_ids', '' );
-							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-							update_post_meta( $new_coupon_id, 'usage_limit', '' );
-							update_post_meta( $new_coupon_id, 'expiry_date', '' );
-							update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-							update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-						endif;
-
-						if ( 'Refersion Registration Ambassador' === $form['title'] && $foundambassador ) :
-							/**
-							 * Create a coupon programatically
-							 */
-							$coupon_code   = substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage; // Code.
-							$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-							$coupon = array(
-								'post_title'   => $coupon_code,
-								'post_content' => '',
-								'post_status'  => 'publish',
-								'post_author'  => 1,
-								'post_type'    => 'shop_coupon',
-							);
-
-							$new_coupon_id = wp_insert_post( $coupon );
-
-							// Add meta.
-							update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-							update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
-							update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-							update_post_meta( $new_coupon_id, 'product_ids', '' );
-							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-							update_post_meta( $new_coupon_id, 'usage_limit', '' );
-							update_post_meta( $new_coupon_id, 'expiry_date', '' );
-							update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-							update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-						endif;
+						wonkasoft_coupon_creation( $entry_fields, $form['title'] );
 
 						// Setting affiliate code and link to send to getResponse.
 						$api_args['custom_fields']        = array(
@@ -1113,6 +1094,11 @@ function make_refersion_api_calls( $entry, $form ) {
 
 						update_user_meta( $user_id, 'refersion_data', $refersion_response );
 						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+						if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
+
+						endif;
 
 						else :
 
@@ -1128,86 +1114,16 @@ function make_refersion_api_calls( $entry, $form ) {
 
 							update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
+							if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
+
+							endif;
 
 					endif;
 						else :
 
-							$args = array(
-								'post_type'      => 'shop_coupon',
-								'post_status'    => 'publish',
-								'posts_per_page' => -1,
-							);
-
-							$coupons         = new WP_Query( $args );
-							$foundzip        = false;
-							$foundambassador = false;
-							$percentage      = '10';
-							foreach ( $coupons->posts as $coupon ) :
-								if ( $entry_fields['company'] === $coupon->post_name ) :
-									$foundzip = true;
-								endif;
-
-								if ( substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage === $coupon->post_name ) :
-									$foundambassador = true;
-								endif;
-							endforeach;
-							if ( 'Refersion Registration Zip' === $form['title'] && $foundzip ) :
-								/**
-								 * Create a coupon programatically
-								 */
-								$coupon_code   = $entry_fields['company']; // Code.
-								$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-								$coupon = array(
-									'post_title'   => $coupon_code,
-									'post_content' => '',
-									'post_status'  => 'publish',
-									'post_author'  => 1,
-									'post_type'    => 'shop_coupon',
-								);
-
-								$new_coupon_id = wp_insert_post( $coupon );
-
-								// Add meta.
-								update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-								update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
-								update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-								update_post_meta( $new_coupon_id, 'product_ids', '' );
-								update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-								update_post_meta( $new_coupon_id, 'usage_limit', '' );
-								update_post_meta( $new_coupon_id, 'expiry_date', '' );
-								update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-								update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-							endif;
-
-							if ( 'Refersion Registration Ambassador' === $form['title'] && $foundambassador ) :
-								/**
-								 * Create a coupon programatically
-								 */
-								$coupon_code   = substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage; // Code.
-								$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-								$coupon = array(
-									'post_title'   => $coupon_code,
-									'post_content' => '',
-									'post_status'  => 'publish',
-									'post_author'  => 1,
-									'post_type'    => 'shop_coupon',
-								);
-
-								$new_coupon_id = wp_insert_post( $coupon );
-
-								// Add meta.
-								update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-								update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
-								update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-								update_post_meta( $new_coupon_id, 'product_ids', '' );
-								update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-								update_post_meta( $new_coupon_id, 'usage_limit', '' );
-								update_post_meta( $new_coupon_id, 'expiry_date', '' );
-								update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-								update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-							endif;
+							wonkasoft_coupon_creation( $entry_fields, $form['title'] );
 
 							// Setting affiliate code and link to send to getResponse.
 							$api_args['custom_fields']        = array(
@@ -1225,6 +1141,11 @@ function make_refersion_api_calls( $entry, $form ) {
 
 							update_user_meta( $user_id, 'refersion_data', $refersion_response );
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
+							if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
+
+							endif;
 				endif;
 			endif;
 
@@ -1247,17 +1168,17 @@ function make_refersion_api_calls( $entry, $form ) {
 				'use_ssl'              => true,   // (bool) Whether the user should always access the admin over https. Default false.
 				'user_registered'      => $date->format( 'Y-m-d H:i:s' ),   // (string) Date the user registered. Format is 'Y-m-d H:i:s'.
 				'show_admin_bar_front' => false,   // (string|bool) Whether to display the Admin Bar for the user on the site's front end. Default true.
-				'role'                 => 'apera_affiliate',   // (string) User's role.
+				'role'                 => $role,   // (string) User's role.
 			);
 
 			// Inserting new user and getting user id.
 			$user_id = wp_insert_user( $userdata );
 			$user    = new WP_User( $user_id );
-			if ( ! in_array( 'apera_affiliate', $user->roles ) ) :
+			if ( ! in_array( $role, $user->roles ) ) :
 				wp_update_user(
 					array(
 						'ID'   => $user_id,
-						'role' => 'apera_affiliate',
+						'role' => $role,
 					)
 				);
 			endif;
@@ -1274,82 +1195,7 @@ function make_refersion_api_calls( $entry, $form ) {
 
 						$refersion_response = $new_affiliate_created->get_affiliate();
 
-						$args = array(
-							'post_type'      => 'shop_coupon',
-							'post_status'    => 'publish',
-							'posts_per_page' => -1,
-						);
-
-						$coupons         = new WP_Query( $args );
-						$foundzip        = false;
-						$foundambassador = false;
-						$percentage      = '10';
-						foreach ( $coupons->posts as $coupon ) :
-							if ( $entry_fields['company'] === $coupon->post_name ) :
-								$foundzip = true;
-							endif;
-
-							if ( substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage === $coupon->post_name ) :
-								$foundambassador = true;
-							endif;
-						endforeach;
-						if ( 'Refersion Registration Zip' === $form['title'] && $foundzip ) :
-							/**
-							 * Create a coupon programatically
-							 */
-							$coupon_code   = $entry_fields['company']; // Code.
-							$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-							$coupon = array(
-								'post_title'   => $coupon_code,
-								'post_content' => '',
-								'post_status'  => 'publish',
-								'post_author'  => 1,
-								'post_type'    => 'shop_coupon',
-							);
-
-							$new_coupon_id = wp_insert_post( $coupon );
-
-							// Add meta.
-							update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-							update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
-							update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-							update_post_meta( $new_coupon_id, 'product_ids', '' );
-							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-							update_post_meta( $new_coupon_id, 'usage_limit', '' );
-							update_post_meta( $new_coupon_id, 'expiry_date', '' );
-							update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-							update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-						endif;
-
-						if ( 'Refersion Registration Ambassador' === $form['title'] && $foundambassador ) :
-							/**
-							 * Create a coupon programatically
-							 */
-							$coupon_code   = substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage; // Code.
-							$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-							$coupon = array(
-								'post_title'   => $coupon_code,
-								'post_content' => '',
-								'post_status'  => 'publish',
-								'post_author'  => 1,
-								'post_type'    => 'shop_coupon',
-							);
-
-							$new_coupon_id = wp_insert_post( $coupon );
-
-							// Add meta.
-							update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-							update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
-							update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-							update_post_meta( $new_coupon_id, 'product_ids', '' );
-							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-							update_post_meta( $new_coupon_id, 'usage_limit', '' );
-							update_post_meta( $new_coupon_id, 'expiry_date', '' );
-							update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-							update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-						endif;
+						wonkasoft_coupon_creation( $entry_fields, $form['title'] );
 
 						// Setting affiliate code and link to send to getResponse.
 						$api_args['custom_fields']        = array(
@@ -1368,6 +1214,11 @@ function make_refersion_api_calls( $entry, $form ) {
 
 						update_user_meta( $user_id, 'refersion_data', $refersion_response );
 						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+						if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
+
+						endif;
 
 						else :
 
@@ -1383,86 +1234,16 @@ function make_refersion_api_calls( $entry, $form ) {
 
 							update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
+							if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
+
+									endif;
 
 					endif;
 						else :
 
-							$args = array(
-								'post_type'      => 'shop_coupon',
-								'post_status'    => 'publish',
-								'posts_per_page' => -1,
-							);
-
-							$coupons         = new WP_Query( $args );
-							$foundzip        = false;
-							$foundambassador = false;
-							$percentage      = '10';
-							foreach ( $coupons->posts as $coupon ) :
-								if ( $entry_fields['company'] === $coupon->post_name ) :
-									$foundzip = true;
-								endif;
-
-								if ( substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage === $coupon->post_name ) :
-									$foundambassador = true;
-								endif;
-							endforeach;
-							if ( 'Refersion Registration Zip' === $form['title'] && $foundzip ) :
-								/**
-								 * Create a coupon programatically
-								 */
-								$coupon_code   = $entry_fields['company']; // Code.
-								$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-								$coupon = array(
-									'post_title'   => $coupon_code,
-									'post_content' => '',
-									'post_status'  => 'publish',
-									'post_author'  => 1,
-									'post_type'    => 'shop_coupon',
-								);
-
-								$new_coupon_id = wp_insert_post( $coupon );
-
-								// Add meta.
-								update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-								update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
-								update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-								update_post_meta( $new_coupon_id, 'product_ids', '' );
-								update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-								update_post_meta( $new_coupon_id, 'usage_limit', '' );
-								update_post_meta( $new_coupon_id, 'expiry_date', '' );
-								update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-								update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-							endif;
-
-							if ( 'Refersion Registration Ambassador' === $form['title'] && $foundambassador ) :
-								/**
-								 * Create a coupon programatically
-								 */
-								$coupon_code   = substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage; // Code.
-								$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-								$coupon = array(
-									'post_title'   => $coupon_code,
-									'post_content' => '',
-									'post_status'  => 'publish',
-									'post_author'  => 1,
-									'post_type'    => 'shop_coupon',
-								);
-
-								$new_coupon_id = wp_insert_post( $coupon );
-
-								// Add meta.
-								update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-								update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
-								update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-								update_post_meta( $new_coupon_id, 'product_ids', '' );
-								update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-								update_post_meta( $new_coupon_id, 'usage_limit', '' );
-								update_post_meta( $new_coupon_id, 'expiry_date', '' );
-								update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-								update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-							endif;
+							wonkasoft_coupon_creation( $entry_fields, $form['title'] );
 
 							// Setting affiliate code and link to send to getResponse.
 							$api_args['custom_fields']        = array(
@@ -1481,6 +1262,11 @@ function make_refersion_api_calls( $entry, $form ) {
 
 							update_user_meta( $user_id, 'refersion_data', $refersion_response );
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
+							if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
+
+							endif;
 				endif;
 			endif;
 
@@ -1494,11 +1280,11 @@ function make_refersion_api_calls( $entry, $form ) {
 
 			$user = get_user_by( 'email', $entry_fields['email'] );
 
-			if ( ! in_array( 'apera_affiliate', $user->roles ) ) :
+			if ( ! in_array( $role, $user->roles ) ) :
 				wp_update_user(
 					array(
 						'ID'   => $user->ID,
-						'role' => 'apera_affiliate',
+						'role' => $role,
 					)
 				);
 			endif;
@@ -1511,82 +1297,7 @@ function make_refersion_api_calls( $entry, $form ) {
 
 						$refersion_response = $new_affiliate_created->get_affiliate();
 
-						$args = array(
-							'post_type'      => 'shop_coupon',
-							'post_status'    => 'publish',
-							'posts_per_page' => -1,
-						);
-
-						$coupons         = new WP_Query( $args );
-						$foundzip        = false;
-						$foundambassador = false;
-						$percentage      = '10';
-						foreach ( $coupons->posts as $coupon ) :
-							if ( $entry_fields['company'] === $coupon->post_name ) :
-								$foundzip = true;
-							endif;
-
-							if ( substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage === $coupon->post_name ) :
-								$foundambassador = true;
-							endif;
-						endforeach;
-						if ( 'Refersion Registration Zip' === $form['title'] && $foundzip ) :
-							/**
-							 * Create a coupon programatically
-							 */
-							$coupon_code   = $entry_fields['company']; // Code.
-							$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-							$coupon = array(
-								'post_title'   => $coupon_code,
-								'post_content' => '',
-								'post_status'  => 'publish',
-								'post_author'  => 1,
-								'post_type'    => 'shop_coupon',
-							);
-
-							$new_coupon_id = wp_insert_post( $coupon );
-
-							// Add meta.
-							update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-							update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
-							update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-							update_post_meta( $new_coupon_id, 'product_ids', '' );
-							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-							update_post_meta( $new_coupon_id, 'usage_limit', '' );
-							update_post_meta( $new_coupon_id, 'expiry_date', '' );
-							update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-							update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-						endif;
-
-						if ( 'Refersion Registration Ambassador' === $form['title'] && $foundambassador ) :
-							/**
-							 * Create a coupon programatically
-							 */
-							$coupon_code   = substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage; // Code.
-							$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-							$coupon = array(
-								'post_title'   => $coupon_code,
-								'post_content' => '',
-								'post_status'  => 'publish',
-								'post_author'  => 1,
-								'post_type'    => 'shop_coupon',
-							);
-
-							$new_coupon_id = wp_insert_post( $coupon );
-
-							// Add meta.
-							update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-							update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
-							update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-							update_post_meta( $new_coupon_id, 'product_ids', '' );
-							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-							update_post_meta( $new_coupon_id, 'usage_limit', '' );
-							update_post_meta( $new_coupon_id, 'expiry_date', '' );
-							update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-							update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-						endif;
+						wonkasoft_coupon_creation( $entry_fields, $form['title'] );
 
 						// Setting affiliate code and link to send to getResponse.
 						$api_args['custom_fields']        = array(
@@ -1605,6 +1316,11 @@ function make_refersion_api_calls( $entry, $form ) {
 
 						update_user_meta( $user_id, 'refersion_data', $refersion_response );
 						update_user_meta( $user_id, 'getResponse_data', $getresponse );
+						if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
+
+						endif;
 
 						else :
 
@@ -1621,86 +1337,17 @@ function make_refersion_api_calls( $entry, $form ) {
 
 							update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
+							if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
+
+							endif;
 
 					endif;
+
 						else :
 
-							$args = array(
-								'post_type'      => 'shop_coupon',
-								'post_status'    => 'publish',
-								'posts_per_page' => -1,
-							);
-
-							$coupons         = new WP_Query( $args );
-							$foundzip        = false;
-							$foundambassador = false;
-							$percentage      = '10';
-							foreach ( $coupons->posts as $coupon ) :
-								if ( $entry_fields['company'] === $coupon->post_name ) :
-									$foundzip = true;
-								endif;
-
-								if ( substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage === $coupon->post_name ) :
-									$foundambassador = true;
-								endif;
-							endforeach;
-							if ( 'Refersion Registration Zip' === $form['title'] && $foundzip ) :
-								/**
-								 * Create a coupon programatically
-								 */
-								$coupon_code   = $entry_fields['company']; // Code.
-								$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-								$coupon = array(
-									'post_title'   => $coupon_code,
-									'post_content' => '',
-									'post_status'  => 'publish',
-									'post_author'  => 1,
-									'post_type'    => 'shop_coupon',
-								);
-
-								$new_coupon_id = wp_insert_post( $coupon );
-
-								// Add meta.
-								update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-								update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
-								update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-								update_post_meta( $new_coupon_id, 'product_ids', '' );
-								update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-								update_post_meta( $new_coupon_id, 'usage_limit', '' );
-								update_post_meta( $new_coupon_id, 'expiry_date', '' );
-								update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-								update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-							endif;
-
-							if ( 'Refersion Registration Ambassador' === $form['title'] && $foundambassador ) :
-								/**
-								 * Create a coupon programatically
-								 */
-								$coupon_code   = substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage; // Code.
-								$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-								$coupon = array(
-									'post_title'   => $coupon_code,
-									'post_content' => '',
-									'post_status'  => 'publish',
-									'post_author'  => 1,
-									'post_type'    => 'shop_coupon',
-								);
-
-								$new_coupon_id = wp_insert_post( $coupon );
-
-								// Add meta.
-								update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
-								update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
-								update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-								update_post_meta( $new_coupon_id, 'product_ids', '' );
-								update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-								update_post_meta( $new_coupon_id, 'usage_limit', '' );
-								update_post_meta( $new_coupon_id, 'expiry_date', '' );
-								update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
-								update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-							endif;
+							wonkasoft_coupon_creation( $entry_fields, $form['title'] );
 
 							// Setting affiliate code and link to send to getResponse.
 							$api_args['custom_fields']        = array(
@@ -1719,13 +1366,198 @@ function make_refersion_api_calls( $entry, $form ) {
 
 							update_user_meta( $user_id, 'refersion_data', $refersion_response );
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
+							if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
+
+							endif;
 				endif;
+
 			endif;
 
 		endif;
 
 }
-add_action( 'gform_after_submission', 'make_refersion_api_calls', 10, 2 );
+add_action( 'gform_after_submission', 'wonkasoft_after_form_submission', 10, 2 );
+
+/**
+ * This adds a company logo.
+ */
+function wonkasoft_add_club_gym_logo( $url, $user_id ) {
+	$image = array();
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+	require_once ABSPATH . 'wp-admin/includes/media.php';
+
+	$attachment_id = media_sideload_image( $url, $user_id, 'logo image ' . $user_id, 'id' );
+
+	if ( is_wp_error( $attachment_id ) ) {
+
+		$error = $attachment_id->get_error_messages();
+
+		update_user_meta( $user_id, 'company_logo', $error );
+
+	} else {
+
+		$image['id']  = $attachment_id;
+		$image['url'] = wp_get_attachment_url( $attachment_id );
+
+		$image = json_encode( $image );
+
+		update_user_meta( $user_id, 'company_logo', $image );
+
+	}
+}
+
+/**
+ * This adds the my account menu link for the logo.
+ *
+ * @param  array $menu_links contains the current my account links.
+ * @return [type]             [description]
+ */
+function wonkasoft_my_account_club_gym_logo( $menu_links ) {
+
+	$user = wp_get_current_user();
+
+	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) :
+
+		$menu_links = array_slice( $menu_links, 0, 5, true )
+		+ array( 'club-gym-logo' => 'Club/Gym Logo' )
+		+ array_slice( $menu_links, 5, null, true );
+
+	endif;
+
+	return $menu_links;
+
+}
+add_filter( 'woocommerce_account_menu_items', 'wonkasoft_my_account_club_gym_logo', 50 );
+
+/**
+ * This is for the adding of the endpoint for my account page logo link.
+ */
+function wonkasoft_add_endpoint_my_account() {
+
+	add_rewrite_endpoint( 'club-gym-logo', EP_PAGES );
+
+}
+add_action( 'init', 'wonkasoft_add_endpoint_my_account' );
+
+/**
+ * This is the content that is parsed at the logo end point.
+ */
+function wonkasoft_my_account_logo_link_endpoint_content() {
+
+	$user         = wp_get_current_user();
+	$user_id      = $user->ID;
+	$company_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
+
+	$output = '';
+	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) {
+
+		$output .= '<div class="my-account-logo-content-wrap">';
+		$output .= '<h2>Club/Gym Logo</h2>';
+		if ( ! empty( $company_logo ) ) {
+
+			$company_logo = json_decode( $company_logo );
+
+			$output .= '<div class="current-logo-wrap">';
+			$output .= '<img src="' . esc_url( $company_logo->url ) . '" class="current-logo" />';
+			$output .= '</div>';
+			$output .= '<div class="form-wrap">';
+			$output .= '<div class="form-container">';
+			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 0, false );
+			$output .= '</div>';
+			$output .= '</div>';
+
+		} else {
+
+			$output .= '<div class="no-logo">You have no logo on file.</div>';
+			$output .= '<div class="form-wrap">';
+			$output .= '<div class="form-container">';
+			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 0, false );
+			$output .= '</div>';
+			$output .= '</div>';
+
+		}
+
+		$output .= '</div>';
+
+		echo $output;
+
+	}
+
+}
+add_action( 'woocommerce_account_club-gym-logo_endpoint', 'wonkasoft_my_account_logo_link_endpoint_content' );
+
+/**
+ * This will check for coupons and create one if needed.
+ *
+ * @param  array  $entry_fields contains the entry fields from submitted form.
+ * @param  string $form_title   contains the form title.
+ */
+function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
+
+	$args = array(
+		'post_type'      => 'shop_coupon',
+		'post_status'    => 'publish',
+		'posts_per_page' => -1,
+	);
+
+	$coupons         = new WP_Query( $args );
+	$foundzip        = false;
+	$foundambassador = false;
+	$percentage      = '10';
+
+	foreach ( $coupons->posts as $coupon ) :
+		if ( $entry_fields['company'] === $coupon->post_name ) :
+			$foundzip = true;
+		endif;
+
+		if ( substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage === $coupon->post_name ) :
+			$foundambassador = true;
+		endif;
+	endforeach;
+
+	if ( 'Refersion Registration Zip' === $form_title && ! $foundzip ) :
+		/**
+		 * Create a coupon programatically
+		 */
+		$coupon_code = $entry_fields['company']; // Code.
+
+	endif;
+
+	if ( 'Refersion Registration Ambassador' === $form_title && ! $foundambassador ) :
+		/**
+		 * Create a coupon programatically
+		 */
+		$coupon_code = substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage; // Code.
+
+	endif;
+
+		$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
+
+		$coupon = array(
+			'post_title'   => $coupon_code,
+			'post_content' => '',
+			'post_status'  => 'publish',
+			'post_author'  => 1,
+			'post_type'    => 'shop_coupon',
+		);
+
+		$new_coupon_id = wp_insert_post( $coupon );
+
+		// Add meta.
+		update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
+		update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
+		update_post_meta( $new_coupon_id, 'individual_use', 'no' );
+		update_post_meta( $new_coupon_id, 'product_ids', '' );
+		update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+		update_post_meta( $new_coupon_id, 'usage_limit', '' );
+		update_post_meta( $new_coupon_id, 'expiry_date', '' );
+		update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
+		update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+
+}
 
 /**
  * This function handles the api request to send data to getResponse.
@@ -1892,17 +1724,33 @@ add_filter( 'rest_url_prefix', 'wonka_rest_api' );
  * @param  object $user contains an object of the user.
  */
 function wonkasoft_api_responses_user_data( $user ) {
-	if ( in_array( 'apera_affiliate', $user->roles ) ) :
+	if ( in_array( $role, $user->roles ) ) :
 		$user_id         = $user->ID;
-		$refersion       = ( ! empty( get_user_meta( $user->ID, 'refersion_data', true ) ) ) ? get_user_meta( $user->ID, 'refersion_data', true ) : '';
-		$refersion_error = ( ! empty( get_user_meta( $user->ID, 'refersion_error', true ) ) ) ? get_user_meta( $user->ID, 'refersion_error', true ) : '';
-		$getresponse     = ( ! empty( get_user_meta( $user->ID, 'getResponse_data', true ) ) ) ? get_user_meta( $user->ID, 'getResponse_data', true ) : '';
+		$refersion       = ( ! empty( get_user_meta( $user_id, 'refersion_data', true ) ) ) ? get_user_meta( $user_id, 'refersion_data', true ) : '';
+		$refersion_error = ( ! empty( get_user_meta( $user_id, 'refersion_error', true ) ) ) ? get_user_meta( $user_id, 'refersion_error', true ) : '';
+		$getresponse     = ( ! empty( get_user_meta( $user_id, 'getResponse_data', true ) ) ) ? get_user_meta( $user_id, 'getResponse_data', true ) : '';
+		$company_logo    = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : '';
+		if ( ! empty( $company_logo ) ) {
+			$company_logo = json_decode( $company_logo );
+		}
 
 		?>
 	<hr />
 		<div class="header-container"><h3 class="h3 header-text"><?php esc_html_e( 'Apera Affiliate and Contact Info', 'aperabags' ); ?></h3></div>
 		<table class="form-table">
 			<tbody>
+					<?php
+					if ( ! empty( $company_logo ) ) :
+						?>
+					<tr>
+						<th>
+							<label for="club-gym-logo">Club/Gym Logo</label>
+						</th>
+						<td>
+							<img src="<?php echo wp_kses_post( $company_logo->url ); ?>" id="club-gym-logo" class="company-logo" />
+						</td>
+					</tr>
+					<?php endif; ?>
 					<?php
 					if ( ! empty( $refersion_error ) ) :
 						?>

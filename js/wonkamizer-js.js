@@ -119,6 +119,26 @@ if ( wonkasoft_request.ga_id !== '' )
 		}
 	}
 
+	if ( document.querySelector( 'input[type=file].custom-file-input' ) ) 
+	{
+		var file_input = document.querySelector( 'input[type=file].custom-file-input' );
+		var input_label = document.querySelector( 'label.custom-file-label' );
+		var file_name;
+
+		file_input.addEventListener( 'change', function( e ) 
+			{
+				if ( '' === file_input.value ) 
+				{
+					input_label.innerText = 'Choose file';
+				}
+				else
+				{
+					file_name = file_input.value.split('\\')[file_input.value.split('\\').length - 1];
+					input_label.innerText = file_name;
+				}
+			} );
+	}
+
 	/**
 	 * This is for the checkout multistep tabs 
 	 * @author Rudy
