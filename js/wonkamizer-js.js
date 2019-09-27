@@ -141,7 +141,24 @@ if ( wonkasoft_request.ga_id !== '' )
 
 		document.ongform_confirmation_loaded = function( e ) 
 			{
-				console.log( 'xhr' );
+				var data = {
+					'url': wonkasoft_request.ajax,
+					'action': 'wonkasoft_parse_account_logo',
+					'security': wonkasoft_request.security
+				};
+				var query_string = Object.keys(data).map(key => key + '=' + data[key]).join('&');
+				xhr.onreadystatechange = function() {
+
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+						var response = JSON.parse( this.responseText );
+						console.log( response );
+					}
+				};
+
+				xhr.open('GET', data.url + "?" + query_string );
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
 			};
 
 	}
