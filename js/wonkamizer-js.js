@@ -141,7 +141,7 @@ if ( wonkasoft_request.ga_id !== '' )
 
 		document.ongform_confirmation_loaded = function( e ) 
 			{
-				console.log( xhr );
+				console.log( 'xhr' );
 			};
 
 	}
