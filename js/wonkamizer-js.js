@@ -124,6 +124,7 @@ if ( wonkasoft_request.ga_id !== '' )
 		var file_input = document.querySelector( 'input[type=file].custom-file-input' );
 		var input_label = document.querySelector( 'label.custom-file-label' );
 		var file_name;
+		var current_logo_wrap = document.querySelector( 'div.current-logo-wrap' );
 
 		file_input.addEventListener( 'change', function( e ) 
 			{
@@ -137,6 +138,12 @@ if ( wonkasoft_request.ga_id !== '' )
 					input_label.innerText = file_name;
 				}
 			} );
+
+		document.addEventListener( 'gform_post_render', function( e ) 
+			{
+				console.log( 'current_logo_wrap' );
+			} );
+
 	}
 
 	/**

@@ -1473,7 +1473,9 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 
 		} else {
 
+			$output .= '<div class="current-logo-wrap">';
 			$output .= '<div class="no-logo">You have no logo on file.</div>';
+			$output .= '</div>';
 			$output .= '<div class="form-wrap">';
 			$output .= '<div class="form-container">';
 			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 0, false );
@@ -1490,6 +1492,35 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 
 }
 add_action( 'woocommerce_account_club-gym-logo_endpoint', 'wonkasoft_my_account_logo_link_endpoint_content' );
+
+
+function wonkasoft_parse_account_logo() {
+
+	$user         = wp_get_current_user();
+	$user_id      = $user->ID;
+	$company_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
+
+	$output = '';
+	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) {
+
+		if ( ! empty( $company_logo ) ) {
+
+			$company_logo = json_decode( $company_logo );
+
+			$output .= '<img src="' . esc_url( $company_logo->url ) . '" class="current-logo" />';
+
+		} else {
+
+			$output .= '<div class="no-logo">You have no logo on file.</div>';
+
+		}
+
+		wp_send_json_success( $output );
+
+	}
+}
+add_action( 'wp_ajax_wonkasoft_parse_account_logo', 'wonkasoft_parse_account_logo' );
+add_action( 'wp_ajax_nopriv_wonkasoft_parse_account_logo', 'wonkasoft_parse_account_logo' );
 
 /**
  * This will check for coupons and create one if needed.
