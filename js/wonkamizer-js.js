@@ -139,9 +139,9 @@ if ( wonkasoft_request.ga_id !== '' )
 				}
 			} );
 
-		document.querySelector( '#gform_ajax_frame_2' ).onload = function( e ) 
+		document.ongform_confirmation_loaded = function( e ) 
 			{
-				console.log( 'current_logo_wrap' );
+				console.log( xhr );
 			};
 
 	}
