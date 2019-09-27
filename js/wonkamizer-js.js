@@ -139,10 +139,10 @@ if ( wonkasoft_request.ga_id !== '' )
 				}
 			} );
 
-		document.addEventListener( 'gform_post_render', function( e ) 
+		document.querySelector( '#gform_ajax_frame_2' ).onload = function( e ) 
 			{
 				console.log( 'current_logo_wrap' );
-			} );
+			};
 
 	}
 
