@@ -152,7 +152,15 @@ if ( wonkasoft_request.ga_id !== '' )
 					if ( this.readyState == 4 && this.status == 200 ) 
 					{
 						var response = JSON.parse( this.responseText );
-						console.log( response );
+						if ( respponse.success ) 
+						{
+							console.log( response );
+							current_logo_wrap.innerHTML = response.data;
+						}
+						else
+						{
+							current_logo_wrap.innerText = 'There was an issue with your upload. Please try again.';
+						}
 					}
 				};
 
