@@ -152,7 +152,7 @@ if ( wonkasoft_request.ga_id !== '' )
 					if ( this.readyState == 4 && this.status == 200 ) 
 					{
 						var response = JSON.parse( this.responseText );
-						if ( respponse.success ) 
+						if ( response.success ) 
 						{
 							console.log( response );
 							current_logo_wrap.innerHTML = response.data;
