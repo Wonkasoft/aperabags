@@ -12,6 +12,7 @@
 
 			.product_title {
 				@include font-size( 1 );
+				padding: 0 15px;
 			}
 		}
 
@@ -73,7 +74,7 @@
 					}
 
 					.slick-prev {
-						left: 0px;
+						left: 20px;
 
 						&:before {
 							color: #fff;
@@ -81,7 +82,7 @@
 					}
 
 					.slick-next {
-						right: 0px;
+						right: 20px;
 
 						&:before {
 							color: #fff;
@@ -314,6 +315,7 @@
 				div.woocommerce-product-details__short-description {
 					flex: 0 0 100%;
 					text-align: left;
+					padding: 15px 0;
 				}
 
 				div.price-reviews-container {

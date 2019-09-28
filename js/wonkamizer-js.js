@@ -3,10 +3,20 @@
 ============================================*/
 if ( wonkasoft_request.ga_id !== '' ) 
 {
-	(function(i,s,o,g,r,a,m){i.GoogleAnalyticsObject=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments);},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m);
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	(function(i,s,o,g,r,a,m)
+	{
+		i.GoogleAnalyticsObject=r;i[r]=i[r]||function()
+		{
+			(i[r].q=i[r].q||[]).push(arguments);
+		}; 
+
+		i[r].l=1*new Date();
+		a=s.createElement(o);
+		m=s.getElementsByTagName(o)[0];
+		a.async=1;
+		a.src=g;
+		m.parentNode.insertBefore(a,m);
+	} )( window,document,'script','https://www.google-analytics.com/analytics.js','ga' );
 
 	ga('create', wonkasoft_request.ga_id, 'auto');
 	ga('send', 'pageview');
@@ -71,10 +81,10 @@ if ( wonkasoft_request.ga_id !== '' )
 			document.getElementById("ambassadar-first-name").innerHTML = "HI " + firstname + "!";
 		}
 
-		if ( getUrlVars().organization ) 
+		if ( getUrlVars().fname ) 
 		{
-			var clubname = decodeURIComponent( getUrlVars().organization ).replace( /\+/gi, ' ' );
-			document.getElementById("club-name").innerHTML = "HI " + clubname + "!";
+			var zip_firstname = decodeURIComponent( getUrlVars().fname ).replace( /\+/gi, ' ' );
+			document.getElementById("zip-first-name").innerHTML = "HI " + zip_firstname + "!";
 		}
 
 		if ( getUrlVars().email ) 
@@ -84,7 +94,83 @@ if ( wonkasoft_request.ga_id !== '' )
 		}
 	}
 
-	
+	if ( document.querySelector( '#tag' ) ) 
+	{
+		if ( getUrlVars().email ) 
+		{
+			var email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("email").innerHTML = email;
+		}
+
+		if ( getUrlVars().tag ) 
+		{
+			var tag = decodeURIComponent( getUrlVars().tag ).replace( /\+/gi, ' ' );
+			document.getElementById("tag").innerHTML = tag;
+		}
+
+	}
+
+	if ( document.querySelector( '#subscriber-email' ) ) 
+	{
+		if ( getUrlVars().email ) 
+		{
+			var subscriber_email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("subscriber-email").innerHTML = subscriber_email;
+		}
+	}
+
+	if ( document.querySelector( 'input[type=file].custom-file-input' ) ) 
+	{
+		var file_input = document.querySelector( 'input[type=file].custom-file-input' );
+		var input_label = document.querySelector( 'label.custom-file-label' );
+		var file_name;
+		var current_logo_wrap = document.querySelector( 'div.current-logo-wrap' );
+
+		file_input.addEventListener( 'change', function( e ) 
+			{
+				if ( '' === file_input.value ) 
+				{
+					input_label.innerText = 'Choose file';
+				}
+				else
+				{
+					file_name = file_input.value.split('\\')[file_input.value.split('\\').length - 1];
+					input_label.innerText = file_name;
+				}
+			} );
+
+		document.ongform_confirmation_loaded = function( e ) 
+			{
+				var data = {
+					'url': wonkasoft_request.ajax,
+					'action': 'wonkasoft_parse_account_logo',
+					'security': wonkasoft_request.security
+				};
+				var query_string = Object.keys(data).map(key => key + '=' + data[key]).join('&');
+				xhr.onreadystatechange = function() {
+
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+						var response = JSON.parse( this.responseText );
+						if ( response.success ) 
+						{
+							console.log( response );
+							current_logo_wrap.innerHTML = response.data;
+						}
+						else
+						{
+							current_logo_wrap.innerText = 'There was an issue with your upload. Please try again.';
+						}
+					}
+				};
+
+				xhr.open('GET', data.url + "?" + query_string );
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+			};
+
+	}
+
 	/**
 	 * This is for the checkout multistep tabs 
 	 * @author Rudy
@@ -1534,21 +1620,16 @@ if ( wonkasoft_request.ga_id !== '' )
 		==========================================================*/
 		if ( document.querySelector( '.home' ) ) 
 		{
-			// var top_slider_section_positionY, cta_section_positionY;
-			// if ( document.querySelector( '.header-slider-section' ) ) 
-			// {
-			// 	top_slider_section_positionY = ( parseInt( getComputedStyle( document.querySelector( '.header-slider-section .top-slide-img-holder' ) ).backgroundPositionY ) / 100 ) * ( document.querySelector( '.header-slider-section' ).offsetHeight / -2 );
-			// }
 
-			// if ( document.querySelector( '.desirable-slider-section' ) ) 
-			// {
-			// 	cta_section_positionY = ( parseInt( getComputedStyle( document.querySelector( '.desirable-slider-section .cta-slide-img-holder' ) ).backgroundPositionY ) / 100 ) * ( document.querySelector( '.desirable-slider-section' ).offsetHeight / -2 );
-			// }
+			var screen_height = window.innerHeight;
+			add_transparent( screen_height );
 
 			window.onscroll = function()
 			{
 				shifting_parallax();
+				add_transparent( screen_height );
 			};
+			
 		}
 		/*=====  End of For parallax on front page sliders  ======*/
 		
@@ -2421,9 +2502,22 @@ if ( wonkasoft_request.ga_id !== '' )
 
 		if ( document.querySelector( 'body.home .instagram-wrap') ) 
 		{
+			var image_containers = document.querySelectorAll( '.wonka-insta-box' );
+			var slides_to_show = 0;
+			var slides_to_scroll = 0;
+			if ( image_containers.length >= 5 ) 
+			{
+				slides_to_show = 5;
+				slides_to_scroll = 3;
+			}
+			else
+			{
+				slides_to_show = image_containers.length;
+				slides_to_scroll = image_containers.length;
+			}
 			$( 'body.home .instagram-wrap' ).slick({
-			  slidesToShow: 5,
-			  slidesToScroll: 3,
+			  slidesToShow: slides_to_show,
+			  slidesToScroll: slides_to_scroll,
 			  autoplay: true,
 			  autoplaySpeed: 4000,
 			  dots: false,
@@ -2433,8 +2527,8 @@ if ( wonkasoft_request.ga_id !== '' )
     			{
 			      breakpoint: 1200,
 			      settings: {
-			        slidesToShow: 4,
-			        slidesToScroll: 3,
+			        slidesToShow: ( slides_to_show < 4) ? slides_to_show: 4,
+			        slidesToScroll: slides_to_scroll,
 			      }
 			    },
 			    {
@@ -2720,17 +2814,14 @@ if ( wonkasoft_request.ga_id !== '' )
 			}
 		}
 
-/**
- * Settup for the compare plugin No Scroll
- *
- * @author Carlos
- * @return  {[type]}  [return description]
- */		
-
+		/**
+		 * Settup for the compare plugin No Scroll
+		 *
+		 * @author Carlos
+		 */		
  		if(document.querySelector('table.compare-list')) {
  			var compare_table = document.querySelector('table.compare-list');
 
-			console.log(compare_table);
 			compare_table.classList.add('table');
 		}
 
@@ -2758,7 +2849,6 @@ if ( wonkasoft_request.ga_id !== '' )
 
 						if ( compare_close_btn )
 						{
-							// console.log(compare_close_btn);
 
 							compare_close_btn.addEventListener( 'click', function( e )
 							{
@@ -2789,30 +2879,17 @@ if ( wonkasoft_request.ga_id !== '' )
 		/**********  End of Settup for the compare plugin No Scroll  *********/
 
 	
-	/*=================================================
-	=            Setup for the search form            =
-	=================================================*/
-	if ( document.querySelector('input#s') )
-	{
-		wonka_ajax_request( xhr, "search_site", null);
-	}
-	/*=====  End of Setup for the search form  ======*/
-
-	/*=================================================
-	=     Setup for the nabar menu transparency           =
-	================================================*/
-	if ( document.querySelector('.header-slider-section') ) {
-		var screen_height = window.innerHeight;
-		add_transparent(screen_height);
-
-		window.onscroll = function() {
-			add_transparent(screen_height);
-		};
-	}
-
-	/*=====  End of Setup for the nabar menu transparency  ======*/
-};
-	/*=====  End of This is for running after document is ready  ======*/
+		/*=================================================
+		=            Setup for the search form            =
+		=================================================*/
+		if ( document.querySelector('input#s') )
+		{
+			wonka_ajax_request( xhr, "search_site", null);
+		}
+		/*=====  End of Setup for the search form  ======*/
+		/*=====  End of Setup for the nabar menu transparency  ======*/
+	};
+		/*=====  End of This is for running after document is ready  ======*/
 
 })( jQuery );
 

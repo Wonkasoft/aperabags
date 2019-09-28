@@ -246,7 +246,7 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 	foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
 		if ( $current_method === $method_id ) :
 			$rate_label = $rate->label;
-			$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+			$rate_cost  = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
 			if ( $rate->label === 'FedEx SmartPost Ground: FREE' ) :
 				$shipping_eta = '2-7 business days';
 			endif;
@@ -321,15 +321,15 @@ function wonka_customized_shop_loop() {
 		$attachment_ids = $product->get_gallery_attachment_ids();
 	}
 	if ( $attachment_ids ) :
-		$attachment_ids     = array_values( $attachment_ids );
-		$secondary_image_id = $attachment_ids['0'];
-		$secondary_image_alt = get_post_meta( $secondary_image_id, '_wp_attachment_image_alt', true );
+		$attachment_ids        = array_values( $attachment_ids );
+		$secondary_image_id    = $attachment_ids['0'];
+		$secondary_image_alt   = get_post_meta( $secondary_image_id, '_wp_attachment_image_alt', true );
 		$secondary_image_title = get_the_title( $secondary_image_id );
 	endif;
 
 	/*=====  End of For setting up the image flipper  ======*/
 
-	$output = '';
+	$output  = '';
 	$output .= '<div class="wonka-shop-img-wrap">';
 	$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ) . '" class="img-fluid wonka-img-fluid" />';
 	if ( $attachment_ids ) :
@@ -357,11 +357,11 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
  */
 function wonka_product_tabs_retitle( $tabs ) {
 
-	$new_title = get_post_meta( get_the_ID(), 'product_statement', true );
-	$tabs['reviews']['priority'] = 10;          // Reviews first
+	$new_title                       = get_post_meta( get_the_ID(), 'product_statement', true );
+	$tabs['reviews']['priority']     = 10;          // Reviews first
 	$tabs['description']['priority'] = 20;          // Description second
 	unset( $tabs['additional_information'] );   // Additional information third
-	$tabs['description']['title'] = __( $new_title );
+	$tabs['description']['title']   = __( $new_title );
 	$tabs['description']['section'] = __( 'Product Statement' );
 
 	return $tabs;
@@ -406,7 +406,7 @@ function wonka_checkout_remove_actions() {
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_remove_actions', 1 );
 
 function wonka_checkout_wrap_before( $checkout ) {
-	$output = '';
+	$output  = '';
 	$output .= '<div class="row wonka-checkout-row">';
 	$output .= '<div class="col col-12 col-md-7 checkout-form-left-side">';
 
@@ -423,20 +423,20 @@ add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25
 function wonka_override_checkout_fields( $fields ) {
 
 	$fields['shipping']['shipping_phone'] = array(
-		'label'         => __( 'Phone', 'woocommerce' ),
-		'placeholder'   => _x( 'Phone', 'placeholder', 'woocommerce' ),
-		'required'      => true,
-		'class'         => array( 'form-row' ),
-		'clear'         => true,
+		'label'       => __( 'Phone', 'woocommerce' ),
+		'placeholder' => _x( 'Phone', 'placeholder', 'woocommerce' ),
+		'required'    => true,
+		'class'       => array( 'form-row' ),
+		'clear'       => true,
 	);
 
 	$fields['shipping']['shipping_email'] = array(
-		'label'         => __( 'Email', 'woocommerce' ),
-		'placeholder'   => _x( 'Email Address', 'placeholder', 'woocommerce' ),
-		'required'      => true,
-		'class'         => array( 'form-row' ),
-		'clear'         => true,
-		'type'          => 'email',
+		'label'       => __( 'Email', 'woocommerce' ),
+		'placeholder' => _x( 'Email Address', 'placeholder', 'woocommerce' ),
+		'required'    => true,
+		'class'       => array( 'form-row' ),
+		'clear'       => true,
+		'type'        => 'email',
 	);
 
 	foreach ( $fields['billing'] as $key => &$field ) {
@@ -745,7 +745,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 			<tbody>
 				<?php
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-					$_product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+					$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
 					if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
 						?>
 						<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
@@ -841,7 +841,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 							<?php
 							if ( WC()->session->get( 'chosen_shipping_methods' )[0] === $method_id ) :
 								$rate_label = $rate->label;
-								$rate_cost = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+								$rate_cost  = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
 								if ( $rate->label === 'FedEx SmartPost Ground: FREE' ) :
 									$shipping_eta = '2-7 business days';
 								endif;
@@ -1179,11 +1179,11 @@ remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_singl
  * @return [type]          [description]
  */
 function wonka_product_carousel_options( $options ) {
-	$options['animation'] = 'slide';
+	$options['animation']      = 'slide';
 	$options['animationSpeed'] = 1500;
-	$options['useCSS'] = true;
-	$options['easing'] = 'swing';
-	$options['direction'] = 'vertical';
+	$options['useCSS']         = true;
+	$options['easing']         = 'swing';
+	$options['direction']      = 'vertical';
 	return $options;
 }
 
@@ -1248,10 +1248,9 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
 		$compare_link_set = '';
 		if ( class_exists( 'YITH_Woocompare_Frontend' ) ) :
 			$YITH_Woocompare_Frontend_compare_link = new YITH_Woocompare_Frontend();
-			$compare_link_set = ' | ' . $YITH_Woocompare_Frontend_compare_link->add_compare_link();
+			$compare_link_set                      = ' | ' . $YITH_Woocompare_Frontend_compare_link->add_compare_link();
 		endif;
-		$add_links = '<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>' . $compare_link_set;
-		;
+		$add_links         = '<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>' . $compare_link_set;
 		$post_post_excerpt = $post_post_excerpt . $add_links . ob_get_clean();
 
 		return $post_post_excerpt;
@@ -1266,10 +1265,10 @@ add_filter( 'woocommerce_short_description', 'wonka_filter_woocommerce_short_des
  * This adds a custom express checkout button to the product page
  */
 function wonka_express_checkout_add() {
-		global $post;
+	global $post;
 	global $product;
 	$variation_id = $product->get_variation_id();
-	$post_id = get_the_ID();
+	$post_id      = get_the_ID();
 	if ( get_post_meta( $post_id, '_enable_wonka_express_button', true ) === 'yes' ) :
 		?>
 		<div class="wonka-express-checkout-wrap">
@@ -1324,7 +1323,7 @@ add_action( 'woocommerce_review_after_comment_text', 'wonka_after_comment_text_a
 function wonka_single_product_image_thumbnail_html_custom( $data, $attachment_id ) {
 	global $product, $post;
 	$post_thumbnail_id = $attachment_id;
-	$wonka_post_id = get_the_ID();
+	$wonka_post_id     = get_the_ID();
 
 	$output = '';
 	ob_start();
@@ -1344,7 +1343,7 @@ function wonka_single_product_image_thumbnail_html_custom( $data, $attachment_id
 function wonka_single_product_image_scroll_html_custom( $data, $attachment_id ) {
 	global $product, $post;
 	$post_thumbnail_id = $attachment_id;
-	$wonka_post_id = get_the_ID();
+	$wonka_post_id     = get_the_ID();
 
 	$output = '';
 	ob_start();
@@ -1364,10 +1363,10 @@ add_filter( 'wonka_single_product_scroll_image_html', 'wonka_single_product_imag
 
 function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
 	if ( strpos( $field, '</label>' ) !== false && $args['required'] ) {
-		$error = '<span class="error" style="display:none">';
+		$error  = '<span class="error" style="display:none">';
 		$error .= sprintf( __( '%s is a required field.', 'woocommerce' ), $args['label'] );
 		$error .= '</span>';
-		$field = substr_replace( $field, $error, strpos( $field, '</p>' ), 0 );
+		$field  = substr_replace( $field, $error, strpos( $field, '</p>' ), 0 );
 	}
 
 	return $field;
@@ -1399,9 +1398,9 @@ add_action( 'wp_ajax_nopriv_shipping_to_billing', 'ws_shipping_to_billing' );
  * @return int (Maybe) modified excerpt length.
  */
 function wonka_custom_excerpt_length( $text ) {
-	$length = 20;
+	$length    = 20;
 	$str_array = explode( ' ', $text );
-	$output = '';
+	$output    = '';
 	if ( is_search() ) :
 		for ( $i = 0; $i < $length; $i++ ) :
 			if ( $i == ( $length - 1 ) ) :
@@ -1426,13 +1425,13 @@ function ws_ajax_search() {
 	}
 	$results = new WP_Query(
 		array(
-			'post_type'     => array( 'product' ),
-			'post_status'   => 'publish',
-			'nopaging'      => true,
+			'post_type'      => array( 'product' ),
+			'post_status'    => 'publish',
+			'nopaging'       => true,
 			'posts_per_page' => 100,
 		)
 	);
-	$items = array();
+	$items   = array();
 	if ( ! empty( $results->posts ) ) {
 		foreach ( $results->posts as $result ) {
 			$items[] = $result->post_title;
@@ -1448,10 +1447,10 @@ add_action( 'wp_ajax_nopriv_search_site', 'ws_ajax_search' );
 function filter_woocommerce_product_review_list_args( $comment ) {
 	// make filter magic happen here...
 
-	$length = 43;
-	$str_array = explode( ' ', $comment->comment_content );
+	$length             = 43;
+	$str_array          = explode( ' ', $comment->comment_content );
 	$comment_word_count = count( (array) $str_array );
-	$output = '';
+	$output             = '';
 
 	for ( $i = 0; $i < $length; $i++ ) :
 		if ( $i == ( $length - 1 ) && $comment_word_count > $length ) :
@@ -1734,10 +1733,10 @@ function add_customer_order_notes( $order_id ) {
 
 	// note this line is different
 	// because I already have the ID from the hook I am using.
-	$order = new WC_Order( $order_id );
+	$order        = new WC_Order( $order_id );
 	$free_logo_id = '';
 
-	$query = new WC_Product_Query();
+	$query          = new WC_Product_Query();
 	$query_products = $query->get_products();
 
 	foreach ( $query_products as $single_product ) {
@@ -1805,13 +1804,13 @@ function ws_add_wc_order_email_images( $table, $order ) {
 	wc_get_template(
 		$template,
 		array(
-			'order'                 => $order,
-			'items'                 => $order->get_items(),
-			'show_download_links'   => $show_download_links,
-			'show_sku'              => $show_sku,
-			'show_purchase_note'    => $show_purchase_note,
-			'show_image'            => true,
-			'image_size'            => array( 120, 120 ),
+			'order'               => $order,
+			'items'               => $order->get_items(),
+			'show_download_links' => $show_download_links,
+			'show_sku'            => $show_sku,
+			'show_purchase_note'  => $show_purchase_note,
+			'show_image'          => true,
+			'image_size'          => array( 120, 120 ),
 		)
 	);
 
@@ -1875,9 +1874,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				 */
 				public function calculate_shipping( $package ) {
 					$rate = array(
-						'id' => $this->id,
-						'label' => $this->title,
-						'cost' => '20.00',
+						'id'       => $this->id,
+						'label'    => $this->title,
+						'cost'     => '20.00',
 						'calc_tax' => 'per_item',
 					);
 					// Register the rate
@@ -1925,9 +1924,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				 */
 				public function calculate_shipping( $package ) {
 					$rate = array(
-						'id' => $this->id,
-						'label' => $this->title,
-						'cost' => '50.00',
+						'id'       => $this->id,
+						'label'    => $this->title,
+						'cost'     => '50.00',
 						'calc_tax' => 'per_item',
 					);
 					// Register the rate
@@ -1940,7 +1939,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
 
 	function add_ws_shipping_methods( $methods ) {
-		$methods['FedEx_2_Day'] = 'WC_2_Day_Shipping_Method';
+		$methods['FedEx_2_Day']              = 'WC_2_Day_Shipping_Method';
 		$methods['FedEx_Standard_Overnight'] = 'WC_Overnight_Shipping_Method';
 		return $methods;
 	}

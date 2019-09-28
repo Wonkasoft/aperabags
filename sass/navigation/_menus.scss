@@ -40,7 +40,7 @@
 		&[aria-expanded="true"] {
 		
 			.hang-a-bur-top {
-				top: 0.6rem;
+				top: 0.5rem;
 				@include prefix( transform, rotate(220deg), webkit moz o );
 			}
 		
@@ -95,8 +95,7 @@
 				&.account-menu-icon a {
 
 					svg {
-						height: 20px!important;
-						width: 25px!important;
+						filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, .8));
 
 						path {
 							color: #ffffff!important;
@@ -107,6 +106,9 @@
 
 				a {
 					width: 100%;
+					display: flex;
+					align-items: center;
+					line-height: 1;
 				}
 
 				ul {
@@ -165,15 +167,15 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
-					font-family: $font__main_jose;
-					font-weight: 800;
+					font-family: "Roboto";
+					font-weight: 400;
 					background: #ffffff;
 					width: 20px;
 					height: 20px;
-				    line-height: 1.5;
+				    line-height: 1;
 				    text-shadow: none;
 				    color: #333333;
-					@include font-size( .9 );
+					@include font-size( 1 );
 					text-shadow: none;
 					@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, .6 ), o moz webkit );
 				}
@@ -388,7 +390,7 @@
 
 				.wonka-cart-badge {
 					display: flex;
-					align-items: flex-start;
+					align-items: center;
 					justify-content: center;
 					font-family: $font__main_jose;
 					font-weight: 800;

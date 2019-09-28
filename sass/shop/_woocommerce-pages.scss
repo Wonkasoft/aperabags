@@ -605,6 +605,11 @@ div.cart-collaterals {
     margin: 8px auto;
     text-align: center;
   }
+
+  #pwgc-redeem-gift-card-number {
+    border-radius: 100px;
+    height: 29px;
+  }
 }
 /*=====  End of This is the totals on the cart page  ======*/
 &.main-checkout {
@@ -669,7 +674,7 @@ div.cart-collaterals {
     div#collapseOne {
 
       input {
-        flex: 0 1 54%;
+        flex: 0 1 45%;
         line-height: 1.1;
         padding: 8px;
         border-radius: 100px 0 0 100px;
