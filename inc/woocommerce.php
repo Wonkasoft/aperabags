@@ -12,11 +12,12 @@
  *
  * @link https://docs.woocommerce.com/document/third-party-custom-theme-compatibility/
  * @link https://github.com/woocommerce/woocommerce/wiki/Enabling-product-gallery-features-(zoom,-swipe,-lightbox)-in-3.0.0
- *
- * @return void
  */
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * This adds woocommerce theme support.
+ */
 function apera_bags_woocommerce_setup() {
 	add_theme_support( 'woocommerce' );
 }
@@ -240,6 +241,12 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 	}
 }
 
+/**
+ * This updates the order review fragments.
+ *
+ * @param  array $fragments contains the fragments.
+ * @return array            returns the fragments after being modified.
+ */
 function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 	$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
 	ob_start();
@@ -247,15 +254,15 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 		if ( $current_method === $method_id ) :
 			$rate_label = $rate->label;
 			$rate_cost  = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
-			if ( $rate->label === 'FedEx SmartPost Ground: FREE' ) :
+			if ( 'FedEx SmartPost Ground: FREE' === $rate->label ) :
 				$shipping_eta = '2-7 business days';
 			endif;
 
-			if ( $rate->label === 'FedEx 2 Day' ) :
+			if ( 'FedEx 2 Day' === $rate->label ) :
 				$shipping_eta = '2 business days (weekends excluded)';
 			endif;
 
-			if ( $rate->label === 'FedEx Standard Overnight' ) :
+			if ( 'FedEx Standard Overnight' === $rate->label ) :
 				$shipping_eta = 'next business day (weekends excluded)';
 			endif;
 		endif;
@@ -283,14 +290,14 @@ add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_upda
 /**
  * This sets up the image flipper class
  *
- * @param  array $classes contains all the classes for the current product
+ * @param  array $classes contains all the classes for the current product.
  * @return array $classes posts all classes to the current product.
  */
 function setting_up_image_flipper_class( $classes ) {
 	global $product;
 	$post_type = get_post_type( get_the_ID() );
 	if ( ! is_admin() ) {
-		if ( $post_type == 'product' ) {
+		if ( 'product' === $post_type ) {
 			$attachment_ids = $product->get_gallery_image_ids( $product );
 			if ( $attachment_ids ) {
 				$classes[] = 'pif-has-gallery';
@@ -337,7 +344,20 @@ function wonka_customized_shop_loop() {
 	endif;
 	$output .= '</div><!-- .wonka-shop-img-wrap -->';
 
-	_e( $output );
+	echo wp_kses(
+		$output,
+		array(
+			'div' => array(
+				'class' => array(),
+			),
+			'img' => array(
+				'class' => array(),
+				'src'   => array(),
+				'title' => array(),
+				'alt'   => array(),
+			),
+		)
+	);
 }
 
 if ( ! get_theme_mod( 'enable_sale_banner' ) ) :
@@ -352,8 +372,9 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 /**
  * Changes the description tab title
  *
- * @param  array $tabs setting up the changed titles
- * @return
+ * @param  array $tabs setting up the changed titles.
+ *
+ * @return array returns the product tabs.
  */
 function wonka_product_tabs_retitle( $tabs ) {
 
@@ -390,7 +411,9 @@ function wonka_cart_cross_sells() {
 add_action( 'woocommerce_after_cart', 'wonka_cart_cross_sells', 10 );
 add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
 
-
+/**
+ * This places a continue shopping notice in the cart.
+ */
 function wonka_add_continue_shopping_notice_to_cart() {
 		$shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ), esc_html__( 'Continue shopping', 'woocommerce' ) );
 
@@ -418,7 +441,7 @@ add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25
 /**
  * This is for adding custom fields to woocommerce shipping and billing fields
  *
- * @param  array $fields all woocommerce fields
+ * @param  array $fields all woocommerce fields.
  */
 function wonka_override_checkout_fields( $fields ) {
 
@@ -440,7 +463,7 @@ function wonka_override_checkout_fields( $fields ) {
 	);
 
 	foreach ( $fields['billing'] as $key => &$field ) {
-		if ( $key === 'billing_country' ) :
+		if ( 'billing_country' === $key ) :
 			$field['priority'] = 95;
 		endif;
 
@@ -456,15 +479,15 @@ function wonka_override_checkout_fields( $fields ) {
 	}
 
 	foreach ( $fields['shipping'] as $key => &$field ) {
-		if ( $key === 'shipping_company' || $key === 'shipping_address_2' ) :
+		if ( 'shipping_company' === $key || 'shipping_address_2' === $key ) :
 			$field['required'] = false;
 		endif;
 
-		if ( $key === 'shipping_first_name' ) :
+		if ( 'shipping_first_name' === $key ) :
 			$field['priority'] = 5;
 		endif;
 
-		if ( $key === 'shipping_country' ) :
+		if ( 'shipping_country' === $key ) :
 			$field['priority'] = 95;
 		endif;
 
@@ -508,6 +531,15 @@ function ws_restrict_free_shipping( $is_available ) {
 
 add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free_shipping' );
 
+/**
+ * This modifies the woocommerce form field.
+ *
+ * @param  [type] $field [description]
+ * @param  [type] $key   [description]
+ * @param  [type] $args  [description]
+ * @param  [type] $value [description]
+ * @return [type]        [description]
+ */
 function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 	$defaults = array(
 		'type'              => 'text',
@@ -1328,12 +1360,12 @@ function wonka_single_product_image_thumbnail_html_custom( $data, $attachment_id
 	$output = '';
 	ob_start();
 	if ( $post_thumbnail_id === $product->get_image_id() ) :
-		$output .= '<a href="#scroll_image_' . esc_attr__( $post_thumbnail_id ) . '_2" class="nav-link active woocommerce-product-gallery__image">';
-		$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'medium' ) . '" class="wp-post-image" alt="' . esc_attr__( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr__( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr__( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr__( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', true ) ) . '" />';
+		$output .= '<a href="#scroll_image_' . esc_attr( $post_thumbnail_id ) . '_2" class="nav-link active woocommerce-product-gallery__image">';
+		$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'medium' ) . '" class="wp-post-image" alt="' . esc_attr( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', true ) ) . '" />';
 		$output .= '</a>';
 	else :
-		$output .= '<a href="#scroll_image_' . esc_attr__( $post_thumbnail_id ) . '" class="nav-link woocommerce-product-gallery__image">';
-		$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'medium' ) . '" class="wp-post-image" alt="' . esc_attr__( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr__( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr__( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr__( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', true ) ) . '" />';
+		$output .= '<a href="#scroll_image_' . esc_attr( $post_thumbnail_id ) . '" class="nav-link woocommerce-product-gallery__image">';
+		$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'medium' ) . '" class="wp-post-image" alt="' . esc_attr( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', true ) ) . '" />';
 		$output .= '</a>';
 	endif;
 	$output .= ob_get_clean();
@@ -1741,7 +1773,7 @@ function add_customer_order_notes( $order_id ) {
 
 	foreach ( $query_products as $single_product ) {
 		$product_data = $single_product->get_data();
-		if ( $product_data['slug'] === 'free-custom-club-greenwood-logo' ) :
+		if ( $product_data['slug'] === 'free-custom-logo' ) :
 			$free_logo_id = $product_data['id'];
 		endif;
 	}
@@ -1752,23 +1784,41 @@ function add_customer_order_notes( $order_id ) {
 
 	$coupon_codes = $order->get_used_coupons();
 
-	foreach ( $coupon_codes as $coupon_code ) {
-		$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
+	$user_query = new WP_User_Query(
+		array(
+			'meta_key'     => 'company_logo',
+			'meta_compare' => '=',
+		)
+	);
 
-		if ( $coupon_code === 'clubgreenwood' ) :
-			if ( ! empty( $product ) ) {
-				$order->add_product( $product, 1 );
+	foreach ( $user_query->results as $user ) {
+
+		$company_logo = get_user_meta( $user->ID, 'company_logo', true );
+		$company_logo = json_decode( $company_logo );
+
+		if ( ! empty( $company_logo->coupon_code ) ) {
+
+			foreach ( $coupon_codes as $coupon_code ) {
+				$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
+
+				if ( $coupon_code === $company_logo->coupon_code ) :
+					if ( ! empty( $product ) ) {
+						$order->add_product( $product, 1 );
+					}
+					// The text for the note.
+					$note  = 'This is a ' . $company_logo->company_name . " order, make sure to add custom logo before shipping\n";
+					$note .= 'url: ' . $company_logo->url . '';
+
+					// Add the note.
+					$order->add_order_note( $note );
+
+					// Save the data.
+					$order->save();
+				endif;
 			}
-			// The text for the note
-			$note = __( ' This is a club greenwood order, make sure to add custom logo before shipping' );
-
-			// Add the note
-			$order->add_order_note( $note );
-
-			// Save the data
-			$order->save();
-		endif;
+		}
 	}
+
 }
 
 add_action( 'woocommerce_payment_complete', 'add_customer_order_notes', 10, 1 );

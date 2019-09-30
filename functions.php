@@ -156,7 +156,7 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		 *
 		 * @since 1.0.0
 		 */
-		add_image_size( 'custom_products_size', 367, 551, false );
+		add_image_size( 'custom_products_size', 370, 550, false );
 	}
 endif;
 add_action( 'after_setup_theme', 'apera_bags_setup' );
@@ -308,6 +308,17 @@ function apera_bags_scripts() {
 	/**
 	 * For enqueues of styles
 	 */
+	global $wp_styles;
+	$slick_css_load      = true;
+	$slick_themecss_load = true;
+	foreach ( $wp_styles->queue as $style ) {
+		if ( strpos( $style, 'slick-js-style' ) ) :
+			$slick_css_load = false;
+		endif;
+		if ( strpos( $style, 'slick-js-theme-style' ) ) :
+			$slick_themecss_load = false;
+		endif;
+	}
 	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1', 'all' );
 
 	wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', 'anonymous' ) );
@@ -315,27 +326,46 @@ function apera_bags_scripts() {
 	wp_enqueue_style( 'fontawesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', array(), '4.7.0', 'all' );
 
 	wp_enqueue_style( 'jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css', array(), '1.0.7' );
+	if ( $slick_css_load ) :
+		wp_enqueue_style( 'slick-js-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick.css' ), array(), '1.8.0', 'all' );
+	endif;
 
-	wp_enqueue_style( 'slick-js-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick.css' ), array(), '1.8.0', 'all' );
-
-	wp_enqueue_style( 'slick-js-theme-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick-theme.css' ), array(), '1.8.0', 'all' );
+	if ( $slick_themecss_load ) :
+		wp_enqueue_style( 'slick-js-theme-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick-theme.css' ), array(), '1.8.0', 'all' );
+	endif;
 
 	wp_enqueue_style( 'apera-bags-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_uri() ), array(), '1.0.0' );
 
 	/**
 	 * For enqueues of scripts
 	 */
+	global $wp_scripts;
+	$slick_js_load = true;
+
+	foreach ( $wp_scripts->queue as $script ) {
+		if ( strpos( $script, 'slick-js' ) ) :
+			$slick_script  = $script;
+			$slick_js_load = false;
+
+		endif;
+	}
 	wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array( 'jquery' ), '4.3.1', true );
 
 	wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', 'anonymous' ) );
 
-	wp_enqueue_script( 'slick-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick.min.js' ), array( 'jquery' ), '1.8.0', true );
+	if ( $slick_js_load ) :
+		wp_enqueue_script( 'slick-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick.min.js' ), array( 'jquery' ), '1.8.0', true );
+	endif;
 
 	wp_enqueue_script( 'apera-bags-navigation-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/js/navigation.js' ), array( 'jquery' ), time(), true );
 
 	wp_enqueue_script( 'apera-bags-skip-link-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/js/skip-link-focus-fix.js' ), array( 'jquery' ), time(), true );
 
-	wp_enqueue_script( 'apera-bags-wonkamizer-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js' ), array( 'jquery', 'slick-js' ), time(), true );
+	if ( $slick_js_load ) :
+		wp_enqueue_script( 'apera-bags-wonkamizer-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js' ), array( 'jquery', 'slick-js' ), time(), true );
+	else :
+		wp_enqueue_script( 'apera-bags-wonkamizer-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js' ), array( 'jquery', $slick_script ), time(), true );
+	endif;
 
 	$ga_id = ( ! empty( get_option( 'google_analytics_id' ) ) ) ? get_option( 'google_analytics_id' ) : '';
 	wp_localize_script(

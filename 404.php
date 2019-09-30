@@ -13,9 +13,10 @@ get_header();
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 
-			<section class="error-404 not-found">
+			<section class="error-404 not-found text-center">
 				<header class="page-header">
-					<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'apera-bags' ); ?></h1>
+					<h1>404</h1>
+					<h2 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'apera-bags' ); ?></h2>
 					<?php get_search_form(); ?>
 				</header><!-- .page-header -->
 

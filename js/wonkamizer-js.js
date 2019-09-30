@@ -146,7 +146,7 @@ if ( wonkasoft_request.ga_id !== '' )
 					'action': 'wonkasoft_parse_account_logo',
 					'security': wonkasoft_request.security
 				};
-				var query_string = Object.keys(data).map(key => key + '=' + data[key]).join('&');
+				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
 				xhr.onreadystatechange = function() {
 
 					if ( this.readyState == 4 && this.status == 200 ) 
@@ -154,7 +154,6 @@ if ( wonkasoft_request.ga_id !== '' )
 						var response = JSON.parse( this.responseText );
 						if ( response.success ) 
 						{
-							console.log( response );
 							current_logo_wrap.innerHTML = response.data;
 						}
 						else
@@ -2269,19 +2268,51 @@ if ( wonkasoft_request.ga_id !== '' )
 		{
 			var about_vid_modal = document.querySelector( 'div#videoModal' );
 			var about_vid_close = document.querySelector( 'div#videoModal button.close' );
-			var about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
-			var about_vid_iframe_link = about_vid_iframe.src;
+			var about_vid_iframe;
+			about_vid_modal.style.opacity = 0;
+			
+			document.getElementById("about-modal-link").addEventListener("click", function(e) {
+				e.preventDefault();
+				var data = {
+					'url': wonkasoft_request.ajax,
+					'action': 'wonkasoft_add_youtube_source',
+					'section': 'about',
+					'security': wonkasoft_request.security
+				};
+				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+				xhr.onreadystatechange = function() {
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+						var response = JSON.parse( this.responseText );
+						if ( response.success ) 
+						{
+							about_vid_modal.style.opacity = 1;
+							document.getElementById('about-youtube-source').innerHTML = response.data.src;
+						}
+						else
+						{
+							console.log('error '+ response);
+						}
+					}
+				};
+
+				xhr.open('GET', data.url + "?" + query_string );
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+			});
 
 			about_vid_close.onclick = function()
 			{
+				about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
 				about_vid_iframe.src = '';
-				about_vid_iframe.src = about_vid_iframe_link;
+				about_vid_modal.style.opacity = 0;
 			};
 
 			about_vid_modal.onclick = function() 
 			{
+				about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
 				about_vid_iframe.src = '';
-				about_vid_iframe.src = about_vid_iframe_link;
+				about_vid_modal.style.opacity = 0;
 			};
 		}
 		/*=====  End of This is to kill the about us video on close  ======*/
@@ -2291,21 +2322,55 @@ if ( wonkasoft_request.ga_id !== '' )
 		===================================================================*/
 		if ( document.querySelector( 'div#videoModalpop' ) ) 
 		{
+
 			var cause_vid_modal = document.querySelector( 'div#videoModalpop' );
 			var cause_vid_close = document.querySelector( 'div#videoModalpop button.close' );
-			var cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
-			var cause_vid_iframe_link = cause_vid_iframe.src;
+			var cause_vid_iframe;
+			cause_vid_modal.style.opacity = 0;
+			
+			document.getElementById("cause-modal-link").addEventListener("click", function(e) {
+				e.preventDefault();
+				var data = {
+					'url': wonkasoft_request.ajax,
+					'action': 'wonkasoft_add_youtube_source',
+					'section': 'cause',
+					'security': wonkasoft_request.security
+				};
+				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+				xhr.onreadystatechange = function() {
+
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+						var response = JSON.parse( this.responseText );
+						if ( response.success ) 
+						{
+							cause_vid_modal.style.opacity = 1;
+							document.getElementById('cause-youtube-source').innerHTML = response.data.src;
+						}
+						else
+						{
+							console.log('error '+ response);
+						}
+					}
+				};
+
+				xhr.open('GET', data.url + "?" + query_string );
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+			});
 
 			cause_vid_close.onclick = function()
 			{
+				cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
 				cause_vid_iframe.src = '';
-				cause_vid_iframe.src = cause_vid_iframe_link;
+				cause_vid_modal.style.opacity = 0;
 			};
 
 			cause_vid_modal.onclick = function() 
 			{
+				cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
 				cause_vid_iframe.src = '';
-				cause_vid_iframe.src = cause_vid_iframe_link;
+				cause_vid_modal.style.opacity = 0;
 			};
 		}
 		/*=====  End of This is to kill the about us video on close  ======*/
