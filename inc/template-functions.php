@@ -1483,12 +1483,7 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 		$company_logo = json_decode( $company_logo );
 	}
 
-	$user_query = new WP_User_Query(
-		array(
-			'meta_key'     => 'company_logo',
-			'meta_compare' => '=',
-		)
-	);
+	$user_query = new WP_User_Query();
 	echo "<pre>\n";
 	print_r( $user_query );
 	echo "</pre>\n";
