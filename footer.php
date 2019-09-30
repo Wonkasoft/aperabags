@@ -48,7 +48,7 @@ $footer_section = get_section_mods( 'footer' );
 							if ( ! empty( $footer_section->footer_mods->footer_social_facebook ) ) {
 								echo '<a href="' . $footer_section->footer_mods->footer_social_facebook . '" target="_blank"><i class="fa fa-facebook"></i></a>';
 							}
-							
+		
 							if ( ! empty( $footer_section->footer_mods->footer_social_pinterest ) ) {
 								echo '<a href="' . $footer_section->footer_mods->footer_social_pinterest . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
 							}
@@ -61,17 +61,11 @@ $footer_section = get_section_mods( 'footer' );
 						</div><!-- .social-icons-btns -->
 						<?php if ( ! empty( $footer_section->footer_mods->footer_contact_message ) ) : ?>
 							<div class="footer-contact-message">
-							<a href="https://www.instagram.com/aperabags/">@APERABAGS</a>	
-							<a href="https://www.instagram.com/explore/tags/aperabags/">#APERABAGS</a>	
+								<a href="https://www.instagram.com/aperabags/">@APERABAGS</a>	
+								<a href="https://www.instagram.com/explore/tags/aperabags/">#APERABAGS</a>	
 
-								<?php //echo $footer_section->footer_mods->footer_contact_message; ?>
 							</div> <!-- .col -->
 						<?php endif; ?>
-						<?php //if ( ! empty( $footer_section->footer_mods->footer_contact_support_email ) ) : ?>
-							<!-- <div class="footer-contact-email"> -->
-								<?php //echo "<a href='mailto:" . $footer_section->footer_mods->footer_contact_support_email . "'>" . $footer_section->footer_mods->footer_contact_support_email . '</a>'; ?>
-							<!-- </div> --> <!-- .col -->
-						<?php //endif; ?>
 					</div><!-- .social-components-wrap -->
 				</div><!-- .col -->
 				<div class="col col-12 col-lg-4 order-3 order-sm-2">
