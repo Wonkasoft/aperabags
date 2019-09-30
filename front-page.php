@@ -277,10 +277,10 @@ get_header();
 											<div class="about-brand-video">
 												<?php
 
-												if ( ! empty( $about_section->about_videoplaceholder ) ) :
+												if ( ! empty( $about_section->about_the_brand->about_videoplaceholder ) ) :
 													?>
 													<a id="about-modal-link" href="#" data-toggle="modal" data-target="#videoModal" class="video-img-link">
-														<img src="<?php echo esc_url( $about_section->about_videoplaceholder ); ?>" />
+														<img src="<?php echo esc_url( $about_section->about_the_brand->about_videoplaceholder ); ?>" />
 														<span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="fa fa-play-circle"></i></span>
 													</a>
 													<?php
@@ -288,7 +288,7 @@ get_header();
 												?>
 											</div>
 											<?php
-											if ( ! empty( $about_section->about_videoplaceholder ) ) :
+											if ( ! empty( $about_section->about_the_brand->about_videoplaceholder ) ) :
 												?>
 
 												<!-- Modal -->
