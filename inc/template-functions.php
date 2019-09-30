@@ -1484,16 +1484,6 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 		$company_logo = json_decode( $company_logo );
 	}
 
-	$user_query = new WP_User_Query(
-		array(
-			'meta_key'     => 'company_logo',
-			'meta_compare' => '=',
-		)
-	);
-	echo "<pre>\n";
-	print_r( $user_query->results );
-	echo "</pre>\n";
-
 	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) {
 
 		$output .= '<div class="my-account-logo-content-wrap">';
