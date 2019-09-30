@@ -218,7 +218,21 @@ get_header();
 															</a>
 														</div>
 														<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>
-														<p class="cause-message text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->message ); ?></p>
+														<p class="cause-message text-<?php echo esc_attr( $cause->position ); ?>">
+																								<?php
+																								echo wp_kses(
+																									$cause->message,
+																									array(
+																										'a' => array(
+																											'href' => array(),
+																											'data-toggle' => array(),
+																											'data-target' => array(),
+																											'id' => array(),
+																										),
+																									)
+																								);
+																								?>
+														</p>
 													</div><!-- .module-component-wrap -->
 												</div><!-- .cause-section-module -->
 											</div>
