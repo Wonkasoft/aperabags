@@ -1098,7 +1098,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 						update_user_meta( $user_id, 'getResponse_data', $getresponse );
 						if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
 
 						endif;
 
@@ -1118,7 +1118,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 							if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
 
 							endif;
 
@@ -1145,7 +1145,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 							if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
 
 							endif;
 				endif;
@@ -1218,7 +1218,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 						update_user_meta( $user_id, 'getResponse_data', $getresponse );
 						if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
 
 						endif;
 
@@ -1238,7 +1238,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 							if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
 
 							endif;
 
@@ -1266,7 +1266,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 							if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
 
 							endif;
 				endif;
@@ -1320,7 +1320,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 						update_user_meta( $user_id, 'getResponse_data', $getresponse );
 						if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
 
 						endif;
 
@@ -1341,7 +1341,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 							if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
 
 							endif;
 
@@ -1370,7 +1370,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 							if ( ! empty( $entry_fields['logo_upload'] ) && ! empty( $entry_fields['company'] ) ) :
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
 
 							endif;
 				endif;
@@ -1385,7 +1385,7 @@ add_action( 'gform_after_submission', 'wonkasoft_after_form_submission', 10, 2 )
 /**
  * This adds a company logo.
  */
-function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null ) {
+function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null, $coupon_code = null ) {
 
 	$current_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
 
@@ -1416,6 +1416,11 @@ function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null ) {
 			$image['company_name'] = $company_name;
 		} elseif ( ! empty( $current_logo->company_name ) ) {
 			$image['company_name'] = $current_logo->company_name;
+		}
+		if ( ! empty( $coupon_code ) ) {
+			$image['coupon_code'] = $coupon_code;
+		} elseif ( ! empty( $current_logo->company_name ) ) {
+			$image['coupon_code'] = $current_logo->coupon_code;
 		}
 
 		$image = json_encode( $image );
@@ -1479,9 +1484,9 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 		$output .= '<div class="my-account-logo-content-wrap">';
 		$output .= '<h2>Club/Gym Logo</h2>';
 		if ( ! empty( $company_logo->company_name ) ) {
-			$output .= '<h4>' . $company_logo->company_name . '</h4>';
+			$output .= '<span>' . $company_logo->coupon_code . '</span>';
 		} else {
-			$output .= '<h4>need a company name</h4>';
+			$output .= '<span>need a coupon code</span>';
 		}
 		if ( ! empty( $company_logo ) ) {
 
