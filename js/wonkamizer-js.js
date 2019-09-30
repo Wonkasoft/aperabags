@@ -2305,12 +2305,14 @@ if ( wonkasoft_request.ga_id !== '' )
 			{
 				about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
 				about_vid_iframe.src = '';
+				about_vid_modal.style.opacity = 0;
 			};
 
 			about_vid_modal.onclick = function() 
 			{
 				about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
 				about_vid_iframe.src = '';
+				about_vid_modal.style.opacity = 0;
 			};
 		}
 		/*=====  End of This is to kill the about us video on close  ======*/
@@ -2361,12 +2363,14 @@ if ( wonkasoft_request.ga_id !== '' )
 			{
 				cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
 				cause_vid_iframe.src = '';
+				cause_vid_modal.style.opacity = 0;
 			};
 
 			cause_vid_modal.onclick = function() 
 			{
 				cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
 				cause_vid_iframe.src = '';
+				cause_vid_modal.style.opacity = 0;
 			};
 		}
 		/*=====  End of This is to kill the about us video on close  ======*/
