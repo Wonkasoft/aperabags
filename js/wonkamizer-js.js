@@ -2266,6 +2266,11 @@ if ( wonkasoft_request.ga_id !== '' )
 		===================================================================*/
 		if ( document.querySelector( 'div#videoModal' ) ) 
 		{
+			var about_vid_modal = document.querySelector( 'div#videoModal' );
+			var about_vid_close = document.querySelector( 'div#videoModal button.close' );
+			var about_vid_iframe;
+			about_vid_modal.style.opacity = 0;
+			
 			document.getElementById("about-modal-link").addEventListener("click", function(e) {
 				e.preventDefault();
 				var data = {
@@ -2276,12 +2281,12 @@ if ( wonkasoft_request.ga_id !== '' )
 				};
 				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
 				xhr.onreadystatechange = function() {
-
 					if ( this.readyState == 4 && this.status == 200 ) 
 					{
 						var response = JSON.parse( this.responseText );
 						if ( response.success ) 
 						{
+							about_vid_modal.style.opacity = 1;
 							document.getElementById('about-youtube-source').innerHTML = response.data.src;
 						}
 						else
@@ -2295,10 +2300,6 @@ if ( wonkasoft_request.ga_id !== '' )
 				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				xhr.send();
 			});
-
-			var about_vid_modal = document.querySelector( 'div#videoModal' );
-			var about_vid_close = document.querySelector( 'div#videoModal button.close' );
-			var about_vid_iframe;
 
 			about_vid_close.onclick = function()
 			{
@@ -2319,6 +2320,12 @@ if ( wonkasoft_request.ga_id !== '' )
 		===================================================================*/
 		if ( document.querySelector( 'div#videoModalpop' ) ) 
 		{
+
+			var cause_vid_modal = document.querySelector( 'div#videoModalpop' );
+			var cause_vid_close = document.querySelector( 'div#videoModalpop button.close' );
+			var cause_vid_iframe;
+			cause_vid_modal.style.opacity = 0;
+			
 			document.getElementById("cause-modal-link").addEventListener("click", function(e) {
 				e.preventDefault();
 				var data = {
@@ -2335,6 +2342,7 @@ if ( wonkasoft_request.ga_id !== '' )
 						var response = JSON.parse( this.responseText );
 						if ( response.success ) 
 						{
+							cause_vid_modal.style.opacity = 1;
 							document.getElementById('cause-youtube-source').innerHTML = response.data.src;
 						}
 						else
@@ -2348,10 +2356,6 @@ if ( wonkasoft_request.ga_id !== '' )
 				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				xhr.send();
 			});
-
-			var cause_vid_modal = document.querySelector( 'div#videoModalpop' );
-			var cause_vid_close = document.querySelector( 'div#videoModalpop button.close' );
-			var cause_vid_iframe;
 
 			cause_vid_close.onclick = function()
 			{
