@@ -214,24 +214,24 @@ get_header();
 													<div class="module-component-wrap">
 														<div class="img-container">
 															<a href="<?php echo esc_url( $cause->img_link ); ?>">
-																<img class="cause-img img-fluid" src="<?php echo esc_url( $cause->img ); ?>" />
+																<img class="cause-img img-fluid" src="<?php echo esc_url( wp_get_attachment_url( $cause->img, 'custom_products_size' ) ); ?>" srcset="<?php echo esc_attr( $cause->img_srcset ); ?>" />
 															</a>
 														</div>
 														<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>
 														<p class="cause-message text-<?php echo esc_attr( $cause->position ); ?>">
-																								<?php
-																								echo wp_kses(
-																									$cause->message,
-																									array(
-																										'a' => array(
-																											'href' => array(),
-																											'data-toggle' => array(),
-																											'data-target' => array(),
-																											'id' => array(),
-																										),
-																									)
-																								);
-																								?>
+															<?php
+																echo wp_kses(
+																	$cause->message,
+																	array(
+																		'a' => array(
+																			'href' => array(),
+																			'data-toggle' => array(),
+																			'data-target' => array(),
+																			'id' => array(),
+																		),
+																	)
+																);
+															?>
 														</p>
 													</div><!-- .module-component-wrap -->
 												</div><!-- .cause-section-module -->
