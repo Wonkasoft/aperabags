@@ -49,32 +49,32 @@ if ( ! comments_open() ) {
 					$commenter = wp_get_current_commenter();
 
 					$comment_form = array(
-						'title_reply'          => have_comments() ? __( 'Write your review', 'woocommerce' ) : sprintf( __( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
-						'title_reply_to'       => __( 'Leave a Reply to %s', 'woocommerce' ),
-						'title_reply_before'   => '<span id="reply-title" class="comment-reply-title">',
-						'title_reply_after'    => '</span>',
-						'comment_notes_after'  => '',
-						'fields'               => array(
+						'title_reply'         => have_comments() ? __( 'Write your review', 'woocommerce' ) : sprintf( __( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
+						'title_reply_to'      => __( 'Leave a Reply to %s', 'woocommerce' ),
+						'title_reply_before'  => '<span id="reply-title" class="comment-reply-title">',
+						'title_reply_after'   => '</span>',
+						'comment_notes_after' => '',
+						'fields'              => array(
 							'author' => '<p class="comment-form-author form-group wonka-form-group">' . '<label for="author" class="sr-only">' . esc_html__( 'Name', 'woocommerce' ) . '&nbsp;<span class="required">*</span></label> ' .
 										'<input id="author" class="form-control wonka-form-control" placeholder="' . esc_html__( 'Name *', 'woocommerce' ) . '" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30" required /></p>',
 							'email'  => '<p class="comment-form-email form-group wonka-form-group"><label for="email" class="sr-only">' . esc_html__( 'Email', 'woocommerce' ) . '&nbsp;<span class="required">*</span></label> ' .
-										'<input id="email" class="form-control wonka-form-control" placeholder="' . esc_html__( 'Email *', 'woocommerce' ) . '" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30" required /></p>',
+											'<input id="email" class="form-control wonka-form-control" placeholder="' . esc_html__( 'Email *', 'woocommerce' ) . '" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30" required /></p>',
 						),
-						'label_submit'  => __( 'Post', 'woocommerce' ),
-						'logged_in_as'  => '',
-						'comment_field' => '',
-						'class_submit' => 'wonka-btn',
-						'id_submit' => 'wonka-submit',
+						'label_submit'        => __( 'Post', 'woocommerce' ),
+						'logged_in_as'        => '',
+						'comment_field'       => '',
+						'class_submit'        => 'wonka-btn',
+						'id_submit'           => 'wonka-submit',
 					);
 
 					$account_page_url = wc_get_page_permalink( 'myaccount' );
-				if ( $account_page_url ) {
-					/* translators: %s opening and closing link tags respectively */
-					$comment_form['must_log_in'] = '<p class="must-log-in">' . sprintf( esc_html__( 'You must be %slogged in%S to post a review.', 'woocommerce' ), '<a href="' . esc_url( $account_page_url ) . '">', '</a>' ) . '</p>';
-				}
+					if ( $account_page_url ) {
+						/* translators: %s opening and closing link tags respectively */
+						$comment_form['must_log_in'] = '<p class="must-log-in">' . sprintf( esc_html__( 'You must be %slogged in%S to post a review.', 'woocommerce' ), '<a href="' . esc_url( $account_page_url ) . '">', '</a>' ) . '</p>';
+					}
 
-				if ( wc_review_ratings_enabled() ) {
-					$comment_form['comment_field'] = '<div class="comment-form-rating"><label for="rating">' . esc_html__( 'Your rating', 'woocommerce' ) . '</label><select name="rating" id="rating" required>
+					if ( wc_review_ratings_enabled() ) {
+						$comment_form['comment_field'] = '<div class="comment-form-rating"><label for="rating">' . esc_html__( 'Your rating', 'woocommerce' ) . '</label><select name="rating" id="rating" required>
 							<option value="">' . esc_html__( 'Rate&hellip;', 'woocommerce' ) . '</option>
 							<option value="5">' . esc_html__( 'Perfect', 'woocommerce' ) . '</option>
 							<option value="4">' . esc_html__( 'Good', 'woocommerce' ) . '</option>
@@ -82,12 +82,12 @@ if ( ! comments_open() ) {
 							<option value="2">' . esc_html__( 'Not that bad', 'woocommerce' ) . '</option>
 							<option value="1">' . esc_html__( 'Very poor', 'woocommerce' ) . '</option>
 						</select></div>';
-				}
+					}
 
 					$comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . esc_html__( 'Your review', 'woocommerce' ) . '&nbsp;<span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="8" required></textarea></p>';
 
 					comment_form( apply_filters( 'woocommerce_product_review_comment_form_args', $comment_form ) );
-				?>
+					?>
 			</div>
 		</div>
 	<?php else : ?>

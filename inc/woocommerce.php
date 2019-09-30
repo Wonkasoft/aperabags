@@ -335,12 +335,13 @@ function wonka_customized_shop_loop() {
 	endif;
 
 	/*=====  End of For setting up the image flipper  ======*/
+	$post_id = get_the_ID();
 
 	$output  = '';
 	$output .= '<div class="wonka-shop-img-wrap">';
-	$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ) . '" class="img-fluid wonka-img-fluid" />';
+	$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( $post_id, 'full' ) ) . '" class="img-fluid wonka-img-fluid" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_id, 'custom_products_size' ) ) . '" />';
 	if ( $attachment_ids ) :
-		$output .= '<img src="' . esc_url( wp_get_attachment_url( $secondary_image_id ) ) . '" title="' . $secondary_image_title . '" alt="' . $secondary_image_alt . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" />';
+		$output .= '<img src="' . esc_url( wp_get_attachment_url( $secondary_image_id, 'custom_products_size' ) ) . '" title="' . $secondary_image_title . '" alt="' . $secondary_image_alt . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" srcset="' . esc_attr( wp_get_attachment_image_srcset( $secondary_image_id, 'custom_products_size' ) ) . '" />';
 	endif;
 	$output .= '</div><!-- .wonka-shop-img-wrap -->';
 
@@ -351,10 +352,11 @@ function wonka_customized_shop_loop() {
 				'class' => array(),
 			),
 			'img' => array(
-				'class' => array(),
-				'src'   => array(),
-				'title' => array(),
-				'alt'   => array(),
+				'class'  => array(),
+				'src'    => array(),
+				'title'  => array(),
+				'alt'    => array(),
+				'srcset' => array(),
 			),
 		)
 	);
@@ -1371,7 +1373,15 @@ function wonka_single_product_image_thumbnail_html_custom( $data, $attachment_id
 	$output .= ob_get_clean();
 	return $output;
 }
+add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_image_thumbnail_html_custom', 10, 2 );
 
+/**
+ * This is the single product image parse.
+ *
+ * @param  html   $data          current html passed in.
+ * @param  number $attachment_id the attachment ID
+ * @return html                [description]
+ */
 function wonka_single_product_image_scroll_html_custom( $data, $attachment_id ) {
 	global $product, $post;
 	$post_thumbnail_id = $attachment_id;
@@ -1387,9 +1397,6 @@ function wonka_single_product_image_scroll_html_custom( $data, $attachment_id ) 
 
 	return $output;
 }
-
-
-add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_image_thumbnail_html_custom', 10, 2 );
 add_filter( 'wonka_single_product_scroll_image_html', 'wonka_single_product_image_scroll_html_custom', 10, 2 );
 /*=====  End of This is filtering the first thumbnail on single product page  ======*/
 
