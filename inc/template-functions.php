@@ -1479,23 +1479,37 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 	$company_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
 
 	$output = '';
+	if ( ! empty( $company_logo ) ) {
+		$company_logo = json_decode( $company_logo );
+	}
+
+	$user_query = new WP_User_Query(
+		array(
+			'meta_key'     => 'company_logo',
+			'meta_compare' => '=',
+		)
+	);
+	echo "<pre>\n";
+	print_r( $user_query );
+	echo "</pre>\n";
+
 	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) {
 
 		$output .= '<div class="my-account-logo-content-wrap">';
 		$output .= '<h2>Club/Gym Logo</h2>';
+
 		if ( ! empty( $company_logo->company_name ) ) {
 			$output .= '<span>' . $company_logo->coupon_code . '</span>';
 		} else {
 			$output .= '<span>need a coupon code</span>';
 		}
-		$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
-		if ( ! empty( $company_logo ) ) {
 
-			$company_logo = json_decode( $company_logo );
+		if ( ! empty( $company_logo->url ) ) {
 
 			$output .= '<div class="current-logo-wrap">';
 			$output .= '<img src="' . esc_url( $company_logo->url ) . '" class="current-logo" />';
 			$output .= '</div>';
+			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
 			$output .= '<div class="form-wrap">';
 			$output .= '<div class="form-container">';
 			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 0, false );
@@ -1507,6 +1521,7 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 			$output .= '<div class="current-logo-wrap">';
 			$output .= '<div class="no-logo">You have no logo on file.</div>';
 			$output .= '</div>';
+			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
 			$output .= '<div class="form-wrap">';
 			$output .= '<div class="form-container">';
 			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 0, false );
@@ -1532,17 +1547,20 @@ function wonkasoft_parse_account_logo() {
 	$company_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
 
 	$output = '';
+
+	if ( ! empty( $company_logo ) ) {
+		$company_logo = json_decode( $company_logo );
+	}
+
 	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) {
 
-		if ( ! empty( $company_logo ) ) {
-
-			$company_logo = json_decode( $company_logo );
+		if ( ! empty( $company_logo->url ) ) {
 
 			$output .= '<img src="' . esc_url( $company_logo->url ) . '" data-attachment-id="' . $company_logo->id . '" class="current-logo" />';
 
 		} else {
 
-			$output .= '<div class="no-logo">You have no logo on file.</div>';
+			$output .= '<div class="no-logo">You have no logo on file. If you just tried to update your logo there must have been a problem with the upload. Try again or contact us for further help.</div>';
 
 		}
 
