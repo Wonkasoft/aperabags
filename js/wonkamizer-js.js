@@ -2306,7 +2306,7 @@ if ( wonkasoft_request.ga_id !== '' )
 						if ( response.success ) 
 						{
 							console.log( response );
-							document.getElementById('cause-youtube-source').src = response.data.src;
+							document.getElementById('cause-youtube-source').innerHTML = response.data.src;
 						}
 						else
 						{
