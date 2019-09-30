@@ -335,11 +335,12 @@ function wonka_customized_shop_loop() {
 	endif;
 
 	/*=====  End of For setting up the image flipper  ======*/
-	$post_id = get_the_ID();
+	$post_id           = get_the_ID();
+	$post_thumbnail_id = get_post_thumbnail_id( $post_id );
 
 	$output  = '';
 	$output .= '<div class="wonka-shop-img-wrap">';
-	$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( $post_id, 'full' ) ) . '" class="img-fluid wonka-img-fluid" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_id, 'custom_products_size' ) ) . '" />';
+	$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( $post_id, 'custom_products_size' ) ) . '" class="img-fluid wonka-img-fluid" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'custom_products_size' ) ) . '" />';
 	if ( $attachment_ids ) :
 		$output .= '<img src="' . esc_url( wp_get_attachment_url( $secondary_image_id, 'custom_products_size' ) ) . '" title="' . $secondary_image_title . '" alt="' . $secondary_image_alt . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" srcset="' . esc_attr( wp_get_attachment_image_srcset( $secondary_image_id, 'custom_products_size' ) ) . '" />';
 	endif;
