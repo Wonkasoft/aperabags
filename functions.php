@@ -227,6 +227,11 @@ require_once get_stylesheet_directory() . '/inc/template-tags.php';
 require_once get_stylesheet_directory() . '/inc/template-functions.php';
 
 /**
+ * Functions which enhance the theme by ajax requests.
+ */
+require_once get_stylesheet_directory() . '/inc/theme-ajax-functions.php';
+
+/**
  * Customizer additions.
  */
 require_once get_stylesheet_directory() . '/inc/customizer.php';
@@ -271,8 +276,8 @@ add_action( 'pre_get_posts', 'ws_apera_search_woocommerce_only' );
  * Hooks into Apera main menu to add Apera logo to
  * my account link. Adds Svg inline to the menu title
  *
- * @param   [object] $items  grabs the menu items for that menu
- * @param   [array]  $args   Menus
+ * @param   [object] $items  grabs the menu items for that menu.
+ * @param   [array]  $args   Menus.
  *
  * @return  [object] returns the whole menu items object
  * with added icons
@@ -325,6 +330,10 @@ function apera_bags_scripts() {
 	wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', 'anonymous' ) );
 
 	wp_enqueue_script( 'slick-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick.min.js' ), array( 'jquery' ), '1.8.0', true );
+
+	wp_enqueue_script( 'apera-bags-navigation-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/js/navigation.js' ), array( 'jquery' ), time(), true );
+
+	wp_enqueue_script( 'apera-bags-skip-link-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/js/skip-link-focus-fix.js' ), array( 'jquery' ), time(), true );
 
 	wp_enqueue_script( 'apera-bags-wonkamizer-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js' ), array( 'jquery', 'slick-js' ), time(), true );
 

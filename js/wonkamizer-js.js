@@ -110,6 +110,67 @@ if ( wonkasoft_request.ga_id !== '' )
 
 	}
 
+	if ( document.querySelector( '#subscriber-email' ) ) 
+	{
+		if ( getUrlVars().email ) 
+		{
+			var subscriber_email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("subscriber-email").innerHTML = subscriber_email;
+		}
+	}
+
+	if ( document.querySelector( 'input[type=file].custom-file-input' ) ) 
+	{
+		var file_input = document.querySelector( 'input[type=file].custom-file-input' );
+		var input_label = document.querySelector( 'label.custom-file-label' );
+		var file_name;
+		var current_logo_wrap = document.querySelector( 'div.current-logo-wrap' );
+
+		file_input.addEventListener( 'change', function( e ) 
+			{
+				if ( '' === file_input.value ) 
+				{
+					input_label.innerText = 'Choose file';
+				}
+				else
+				{
+					file_name = file_input.value.split('\\')[file_input.value.split('\\').length - 1];
+					input_label.innerText = file_name;
+				}
+			} );
+
+		document.ongform_confirmation_loaded = function( e ) 
+			{
+				var data = {
+					'url': wonkasoft_request.ajax,
+					'action': 'wonkasoft_parse_account_logo',
+					'security': wonkasoft_request.security
+				};
+				var query_string = Object.keys(data).map(key => key + '=' + data[key]).join('&');
+				xhr.onreadystatechange = function() {
+
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+						var response = JSON.parse( this.responseText );
+						if ( response.success ) 
+						{
+							console.log( response );
+							current_logo_wrap.innerHTML = response.data;
+						}
+						else
+						{
+							current_logo_wrap.innerText = 'There was an issue with your upload. Please try again.';
+						}
+					}
+				};
+
+				xhr.open('GET', data.url + "?" + query_string );
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+			};
+
+	}
+
 	/**
 	 * This is for the checkout multistep tabs 
 	 * @author Rudy

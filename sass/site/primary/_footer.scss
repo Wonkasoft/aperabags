@@ -55,6 +55,10 @@ footer#colophon {
 				margin-bottom: 1.2rem;
 				@include font-size( 1.4 );
 			}
+
+			.footer-contact-message {
+				font-size: 1rem;
+			}
 		}
 
 		ul {

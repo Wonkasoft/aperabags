@@ -35,7 +35,7 @@
 			</div><!-- topbar-notice -->
 		<?php endif; ?>
 		<div class="row brand-nav-bar">
-			<div class="col col-6 col-lg-3 branding">
+			<div class="col col-6 col-lg-2 offset-1 branding">
 				<div class="site-branding">
 					<?php
 						the_custom_logo();
@@ -68,7 +68,7 @@
 					);
 					?>
 			</div><!-- .cart-mobile-col -->
-			<div class="col col-12 col-lg-9 div-nav">
+			<div class="col col-12 col-lg-9 text-right div-nav">
 
 				<nav id="site-navigation" class="main-navigation">
 					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">

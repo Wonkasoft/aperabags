@@ -32,3 +32,25 @@ body.woocommerce-lost-password {
     display: none;
   }
 }
+
+div.my-account-logo-content-wrap {
+  padding: 0 8px;
+  max-width: 800px;
+
+  .no-logo {
+    padding: 8px;
+  }
+
+  .current-logo-wrap {
+    padding: 8px;
+
+    img {
+      max-width: 200px;
+      @include box-shadow( 0 1px 6px 0 rgba( 0, 0, 0, .3 ) );
+    }
+  }
+
+  .form-wrap {
+    padding: 8px;
+  }
+}

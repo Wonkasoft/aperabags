@@ -18,7 +18,7 @@ $footer_section = get_section_mods( 'footer' );
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
 			<div class="row upper-footer wonka-row-footer">
-				<div class="col col-12 col-lg-4 col-sm-6">
+				<div class="col col-12 col-lg-3 offset-lg-1 col-sm-6">
 					<div class="row wonka-row-footer">
 						<?php if ( ! empty( $footer_section->footer_titles->footer_title_1 ) ) : ?>
 							<div class="col-12 col-lg">
@@ -36,7 +36,7 @@ $footer_section = get_section_mods( 'footer' );
 					</div><!-- .row -->
 				</div><!-- .col-4 -->
 
-				<div class="col col-12 col-lg-4 col-sm-6 order-lg-3 order-2">
+				<div class="col col-12 col-lg-3 col-sm-6 order-lg-3 order-2">
 					<div class="social-components-wrap">
 						<h4 class="footer-title text-center"><?php echo $footer_section->footer_mods->footer_social_title; ?></h4>
 						<div class="social-icons-btns">
@@ -45,27 +45,25 @@ $footer_section = get_section_mods( 'footer' );
 								echo '<a href="' . $footer_section->footer_mods->footer_social_instagram . '" target="_blank"><i class="fa fa-instagram"></i></a>';
 							}
 
+							if ( ! empty( $footer_section->footer_mods->footer_social_facebook ) ) {
+								echo '<a href="' . $footer_section->footer_mods->footer_social_facebook . '" target="_blank"><i class="fa fa-facebook"></i></a>';
+							}
+		
+							if ( ! empty( $footer_section->footer_mods->footer_social_pinterest ) ) {
+								echo '<a href="' . $footer_section->footer_mods->footer_social_pinterest . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
+							}
+
 							if ( ! empty( $footer_section->footer_mods->footer_social_twitter ) ) {
 								echo '<a href="' . $footer_section->footer_mods->footer_social_twitter . '" target="_blank"><i class="fa fa-twitter"></i></a>';
 							}
 
-							if ( ! empty( $footer_section->footer_mods->footer_social_facebook ) ) {
-								echo '<a href="' . $footer_section->footer_mods->footer_social_facebook . '" target="_blank"><i class="fa fa-facebook"></i></a>';
-							}
-
-							if ( ! empty( $footer_section->footer_mods->footer_social_pinterest ) ) {
-								echo '<a href="' . $footer_section->footer_mods->footer_social_pinterest . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
-							}
 							?>
 						</div><!-- .social-icons-btns -->
 						<?php if ( ! empty( $footer_section->footer_mods->footer_contact_message ) ) : ?>
 							<div class="footer-contact-message">
-								<?php echo $footer_section->footer_mods->footer_contact_message; ?>
-							</div> <!-- .col -->
-						<?php endif; ?>
-						<?php if ( ! empty( $footer_section->footer_mods->footer_contact_support_email ) ) : ?>
-							<div class="footer-contact-email">
-								<?php echo "<a href='mailto:" . $footer_section->footer_mods->footer_contact_support_email . "'>" . $footer_section->footer_mods->footer_contact_support_email . '</a>'; ?>
+								<a href="https://www.instagram.com/aperabags/">@APERABAGS</a>	
+								<a href="https://www.instagram.com/explore/tags/aperabags/">#APERABAGS</a>	
+
 							</div> <!-- .col -->
 						<?php endif; ?>
 					</div><!-- .social-components-wrap -->
@@ -74,7 +72,7 @@ $footer_section = get_section_mods( 'footer' );
 					<div class="row align-items-end justify-content-center wonka-email-form">
 					<?php _e('<h4 class="footer-title menu-title-shop pb-2">KEEP IN TOUCH!</h4>') ?>
 						<?php if ( ! empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
-							<div class="col col-12">
+							<div class="col col-10 col-lg-12">
 								<?php
 									_e( do_shortcode( $footer_section->footer_mods->footer_form_shortcode ) );
 

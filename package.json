@@ -32,7 +32,7 @@
     "path": "^0.12.7"
   },
   "siteName": "aperabags.com",
-  "localhost": "https://listers.dev/",
+  "localhost": "https://localhost/",
   "dependencies": {
     "smoothscroll-polyfill": "^0.4.4"
   }

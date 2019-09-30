@@ -6,8 +6,8 @@
  * @package    GetResponse
  * @author     Wonkasoft <Support@Wonkasoft.com>
  * @copyright  2019 Wonkasoft
- * @version    Release: 1.0.0
- * @since      file available since Release 1.0.0
+ * @version    1.0.0
+ * @since      1.0.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -18,11 +18,11 @@ defined( 'ABSPATH' ) || exit;
  */
 class Wonkasoft_GetResponse_Api {
 
-	protected $data      = null; // Will be set to the data that is passed into the class.
+	protected $data = null; // Will be set to the data that is passed into the class.
 
-	protected $post_header   = array(); // POST header array for api calls.
+	protected $post_header = array(); // POST header array for api calls.
 
-	protected $get_header   = array(); // GET header array for api calls.
+	protected $get_header = array(); // GET header array for api calls.
 
 	private $getresponse_api = null; // Will be set with api key.
 
@@ -48,9 +48,9 @@ class Wonkasoft_GetResponse_Api {
 
 	public $custom_fields = array(); // Custom field names to find ids for.
 
-	public $custom_fields_values  = array(); // Custom field values.
+	public $custom_fields_values = array(); // Custom field values.
 
-	public $custom_fields_to_update  = array(); // Custom fields to be updated.
+	public $custom_fields_to_update = array(); // Custom fields to be updated.
 
 	public $contact_id = null;  // Will be set to current contact.
 
@@ -63,32 +63,32 @@ class Wonkasoft_GetResponse_Api {
 	 */
 	public function __construct( $data = null ) {
 
-		$this->data             = ( ! empty( $data ) ) ? $data : null;
-		$this->getresponse_api = ( ! empty( get_option( 'getresponse_api_key' ) ) ) ? get_option( 'getresponse_api_key' ) : null;
-		$this->getresponse_url = ( ! empty( get_option( 'getresponse_api_url' ) ) ) ? get_option( 'getresponse_api_url' ) : null;
-		$this->post_header = array(
+		$this->data                    = ( ! empty( $data ) ) ? $data : null;
+		$this->getresponse_api         = ( ! empty( get_option( 'getresponse_api_key' ) ) ) ? get_option( 'getresponse_api_key' ) : null;
+		$this->getresponse_url         = ( ! empty( get_option( 'getresponse_api_url' ) ) ) ? get_option( 'getresponse_api_url' ) : null;
+		$this->post_header             = array(
 			'X-Auth-Token: api-key ' . $this->getresponse_api,
 			'Content-Type: application/json',
 		);
-		$this->get_header = array(
+		$this->get_header              = array(
 			'X-Auth-Token: api-key ' . $this->getresponse_api,
 			'Content-Type: application/x-www-form-urlencoded',
 		);
-		$this->email      = ( ! empty( $data['email'] ) ) ? $data['email'] : null;
-		$this->tags        = ( ! empty( $data['tags'] ) ) ? $data['tags'] : null;
-		$this->tags_to_update  = ( ! empty( $data['tags_to_update'] ) ) ? $data['tags_to_update'] : null;
-		$this->campaign_name   = ( ! empty( $data['campaign_name'] ) ) ? $data['campaign_name'] : null;
-		$this->campaign_list   = ( ! empty( $data['campaign_list'] ) ) ? $data['campaign_list'] : null;
-		$this->campaign_id   = ( ! empty( $data['campaign_id'] ) ) ? $data['campaign_id'] : null;
-		$this->custom_fields  = ( ! empty( $data['custom_fields'] ) ) ? $data['custom_fields'] : null;
-		$this->custom_fields_values  = ( ! empty( $data['custom_fields_values'] ) ) ? $data['custom_fields_values'] : null;
-		$this->custom_fields_list  = ( ! empty( $data['custom_fields_list'] ) ) ? $data['custom_fields_list'] : null;
-		$this->custom_fields_to_update  = ( ! empty( $data['custom_fields_to_update'] ) ) ? $data['custom_fields_to_update'] : null;
-		$this->contact_id = ( ! empty( $data['contact_id'] ) ) ? $data['contact_id'] : null;
-		$this->tag_id = ( ! empty( $data['tag_id'] ) ) ? $data['tag_id'] : null;
-		$this->contact_list = $this->get_contact_list();
-		$this->tag_list = $this->get_the_list_of_tags();
-		$this->campaign_list = $this->get_a_list_of_campaigns();
+		$this->email                   = ( ! empty( $data['email'] ) ) ? $data['email'] : null;
+		$this->tags                    = ( ! empty( $data['tags'] ) ) ? $data['tags'] : null;
+		$this->tags_to_update          = ( ! empty( $data['tags_to_update'] ) ) ? $data['tags_to_update'] : null;
+		$this->campaign_name           = ( ! empty( $data['campaign_name'] ) ) ? $data['campaign_name'] : null;
+		$this->campaign_list           = ( ! empty( $data['campaign_list'] ) ) ? $data['campaign_list'] : null;
+		$this->campaign_id             = ( ! empty( $data['campaign_id'] ) ) ? $data['campaign_id'] : null;
+		$this->custom_fields           = ( ! empty( $data['custom_fields'] ) ) ? $data['custom_fields'] : null;
+		$this->custom_fields_values    = ( ! empty( $data['custom_fields_values'] ) ) ? $data['custom_fields_values'] : null;
+		$this->custom_fields_list      = ( ! empty( $data['custom_fields_list'] ) ) ? $data['custom_fields_list'] : null;
+		$this->custom_fields_to_update = ( ! empty( $data['custom_fields_to_update'] ) ) ? $data['custom_fields_to_update'] : null;
+		$this->contact_id              = ( ! empty( $data['contact_id'] ) ) ? $data['contact_id'] : null;
+		$this->tag_id                  = ( ! empty( $data['tag_id'] ) ) ? $data['tag_id'] : null;
+		$this->contact_list            = $this->get_contact_list();
+		$this->tag_list                = $this->get_the_list_of_tags();
+		$this->campaign_list           = $this->get_a_list_of_campaigns();
 	}
 
 	/**
@@ -99,7 +99,7 @@ class Wonkasoft_GetResponse_Api {
 	 */
 	public function update_contact_details() {
 
-		$payload  = array(
+		$payload = array(
 			'name'              => $this->contact_name,
 			'campaign'          => $this->campaign_name,
 			'email'             => $this->email,
@@ -109,8 +109,8 @@ class Wonkasoft_GetResponse_Api {
 
 		$payload = json_encode( $payload );
 
-		$ch         = curl_init();
-		$url        = $this->getresponse_api . '/contacts/' . $this->contact_id;
+		$ch  = curl_init();
+		$url = $this->getresponse_url . '/contacts/' . $this->contact_id;
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
@@ -123,8 +123,8 @@ class Wonkasoft_GetResponse_Api {
 
 		if ( false === $response ) :
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 			curl_close( $ch );
 			$error_obj = json_decode( json_encode( $error_obj ) );
@@ -146,23 +146,23 @@ class Wonkasoft_GetResponse_Api {
 	public function upsert_the_tags_of_contact() {
 
 		if ( ! empty( $this->tag_id ) ) :
-			$payload    = array(
-				'tags'      => array(
+			$payload = array(
+				'tags' => array(
 					array(
 						'tagId' => $this->tag_id,
 					),
 				),
 			);
 	else :
-		$payload    = array(
-			'tags'      => $this->tags_to_update,
+		$payload = array(
+			'tags' => $this->tags_to_update,
 		);
 	endif;
 
-		$payload  = json_encode( $payload );
+		$payload = json_encode( $payload );
 
-		$ch         = curl_init();
-		$url        = $this->getresponse_url . '/contacts/' . $this->contact_id . '/tags';
+		$ch  = curl_init();
+		$url = $this->getresponse_url . '/contacts/' . $this->contact_id . '/tags';
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -175,8 +175,8 @@ class Wonkasoft_GetResponse_Api {
 
 	if ( false === $response ) :
 		$error_obj = array(
-			'error' => curl_error( $ch ),
-			'status'    => 'failed',
+			'error'  => curl_error( $ch ),
+			'status' => 'failed',
 		);
 
 		curl_close( $ch );
@@ -200,27 +200,27 @@ class Wonkasoft_GetResponse_Api {
 	 */
 	public function get_the_list_of_tags() {
 
-		$current_query  = array(
-			'query' => array(
-				'name' => $this->tags,
+		$current_query = array(
+			'query'   => array(
+				'name'      => $this->tags,
 				'createdAt' => array(
-					'from'    => null,
-					'to'      => null,
+					'from' => null,
+					'to'   => null,
 				),
 			),
-			'sort' => array(
+			'sort'    => array(
 				'createdAt' => null,
 			),
-			'fields'      => null,
-			'perPage'     => null,
-			'page'        => null,
+			'fields'  => null,
+			'perPage' => null,
+			'page'    => null,
 		);
 
-		$current_query  = json_decode( json_encode( $current_query ) );
-		$current_query  = http_build_query( $current_query );
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
 
-		$ch         = curl_init();
-		$url        = $this->getresponse_url . '/tags?' . $current_query;
+		$ch  = curl_init();
+		$url = $this->getresponse_url . '/tags?' . $current_query;
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -231,8 +231,8 @@ class Wonkasoft_GetResponse_Api {
 
 		if ( false === $response ) :
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 
 			curl_close( $ch );
@@ -256,49 +256,49 @@ class Wonkasoft_GetResponse_Api {
 	 */
 	public function get_contact_list() {
 
-		$current_query  = array(
-			'query' => array(
-				'email'          => $this->email,
-				'name'           => null,
-				'campaignId'     => null,
-				'origin'         => null,
-				'createdOn'      => array(
-					'from'         => null,
-					'to'           => null,
+		$current_query = array(
+			'query'           => array(
+				'email'      => $this->email,
+				'name'       => null,
+				'campaignId' => null,
+				'origin'     => null,
+				'createdOn'  => array(
+					'from' => null,
+					'to'   => null,
 				),
-				'changedOn'      => array(
-					'from'         => null,
-					'to'           => null,
+				'changedOn'  => array(
+					'from' => null,
+					'to'   => null,
 				),
 			),
-			'sort'             => array(
-				'createdOn'      => null,
-				'changedOn'      => null,
-				'campaignId'     => null,
+			'sort'            => array(
+				'createdOn'  => null,
+				'changedOn'  => null,
+				'campaignId' => null,
 			),
-			'additionalFlags'  => null,
-			'fields'           => null,
-			'perPage'          => null,
-			'page'             => null,
+			'additionalFlags' => null,
+			'fields'          => null,
+			'perPage'         => null,
+			'page'            => null,
 		);
 
-		$current_query  = json_decode( json_encode( $current_query ) );
-		$current_query  = http_build_query( $current_query );
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
 
-		$ch         = curl_init();
-		$url        = $this->getresponse_url . '/contacts?' . $current_query;
+		$ch  = curl_init();
+		$url = $this->getresponse_url . '/contacts?' . $current_query;
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
 		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response   = curl_exec( $ch );
+		$response = curl_exec( $ch );
 
 		if ( false === $response ) :
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 
 			curl_close( $ch );
@@ -322,37 +322,37 @@ class Wonkasoft_GetResponse_Api {
 	 */
 	public function get_a_list_of_campaigns() {
 
-		$current_query  = array(
-			'query' => array(
-				'name'           => $this->campaign_name,
-				'isDefault'     => null,
+		$current_query = array(
+			'query'   => array(
+				'name'      => $this->campaign_name,
+				'isDefault' => null,
 			),
-			'sort'             => array(
-				'name'          => null,
-				'createdOn'      => null,
+			'sort'    => array(
+				'name'      => null,
+				'createdOn' => null,
 			),
-			'fields'           => null,
-			'perPage'          => null,
-			'page'             => null,
+			'fields'  => null,
+			'perPage' => null,
+			'page'    => null,
 		);
 
-		$current_query  = json_decode( json_encode( $current_query ) );
-		$current_query  = http_build_query( $current_query );
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
 
-		$ch         = curl_init();
-		$url        = $this->getresponse_url . '/campaigns?' . $current_query;
+		$ch  = curl_init();
+		$url = $this->getresponse_url . '/campaigns?' . $current_query;
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
 		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response   = curl_exec( $ch );
+		$response = curl_exec( $ch );
 
 		if ( false === $response ) :
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 
 			curl_close( $ch );
@@ -375,35 +375,35 @@ class Wonkasoft_GetResponse_Api {
 	 */
 	public function get_a_list_of_custom_fields() {
 
-		$current_query  = array(
-			'query' => array(
-				'name'           => null,
+		$current_query = array(
+			'query'   => array(
+				'name' => null,
 			),
-			'sort'             => array(
-				'name'          => null,
+			'sort'    => array(
+				'name' => null,
 			),
-			'fields'           => null,
-			'perPage'          => null,
-			'page'             => null,
+			'fields'  => null,
+			'perPage' => null,
+			'page'    => null,
 		);
 
-		$current_query  = json_decode( json_encode( $current_query ) );
-		$current_query  = http_build_query( $current_query );
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
 
-		$ch         = curl_init();
-		$url        = $this->getresponse_url . '/custom-fields?' . $current_query;
+		$ch  = curl_init();
+		$url = $this->getresponse_url . '/custom-fields?' . $current_query;
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
 		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response   = curl_exec( $ch );
+		$response = curl_exec( $ch );
 
 		if ( false === $response ) :
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 
 			curl_close( $ch );
@@ -427,14 +427,14 @@ class Wonkasoft_GetResponse_Api {
 	 */
 	public function upsert_the_custom_fields_of_a_contact() {
 
-		$payload    = array(
-			'customFieldValues'  => $this->custom_fields_to_update,
+		$payload = array(
+			'customFieldValues' => $this->custom_fields_to_update,
 		);
 
-		$payload  = json_encode( $payload );
+		$payload = json_encode( $payload );
 
-		$ch         = curl_init();
-		$url        = $this->getresponse_url . '/contacts/' . $this->contact_id . '/custom-fields';
+		$ch  = curl_init();
+		$url = $this->getresponse_url . '/contacts/' . $this->contact_id . '/custom-fields';
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -447,8 +447,8 @@ class Wonkasoft_GetResponse_Api {
 
 		if ( false === $response ) :
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 
 			curl_close( $ch );

@@ -1612,6 +1612,54 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
+		// Footer contact message Setting.
+		$wp_customize->add_setting(
+			'footer_insta_tags',
+			array(
+				'default'           => '',
+				'transport'         => 'refresh',
+			)
+		);
+	
+		// Footer contact message Setting Control.
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'footer_insta_tags_control',
+				array(
+					'label'       => __( 'Contact message', 'apera-bags' ),
+					'section'     => 'footer_section',
+					'settings'    => 'footer_insta_tags',
+					'type'      => 'text',
+					'description' => 'Example: Contact Customer Service',
+				)
+			)
+		);
+	
+		// Footer support email Setting.
+		$wp_customize->add_setting(
+			'footer_insta_tags_link',
+			array(
+				'default'           => '',
+				'transport'         => 'refresh',
+			)
+		);
+	
+		// Footer support email Setting Control.
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'footer_insta_tags_link_control',
+				array(
+					'label'       => __( 'Contact support email', 'apera-bags' ),
+					'section'     => 'footer_section',
+					'settings'    => 'footer_insta_tags_link',
+					'type'      => 'text',
+					'description' => 'Example: support@domain.com',
+				)
+			)
+		);
+
 	for ( $i = 1; $i <= 5; $i++ ) :
 		// Footer menu header Setting.
 		$wp_customize->add_setting(
