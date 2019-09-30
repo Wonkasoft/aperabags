@@ -161,6 +161,7 @@ function the_mods_for_section( $section ) {
 			$about->about_the_brand_button_link  = get_permalink( get_theme_mod( 'about_the_brand_button_link' ) );
 			$about->about_the_brand_second_image = get_theme_mod( 'about_the_brand_second_image' );
 			$about->about_the_brand_image_link   = get_permalink( get_theme_mod( 'about_the_brand_second_image_link', '#' ) );
+			$about->about_videoplaceholder       = get_theme_mod( 'about_the_brand_video_placeholder' );
 
 			$mods_class->{'about_the_brand'}        = $about;
 			$mods_class->{'about_the_brand'}->count = $count;

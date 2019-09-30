@@ -2266,21 +2266,51 @@ if ( wonkasoft_request.ga_id !== '' )
 		===================================================================*/
 		if ( document.querySelector( 'div#videoModal' ) ) 
 		{
+			document.getElementById("about-modal-link").addEventListener("click", function(e) {
+				e.preventDefault();
+				var data = {
+					'url': wonkasoft_request.ajax,
+					'action': 'wonkasoft_add_youtube_source',
+					'section': 'about',
+					'security': wonkasoft_request.security
+				};
+				var query_string = Object.keys(data).map(key => key + '=' + data[key]).join('&');
+				xhr.onreadystatechange = function() {
+
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+						var response = JSON.parse( this.responseText );
+						if ( response.success ) 
+						{
+							console.log( response );
+							document.getElementById('cause-youtube-source').innerHTML = response.data.src;
+						}
+						else
+						{
+							console.log('error '+ response);
+						}
+					}
+				};
+
+				xhr.open('GET', data.url + "?" + query_string );
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+			});
+
 			var about_vid_modal = document.querySelector( 'div#videoModal' );
 			var about_vid_close = document.querySelector( 'div#videoModal button.close' );
-			var about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
-			var about_vid_iframe_link = about_vid_iframe.src;
+			var about_vid_iframe;
 
 			about_vid_close.onclick = function()
 			{
+				about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
 				about_vid_iframe.src = '';
-				about_vid_iframe.src = about_vid_iframe_link;
 			};
 
 			about_vid_modal.onclick = function() 
 			{
+				about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
 				about_vid_iframe.src = '';
-				about_vid_iframe.src = about_vid_iframe_link;
 			};
 		}
 		/*=====  End of This is to kill the about us video on close  ======*/
@@ -2295,6 +2325,7 @@ if ( wonkasoft_request.ga_id !== '' )
 				var data = {
 					'url': wonkasoft_request.ajax,
 					'action': 'wonkasoft_add_youtube_source',
+					'section': 'cause',
 					'security': wonkasoft_request.security
 				};
 				var query_string = Object.keys(data).map(key => key + '=' + data[key]).join('&');
@@ -2322,19 +2353,18 @@ if ( wonkasoft_request.ga_id !== '' )
 
 			var cause_vid_modal = document.querySelector( 'div#videoModalpop' );
 			var cause_vid_close = document.querySelector( 'div#videoModalpop button.close' );
-			var cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
-			var cause_vid_iframe_link = cause_vid_iframe.src;
+			var cause_vid_iframe;
 
 			cause_vid_close.onclick = function()
 			{
+				cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
 				cause_vid_iframe.src = '';
-				cause_vid_iframe.src = cause_vid_iframe_link;
 			};
 
 			cause_vid_modal.onclick = function() 
 			{
+				cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
 				cause_vid_iframe.src = '';
-				cause_vid_iframe.src = cause_vid_iframe_link;
 			};
 		}
 		/*=====  End of This is to kill the about us video on close  ======*/

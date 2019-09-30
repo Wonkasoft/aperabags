@@ -276,21 +276,19 @@ get_header();
 											<p class="about-brand-message"><?php echo wp_kses_post( $about_section->about_the_brand->about_message ); ?></p>
 											<div class="about-brand-video">
 												<?php
-												$videoplaceholder = ( get_theme_mod( 'about_the_brand_video_placeholder' ) ) ? get_theme_mod( 'about_the_brand_video_placeholder' ) : '';
-												$videocode        = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
-												if ( ! empty( $videoplaceholder ) ) :
+
+												if ( ! empty( $about_section->about_videoplaceholder ) ) :
 													?>
-													<a href="#" data-toggle="modal" data-src="https://www.youtube.com/embed/<?php echo wp_kses_data( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" data-target="#videoModal" class="video-img-link">
-														<img src="<?php echo esc_url( $videoplaceholder ); ?>" />
+													<a id="about-modal-link" href="#" data-toggle="modal" data-target="#videoModal" class="video-img-link">
+														<img src="<?php echo esc_url( $about_section->about_videoplaceholder ); ?>" />
 														<span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="fa fa-play-circle"></i></span>
 													</a>
-
 													<?php
 												endif;
 												?>
 											</div>
 											<?php
-											if ( ! empty( $videoplaceholder ) ) :
+											if ( ! empty( $about_section->about_videoplaceholder ) ) :
 												?>
 
 												<!-- Modal -->
@@ -299,8 +297,8 @@ get_header();
 														<div class="modal-content">
 															<div class="modal-body">
 																<!-- 16:9 aspect ratio -->
-																<div class="embed-responsive embed-responsive-16by9">
-																	<iframe width="780" height="442" src="https://www.youtube.com/embed/<?php echo wp_kses_data( $videocode ); ?>?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
+																<div id="about-youtube-source" class="embed-responsive embed-responsive-16by9">
+																	
 																</div>
 																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 																	<span aria-hidden="true">X</span>
