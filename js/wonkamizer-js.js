@@ -2291,7 +2291,8 @@ if ( wonkasoft_request.ga_id !== '' )
 		===================================================================*/
 		if ( document.querySelector( 'div#videoModalpop' ) ) 
 		{
-			document.getElementById("cause-modal-link").addEventListener("click", function() {
+			document.getElementById("cause-modal-link").addEventListener("click", function(e) {
+				e.preventDefault();
 				var data = {
 					'url': wonkasoft_request.ajax,
 					'action': 'wonkasoft_add_youtube_source',
