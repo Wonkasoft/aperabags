@@ -1488,6 +1488,7 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 		} else {
 			$output .= '<span>need a coupon code</span>';
 		}
+		$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
 		if ( ! empty( $company_logo ) ) {
 
 			$company_logo = json_decode( $company_logo );
