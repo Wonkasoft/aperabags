@@ -246,8 +246,8 @@ get_header();
 											<div class="modal-content">
 												<div class="modal-body">
 													<!-- 16:9 aspect ratio -->
-													<div class="embed-responsive embed-responsive-16by9">
-														<iframe id="cause-youtube-source" width="780" height="442" src="#" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>
+													<div class="embed-responsive embed-responsive-16by9" id="cause-youtube-source">
+														
 													</div>
 													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 														<span aria-hidden="true">X</span>
