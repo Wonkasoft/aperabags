@@ -2291,32 +2291,34 @@ if ( wonkasoft_request.ga_id !== '' )
 		===================================================================*/
 		if ( document.querySelector( 'div#videoModalpop' ) ) 
 		{
-			var data = {
-				'url': wonkasoft_request.ajax,
-				'action': 'wonkasoft_add_youtube_source',
-				'security': wonkasoft_request.security
-			};
-			var query_string = Object.keys(data).map(key => key + '=' + data[key]).join('&');
-			xhr.onreadystatechange = function() {
+			document.getElementById("cause-modal-link").addEventListener("click", function() {
+				var data = {
+					'url': wonkasoft_request.ajax,
+					'action': 'wonkasoft_add_youtube_source',
+					'security': wonkasoft_request.security
+				};
+				var query_string = Object.keys(data).map(key => key + '=' + data[key]).join('&');
+				xhr.onreadystatechange = function() {
 
-				if ( this.readyState == 4 && this.status == 200 ) 
-				{
-					var response = JSON.parse( this.responseText );
-					if ( response.success ) 
+					if ( this.readyState == 4 && this.status == 200 ) 
 					{
-						console.log( response );
-						document.getElementById('cause-youtube-source').src = response.data.src;
+						var response = JSON.parse( this.responseText );
+						if ( response.success ) 
+						{
+							console.log( response );
+							document.getElementById('cause-youtube-source').src = response.data.src;
+						}
+						else
+						{
+							console.log('error '+ response);
+						}
 					}
-					else
-					{
-						console.log('error '+ response);
-					}
-				}
-			};
+				};
 
-			xhr.open('GET', data.url + "?" + query_string );
-			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr.send();
+				xhr.open('GET', data.url + "?" + query_string );
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+			});
 
 			var cause_vid_modal = document.querySelector( 'div#videoModalpop' );
 			var cause_vid_close = document.querySelector( 'div#videoModalpop button.close' );
