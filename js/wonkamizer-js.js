@@ -146,7 +146,7 @@ if ( wonkasoft_request.ga_id !== '' )
 					'action': 'wonkasoft_parse_account_logo',
 					'security': wonkasoft_request.security
 				};
-				var query_string = Object.keys(data).map(key => key + '=' + data[key]).join('&');
+				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
 				xhr.onreadystatechange = function() {
 
 					if ( this.readyState == 4 && this.status == 200 ) 
@@ -2274,7 +2274,7 @@ if ( wonkasoft_request.ga_id !== '' )
 					'section': 'about',
 					'security': wonkasoft_request.security
 				};
-				var query_string = Object.keys(data).map(key => key + '=' + data[key]).join('&');
+				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
 				xhr.onreadystatechange = function() {
 
 					if ( this.readyState == 4 && this.status == 200 ) 
@@ -2282,7 +2282,6 @@ if ( wonkasoft_request.ga_id !== '' )
 						var response = JSON.parse( this.responseText );
 						if ( response.success ) 
 						{
-							console.log( response );
 							document.getElementById('about-youtube-source').innerHTML = response.data.src;
 						}
 						else
@@ -2328,7 +2327,7 @@ if ( wonkasoft_request.ga_id !== '' )
 					'section': 'cause',
 					'security': wonkasoft_request.security
 				};
-				var query_string = Object.keys(data).map(key => key + '=' + data[key]).join('&');
+				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
 				xhr.onreadystatechange = function() {
 
 					if ( this.readyState == 4 && this.status == 200 ) 
@@ -2336,7 +2335,6 @@ if ( wonkasoft_request.ga_id !== '' )
 						var response = JSON.parse( this.responseText );
 						if ( response.success ) 
 						{
-							console.log( response );
 							document.getElementById('cause-youtube-source').innerHTML = response.data.src;
 						}
 						else
