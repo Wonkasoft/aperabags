@@ -214,7 +214,7 @@ get_header();
 													<div class="module-component-wrap">
 														<div class="img-container">
 															<a href="<?php echo esc_url( $cause->img_link ); ?>">
-																<img class="cause-img img-fluid" src="<?php echo esc_url( wp_get_attachment_image_src( $cause->img, 'custom_products_size' )[0] ); ?>" srcset="<?php echo esc_attr( $cause->img_srcset ); ?>" />
+																<img class="cause-img img-fluid" srcset="<?php echo esc_attr( $cause->img_srcset ); ?>" />
 															</a>
 														</div>
 														<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>
