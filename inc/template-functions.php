@@ -198,6 +198,12 @@ function the_mods_for_section( $section ) {
 			$footer->footer_social_pinterest      = get_theme_mod( 'footer_social_pinterest' );
 			$footer->footer_contact_message       = get_theme_mod( 'footer_contact_message' );
 			$footer->footer_contact_support_email = get_theme_mod( 'footer_contact_support_email' );
+
+			$footer->footer_insta_username       	= get_theme_mod( 'footer_insta_username' );
+			$footer->footer_insta_username_link 	= get_theme_mod( 'footer_insta_username_link' );
+			$footer->footer_insta_hashtag       	= get_theme_mod( 'footer_insta_hashtags' );
+			$footer->footer_insta_hashtag_link 		= get_theme_mod( 'footer_insta_hashtags_link' );
+
 			$footer->footer_logo                  = get_theme_mod( 'footer_logo' );
 			$footer->footer_form_shortcode        = get_theme_mod( 'footer_form_shortcode' );
 
