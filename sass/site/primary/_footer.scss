@@ -26,13 +26,22 @@ footer#colophon {
 
 			div.col-12 {
 
-				div.footer-contact-message {
+				div.footer-insta {
+					font-display: $font__main_jose;
+					font-weight: 500;
 					display: flex;
 					justify-content: center;
-					font-size: 1rem;
 					display: grid;
 					grid-gap: 8px;
 					grid-auto-flow: column;
+					margin-bottom: 1.2rem;
+
+					@include media-breakpoint( md ) {
+						margin-bottom: 1.6rem;
+					}
+					@include media-breakpoint( lg ) {
+						margin-bottom: 1.9rem;
+					}
 				}
 
 				div.menu-footer-main-container {
@@ -47,7 +56,7 @@ footer#colophon {
 			@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
 
 			@include media-breakpoint( md ) {
-				@include font-size( 1.3 );
+			@include font-size( 1.3 );
 			}
 		}
 

@@ -39,8 +39,12 @@ $footer_section = get_section_mods( 'footer' );
 				<div class="col col-12 col-lg-4 col-sm-6 order-lg-3 order-2">
 					<div class="row social-components-wrap">
 						<div class="col-12 col-lg">
-							<h4 class="footer-title text-center"><?php echo $footer_section->footer_mods->footer_social_title; ?></h4>
+							<div class="footer-insta footer-title">
+								<?php echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_username_link ) . '">' . esc_html( $footer_section->footer_mods->footer_insta_username ) . '</a>'; ?>
+								<?php echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_hashtag_link ) . '">' . esc_html( $footer_section->footer_mods->footer_insta_hashtag ) . '</a>'; ?>
+							</div> <!-- .col -->
 							<div class="social-icons-btns text-center">
+
 								<?php
 								if ( ! empty( $footer_section->footer_mods->footer_social_instagram ) ) {
 									echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_instagram ) . '" target="_blank"><i class="fa fa-instagram"></i></a>';
@@ -61,10 +65,7 @@ $footer_section = get_section_mods( 'footer' );
 								?>
 							</div><!-- .social-icons-btns -->
 							<?php if ( ! empty( $footer_section->footer_mods->footer_insta_username ) ) : ?>
-								<div class="footer-contact-message">
-								<?php echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_username_link ) . '">' . esc_html( $footer_section->footer_mods->footer_insta_username ) . '</a>'; ?>
-								<?php echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_hashtag_link ) . '">' . esc_html( $footer_section->footer_mods->footer_insta_hashtag ) . '</a>'; ?>
-								</div> <!-- .col -->
+
 							<?php endif; ?>
 						</div>
 					</div><!-- .social-components-wrap -->
