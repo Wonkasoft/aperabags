@@ -1581,15 +1581,9 @@ function apera_bags_customize_register( $wp_customize ) {
 			array(
 				'label'       => __( 'Instagram Username', 'apera-bags' ),
 				'section'     => 'footer_section',
-<<<<<<< HEAD
-				'settings'    => 'footer_contact_message',
-				'type'        => 'text',
-				'description' => 'Example: Contact Customer Service',
-=======
 				'settings'    => 'footer_insta_username',
 				'type'      => 'text',
 				'description' => 'Example: @MYUSERNAME',
->>>>>>> jcar2013
 			)
 		)
 	);
@@ -1611,15 +1605,9 @@ function apera_bags_customize_register( $wp_customize ) {
 			array(
 				'label'       => __( 'Instagram link', 'apera-bags' ),
 				'section'     => 'footer_section',
-<<<<<<< HEAD
-				'settings'    => 'footer_contact_support_email',
-				'type'        => 'text',
-				'description' => 'Example: support@domain.com',
-=======
 				'settings'    => 'footer_insta_username_link',
 				'type'      => 'text',
 				'description' => 'Example: https://www.instagram.com/myusername/',
->>>>>>> jcar2013
 			)
 		)
 	);
