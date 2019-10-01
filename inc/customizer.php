@@ -1566,7 +1566,7 @@ function apera_bags_customize_register( $wp_customize ) {
 
 	// Footer contact message Setting.
 	$wp_customize->add_setting(
-		'footer_contact_message',
+		'footer_insta_username',
 		array(
 			'default'   => '',
 			'transport' => 'refresh',
@@ -1577,20 +1577,26 @@ function apera_bags_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
-			'footer_contact_message_control',
+			'footer_insta_username_control',
 			array(
-				'label'       => __( 'Contact message', 'apera-bags' ),
+				'label'       => __( 'Instagram Username', 'apera-bags' ),
 				'section'     => 'footer_section',
+<<<<<<< HEAD
 				'settings'    => 'footer_contact_message',
 				'type'        => 'text',
 				'description' => 'Example: Contact Customer Service',
+=======
+				'settings'    => 'footer_insta_username',
+				'type'      => 'text',
+				'description' => 'Example: @MYUSERNAME',
+>>>>>>> jcar2013
 			)
 		)
 	);
 
 	// Footer support email Setting.
 	$wp_customize->add_setting(
-		'footer_contact_support_email',
+		'footer_insta_username_link',
 		array(
 			'default'   => '',
 			'transport' => 'refresh',
@@ -1601,61 +1607,67 @@ function apera_bags_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
-			'footer_contact_support_email_control',
+			'footer_insta_username_link_control',
 			array(
-				'label'       => __( 'Contact support email', 'apera-bags' ),
+				'label'       => __( 'Instagram link', 'apera-bags' ),
 				'section'     => 'footer_section',
+<<<<<<< HEAD
 				'settings'    => 'footer_contact_support_email',
 				'type'        => 'text',
 				'description' => 'Example: support@domain.com',
+=======
+				'settings'    => 'footer_insta_username_link',
+				'type'      => 'text',
+				'description' => 'Example: https://www.instagram.com/myusername/',
+>>>>>>> jcar2013
 			)
 		)
 	);
 
 		// Footer contact message Setting.
 		$wp_customize->add_setting(
-			'footer_insta_tags',
+			'footer_insta_hashtags',
 			array(
 				'default'           => '',
 				'transport'         => 'refresh',
 			)
 		);
-	
+
 		// Footer contact message Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
-				'footer_insta_tags_control',
+				'footer_insta_hashtags_control',
 				array(
-					'label'       => __( 'Contact message', 'apera-bags' ),
+					'label'       => __( 'Instgram Hashtag Page', 'apera-bags' ),
 					'section'     => 'footer_section',
-					'settings'    => 'footer_insta_tags',
+					'settings'    => 'footer_insta_hashtags',
 					'type'      => 'text',
-					'description' => 'Example: Contact Customer Service',
+					'description' => 'Example: #MYHASHTAG',
 				)
 			)
 		);
-	
+
 		// Footer support email Setting.
 		$wp_customize->add_setting(
-			'footer_insta_tags_link',
+			'footer_insta_hashtags_link',
 			array(
 				'default'           => '',
 				'transport'         => 'refresh',
 			)
 		);
-	
+
 		// Footer support email Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
-				'footer_insta_tags_link_control',
+				'footer_insta_hashtags_link_control',
 				array(
-					'label'       => __( 'Contact support email', 'apera-bags' ),
+					'label'       => __( 'Instagram Hashtag link', 'apera-bags' ),
 					'section'     => 'footer_section',
-					'settings'    => 'footer_insta_tags_link',
+					'settings'    => 'footer_insta_hashtags_link',
 					'type'      => 'text',
-					'description' => 'Example: support@domain.com',
+					'description' => 'Example: https://www.instagram.com/explore/tags/hashtaghere/',
 				)
 			)
 		);
