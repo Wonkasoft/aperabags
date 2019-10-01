@@ -335,12 +335,14 @@ function wonka_customized_shop_loop() {
 	endif;
 
 	/*=====  End of For setting up the image flipper  ======*/
+	$post_id           = get_the_ID();
+	$post_thumbnail_id = get_post_thumbnail_id( $post_id );
 
 	$output  = '';
 	$output .= '<div class="wonka-shop-img-wrap">';
-	$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ) . '" class="img-fluid wonka-img-fluid" />';
+	$output .= '<img src="' . esc_url( get_the_post_thumbnail_url( $post_id, 'custom_products_size' ) ) . '" class="img-fluid wonka-img-fluid" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'custom_products_size' ) ) . '" />';
 	if ( $attachment_ids ) :
-		$output .= '<img src="' . esc_url( wp_get_attachment_url( $secondary_image_id ) ) . '" title="' . $secondary_image_title . '" alt="' . $secondary_image_alt . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" />';
+		$output .= '<img src="' . esc_url( wp_get_attachment_image_src( $secondary_image_id, 'custom_products_size' )[0] ) . '" title="' . $secondary_image_title . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" srcset="' . esc_attr( wp_get_attachment_image_srcset( $secondary_image_id, 'custom_products_size' ) ) . '" />';
 	endif;
 	$output .= '</div><!-- .wonka-shop-img-wrap -->';
 
@@ -351,10 +353,11 @@ function wonka_customized_shop_loop() {
 				'class' => array(),
 			),
 			'img' => array(
-				'class' => array(),
-				'src'   => array(),
-				'title' => array(),
-				'alt'   => array(),
+				'class'  => array(),
+				'src'    => array(),
+				'title'  => array(),
+				'alt'    => array(),
+				'srcset' => array(),
 			),
 		)
 	);
@@ -1361,17 +1364,25 @@ function wonka_single_product_image_thumbnail_html_custom( $data, $attachment_id
 	ob_start();
 	if ( $post_thumbnail_id === $product->get_image_id() ) :
 		$output .= '<a href="#scroll_image_' . esc_attr( $post_thumbnail_id ) . '_2" class="nav-link active woocommerce-product-gallery__image">';
-		$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'medium' ) . '" class="wp-post-image" alt="' . esc_attr( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', true ) ) . '" />';
+		$output .= '<img src="' . esc_url( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" class="wp-post-image" alt="' . esc_attr( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . esc_attr( get_the_title( $post_thumbnail_id ) ) . '" data-caption="' . esc_attr( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', true ) ) . '" />';
 		$output .= '</a>';
 	else :
 		$output .= '<a href="#scroll_image_' . esc_attr( $post_thumbnail_id ) . '" class="nav-link woocommerce-product-gallery__image">';
-		$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'medium' ) . '" class="wp-post-image" alt="' . esc_attr( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', true ) ) . '" />';
+		$output .= '<img src="' . esc_url( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" class="wp-post-image" alt="' . esc_attr( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . esc_attr( get_the_title( $post_thumbnail_id ) ) . '" data-caption="' . esc_attr( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', true ) ) . '" />';
 		$output .= '</a>';
 	endif;
 	$output .= ob_get_clean();
 	return $output;
 }
+add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_image_thumbnail_html_custom', 10, 2 );
 
+/**
+ * This is the single product image parse.
+ *
+ * @param  html   $data          current html passed in.
+ * @param  number $attachment_id the attachment ID
+ * @return html                [description]
+ */
 function wonka_single_product_image_scroll_html_custom( $data, $attachment_id ) {
 	global $product, $post;
 	$post_thumbnail_id = $attachment_id;
@@ -1379,17 +1390,14 @@ function wonka_single_product_image_scroll_html_custom( $data, $attachment_id ) 
 
 	$output = '';
 	ob_start();
-	$output .= '<div id="scroll_image_' . esc_attr__( $post_thumbnail_id ) . '" class="woocommerce-product-gallery__image" data-variant-check="true" data-variant-color="' . esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '">';
-	$output .= '<a href="#scroll_image_' . esc_attr__( $post_thumbnail_id ) . '">';
-	$output .= '<img src="' . wp_get_attachment_url( $post_thumbnail_id, 'custom_products_size' ) . '" class="wp-post-image" alt="' . esc_attr__( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . get_the_title( $post_thumbnail_id ) . '" data-caption="' . esc_attr__( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr__( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . wp_get_attachment_image_src( $post_thumbnail_id, 'custom_products_size' ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr__( wp_get_attachment_image_srcset( $post_thumbnail_id, 'custom_products_size', true ) ) . '" />';
+	$output .= '<div id="scroll_image_' . esc_attr( $post_thumbnail_id ) . '" class="woocommerce-product-gallery__image" data-variant-check="true" data-variant-color="' . esc_attr( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '">';
+	$output .= '<a href="#scroll_image_' . esc_attr( $post_thumbnail_id ) . '">';
+	$output .= '<img src="' . esc_url( wp_get_attachment_image_src( $post_thumbnail_id, 'custom_products_size' )[0] ) . '" class="wp-post-image" alt="' . esc_attr( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . esc_attr( get_the_title( $post_thumbnail_id ) ) . '" data-caption="' . esc_attr( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'custom_products_size' ) ) . '" data-large_image="' . esc_attr( wp_get_attachment_url( $post_thumbnail_id ) ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'custom_products_size', true ) ) . '" />';
 	$output .= '</a></div>';
 	$output .= ob_get_clean();
 
 	return $output;
 }
-
-
-add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_image_thumbnail_html_custom', 10, 2 );
 add_filter( 'wonka_single_product_scroll_image_html', 'wonka_single_product_image_scroll_html_custom', 10, 2 );
 /*=====  End of This is filtering the first thumbnail on single product page  ======*/
 
