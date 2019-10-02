@@ -329,6 +329,20 @@ get_header();
 						<?php endif; ?>
 
 						<?php
+						do_action( 'get_mods_before_section', 'perks' );
+						$apera_perks = get_section_mods( 'perks' );
+
+						if ( ! empty( $apera_perks->apera_perks->perks_checkbox ) ) :
+							?>
+							<section class="container-fluid perks-section text-center">
+								<h3 class="section-title perks-title">Apera Perks</h3>
+								<p class="social-message">Earn $10 AperaCash when you sign up for the Apera Perks Program!</p>
+								<a class="wonka-btn" href="https://aperabags.com/my-account/">Join Now</a>
+							</section>
+
+						<?php endif; ?>
+
+						<?php
 						do_action( 'get_mods_before_section', 'social' );
 						$social_section = get_section_mods( 'social' );
 

@@ -171,6 +171,19 @@ function the_mods_for_section( $section ) {
 		return $mods_class;
 	endif;
 
+	if ( 'perks' === $section ) :
+		if ( ! empty( get_theme_mod( 'perks_checkbox' ) ) ) :
+			$count++;
+			$perks                              = new stdClass();
+			$perks->perks_checkbox              = get_theme_mod( 'perks_checkbox' );
+
+			$mods_class->{'apera_perks'}        = $perks;
+			$mods_class->{'apera_perks'}->count = $count;
+		endif;
+
+		return $mods_class;
+	endif;
+
 	if ( 'social' === $section ) :
 		if ( ! empty( get_theme_mod( 'social_section_title' ) ) ) :
 			$count++;
