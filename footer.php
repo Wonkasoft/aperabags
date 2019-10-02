@@ -25,8 +25,8 @@ $footer_section = get_section_mods( 'footer' );
 								<?php
 									wp_nav_menu(
 										array(
-											'theme_location'   => 'menu-footer',
-											'menu_class'        => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_1 ),
+											'theme_location' => 'menu-footer',
+											'menu_class' => 'wonka-footer-menu wonka-footer-menu-' . strtolower( $footer_section->footer_titles->footer_title_1 ),
 										)
 									);
 								?>
@@ -39,8 +39,12 @@ $footer_section = get_section_mods( 'footer' );
 				<div class="col col-12 col-lg-4 col-sm-6 order-lg-3 order-2">
 					<div class="row social-components-wrap">
 						<div class="col-12 col-lg">
-							<h4 class="footer-title text-center"><?php echo $footer_section->footer_mods->footer_social_title; ?></h4>
+							<div class="footer-insta footer-title">
+								<?php echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_username_link ) . '" target="_blank">' . esc_html( $footer_section->footer_mods->footer_insta_username ) . '</a>'; ?>
+								<?php echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_hashtag_link ) . '" target="_blank">' . esc_html( $footer_section->footer_mods->footer_insta_hashtag ) . '</a>'; ?>
+							</div> <!-- .col -->
 							<div class="social-icons-btns text-center">
+
 								<?php
 								if ( ! empty( $footer_section->footer_mods->footer_social_instagram ) ) {
 									echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_instagram ) . '" target="_blank"><i class="fa fa-instagram"></i></a>';
@@ -61,10 +65,7 @@ $footer_section = get_section_mods( 'footer' );
 								?>
 							</div><!-- .social-icons-btns -->
 							<?php if ( ! empty( $footer_section->footer_mods->footer_insta_username ) ) : ?>
-								<div class="footer-contact-message">
-								<?php echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_username_link ) . '">' . esc_html( $footer_section->footer_mods->footer_insta_username ) . '</a>'; ?>
-								<?php echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_hashtag_link ) . '">' . esc_html( $footer_section->footer_mods->footer_insta_hashtag ) . '</a>'; ?>
-								</div> <!-- .col -->
+
 							<?php endif; ?>
 						</div>
 					</div><!-- .social-components-wrap -->
@@ -73,7 +74,16 @@ $footer_section = get_section_mods( 'footer' );
 					<div class="row align-items-end text-center justify-content-center wonka-email-form">
 						<?php if ( ! empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
 							<div class="col col-10 col-lg-12">
-								<?php _e('<h4 class="footer-title menu-title-shop pb-2">KEEP IN TOUCH!</h4>') ?>
+								<?php
+									echo wp_kses(
+										'<h4 class="footer-title menu-title-shop pb-2">KEEP IN TOUCH!</h4>',
+										array(
+											'h4' => array(
+												'class' => array(),
+											),
+										)
+									);
+								?>
 
 								<?php
 									_e( do_shortcode( $footer_section->footer_mods->footer_form_shortcode ) );
@@ -108,18 +118,18 @@ $footer_section = get_section_mods( 'footer' );
 	</footer><!-- #colophon -->
 <?php
 $newsletter_section = get_section_mods( 'newsletter' );
-$user_id = get_current_user_id();
+$user_id            = get_current_user_id();
 
 if ( isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
 	$user_cookie = $_COOKIE['wonkasoft_newsletter_popup'];
 	$user_cookie = str_replace( '\\', '', $user_cookie );
 	$user_cookie = json_decode( $user_cookie );
 else :
-	$user_cookie = new stdclass();
+	$user_cookie       = new stdclass();
 	$user_cookie->show = true;
 endif;
 if ( ! empty( $newsletter_section ) && $newsletter_section->newsletter_mods->enable_popup && $user_cookie->show ) :
-	$bg_img = ( ! empty( $newsletter_section->newsletter_mods->background_image ) ) ? $newsletter_section->newsletter_mods->background_image : '';
+	$bg_img   = ( ! empty( $newsletter_section->newsletter_mods->background_image ) ) ? $newsletter_section->newsletter_mods->background_image : '';
 	$bg_color = ( ! empty( $newsletter_section->newsletter_mods->background_color ) ) ? $newsletter_section->newsletter_mods->background_color : '';
 	if ( ! empty( $newsletter_section->newsletter_mods->background_color ) ) :
 		$wrap_styles = ' style="background: ' . $newsletter_section->newsletter_mods->background_color . ';"';
