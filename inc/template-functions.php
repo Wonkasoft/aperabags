@@ -176,6 +176,8 @@ function the_mods_for_section( $section ) {
 			$count++;
 			$perks                              = new stdClass();
 			$perks->perks_checkbox              = get_theme_mod( 'perks_checkbox' );
+			$perks->perks_message               = get_theme_mod( 'perks_section_message' );
+			$perks->perks_image                 =	wp_get_attachment_image_srcset( get_theme_mod( 'perks_section_image' ), 'custom_products_size', true );
 
 			$mods_class->{'apera_perks'}        = $perks;
 			$mods_class->{'apera_perks'}->count = $count;

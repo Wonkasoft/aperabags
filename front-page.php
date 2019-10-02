@@ -336,8 +336,16 @@ get_header();
 							?>
 							<section class="container-fluid perks-section text-center">
 								<h3 class="section-title perks-title">Apera Perks</h3>
-								<p class="social-message">Earn $10 AperaCash when you sign up for the Apera Perks Program!</p>
-								<a class="wonka-btn" href="https://aperabags.com/my-account/">Join Now</a>
+								<div class="row row-perks">
+									<div class="col-6 col-perks-content">
+										<p class="social-message">Earn $10 AperaCash when you sign up for the Apera Perks Program!</p>
+										<a class="wonka-btn" href="https://aperabags.com/my-account/">Join Now</a>
+									</div>
+									<div class="col-6 col-perks-image">
+									<img class="cause-img img-fluid" srcset="<?php echo esc_attr( $apera_perks->apera_perks->perks_image ); ?>" />
+
+									</div>
+								</div>
 							</section>
 
 						<?php endif; ?>

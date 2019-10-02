@@ -488,11 +488,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	 /**
-	  * Shop options for number of products settings Section
-	  *
-	  * @since  1.0.0
-	  */
+	/**
+	* Shop options for number of products settings Section
+	*
+	* @since  1.0.0
+	*/
 	$wp_customize->add_setting(
 		'shop_num_of_products',
 		array(
@@ -1305,7 +1305,57 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
+	/**
+	 * About the brand message settings Section
+	 *
+	 * @since  1.0.0
+	 */
+	$wp_customize->add_setting(
+		'perks_section_message',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
 
+	// About the brand message Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+			'perks_section_message_control',
+			array(
+				'label'       => __( 'Perks Program message', 'apera-bags' ),
+				'section'     => 'apera_perks_section',
+				'settings'    => 'perks_section_message',
+				'type'        => 'textarea',
+				'description' => 'Add Perks section message',
+			)
+		)
+	);
+
+	// Perks image Setting.
+	$wp_customize->add_setting(
+		'perks_section_image',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Perks image Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Media_Control(
+			$wp_customize,
+			'perks_section_image_control',
+			array(
+				'label'       => __( 'Perks image', 'apera-bags' ),
+				'section'     => 'apera_perks_section',
+				'settings'    => 'perks_section_image',
+				'type'        => 'media',
+				'description' => 'Add image for Perks sections ',
+			)
+		)
+	);
 
 	/**
 	 * Social settings Section
