@@ -700,6 +700,26 @@ section.about-brand-section {
 /*=====  End of About the Brand section  ======*/
 
 /*======================================
+=            Apera Perks section            =
+======================================*/
+section.perks-section {
+
+	.row-perks {
+
+		.col-perks-content {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-flow: column;
+		}
+		.col-perks-image {
+
+		}
+	}
+}
+/*=====  End of Apera Perks section  ======*/
+
+/*======================================
 =            Social section            =
 ======================================*/
 section.social-section {

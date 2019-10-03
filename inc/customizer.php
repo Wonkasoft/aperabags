@@ -48,11 +48,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	 /**
-	  * Top bar message settings Section
-	  *
-	  * @since  1.0.0
-	  */
+	/**
+	* Top bar message settings Section
+	*
+	* @since  1.0.0
+	*/
 	$wp_customize->add_section(
 		'topbar_message_section',
 		array(
@@ -65,11 +65,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	 /**
-	  * Enable topbar message settings Section
-	  *
-	  * @since  1.0.0
-	  */
+	/**
+	* Enable topbar message settings Section
+	*
+	* @since  1.0.0
+	*/
 	$wp_customize->add_setting(
 		'enable_topbar',
 		array(
@@ -488,11 +488,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	 /**
-	  * Shop options for number of products settings Section
-	  *
-	  * @since  1.0.0
-	  */
+	/**
+	* Shop options for number of products settings Section
+	*
+	* @since  1.0.0
+	*/
 	$wp_customize->add_setting(
 		'shop_num_of_products',
 		array(
@@ -714,11 +714,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		);
 	endfor;
 
-	 /**
-	  * Our Cause / About Us settings Section
-	  *
-	  * @since  1.0.0
-	  */
+	/**
+	* Our Cause / About Us settings Section
+	*
+	* @since  1.0.0
+	*/
 	$wp_customize->add_section(
 		'cause_section',
 		array(
@@ -855,7 +855,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		// About the brand button Link Setting Control.
+		// Cause image Link Setting Control.
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
@@ -1256,6 +1256,103 @@ function apera_bags_customize_register( $wp_customize ) {
 				'type'        => 'select',
 				'description' => 'About the brand button link',
 				'choices'     => $products,
+			)
+		)
+	);
+
+	/**
+	* Perks settings Section
+	*
+	* @since  1.0.0
+	*/
+	$wp_customize->add_section(
+		'apera_perks_section',
+		array(
+			'capability'     => 'edit_theme_options',
+			'theme_supports' => '',
+			'priority'       => 10,
+			'title'          => __( 'Apera Perks Section', 'apera-bags' ),
+			'description'    => __( 'Apera Perks version 1.0.0', 'apera-bags' ),
+			'panel'          => 'wonkasoft_theme_options',
+		)
+	);
+
+	/**
+	* Enables Perks settings Section
+	*
+	* @since  1.0.0
+	*/
+	$wp_customize->add_setting(
+		'perks_checkbox',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Enable perks section Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+			'perks_checkbox_control',
+			array(
+				'label'       => __( 'Apera Perks Display CTA Option', 'apera-bags' ),
+				'section'     => 'apera_perks_section',
+				'settings'    => 'perks_checkbox',
+				'type'        => 'checkbox',
+				'description' => 'Enable Perks CTA',
+			)
+		)
+	);
+
+	/**
+	 * About the brand message settings Section
+	 *
+	 * @since  1.0.0
+	 */
+	$wp_customize->add_setting(
+		'perks_section_message',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// About the brand message Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+			'perks_section_message_control',
+			array(
+				'label'       => __( 'Perks Program message', 'apera-bags' ),
+				'section'     => 'apera_perks_section',
+				'settings'    => 'perks_section_message',
+				'type'        => 'textarea',
+				'description' => 'Add Perks section message',
+			)
+		)
+	);
+
+	// Perks image Setting.
+	$wp_customize->add_setting(
+		'perks_section_image',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Perks image Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Media_Control(
+			$wp_customize,
+			'perks_section_image_control',
+			array(
+				'label'       => __( 'Perks image', 'apera-bags' ),
+				'section'     => 'apera_perks_section',
+				'settings'    => 'perks_section_image',
+				'type'        => 'media',
+				'description' => 'Add image for Perks sections ',
 			)
 		)
 	);
