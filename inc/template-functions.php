@@ -201,13 +201,13 @@ function the_mods_for_section( $section ) {
 			$footer->footer_contact_message       = get_theme_mod( 'footer_contact_message' );
 			$footer->footer_contact_support_email = get_theme_mod( 'footer_contact_support_email' );
 
-			$footer->footer_insta_username       	= get_theme_mod( 'footer_insta_username' );
-			$footer->footer_insta_username_link 	= get_theme_mod( 'footer_insta_username_link' );
-			$footer->footer_insta_hashtag       	= get_theme_mod( 'footer_insta_hashtags' );
-			$footer->footer_insta_hashtag_link 		= get_theme_mod( 'footer_insta_hashtags_link' );
+			$footer->footer_insta_username      = get_theme_mod( 'footer_insta_username' );
+			$footer->footer_insta_username_link = get_theme_mod( 'footer_insta_username_link' );
+			$footer->footer_insta_hashtag       = get_theme_mod( 'footer_insta_hashtags' );
+			$footer->footer_insta_hashtag_link  = get_theme_mod( 'footer_insta_hashtags_link' );
 
-			$footer->footer_logo                  = get_theme_mod( 'footer_logo' );
-			$footer->footer_form_shortcode        = get_theme_mod( 'footer_form_shortcode' );
+			$footer->footer_logo           = get_theme_mod( 'footer_logo' );
+			$footer->footer_form_shortcode = get_theme_mod( 'footer_form_shortcode' );
 
 			$mods_class->{'footer_mods'}        = $footer;
 			$mods_class->{'footer_mods'}->count = $count;
@@ -281,6 +281,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	endif;
 
 	if ( in_array( $form['title'], array( 'Ambassador Program' ) ) ) :
+		$form['cssClass'] .= ' inline-form wonka-ambassador-form';
+	endif;
+
+	if ( in_array( $form['title'], array( 'Apera Perks Registration' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-ambassador-form';
 	endif;
 
