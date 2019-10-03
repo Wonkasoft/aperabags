@@ -9,7 +9,7 @@
 	}
 }
 
-form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
+form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form, form.wonka-gform.wonka-perks-form {
 	font-family: $font__main;
 
 	ul.gform_fields {
@@ -29,7 +29,7 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form {
 			font-family: $font__main;
 		}
 
-		li.zip-name, li.ambassador-name {
+		li.zip-name, li.ambassador-name, li.perks-name {
 			grid-area: 1 / 1 / 2 / 3;
 
 			> div {
