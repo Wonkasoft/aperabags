@@ -24,6 +24,16 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form, form.wo
 			padding: 8px;
 		}
 
+		ul.gfield_checkbox {
+
+			li {
+				display: grid;
+			    align-items: center;
+			    grid-auto-flow: column;
+			    grid-gap: 8px;
+			}
+		}
+
 		input:not([type=radio]), textarea {
 			@include prefix(box-shadow, 0 1px 4px 0 rgba(0,0,0,.2), o moz webkit );
 			font-family: $font__main;
