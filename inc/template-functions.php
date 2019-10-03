@@ -174,10 +174,10 @@ function the_mods_for_section( $section ) {
 	if ( 'perks' === $section ) :
 		if ( ! empty( get_theme_mod( 'perks_checkbox' ) ) ) :
 			$count++;
-			$perks                              = new stdClass();
-			$perks->perks_checkbox              = get_theme_mod( 'perks_checkbox' );
-			$perks->perks_message               = get_theme_mod( 'perks_section_message' );
-			$perks->perks_image                 =	wp_get_attachment_image_srcset( get_theme_mod( 'perks_section_image' ), 'custom_products_size', true );
+			$perks                 = new stdClass();
+			$perks->perks_checkbox = get_theme_mod( 'perks_checkbox' );
+			$perks->perks_message  = get_theme_mod( 'perks_section_message' );
+			$perks->perks_image    = wp_get_attachment_image_srcset( get_theme_mod( 'perks_section_image' ), 'custom_products_size', true );
 
 			$mods_class->{'apera_perks'}        = $perks;
 			$mods_class->{'apera_perks'}->count = $count;
@@ -296,10 +296,6 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	endif;
 
 	if ( in_array( $form['title'], array( 'Ambassador Program' ) ) ) :
-		$form['cssClass'] .= ' inline-form wonka-ambassador-form';
-	endif;
-
-	if ( in_array( $form['title'], array( 'Apera Perks Registration' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-ambassador-form';
 	endif;
 
