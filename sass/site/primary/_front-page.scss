@@ -12,6 +12,7 @@
 	}
 	
 	section {
+		padding: 70px 0;
 
 		p.price,
 		span.price {
@@ -266,7 +267,6 @@ section.shop-section {
 	-webkit-background-size: cover;
 	background-size: cover;
 	background-position: center;
-	padding: 15px 0;
 
 	.wonka-row {
 		margin: 15px auto;
@@ -483,7 +483,6 @@ section.desirable-slider-section {
 /*----------  Our Cause Section  ----------*/
 section.our-cause-section {
 	margin: 0;
-	padding: 15px 0;
 
 	.wonka-row {
 		margin: 15px auto;
@@ -553,7 +552,6 @@ div.modal-backdrop {
 
 section.about-brand-section {
 	margin: 0;
-	padding: 15px 0;
 	background: #f0f0f0;
 	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
@@ -724,7 +722,6 @@ section.perks-section {
 ======================================*/
 section.social-section {
 	margin: 0;
-	padding: 15px 0;
 
 	.wonka-row {
 		margin: 15px auto;
