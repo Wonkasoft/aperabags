@@ -99,11 +99,7 @@ $footer_section = get_section_mods( 'footer' );
 			<!-- This column is still parsed in order to hold spacing for formating -->
 			<div class="col col-12 col-md-2 offset-md-1 footer-logo">
 				<?php if ( ! empty( $footer_section->footer_mods->footer_logo ) ) : ?>
-					<?php
-					echo wp_kses(
-						sprintf( __( '<img src="%1$s" alt="Apera logo" />', 'apera-bags' ), $footer_section->footer_mods->footer_logo ),
-					);
-					?>
+					<?php echo sprintf( __( '<img src="%1$s" alt="Apera logo" />', 'apera-bags' ), $footer_section->footer_mods->footer_logo ); ?>
 				<?php endif; ?>
 			</div> <!-- .col -->
 			<!-- End logo spacing column -->
