@@ -299,6 +299,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] .= ' inline-form wonka-ambassador-form';
 	endif;
 
+	if ( in_array( $form['title'], array( 'Apera Perks Registration' ) ) ) :
+		$form['cssClass'] .= ' inline-form wonka-perks-form';
+	endif;
+
 	foreach ( $form['fields'] as &$field ) :
 
 		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
