@@ -29,6 +29,7 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form, form.wo
 			li {
 				display: grid;
 			    align-items: center;
+			    grid-template-columns: 15px auto;
 			    grid-auto-flow: column;
 			    grid-gap: 8px;
 			}
