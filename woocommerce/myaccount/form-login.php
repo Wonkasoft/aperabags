@@ -20,14 +20,17 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 <?php if ( 'yes' === get_option( 'woocommerce_enable_myaccount_registration' ) ) : ?>
+<div class="row row-account-wrapper justify-content-center">
+	<div class="col-8">
 
-<div class="row" id="customer_login">
 
-	<div class="col-12 col-md-6">
+<div class="row justify-content-center" id="customer_login">
+
+	<div class="col-12 col-lg-6 login">
 
 <?php endif; ?>
 
-		<h2><?php esc_html_e( 'Login', 'woocommerce' ); ?></h2>
+		<h2><?php esc_html_e( 'Welcome Back', 'woocommerce' ); ?></h2>
 
 		<form class="login" method="post">
 
@@ -70,11 +73,15 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 	</div>
 
-	<div class="col-12 col-md-6">
+	<div class="col-12 col-lg-6 register text-center">
 
-		<h2><?php esc_html_e( 'Register', 'woocommerce' ); ?></h2>
+		<h2><?php esc_html_e( 'I\'m New Here...', 'woocommerce' ); ?></h2>
 
-		<form method="post" class="woocommerce-form woocommerce-form-register register" <?php do_action( 'woocommerce_register_form_tag' ); ?> >
+		<!-- <p class="create-account-wrapper form-row"> -->
+				<button type="button" class="create-account-full button wonka-btn" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>"><?php esc_html_e( 'Create Account', 'woocommerce' ); ?></button>
+		<!-- </p> -->
+
+		<form method="post" class="woocommerce-form woocommerce-form-register" <?php do_action( 'woocommerce_register_form_tag' ); ?> >
 
 			<?php do_action( 'woocommerce_register_form_start' ); ?>
 
@@ -115,15 +122,22 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 			<p class="woocommerce-FormRow form-row">
 				<?php wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ); ?>
-				<button type="submit" class="woocommerce-Button button wonka-btn" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>"><?php esc_html_e( 'Register', 'woocommerce' ); ?></button>
+				<button type="submit" class="woocommerce-Button button wonka-btn" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>"><?php esc_html_e( 'Create My Account', 'woocommerce' ); ?></button>
 			</p>
 
 			<?php do_action( 'woocommerce_register_form_end' ); ?>
 
 		</form>
+			<div class="loggin-toggle-wrapper">
+				<p><?php esc_html_e( 'Already have an account?', 'woocommerce' ); ?></p>
+				<button type="submit" class="login-slide-btn button wonka-btn" name="register" ><?php esc_html_e( 'Login', 'woocommerce' ); ?></button>
+			</div>
 
 	</div>
 
+</div>
+
+</div>
 </div>
 <?php endif; ?>
 

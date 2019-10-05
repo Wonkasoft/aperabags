@@ -2,6 +2,54 @@ main.main-my-account {
 
   div#customer_login {
 
+    
+    overflow-x: hidden;
+
+    .login,
+    .register {
+      transition: all .35s ease-in-out;
+    
+      .create-account-full {
+        opacity: 1;
+        transition: all .35s ease-in-out;
+      }
+
+      .btn-create-toggle {
+        opacity: 0;
+      }
+
+      .woocommerce-form-register {
+        padding: 0 15px;
+        height: 0;
+        overflow: hidden;
+        transition: all .35s ease-in-out;
+      }
+
+      .form-register-toggle {
+        height: 290px;
+        // display: block;
+      }
+
+      &.collapse-col-login {
+        display: block;
+        margin-left: -50%;
+      }
+
+      .loggin-toggle-wrapper {
+        opacity: 0;
+      }
+
+      .loggin-toggle-wrapper-visable {
+        opacity: 1;
+      }
+    }
+
+
+    
+    // .register-toggle {
+    //   display: block;
+    // }
+
     div.input-group {
 
       input.input-text.is-invalid {

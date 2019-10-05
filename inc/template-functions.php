@@ -160,9 +160,9 @@ function the_mods_for_section( $section ) {
 			$about->about_message                = get_theme_mod( 'about_the_brand_message' );
 			$about->about_the_brand_btn_text     = get_theme_mod( 'about_the_brand_btn_text' );
 			$about->about_the_brand_button_link  = get_permalink( get_theme_mod( 'about_the_brand_button_link' ) );
-			$about->about_the_brand_second_image = get_theme_mod( 'about_the_brand_second_image' );
+			$about->about_the_brand_second_image = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_second_image' ), 'custom_products_size', true );
 			$about->about_the_brand_image_link   = get_permalink( get_theme_mod( 'about_the_brand_second_image_link', '#' ) );
-			$about->about_videoplaceholder       = get_theme_mod( 'about_the_brand_video_placeholder' );
+			$about->about_videoplaceholder       = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_video_placeholder' ), 'custom_products_size', true );
 
 			$mods_class->{'about_the_brand'}        = $about;
 			$mods_class->{'about_the_brand'}->count = $count;

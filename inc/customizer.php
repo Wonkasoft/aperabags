@@ -1105,14 +1105,14 @@ function apera_bags_customize_register( $wp_customize ) {
 
 	// About the brand embeded video placeholder Setting Control.
 	$wp_customize->add_control(
-		new WP_Customize_Image_Control(
+		new WP_Customize_Media_Control(
 			$wp_customize,
 			'about_the_brand_video_placeholder_contol',
 			array(
 				'label'       => __( 'About the brand video placeholder', 'apera-bags' ),
 				'section'     => 'about_section',
 				'settings'    => 'about_the_brand_video_placeholder',
-				'type'        => 'image',
+				'type'        => 'media',
 				'description' => 'Add placeholder image for video',
 			)
 		)
@@ -1217,14 +1217,14 @@ function apera_bags_customize_register( $wp_customize ) {
 
 	// About the brand second image Setting Control.
 	$wp_customize->add_control(
-		new WP_Customize_Image_Control(
+		new WP_Customize_Media_Control(
 			$wp_customize,
 			'about_the_brand_second_image_control',
 			array(
 				'label'       => __( 'About the brand second image', 'apera-bags' ),
 				'section'     => 'about_section',
 				'settings'    => 'about_the_brand_second_image',
-				'type'        => 'image',
+				'type'        => 'media',
 				'description' => 'About the brand second image',
 			)
 		)
