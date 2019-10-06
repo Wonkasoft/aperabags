@@ -42,7 +42,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 					<input type="text" class="form-control input-text" name="username" id="username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" placeholder="<?php esc_html_e( 'Username or email address *', 'woocommerce' ); ?>" /><?php // @codingStandardsIgnoreLine ?>
 					<div class="invalid-feedback username"></div>
 				</div>
-				
+		
 			</div>
 
 			<div class="form-group">
@@ -52,8 +52,6 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 					<div class="invalid-feedback password"></div>
 				</div>
 			</div>
-			<?php do_action( 'woocommerce_login_form' ); ?>
-
 			<p class="form-row">
 				<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
 				<button type="submit" class="woocommerce-Button button wonka-btn" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Log in', 'woocommerce' ); ?></button>
@@ -61,9 +59,12 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 					<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span><?php esc_html_e( 'Remember me', 'woocommerce' ); ?></span>
 				</label>
 			</p>
+
 			<p class="woocommerce-LostPassword lost_password">
 				<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Lost your password?', 'woocommerce' ); ?></a>
 			</p>
+			
+			<?php do_action( 'woocommerce_login_form' ); ?>
 
 			<?php do_action( 'woocommerce_login_form_end' ); ?>
 
@@ -118,12 +119,12 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 			<?php endif; ?>
 
-			<?php do_action( 'woocommerce_register_form' ); ?>
-
 			<p class="woocommerce-FormRow form-row">
 				<?php wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ); ?>
 				<button type="submit" class="woocommerce-Button button wonka-btn" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>"><?php esc_html_e( 'Create My Account', 'woocommerce' ); ?></button>
 			</p>
+
+			<?php do_action( 'woocommerce_register_form' ); ?>
 
 			<?php do_action( 'woocommerce_register_form_end' ); ?>
 

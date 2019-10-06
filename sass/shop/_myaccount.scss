@@ -1,8 +1,6 @@
 main.main-my-account {
 
   div#customer_login {
-
-    
     overflow-x: hidden;
 
     .login,
@@ -19,20 +17,23 @@ main.main-my-account {
       }
 
       .woocommerce-form-register {
-        padding: 0 15px;
+        padding: 0 30px;
         height: 0;
         overflow: hidden;
         transition: all .35s ease-in-out;
       }
 
       .form-register-toggle {
-        height: 290px;
-        // display: block;
+        height: 285px;
       }
 
       &.collapse-col-login {
         display: block;
-        margin-left: -50%;
+        margin: -100% 0 0 0;
+
+        @include media-breakpoint( md ) {
+          margin: 0 0 0 -50%
+        }
       }
 
       .loggin-toggle-wrapper {
@@ -42,13 +43,17 @@ main.main-my-account {
       .loggin-toggle-wrapper-visable {
         opacity: 1;
       }
+
+      ul.the_champ_login_ul {
+        display: flex;
+        justify-content: flex-start;
+      }
     }
 
-
-    
-    // .register-toggle {
-    //   display: block;
-    // }
+    .register ul.the_champ_login_ul {
+      display: flex;
+      justify-content: center;
+    }
 
     div.input-group {
 
