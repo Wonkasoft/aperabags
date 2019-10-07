@@ -396,3 +396,15 @@ function admin_styles() {
 	wp_enqueue_style( 'apera-bags-admin-styles', get_stylesheet_directory_uri() . '/assets/css/admin-styles.css', array(), '1.0.0', 'all' );
 }
 add_action( 'admin_enqueue_scripts', 'admin_styles', 15 );
+
+if ( function_exists( 'wordfence_ls_require_captcha' ) ) {
+
+	function wonkasoft_wordfence_ls_require_captcha( $data ) {
+		echo "<pre>\n";
+		print_r( $data );
+		echo "</pre>\n";
+
+		return false;
+	}
+	add_filter( 'wordfence_ls_require_captcha', 'wonkasoft_wordfence_ls_require_captcha' );
+}
