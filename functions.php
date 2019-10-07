@@ -397,10 +397,13 @@ function admin_styles() {
 }
 add_action( 'admin_enqueue_scripts', 'admin_styles', 15 );
 
-if ( function_exists( 'wordfence_ls_require_captcha' ) ) {
-
-	function wonkasoft_wordfence_ls_require_captcha( $requireCAPTCHA ) {
-		return false;
-	}
-	add_filter( 'wordfence_ls_require_captcha', 'wonkasoft_wordfence_ls_require_captcha' );
+/**
+ * This is preventing reCAPTCHA from sending verification link.
+ *
+ * @param  boolean $requireCAPTCHA
+ * @return boolean                 returns false to prevent.
+ */
+function wonkasoft_wordfence_ls_require_captcha( $requireCAPTCHA ) {
+	return false;
 }
+add_filter( 'wordfence_ls_require_captcha', 'wonkasoft_wordfence_ls_require_captcha' );
