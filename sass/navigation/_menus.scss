@@ -154,7 +154,6 @@
 				color: #ffffff;
 				font-family: $font__main_jose;
 				font-weight: 600;
-				padding: 4px 0;
 				white-space: nowrap;
 				height: 35px;
 				@include font-size( 1 );
@@ -243,7 +242,7 @@
 				justify-content: flex-end;
 				background: transparent;
 				overflow: visible;
-				top: 10px;
+				top: 5px;
 				height: 57.5px;
 				opacity: 1;
 				@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0), webkit moz o );
