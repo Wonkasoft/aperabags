@@ -103,9 +103,10 @@
 
 				a {
 					width: 100%;
-					display: flex;
+					display: grid;
 					align-items: center;
-					line-height: 1;
+					justify-content: start;
+					grid-auto-flow: column;
 				}
 
 				ul {
@@ -200,8 +201,9 @@
 					font-family: "FontAwesome";
 					color: #ffffff;
 					@include font-size( 1.2 );
-					line-height: 0.5;
-					padding: 0 8px 4px;
+					line-height: 1;
+					top: -4px;
+					padding: 0 8px;
 					right: 0;
 					@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
 					@include prefix( transition, $trans_25, webkit moz o);
