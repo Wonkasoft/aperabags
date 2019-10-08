@@ -86,7 +86,7 @@
 		}
 		li i.fa-search,
 		li i.fa-shopping-cart {
-			font-size: 20px;
+			@include font-size( 1 );
 		}
 	}
 
