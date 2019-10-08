@@ -400,8 +400,8 @@ add_action( 'admin_enqueue_scripts', 'admin_styles', 15 );
 /**
  * This is preventing reCAPTCHA from sending verification link.
  *
- * @param  boolean $requireCAPTCHA
- * @return boolean                 returns false to prevent.
+ * @param  boolean $requireCAPTCHA contains boolean.
+ * @return boolean                 returns false to prevent verification links.
  */
 function wonkasoft_wordfence_ls_require_captcha( $requireCAPTCHA ) {
 	return false;

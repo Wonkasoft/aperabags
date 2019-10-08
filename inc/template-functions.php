@@ -1626,6 +1626,7 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 	endforeach;
 
 	if ( 'Refersion Registration Zip' === $form_title && ! $foundzip ) :
+
 		/**
 		 * Create a coupon programatically
 		 */
@@ -1634,6 +1635,7 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 	endif;
 
 	if ( 'Refersion Registration Ambassador' === $form_title && ! $foundambassador ) :
+
 		/**
 		 * Create a coupon programatically
 		 */

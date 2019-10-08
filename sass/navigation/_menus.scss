@@ -241,7 +241,8 @@
 				justify-content: flex-end;
 				background: transparent;
 				overflow: visible;
-				top: 0;
+				top: 10px;
+				height: 57.5px;
 				opacity: 1;
 				@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0), webkit moz o );
 
@@ -251,6 +252,7 @@
 
 				li {
 					position: relative;
+					padding: 0 8px;
 
 					> ul {
 						position: absolute;
