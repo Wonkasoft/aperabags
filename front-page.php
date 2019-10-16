@@ -217,7 +217,13 @@ get_header();
 																<img class="cause-img img-fluid" srcset="<?php echo esc_attr( $cause->img_srcset ); ?>" />
 															</a>
 														</div>
-														<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>
+														<?php if ( ! empty( $cause->header_link ) ) :?>
+															<a href="<?php echo esc_url( $cause->header_link ); ?>" >
+																<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>
+															</a>
+														<?php else: ?>
+															<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>										
+														<?php endif; ?>
 														<p class="cause-message text-<?php echo esc_attr( $cause->position ); ?>">
 															<?php
 																echo wp_kses(

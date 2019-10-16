@@ -12,7 +12,6 @@
 	}
 	
 	section {
-		padding: 0 0 70px;
 
 		p.price,
 		span.price {
@@ -22,6 +21,10 @@
 		a.button.product_type_variable {
 			display: none;
 		}
+	}
+
+	section:not(:first-of-type):not(:nth-of-type(3)) {
+		padding: 70px 0;
 	}
 }
 /*----------  Header Slider  ----------*/
@@ -513,6 +516,7 @@ section.our-cause-section {
 
 			.cause-title {
 				padding: 0 15px;
+				color: #000;
 			}
 
 			.cause-message {

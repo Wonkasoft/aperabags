@@ -861,7 +861,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				$wp_customize,
 				'cause_image_link_' . $i . '_control',
 				array(
-					'label'       => 'Cause image link' . $i,
+					'label'       => 'Cause image link ' . $i,
 					'section'     => 'cause_section',
 					'settings'    => 'cause_image_link_' . $i,
 					'type'        => 'select',
@@ -928,6 +928,34 @@ function apera_bags_customize_register( $wp_customize ) {
 					'settings'    => 'cause_header_' . $i,
 					'type'        => 'text',
 					'description' => 'Add header for cause ' . $i,
+				)
+			)
+		);
+
+		/**
+		 * Our Cause header Link settings Section
+		 *
+		 * @since  1.0.0
+		 */
+		$wp_customize->add_setting(
+			'cause' . $i . '_header_link',
+			array(
+				'default'   => '',
+				'transport' => 'refresh',
+			)
+		);
+
+		// Our Cause header Link Setting Control.
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'cause' . $i . '_header_link_control',
+				array(
+					'label'       => __( 'Cause ' . $i . ' Title Link', 'apera-bags' ),
+					'section'     => 'cause_section',
+					'settings'    => 'cause' . $i . '_header_link',
+					'type'        => 'dropdown-pages',
+					'description' => 'Set Cause ' . $i . ' link',
 				)
 			)
 		);

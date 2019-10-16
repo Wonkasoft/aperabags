@@ -134,13 +134,14 @@ function the_mods_for_section( $section ) {
 		for ( $i = 1; $i <= 3; $i++ ) {
 			if ( ! empty( get_theme_mod( 'cause_image_' . $i ) ) ) :
 				$count++;
-				${"cause_$i"}             = new stdClass();
-				${"cause_$i"}->img        = get_theme_mod( 'cause_image_' . $i );
-				${"cause_$i"}->img_link   = get_permalink( get_theme_mod( 'cause_image_link_' . $i ) );
-				${"cause_$i"}->img_srcset = wp_get_attachment_image_srcset( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', true );
-				${"cause_$i"}->position   = get_theme_mod( 'cause_message_position_' . $i );
-				${"cause_$i"}->header     = get_theme_mod( 'cause_header_' . $i );
-				${"cause_$i"}->message    = get_theme_mod( 'cause_message_' . $i );
+				${"cause_$i"}             		= new stdClass();
+				${"cause_$i"}->img        		= get_theme_mod( 'cause_image_' . $i );
+				${"cause_$i"}->img_link   		= get_permalink( get_theme_mod( 'cause_image_link_' . $i ) );
+				${"cause_$i"}->img_srcset 		= wp_get_attachment_image_srcset( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', true );
+				${"cause_$i"}->position   		= get_theme_mod( 'cause_message_position_' . $i );
+				${"cause_$i"}->header     		= get_theme_mod( 'cause_header_' . $i );
+				${"cause_$i"}->header_link   	= get_permalink( get_theme_mod( 'cause' . $i . '_header_link' ) );
+				${"cause_$i"}->message    		= get_theme_mod( 'cause_message_' . $i );
 
 				$mods_class->causes->{"cause_$i"} = ${"cause_$i"};
 			endif;
@@ -1626,6 +1627,7 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 	endforeach;
 
 	if ( 'Refersion Registration Zip' === $form_title && ! $foundzip ) :
+
 		/**
 		 * Create a coupon programatically
 		 */
@@ -1634,6 +1636,7 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 	endif;
 
 	if ( 'Refersion Registration Ambassador' === $form_title && ! $foundambassador ) :
+
 		/**
 		 * Create a coupon programatically
 		 */
