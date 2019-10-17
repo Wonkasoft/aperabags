@@ -266,7 +266,7 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 				$shipping_eta = 'next business day (weekends excluded)';
 			endif;
 
-			if ( 'USPS Priority Mail: FREE' === $rate->label ) :
+			if ( 'USPS Priority Mail' === $rate->label ) :
 				$shipping_eta = '1-3 business days (weekends excluded)';
 			endif;
 
@@ -897,7 +897,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 									$shipping_eta = 'next business day (weekends excluded)';
 								endif;
 
-								if ( $rate->label === 'USPS Priority Mail: FREE' ) :
+								if ( $rate->label === 'USPS Priority Mail' ) :
 									$shipping_eta = '1-3 business days (weekends excluded)';
 								endif;
 

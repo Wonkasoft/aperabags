@@ -43,7 +43,7 @@ $available_methods = WC()->session->get( 'shipping_for_package_0' )['rates'];
 						$shipping_eta = 'next business day (weekends excluded)';
 					endif;
 
-					if ( $method->label === 'USPS Priority Mail: FREE' ) :
+					if ( $method->label === 'USPS Priority Mail' ) :
 						$shipping_eta = '1-3 business days (weekends excluded)';
 					endif;
 
