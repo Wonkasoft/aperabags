@@ -303,6 +303,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] .= ' inline-form wonka-perks-form';
 	endif;
 
+	if ( in_array( $form['title'], array( 'Add Discount Code' ) ) ) :
+		$form['cssClass'] .= ' inline-form wonka-discount-form';
+	endif;
+
 	foreach ( $form['fields'] as &$field ) :
 
 		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
