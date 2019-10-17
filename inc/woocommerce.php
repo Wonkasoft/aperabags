@@ -2115,7 +2115,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	function add_ws_shipping_methods( $methods ) {
 		$methods['FedEx_2_Day']                = 'WC_2_Day_Shipping_Method';
 		$methods['FedEx_Standard_Overnight']   = 'WC_Overnight_Shipping_Method';
-		$methods['USPS_Priority_Mail']         = 'WC_Priority_Mail_Shipping_Method';
+		$methods['USPS_Priority_Mail: FREE']   = 'WC_Priority_Mail_Shipping_Method';
 		$methods['USPS_Priority_Mail_Express'] = 'WC_Priority_Mail_Express_Shipping_Method';
 		return $methods;
 	}
