@@ -897,11 +897,11 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 									$shipping_eta = 'next business day (weekends excluded)';
 								endif;
 
-								if ( 'USPS Priority Mail: FREE' === $rate->label ) :
+								if ( $rate->label === 'USPS Priority Mail: FREE' ) :
 									$shipping_eta = '1-3 business days (weekends excluded)';
 								endif;
 
-								if ( 'USPS Priority Mail Express' === $rate->label ) :
+								if ( $rate->label === 'USPS Priority Mail Express' ) :
 									$shipping_eta = '1 business day (weekends excluded)';
 								endif;
 								?>
