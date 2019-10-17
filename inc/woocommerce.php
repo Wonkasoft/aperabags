@@ -266,7 +266,7 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 				$shipping_eta = 'next business day (weekends excluded)';
 			endif;
 
-			if ( 'USPS Priority Mail' === $rate->label ) :
+			if ( 'USPS Priority Mail: FREE' === $rate->label ) :
 				$shipping_eta = '1-3 business days (weekends excluded)';
 			endif;
 
@@ -897,7 +897,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 									$shipping_eta = 'next business day (weekends excluded)';
 								endif;
 
-								if ( 'USPS Priority Mail' === $rate->label ) :
+								if ( 'USPS Priority Mail: FREE' === $rate->label ) :
 									$shipping_eta = '1-3 business days (weekends excluded)';
 								endif;
 
@@ -2020,7 +2020,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				 */
 				public function __construct() {
 					$this->id                 = 'USPS_Priority_Mail'; // Id for your shipping method. Should be uunique.
-					$this->method_title       = __( 'USPS Priority Mail' );  // Title shown in admin
+					$this->method_title       = __( 'USPS Priority Mail: FREE' );  // Title shown in admin
 					$this->method_description = __( 'USPS Priority Mail FREE' ); // Description shown in admin
 					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
 					$this->title              = 'USPS Priority Mail'; // This can be added as an setting but for this example its forced.
