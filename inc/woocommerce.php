@@ -2023,7 +2023,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					$this->method_title       = __( 'USPS Priority Mail: FREE' );  // Title shown in admin
 					$this->method_description = __( 'USPS Priority Mail FREE' ); // Description shown in admin
 					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
-					$this->title              = 'USPS Priority Mail'; // This can be added as an setting but for this example its forced.
+					$this->title              = 'USPS Priority Mail: FREE'; // This can be added as an setting but for this example its forced.
 					$this->init();
 				}
 				/**
