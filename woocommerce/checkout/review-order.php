@@ -31,20 +31,8 @@ $available_methods = WC()->session->get( 'shipping_for_package_0' )['rates'];
 			<?php foreach ( $available_methods as $index => $method ) : ?>
 				<li class="list-group-item">
 					<?php
-					if ( $method->label === 'FedEx SmartPost Ground: FREE' ) :
-						$shipping_eta = '2-7 business days';
-					endif;
-
-					if ( $method->label === 'FedEx 2 Day' ) :
-						$shipping_eta = '2 business days (weekends excluded)';
-					endif;
-
-					if ( $method->label === 'FedEx Standard Overnight' ) :
-						$shipping_eta = 'next business day (weekends excluded)';
-					endif;
-
-					if ( $method->label === 'USPS Priority Mail' ) :
-						$shipping_eta = '1-3 business days (weekends excluded)';
+					if ( $method->label === 'USPS Priority Mail: FREE' ) :
+						$shipping_eta = '1-3 business days';
 					endif;
 
 					if ( $method->label === 'USPS Priority Mail Express' ) :

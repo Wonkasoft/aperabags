@@ -254,24 +254,12 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 		if ( $current_method === $method_id ) :
 			$rate_label = $rate->label;
 			$rate_cost  = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
-			if ( 'FedEx SmartPost Ground: FREE' === $rate->label ) :
-				$shipping_eta = '2-7 business days';
-			endif;
-
-			if ( 'FedEx 2 Day' === $rate->label ) :
-				$shipping_eta = '2 business days (weekends excluded)';
-			endif;
-
-			if ( 'FedEx Standard Overnight' === $rate->label ) :
-				$shipping_eta = 'next business day (weekends excluded)';
-			endif;
-
-			if ( 'USPS Priority Mail' === $rate->label ) :
-				$shipping_eta = '1-3 business days (weekends excluded)';
+			if ( 'USPS Priority Mail: FREE' === $rate->label ) :
+				$shipping_eta = '1-3 business days';
 			endif;
 
 			if ( 'USPS Priority Mail Express' === $rate->label ) :
-				$shipping_eta = '1 business day (weekends excluded)';
+				$shipping_eta = '1 business day';
 			endif;
 		endif;
 	endforeach;
@@ -885,20 +873,8 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 							if ( WC()->session->get( 'chosen_shipping_methods' )[0] === $method_id ) :
 								$rate_label = $rate->label;
 								$rate_cost  = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
-								if ( $rate->label === 'FedEx SmartPost Ground: FREE' ) :
-									$shipping_eta = '2-7 business days';
-								endif;
-
-								if ( $rate->label === 'FedEx 2 Day' ) :
-									$shipping_eta = '2 business days (weekends excluded)';
-								endif;
-
-								if ( $rate->label === 'FedEx Standard Overnight' ) :
-									$shipping_eta = 'next business day (weekends excluded)';
-								endif;
-
-								if ( $rate->label === 'USPS Priority Mail' ) :
-									$shipping_eta = '1-3 business days (weekends excluded)';
+								if ( $rate->label === 'USPS Priority Mail: FREE' ) :
+									$shipping_eta = '1-3 business days';
 								endif;
 
 								if ( $rate->label === 'USPS Priority Mail Express' ) :
@@ -1909,155 +1885,6 @@ add_filter( 'woocommerce_order_item_name', 'ws_edit_order_item_name' );
  */
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 	function ws_shipping_method_init() {
-		if ( ! class_exists( 'WC_2_Day_Shipping_Method' ) ) {
-			class WC_2_Day_Shipping_Method extends WC_Shipping_Method {
-
-				/**
-				 * Constructor for your shipping class
-				 *
-				 * @access public
-				 * @return void
-				 */
-				public function __construct() {
-					$this->id                 = 'FedEx_2_Day'; // Id for your shipping method. Should be uunique.
-					$this->method_title       = __( 'FedEx 2 Day' );  // Title shown in admin
-					$this->method_description = __( 'FedEx 2 Day Flat Rate' ); // Description shown in admin
-					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
-					$this->title              = 'FedEx 2 Day'; // This can be added as an setting but for this example its forced.
-					$this->init();
-				}
-				/**
-				 * Init your settings
-				 *
-				 * @access public
-				 * @return void
-				 */
-				function init() {
-					// Load the settings API
-					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
-					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
-					// Save settings in admin if you have any defined
-					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-				}
-				/**
-				 * calculate_shipping function.
-				 *
-				 * @access public
-				 * @param mixed $package
-				 * @return void
-				 */
-				public function calculate_shipping( $package ) {
-					$rate = array(
-						'id'       => $this->id,
-						'label'    => $this->title,
-						'cost'     => '20.00',
-						'calc_tax' => 'per_item',
-					);
-					// Register the rate
-					$this->add_rate( $rate );
-				}
-			}
-		}
-
-		if ( ! class_exists( 'WC_Overnight_Shipping_Method' ) ) {
-			class WC_Overnight_Shipping_Method extends WC_Shipping_Method {
-
-				/**
-				 * Constructor for your shipping class
-				 *
-				 * @access public
-				 * @return void
-				 */
-				public function __construct() {
-					$this->id                 = 'FedEx_Standard_Overnight'; // Id for your shipping method. Should be uunique.
-					$this->method_title       = __( 'FedEx Standard Overnight' );  // Title shown in admin
-					$this->method_description = __( 'FedEx Standard Overnight Flat Rate' ); // Description shown in admin
-					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
-					$this->title              = 'FedEx Standard Overnight'; // This can be added as an setting but for this example its forced.
-					$this->init();
-				}
-				/**
-				 * Init your settings
-				 *
-				 * @access public
-				 * @return void
-				 */
-				function init() {
-					// Load the settings API
-					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
-					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
-					// Save settings in admin if you have any defined
-					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-				}
-				/**
-				 * calculate_shipping function.
-				 *
-				 * @access public
-				 * @param mixed $package
-				 * @return void
-				 */
-				public function calculate_shipping( $package ) {
-					$rate = array(
-						'id'       => $this->id,
-						'label'    => $this->title,
-						'cost'     => '50.00',
-						'calc_tax' => 'per_item',
-					);
-					// Register the rate
-					$this->add_rate( $rate );
-				}
-			}
-		}
-
-		if ( ! class_exists( 'WC_Priority_Mail_Shipping_Method' ) ) {
-			class WC_Priority_Mail_Shipping_Method extends WC_Shipping_Method {
-
-				/**
-				 * Constructor for your shipping class
-				 *
-				 * @access public
-				 * @return void
-				 */
-				public function __construct() {
-					$this->id                 = 'USPS_Priority_Mail'; // Id for your shipping method. Should be uunique.
-					$this->method_title       = __( 'USPS Priority Mail: FREE' );  // Title shown in admin
-					$this->method_description = __( 'USPS Priority Mail FREE' ); // Description shown in admin
-					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
-					$this->title              = 'USPS Priority Mail: FREE'; // This can be added as an setting but for this example its forced.
-					$this->init();
-				}
-				/**
-				 * Init your settings
-				 *
-				 * @access public
-				 * @return void
-				 */
-				function init() {
-					// Load the settings API
-					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
-					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
-					// Save settings in admin if you have any defined
-					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-				}
-				/**
-				 * calculate_shipping function.
-				 *
-				 * @access public
-				 * @param mixed $package
-				 * @return void
-				 */
-				public function calculate_shipping( $package ) {
-					$rate = array(
-						'id'       => $this->id,
-						'label'    => $this->title,
-						'cost'     => '0.00',
-						'calc_tax' => 'per_item',
-					);
-					// Register the rate
-					$this->add_rate( $rate );
-				}
-			}
-		}
 
 		if ( ! class_exists( 'WC_Priority_Mail_Express_Shipping_Method' ) ) {
 			class WC_Priority_Mail_Express_Shipping_Method extends WC_Shipping_Method {
@@ -2113,9 +1940,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
 
 	function add_ws_shipping_methods( $methods ) {
-		$methods['FedEx_2_Day']                = 'WC_2_Day_Shipping_Method';
-		$methods['FedEx_Standard_Overnight']   = 'WC_Overnight_Shipping_Method';
-		$methods['USPS_Priority_Mail: FREE']   = 'WC_Priority_Mail_Shipping_Method';
+
 		$methods['USPS_Priority_Mail_Express'] = 'WC_Priority_Mail_Express_Shipping_Method';
 		return $methods;
 	}
