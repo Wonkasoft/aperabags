@@ -265,6 +265,14 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 			if ( 'FedEx Standard Overnight' === $rate->label ) :
 				$shipping_eta = 'next business day (weekends excluded)';
 			endif;
+
+			if ( 'USPS Priority Mail: FREE' === $rate->label ) :
+				$shipping_eta = '1-3 business days (weekends excluded)';
+			endif;
+
+			if ( 'USPS Priority Mail Express' === $rate->label ) :
+				$shipping_eta = '1 business day (weekends excluded)';
+			endif;
 		endif;
 	endforeach;
 
@@ -887,6 +895,14 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 
 								if ( $rate->label === 'FedEx Standard Overnight' ) :
 									$shipping_eta = 'next business day (weekends excluded)';
+								endif;
+
+								if ( 'USPS Priority Mail: FREE' === $rate->label ) :
+									$shipping_eta = '1-3 business days (weekends excluded)';
+								endif;
+
+								if ( 'USPS Priority Mail Express' === $rate->label ) :
+									$shipping_eta = '1 business day (weekends excluded)';
 								endif;
 								?>
 						<td colspan="2" class="ship-method-cell">
@@ -1992,13 +2008,115 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				}
 			}
 		}
+
+		if ( ! class_exists( 'WC_Priority_Mail_Shipping_Method' ) ) {
+			class WC_Priority_Mail_Shipping_Method extends WC_Shipping_Method {
+
+				/**
+				 * Constructor for your shipping class
+				 *
+				 * @access public
+				 * @return void
+				 */
+				public function __construct() {
+					$this->id                 = 'USPS_Priority_Mail: FREE'; // Id for your shipping method. Should be uunique.
+					$this->method_title       = __( 'USPS Priority Mail: FREE' );  // Title shown in admin
+					$this->method_description = __( 'USPS Priority Mail FREE' ); // Description shown in admin
+					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
+					$this->title              = 'USPS Priority Mail'; // This can be added as an setting but for this example its forced.
+					$this->init();
+				}
+				/**
+				 * Init your settings
+				 *
+				 * @access public
+				 * @return void
+				 */
+				function init() {
+					// Load the settings API
+					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
+					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
+					// Save settings in admin if you have any defined
+					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+				}
+				/**
+				 * calculate_shipping function.
+				 *
+				 * @access public
+				 * @param mixed $package
+				 * @return void
+				 */
+				public function calculate_shipping( $package ) {
+					$rate = array(
+						'id'       => $this->id,
+						'label'    => $this->title,
+						'cost'     => '0.00',
+						'calc_tax' => 'per_item',
+					);
+					// Register the rate
+					$this->add_rate( $rate );
+				}
+			}
+		}
+
+		if ( ! class_exists( 'WC_Priority_Mail_Express_Shipping_Method' ) ) {
+			class WC_Priority_Mail_Express_Shipping_Method extends WC_Shipping_Method {
+
+				/**
+				 * Constructor for your shipping class
+				 *
+				 * @access public
+				 * @return void
+				 */
+				public function __construct() {
+					$this->id                 = 'USPS_Priority_Mail_Express'; // Id for your shipping method. Should be uunique.
+					$this->method_title       = __( 'USPS Priority Mail Express' );  // Title shown in admin
+					$this->method_description = __( 'USPS Priority Mail Express Flat Rate' ); // Description shown in admin
+					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
+					$this->title              = 'USPS Priority Mail Express'; // This can be added as an setting but for this example its forced.
+					$this->init();
+				}
+				/**
+				 * Init your settings
+				 *
+				 * @access public
+				 * @return void
+				 */
+				function init() {
+					// Load the settings API
+					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
+					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
+					// Save settings in admin if you have any defined
+					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+				}
+				/**
+				 * calculate_shipping function.
+				 *
+				 * @access public
+				 * @param mixed $package
+				 * @return void
+				 */
+				public function calculate_shipping( $package ) {
+					$rate = array(
+						'id'       => $this->id,
+						'label'    => $this->title,
+						'cost'     => '30.00',
+						'calc_tax' => 'per_item',
+					);
+					// Register the rate
+					$this->add_rate( $rate );
+				}
+			}
+		}
 	}
 
 	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
 
 	function add_ws_shipping_methods( $methods ) {
-		$methods['FedEx_2_Day']              = 'WC_2_Day_Shipping_Method';
-		$methods['FedEx_Standard_Overnight'] = 'WC_Overnight_Shipping_Method';
+		$methods['FedEx_2_Day']                = 'WC_2_Day_Shipping_Method';
+		$methods['FedEx_Standard_Overnight']   = 'WC_Overnight_Shipping_Method';
+		$methods['USPS_Priority_Mail: FREE']   = 'WC_Priority_Mail_Shipping_Method';
+		$methods['USPS_Priority_Mail_Express'] = 'WC_Priority_Mail_Express_Shipping_Method';
 		return $methods;
 	}
 	add_filter( 'woocommerce_shipping_methods', 'add_ws_shipping_methods' );

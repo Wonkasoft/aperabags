@@ -1,6 +1,59 @@
 main.main-my-account {
 
   div#customer_login {
+    overflow-x: hidden;
+
+    .login,
+    .register {
+      transition: all .35s ease-in-out;
+    
+      .create-account-full {
+        opacity: 1;
+        transition: all .35s ease-in-out;
+      }
+
+      .btn-create-toggle {
+        opacity: 0;
+      }
+
+      .woocommerce-form-register {
+        padding: 0 30px;
+        height: 0;
+        overflow: hidden;
+        transition: all .35s ease-in-out;
+      }
+
+      .form-register-toggle {
+        height: 285px;
+      }
+
+      &.collapse-col-login {
+        display: block;
+        margin: -100% 0 0 0;
+
+        @include media-breakpoint( md ) {
+          margin: 0 0 0 -50%
+        }
+      }
+
+      .loggin-toggle-wrapper {
+        opacity: 0;
+      }
+
+      .loggin-toggle-wrapper-visable {
+        opacity: 1;
+      }
+
+      ul.the_champ_login_ul {
+        display: flex;
+        justify-content: flex-start;
+      }
+    }
+
+    .register ul.the_champ_login_ul {
+      display: flex;
+      justify-content: center;
+    }
 
     div.input-group {
 

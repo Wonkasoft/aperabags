@@ -67,3 +67,10 @@ input.input-text.is-invalid {
 .gform_validation_container {
     display: none;
 }
+
+.woocommerce-page #main.main-my-account div.col-12 {
+	p,
+	label {
+		margin: 7px 0;
+	}
+}

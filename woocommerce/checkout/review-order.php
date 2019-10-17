@@ -43,6 +43,14 @@ $available_methods = WC()->session->get( 'shipping_for_package_0' )['rates'];
 						$shipping_eta = 'next business day (weekends excluded)';
 					endif;
 
+					if ( 'USPS Priority Mail: FREE' === $rate->label ) :
+						$shipping_eta = '1-3 business days (weekends excluded)';
+					endif;
+
+					if ( 'USPS Priority Mail Express' === $rate->label ) :
+						$shipping_eta = '1 business day (weekends excluded)';
+					endif;
+
 					if ( 1 < count( $available_methods ) ) {
 						printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
 					} else {

@@ -217,7 +217,13 @@ get_header();
 																<img class="cause-img img-fluid" srcset="<?php echo esc_attr( $cause->img_srcset ); ?>" />
 															</a>
 														</div>
-														<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>
+														<?php if ( ! empty( $cause->header_link ) ) :?>
+															<a href="<?php echo esc_url( $cause->header_link ); ?>" >
+																<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>
+															</a>
+														<?php else: ?>
+															<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>										
+														<?php endif; ?>
 														<p class="cause-message text-<?php echo esc_attr( $cause->position ); ?>">
 															<?php
 																echo wp_kses(
@@ -280,7 +286,7 @@ get_header();
 												if ( ! empty( $about_section->about_the_brand->about_videoplaceholder ) ) :
 													?>
 													<a id="about-modal-link" href="#" data-toggle="modal" data-target="#videoModal" class="video-img-link">
-														<img src="<?php echo esc_url( $about_section->about_the_brand->about_videoplaceholder ); ?>" />
+														<img srcset="<?php echo esc_attr( $about_section->about_the_brand->about_videoplaceholder ); ?>" />
 														<span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="fa fa-play-circle"></i></span>
 													</a>
 													<?php
@@ -319,7 +325,7 @@ get_header();
 										<div class="col-12 col-sm-6 text-center">
 											<div class="img-container">
 												<a href="<?php echo esc_url( $about_section->about_the_brand->about_the_brand_image_link ); ?>">
-													<img class="about-second-image" src="<?php echo esc_url( $about_section->about_the_brand->about_the_brand_second_image ); ?>" />
+													<img class="about-second-image" srcset="<?php echo esc_attr( $about_section->about_the_brand->about_the_brand_second_image ); ?>"/>
 												</a>
 											</div>
 										</div>
@@ -338,7 +344,7 @@ get_header();
 								<h3 class="section-title perks-title">Apera Perks</h3>
 								<div class="row row-perks">
 									<div class="col-6 col-perks-content">
-										<p class="social-message">Earn $10 AperaCash when you sign up for the Apera Perks Program!</p>
+										<?php echo '<p class="social-message">' . esc_html( $apera_perks->apera_perks->perks_message ) . '</p>'; ?>
 										<a class="wonka-btn" href="https://aperabags.com/my-account/">Join Now</a>
 									</div>
 									<div class="col-6 col-perks-image">

@@ -1559,6 +1559,42 @@ if ( wonkasoft_request.ga_id !== '' )
 	===================================================================*/
 	window.onload = function()
 	{
+		/**
+		 * Allows register side on my account page to slide out and in.
+		 *
+		 * @auther  Carlos
+		 */
+		if ( document.querySelector( '.create-account-full' ) )
+		{
+			create_toggle_btn = document.querySelector( '.create-account-full' );
+			login_toggle_btn = document.querySelector( '.login-slide-btn' );
+			login_col = document.querySelector( 'div.login' );
+			register_col = document.querySelector( 'div.register' );
+			register_form = document.querySelector( 'form.woocommerce-form-register' );
+			loggin_toggle_wrapper = document.querySelector( 'div.loggin-toggle-wrapper' );
+
+			create_toggle_btn.addEventListener( 'click', function( e )
+			{
+				create_toggle_btn.classList.toggle('btn-create-toggle');
+				create_toggle_btn.toggleAttribute('disabled');
+				login_col.classList.toggle( 'collapse-col-login' );
+				register_col.classList.toggle( 'col-lg-12' );
+				register_form.classList.toggle( 'form-register-toggle' );
+				loggin_toggle_wrapper.classList.toggle( 'loggin-toggle-wrapper-visable' );
+			});
+
+			login_toggle_btn.addEventListener( 'click', function( e )
+			{
+				create_toggle_btn.classList.toggle('btn-create-toggle');
+				create_toggle_btn.toggleAttribute('disabled');
+				login_col.classList.toggle( 'collapse-col-login' );
+				register_col.classList.toggle( 'col-lg-12' );
+				register_form.classList.toggle( 'form-register-toggle' );
+				loggin_toggle_wrapper.classList.toggle( 'loggin-toggle-wrapper-visable' );
+			});
+		}
+
+
 		// if ( document.querySelector( 'div.xoo-wsc-modal' ) ) 
 		// {
 		// 	var side_cart_btn = document.querySelector( '.wonka-cart-open' );
