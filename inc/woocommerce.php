@@ -259,7 +259,7 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 			endif;
 
 			if ( 'USPS Priority Mail Express' === $rate->label ) :
-				$shipping_eta = '1 business day';
+				$shipping_eta = '1 business day (weekends excluded)';
 			endif;
 		endif;
 	endforeach;
