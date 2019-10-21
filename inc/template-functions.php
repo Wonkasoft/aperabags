@@ -134,14 +134,14 @@ function the_mods_for_section( $section ) {
 		for ( $i = 1; $i <= 3; $i++ ) {
 			if ( ! empty( get_theme_mod( 'cause_image_' . $i ) ) ) :
 				$count++;
-				${"cause_$i"}             		= new stdClass();
-				${"cause_$i"}->img        		= get_theme_mod( 'cause_image_' . $i );
-				${"cause_$i"}->img_link   		= get_permalink( get_theme_mod( 'cause_image_link_' . $i ) );
-				${"cause_$i"}->img_srcset 		= wp_get_attachment_image_srcset( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', true );
-				${"cause_$i"}->position   		= get_theme_mod( 'cause_message_position_' . $i );
-				${"cause_$i"}->header     		= get_theme_mod( 'cause_header_' . $i );
-				${"cause_$i"}->header_link   	= get_permalink( get_theme_mod( 'cause' . $i . '_header_link' ) );
-				${"cause_$i"}->message    		= get_theme_mod( 'cause_message_' . $i );
+				${"cause_$i"}              = new stdClass();
+				${"cause_$i"}->img         = get_theme_mod( 'cause_image_' . $i );
+				${"cause_$i"}->img_link    = get_permalink( get_theme_mod( 'cause_image_link_' . $i ) );
+				${"cause_$i"}->img_srcset  = wp_get_attachment_image_srcset( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', true );
+				${"cause_$i"}->position    = get_theme_mod( 'cause_message_position_' . $i );
+				${"cause_$i"}->header      = get_theme_mod( 'cause_header_' . $i );
+				${"cause_$i"}->header_link = get_permalink( get_theme_mod( 'cause' . $i . '_header_link' ) );
+				${"cause_$i"}->message     = get_theme_mod( 'cause_message_' . $i );
 
 				$mods_class->causes->{"cause_$i"} = ${"cause_$i"};
 			endif;
@@ -1109,18 +1109,14 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 						$refersion_response = $new_affiliate_created->get_affiliate();
 
-						$coupon_code = wonkasoft_coupon_creation( $entry_fields, $form['title'] );
-
 						// Setting affiliate code and link to send to getResponse.
 						$api_args['custom_fields']        = array(
 							'affiliate_code',
 							'affiliate_link',
-							'discount_code',
 						);
 						$api_args['custom_fields_values'] = array(
 							'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
 							'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-							'discount_code'  => $coupon_code,
 						);
 
 						// Send to getResponse.
@@ -1130,7 +1126,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 						update_user_meta( $user_id, 'getResponse_data', $getresponse );
 						if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
+							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
 
 						endif;
 
@@ -1150,25 +1146,21 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 							if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
 
 							endif;
 
 					endif;
 						else :
 
-							$coupon_code = wonkasoft_coupon_creation( $entry_fields, $form['title'] );
-
 							// Setting affiliate code and link to send to getResponse.
 							$api_args['custom_fields']        = array(
 								'affiliate_code',
 								'affiliate_link',
-								'discount_code',
 							);
 							$api_args['custom_fields_values'] = array(
 								'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
 								'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-								'discount_code'  => $coupon_code,
 							);
 							// Send to getResponse.
 							$getresponse = get_response_api_call( $api_args );
@@ -1177,7 +1169,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 							if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
 
 							endif;
 				endif;
@@ -1229,18 +1221,14 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 						$refersion_response = $new_affiliate_created->get_affiliate();
 
-						$coupon_code = wonkasoft_coupon_creation( $entry_fields, $form['title'] );
-
 						// Setting affiliate code and link to send to getResponse.
 						$api_args['custom_fields']        = array(
 							'affiliate_code',
 							'affiliate_link',
-							'discount_code',
 						);
 						$api_args['custom_fields_values'] = array(
 							'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
 							'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-							'discount_code'  => $coupon_code,
 						);
 
 						// Send to getResponse.
@@ -1250,7 +1238,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 						update_user_meta( $user_id, 'getResponse_data', $getresponse );
 						if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
+							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
 
 						endif;
 
@@ -1270,25 +1258,21 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 							if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
 
 							endif;
 
 					endif;
 						else :
 
-							$coupon_code = wonkasoft_coupon_creation( $entry_fields, $form['title'] );
-
 							// Setting affiliate code and link to send to getResponse.
 							$api_args['custom_fields']        = array(
 								'affiliate_code',
 								'affiliate_link',
-								'discount_code',
 							);
 							$api_args['custom_fields_values'] = array(
 								'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
 								'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-								'discount_code'  => $coupon_code,
 							);
 
 							// Send to getResponse.
@@ -1298,7 +1282,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 							if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
 
 							endif;
 				endif;
@@ -1331,18 +1315,14 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 						$refersion_response = $new_affiliate_created->get_affiliate();
 
-						$coupon_code = wonkasoft_coupon_creation( $entry_fields, $form['title'] );
-
 						// Setting affiliate code and link to send to getResponse.
 						$api_args['custom_fields']        = array(
 							'affiliate_code',
 							'affiliate_link',
-							'discount_code',
 						);
 						$api_args['custom_fields_values'] = array(
 							'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
 							'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-							'discount_code'  => $coupon_code,
 						);
 
 						// Send to getResponse.
@@ -1352,7 +1332,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 						update_user_meta( $user_id, 'getResponse_data', $getresponse );
 						if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
+							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
 
 						endif;
 
@@ -1373,7 +1353,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 							if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
 
 							endif;
 
@@ -1381,18 +1361,14 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 						else :
 
-							$coupon_code = wonkasoft_coupon_creation( $entry_fields, $form['title'] );
-
 							// Setting affiliate code and link to send to getResponse.
 							$api_args['custom_fields']        = array(
 								'affiliate_code',
 								'affiliate_link',
-								'discount_code',
 							);
 							$api_args['custom_fields_values'] = array(
 								'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
 								'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-								'discount_code'  => $coupon_code,
 							);
 
 							// Send to getResponse.
@@ -1402,7 +1378,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							update_user_meta( $user_id, 'getResponse_data', $getresponse );
 							if ( ! empty( $entry_fields['logo_upload'] ) && ! empty( $entry_fields['company'] ) ) :
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'], $coupon_code );
+								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
 
 							endif;
 				endif;
@@ -1417,7 +1393,7 @@ add_action( 'gform_after_submission', 'wonkasoft_after_form_submission', 10, 2 )
 /**
  * This adds a company logo.
  */
-function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null, $coupon_code = null ) {
+function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null ) {
 
 	$current_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
 
@@ -1448,11 +1424,6 @@ function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null, $cou
 			$image['company_name'] = $company_name;
 		} elseif ( ! empty( $current_logo->company_name ) ) {
 			$image['company_name'] = $current_logo->company_name;
-		}
-		if ( ! empty( $coupon_code ) ) {
-			$image['coupon_code'] = $coupon_code;
-		} elseif ( ! empty( $current_logo->company_name ) ) {
-			$image['coupon_code'] = $current_logo->coupon_code;
 		}
 
 		$image = json_encode( $image );
@@ -1698,6 +1669,15 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 
 }
 
+function wonkasoft_after_code_entry( $entry, $form ) {
+
+	if ( 'Add Discount Code' !== $form['title'] ) {
+		return;
+	}
+
+}
+add_action( 'gform_after_submission', 'wonkasoft_after_code_entry', 10, 2 );
+
 /**
  * This function handles the api request to send data to getResponse.
  *
@@ -1715,6 +1695,7 @@ function get_response_api_call( $api_args ) {
 				$getresponse->campaign_id = $campaign->campaignId;
 			endif;
 		endforeach;
+
 	endif;
 
 	if ( empty( $getresponse->contact_id ) ) :

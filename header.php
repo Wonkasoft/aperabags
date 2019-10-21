@@ -15,6 +15,7 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="google-site-verification" content="eYMU9wHvI9cwK4rHA5VmPSE4SXRoAbXD6XCFlDQi4Vk" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
 	<?php wp_head(); ?>
@@ -60,10 +61,10 @@
 					$count = WC()->cart->cart_contents_count;
 					wp_nav_menu(
 						array(
-							'theme_location'    => 'menu-cart',
-							'menu_id'           => 'cart-menu-mobile',
-							'menu_class'        => 'wonka-cart-menu header-cart-menu',
-							'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s<li class="menu-item menu-item-type-post"><a href="#" class="wonka-cart-open"><span class="cart-contents-count wonka-cart-badge badge badge-light">' . esc_html( $count ) . '</span></a></li></ul>',
+							'theme_location' => 'menu-cart',
+							'menu_id'        => 'cart-menu-mobile',
+							'menu_class'     => 'wonka-cart-menu header-cart-menu',
+							'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s<li class="menu-item menu-item-type-post"><a href="#" class="wonka-cart-open"><span class="cart-contents-count wonka-cart-badge badge badge-light">' . esc_html( $count ) . '</span></a></li></ul>',
 						)
 					);
 					?>
@@ -79,17 +80,17 @@
 					<?php
 					wp_nav_menu(
 						array(
-							'theme_location'        => 'menu-primary',
-							'menu_id'               => 'primary-menu',
-							'menu_class'            => 'nav-menu header-menu',
+							'theme_location' => 'menu-primary',
+							'menu_id'        => 'primary-menu',
+							'menu_class'     => 'nav-menu header-menu',
 						)
 					);
 					wp_nav_menu(
 						array(
-							'theme_location'    => 'menu-cart',
-							'menu_id'           => 'cart-menu-desktop',
-							'menu_class'        => 'wonka-cart-menu header-cart-menu d-none d-md-flex',
-							'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s<li class="menu-item menu-item-type-post"><a href="#" class="wonka-cart-open"><span class="cart-contents-count wonka-cart-badge badge badge-light">' . esc_html( $count ) . '</span></a></li></ul>',
+							'theme_location' => 'menu-cart',
+							'menu_id'        => 'cart-menu-desktop',
+							'menu_class'     => 'wonka-cart-menu header-cart-menu d-none d-md-flex',
+							'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s<li class="menu-item menu-item-type-post"><a href="#" class="wonka-cart-open"><span class="cart-contents-count wonka-cart-badge badge badge-light">' . esc_html( $count ) . '</span></a></li></ul>',
 						)
 					);
 					?>
