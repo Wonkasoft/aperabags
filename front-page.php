@@ -72,6 +72,12 @@ get_header();
 														if ( ! empty( $slide->slide_subheader ) ) :
 															?>
 															<h4 class="img-subheader-text text-center"><?php echo wp_kses_data( $slide->slide_subheader ); ?></h4>
+															<?php 
+															if (! empty( $slide->slide_link_btn )):
+																?>
+																<a href="<?php echo esc_url( get_the_permalink( $slide->slide_link, false ) ); ?>" class="wonka-btn img-top-slide-link text-center"><?php echo wp_kses_data( $slide->slide_link_btn ); ?></a>
+															<?php endif; ?>
+
 														<?php endif; ?>
 													</div><!-- .text-box -->
 												</div><!-- .img-header-text-container -->
