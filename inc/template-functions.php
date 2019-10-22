@@ -1573,12 +1573,7 @@ add_action( 'wp_ajax_nopriv_wonkasoft_parse_account_logo', 'wonkasoft_parse_acco
  */
 function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 
-	$coupon_code   = null;
-	$current_logos = ( ! empty( get_option( 'logo_codes' ) ) ) ? get_option( 'logo_codes' ) : '';
-
-	if ( ! empty( $current_logos ) ) :
-		$current_logos = json_decode( $current_logos, true );
-	endif;
+	$coupon_code = null;
 
 	$args = array(
 		'post_type'      => 'shop_coupon',
@@ -1586,40 +1581,22 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 		'posts_per_page' => -1,
 	);
 
-	$coupons         = new WP_Query( $args );
-	$foundzip        = false;
-	$foundambassador = false;
-	$percentage      = '10';
+	$coupons    = new WP_Query( $args );
+	$found_code = false;
+	$percentage = $entry_fields['discount_code'];
 
 	foreach ( $coupons->posts as $coupon ) :
-		if ( $entry_fields['company'] === $coupon->post_name ) :
-			$foundzip = true;
-		endif;
-
-		if ( substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage === $coupon->post_name ) :
-			$foundambassador = true;
+		if ( $entry_fields['discount_code'] === $coupon->post_name ) :
+			$found_code = true;
 		endif;
 	endforeach;
 
-	if ( 'Refersion Registration Zip' === $form_title && ! $foundzip ) :
+	if ( 'Add Discount Code' === $form_title && ! $found_code ) :
 
 		/**
 		 * Create a coupon programatically
 		 */
-		$coupon_code = $entry_fields['company']; // Code.
-
-	endif;
-
-	if ( 'Refersion Registration Ambassador' === $form_title && ! $foundambassador ) :
-
-		/**
-		 * Create a coupon programatically
-		 */
-		$coupon_code = substr( $entry_fields['first'], 0, 1 ) . $entry_fields['last'] . $percentage; // Code.
-
-	endif;
-
-	if ( ( 'Refersion Registration Zip' === $form_title && ! $foundzip ) || ( 'Refersion Registration Ambassador' === $form_title && ! $foundambassador ) ) :
+		$coupon_code = $entry_fields['discount_code']; // Code.
 
 		$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
 
@@ -1644,35 +1621,84 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 		update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
 		update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
 
-		if ( empty( $current_logos ) && 'Refersion Registration Zip' === $form_title ) {
-			$current_logos = array(
-				$coupon_code,
-			);
-
-			$current_logos = json_encode( $current_logos );
-
-			update_option( 'logo_codes', $current_logos, null );
-
-		} elseif ( is_array( $current_logos ) && 'Refersion Registration Zip' === $form_title ) {
-
-			array_push( $current_logos, $coupon_code );
-
-			$current_logos = json_encode( $current_logos );
-
-			update_option( 'logo_codes', $current_logos, null );
-
-		}
+		return $coupon_code;
 
 	endif;
 
-	return $coupon_code;
+	return false;
 
 }
 
+/**
+ * Runs after discount code creation.
+ *
+ * @param  array $entry array of entry.
+ * @param  array $form  array of the form.
+ */
 function wonkasoft_after_code_entry( $entry, $form ) {
 
 	if ( 'Add Discount Code' !== $form['title'] ) {
 		return;
+	}
+
+	$entry_fields                  = array();
+	$entry_fields['custom_fields'] = array();
+	$set_labels                    = array(
+		'Discount Code',
+		'Percentage',
+		'Email',
+	);
+
+	$custom_fields = array();
+
+	$pattern = '/([ \/]{1,5})/';
+
+	foreach ( $form['fields'] as $field ) {
+		if ( 'honeypot' !== $field['type'] ) :
+			if ( in_array( $field['label'], $set_labels ) ) :
+				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
+			endif;
+
+			if ( in_array( $field['label'], $custom_fields ) ) :
+				$current_label = strtolower( preg_replace( $pattern, $field['label'] ) );
+					array_push(
+						$entry_fields['custom_fields'],
+						array(
+							'label' => $current_label,
+							'value' => $entry[ $field['id'] ],
+						)
+					);
+			endif;
+
+			if ( ! empty( $field->inputs ) ) :
+				foreach ( $field->inputs as $input ) {
+					if ( in_array( $input['label'], $set_labels ) ) :
+						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
+					endif;
+				}
+			endif;
+		endif;
+	}
+
+	$affiliate_apera_id = get_user_by( 'email', $entry_fields['email'] );
+
+	$refersion_data = wonkasoft_get_refersion_data( $affiliate_apera_id );
+
+	echo "<pre>\n";
+	print_r( $refersion_data );
+	echo "</pre>\n";
+
+	$coupon_code = wonkasoft_coupon_creation( $entry_fields, $form['title'] );
+
+	if ( false !== $coupon_code ) {
+
+		$entry_fields['affiliate_code'] = $refersion_data->id;
+		$entry_fields['type']           = 'COUPON';
+		$entry_fields['trigger']        = $entry_fields['discount_code'];
+
+		$refersion_init          = new Wonkasoft_Refersion_Api( $entry_fields );
+		$refersion_added_trigger = $refersion_init->create_conversion_trigger();
+
 	}
 
 }
@@ -1929,3 +1955,9 @@ function wonkasoft_api_responses_user_data( $user ) {
 }
 add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 1 );
 add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 1 );
+
+
+function wonkasoft_get_refersion_data( $user_id ) {
+	$refersion = ( ! empty( get_user_meta( $user_id, 'refersion_data', true ) ) ) ? get_user_meta( $user_id, 'refersion_data', true ) : '';
+	return $refersion;
+}
