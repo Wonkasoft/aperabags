@@ -1583,7 +1583,7 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 
 	$coupons    = new WP_Query( $args );
 	$found_code = false;
-	$percentage = $entry_fields['discount_code'];
+	$percentage = $entry_fields['percentage'];
 
 	foreach ( $coupons->posts as $coupon ) :
 		if ( $entry_fields['discount_code'] === $coupon->post_name ) :
@@ -1620,6 +1620,7 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 		update_post_meta( $new_coupon_id, 'expiry_date', '' );
 		update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
 		update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
+		update_post_meta( $new_coupon_id, 'excerpt', $percentage . '% off' );
 
 		return $coupon_code;
 
@@ -1680,7 +1681,15 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 		endif;
 	}
 
-	$affiliate_apera_id = get_user_by( 'email', $entry_fields['email'] );
+	echo "<pre>\n";
+	print_r( $entry_fields );
+	echo "</pre>\n";
+
+	$affiliate_apera_id = get_user_by( 'email', $entry_fields['email'] )->data->ID;
+
+	echo "<pre>\n";
+	print_r( $affiliate_apera_id );
+	echo "</pre>\n";
 
 	$refersion_data = wonkasoft_get_refersion_data( $affiliate_apera_id );
 
