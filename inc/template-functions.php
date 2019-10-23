@@ -1009,6 +1009,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 	// Get current user object.
 	$current_user = wp_get_current_user();
+
 	// Get current user ID.
 	$user_id = $current_user->ID;
 
@@ -1070,6 +1071,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 			return;
 
 		endif;
+
 	endif;
 
 	// Setting getResponse api args.
@@ -1089,90 +1091,51 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 			$user = get_user_by( 'email', $entry_fields['email'] );
 
 			if ( ! in_array( $role, $user->roles ) ) :
+				array_push( $user->roles, $role );
 				wp_update_user(
 					array(
 						'ID'   => $user->ID,
-						'role' => $role,
+						'role' => $user->roles,
 					)
 				);
 			endif;
 
-			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
+			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
 
-			$refersion_response = $new_affiliate_created->add_new_affiliate();
+			$refersion_response = $refersion_api_init->add_new_affiliate();
 
 			if ( 'failed' !== $refersion_response->status ) :
 
 				if ( ! empty( $refersion_response->errors ) ) :
 
-					if ( ! empty( $new_affiliate_created->affiliate_code ) ) :
+					if ( ! empty( $refersion_api_init->affiliate_code ) ) :
 
-						$refersion_response = $new_affiliate_created->get_affiliate();
+						wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
 
-						// Setting affiliate code and link to send to getResponse.
-						$api_args['custom_fields']        = array(
-							'affiliate_code',
-							'affiliate_link',
-						);
-						$api_args['custom_fields_values'] = array(
-							'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
-							'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-						);
+						return;
 
-						// Send to getResponse.
-						$getresponse = get_response_api_call( $api_args );
+					else :
 
-						update_user_meta( $user_id, 'refersion_data', $refersion_response );
-						update_user_meta( $user_id, 'getResponse_data', $getresponse );
-						if ( ! empty( $entry_fields['logo_upload'] ) ) :
+						wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
 
-							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
-
-						endif;
-
-						else :
-
-							// Setting affiliate code and link to send to getResponse.
-							$api_args['custom_fields']        = array(
-								'affiliate_error_code',
-							);
-							$api_args['custom_fields_values'] = array(
-								'affiliate_error_code' => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
-							);
-							// Send to getResponse.
-							$getresponse = get_response_api_call( $api_args );
-
-							update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
-							update_user_meta( $user_id, 'getResponse_data', $getresponse );
-							if ( ! empty( $entry_fields['logo_upload'] ) ) :
-
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
-
-							endif;
+						return;
 
 					endif;
-						else :
 
-							// Setting affiliate code and link to send to getResponse.
-							$api_args['custom_fields']        = array(
-								'affiliate_code',
-								'affiliate_link',
-							);
-							$api_args['custom_fields_values'] = array(
-								'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
-								'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-							);
-							// Send to getResponse.
-							$getresponse = get_response_api_call( $api_args );
+					else :
 
-							update_user_meta( $user_id, 'refersion_data', $refersion_response );
-							update_user_meta( $user_id, 'getResponse_data', $getresponse );
-							if ( ! empty( $entry_fields['logo_upload'] ) ) :
+						wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+						return;
 
-							endif;
 				endif;
+
+					else :
+
+						echo $refersion_response->status;
+
+						return;
+
 			endif;
 
 		} else {
@@ -1199,196 +1162,218 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 			// Inserting new user and getting user id.
 			$user_id = wp_insert_user( $userdata );
-			$user    = new WP_User( $user_id );
+
+			$user = new WP_User( $user_id );
+
 			if ( ! in_array( $role, $user->roles ) ) :
+				array_push( $user->roles, $role );
 				wp_update_user(
 					array(
 						'ID'   => $user_id,
-						'role' => $role,
+						'role' => $user->roles,
 					)
 				);
 			endif;
 
-			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
+			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
 
-			$refersion_response = $new_affiliate_created->add_new_affiliate();
+			$refersion_response = $refersion_api_init->add_new_affiliate();
 
 			if ( 'failed' !== $refersion_response->status ) :
 
 				if ( ! empty( $refersion_response->errors ) ) :
 
-					if ( ! empty( $new_affiliate_created->affiliate_code ) ) :
+					if ( ! empty( $refersion_api_init->affiliate_code ) ) :
 
-						$refersion_response = $new_affiliate_created->get_affiliate();
+						wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
 
-						// Setting affiliate code and link to send to getResponse.
-						$api_args['custom_fields']        = array(
-							'affiliate_code',
-							'affiliate_link',
-						);
-						$api_args['custom_fields_values'] = array(
-							'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
-							'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-						);
+						return;
 
-						// Send to getResponse.
-						$getresponse = get_response_api_call( $api_args );
+					else :
 
-						update_user_meta( $user_id, 'refersion_data', $refersion_response );
-						update_user_meta( $user_id, 'getResponse_data', $getresponse );
-						if ( ! empty( $entry_fields['logo_upload'] ) ) :
+						wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
 
-							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
-
-						endif;
-
-						else :
-
-							// Setting affiliate code and link to send to getResponse.
-							$api_args['custom_fields']        = array(
-								'affiliate_error_code',
-							);
-							$api_args['custom_fields_values'] = array(
-								'affiliate_error_code' => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
-							);
-							// Send to getResponse.
-							$getresponse = get_response_api_call( $api_args );
-
-							update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
-							update_user_meta( $user_id, 'getResponse_data', $getresponse );
-							if ( ! empty( $entry_fields['logo_upload'] ) ) :
-
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
-
-							endif;
+						return;
 
 					endif;
-						else :
 
-							// Setting affiliate code and link to send to getResponse.
-							$api_args['custom_fields']        = array(
-								'affiliate_code',
-								'affiliate_link',
-							);
-							$api_args['custom_fields_values'] = array(
-								'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
-								'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-							);
+					else :
 
-							// Send to getResponse.
-							$getresponse = get_response_api_call( $api_args );
+						wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
 
-							update_user_meta( $user_id, 'refersion_data', $refersion_response );
-							update_user_meta( $user_id, 'getResponse_data', $getresponse );
-							if ( ! empty( $entry_fields['logo_upload'] ) ) :
+						return;
 
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
-
-							endif;
 				endif;
+
+					else :
+
+						echo $refersion_response->status;
+
+						return;
+
 			endif;
 
 		}
 
 		else :
 
-			$new_affiliate_created = new Wonkasoft_Refersion_Api( $entry_fields );
+			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
 
-			$refersion_response = $new_affiliate_created->add_new_affiliate();
+			$refersion_response = $refersion_api_init->add_new_affiliate();
 
 			$user = get_user_by( 'email', $entry_fields['email'] );
 
 			if ( ! in_array( $role, $user->roles ) ) :
+
+				array_push( $user->roles, $role );
 				wp_update_user(
 					array(
-						'ID'   => $user->ID,
-						'role' => $role,
+						'ID'   => $user_id,
+						'role' => $user->roles,
 					)
 				);
+
 			endif;
 
 			if ( 'failed' !== $refersion_response->status ) :
 
 				if ( ! empty( $refersion_response->errors ) ) :
 
-					if ( ! empty( $new_affiliate_created->affiliate_code ) ) :
+					if ( ! empty( $refersion_api_init->affiliate_code ) ) :
 
-						$refersion_response = $new_affiliate_created->get_affiliate();
+						wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
 
-						// Setting affiliate code and link to send to getResponse.
-						$api_args['custom_fields']        = array(
-							'affiliate_code',
-							'affiliate_link',
-						);
-						$api_args['custom_fields_values'] = array(
-							'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
-							'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-						);
+						return;
 
-						// Send to getResponse.
-						$getresponse = get_response_api_call( $api_args );
+					else :
 
-						update_user_meta( $user_id, 'refersion_data', $refersion_response );
-						update_user_meta( $user_id, 'getResponse_data', $getresponse );
-						if ( ! empty( $entry_fields['logo_upload'] ) ) :
+						wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
 
-							wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
-
-						endif;
-
-						else :
-
-							// Setting affiliate code and link to send to getResponse.
-							$api_args['custom_fields']        = array(
-								'affiliate_error_code',
-							);
-							$api_args['custom_fields_values'] = array(
-								'affiliate_error_code' => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
-							);
-
-							// Send to getResponse.
-							$getresponse = get_response_api_call( $api_args );
-
-							update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
-							update_user_meta( $user_id, 'getResponse_data', $getresponse );
-							if ( ! empty( $entry_fields['logo_upload'] ) ) :
-
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
-
-							endif;
+						return;
 
 					endif;
 
-						else :
+					else :
 
-							// Setting affiliate code and link to send to getResponse.
-							$api_args['custom_fields']        = array(
-								'affiliate_code',
-								'affiliate_link',
-							);
-							$api_args['custom_fields_values'] = array(
-								'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
-								'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
-							);
+						wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
 
-							// Send to getResponse.
-							$getresponse = get_response_api_call( $api_args );
+						return;
 
-							update_user_meta( $user_id, 'refersion_data', $refersion_response );
-							update_user_meta( $user_id, 'getResponse_data', $getresponse );
-							if ( ! empty( $entry_fields['logo_upload'] ) && ! empty( $entry_fields['company'] ) ) :
-
-								wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
-
-							endif;
 				endif;
+
+					else :
+
+						echo $refersion_response->status;
+
+						return;
 
 			endif;
 
-		endif;
+	endif;
 
 }
 add_action( 'gform_after_submission', 'wonkasoft_after_form_submission', 10, 2 );
+
+
+/**
+ * Function is called if refersion successfully created affiliate.
+ *
+ * @param  string $user_id          current user ID.
+ * @param  array  $entry_fields          entry form fields.
+ * @param  object $refersion_api_init refersion api init.
+ * @param  object $refersion_response    refersion affiliate created response.
+ * @param  array  $api_args          api args for getresponse.
+ */
+function wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args ) {
+
+	// Setting affiliate code and link to send to getResponse.
+	$api_args['custom_fields']        = array(
+		'affiliate_code',
+		'affiliate_link',
+	);
+	$api_args['custom_fields_values'] = array(
+		'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+		'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+	);
+	// Send to getResponse.
+	$getresponse = get_response_api_call( $api_args );
+
+	update_user_meta( $user_id, 'refersion_data', $refersion_response );
+	update_user_meta( $user_id, 'getResponse_data', $getresponse );
+	if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+		wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+
+	endif;
+
+}
+
+/**
+ * Function is called if refersion new affiliate successful and affiliate code is empty.
+ *
+ * @param  string $user_id          current user ID.
+ * @param  array  $entry_fields          entry form fields.
+ * @param  object $refersion_api_init refersion api init.
+ * @param  object $refersion_response    refersion affiliate created response.
+ * @param  array  $api_args          api args for getresponse.
+ */
+function wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args ) {
+
+	$refersion_response = $refersion_api_init->get_affiliate();
+
+	// Setting affiliate code and link to send to getResponse.
+	$api_args['custom_fields']        = array(
+		'affiliate_code',
+		'affiliate_link',
+	);
+	$api_args['custom_fields_values'] = array(
+		'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
+		'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
+	);
+
+	// Send to getResponse.
+	$getresponse = get_response_api_call( $api_args );
+
+	update_user_meta( $user_id, 'refersion_data', $refersion_response );
+	update_user_meta( $user_id, 'getResponse_data', $getresponse );
+	if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+		wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+
+	endif;
+
+}
+
+/**
+ * Function is called if refersion new affiliate successful and affiliate code is not empty.
+ *
+ * @param  string $user_id          current user ID.
+ * @param  array  $entry_fields          entry form fields.
+ * @param  object $refersion_api_init refersion api init.
+ * @param  object $refersion_response    refersion affiliate created response.
+ * @param  array  $api_args          api args for getresponse.
+ */
+function wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args ) {
+
+	// Setting affiliate code and link to send to getResponse.
+	$api_args['custom_fields']        = array(
+		'affiliate_error_code',
+	);
+	$api_args['custom_fields_values'] = array(
+		'affiliate_error_code' => ( ! empty( $refersion_response->errors ) ) ? $refersion_response->errors[0] : '',
+	);
+	// Send to getResponse.
+	$getresponse = get_response_api_call( $api_args );
+
+	update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
+	update_user_meta( $user_id, 'getResponse_data', $getresponse );
+	if ( ! empty( $entry_fields['logo_upload'] ) ) :
+
+		wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+
+	endif;
+
+}
 
 /**
  * This adds a company logo.
@@ -1606,6 +1591,7 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 			'post_status'  => 'publish',
 			'post_author'  => 1,
 			'post_type'    => 'shop_coupon',
+			'post_excerpt' => 'This coupon gives ' . $percentage . '% off',
 		);
 
 		$new_coupon_id = wp_insert_post( $coupon );
@@ -1620,7 +1606,6 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 		update_post_meta( $new_coupon_id, 'expiry_date', '' );
 		update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
 		update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-		update_post_meta( $new_coupon_id, 'excerpt', $percentage . '% off' );
 
 		return $coupon_code;
 
@@ -1681,21 +1666,9 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 		endif;
 	}
 
-	echo "<pre>\n";
-	print_r( $entry_fields );
-	echo "</pre>\n";
-
 	$affiliate_apera_id = get_user_by( 'email', $entry_fields['email'] )->data->ID;
 
-	echo "<pre>\n";
-	print_r( $affiliate_apera_id );
-	echo "</pre>\n";
-
 	$refersion_data = wonkasoft_get_refersion_data( $affiliate_apera_id );
-
-	echo "<pre>\n";
-	print_r( $refersion_data );
-	echo "</pre>\n";
 
 	$coupon_code = wonkasoft_coupon_creation( $entry_fields, $form['title'] );
 
@@ -1708,6 +1681,30 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 		$refersion_init          = new Wonkasoft_Refersion_Api( $entry_fields );
 		$refersion_added_trigger = $refersion_init->create_conversion_trigger();
 
+		$refersion_data->trigger_id = $refersion_added_trigger->trigger_id;
+		$refersion_data->trigger    = $refersion_added_trigger->trigger;
+
+		// Setting getResponse api args.
+		$api_args = array(
+			'email' => $entry_fields['email'],
+			'tags'  => array(
+				'discount_code_created',
+			),
+		);
+
+		// Setting affiliate code and link to send to getResponse.
+		$api_args['custom_fields']        = array(
+			'discount_code',
+		);
+		$api_args['custom_fields_values'] = array(
+			'discount_code' => $entry_fields['discount_code'],
+		);
+
+		// Send to getResponse.
+		$getresponse = get_response_api_call( $api_args );
+
+		update_user_meta( $user_id, 'refersion_data', $refersion_data );
+		update_user_meta( $user_id, 'getResponse_data', $getresponse );
 	}
 
 }
@@ -1735,9 +1732,13 @@ function get_response_api_call( $api_args ) {
 
 	if ( empty( $getresponse->contact_id ) ) :
 		foreach ( $getresponse->contact_list as $contact ) :
-			if ( $getresponse->campaign_id === $contact->campaign->campaignId ) :
+			if ( empty( $getresponse->campaign_id ) ) {
 				$getresponse->contact_id = $contact->contactId;
-			endif;
+			} else {
+				if ( $getresponse->campaign_id === $contact->campaign->campaignId ) :
+					$getresponse->contact_id = $contact->contactId;
+				endif;
+			}
 		endforeach;
 	endif;
 
@@ -1965,8 +1966,15 @@ function wonkasoft_api_responses_user_data( $user ) {
 add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 1 );
 add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 1 );
 
-
+/**
+ * This returns the refersion data that is set for the user.
+ *
+ * @param  string $user_id the users ID.
+ * @return object          returns an object of the users refersion data.
+ */
 function wonkasoft_get_refersion_data( $user_id ) {
+
 	$refersion = ( ! empty( get_user_meta( $user_id, 'refersion_data', true ) ) ) ? get_user_meta( $user_id, 'refersion_data', true ) : '';
 	return $refersion;
+
 }
