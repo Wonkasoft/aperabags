@@ -1699,16 +1699,9 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 		$api_args['custom_fields_values'] = array(
 			'discount_code' => $entry_fields['discount_code'],
 		);
-		echo "<pre>\n";
-		print_r( $api_args );
-		echo "</pre>\n";
 
 		// Send to getResponse.
 		$getresponse = get_response_api_call( $api_args );
-
-		echo "<pre>\n";
-		print_r( $getresponse );
-		echo "</pre>\n";
 
 		update_user_meta( $user_id, 'refersion_data', $refersion_data );
 		update_user_meta( $user_id, 'getResponse_data', $getresponse );
