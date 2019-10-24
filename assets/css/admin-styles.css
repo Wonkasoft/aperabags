@@ -3,6 +3,6 @@ form#custom-options-form input:not( #submit ) {
   	width: 85%;
 }
 
-.woocomerce .subsubsub {
+.woocommerce #entry_list_form .subsubsub {
 	margin: 8px 0 0;
 }

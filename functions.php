@@ -395,7 +395,7 @@ add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 50 );
 function admin_styles() {
 	wp_enqueue_style( 'apera-bags-admin-styles', get_stylesheet_directory_uri() . '/assets/css/admin-styles.css', array(), '1.0.0', 'all' );
 }
-add_action( 'admin_enqueue_scripts', 'admin_styles', 15 );
+add_action( 'admin_enqueue_scripts', 'admin_styles', 50 );
 
 /**
  * This is preventing reCAPTCHA from sending verification link.
