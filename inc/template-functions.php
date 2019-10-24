@@ -1088,8 +1088,9 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 		// Check if email has user account already.
 		if ( email_exists( $entry_fields['email'] ) ) {
 
-			$user = get_user_by( 'email', $entry_fields['email'] );
-
+			$user    = get_user_by( 'email', $entry_fields['email'] );
+			$user_id = $user->data->ID;
+			$user    = new WP_User( $user_id );
 			if ( ! in_array( $role, $user->roles ) ) :
 				$user->add_role( $role );
 			endif;
@@ -1209,7 +1210,9 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 			$refersion_response = $refersion_api_init->add_new_affiliate();
 
-			$user = get_user_by( 'email', $entry_fields['email'] );
+			$user    = get_user_by( 'email', $entry_fields['email'] );
+			$user_id = $user->data->ID;
+			$user    = new WP_User( $user_id );
 
 			if ( ! in_array( $role, $user->roles ) ) :
 
