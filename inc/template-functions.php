@@ -1633,6 +1633,9 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 		'Discount Code',
 		'Percentage',
 		'Email',
+		'Tag',
+		'First Name',
+		'Last Name',
 	);
 
 	$custom_fields = array();
@@ -1688,7 +1691,7 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 		$api_args = array(
 			'email' => $entry_fields['email'],
 			'tags'  => array(
-				'discount_code_created',
+				$entry_fields['tag'],
 			),
 		);
 
