@@ -109,7 +109,7 @@ if ( wonkasoft_request.ga_id !== '' )
 
 		if ( getUrlVars().lname ) 
 		{
-			var for_lname = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			var for_lname = decodeURIComponent( getUrlVars().lname ).replace( /\+/gi, ' ' );
 			document.getElementById("for-lname").innerHTML = for_lname;
 		}
 	}
