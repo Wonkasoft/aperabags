@@ -94,6 +94,26 @@ if ( wonkasoft_request.ga_id !== '' )
 		}
 	}
 
+	if ( document.getElementById("for-fname") ) {
+		if ( getUrlVars().email ) 
+		{
+			var for_email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("for-email").innerHTML = for_email;
+		}
+
+		if ( getUrlVars().fname ) 
+		{
+			var for_fname = decodeURIComponent( getUrlVars().fname ).replace( /\+/gi, ' ' );
+			document.getElementById("for-fname").innerHTML = for_fname;
+		}
+
+		if ( getUrlVars().lname ) 
+		{
+			var for_lname = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("for-lname").innerHTML = for_lname;
+		}
+	}
+
 	if ( document.querySelector( '#tag' ) ) 
 	{
 		if ( getUrlVars().email ) 
