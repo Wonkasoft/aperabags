@@ -999,12 +999,14 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 		$campaign_name = 'ambassador_program_signups';
 		$set_tag       = 'ambassadorcompleted';
 		$role          = 'apera_ambassador_affiliate';
+		$role_display  = 'Apera Ambassador Affiliate';
 	endif;
 
 	if ( 'Refersion Registration Zip' === $form['title'] ) :
 		$campaign_name = 'zip_program_signups';
 		$set_tag       = 'zipcompleted';
 		$role          = 'apera_zip_affiliate';
+		$role_display  = 'Apera Zip Affiliate';
 	endif;
 
 	// Get current user object.
@@ -1092,7 +1094,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 			$user_id = $user->data->ID;
 			$user    = new WP_User( $user_id );
 			if ( ! in_array( $role, $user->roles ) ) :
-				$user->add_role( $role );
+				$user->add_role( $role, $role_display );
 			endif;
 
 			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
@@ -1135,33 +1137,12 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 		} else {
 
-			// Setting time stamp.
-			$ts   = time();
-			$date = new DateTime( "@$ts" );
-			$date->setTimezone( new DateTimeZone( get_option( 'timezone_string' ) ) );
-
-			// Setting new user args.
-			$userdata = array(
-				'user_pass'            => $entry_fields['password'],   // (string) The plain-text user password.
-				'user_login'           => $entry_fields['email'],   // (string) The user's login username.
-				'user_nicename'        => $entry_fields['first'],   // (string) The URL-friendly user name.
-				'user_email'           => $entry_fields['email'],   // (string) The user email address.
-				'display_name'         => $entry_fields['first'] . ' ' . $entry_fields['last'],   // (string) The user's display name. Default is the user's username.
-				'first_name'           => $entry_fields['first'],   // (string) The user's first name. For new users, will be used to build the first part of the user's display name if $display_name is not specified.
-				'last_name'            => $entry_fields['last'],   // (string) The user's last name. For new users, will be used to build the second part of the user's display name if $display_name is not specified.
-				'use_ssl'              => true,   // (bool) Whether the user should always access the admin over https. Default false.
-				'user_registered'      => $date->format( 'Y-m-d H:i:s' ),   // (string) Date the user registered. Format is 'Y-m-d H:i:s'.
-				'show_admin_bar_front' => false,   // (string|bool) Whether to display the Admin Bar for the user on the site's front end. Default true.
-				'role'                 => $role,   // (string) User's role.
-			);
-
-			// Inserting new user and getting user id.
-			$user_id = wp_insert_user( $userdata );
+			$user_id = wonkasoft_make_user_account( $entry_fields, $role );
 
 			$user = new WP_User( $user_id );
 
 			if ( ! in_array( $role, $user->roles ) ) :
-				$user->add_role( $role );
+				$user->add_role( $role, $role_display );
 			endif;
 
 			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
@@ -1210,14 +1191,17 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 			$refersion_response = $refersion_api_init->add_new_affiliate();
 
-			$user    = get_user_by( 'email', $entry_fields['email'] );
-			$user_id = $user->data->ID;
-			$user    = new WP_User( $user_id );
+			if ( email_exists( $entry_fields['email'] ) ) {
+				$user    = get_user_by( 'email', $entry_fields['email'] );
+				$user_id = $user->data->ID;
+				$user    = new WP_User( $user_id );
+			} else {
+				$user_id = wonkasoft_make_user_account( $entry_fields, $role );
+				$user    = new WP_User( $user_id );
+			}
 
 			if ( ! in_array( $role, $user->roles ) ) :
-
-				$user->add_role( $role );
-
+				$user->add_role( $role, $role_display );
 			endif;
 
 			if ( 'failed' !== $refersion_response->status ) :
@@ -1259,6 +1243,41 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 }
 add_action( 'gform_after_submission', 'wonkasoft_after_form_submission', 10, 2 );
 
+/**
+ * This function creates new user accounts.
+ *
+ * @param  array  $entry_fields contains the form fields.
+ * @param  string $role         the role set to give new user.
+ * @return number               returns the new user id.
+ */
+function wonkasoft_make_user_account( $entry_fields, $role ) {
+
+	// Setting time stamp.
+	$ts   = time();
+	$date = new DateTime( "@$ts" );
+	$date->setTimezone( new DateTimeZone( get_option( 'timezone_string' ) ) );
+
+	// Setting new user args.
+	$userdata = array(
+		'user_pass'            => $entry_fields['password'],   // (string) The plain-text user password.
+		'user_login'           => $entry_fields['email'],   // (string) The user's login username.
+		'user_nicename'        => $entry_fields['first'],   // (string) The URL-friendly user name.
+		'user_email'           => $entry_fields['email'],   // (string) The user email address.
+		'display_name'         => $entry_fields['first'] . ' ' . $entry_fields['last'],   // (string) The user's display name. Default is the user's username.
+		'first_name'           => $entry_fields['first'],   // (string) The user's first name. For new users, will be used to build the first part of the user's display name if $display_name is not specified.
+		'last_name'            => $entry_fields['last'],   // (string) The user's last name. For new users, will be used to build the second part of the user's display name if $display_name is not specified.
+		'use_ssl'              => true,   // (bool) Whether the user should always access the admin over https. Default false.
+		'user_registered'      => $date->format( 'Y-m-d H:i:s' ),   // (string) Date the user registered. Format is 'Y-m-d H:i:s'.
+		'show_admin_bar_front' => false,   // (string|bool) Whether to display the Admin Bar for the user on the site's front end. Default true.
+		'role'                 => $role,   // (string) User's role.
+	);
+
+	// Inserting new user and getting user id.
+	$user_id = wp_insert_user( $userdata );
+
+	return $user_id;
+
+}
 
 /**
  * Function is called if refersion successfully created affiliate.
