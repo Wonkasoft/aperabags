@@ -1779,6 +1779,8 @@ function get_response_api_call( $api_args ) {
 
 /**
  * This function registers the custom api route.
+ *
+ * {site_url}/api/wonkasoft/v1/getresponse-api/
  */
 function wonkasoft_register_custom_api() {
 	register_rest_route(
@@ -1794,12 +1796,24 @@ function wonkasoft_register_custom_api() {
 add_action( 'rest_api_init', 'wonkasoft_register_custom_api' );
 
 /**
+ * This function resets the wp-json rest api.
+ *
+ * @param  string $api current base route.
+ * @return string      returns rest api base.
+ */
+function wonka_rest_api( $api ) {
+	return 'api';
+}
+add_filter( 'rest_url_prefix', 'wonka_rest_api' );
+
+/**
  * This function handles the rest api endpoint for getResponse.
  *
  * @param  array $data contains params send in the url.
  * @return json    returns the response data.
  */
 function wonkasoft_getresponse_endpoint( $data ) {
+
 	if ( ! isset( $_GET['email'] ) && ! isset( $_GET['tag'] ) && ! isset( $_GET['campaign_name'] ) ) :
 		return 'Invalid request, contact support for more information.';
 	endif;
@@ -1861,18 +1875,6 @@ function wonkasoft_getresponse_endpoint( $data ) {
 
 	return $getresponse;
 }
-
-/**
- * This function resets the wp-json rest api.
- *
- * @param  string $api current base route.
- * @return string      returns rest api base.
- */
-function wonka_rest_api( $api ) {
-	return 'api';
-}
-add_filter( 'rest_url_prefix', 'wonka_rest_api' );
-
 
 /**
  * This function adds Affiliate and Contact data to user profile.

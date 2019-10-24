@@ -2,3 +2,7 @@ form#custom-options-form input:not( #submit ) {
 	margin-top: 0;
   	width: 85%;
 }
+
+.woocomerce .subsubsub {
+	margin: 8px 0 0;
+}
