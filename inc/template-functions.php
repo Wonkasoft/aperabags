@@ -1091,13 +1091,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 			$user = get_user_by( 'email', $entry_fields['email'] );
 
 			if ( ! in_array( $role, $user->roles ) ) :
-				array_push( $user->roles, $role );
-				wp_update_user(
-					array(
-						'ID'   => $user->ID,
-						'role' => $user->roles,
-					)
-				);
+				$user->add_role( $role );
 			endif;
 
 			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
@@ -1166,13 +1160,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 			$user = new WP_User( $user_id );
 
 			if ( ! in_array( $role, $user->roles ) ) :
-				array_push( $user->roles, $role );
-				wp_update_user(
-					array(
-						'ID'   => $user_id,
-						'role' => $user->roles,
-					)
-				);
+				$user->add_role( $role );
 			endif;
 
 			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
@@ -1225,13 +1213,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 			if ( ! in_array( $role, $user->roles ) ) :
 
-				array_push( $user->roles, $role );
-				wp_update_user(
-					array(
-						'ID'   => $user_id,
-						'role' => $user->roles,
-					)
-				);
+				$user->add_role( $role );
 
 			endif;
 
