@@ -74,7 +74,7 @@ if ( wonkasoft_request.ga_id !== '' )
 	 * This is for the zip and ambassador thank you pages.
 	 * 
 	 */
-	if (document.getElementById("ambassadar-first-name") || document.getElementById("club-name") || document.getElementById("confirm-email") ) {
+	if (document.getElementById("ambassadar-first-name") || document.getElementById("zip-first-name") || document.getElementById("confirm-email") ) {
 		if ( getUrlVars().firstname ) 
 		{
 			var firstname = decodeURIComponent( getUrlVars().firstname ).replace( /\+/gi, ' ' );
