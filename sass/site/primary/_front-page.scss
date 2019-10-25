@@ -761,6 +761,7 @@ section.perks-section {
 			ul {
 				margin: 0;
 				padding: 20px 0;
+				list-style-position: inside;
 
 				li.perks-description {
 					@include font-size( 1.1 );

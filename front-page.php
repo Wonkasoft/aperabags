@@ -347,7 +347,7 @@ get_header();
 						if ( ! empty( $apera_perks->apera_perks->perks_checkbox ) ) :
 							
 							if ( !empty( $apera_perks->apera_perks->perks_image ) ): ?>
-								<section class="container-fluid perks-section text-center perks-background-img" data-img-url="<?php echo esc_attr( $apera_perks->apera_perks->perks_image ); ?>" style="background-image:radial-gradient(rgba(0, 0, 0, .85),rgba(0, 0, 0, 0.0)), url('<?php echo esc_url( $apera_perks->apera_perks->perks_image ); ?>');">
+								<section class="container-fluid perks-section text-center perks-background-img" data-img-url="<?php echo esc_attr( $apera_perks->apera_perks->perks_image ); ?>" style="background-image:radial-gradient(rgba(0, 0, 0, .45),rgba(0, 0, 0, 0.0)), url('<?php echo esc_url( $apera_perks->apera_perks->perks_image ); ?>');">
 							<?php else : ?>
 								<section class="container-fluid perks-section text-center">
 							<?php endif; ?>
@@ -355,7 +355,7 @@ get_header();
 							<div class="perks-section-content">
 								<h3 class="section-title perks-title"><?php echo wp_kses_post( $apera_perks->apera_perks->perks_section_title ); ?></h3>
 								<div class="row row-perks justify-content-md-center">
-									<div class="col-9 col-perks-content">
+									<div class="col-4 col-perks-content">
 										<ul class="perks-description-ul">
 											<?php
 												for ( $i = 1; $i <= 3; $i++ ) :
