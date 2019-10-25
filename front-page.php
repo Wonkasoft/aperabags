@@ -355,7 +355,7 @@ get_header();
 							<div class="perks-section-content">
 								<h3 class="section-title perks-title"><?php echo wp_kses_post( $apera_perks->apera_perks->perks_section_title ); ?></h3>
 								<div class="row row-perks justify-content-md-center">
-									<div class="col-4 col-perks-content">
+									<div class="col-9 col-perks-content">
 										<ul class="perks-description-ul">
 											<?php
 												for ( $i = 1; $i <= 3; $i++ ) :
