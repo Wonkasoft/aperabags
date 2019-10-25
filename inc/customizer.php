@@ -178,7 +178,7 @@ function apera_bags_customize_register( $wp_customize ) {
 
 		// Slider Setting Control.
 		$wp_customize->add_control(
-			new WP_Customize_Media_Control(
+			new WP_Customize_Image_Control(
 				$wp_customize,
 				'slider_' . $i . '_control',
 				array(
@@ -1334,29 +1334,141 @@ function apera_bags_customize_register( $wp_customize ) {
 	);
 
 	/**
-	 * About the brand message settings Section
+	 * Perks section title settings Section
 	 *
 	 * @since  1.0.0
 	 */
 	$wp_customize->add_setting(
-		'perks_section_message',
+		'perks_section_title',
 		array(
 			'default'   => '',
 			'transport' => 'refresh',
 		)
 	);
 
-	// About the brand message Setting Control.
+	// Perks section title Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
-			'perks_section_message_control',
+			'perks_section_title_control',
 			array(
-				'label'       => __( 'Perks Program message', 'apera-bags' ),
+				'label'       => __( 'Perks Program Section Title ', 'apera-bags' ),
 				'section'     => 'apera_perks_section',
-				'settings'    => 'perks_section_message',
-				'type'        => 'textarea',
-				'description' => 'Add Perks section message',
+				'settings'    => 'perks_section_title',
+				'type'        => 'text',
+				'description' => 'Add Perks section Title',
+			)
+		)
+	);
+
+	// Perks description list icon Setting.
+	$wp_customize->add_setting(
+		'perks_description_list_icon',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Perks description list icon Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Image_Control(
+			$wp_customize,
+			'perks_description_list_icon_control',
+			array(
+				'label'       => 'Perks Description Icon',
+				'section'     => 'apera_perks_section',
+				'settings'    => 'perks_description_list_icon',
+				'type'        => 'image',
+				'description' => 'Add icon for Perks description list Item',
+			)
+		)
+	);
+		
+
+	for ( $i = 1; $i <= 3; $i++ ) :
+		/**
+		 * Perks description settings Section
+		 *
+		 * @since  1.0.0
+		 */
+		$wp_customize->add_setting(
+			'perks_section_description_' . $i,
+			array(
+				'default'   => '',
+				'transport' => 'refresh',
+			)
+		);
+
+		// Perks description Setting Control.
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'perks_section_description_' . $i . '_control',
+				array(
+					'label'       => __( 'Perks Program bullet ' . $i, 'apera-bags' ),
+					'section'     => 'apera_perks_section',
+					'settings'    => 'perks_section_description_' . $i,
+					'type'        => 'text',
+					'description' => 'Add Perks section bullet #' . $i,
+				)
+			)
+		);
+
+	endfor;
+
+	/**
+	 * Perks button text settings Section
+	 *
+	 * @since  1.0.0
+	 */
+	$wp_customize->add_setting(
+		'perks_button_text',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Perks button text Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+			'perks_button_text_control',
+			array(
+				'label'       => __( 'Perks Button Text', 'apera-bags' ),
+				'section'     => 'apera_perks_section',
+				'settings'    => 'perks_button_text',
+				'type'        => 'text',
+				'description' => 'Add Perks Button Text',
+			)
+		)
+	);
+
+	/**
+	 * Perks button  settings Section
+	 *
+	 * @since  1.0.0
+	 */
+	$wp_customize->add_setting(
+		'perks_button',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Perks button Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+			'perks_button_control',
+			array(
+				'label'       => __( 'Apera Perks Button', 'apera-bags' ),
+				'section'     => 'apera_perks_section',
+				'settings'    => 'perks_button',
+				'type'        => 'dropdown-pages',
+				'description' => 'Apera Perks Button choose the destination page',
 			)
 		)
 	);
@@ -1372,14 +1484,14 @@ function apera_bags_customize_register( $wp_customize ) {
 
 	// Perks image Setting Control.
 	$wp_customize->add_control(
-		new WP_Customize_Media_Control(
+		new WP_Customize_Image_Control(
 			$wp_customize,
 			'perks_section_image_control',
 			array(
 				'label'       => __( 'Perks image', 'apera-bags' ),
 				'section'     => 'apera_perks_section',
 				'settings'    => 'perks_section_image',
-				'type'        => 'media',
+				'type'        => 'image',
 				'description' => 'Add image for Perks sections ',
 			)
 		)

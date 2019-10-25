@@ -345,19 +345,30 @@ get_header();
 						$apera_perks = get_section_mods( 'perks' );
 
 						if ( ! empty( $apera_perks->apera_perks->perks_checkbox ) ) :
-							?>
-							<section class="container-fluid perks-section text-center">
-								<h3 class="section-title perks-title">Apera Perks</h3>
-								<div class="row row-perks">
-									<div class="col-6 col-perks-content">
-										<?php echo '<p class="social-message">' . esc_html( $apera_perks->apera_perks->perks_message ) . '</p>'; ?>
-										<a class="wonka-btn" href="https://aperabags.com/my-account/">Join Now</a>
-									</div>
-									<div class="col-6 col-perks-image">
-									<img class="cause-img img-fluid" srcset="<?php echo esc_attr( $apera_perks->apera_perks->perks_image ); ?>" />
+							
+							if ( !empty( $apera_perks->apera_perks->perks_image ) ): ?>
+								<section class="container-fluid perks-section text-center perks-background-img" data-img-url="<?php echo esc_attr( $apera_perks->apera_perks->perks_image ); ?>" style="background-image:radial-gradient(rgba(0, 0, 0, .85),rgba(0, 0, 0, 0.0)), url('<?php echo esc_url( $apera_perks->apera_perks->perks_image ); ?>');">
+							<?php else : ?>
+								<section class="container-fluid perks-section text-center">
+							<?php endif; ?>
 
+							<div class="perks-section-content">
+								<h3 class="section-title perks-title"><?php echo wp_kses_post( $apera_perks->apera_perks->perks_section_title ); ?></h3>
+								<div class="row row-perks justify-content-md-center">
+									<div class="col-9 col-perks-content">
+										<ul class="perks-description-ul">
+											<?php
+												for ( $i = 1; $i <= 3; $i++ ) :
+													echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $apera_perks->apera_perks->perks_description_icon ) . ')">' . esc_html( $apera_perks->apera_perks->{'perks_description_' . $i } ) . '</li>';
+												endfor;
+												?>
+										</ul>
+										<a class="join-perks-btn wonka-btn" href="<?php echo esc_url( $apera_perks->apera_perks->perks_button ); ?>"><?php echo wp_kses_post( $apera_perks->apera_perks->perks_btn_text ); ?></a>
 									</div>
-								</div>
+								</div>				
+							</div>
+
+
 							</section>
 
 						<?php endif; ?>
