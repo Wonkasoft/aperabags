@@ -954,7 +954,7 @@ if ( wonkasoft_request.ga_id !== '' )
 				});
 		}
 
-		if ( window.pageYOffset < top_slider_section.offsetTop ) 
+		if ( window.pageYOffset <= top_slider_section.offsetTop ) 
 		{
 			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
@@ -977,7 +977,7 @@ if ( wonkasoft_request.ga_id !== '' )
 				});
 		}
 
-		if ( window.pageYOffset < cta_section.offsetTop ) 
+		if ( window.pageYOffset <= cta_section.offsetTop ) 
 		{
 			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
