@@ -34,6 +34,9 @@ if ( wonkasoft_request.ga_id !== '' )
 	admin_bar,
 	message_timer,
 	admin_height,
+	drop_down,
+	header_el,
+	header_height,
 	xhr = new XMLHttpRequest();
 
 	if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
@@ -708,6 +711,42 @@ if ( wonkasoft_request.ga_id !== '' )
 		}
 	}
 
+	function add_fixed_header( win_y_offset, header_el, header_height ) 
+	{
+		console.log( win_y_offset );
+		if ( win_y_offset > header_height ) 
+		{
+			console.log('fixed');
+			header_el.classList.add( 'fixed' );
+			drop_down = setTimeout( function() 
+				{
+					if ( window.pageYOffset > header_height ) 
+					{
+						header_el.style = 'height: ' + header_height + 'px;';
+						setTimeout( function() 
+							{
+								header_el.style = 'height: ' + header_height + 'px; overflow: unset;';
+
+							}, 400 );
+					}
+					else
+					{
+						header_el.style = '';
+					}
+				}, 300 );
+		} 
+		else
+		{
+			console.log('remove fixed');
+			if ( header_el.classList.contains( 'fixed' ) ) 
+			{
+				header_el.classList.remove( 'fixed' );
+			}
+			clearTimeout( drop_down );
+			header_el.style = '';
+		}
+	}
+
 	function wonka_ajax_request( xhr, action, data ) 
 	{
 		if ( action === "search_site" ) 
@@ -990,21 +1029,21 @@ if ( wonkasoft_request.ga_id !== '' )
 		
 	}
 
-	function stickyThumbnails() 
+	function stickyThumbnails( header_el, header_height ) 
 	{
 		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 40;
 		target_stop = wonka_single_product_img_area.offsetHeight - thumbnail_controls.offsetHeight;
 		var scrolling_spacer = document.querySelector( 'div.sticky-spacer' );
 		win_y = window.pageYOffset;
 
-		if ( win_y < img_area_top ) 
+		if ( win_y + header_height < img_area_top ) 
 		{
 			thumbnail_controls.classList.remove( 'sticky-on' );
 			thumbnail_controls.removeAttribute( 'style' );
 			scrolling_spacer.classList.remove( 'spacing-now' );
 			scrolling_spacer.removeAttribute( 'style' );
 		}
-		else if ( win_y - img_area_top > target_stop ) 
+		else if ( win_y + header_height - img_area_top > target_stop ) 
 		{
 			thumbnail_controls.style.top = target_stop + 'px';
 			thumbnail_controls.classList.remove( 'sticky-on' );
@@ -1021,14 +1060,14 @@ if ( wonkasoft_request.ga_id !== '' )
 				if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
 				{
 					thumbnail_controls.classList.add( 'sticky-on' );
-					thumbnail_controls.style.top = 30 + 'px';
+					thumbnail_controls.style.top = header_height + 'px';
 					scrolling_spacer.classList.add( 'spacing-now' );
 					scrolling_spacer.style.top = 0;
 				}
 				else
 				{
 					thumbnail_controls.classList.add( 'sticky-on' );
-					thumbnail_controls.style.top = admin_height + 30 + 'px';
+					thumbnail_controls.style.top = admin_height + header_height + 'px';
 					scrolling_spacer.classList.add( 'spacing-now' );
 					scrolling_spacer.style.top = admin_height + 'px';
 				}
@@ -1036,14 +1075,14 @@ if ( wonkasoft_request.ga_id !== '' )
 			else
 			{
 				thumbnail_controls.classList.add( 'sticky-on' );
-				thumbnail_controls.style.top = 30 + 'px';
+				thumbnail_controls.style.top = header_height + 'px';
 				scrolling_spacer.classList.add( 'spacing-now' );
 				scrolling_spacer.style.top = 0;
 			}
 		} 
 	}
 
-	function stickySummary() 
+	function stickySummary( header_el, header_height ) 
 	{
 		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 40;
 		target_stop = wonka_single_product_img_area.offsetHeight - summary_section.offsetHeight;
@@ -1051,12 +1090,12 @@ if ( wonkasoft_request.ga_id !== '' )
 
 		if ( wonka_single_product_img_area.offsetHeight > summary_section.offsetHeight ) 
 		{
-			if ( window.innerWidth > 767 && win_y < img_area_top ) 
+			if ( window.innerWidth > 767 + header_height && win_y + header_height < img_area_top ) 
 			{
 				summary_section.classList.remove( 'sticky-on' );
 				summary_section.removeAttribute( 'style' );
 			}
-			else if ( window.innerWidth > 767 && win_y - img_area_top > target_stop ) 
+			else if ( window.innerWidth > 767 && win_y + header_height - img_area_top > target_stop ) 
 			{
 				summary_section.style.top = target_stop + 'px';
 				summary_section.classList.remove( 'sticky-on' );
@@ -1071,18 +1110,18 @@ if ( wonkasoft_request.ga_id !== '' )
 					if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
 					{
 						summary_section.classList.add( 'sticky-on' );
-						summary_section.style.top = 30 + 'px';
+						summary_section.style.top = header_height + 'px';
 					}
 					else
 					{
 						summary_section.classList.add( 'sticky-on' );
-						summary_section.style.top = admin_height + 30 + 'px';
+						summary_section.style.top = admin_height + header_height + 'px';
 					}
 				}
 				else
 				{
 					summary_section.classList.add( 'sticky-on' );
-					summary_section.style.top = 30 + 'px';
+					summary_section.style.top = header_height + 'px';
 				}
 			}
 		}
@@ -1686,6 +1725,18 @@ if ( wonkasoft_request.ga_id !== '' )
 				add_transparent( screen_height );
 			};
 			
+		}
+
+		if ( document.querySelector( '.page-template-default' ) ) 
+		{
+			header_el = document.querySelector( '#masthead' );
+			header_height = header_el.offsetHeight;
+			add_fixed_header( window.pageYOffset, header_el, header_height );
+
+			window.onscroll = function() 
+			{
+				add_fixed_header( window.pageYOffset, header_el, header_height );
+			};
 		}
 		/*=====  End of For parallax on front page sliders  ======*/
 		
@@ -2528,12 +2579,15 @@ if ( wonkasoft_request.ga_id !== '' )
 				
 			}
 			/*=====  End of This is the setup for the Wonka Express Checkout Button  ======*/
-
+			header_el = document.querySelector( '#masthead' );
+			header_height = header_el.offsetHeight;
+			add_fixed_header( window.pageYOffset, header_el, header_height );
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
-				stickyThumbnails();
-				stickySummary();
+				stickyThumbnails( header_el, header_height );
+				stickySummary( header_el, header_height );
+				add_fixed_header( window.pageYOffset, header_el, header_height );
 			};
 		}
 		/*=====  End of For single product page  ======*/

@@ -35,10 +35,11 @@
 	padding: 0;
 	@include prefix( transition, $trans_25, o moz webkit );
 
-	main#main {
+	main#main, main#site-main {
 		width: 100%;
 		max-width: 1200px;
 		margin: 15px auto;
+		padding: 0 15px;
 
 		header.entry-header {
 			display: flex;

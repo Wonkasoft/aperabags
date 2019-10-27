@@ -111,13 +111,16 @@
   	padding-top: 120px;
 }
 
-.page-template {
+.page-template-default, .product-template-default {
 
 	.site-header {
 		position: relative;
 
 		&.fixed {
 			position: fixed;
+			height: 0;
+			overflow: hidden;
+			@include prefix( transition, all .3s ease-in-out, o moz webkit );
 		}
 	}
 }
