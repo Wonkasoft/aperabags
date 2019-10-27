@@ -110,4 +110,15 @@
 .home .sticky + .content {
   	padding-top: 120px;
 }
+
+.page-template {
+
+	.site-header {
+		position: relative;
+
+		&.fixed {
+			position: fixed;
+		}
+	}
+}
 /*=====  End of header branding and navbar  ======*/
