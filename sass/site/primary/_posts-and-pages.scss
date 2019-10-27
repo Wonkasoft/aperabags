@@ -33,7 +33,6 @@
 #content {
 	margin: 0;
 	padding: 0;
-	@include prefix( transition, $trans_25, o moz webkit );
 
 	main#main, main#site-main {
 		width: 100%;

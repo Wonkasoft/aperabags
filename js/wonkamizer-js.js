@@ -713,37 +713,43 @@ if ( wonkasoft_request.ga_id !== '' )
 
 	function add_fixed_header( win_y_offset, header_el, header_height ) 
 	{
-		console.log( win_y_offset );
+		var content_area = document.querySelector( '#content' );
 		if ( win_y_offset > header_height ) 
 		{
-			console.log('fixed');
 			header_el.classList.add( 'fixed' );
-			drop_down = setTimeout( function() 
-				{
-					if ( window.pageYOffset > header_height ) 
+			content_area.style = 'padding-top: ' + header_height + 'px;';
+			if ( '' == header_el.style.height ) 
+			{
+				drop_down = setTimeout( function() 
 					{
-						header_el.style = 'height: ' + header_height + 'px;';
-						setTimeout( function() 
-							{
-								header_el.style = 'height: ' + header_height + 'px; overflow: unset;';
+						if ( window.pageYOffset > header_height ) 
+						{
+							header_el.style = 'height: ' + header_height + 'px;';
+							setTimeout( function() 
+								{
+									header_el.style = 'height: ' + header_height + 'px; overflow: unset;';
 
-							}, 400 );
-					}
-					else
-					{
-						header_el.style = '';
-					}
-				}, 300 );
+								}, 400 );
+						}
+						else
+						{
+							header_el.style = '';
+						}
+					}, 300 );
+			}
 		} 
 		else
 		{
-			console.log('remove fixed');
-			if ( header_el.classList.contains( 'fixed' ) ) 
+			if ( 0 === win_y_offset ) 
 			{
-				header_el.classList.remove( 'fixed' );
+				if ( header_el.classList.contains( 'fixed' ) ) 
+				{
+					header_el.classList.remove( 'fixed' );
+					content_area.style = '';
+				}
+				clearTimeout( drop_down );
+				header_el.style = '';
 			}
-			clearTimeout( drop_down );
-			header_el.style = '';
 		}
 	}
 
@@ -1031,7 +1037,7 @@ if ( wonkasoft_request.ga_id !== '' )
 
 	function stickyThumbnails( header_el, header_height ) 
 	{
-		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 40;
+		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 80;
 		target_stop = wonka_single_product_img_area.offsetHeight - thumbnail_controls.offsetHeight;
 		var scrolling_spacer = document.querySelector( 'div.sticky-spacer' );
 		win_y = window.pageYOffset;
@@ -1040,7 +1046,6 @@ if ( wonkasoft_request.ga_id !== '' )
 		{
 			thumbnail_controls.classList.remove( 'sticky-on' );
 			thumbnail_controls.removeAttribute( 'style' );
-			scrolling_spacer.classList.remove( 'spacing-now' );
 			scrolling_spacer.removeAttribute( 'style' );
 		}
 		else if ( win_y + header_height - img_area_top > target_stop ) 
@@ -1048,7 +1053,6 @@ if ( wonkasoft_request.ga_id !== '' )
 			thumbnail_controls.style.top = target_stop + 'px';
 			thumbnail_controls.classList.remove( 'sticky-on' );
 			scrolling_spacer.style.top = target_stop + 'px';
-			scrolling_spacer.classList.remove( 'spacing-now' );
 		} 
 		else
 		{
@@ -1061,14 +1065,12 @@ if ( wonkasoft_request.ga_id !== '' )
 				{
 					thumbnail_controls.classList.add( 'sticky-on' );
 					thumbnail_controls.style.top = header_height + 'px';
-					scrolling_spacer.classList.add( 'spacing-now' );
 					scrolling_spacer.style.top = 0;
 				}
 				else
 				{
 					thumbnail_controls.classList.add( 'sticky-on' );
 					thumbnail_controls.style.top = admin_height + header_height + 'px';
-					scrolling_spacer.classList.add( 'spacing-now' );
 					scrolling_spacer.style.top = admin_height + 'px';
 				}
 			}
@@ -1076,7 +1078,6 @@ if ( wonkasoft_request.ga_id !== '' )
 			{
 				thumbnail_controls.classList.add( 'sticky-on' );
 				thumbnail_controls.style.top = header_height + 'px';
-				scrolling_spacer.classList.add( 'spacing-now' );
 				scrolling_spacer.style.top = 0;
 			}
 		} 
@@ -1084,7 +1085,7 @@ if ( wonkasoft_request.ga_id !== '' )
 
 	function stickySummary( header_el, header_height ) 
 	{
-		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 40;
+		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 80;
 		target_stop = wonka_single_product_img_area.offsetHeight - summary_section.offsetHeight;
 		win_y = window.pageYOffset;
 
