@@ -32,13 +32,13 @@
 
 #content {
 	margin: 0;
-	padding: 110px 0 0 0;
-	@include prefix( transition, $trans_25, o moz webkit );
+	padding: 0;
 
-	main#main {
+	main#main, main#site-main {
 		width: 100%;
 		max-width: 1200px;
 		margin: 15px auto;
+		padding: 0 15px;
 
 		header.entry-header {
 			display: flex;
@@ -61,18 +61,6 @@
 		.entry-title {
 			display: none;
 		}
-	}
-
-	@include media-breakpoint( xs ) {
-		padding-top: 120px;
-	}
-
-	@include media-breakpoint( sm ) {
-		padding-top: 140px;
-	}
-
-	@include media-breakpoint( md ) {
-		padding-top: 120px;
 	}
 }
 
