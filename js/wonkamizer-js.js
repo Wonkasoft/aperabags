@@ -716,18 +716,74 @@ if ( wonkasoft_request.ga_id !== '' )
 		var content_area = document.querySelector( '#content' );
 		if ( win_y_offset > header_height ) 
 		{
-			header_el.classList.add( 'fixed' );
-			content_area.style = 'padding-top: ' + header_height + 'px;';
-			if ( '' == header_el.style.height ) 
+			if ( document.querySelector( '#wpadminbar' ) ) 
 			{
-				drop_down = setTimeout( function() 
+				admin_bar = document.querySelector( '#wpadminbar' );
+				admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+				
+				if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+				{
+					header_el.classList.add( 'fixed' );
+					content_area.style = 'padding-top: ' + header_height + 'px;';
+					if ( '' == header_el.style.height ) 
+					{
+						drop_down = setTimeout( function() 
+						{
+							if ( window.pageYOffset > header_height ) 
+							{
+								header_el.style = 'height: ' + header_height + 'px; top: ' + admin_height + ';';
+								setTimeout( function() 
+									{
+										header_el.style = 'height: ' + header_height + 'px; top: ' + admin_height + '; overflow: unset;';
+
+									}, 400 );
+							}
+							else
+							{
+								header_el.style = '';
+							}
+						}, 300 );
+					}
+				}
+				else
+				{
+					header_el.classList.add( 'fixed' );
+					content_area.style = 'padding-top: ' + header_height + 'px;';
+					if ( '' == header_el.style.height ) 
+					{
+						drop_down = setTimeout( function() 
+						{
+							if ( window.pageYOffset > header_height ) 
+							{
+								header_el.style = 'height: ' + header_height + 'px; top: 0;';
+								setTimeout( function() 
+									{
+										header_el.style = 'height: ' + header_height + 'px; top: 0; overflow: unset;';
+
+									}, 400 );
+							}
+							else
+							{
+								header_el.style = '';
+							}
+						}, 300 );
+					}
+				}
+			}
+			else
+			{
+				header_el.classList.add( 'fixed' );
+				content_area.style = 'padding-top: ' + header_height + 'px;';
+				if ( '' == header_el.style.height ) 
+				{
+					drop_down = setTimeout( function() 
 					{
 						if ( window.pageYOffset > header_height ) 
 						{
-							header_el.style = 'height: ' + header_height + 'px;';
+							header_el.style = 'height: ' + header_height + 'px; top: 0;';
 							setTimeout( function() 
 								{
-									header_el.style = 'height: ' + header_height + 'px; overflow: unset;';
+									header_el.style = 'height: ' + header_height + 'px; top: 0; overflow: unset;';
 
 								}, 400 );
 						}
@@ -736,7 +792,9 @@ if ( wonkasoft_request.ga_id !== '' )
 							header_el.style = '';
 						}
 					}, 300 );
+				}
 			}
+
 		} 
 		else
 		{

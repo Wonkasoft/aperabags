@@ -119,6 +119,7 @@
 		&.fixed {
 			position: fixed;
 			height: 0;
+			top: 0;
 			overflow: hidden;
 			@include prefix( transition, all .3s ease-in-out, o moz webkit );
 		}
