@@ -643,3 +643,15 @@ main#full-width {
 		}
 	}
 }
+
+.fixed-divider-460:before {
+	content: "";
+    position: absolute;
+    display: inline-block;
+    top: -4px;
+    left: calc(50% - 231px);
+    margin: auto;
+    height: 8px;
+    width: 460px;
+    background: #52abf6;
+}
