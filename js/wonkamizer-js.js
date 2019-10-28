@@ -1728,7 +1728,7 @@ if ( wonkasoft_request.ga_id !== '' )
 			
 		}
 
-		if ( document.querySelector( '.page-template-default' ) ) 
+		if ( document.querySelector( '.page-template-default' ) || document.querySelector( '.page-template' ) ) 
 		{
 			header_el = document.querySelector( '#masthead' );
 			header_height = header_el.offsetHeight;
