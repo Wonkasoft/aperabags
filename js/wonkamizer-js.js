@@ -721,7 +721,7 @@ if ( wonkasoft_request.ga_id !== '' )
 				admin_bar = document.querySelector( '#wpadminbar' );
 				admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
 				
-				if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
+				if ( getComputedStyle( admin_bar ).position == 'fixed' ) 
 				{
 					header_el.classList.add( 'fixed' );
 					content_area.style = 'padding-top: ' + header_height + 'px;';
@@ -731,10 +731,10 @@ if ( wonkasoft_request.ga_id !== '' )
 						{
 							if ( window.pageYOffset > header_height ) 
 							{
-								header_el.style = 'height: ' + header_height + 'px; top: ' + admin_height + ';';
+								header_el.style = 'height: ' + header_height + 'px; top: ' + admin_height + 'px;';
 								setTimeout( function() 
 									{
-										header_el.style = 'height: ' + header_height + 'px; top: ' + admin_height + '; overflow: unset;';
+										header_el.style = 'height: ' + header_height + 'px; top: ' + admin_height + 'px; overflow: unset;';
 
 									}, 400 );
 							}
@@ -1786,7 +1786,7 @@ if ( wonkasoft_request.ga_id !== '' )
 			
 		}
 
-		if ( document.querySelector( '.page-template-default' ) || document.querySelector( '.page-template' ) ) 
+		if ( document.querySelector( '.page-template-default' ) || document.querySelector( '.page-template' ) || document.querySelector( '.error404' ) ) 
 		{
 			header_el = document.querySelector( '#masthead' );
 			header_height = header_el.offsetHeight;
