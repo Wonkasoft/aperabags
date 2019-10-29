@@ -1691,10 +1691,6 @@ if ( wonkasoft_request.ga_id !== '' )
 			register_col = document.querySelector( 'div.register' );
 			register_form = document.querySelector( 'form.woocommerce-form-register' );
 			loggin_toggle_wrapper = document.querySelector( 'div.loggin-toggle-wrapper' );
-			if ( '1' === getUrlVars().create ) 
-			{
-				create_toggle_btn.click();
-			}
 
 			create_toggle_btn.addEventListener( 'click', function( e )
 			{
@@ -1715,6 +1711,11 @@ if ( wonkasoft_request.ga_id !== '' )
 				register_form.classList.toggle( 'form-register-toggle' );
 				loggin_toggle_wrapper.classList.toggle( 'loggin-toggle-wrapper-visable' );
 			});
+			
+			if ( '1' === getUrlVars().create ) 
+			{
+				create_toggle_btn.click();
+			}
 		}
 
 
