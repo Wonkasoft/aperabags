@@ -1910,10 +1910,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				 * @return void
 				 */
 				function init() {
-					// Load the settings API
+					// Load the settings API.
 					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
-					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
-					// Save settings in admin if you have any defined
+					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings.
+					// Save settings in admin if you have any defined.
 					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 				}
 				/**
@@ -1930,7 +1930,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 						'cost'     => '30.00',
 						'calc_tax' => 'per_item',
 					);
-					// Register the rate
+					// Register the rate.
 					$this->add_rate( $rate );
 				}
 			}
@@ -1939,6 +1939,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
 
+	/**
+	 * This adds new shipping methods.
+	 *
+	 * @param object $methods contains the current methods.
+	 */
 	function add_ws_shipping_methods( $methods ) {
 
 		$methods['USPS_Priority_Mail_Express'] = 'WC_Priority_Mail_Express_Shipping_Method';
@@ -1947,7 +1952,16 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	add_filter( 'woocommerce_shipping_methods', 'add_ws_shipping_methods' );
 }
 
-
+/**
+ * This function is used to call product images
+ *
+ * @param  [type] $image       [description]
+ * @param  [type] $obj         [description]
+ * @param  [type] $size        [description]
+ * @param  [type] $attr        [description]
+ * @param  [type] $placeholder [description]
+ * @return [type]              [description]
+ */
 function wonka_woocommerce_product_get_image( $image, $obj, $size, $attr, $placeholder ) {
 
 	$size = array( '220', '264' );
@@ -2010,6 +2024,12 @@ function wonkasoft_woocommerce_register_form_start() {
 }
 add_action( 'woocommerce_register_form_start', 'wonkasoft_woocommerce_register_form_start', 10 );
 
+/**
+ * This sets the role for woocommerce registration form
+ *
+ * @param  [type] $new_customer_data [description]
+ * @return [type]                    [description]
+ */
 function wonkasoft_woocommerce_new_customer_data( $new_customer_data ) {
 
 	$new_customer_data['role'] = get_option( 'default_role' );
@@ -2018,3 +2038,25 @@ function wonkasoft_woocommerce_new_customer_data( $new_customer_data ) {
 
 }
 add_filter( 'woocommerce_new_customer_data', 'wonkasoft_woocommerce_new_customer_data', 10 );
+
+/**
+ * This sets the user first name last name and billing fields.
+ *
+ * @param  [type] $customer_id [description]
+ * @return [type]              [description]
+ */
+function wonkasoft_woocommerce_created_customer( $customer_id ) {
+	if ( isset( $_POST['billing_first_name'] ) ) {
+		// First name field which is by default
+		update_user_meta( $customer_id, 'first_name', sanitize_text_field( $_POST['billing_first_name'] ) );
+		// First name field which is used in WooCommerce
+		update_user_meta( $customer_id, 'billing_first_name', sanitize_text_field( $_POST['billing_first_name'] ) );
+	}
+	if ( isset( $_POST['billing_last_name'] ) ) {
+		// Last name field which is by default
+		update_user_meta( $customer_id, 'last_name', sanitize_text_field( $_POST['billing_last_name'] ) );
+		// Last name field which is used in WooCommerce
+		update_user_meta( $customer_id, 'billing_last_name', sanitize_text_field( $_POST['billing_last_name'] ) );
+	}
+}
+add_action( 'woocommerce_created_customer', 'wonkasoft_woocommerce_created_customer' );
