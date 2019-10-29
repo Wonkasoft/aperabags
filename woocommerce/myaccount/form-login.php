@@ -131,7 +131,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 		</form>
 			<div class="loggin-toggle-wrapper">
 				<p><?php esc_html_e( 'Already have an account?', 'woocommerce' ); ?></p>
-				<button type="submit" class="login-slide-btn button wonka-btn" name="register" ><?php esc_html_e( 'Login', 'woocommerce' ); ?></button>
+				<button type="submit" class="login-slide-btn button wonka-btn" name="register" ><?php esc_html_e( 'Back to Login', 'woocommerce' ); ?></button>
 			</div>
 
 	</div>

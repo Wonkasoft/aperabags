@@ -1,10 +1,11 @@
 main.main-my-account {
 
   div#customer_login {
-    overflow-x: hidden;
+    overflow: hidden;
 
     .login,
     .register {
+      margin-bottom: 15px;
       transition: all .35s ease-in-out;
     
       .create-account-full {
@@ -29,15 +30,20 @@ main.main-my-account {
 
       &.collapse-col-login {
         display: block;
-        margin: -100% 0 0 0;
+        margin: -200% 0 0 0;
 
         @include media-breakpoint( md ) {
+          margin: 0 0 0 -100%
+        }
+
+        @include media-breakpoint( lg ) {
           margin: 0 0 0 -50%
         }
       }
 
       .loggin-toggle-wrapper {
         opacity: 0;
+        margin: 8px auto;
       }
 
       .loggin-toggle-wrapper-visable {

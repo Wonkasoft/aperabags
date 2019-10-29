@@ -1969,3 +1969,43 @@ function wonka_woocommerce_product_get_image( $image, $obj, $size, $attr, $place
 }
 add_filter( 'woocommerce_product_get_image', 'wonka_woocommerce_product_get_image', 10, 5 );
 
+function wonkasoft_woocommerce_register_form_start() {
+	$output = '';
+
+	$first_name = ( ! empty( $_POST['billing_first_name'] ) ) ? esc_attr( wp_unslash( $_POST['billing_first_name'] ) ) : '';
+	$last_name  = ( ! empty( $_POST['billing_last_name'] ) ) ? esc_attr( wp_unslash( $_POST['billing_last_name'] ) ) : '';
+
+	$output .= '<div class="form-group">';
+	$output .= '<div class="input-group">';
+	$output .= '<div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-user"></i></span></div>';
+	$output .= '<input type="text" class="form-control" name="billing_first_name" id="reg_billing_first_name" placeholder="' . esc_html( 'First Name *', 'woocommerce' ) . '" autocomplete="billing_first_name" value="' . $first_name . '" />';
+	$output .= '<input type="text" class="form-control" name="billing_last_name" id="reg_billing_last_name" placeholder="' . esc_html( 'Last Name *', 'woocommerce' ) . '" autocomplete="billing_last_name" value="' . $last_name . '" />';
+	$output .= '<div class="invalid-feedback reg_billing_first_name"></div>';
+	$output .= '</div>';
+	$output .= '</div>';
+
+	echo wp_kses(
+		$output,
+		array(
+			'div'   => array(
+				'class' => array(),
+			),
+			'i'     => array(
+				'class' => array(),
+			),
+			'span'  => array(
+				'class' => array(),
+			),
+			'input' => array(
+				'type'         => array(),
+				'class'        => array(),
+				'name'         => array(),
+				'id'           => array(),
+				'placeholder'  => array(),
+				'autocomplete' => array(),
+				'value'        => array(),
+			),
+		)
+	);
+}
+add_action( 'woocommerce_register_form_start', 'wonkasoft_woocommerce_register_form_start', 10 );

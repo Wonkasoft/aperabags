@@ -15,7 +15,7 @@ get_header();
 
 			<section class="error-404 not-found text-center">
 				<header class="page-header">
-					<h1>404</h1>
+					<h1>404-page</h1>
 					<h2 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'apera-bags' ); ?></h2>
 					<?php get_search_form(); ?>
 				</header><!-- .page-header -->
