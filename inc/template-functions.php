@@ -103,7 +103,15 @@ function the_mods_for_section( $section ) {
 				$slide                      = new stdClass();
 				$slide->slide_img           = get_theme_mod( 'cta_slider_' . $i );
 				$slide->slide_text_position = get_theme_mod( 'cta_slider_text_position_' . $i );
+				$slide->slide_title  = get_theme_mod( 'cta_slider_title_' . $i );
+
 				$slide->slide_text_message  = get_theme_mod( 'cta_slider_text_' . $i );
+
+				for ( $a = 1; $a <= 3; $a++ ) {
+
+					$slide->{ 'cta_description_' . $a } = get_theme_mod( 'cta_slider_' . $i . '_description_' . $a );
+
+				}
 				$slide->slide_link_btn      = get_theme_mod( 'cta_slider_btn_text_' . $i );
 				$slide->slide_link          = get_theme_mod( 'cta_slider_btn_link_' . $i );
 				// Mobile Theme mod.
@@ -1005,12 +1013,14 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 		$campaign_name = 'ambassador_program_signups';
 		$set_tag       = 'ambassadorcompleted';
 		$role          = 'apera_ambassador_affiliate';
+		$role_display  = 'Apera Ambassador Affiliate';
 	endif;
 
 	if ( 'Refersion Registration Zip' === $form['title'] ) :
 		$campaign_name = 'zip_program_signups';
 		$set_tag       = 'zipcompleted';
 		$role          = 'apera_zip_affiliate';
+		$role_display  = 'Apera Zip Affiliate';
 	endif;
 
 	// Get current user object.
@@ -1094,16 +1104,11 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 		// Check if email has user account already.
 		if ( email_exists( $entry_fields['email'] ) ) {
 
-			$user = get_user_by( 'email', $entry_fields['email'] );
-
+			$user    = get_user_by( 'email', $entry_fields['email'] );
+			$user_id = $user->data->ID;
+			$user    = new WP_User( $user_id );
 			if ( ! in_array( $role, $user->roles ) ) :
-				array_push( $user->roles, $role );
-				wp_update_user(
-					array(
-						'ID'   => $user->ID,
-						'role' => $user->roles,
-					)
-				);
+				$user->add_role( $role, $role_display );
 			endif;
 
 			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
@@ -1146,39 +1151,12 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 		} else {
 
-			// Setting time stamp.
-			$ts   = time();
-			$date = new DateTime( "@$ts" );
-			$date->setTimezone( new DateTimeZone( get_option( 'timezone_string' ) ) );
-
-			// Setting new user args.
-			$userdata = array(
-				'user_pass'            => $entry_fields['password'],   // (string) The plain-text user password.
-				'user_login'           => $entry_fields['email'],   // (string) The user's login username.
-				'user_nicename'        => $entry_fields['first'],   // (string) The URL-friendly user name.
-				'user_email'           => $entry_fields['email'],   // (string) The user email address.
-				'display_name'         => $entry_fields['first'] . ' ' . $entry_fields['last'],   // (string) The user's display name. Default is the user's username.
-				'first_name'           => $entry_fields['first'],   // (string) The user's first name. For new users, will be used to build the first part of the user's display name if $display_name is not specified.
-				'last_name'            => $entry_fields['last'],   // (string) The user's last name. For new users, will be used to build the second part of the user's display name if $display_name is not specified.
-				'use_ssl'              => true,   // (bool) Whether the user should always access the admin over https. Default false.
-				'user_registered'      => $date->format( 'Y-m-d H:i:s' ),   // (string) Date the user registered. Format is 'Y-m-d H:i:s'.
-				'show_admin_bar_front' => false,   // (string|bool) Whether to display the Admin Bar for the user on the site's front end. Default true.
-				'role'                 => $role,   // (string) User's role.
-			);
-
-			// Inserting new user and getting user id.
-			$user_id = wp_insert_user( $userdata );
+			$user_id = wonkasoft_make_user_account( $entry_fields, $role );
 
 			$user = new WP_User( $user_id );
 
 			if ( ! in_array( $role, $user->roles ) ) :
-				array_push( $user->roles, $role );
-				wp_update_user(
-					array(
-						'ID'   => $user_id,
-						'role' => $user->roles,
-					)
-				);
+				$user->add_role( $role, $role_display );
 			endif;
 
 			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
@@ -1227,18 +1205,17 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 			$refersion_response = $refersion_api_init->add_new_affiliate();
 
-			$user = get_user_by( 'email', $entry_fields['email'] );
+			if ( email_exists( $entry_fields['email'] ) ) {
+				$user    = get_user_by( 'email', $entry_fields['email'] );
+				$user_id = $user->data->ID;
+				$user    = new WP_User( $user_id );
+			} else {
+				$user_id = wonkasoft_make_user_account( $entry_fields, $role );
+				$user    = new WP_User( $user_id );
+			}
 
 			if ( ! in_array( $role, $user->roles ) ) :
-
-				array_push( $user->roles, $role );
-				wp_update_user(
-					array(
-						'ID'   => $user_id,
-						'role' => $user->roles,
-					)
-				);
-
+				$user->add_role( $role, $role_display );
 			endif;
 
 			if ( 'failed' !== $refersion_response->status ) :
@@ -1280,6 +1257,41 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 }
 add_action( 'gform_after_submission', 'wonkasoft_after_form_submission', 10, 2 );
 
+/**
+ * This function creates new user accounts.
+ *
+ * @param  array  $entry_fields contains the form fields.
+ * @param  string $role         the role set to give new user.
+ * @return number               returns the new user id.
+ */
+function wonkasoft_make_user_account( $entry_fields, $role ) {
+
+	// Setting time stamp.
+	$ts   = time();
+	$date = new DateTime( "@$ts" );
+	$date->setTimezone( new DateTimeZone( get_option( 'timezone_string' ) ) );
+
+	// Setting new user args.
+	$userdata = array(
+		'user_pass'            => $entry_fields['password'],   // (string) The plain-text user password.
+		'user_login'           => $entry_fields['email'],   // (string) The user's login username.
+		'user_nicename'        => $entry_fields['first'],   // (string) The URL-friendly user name.
+		'user_email'           => $entry_fields['email'],   // (string) The user email address.
+		'display_name'         => $entry_fields['first'] . ' ' . $entry_fields['last'],   // (string) The user's display name. Default is the user's username.
+		'first_name'           => $entry_fields['first'],   // (string) The user's first name. For new users, will be used to build the first part of the user's display name if $display_name is not specified.
+		'last_name'            => $entry_fields['last'],   // (string) The user's last name. For new users, will be used to build the second part of the user's display name if $display_name is not specified.
+		'use_ssl'              => true,   // (bool) Whether the user should always access the admin over https. Default false.
+		'user_registered'      => $date->format( 'Y-m-d H:i:s' ),   // (string) Date the user registered. Format is 'Y-m-d H:i:s'.
+		'show_admin_bar_front' => false,   // (string|bool) Whether to display the Admin Bar for the user on the site's front end. Default true.
+		'role'                 => $role,   // (string) User's role.
+	);
+
+	// Inserting new user and getting user id.
+	$user_id = wp_insert_user( $userdata );
+
+	return $user_id;
+
+}
 
 /**
  * Function is called if refersion successfully created affiliate.
@@ -1639,6 +1651,9 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 		'Discount Code',
 		'Percentage',
 		'Email',
+		'Tag',
+		'First Name',
+		'Last Name',
 	);
 
 	$custom_fields = array();
@@ -1694,7 +1709,7 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 		$api_args = array(
 			'email' => $entry_fields['email'],
 			'tags'  => array(
-				'discount_code_created',
+				$entry_fields['tag'],
 			),
 		);
 
@@ -1785,6 +1800,8 @@ function get_response_api_call( $api_args ) {
 
 /**
  * This function registers the custom api route.
+ *
+ * {site_url}/api/wonkasoft/v1/getresponse-api/
  */
 function wonkasoft_register_custom_api() {
 	register_rest_route(
@@ -1800,12 +1817,24 @@ function wonkasoft_register_custom_api() {
 add_action( 'rest_api_init', 'wonkasoft_register_custom_api' );
 
 /**
+ * This function resets the wp-json rest api.
+ *
+ * @param  string $api current base route.
+ * @return string      returns rest api base.
+ */
+function wonka_rest_api( $api ) {
+	return 'api';
+}
+add_filter( 'rest_url_prefix', 'wonka_rest_api' );
+
+/**
  * This function handles the rest api endpoint for getResponse.
  *
  * @param  array $data contains params send in the url.
  * @return json    returns the response data.
  */
 function wonkasoft_getresponse_endpoint( $data ) {
+
 	if ( ! isset( $_GET['email'] ) && ! isset( $_GET['tag'] ) && ! isset( $_GET['campaign_name'] ) ) :
 		return 'Invalid request, contact support for more information.';
 	endif;
@@ -1867,18 +1896,6 @@ function wonkasoft_getresponse_endpoint( $data ) {
 
 	return $getresponse;
 }
-
-/**
- * This function resets the wp-json rest api.
- *
- * @param  string $api current base route.
- * @return string      returns rest api base.
- */
-function wonka_rest_api( $api ) {
-	return 'api';
-}
-add_filter( 'rest_url_prefix', 'wonka_rest_api' );
-
 
 /**
  * This function adds Affiliate and Contact data to user profile.

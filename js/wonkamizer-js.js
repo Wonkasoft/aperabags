@@ -34,6 +34,9 @@ if ( wonkasoft_request.ga_id !== '' )
 	admin_bar,
 	message_timer,
 	admin_height,
+	drop_down,
+	header_el,
+	header_height,
 	xhr = new XMLHttpRequest();
 
 	if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
@@ -74,7 +77,7 @@ if ( wonkasoft_request.ga_id !== '' )
 	 * This is for the zip and ambassador thank you pages.
 	 * 
 	 */
-	if (document.getElementById("ambassadar-first-name") || document.getElementById("club-name") || document.getElementById("confirm-email") ) {
+	if (document.getElementById("ambassadar-first-name") || document.getElementById("zip-first-name") || document.getElementById("confirm-email") ) {
 		if ( getUrlVars().firstname ) 
 		{
 			var firstname = decodeURIComponent( getUrlVars().firstname ).replace( /\+/gi, ' ' );
@@ -91,6 +94,26 @@ if ( wonkasoft_request.ga_id !== '' )
 		{
 			var confirm_email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
 			document.getElementById("confirm-email").innerHTML = confirm_email;
+		}
+	}
+
+	if ( document.getElementById("for-fname") ) {
+		if ( getUrlVars().email ) 
+		{
+			var for_email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("for-email").innerHTML = for_email;
+		}
+
+		if ( getUrlVars().fname ) 
+		{
+			var for_fname = decodeURIComponent( getUrlVars().fname ).replace( /\+/gi, ' ' );
+			document.getElementById("for-fname").innerHTML = for_fname;
+		}
+
+		if ( getUrlVars().lname ) 
+		{
+			var for_lname = decodeURIComponent( getUrlVars().lname ).replace( /\+/gi, ' ' );
+			document.getElementById("for-lname").innerHTML = for_lname;
 		}
 	}
 
@@ -682,8 +705,51 @@ if ( wonkasoft_request.ga_id !== '' )
 
 		if ( document.body.scrollTop > height || document.documentElement.scrollTop > height ) {
 			document.querySelector('#masthead').classList.add('transparent-header');
+			
 		} else {
 			document.querySelector('#masthead').classList.remove('transparent-header');
+		}
+	}
+
+	function add_fixed_header( win_y_offset, header_el, header_height ) 
+	{
+		var content_area = document.querySelector( '#content' );
+		if ( win_y_offset > header_height ) 
+		{
+			header_el.classList.add( 'fixed' );
+			content_area.style = 'padding-top: ' + header_height + 'px;';
+			if ( '' == header_el.style.height ) 
+			{
+				drop_down = setTimeout( function() 
+					{
+						if ( window.pageYOffset > header_height ) 
+						{
+							header_el.style = 'height: ' + header_height + 'px;';
+							setTimeout( function() 
+								{
+									header_el.style = 'height: ' + header_height + 'px; overflow: unset;';
+
+								}, 400 );
+						}
+						else
+						{
+							header_el.style = '';
+						}
+					}, 300 );
+			}
+		} 
+		else
+		{
+			if ( 0 === win_y_offset ) 
+			{
+				if ( header_el.classList.contains( 'fixed' ) ) 
+				{
+					header_el.classList.remove( 'fixed' );
+					content_area.style = '';
+				}
+				clearTimeout( drop_down );
+				header_el.style = '';
+			}
 		}
 	}
 
@@ -934,7 +1000,7 @@ if ( wonkasoft_request.ga_id !== '' )
 				});
 		}
 
-		if ( window.pageYOffset < top_slider_section.offsetTop ) 
+		if ( window.pageYOffset <= top_slider_section.offsetTop ) 
 		{
 			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
@@ -957,7 +1023,7 @@ if ( wonkasoft_request.ga_id !== '' )
 				});
 		}
 
-		if ( window.pageYOffset < cta_section.offsetTop ) 
+		if ( window.pageYOffset <= cta_section.offsetTop ) 
 		{
 			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
@@ -969,26 +1035,24 @@ if ( wonkasoft_request.ga_id !== '' )
 		
 	}
 
-	function stickyThumbnails() 
+	function stickyThumbnails( header_el, header_height ) 
 	{
-		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 40;
+		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 80;
 		target_stop = wonka_single_product_img_area.offsetHeight - thumbnail_controls.offsetHeight;
 		var scrolling_spacer = document.querySelector( 'div.sticky-spacer' );
 		win_y = window.pageYOffset;
 
-		if ( win_y < img_area_top ) 
+		if ( win_y + header_height < img_area_top ) 
 		{
 			thumbnail_controls.classList.remove( 'sticky-on' );
 			thumbnail_controls.removeAttribute( 'style' );
-			scrolling_spacer.classList.remove( 'spacing-now' );
 			scrolling_spacer.removeAttribute( 'style' );
 		}
-		else if ( win_y - img_area_top > target_stop ) 
+		else if ( win_y + header_height - img_area_top > target_stop ) 
 		{
 			thumbnail_controls.style.top = target_stop + 'px';
 			thumbnail_controls.classList.remove( 'sticky-on' );
 			scrolling_spacer.style.top = target_stop + 'px';
-			scrolling_spacer.classList.remove( 'spacing-now' );
 		} 
 		else
 		{
@@ -1000,42 +1064,39 @@ if ( wonkasoft_request.ga_id !== '' )
 				if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
 				{
 					thumbnail_controls.classList.add( 'sticky-on' );
-					thumbnail_controls.style.top = 30 + 'px';
-					scrolling_spacer.classList.add( 'spacing-now' );
+					thumbnail_controls.style.top = header_height + 'px';
 					scrolling_spacer.style.top = 0;
 				}
 				else
 				{
 					thumbnail_controls.classList.add( 'sticky-on' );
-					thumbnail_controls.style.top = admin_height + 30 + 'px';
-					scrolling_spacer.classList.add( 'spacing-now' );
+					thumbnail_controls.style.top = admin_height + header_height + 'px';
 					scrolling_spacer.style.top = admin_height + 'px';
 				}
 			}
 			else
 			{
 				thumbnail_controls.classList.add( 'sticky-on' );
-				thumbnail_controls.style.top = 30 + 'px';
-				scrolling_spacer.classList.add( 'spacing-now' );
+				thumbnail_controls.style.top = header_height + 'px';
 				scrolling_spacer.style.top = 0;
 			}
 		} 
 	}
 
-	function stickySummary() 
+	function stickySummary( header_el, header_height ) 
 	{
-		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 40;
+		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 80;
 		target_stop = wonka_single_product_img_area.offsetHeight - summary_section.offsetHeight;
 		win_y = window.pageYOffset;
 
 		if ( wonka_single_product_img_area.offsetHeight > summary_section.offsetHeight ) 
 		{
-			if ( window.innerWidth > 767 && win_y < img_area_top ) 
+			if ( window.innerWidth > 767 + header_height && win_y + header_height < img_area_top ) 
 			{
 				summary_section.classList.remove( 'sticky-on' );
 				summary_section.removeAttribute( 'style' );
 			}
-			else if ( window.innerWidth > 767 && win_y - img_area_top > target_stop ) 
+			else if ( window.innerWidth > 767 && win_y + header_height - img_area_top > target_stop ) 
 			{
 				summary_section.style.top = target_stop + 'px';
 				summary_section.classList.remove( 'sticky-on' );
@@ -1050,18 +1111,18 @@ if ( wonkasoft_request.ga_id !== '' )
 					if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
 					{
 						summary_section.classList.add( 'sticky-on' );
-						summary_section.style.top = 30 + 'px';
+						summary_section.style.top = header_height + 'px';
 					}
 					else
 					{
 						summary_section.classList.add( 'sticky-on' );
-						summary_section.style.top = admin_height + 30 + 'px';
+						summary_section.style.top = admin_height + header_height + 'px';
 					}
 				}
 				else
 				{
 					summary_section.classList.add( 'sticky-on' );
-					summary_section.style.top = 30 + 'px';
+					summary_section.style.top = header_height + 'px';
 				}
 			}
 		}
@@ -1666,6 +1727,18 @@ if ( wonkasoft_request.ga_id !== '' )
 			};
 			
 		}
+
+		if ( document.querySelector( '.page-template-default' ) ) 
+		{
+			header_el = document.querySelector( '#masthead' );
+			header_height = header_el.offsetHeight;
+			add_fixed_header( window.pageYOffset, header_el, header_height );
+
+			window.onscroll = function() 
+			{
+				add_fixed_header( window.pageYOffset, header_el, header_height );
+			};
+		}
 		/*=====  End of For parallax on front page sliders  ======*/
 		
 		/*========================================================
@@ -1679,51 +1752,6 @@ if ( wonkasoft_request.ga_id !== '' )
 		===========================================================================================*/
 		footer_adjustment();
 		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
-
-		/*===================================================================
-		=            This is for engaging with the Refersion API            =
-		===================================================================*/
-		if ( document.querySelector( '.wonka-refersion-form' ) ) 
-		{
-			var action = 'refersion_api_calls';
-			var refersion_form = document.querySelector( '.wonka-refersion-form' );
-			var submit_btn = refersion_form.querySelector( 'input[type="submit"]' );
-
-			// submit_btn.onclick = function( e ) 
-			// {
-
-			// 	var form_inputs = refersion_form.querySelectorAll( 'input' );
-			// 	var data = {};
-			// 	form_inputs.forEach( function( input, i ) 
-			// 		{
-			// 			if ( 'submit' !== input.type ) 
-			// 			{
-			// 				var key = input.id;
-			// 				var value = input.value;
-			// 				data[key] = value;
-			// 			}
-			// 		});
-			// 	console.log( data );
-			// 	if ( data.password === data.reenter_password ) 
-			// 	{
-			// 		xhr.onreadystatechange = function() {
-		 //        if ( this.readyState == 4 && this.status == 200 )  {
-		 //        	var response =   this.responseText;
-		 //        	console.log( response );
-		 //        }
-	  //       };
-	  //       xhr.open('POST', wonkasoft_request.ajax );
-	  //       xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-	  //       xhr.send( 'action=' + action + '&data=' + JSON.stringify( data ) + '&security=' + data.gform_unique_id );
-			// 	}
-			// 	else
-			// 	{
-			// 		refersion_form.validate();
-			// 	}
-			// };
-
-		}
-		/*=====  End of This is for engaging with the Refersion API  ======*/
 		
 		/*=================================
 		=            For Popup            =
@@ -2552,12 +2580,15 @@ if ( wonkasoft_request.ga_id !== '' )
 				
 			}
 			/*=====  End of This is the setup for the Wonka Express Checkout Button  ======*/
-
+			header_el = document.querySelector( '#masthead' );
+			header_height = header_el.offsetHeight;
+			add_fixed_header( window.pageYOffset, header_el, header_height );
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
-				stickyThumbnails();
-				stickySummary();
+				stickyThumbnails( header_el, header_height );
+				stickySummary( header_el, header_height );
+				add_fixed_header( window.pageYOffset, header_el, header_height );
 			};
 		}
 		/*=====  End of For single product page  ======*/
