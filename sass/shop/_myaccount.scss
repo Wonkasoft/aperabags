@@ -7,6 +7,11 @@ main.main-my-account {
     .register {
       margin-bottom: 15px;
       transition: all .35s ease-in-out;
+
+      h2 {
+        text-transform: none;
+        margin-bottom: 15px;
+      }
     
       .create-account-full {
         opacity: 1;
@@ -53,6 +58,11 @@ main.main-my-account {
       ul.the_champ_login_ul {
         display: flex;
         justify-content: flex-start;
+      }
+
+      button {
+        margin-top: 15px;
+        margin-bottom: 15px;
       }
     }
 

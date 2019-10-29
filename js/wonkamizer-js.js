@@ -1718,7 +1718,6 @@ if ( wonkasoft_request.ga_id !== '' )
 			}
 		}
 
-
 		// if ( document.querySelector( 'div.xoo-wsc-modal' ) ) 
 		// {
 		// 	var side_cart_btn = document.querySelector( '.wonka-cart-open' );
