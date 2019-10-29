@@ -2009,3 +2009,12 @@ function wonkasoft_woocommerce_register_form_start() {
 	);
 }
 add_action( 'woocommerce_register_form_start', 'wonkasoft_woocommerce_register_form_start', 10 );
+
+function wonkasoft_woocommerce_new_customer_data( $new_customer_data ) {
+
+	$new_customer_data['role'] = get_option( 'default_role' );
+
+	return $new_customer_data;
+
+}
+add_filter( 'woocommerce_new_customer_data', 'wonkasoft_woocommerce_new_customer_data', 10 );
