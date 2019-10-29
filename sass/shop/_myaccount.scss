@@ -27,14 +27,14 @@ main#main.main-my-account {
       }
 
       .woocommerce-form-register {
-        padding: 0 30px;
+        padding: 0 8px;
         height: 0;
         overflow: hidden;
         transition: all .35s ease-in-out;
       }
 
       .form-register-toggle {
-        height: 285px;
+        height: 350px;
       }
 
       &.collapse-col-login {
@@ -62,17 +62,16 @@ main#main.main-my-account {
       ul.the_champ_login_ul {
         display: flex;
         justify-content: flex-start;
+
+        li {
+          margin: 15px 15px 15px 0 !important;
+        }
       }
 
       button {
         margin-top: 15px;
         margin-bottom: 15px;
       }
-    }
-
-    .register ul.the_champ_login_ul {
-      display: flex;
-      justify-content: center;
     }
 
     div.input-group {

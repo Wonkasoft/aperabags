@@ -71,7 +71,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 	</div>
 
-	<div class="col-12 col-lg-6 register text-center">
+	<div class="col-12 col-lg-6 register">
 
 		<h2><?php esc_html_e( 'I\'m new here...', 'woocommerce' ); ?></h2>
 
