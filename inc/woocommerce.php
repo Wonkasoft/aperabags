@@ -378,9 +378,9 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 function wonka_product_tabs_retitle( $tabs ) {
 
 	$new_title                       = get_post_meta( get_the_ID(), 'product_statement', true );
-	$tabs['reviews']['priority']     = 10;          // Reviews first
-	$tabs['description']['priority'] = 20;          // Description second
-	unset( $tabs['additional_information'] );   // Additional information third
+	$tabs['reviews']['priority']     = 10;          // Reviews first.
+	$tabs['description']['priority'] = 20;          // Description second.
+	unset( $tabs['additional_information'] );   // Additional information third.
 	$tabs['description']['title']   = __( $new_title );
 	$tabs['description']['section'] = __( 'Product Statement' );
 
@@ -390,7 +390,7 @@ function wonka_product_tabs_retitle( $tabs ) {
 add_filter( 'woocommerce_product_tabs', 'wonka_product_tabs_retitle', 98 );
 
 /**
- * This is for moving the cross sells items on the cart page setting the display of how many items and columns to show
+ * This is for moving the cross sells items on the cart page setting the display of how many items and columns to show.
  */
 function wonka_cart_cross_sells() {
 	add_filter(
@@ -432,7 +432,14 @@ function wonka_checkout_wrap_before( $checkout ) {
 	$output .= '<div class="row wonka-checkout-row">';
 	$output .= '<div class="col col-12 col-md-7 checkout-form-left-side">';
 
-	_e( $output );
+	echo wp_kses(
+		$output,
+		array(
+			'div' => array(
+				'class' => array(),
+			),
+		)
+	);
 }
 
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25, 1 );
@@ -2042,21 +2049,23 @@ add_filter( 'woocommerce_new_customer_data', 'wonkasoft_woocommerce_new_customer
 /**
  * This sets the user first name last name and billing fields.
  *
- * @param  [type] $customer_id [description]
- * @return [type]              [description]
+ * @param  number $customer_id customer ID.
  */
 function wonkasoft_woocommerce_created_customer( $customer_id ) {
 	if ( isset( $_POST['billing_first_name'] ) ) {
 		// First name field which is by default
-		update_user_meta( $customer_id, 'first_name', sanitize_text_field( $_POST['billing_first_name'] ) );
+		update_user_meta( $customer_id, 'first_name', sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) );
 		// First name field which is used in WooCommerce
-		update_user_meta( $customer_id, 'billing_first_name', sanitize_text_field( $_POST['billing_first_name'] ) );
+		update_user_meta( $customer_id, 'billing_first_name', sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) );
 	}
 	if ( isset( $_POST['billing_last_name'] ) ) {
 		// Last name field which is by default
-		update_user_meta( $customer_id, 'last_name', sanitize_text_field( $_POST['billing_last_name'] ) );
+		update_user_meta( $customer_id, 'last_name', sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) );
 		// Last name field which is used in WooCommerce
-		update_user_meta( $customer_id, 'billing_last_name', sanitize_text_field( $_POST['billing_last_name'] ) );
+		update_user_meta( $customer_id, 'billing_last_name', sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) );
+	}
+	if ( isset( $_POST['billing_first_name'] ) && isset( $_POST['billing_last_name'] ) ) {
+		update_user_meta( $customer_id, 'display_name', sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) . ' ' . sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) );
 	}
 }
 add_action( 'woocommerce_created_customer', 'wonkasoft_woocommerce_created_customer' );

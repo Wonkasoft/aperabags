@@ -8,6 +8,10 @@ main#main.main-my-account {
       margin-bottom: 15px;
       transition: all .35s ease-in-out;
 
+      .gr-comment-checkbox {
+        display: none;
+      }
+
       h2 {
         text-transform: none;
         margin-bottom: 15px;
