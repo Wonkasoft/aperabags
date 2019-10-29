@@ -317,6 +317,7 @@ section.desirable-slider-section {
 				height: 100%;
 
 				.img-header-text-wrap {
+					background: radial-gradient(rgba(0, 0, 0, .45),rgba(0, 0, 0, 0.0));
 					position: relative;
 					margin: auto;
 					width: 100%;
@@ -324,7 +325,7 @@ section.desirable-slider-section {
 
 					.img-header-text-container {
 						margin: auto;
-						margin-bottom: 15%;
+						// margin-bottom: 15%;
 						display: flex;
 						flex-direction: column;
 
@@ -348,11 +349,41 @@ section.desirable-slider-section {
 								color: #ffffff;
 								font-weight: 800;
 								@include prefix( text-shadow, 1px 1px 2px rgba( #000, .8 ), o moz webkit );
+								padding-bottom: 20px;
+								font-size: 2rem;
+							}
+
+							h3 {
+								margin: auto;
+								max-width: 300px;
+								text-transform: unset;
+								padding-bottom: 30px;
+								font-size: 1.3rem;
+								// line-height: 2.8rem;
+							}
+
+							ul {
+								margin: 0;
+								padding: 20px 0;
+								list-style-position: inside;
+				
+								.perks-description {
+									@include font-size( 1.4 );
+									font-family: $font__main_jose;
+									margin-bottom: .5em;
+								}
+							}
+
+							.wonka-btn.img-cta-link {
+								font-size: 1rem;
+								padding: 6px 10px;
+								// font-size: 1.6rem;
+								// padding: 10px 20px;
 							}
 
 							@include media-breakpoint( md ) {
 								max-width: 1200px;
-								white-space: nowrap;
+								// white-space: nowrap;
 							}
 						}
 					}	
@@ -419,7 +450,19 @@ section.desirable-slider-section {
 
 								h2 {
 									line-height: 1.1;
-									@include font-size( 2.5 );
+									@include font-size( 2.8 );
+								}
+
+								h3,
+								li.perks-description {
+									max-width: 400px;
+									line-height: 1.4;
+									font-size: 1.8rem;
+								}
+
+								.wonka-btn.img-cta-link {
+									font-size: 1.6rem;
+									padding: 10px 20px;
 								}
 							}
 						}
@@ -438,6 +481,13 @@ section.desirable-slider-section {
 								h2 {
 									line-height: 1.1;
 									@include font-size( 2.8 );
+								}
+								
+								h3,
+								.perks-description {
+									max-width: 400px;
+									line-height: 2.4;
+									font-size: 1.9rem;
 								}
 							}
 						}

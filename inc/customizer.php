@@ -604,12 +604,40 @@ function apera_bags_customize_register( $wp_customize ) {
 				)
 			)
 		);
+		
+		/**
+		* Slider title settings Section
+		*
+		* @since  1.0.0
+		*/
+		$wp_customize->add_setting(
+			'cta_slider_title_' . $i,
+			array(
+				'default'   => '',
+				'transport' => 'refresh',
+			)
+		);
 
-		 /**
-		  * Slider message settings Section
-		  *
-		  * @since  1.0.0
-		  */
+		// Slider title Setting Control.
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'cta_slider_title_' . $i . '_control',
+				array(
+					'label'       => 'Slider Title ' . $i,
+					'section'     => 'lg_cta_section',
+					'settings'    => 'cta_slider_title_' . $i,
+					'type'        => 'text',
+					'description' => 'Add Title for slider ' . $i,
+				)
+			)
+		);
+
+		/**
+		* Slider message settings Section
+		*
+		* @since  1.0.0
+		*/
 		$wp_customize->add_setting(
 			'cta_slider_text_' . $i,
 			array(
@@ -633,11 +661,72 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		 /**
-		  * CTA Slider button text settings Section
-		  *
-		  * @since  1.0.0
-		  */
+
+
+		/**
+		* Slider 3 description settings Section
+		*
+		* @since  1.0.0
+		*/
+		for ( $a = 1; $a <= 3; $a++ ) :
+			/**
+				* CTA Slider 3 Descriptions settings Section
+				*
+				* @since  1.0.0
+				*/
+			$wp_customize->add_setting(
+				'cta_slider_' . $i . '_description_' . $a,
+				array(
+					'default'   => '',
+					'transport' => 'refresh',
+				)
+			);
+
+			// Slider description Setting Control.
+			$wp_customize->add_control(
+				new WP_Customize_Control(
+					$wp_customize,
+					'cta_slider_' . $i . '_description_' . $a . '_control',
+					array(
+						'label'       => 'CTA #' . $a . ' description ' . $a,
+						'section'     => 'lg_cta_section',
+						'settings'    => 'cta_slider_' . $i . '_description_' . $a,
+						'type'        => 'text',
+						'description' => 'Add description #' . $a . ' for slide #' . $a,
+					)
+				)
+			);
+		endfor;
+
+			// Slider description list icon Setting.
+		$wp_customize->add_setting(
+			'slider_description_list_icon_' . $i,
+			array(
+				'default'   => '',
+				'transport' => 'refresh',
+			)
+		);
+
+		// Slider description list icon Setting Control.
+		$wp_customize->add_control(
+			new WP_Customize_Image_Control(
+				$wp_customize,
+				'slider_' . $i . '_description_list_icon_control',
+				array(
+					'label'       => 'Slider ' . $i . ' list Description Icon',
+					'section'     => 'lg_cta_section',
+					'settings'    => 'slider_description_list_icon_' . $i,
+					'type'        => 'image',
+					'description' => 'Add icon for Slider ' . $i . ' description list Item',
+				)
+			)
+		);
+
+		/**
+		* CTA Slider button text settings Section
+		*
+		* @since  1.0.0
+		*/
 		$wp_customize->add_setting(
 			'cta_slider_btn_text_' . $i,
 			array(
@@ -804,12 +893,6 @@ function apera_bags_customize_register( $wp_customize ) {
 			$products[ get_the_ID() ] = get_the_title();
 		}
 	}
-
-	 /**
-	  * Loop for all items and options
-	  *
-	  * @since 1.0.0
-	  */
 
 	 /**
 	  * Count for looping through settings to add

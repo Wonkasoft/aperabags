@@ -103,7 +103,15 @@ function the_mods_for_section( $section ) {
 				$slide                      = new stdClass();
 				$slide->slide_img           = get_theme_mod( 'cta_slider_' . $i );
 				$slide->slide_text_position = get_theme_mod( 'cta_slider_text_position_' . $i );
+				$slide->slide_title  = get_theme_mod( 'cta_slider_title_' . $i );
+
 				$slide->slide_text_message  = get_theme_mod( 'cta_slider_text_' . $i );
+
+				for ( $a = 1; $a <= 3; $a++ ) {
+
+					$slide->{ 'cta_description_' . $a } = get_theme_mod( 'cta_slider_' . $i . '_description_' . $a );
+
+				}
 				$slide->slide_link_btn      = get_theme_mod( 'cta_slider_btn_text_' . $i );
 				$slide->slide_link          = get_theme_mod( 'cta_slider_btn_link_' . $i );
 				// Mobile Theme mod.

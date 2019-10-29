@@ -134,6 +134,7 @@ get_header();
 				<?php
 				do_action( 'get_mods_before_section', 'cta' );
 				$cta_slider = get_section_mods( 'cta' );
+
 				if ( ! empty( $cta_slider ) ) :
 					?>
 					<section class="desirable-slider-section">
@@ -166,18 +167,34 @@ get_header();
 												}
 														endif;
 														/* Checks for an message set in the slide object */
-											if ( ! empty( $slide->slide_text_message ) ) :
+											if ( ! empty( $slide->slide_title ) ) :
 												?>
 															<div class="row img-header-text-wrap">
 																<div class="col col-12 img-header-text-container">
 																	<div class="text-box text-center
-														<?php
-														$set_text_align = ( ! empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position : ' set-align-center';
-														echo wp_kses_data( $set_text_align );
-														?>
+																		<?php
+																		$set_text_align = ( ! empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position : ' set-align-center';
+																		echo wp_kses_data( $set_text_align );
+																		?>
 																	">
-																	<h2 class="img-header-text text-center"><?php echo wp_kses_data( $slide->slide_text_message ); ?></h2>
+																	<h2 class="img-header-text text-center"><?php echo wp_kses_data( $slide->slide_title ); ?></h2>
 																	<?php
+																	if ( ! empty( $slide->slide_text_message ) ) :
+																		?>
+																	<h3 class="img-header-text text-center "><?php echo wp_kses_data( $slide->slide_text_message ); ?></h3>
+																	<?php endif; 
+
+																	if ( ! empty( $slide->cta_description_1) ) :
+																		?>
+																		<ul class="perks-description-ul">
+																			<?php
+																				for ( $i = 1; $i <= 3; $i++ ) :
+																					echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->{'cta_description_' . $i } ) . ')">' . esc_html( $slide->{'cta_description_' . $i } ) . '</li>';
+																				endfor;
+																			?>
+																		</ul>
+																	<?php endif; 
+
 																	/* Checks for an subheader set in the slide object */
 																	if ( ! empty( $slide->slide_link ) ) :
 																		?>
@@ -354,8 +371,8 @@ get_header();
 
 							<div class="perks-section-content">
 								<h3 class="section-title perks-title"><?php echo wp_kses_post( $apera_perks->apera_perks->perks_section_title ); ?></h3>
-								<div class="row row-perks justify-content-md-center">
-									<div class="col-4 col-perks-content">
+								<div class="row row-perks justify-content-center">
+									<div class="col-12 col-perks-content">
 										<ul class="perks-description-ul">
 											<?php
 												for ( $i = 1; $i <= 3; $i++ ) :
