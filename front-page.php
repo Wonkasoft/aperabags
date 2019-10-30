@@ -192,13 +192,8 @@ get_header();
 																		?>
 																		<ul class="perks-description-ul">
 																			<?php
-<<<<<<< HEAD
 																				for ( $i = 1; $i <= 3; $i++ ) :
 																					echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->slide_description_icon ) . ')">' . esc_html( $slide->{'cta_description_' . $i } ) . '</li>';
-=======
-																			for ( $i = 1; $i <= 3; $i++ ) :
-																				echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->{'cta_description_' . $i } ) . ')">' . esc_html( $slide->{'cta_description_' . $i } ) . '</li>';
->>>>>>> f1a769942f0a95ee736006523ce8dd4de0e40d7c
 																				endfor;
 																			?>
 																		</ul>
