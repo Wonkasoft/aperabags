@@ -865,9 +865,8 @@ function apera_bags_customize_register( $wp_customize ) {
 					'label'       => 'Cause image link ' . $i,
 					'section'     => 'cause_section',
 					'settings'    => 'cause_image_link_' . $i,
-					'type'        => 'select',
+					'type'        => 'text',
 					'description' => 'Slect a product to link the image to.',
-					'choices'     => $products,
 				)
 			)
 		);
@@ -955,7 +954,7 @@ function apera_bags_customize_register( $wp_customize ) {
 					'label'       => __( 'Cause ' . $i . ' Title Link', 'apera-bags' ),
 					'section'     => 'cause_section',
 					'settings'    => 'cause' . $i . '_header_link',
-					'type'        => 'dropdown-pages',
+					'type'        => 'text',
 					'description' => 'Set Cause ' . $i . ' link',
 				)
 			)
