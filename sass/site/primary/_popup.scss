@@ -1,3 +1,32 @@
+/* The animation code */
+@keyframes btn-yes {
+  0%   {top: 0;}
+  10%  {top: -4px;}
+  20%  {top: 4px;}
+  30%  {top: -4px;}
+  40%  {top: 4px;}
+  50%  {top: -4px;}
+  60%  {top: 4px;}
+  70%  {top: -4px;}
+  80%  {top: 4px;}
+  90%  {top: -4px;}
+  100% {top: 0;}
+}
+
+@keyframes btn-no {
+  0%   {left: 0;}
+  10%  {left: -4px;}
+  20%  {left: 4px;}
+  30%  {left: -4px;}
+  40%  {left: 4px;}
+  50%  {left: -4px;}
+  60%  {left: 4px;}
+  70%  {left: -4px;}
+  80%  {left: 4px;}
+  90%  {left: -4px;}
+  100% {left: 0;}
+}
+
 div.wonka-newsletter-wrap {
   display: flex;
   align-items: center;
@@ -91,76 +120,43 @@ div.wonka-newsletter-wrap {
       justify-content: center;
     }
 
-    form.wonka-newsletter-form {
-      flex: 1 0 100%;
-      align-items: stretch;
-      justify-content: center;
+    .popup-btn-wrap {
+      display: grid;
+      width: 25%;
+      grid-template-columns: auto auto;
 
-      .validation_error {
-        flex: 1 0 100%;
-        margin: auto;
-        text-align: center;
-      }
+      a.wonka-btn {
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        height: 58px;
+        margin: 15px;
+        padding: 0 8px;
+        @include font-size( 1.6 );
+        @include prefix( box-shadow, 0 1px 2px .5px rgba( 0, 0, 0, .7 ), o moz webkit );
 
-      .gform_body {
-        height: 70px;
-        flex: auto;
-        max-width: 450px;
+        span {
+          position: relative;
+          display: inline-block;
+          @include prefix( transition, all .4s ease-in-out, o moz webkit );
+        }
 
-        ul {
-          margin: 0;
-          padding: 0;
+        &:hover {
+          @include prefix( box-shadow, 0 1px 4px .2px rgba( 0, 0, 0, .6 ), o moz webkit );
 
-          label {
-            display: none;
-          }
+          span {
+            animation: btn-yes;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
 
-          li.wonka-form-group {
-            margin-bottom: 0;
-          }
-
-          div.ginput_container_email {
-            width: 100%;
-          }
-
-          input[type=email].wonka-form-control {
-            width: 100%;
-            color: #bfc0c2;
-            background: transparent;
-            padding: 8px 15px;
-            font-weight: 600;
-            border-radius: 100px 0 0 100px;
-            height: 40px;
-            @include font-size( .9 );
-            letter-spacing: 1px;
-            @include prefix( transition, $trans_25, webkit moz o);
-
-            &::placeholder {
-              font-style: italic;
-              font-weight: 300;
-              color: #444444
+            &.newsletter-close-btn {
+              animation: btn-no;
+              animation-duration: 3s;
+              animation-iteration-count: infinite; 
+              animation-timing-function: ease-in-out;    
             }
           }
-        }
-      }
-
-      .gform_footer {
-        flex: 0 0 12%;
-        height: 70px;
-
-        input[type=submit].wonka-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-family: $font__main;
-          font-weight: 800;
-          color: #ffffff;
-          margin-left: 0;
-          width: 100%;
-          height: 40px;
-          @include font-size( .9 );
-          border-radius: 0 100px 100px 0;
-          @include prefix( transition, all 0.3s ease-in-out, webkit moz o);
         }
       }
     }

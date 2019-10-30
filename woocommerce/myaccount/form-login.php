@@ -30,7 +30,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 <?php endif; ?>
 
-		<h2><?php esc_html_e( 'Welcome Back', 'woocommerce' ); ?></h2>
+		<h2><?php esc_html_e( 'Welcome back', 'woocommerce' ); ?></h2>
 
 		<form class="login" method="post">
 
@@ -52,17 +52,14 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 					<div class="invalid-feedback password"></div>
 				</div>
 			</div>
-			<p class="form-row">
+			<div class="form-row">
 				<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
 				<button type="submit" class="woocommerce-Button button wonka-btn" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Log in', 'woocommerce' ); ?></button>
-				<label class="woocommerce-form__label woocommerce-form__label-for-checkbox inline">
-					<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span><?php esc_html_e( 'Remember me', 'woocommerce' ); ?></span>
-				</label>
-			</p>
+			</div>
 
-			<p class="woocommerce-LostPassword lost_password">
-				<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Lost your password?', 'woocommerce' ); ?></a>
-			</p>
+			<div class="woocommerce-LostPassword lost_password">
+				<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Forgot your password?', 'woocommerce' ); ?></a>
+			</div>
 			
 			<?php do_action( 'woocommerce_login_form' ); ?>
 
@@ -74,9 +71,9 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 	</div>
 
-	<div class="col-12 col-lg-6 register text-center">
+	<div class="col-12 col-lg-6 register">
 
-		<h2><?php esc_html_e( 'I\'m New Here...', 'woocommerce' ); ?></h2>
+		<h2><?php esc_html_e( 'I\'m new here...', 'woocommerce' ); ?></h2>
 
 		<!-- <p class="create-account-wrapper form-row"> -->
 				<button type="button" class="create-account-full button wonka-btn" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>"><?php esc_html_e( 'Create Account', 'woocommerce' ); ?></button>
@@ -131,7 +128,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 		</form>
 			<div class="loggin-toggle-wrapper">
 				<p><?php esc_html_e( 'Already have an account?', 'woocommerce' ); ?></p>
-				<button type="submit" class="login-slide-btn button wonka-btn" name="register" ><?php esc_html_e( 'Login', 'woocommerce' ); ?></button>
+				<button type="submit" class="login-slide-btn button wonka-btn" name="register" ><?php esc_html_e( 'Back to Login', 'woocommerce' ); ?></button>
 			</div>
 
 	</div>

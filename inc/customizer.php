@@ -884,8 +884,9 @@ function apera_bags_customize_register( $wp_customize ) {
 		'product_cat'   => 'allbags',
 	);
 
-	$the_query = new WP_Query( $args );
-	$products  = array();
+	$the_query   = new WP_Query( $args );
+	$products    = array();
+	$products[0] = 'No product selected';
 
 	if ( $the_query->have_posts() ) {
 		while ( $the_query->have_posts() ) {
@@ -1349,7 +1350,7 @@ function apera_bags_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'about_the_brand_second_image_link',
 		array(
-			'default'   => '0',
+			'default'   => 0,
 			'transport' => 'refresh',
 		)
 	);
@@ -1901,7 +1902,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				'label'       => __( 'Instagram Username', 'apera-bags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_insta_username',
-				'type'      => 'text',
+				'type'        => 'text',
 				'description' => 'Example: @MYUSERNAME',
 			)
 		)
@@ -1925,7 +1926,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				'label'       => __( 'Instagram link', 'apera-bags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_insta_username_link',
-				'type'      => 'text',
+				'type'        => 'text',
 				'description' => 'Example: https://www.instagram.com/myusername/',
 			)
 		)
@@ -1935,8 +1936,8 @@ function apera_bags_customize_register( $wp_customize ) {
 		$wp_customize->add_setting(
 			'footer_insta_hashtags',
 			array(
-				'default'           => '',
-				'transport'         => 'refresh',
+				'default'   => '',
+				'transport' => 'refresh',
 			)
 		);
 
@@ -1949,7 +1950,7 @@ function apera_bags_customize_register( $wp_customize ) {
 					'label'       => __( 'Instgram Hashtag Page', 'apera-bags' ),
 					'section'     => 'footer_section',
 					'settings'    => 'footer_insta_hashtags',
-					'type'      => 'text',
+					'type'        => 'text',
 					'description' => 'Example: #MYHASHTAG',
 				)
 			)
@@ -1959,8 +1960,8 @@ function apera_bags_customize_register( $wp_customize ) {
 		$wp_customize->add_setting(
 			'footer_insta_hashtags_link',
 			array(
-				'default'           => '',
-				'transport'         => 'refresh',
+				'default'   => '',
+				'transport' => 'refresh',
 			)
 		);
 
@@ -1973,7 +1974,7 @@ function apera_bags_customize_register( $wp_customize ) {
 					'label'       => __( 'Instagram Hashtag link', 'apera-bags' ),
 					'section'     => 'footer_section',
 					'settings'    => 'footer_insta_hashtags_link',
-					'type'      => 'text',
+					'type'        => 'text',
 					'description' => 'Example: https://www.instagram.com/explore/tags/hashtaghere/',
 				)
 			)
@@ -2252,6 +2253,34 @@ function apera_bags_customize_register( $wp_customize ) {
 				'settings'    => 'newsletter_popup_message_session_length',
 				'type'        => 'number',
 				'description' => 'Hours to reset the popup when a user dismisses it. logged in users will not see it unless they are not opted in.',
+			)
+		)
+	);
+
+	/**
+	 * Newsletter time to pop settings
+	 *
+	 * @since  1.0.0
+	 */
+	$wp_customize->add_setting(
+		'newsletter_popup_time_to_pop',
+		array(
+			'default'   => '20',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Newsletter session length Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+			'newsletter_popup_time_to_pop_control',
+			array(
+				'label'       => __( 'Newsletter Popup Timer', 'apera-bags' ),
+				'section'     => 'newsletter_popup_section',
+				'settings'    => 'newsletter_popup_time_to_pop',
+				'type'        => 'number',
+				'description' => 'Seconds to popup after the page loads.',
 			)
 		)
 	);

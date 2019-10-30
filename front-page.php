@@ -24,7 +24,7 @@ get_header();
 	$top_slider = get_section_mods( 'top' );
 
 	/* This checks for slider object in order to parse slider section */
-	if ( ! empty( $top_slider ) ) :
+	if ( ! empty( $top_slider->slides ) ) :
 		?>
 		<section class="header-slider-section">
 			<div class="top-page-slider-wrap">
@@ -72,8 +72,8 @@ get_header();
 														if ( ! empty( $slide->slide_subheader ) ) :
 															?>
 															<h4 class="img-subheader-text text-center"><?php echo wp_kses_data( $slide->slide_subheader ); ?></h4>
-															<?php 
-															if (! empty( $slide->slide_link_btn )):
+															<?php
+															if ( ! empty( $slide->slide_link_btn ) ) :
 																?>
 																<a href="<?php echo esc_url( get_the_permalink( $slide->slide_link, false ) ); ?>" class="wonka-btn img-top-slide-link text-center"><?php echo wp_kses_data( $slide->slide_link_btn ); ?></a>
 															<?php endif; ?>
@@ -101,7 +101,7 @@ get_header();
 			do_action( 'get_mods_before_section', 'shop' );
 
 			$shop_section = get_section_mods( 'shop' );
-			if ( ! empty( $shop_section->shop_mods->shop_title ) ) :
+			if ( ! empty( $shop_section->shop_mods ) ) :
 				?>
 
 				<section class="shop-section container-fluid" style="background-image:url(<?php echo esc_url( $shop_section->shop_mods->shop_background_image ); ?>);">
@@ -135,7 +135,7 @@ get_header();
 				do_action( 'get_mods_before_section', 'cta' );
 				$cta_slider = get_section_mods( 'cta' );
 
-				if ( ! empty( $cta_slider ) ) :
+				if ( ! empty( $cta_slider->slides ) ) :
 					?>
 					<section class="desirable-slider-section">
 						<div class="cta-section-slider-wrap">
@@ -182,18 +182,20 @@ get_header();
 																	if ( ! empty( $slide->slide_text_message ) ) :
 																		?>
 																	<h3 class="img-header-text text-center "><?php echo wp_kses_data( $slide->slide_text_message ); ?></h3>
-																	<?php endif; 
+																		<?php
+																	endif;
 
-																	if ( ! empty( $slide->cta_description_1) ) :
+																	if ( ! empty( $slide->cta_description_1 ) ) :
 																		?>
 																		<ul class="perks-description-ul">
 																			<?php
-																				for ( $i = 1; $i <= 3; $i++ ) :
-																					echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->{'cta_description_' . $i } ) . ')">' . esc_html( $slide->{'cta_description_' . $i } ) . '</li>';
+																			for ( $i = 1; $i <= 3; $i++ ) :
+																				echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->{'cta_description_' . $i } ) . ')">' . esc_html( $slide->{'cta_description_' . $i } ) . '</li>';
 																				endfor;
 																			?>
 																		</ul>
-																	<?php endif; 
+																		<?php
+																	endif;
 
 																	/* Checks for an subheader set in the slide object */
 																	if ( ! empty( $slide->slide_link ) ) :
@@ -219,7 +221,7 @@ get_header();
 						$cause_section = get_section_mods( 'cause' );
 
 						/* Check for Cause object */
-						if ( ! empty( $cause_section->cause_mods->cause_section_title ) ) :
+						if ( ! empty( $cause_section->cause_mods ) ) :
 							?>
 							<section class="container-fluid our-cause-section">
 								<div class="row wonka-row">
@@ -240,11 +242,11 @@ get_header();
 																<img class="cause-img img-fluid" srcset="<?php echo esc_attr( $cause->img_srcset ); ?>" />
 															</a>
 														</div>
-														<?php if ( ! empty( $cause->header_link ) ) :?>
+														<?php if ( ! empty( $cause->header_link ) ) : ?>
 															<a href="<?php echo esc_url( $cause->header_link ); ?>" >
 																<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>
 															</a>
-														<?php else: ?>
+														<?php else : ?>
 															<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>										
 														<?php endif; ?>
 														<p class="cause-message text-<?php echo esc_attr( $cause->position ); ?>">
@@ -294,7 +296,7 @@ get_header();
 						do_action( 'get_mods_before_section', 'about' );
 						$about_section = get_section_mods( 'about' );
 
-						if ( ! empty( $about_section ) ) :
+						if ( ! empty( $about_section->about_the_brand ) ) :
 							?>
 							<section class="container-fluid about-brand-section align-items-center justify-content-around">
 								<div class="row wonka-row">
@@ -362,8 +364,9 @@ get_header();
 						$apera_perks = get_section_mods( 'perks' );
 
 						if ( ! empty( $apera_perks->apera_perks->perks_checkbox ) ) :
-							
-							if ( !empty( $apera_perks->apera_perks->perks_image ) ): ?>
+
+							if ( ! empty( $apera_perks->apera_perks->perks_image ) ) :
+								?>
 								<section class="container-fluid perks-section text-center perks-background-img" data-img-url="<?php echo esc_attr( $apera_perks->apera_perks->perks_image ); ?>" style="background-image:radial-gradient(rgba(0, 0, 0, .45),rgba(0, 0, 0, 0.0)), url('<?php echo esc_url( $apera_perks->apera_perks->perks_image ); ?>');">
 							<?php else : ?>
 								<section class="container-fluid perks-section text-center">
@@ -375,10 +378,10 @@ get_header();
 									<div class="col-12 col-perks-content">
 										<ul class="perks-description-ul">
 											<?php
-												for ( $i = 1; $i <= 3; $i++ ) :
-													echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $apera_perks->apera_perks->perks_description_icon ) . ')">' . esc_html( $apera_perks->apera_perks->{'perks_description_' . $i } ) . '</li>';
+											for ( $i = 1; $i <= 3; $i++ ) :
+												echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $apera_perks->apera_perks->perks_description_icon ) . ')">' . esc_html( $apera_perks->apera_perks->{'perks_description_' . $i } ) . '</li>';
 												endfor;
-												?>
+											?>
 										</ul>
 										<a class="join-perks-btn wonka-btn" href="<?php echo esc_url( $apera_perks->apera_perks->perks_button ); ?>"><?php echo wp_kses_post( $apera_perks->apera_perks->perks_btn_text ); ?></a>
 									</div>
@@ -396,7 +399,7 @@ get_header();
 
 						if ( ! empty( $social_section->social_mods->social_title ) ) :
 							?>
-							<section class="container-fluid social-section">
+							<section class="container-fluid social-section fixed-divider-460">
 								<div class="row wonka-row align-items-center justify-content-around">
 									<div class="col-12 text-center">
 										<h3 class="section-title social-title"><?php echo wp_kses_post( $social_section->social_mods->social_title ); ?></h3>

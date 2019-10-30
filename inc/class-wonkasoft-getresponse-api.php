@@ -34,6 +34,8 @@ class Wonkasoft_GetResponse_Api {
 
 	public $contact_list = array();  // The contact list to be fetched.
 
+	public $contact_name = null; // For the name of the contact.
+
 	public $tags = array();  // Array of tag names passed in.
 
 	public $tags_to_update = array();  // The tag to be updated on contact.
@@ -54,7 +56,15 @@ class Wonkasoft_GetResponse_Api {
 
 	public $contact_id = null;  // Will be set to current contact.
 
-	public $tag_id = null; // Will be set to the current tags id
+	public $tag_id = null; // Will be set to the current tags id.
+
+	public $day_of_cycle = null; // Will be set to the days of cycle.
+
+	public $scoring = null; // Will be set to the scoring.
+
+	public $ip_address = null; // Will be set to user ip.
+
+	public $note = null; // Will be set to the note.
 
 	/**
 	 * Class Init constructor.
@@ -76,19 +86,25 @@ class Wonkasoft_GetResponse_Api {
 		);
 		$this->email                   = ( ! empty( $data['email'] ) ) ? $data['email'] : null;
 		$this->tags                    = ( ! empty( $data['tags'] ) ) ? $data['tags'] : null;
-		$this->tags_to_update          = ( ! empty( $data['tags_to_update'] ) ) ? $data['tags_to_update'] : null;
+		$this->tags_to_update          = ( ! empty( $data['tags_to_update'] ) ) ? $data['tags_to_update'] : array();
 		$this->campaign_name           = ( ! empty( $data['campaign_name'] ) ) ? $data['campaign_name'] : null;
 		$this->campaign_list           = ( ! empty( $data['campaign_list'] ) ) ? $data['campaign_list'] : null;
 		$this->campaign_id             = ( ! empty( $data['campaign_id'] ) ) ? $data['campaign_id'] : null;
 		$this->custom_fields           = ( ! empty( $data['custom_fields'] ) ) ? $data['custom_fields'] : null;
-		$this->custom_fields_values    = ( ! empty( $data['custom_fields_values'] ) ) ? $data['custom_fields_values'] : null;
+		$this->custom_fields_values    = ( ! empty( $data['custom_fields_values'] ) ) ? $data['custom_fields_values'] : array();
 		$this->custom_fields_list      = ( ! empty( $data['custom_fields_list'] ) ) ? $data['custom_fields_list'] : null;
-		$this->custom_fields_to_update = ( ! empty( $data['custom_fields_to_update'] ) ) ? $data['custom_fields_to_update'] : null;
+		$this->custom_fields_to_update = ( ! empty( $data['custom_fields_to_update'] ) ) ? $data['custom_fields_to_update'] : array();
 		$this->contact_id              = ( ! empty( $data['contact_id'] ) ) ? $data['contact_id'] : null;
+		$this->contact_name            = ( ! empty( $data['contact_name'] ) ) ? $data['contact_name'] : null;
 		$this->tag_id                  = ( ! empty( $data['tag_id'] ) ) ? $data['tag_id'] : null;
+		$this->day_of_cycle            = ( ! empty( $data['day_of_cycle'] ) ) ? $data['day_of_cycle'] : 0;
+		$this->ip_address              = ( ! empty( $data['ip_address'] ) ) ? $data['ip_address'] : null;
+		$this->note                    = ( ! empty( $data['note'] ) ) ? $data['note'] : null;
+		$this->scoring                 = ( ! empty( $data['scoring'] ) ) ? $data['scoring'] : null;
 		$this->contact_list            = $this->get_contact_list();
 		$this->tag_list                = $this->get_the_list_of_tags();
 		$this->campaign_list           = $this->get_a_list_of_campaigns();
+		$this->custom_fields_list      = $this->get_a_list_of_custom_fields();
 	}
 
 	/**
@@ -103,6 +119,10 @@ class Wonkasoft_GetResponse_Api {
 			'name'              => $this->contact_name,
 			'campaign'          => $this->campaign_name,
 			'email'             => $this->email,
+			'dayOfCycle'        => $this->day_of_cycle,
+			'scoring'           => $this->scoring,
+			'ipAddress'         => $this->ip_address,
+			'note'              => $this->note,
 			'tags'              => $this->tags_to_update,
 			'customFieldValues' => $this->custom_fields_to_update,
 		);
@@ -111,6 +131,57 @@ class Wonkasoft_GetResponse_Api {
 
 		$ch  = curl_init();
 		$url = $this->getresponse_url . '/contacts/' . $this->contact_id;
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+			curl_close( $ch );
+			$error_obj = json_decode( json_encode( $error_obj ) );
+			return $error_obj;
+	  else :
+		  curl_close( $ch );
+		  $response = json_decode( $response );
+
+		  return $response;
+	  endif;
+	}
+
+	/**
+	 * This public function will create a new contact.
+	 *
+	 * @rest_endpoint POST /contacts/
+	 * @return object             contains the response data from getResponse.
+	 */
+	public function create_a_new_contact() {
+
+		$payload = array(
+			'name'              => $this->contact_name,
+			'campaign'          => array(
+				'campaignId' => $this->campaign_id,
+			),
+			'email'             => $this->email,
+			'dayOfCycle'        => $this->day_of_cycle,
+			'scoring'           => $this->scoring,
+			'ipAddress'         => $this->ip_address,
+			'tags'              => $this->tags_to_update,
+			'customFieldValues' => $this->custom_fields_to_update,
+		);
+
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . '/contacts';
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );

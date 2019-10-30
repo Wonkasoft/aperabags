@@ -6,3 +6,7 @@ form#custom-options-form input:not( #submit ) {
 .woocommerce #entry_list_form .subsubsub {
 	margin: 8px 0 0;
 }
+
+table.subscription-settings td.subscription-settings-cell {
+	width: 100%;
+}
