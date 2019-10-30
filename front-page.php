@@ -134,9 +134,6 @@ get_header();
 				<?php
 				do_action( 'get_mods_before_section', 'cta' );
 				$cta_slider = get_section_mods( 'cta' );
-				echo "<pre>\n";
-				print_r( $cta_slider );
-				echo "</pre>\n";
 
 				if ( ! empty( $cta_slider->slides ) ) :
 					?>
