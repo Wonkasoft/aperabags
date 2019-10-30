@@ -2061,6 +2061,34 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		)
 	);
+
+	/**
+	 * Newsletter time to pop settings
+	 *
+	 * @since  1.0.0
+	 */
+	$wp_customize->add_setting(
+		'newsletter_popup_time_to_pop',
+		array(
+			'default'   => '20',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Newsletter session length Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+			'newsletter_popup_time_to_pop_control',
+			array(
+				'label'       => __( 'Newsletter Popup Timer', 'apera-bags' ),
+				'section'     => 'newsletter_popup_section',
+				'settings'    => 'newsletter_popup_time_to_pop',
+				'type'        => 'number',
+				'description' => 'Seconds to popup after the page loads.',
+			)
+		)
+	);
 }
 add_action( 'customize_register', 'apera_bags_customize_register' );
 

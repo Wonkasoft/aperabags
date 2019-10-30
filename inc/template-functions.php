@@ -253,6 +253,7 @@ function the_mods_for_section( $section ) {
 			$newsletter->background_color  = ( ! empty( get_theme_mod( 'newsletter_background_color' ) ) ) ? get_theme_mod( 'newsletter_background_color' ) : '#ffffff';
 			$newsletter->popup_form_select = get_theme_mod( 'newsletter_popup_form_select' );
 			$newsletter->session_length    = ( ! empty( get_theme_mod( 'newsletter_popup_message_session_length' ) ) ) ? get_theme_mod( 'newsletter_popup_message_session_length' ) : 24;
+			$newsletter->time_to_pop       = ( ! empty( get_theme_mod( 'newsletter_popup_time_to_pop' ) ) ) ? get_theme_mod( 'newsletter_popup_time_to_pop' ) : 20;
 
 			$mods_class->{'newsletter_mods'} = $newsletter;
 		endif;

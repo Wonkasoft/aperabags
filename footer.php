@@ -139,7 +139,7 @@ if ( ! empty( $newsletter_section ) && $newsletter_section->newsletter_mods->ena
 		$wrap_styles = '';
 	endif;
 	?>
-	<div class="wonka-newsletter-wrap"<?php echo $wrap_styles; ?>>
+	<div class="wonka-newsletter-wrap"<?php echo $wrap_styles; ?> time-to-pop="<?php echo $newsletter_section->newsletter_mods->time_to_pop; ?>">
 		<div class="wonka-newsletter-content">
 			<div class="wonka-newsletter-close-btn-wrap">
 				<a href="#" class="wonka-newsletter-close-btn">
