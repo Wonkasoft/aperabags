@@ -795,8 +795,9 @@ function apera_bags_customize_register( $wp_customize ) {
 		'product_cat'   => 'allbags',
 	);
 
-	$the_query = new WP_Query( $args );
-	$products  = array();
+	$the_query   = new WP_Query( $args );
+	$products    = array();
+	$products[0] = 'No product selected';
 
 	if ( $the_query->have_posts() ) {
 		while ( $the_query->have_posts() ) {
@@ -1266,7 +1267,7 @@ function apera_bags_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'about_the_brand_second_image_link',
 		array(
-			'default'   => '0',
+			'default'   => 0,
 			'transport' => 'refresh',
 		)
 	);

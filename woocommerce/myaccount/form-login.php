@@ -52,14 +52,14 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 					<div class="invalid-feedback password"></div>
 				</div>
 			</div>
-			<p class="form-row">
+			<div class="form-row">
 				<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
 				<button type="submit" class="woocommerce-Button button wonka-btn" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Log in', 'woocommerce' ); ?></button>
-			</p>
+			</div>
 
-			<p class="woocommerce-LostPassword lost_password">
+			<div class="woocommerce-LostPassword lost_password">
 				<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Forgot your password?', 'woocommerce' ); ?></a>
-			</p>
+			</div>
 			
 			<?php do_action( 'woocommerce_login_form' ); ?>
 

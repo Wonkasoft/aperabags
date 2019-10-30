@@ -2028,6 +2028,7 @@ function wonkasoft_woocommerce_register_form_start() {
 			),
 		)
 	);
+
 }
 add_action( 'woocommerce_register_form_start', 'wonkasoft_woocommerce_register_form_start', 10 );
 
@@ -2042,7 +2043,6 @@ function wonkasoft_woocommerce_new_customer_data( $new_customer_data ) {
 	$new_customer_data['role'] = get_option( 'default_role' );
 
 	return $new_customer_data;
-
 }
 add_filter( 'woocommerce_new_customer_data', 'wonkasoft_woocommerce_new_customer_data', 10 );
 
@@ -2052,20 +2052,69 @@ add_filter( 'woocommerce_new_customer_data', 'wonkasoft_woocommerce_new_customer
  * @param  number $customer_id customer ID.
  */
 function wonkasoft_woocommerce_created_customer( $customer_id ) {
+
+	$nonce = $_REQUEST['_wpnonce'];
+	! wp_verify_nonce( $nonce, -1 ) || die( 'Nonce Failed' );
+
 	if ( isset( $_POST['billing_first_name'] ) ) {
+		$first_name = sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) );
 		// First name field which is by default
-		update_user_meta( $customer_id, 'first_name', sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) );
+		update_user_meta( $customer_id, 'first_name', $first_name );
 		// First name field which is used in WooCommerce
-		update_user_meta( $customer_id, 'billing_first_name', sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) );
+		update_user_meta( $customer_id, 'billing_first_name', $first_name );
 	}
 	if ( isset( $_POST['billing_last_name'] ) ) {
+		$last_name = sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) );
 		// Last name field which is by default
-		update_user_meta( $customer_id, 'last_name', sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) );
+		update_user_meta( $customer_id, 'last_name', $last_name );
 		// Last name field which is used in WooCommerce
-		update_user_meta( $customer_id, 'billing_last_name', sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) );
+		update_user_meta( $customer_id, 'billing_last_name', $last_name );
 	}
-	if ( isset( $_POST['billing_first_name'] ) && isset( $_POST['billing_last_name'] ) ) {
-		update_user_meta( $customer_id, 'display_name', sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) . ' ' . sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) );
+	if ( isset( $_POST['email'] ) && isset( $_POST['billing_first_name'] ) && isset( $_POST['billing_last_name'] ) ) {
+		$campaign_name = 'perks_program_signups';
+		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+			$ip = $_SERVER['HTTP_CLIENT_IP'];
+		} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		} else {
+			$ip = $_SERVER['REMOTE_ADDR'];
+		}
+		$api_args = array(
+			'email'         => sanitize_email( wp_unslash( $_POST['email'] ) ),
+			'contact_name'  => $first_name . ' ' . $last_name,
+			'campaign_name' => $campaign_name,
+			'ip_address'    => $ip,
+		);
+
+		$api_args['contact_name'] = ucfirst( $api_args['contact_name'] );
+		$getresponse              = new Wonkasoft_GetResponse_Api( $api_args );
+
+		if ( empty( $getresponse->campaign_id ) ) :
+			foreach ( $getresponse->campaign_list as $campaign ) :
+				if ( $api_args['campaign_name'] === $campaign->name ) :
+					$getresponse->campaign_id = $campaign->campaignId;
+				endif;
+			endforeach;
+
+		endif;
+
+		if ( empty( $getresponse->contact_id ) ) :
+			foreach ( $getresponse->contact_list as $contact ) :
+				if ( empty( $getresponse->campaign_id ) ) {
+					$getresponse->contact_id = $contact->contactId;
+				} else {
+					if ( $getresponse->campaign_id === $contact->campaign->campaignId ) :
+						$getresponse->contact_id = $contact->contactId;
+					endif;
+				}
+			endforeach;
+		endif;
+
+		if ( ! empty( $getresponse->contact_id ) ) {
+			$getresponse->update_contact_details();
+		} else {
+			$getresponse->create_a_new_contact();
+		}
 	}
 }
-add_action( 'woocommerce_created_customer', 'wonkasoft_woocommerce_created_customer' );
+add_action( 'woocommerce_created_customer', 'wonkasoft_woocommerce_created_customer', 1 );
