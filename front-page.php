@@ -271,7 +271,7 @@ get_header();
 						do_action( 'get_mods_before_section', 'about' );
 						$about_section = get_section_mods( 'about' );
 
-						if ( ! empty( $about_section ) ) :
+						if ( ! empty( $about_section->about_the_brand->about_header ) ) :
 							?>
 							<section class="container-fluid about-brand-section align-items-center justify-content-around">
 								<div class="row wonka-row">
