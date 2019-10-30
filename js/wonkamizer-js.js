@@ -1695,21 +1695,29 @@ if ( wonkasoft_request.ga_id !== '' )
 			create_toggle_btn.addEventListener( 'click', function( e )
 			{
 				create_toggle_btn.classList.toggle('btn-create-toggle');
-				create_toggle_btn.toggleAttribute('disabled');
-				login_col.classList.toggle( 'collapse-col-login' );
-				register_col.classList.toggle( 'col-lg-12' );
-				register_form.classList.toggle( 'form-register-toggle' );
-				loggin_toggle_wrapper.classList.toggle( 'loggin-toggle-wrapper-visable' );
+				setTimeout( function() 
+				{
+					create_toggle_btn.classList.toggle('display-none');
+					create_toggle_btn.toggleAttribute('disabled');
+					login_col.classList.toggle( 'collapse-col-login' );
+					register_col.classList.toggle( 'col-lg-12' );
+					register_form.classList.toggle( 'form-register-toggle' );
+					loggin_toggle_wrapper.classList.toggle( 'loggin-toggle-wrapper-visable' );
+				}, 200 );
 			});
 
 			login_toggle_btn.addEventListener( 'click', function( e )
 			{
 				create_toggle_btn.classList.toggle('btn-create-toggle');
-				create_toggle_btn.toggleAttribute('disabled');
-				login_col.classList.toggle( 'collapse-col-login' );
-				register_col.classList.toggle( 'col-lg-12' );
-				register_form.classList.toggle( 'form-register-toggle' );
-				loggin_toggle_wrapper.classList.toggle( 'loggin-toggle-wrapper-visable' );
+				setTimeout( function() 
+				{
+					create_toggle_btn.toggleAttribute('disabled');
+					login_col.classList.toggle( 'collapse-col-login' );
+					register_col.classList.toggle( 'col-lg-12' );
+					register_form.classList.toggle( 'form-register-toggle' );
+					loggin_toggle_wrapper.classList.toggle( 'loggin-toggle-wrapper-visable' );
+					create_toggle_btn.classList.toggle('display-none');
+				}, 200 );
 			});
 			
 			if ( '1' === getUrlVars().create ) 
@@ -1822,7 +1830,6 @@ if ( wonkasoft_request.ga_id !== '' )
 		{
 			var popup_wrap = document.querySelector( 'div.wonka-newsletter-wrap' );
 			var popup_dismiss_btn = document.querySelector( 'a.wonka-newsletter-close-btn' );
-			var popup_form = document.querySelector( 'div.wonka-newsletter-wrap form' );
 			setTimeout( function() 
 				{
 					popup_wrap.classList.add( 'popped-up' );
@@ -1854,20 +1861,6 @@ if ( wonkasoft_request.ga_id !== '' )
 	        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 	        xhr.send();
 
-				});
-
-			popup_form.addEventListener( 'submit', function( e ) 
-				{
-					setTimeout( function() 
-						{
-							if ( document.querySelector( 'div.wonka-newsletter-wrap .gform_confirmation_wrapper' ) ) 
-							{
-								if ( popup_wrap.classList.contains( 'popped-up' ) ) 
-								{
-									popup_wrap.classList.remove( 'popped-up' );
-								}
-							}
-						}, 2000 );
 				});
 		}
 		/*=====  End of For Popup  ======*/

@@ -795,8 +795,9 @@ function apera_bags_customize_register( $wp_customize ) {
 		'product_cat'   => 'allbags',
 	);
 
-	$the_query = new WP_Query( $args );
-	$products  = array();
+	$the_query   = new WP_Query( $args );
+	$products    = array();
+	$products[0] = 'No product selected';
 
 	if ( $the_query->have_posts() ) {
 		while ( $the_query->have_posts() ) {
@@ -1267,7 +1268,7 @@ function apera_bags_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'about_the_brand_second_image_link',
 		array(
-			'default'   => '0',
+			'default'   => 0,
 			'transport' => 'refresh',
 		)
 	);
@@ -1707,7 +1708,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				'label'       => __( 'Instagram Username', 'apera-bags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_insta_username',
-				'type'      => 'text',
+				'type'        => 'text',
 				'description' => 'Example: @MYUSERNAME',
 			)
 		)
@@ -1731,7 +1732,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				'label'       => __( 'Instagram link', 'apera-bags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_insta_username_link',
-				'type'      => 'text',
+				'type'        => 'text',
 				'description' => 'Example: https://www.instagram.com/myusername/',
 			)
 		)
@@ -1741,8 +1742,8 @@ function apera_bags_customize_register( $wp_customize ) {
 		$wp_customize->add_setting(
 			'footer_insta_hashtags',
 			array(
-				'default'           => '',
-				'transport'         => 'refresh',
+				'default'   => '',
+				'transport' => 'refresh',
 			)
 		);
 
@@ -1755,7 +1756,7 @@ function apera_bags_customize_register( $wp_customize ) {
 					'label'       => __( 'Instgram Hashtag Page', 'apera-bags' ),
 					'section'     => 'footer_section',
 					'settings'    => 'footer_insta_hashtags',
-					'type'      => 'text',
+					'type'        => 'text',
 					'description' => 'Example: #MYHASHTAG',
 				)
 			)
@@ -1765,8 +1766,8 @@ function apera_bags_customize_register( $wp_customize ) {
 		$wp_customize->add_setting(
 			'footer_insta_hashtags_link',
 			array(
-				'default'           => '',
-				'transport'         => 'refresh',
+				'default'   => '',
+				'transport' => 'refresh',
 			)
 		);
 
@@ -1779,7 +1780,7 @@ function apera_bags_customize_register( $wp_customize ) {
 					'label'       => __( 'Instagram Hashtag link', 'apera-bags' ),
 					'section'     => 'footer_section',
 					'settings'    => 'footer_insta_hashtags_link',
-					'type'      => 'text',
+					'type'        => 'text',
 					'description' => 'Example: https://www.instagram.com/explore/tags/hashtaghere/',
 				)
 			)

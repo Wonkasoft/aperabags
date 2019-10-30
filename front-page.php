@@ -24,7 +24,7 @@ get_header();
 	$top_slider = get_section_mods( 'top' );
 
 	/* This checks for slider object in order to parse slider section */
-	if ( ! empty( $top_slider ) ) :
+	if ( ! empty( $top_slider->slides ) ) :
 		?>
 		<section class="header-slider-section">
 			<div class="top-page-slider-wrap">
@@ -128,7 +128,7 @@ get_header();
 				<?php
 				do_action( 'get_mods_before_section', 'cta' );
 				$cta_slider = get_section_mods( 'cta' );
-				if ( ! empty( $cta_slider ) ) :
+				if ( ! empty( $cta_slider->slides ) ) :
 					?>
 					<section class="desirable-slider-section">
 						<div class="cta-section-slider-wrap">
@@ -217,11 +217,11 @@ get_header();
 																<img class="cause-img img-fluid" srcset="<?php echo esc_attr( $cause->img_srcset ); ?>" />
 															</a>
 														</div>
-														<?php if ( ! empty( $cause->header_link ) ) :?>
+														<?php if ( ! empty( $cause->header_link ) ) : ?>
 															<a href="<?php echo esc_url( $cause->header_link ); ?>" >
 																<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>
 															</a>
-														<?php else: ?>
+														<?php else : ?>
 															<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>										
 														<?php endif; ?>
 														<p class="cause-message text-<?php echo esc_attr( $cause->position ); ?>">
@@ -271,7 +271,7 @@ get_header();
 						do_action( 'get_mods_before_section', 'about' );
 						$about_section = get_section_mods( 'about' );
 
-						if ( ! empty( $about_section ) ) :
+						if ( ! empty( $about_section->about_the_brand->about_header ) ) :
 							?>
 							<section class="container-fluid about-brand-section align-items-center justify-content-around">
 								<div class="row wonka-row">
