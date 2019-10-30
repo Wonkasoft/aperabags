@@ -1835,12 +1835,14 @@ if ( wonkasoft_request.ga_id !== '' )
 				{
 					popup_wrap.classList.add( 'popped-up' );
 				}, time_to_pop );
+
 			popup_dismiss_btns.forEach( function( btn, i ) 
 				{
 					btn.addEventListener( 'click', function( e ) 
 					{
 						e.preventDefault();
 						var el = e.target;
+						console.log(el);
 						var data = {};
 						data.action = 'wonkasoft_dismiss_popup';
 						data.security = wonkasoft_request.security;

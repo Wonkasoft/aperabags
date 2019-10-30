@@ -362,7 +362,7 @@ get_header();
 
 						if ( ! empty( $social_section->social_mods->social_title ) ) :
 							?>
-							<section class="container-fluid social-section">
+							<section class="container-fluid social-section fixed-divider-460">
 								<div class="row wonka-row align-items-center justify-content-around">
 									<div class="col-12 text-center">
 										<h3 class="section-title social-title"><?php echo wp_kses_post( $social_section->social_mods->social_title ); ?></h3>
