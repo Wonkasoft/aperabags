@@ -145,11 +145,11 @@ function the_mods_for_section( $section ) {
 				$count++;
 				${"cause_$i"}              = new stdClass();
 				${"cause_$i"}->img         = get_theme_mod( 'cause_image_' . $i );
-				${"cause_$i"}->img_link    = get_permalink( get_theme_mod( 'cause_image_link_' . $i ) );
+				${"cause_$i"}->img_link    = get_theme_mod( 'cause_image_link_' . $i );
 				${"cause_$i"}->img_srcset  = wp_get_attachment_image_srcset( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', true );
 				${"cause_$i"}->position    = get_theme_mod( 'cause_message_position_' . $i );
 				${"cause_$i"}->header      = get_theme_mod( 'cause_header_' . $i );
-				${"cause_$i"}->header_link = get_permalink( get_theme_mod( 'cause' . $i . '_header_link' ) );
+				${"cause_$i"}->header_link = get_theme_mod( 'cause' . $i . '_header_link' );
 				${"cause_$i"}->message     = get_theme_mod( 'cause_message_' . $i );
 
 				$mods_class->causes->{"cause_$i"} = ${"cause_$i"};
@@ -268,6 +268,7 @@ function the_mods_for_section( $section ) {
 			$newsletter->background_color  = ( ! empty( get_theme_mod( 'newsletter_background_color' ) ) ) ? get_theme_mod( 'newsletter_background_color' ) : '#ffffff';
 			$newsletter->popup_form_select = get_theme_mod( 'newsletter_popup_form_select' );
 			$newsletter->session_length    = ( ! empty( get_theme_mod( 'newsletter_popup_message_session_length' ) ) ) ? get_theme_mod( 'newsletter_popup_message_session_length' ) : 24;
+			$newsletter->time_to_pop       = ( ! empty( get_theme_mod( 'newsletter_popup_time_to_pop' ) ) ) ? get_theme_mod( 'newsletter_popup_time_to_pop' ) : 20;
 
 			$mods_class->{'newsletter_mods'} = $newsletter;
 		endif;

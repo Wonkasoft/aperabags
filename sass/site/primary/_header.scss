@@ -111,7 +111,7 @@
   	padding-top: 120px;
 }
 
-.page-template-default, .product-template-default {
+.page-template, .page-template-default, .product-template-default, .error404 {
 
 	.site-header {
 		position: relative;
@@ -119,6 +119,7 @@
 		&.fixed {
 			position: fixed;
 			height: 0;
+			top: 0;
 			overflow: hidden;
 			@include prefix( transition, all .3s ease-in-out, o moz webkit );
 		}
