@@ -1829,11 +1829,12 @@ if ( wonkasoft_request.ga_id !== '' )
 		if ( document.querySelector( 'div.wonka-newsletter-wrap' ) ) 
 		{
 			var popup_wrap = document.querySelector( 'div.wonka-newsletter-wrap' );
+			var time_to_pop = document.querySelector( 'div.wonka-newsletter-wrap' ).getAttribute('time-to-pop') * 1000;
 			var popup_dismiss_btns = document.querySelectorAll( 'a.wonka-newsletter-close-btn' );
 			setTimeout( function() 
 				{
 					popup_wrap.classList.add( 'popped-up' );
-				}, 15000 );
+				}, time_to_pop );
 			popup_dismiss_btns.forEach( function( btn, i ) 
 				{
 					btn.addEventListener( 'click', function( e ) 
