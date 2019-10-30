@@ -688,11 +688,11 @@ function apera_bags_customize_register( $wp_customize ) {
 					$wp_customize,
 					'cta_slider_' . $i . '_description_' . $a . '_control',
 					array(
-						'label'       => 'CTA #' . $a . ' description ' . $a,
+						'label'       => 'CTA #' . $i . ' description ' . $a,
 						'section'     => 'lg_cta_section',
 						'settings'    => 'cta_slider_' . $i . '_description_' . $a,
 						'type'        => 'text',
-						'description' => 'Add description #' . $a . ' for slide #' . $a,
+						'description' => 'Add description #' . $i . ' for slide #' . $a,
 					)
 				)
 			);
@@ -947,9 +947,8 @@ function apera_bags_customize_register( $wp_customize ) {
 					'label'       => 'Cause image link ' . $i,
 					'section'     => 'cause_section',
 					'settings'    => 'cause_image_link_' . $i,
-					'type'        => 'select',
+					'type'        => 'text',
 					'description' => 'Slect a product to link the image to.',
-					'choices'     => $products,
 				)
 			)
 		);
@@ -1037,7 +1036,7 @@ function apera_bags_customize_register( $wp_customize ) {
 					'label'       => __( 'Cause ' . $i . ' Title Link', 'apera-bags' ),
 					'section'     => 'cause_section',
 					'settings'    => 'cause' . $i . '_header_link',
-					'type'        => 'dropdown-pages',
+					'type'        => 'text',
 					'description' => 'Set Cause ' . $i . ' link',
 				)
 			)
