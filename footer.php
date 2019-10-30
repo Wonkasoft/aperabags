@@ -153,6 +153,7 @@ if ( ! empty( $newsletter_section ) && $newsletter_section->newsletter_mods->ena
 				<?php if ( ! empty( $newsletter_section->newsletter_mods->popup_form_select ) ) : ?>
 					<div class="wonka-newsletter-form-wrap">
 						<?php echo do_shortcode( '[gravityform id="' . $newsletter_section->newsletter_mods->popup_form_select . '" title="false" description="false" ajax="true"]' ); ?>
+						<a href="<?php echo get_site_url() . '/perks'; ?>" class="wonka-btn img-cta-link text-center">YES!</a> <a href="#" class="wonka-btn img-cta-link text-center wonka-newsletter-close-btn">MAYBE LATER</a>
 					</div>
 				<?php endif; ?>
 			</main>
