@@ -112,6 +112,7 @@ function the_mods_for_section( $section ) {
 					$slide->{ 'cta_description_' . $a } = get_theme_mod( 'cta_slider_' . $i . '_description_' . $a );
 
 				}
+				$slide->slide_description_icon  = get_theme_mod( 'slider_description_list_icon_' . $i );
 				$slide->slide_link_btn      = get_theme_mod( 'cta_slider_btn_text_' . $i );
 				$slide->slide_link          = get_theme_mod( 'cta_slider_btn_link_' . $i );
 				// Mobile Theme mod.

@@ -134,6 +134,9 @@ get_header();
 				<?php
 				do_action( 'get_mods_before_section', 'cta' );
 				$cta_slider = get_section_mods( 'cta' );
+				echo "<pre>\n";
+				print_r( $cta_slider );
+				echo "</pre>\n";
 
 				if ( ! empty( $cta_slider ) ) :
 					?>
@@ -189,7 +192,7 @@ get_header();
 																		<ul class="perks-description-ul">
 																			<?php
 																				for ( $i = 1; $i <= 3; $i++ ) :
-																					echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->{'cta_description_' . $i } ) . ')">' . esc_html( $slide->{'cta_description_' . $i } ) . '</li>';
+																					echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->slide_description_icon ) . ')">' . esc_html( $slide->{'cta_description_' . $i } ) . '</li>';
 																				endfor;
 																			?>
 																		</ul>
