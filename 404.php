@@ -23,7 +23,7 @@ get_header();
 				<div class="page-content fixed-divider-460">
 					<p><?php esc_html_e( 'Like a great workout coming to a grinding halt!', 'apera-bags' ); ?></p>
 					<p><?php esc_html_e( "Unfortunately, this page doesn't seem to exist.", 'apera-bags' ); ?></p>
-					<?php get_search_form(); ?> or... <a href="" class="wonka-btn">Back Home</a>
+					<?php get_search_form(); ?> or... <a href="<?php echo get_site_url(); ?>" class="wonka-btn">Back Home</a>
 
 				</div><!-- .page-content -->
 			</section><!-- .error-404 -->
