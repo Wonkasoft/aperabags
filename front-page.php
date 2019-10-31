@@ -189,8 +189,8 @@ get_header();
 																		?>
 																		<ul class="perks-description-ul">
 																			<?php
-																			for ( $i = 1; $i <= 3; $i++ ) :
-																				echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->{'cta_description_' . $i } ) . ')">' . esc_html( $slide->{'cta_description_' . $i } ) . '</li>';
+																				for ( $i = 1; $i <= 3; $i++ ) :
+																					echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->slide_description_icon ) . ')">' . esc_html( $slide->{'cta_description_' . $i } ) . '</li>';
 																				endfor;
 																			?>
 																		</ul>
@@ -296,7 +296,7 @@ get_header();
 						do_action( 'get_mods_before_section', 'about' );
 						$about_section = get_section_mods( 'about' );
 
-						if ( ! empty( $about_section->about_the_brand ) ) :
+						if ( ! empty( $about_section->about_the_brand->about_header ) ) :
 							?>
 							<section class="container-fluid about-brand-section align-items-center justify-content-around">
 								<div class="row wonka-row">
@@ -357,40 +357,6 @@ get_header();
 									<?php endif; ?>
 								</div>
 							</section>
-						<?php endif; ?>
-
-						<?php
-						do_action( 'get_mods_before_section', 'perks' );
-						$apera_perks = get_section_mods( 'perks' );
-
-						if ( ! empty( $apera_perks->apera_perks->perks_checkbox ) ) :
-
-							if ( ! empty( $apera_perks->apera_perks->perks_image ) ) :
-								?>
-								<section class="container-fluid perks-section text-center perks-background-img" data-img-url="<?php echo esc_attr( $apera_perks->apera_perks->perks_image ); ?>" style="background-image:radial-gradient(rgba(0, 0, 0, .45),rgba(0, 0, 0, 0.0)), url('<?php echo esc_url( $apera_perks->apera_perks->perks_image ); ?>');">
-							<?php else : ?>
-								<section class="container-fluid perks-section text-center">
-							<?php endif; ?>
-
-							<div class="perks-section-content">
-								<h3 class="section-title perks-title"><?php echo wp_kses_post( $apera_perks->apera_perks->perks_section_title ); ?></h3>
-								<div class="row row-perks justify-content-center">
-									<div class="col-12 col-perks-content">
-										<ul class="perks-description-ul">
-											<?php
-											for ( $i = 1; $i <= 3; $i++ ) :
-												echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $apera_perks->apera_perks->perks_description_icon ) . ')">' . esc_html( $apera_perks->apera_perks->{'perks_description_' . $i } ) . '</li>';
-												endfor;
-											?>
-										</ul>
-										<a class="join-perks-btn wonka-btn" href="<?php echo esc_url( $apera_perks->apera_perks->perks_button ); ?>"><?php echo wp_kses_post( $apera_perks->apera_perks->perks_btn_text ); ?></a>
-									</div>
-								</div>				
-							</div>
-
-
-							</section>
-
 						<?php endif; ?>
 
 						<?php

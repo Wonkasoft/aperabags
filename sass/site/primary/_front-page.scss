@@ -350,6 +350,7 @@ section.desirable-slider-section {
 						.text-box {
 							color: #ffffff;
 							max-width: 100%;
+							display: grid;
 
 							h2 {
 								color: #ffffff;
@@ -369,7 +370,8 @@ section.desirable-slider-section {
 							}
 
 							ul {
-								margin: 0;
+								margin: auto;
+								text-align: left;
 								padding: 20px 0;
 								list-style-position: inside;
 				
@@ -784,84 +786,6 @@ section.about-brand-section {
 	}
 }
 /*=====  End of About the Brand section  ======*/
-
-/*======================================
-=            Apera Perks section            =
-======================================*/
-section.perks-section {
-
-	&.perks-background-img {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 580px;
-		background-repeat: no-repeat;
-		-webkit-background-size: cover;
-		background-size: cover;
-		background-position: center;
-		color: #fff;
-	}
-	
-	.perks-section-content {
-		// background: radial-gradient( #000, #00000000);
-		
-		h3.perks-title {
-			font-weight: 800;
-			@include prefix( text-shadow, 1px 1px 2px rgba( #000, .8 ), o moz webkit );
-
-			@include media-breakpoint( ipx ) {
-				line-height: 1.1;
-				@include font-size( 1.2 );
-			}
-
-			@include media-breakpoint( ip8 ) {
-				line-height: 1.1;
-				@include font-size( 1.2 );
-			}
-
-			@include media-breakpoint( ip8p ) {
-				line-height: 1.1;
-				@include font-size( 1.2 );
-			}
-
-			@include media-breakpoint( md ) {
-				line-height: 1.1;
-				@include font-size( 2.5 );
-			}
-
-			@include media-breakpoint( lg ) {
-				line-height: 1.1;
-				@include font-size( 2.8 );
-			}
-
-			@include media-breakpoint( xl ) {
-				line-height: 1.1;
-				@include font-size( 3.2 );
-			}	
-		}
-
-		.col-perks-content {
-
-			ul {
-				margin: 0;
-				padding: 20px 0;
-				list-style-position: inside;
-
-				li.perks-description {
-					@include font-size( 1.1 );
-					margin-bottom: 1.2em;
-					
-				}
-			}
-
-			a.join-perks-btn {
-				padding: 10px 15px;
-			}
-		}
-	}
-
-}
-/*=====  End of Apera Perks section  ======*/
 
 /*======================================
 =            Social section            =

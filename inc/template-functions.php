@@ -112,6 +112,7 @@ function the_mods_for_section( $section ) {
 					$slide->{ 'cta_description_' . $a } = get_theme_mod( 'cta_slider_' . $i . '_description_' . $a );
 
 				}
+				$slide->slide_description_icon  = get_theme_mod( 'slider_description_list_icon_' . $i );
 				$slide->slide_link_btn      = get_theme_mod( 'cta_slider_btn_text_' . $i );
 				$slide->slide_link          = get_theme_mod( 'cta_slider_btn_link_' . $i );
 				// Mobile Theme mod.
@@ -175,27 +176,6 @@ function the_mods_for_section( $section ) {
 
 			$mods_class->{'about_the_brand'}        = $about;
 			$mods_class->{'about_the_brand'}->count = $count;
-		endif;
-
-		return $mods_class;
-	endif;
-
-	if ( 'perks' === $section ) :
-		if ( ! empty( get_theme_mod( 'perks_checkbox' ) ) ) :
-			$count++;
-			$perks                                  = new stdClass();
-			$perks->perks_checkbox                  = get_theme_mod( 'perks_checkbox' );
-			$perks->perks_section_title             = get_theme_mod( 'perks_section_title' );
-			$perks->perks_description_icon          = get_theme_mod( 'perks_description_list_icon' );
-			for ( $i = 1; $i <= 3; $i++ ) :
-				$perks->{ 'perks_description_' . $i } = get_theme_mod( 'perks_section_description_' . $i );
-			endfor;
-			$perks->perks_btn_text                  = get_theme_mod( 'perks_button_text' );
-			$perks->perks_button                    = get_permalink( get_theme_mod( 'perks_button' ) );
-			$perks->perks_image                     = get_theme_mod( 'perks_section_image' );
-
-			$mods_class->{'apera_perks'}        = $perks;
-			$mods_class->{'apera_perks'}->count = $count;
 		endif;
 
 		return $mods_class;
