@@ -778,19 +778,12 @@ if ( wonkasoft_request.ga_id !== '' )
 				{
 					drop_down = setTimeout( function() 
 					{
-						if ( window.pageYOffset > header_height ) 
-						{
-							header_el.style = 'height: ' + header_height + 'px; top: 0;';
-							setTimeout( function() 
-								{
-									header_el.style = 'height: ' + header_height + 'px; top: 0; overflow: unset;';
+						header_el.style = 'height: ' + header_height + 'px; top: 0;';
+						setTimeout( function() 
+							{
+								header_el.style = 'height: ' + header_height + 'px; top: 0; overflow: unset;';
 
-								}, 400 );
-						}
-						else
-						{
-							header_el.style = '';
-						}
+							}, 400 );
 					}, 300 );
 				}
 			}
