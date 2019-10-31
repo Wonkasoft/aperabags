@@ -593,7 +593,7 @@ section.our-cause-section {
 				align-items: center;
 				max-width: 300px;
 				height: auto;
-				@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+				@include prefix( box-shadow, 0 0 4px .5px rgba, o moz webkit );
 
 				img {
 					height: 550px;
