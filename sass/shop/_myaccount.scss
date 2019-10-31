@@ -1,15 +1,38 @@
-main.main-my-account {
+main#main.main-my-account {
 
   div#customer_login {
-    overflow-x: hidden;
+    overflow: hidden;
 
     .login,
     .register {
+      margin-bottom: 15px;
       transition: all .35s ease-in-out;
-    
+
+      .gr-comment-checkbox {
+        display: none;
+      }
+
+      h2 {
+        text-transform: none;
+        margin-bottom: 15px;
+      }
+      
+      button {
+        margin: 15px 0;
+      }
+
+      .woocommerce-LostPassword {
+        margin: 15px 0;
+      }
+
       .create-account-full {
+        margin-top: 0;
         opacity: 1;
         transition: all .35s ease-in-out;
+        
+        &.display-none {
+          display: none;
+        }
       }
 
       .btn-create-toggle {
@@ -17,45 +40,51 @@ main.main-my-account {
       }
 
       .woocommerce-form-register {
-        padding: 0 30px;
+        padding: 0 8px;
         height: 0;
         overflow: hidden;
         transition: all .35s ease-in-out;
       }
 
       .form-register-toggle {
-        height: 285px;
+        height: 360px;
       }
 
       &.collapse-col-login {
         display: block;
-        margin: -100% 0 0 0;
+        margin: -200% 0 0 0;
 
         @include media-breakpoint( md ) {
+          margin: 0 0 0 -100%
+        }
+
+        @include media-breakpoint( lg ) {
           margin: 0 0 0 -50%
         }
       }
 
       .loggin-toggle-wrapper {
         opacity: 0;
+        margin: 8px auto;
       }
 
       .loggin-toggle-wrapper-visable {
         opacity: 1;
+
       }
 
       ul.the_champ_login_ul {
         display: flex;
         justify-content: flex-start;
+
+        li {
+          margin: 15px 15px 15px 0 !important;
+        }
       }
     }
 
-    .register ul.the_champ_login_ul {
-      display: flex;
-      justify-content: center;
-    }
-
     div.input-group {
+      margin: 15px auto;
 
       input.input-text.is-invalid {
         @include prefix( box-shadow, 0px 0px 5px rgba(#e2401c, .6 ), o moz webkit );

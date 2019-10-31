@@ -378,9 +378,9 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 function wonka_product_tabs_retitle( $tabs ) {
 
 	$new_title                       = get_post_meta( get_the_ID(), 'product_statement', true );
-	$tabs['reviews']['priority']     = 10;          // Reviews first
-	$tabs['description']['priority'] = 20;          // Description second
-	unset( $tabs['additional_information'] );   // Additional information third
+	$tabs['reviews']['priority']     = 10;          // Reviews first.
+	$tabs['description']['priority'] = 20;          // Description second.
+	unset( $tabs['additional_information'] );   // Additional information third.
 	$tabs['description']['title']   = __( $new_title );
 	$tabs['description']['section'] = __( 'Product Statement' );
 
@@ -390,7 +390,7 @@ function wonka_product_tabs_retitle( $tabs ) {
 add_filter( 'woocommerce_product_tabs', 'wonka_product_tabs_retitle', 98 );
 
 /**
- * This is for moving the cross sells items on the cart page setting the display of how many items and columns to show
+ * This is for moving the cross sells items on the cart page setting the display of how many items and columns to show.
  */
 function wonka_cart_cross_sells() {
 	add_filter(
@@ -432,7 +432,14 @@ function wonka_checkout_wrap_before( $checkout ) {
 	$output .= '<div class="row wonka-checkout-row">';
 	$output .= '<div class="col col-12 col-md-7 checkout-form-left-side">';
 
-	_e( $output );
+	echo wp_kses(
+		$output,
+		array(
+			'div' => array(
+				'class' => array(),
+			),
+		)
+	);
 }
 
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25, 1 );
@@ -1910,10 +1917,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				 * @return void
 				 */
 				function init() {
-					// Load the settings API
+					// Load the settings API.
 					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
-					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
-					// Save settings in admin if you have any defined
+					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings.
+					// Save settings in admin if you have any defined.
 					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 				}
 				/**
@@ -1930,7 +1937,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 						'cost'     => '30.00',
 						'calc_tax' => 'per_item',
 					);
-					// Register the rate
+					// Register the rate.
 					$this->add_rate( $rate );
 				}
 			}
@@ -1939,6 +1946,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
 
+	/**
+	 * This adds new shipping methods.
+	 *
+	 * @param object $methods contains the current methods.
+	 */
 	function add_ws_shipping_methods( $methods ) {
 
 		$methods['USPS_Priority_Mail_Express'] = 'WC_Priority_Mail_Express_Shipping_Method';
@@ -1947,7 +1959,16 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	add_filter( 'woocommerce_shipping_methods', 'add_ws_shipping_methods' );
 }
 
-
+/**
+ * This function is used to call product images
+ *
+ * @param  [type] $image       [description]
+ * @param  [type] $obj         [description]
+ * @param  [type] $size        [description]
+ * @param  [type] $attr        [description]
+ * @param  [type] $placeholder [description]
+ * @return [type]              [description]
+ */
 function wonka_woocommerce_product_get_image( $image, $obj, $size, $attr, $placeholder ) {
 
 	$size = array( '220', '264' );
@@ -1969,3 +1990,131 @@ function wonka_woocommerce_product_get_image( $image, $obj, $size, $attr, $place
 }
 add_filter( 'woocommerce_product_get_image', 'wonka_woocommerce_product_get_image', 10, 5 );
 
+function wonkasoft_woocommerce_register_form_start() {
+	$output = '';
+
+	$first_name = ( ! empty( $_POST['billing_first_name'] ) ) ? esc_attr( wp_unslash( $_POST['billing_first_name'] ) ) : '';
+	$last_name  = ( ! empty( $_POST['billing_last_name'] ) ) ? esc_attr( wp_unslash( $_POST['billing_last_name'] ) ) : '';
+
+	$output .= '<div class="form-group">';
+	$output .= '<div class="input-group">';
+	$output .= '<div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-user"></i></span></div>';
+	$output .= '<input type="text" class="form-control" name="billing_first_name" id="reg_billing_first_name" placeholder="' . esc_html( 'First Name *', 'woocommerce' ) . '" autocomplete="billing_first_name" value="' . $first_name . '" />';
+	$output .= '<input type="text" class="form-control" name="billing_last_name" id="reg_billing_last_name" placeholder="' . esc_html( 'Last Name *', 'woocommerce' ) . '" autocomplete="billing_last_name" value="' . $last_name . '" />';
+	$output .= '<div class="invalid-feedback reg_billing_first_name"></div>';
+	$output .= '</div>';
+	$output .= '</div>';
+
+	echo wp_kses(
+		$output,
+		array(
+			'div'   => array(
+				'class' => array(),
+			),
+			'i'     => array(
+				'class' => array(),
+			),
+			'span'  => array(
+				'class' => array(),
+			),
+			'input' => array(
+				'type'         => array(),
+				'class'        => array(),
+				'name'         => array(),
+				'id'           => array(),
+				'placeholder'  => array(),
+				'autocomplete' => array(),
+				'value'        => array(),
+			),
+		)
+	);
+
+}
+add_action( 'woocommerce_register_form_start', 'wonkasoft_woocommerce_register_form_start', 10 );
+
+/**
+ * This sets the role for woocommerce registration form
+ *
+ * @param  [type] $new_customer_data [description]
+ * @return [type]                    [description]
+ */
+function wonkasoft_woocommerce_new_customer_data( $new_customer_data ) {
+
+	$new_customer_data['role'] = get_option( 'default_role' );
+
+	return $new_customer_data;
+}
+add_filter( 'woocommerce_new_customer_data', 'wonkasoft_woocommerce_new_customer_data', 10 );
+
+/**
+ * This sets the user first name last name and billing fields.
+ *
+ * @param  number $customer_id customer ID.
+ */
+function wonkasoft_woocommerce_created_customer( $customer_id ) {
+
+	$nonce = $_REQUEST['_wpnonce'];
+	! wp_verify_nonce( $nonce, -1 ) || die( 'Nonce Failed' );
+
+	if ( isset( $_POST['billing_first_name'] ) ) {
+		$first_name = sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) );
+		// First name field which is by default
+		update_user_meta( $customer_id, 'first_name', $first_name );
+		// First name field which is used in WooCommerce
+		update_user_meta( $customer_id, 'billing_first_name', $first_name );
+	}
+	if ( isset( $_POST['billing_last_name'] ) ) {
+		$last_name = sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) );
+		// Last name field which is by default
+		update_user_meta( $customer_id, 'last_name', $last_name );
+		// Last name field which is used in WooCommerce
+		update_user_meta( $customer_id, 'billing_last_name', $last_name );
+	}
+	if ( isset( $_POST['email'] ) && isset( $_POST['billing_first_name'] ) && isset( $_POST['billing_last_name'] ) ) {
+		$campaign_name = 'perks_program_signups';
+		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+			$ip = $_SERVER['HTTP_CLIENT_IP'];
+		} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		} else {
+			$ip = $_SERVER['REMOTE_ADDR'];
+		}
+		$api_args = array(
+			'email'         => sanitize_email( wp_unslash( $_POST['email'] ) ),
+			'contact_name'  => $first_name . ' ' . $last_name,
+			'campaign_name' => $campaign_name,
+			'ip_address'    => $ip,
+		);
+
+		$api_args['contact_name'] = ucfirst( $api_args['contact_name'] );
+		$getresponse              = new Wonkasoft_GetResponse_Api( $api_args );
+
+		if ( empty( $getresponse->campaign_id ) ) :
+			foreach ( $getresponse->campaign_list as $campaign ) :
+				if ( $api_args['campaign_name'] === $campaign->name ) :
+					$getresponse->campaign_id = $campaign->campaignId;
+				endif;
+			endforeach;
+
+		endif;
+
+		if ( empty( $getresponse->contact_id ) ) :
+			foreach ( $getresponse->contact_list as $contact ) :
+				if ( empty( $getresponse->campaign_id ) ) {
+					$getresponse->contact_id = $contact->contactId;
+				} else {
+					if ( $getresponse->campaign_id === $contact->campaign->campaignId ) :
+						$getresponse->contact_id = $contact->contactId;
+					endif;
+				}
+			endforeach;
+		endif;
+
+		if ( ! empty( $getresponse->contact_id ) ) {
+			$getresponse->update_contact_details();
+		} else {
+			$getresponse->create_a_new_contact();
+		}
+	}
+}
+add_action( 'woocommerce_created_customer', 'wonkasoft_woocommerce_created_customer', 1 );

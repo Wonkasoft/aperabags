@@ -112,6 +112,7 @@ function the_mods_for_section( $section ) {
 					$slide->{ 'cta_description_' . $a } = get_theme_mod( 'cta_slider_' . $i . '_description_' . $a );
 
 				}
+				$slide->slide_description_icon  = get_theme_mod( 'slider_description_list_icon_' . $i );
 				$slide->slide_link_btn      = get_theme_mod( 'cta_slider_btn_text_' . $i );
 				$slide->slide_link          = get_theme_mod( 'cta_slider_btn_link_' . $i );
 				// Mobile Theme mod.
@@ -144,11 +145,11 @@ function the_mods_for_section( $section ) {
 				$count++;
 				${"cause_$i"}              = new stdClass();
 				${"cause_$i"}->img         = get_theme_mod( 'cause_image_' . $i );
-				${"cause_$i"}->img_link    = get_permalink( get_theme_mod( 'cause_image_link_' . $i ) );
+				${"cause_$i"}->img_link    = get_theme_mod( 'cause_image_link_' . $i );
 				${"cause_$i"}->img_srcset  = wp_get_attachment_image_srcset( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', true );
 				${"cause_$i"}->position    = get_theme_mod( 'cause_message_position_' . $i );
 				${"cause_$i"}->header      = get_theme_mod( 'cause_header_' . $i );
-				${"cause_$i"}->header_link = get_permalink( get_theme_mod( 'cause' . $i . '_header_link' ) );
+				${"cause_$i"}->header_link = get_theme_mod( 'cause' . $i . '_header_link' );
 				${"cause_$i"}->message     = get_theme_mod( 'cause_message_' . $i );
 
 				$mods_class->causes->{"cause_$i"} = ${"cause_$i"};
@@ -175,27 +176,6 @@ function the_mods_for_section( $section ) {
 
 			$mods_class->{'about_the_brand'}        = $about;
 			$mods_class->{'about_the_brand'}->count = $count;
-		endif;
-
-		return $mods_class;
-	endif;
-
-	if ( 'perks' === $section ) :
-		if ( ! empty( get_theme_mod( 'perks_checkbox' ) ) ) :
-			$count++;
-			$perks                                  = new stdClass();
-			$perks->perks_checkbox                  = get_theme_mod( 'perks_checkbox' );
-			$perks->perks_section_title             = get_theme_mod( 'perks_section_title' );
-			$perks->perks_description_icon          = get_theme_mod( 'perks_description_list_icon' );
-			for ( $i = 1; $i <= 3; $i++ ) :
-				$perks->{ 'perks_description_' . $i } = get_theme_mod( 'perks_section_description_' . $i );
-			endfor;
-			$perks->perks_btn_text                  = get_theme_mod( 'perks_button_text' );
-			$perks->perks_button                    = get_permalink( get_theme_mod( 'perks_button' ) );
-			$perks->perks_image                     = get_theme_mod( 'perks_section_image' );
-
-			$mods_class->{'apera_perks'}        = $perks;
-			$mods_class->{'apera_perks'}->count = $count;
 		endif;
 
 		return $mods_class;
@@ -267,6 +247,7 @@ function the_mods_for_section( $section ) {
 			$newsletter->background_color  = ( ! empty( get_theme_mod( 'newsletter_background_color' ) ) ) ? get_theme_mod( 'newsletter_background_color' ) : '#ffffff';
 			$newsletter->popup_form_select = get_theme_mod( 'newsletter_popup_form_select' );
 			$newsletter->session_length    = ( ! empty( get_theme_mod( 'newsletter_popup_message_session_length' ) ) ) ? get_theme_mod( 'newsletter_popup_message_session_length' ) : 24;
+			$newsletter->time_to_pop       = ( ! empty( get_theme_mod( 'newsletter_popup_time_to_pop' ) ) ) ? get_theme_mod( 'newsletter_popup_time_to_pop' ) : 20;
 
 			$mods_class->{'newsletter_mods'} = $newsletter;
 		endif;

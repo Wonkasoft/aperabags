@@ -884,8 +884,9 @@ function apera_bags_customize_register( $wp_customize ) {
 		'product_cat'   => 'allbags',
 	);
 
-	$the_query = new WP_Query( $args );
-	$products  = array();
+	$the_query   = new WP_Query( $args );
+	$products    = array();
+	$products[0] = 'No product selected';
 
 	if ( $the_query->have_posts() ) {
 		while ( $the_query->have_posts() ) {
@@ -1349,7 +1350,7 @@ function apera_bags_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'about_the_brand_second_image_link',
 		array(
-			'default'   => '0',
+			'default'   => 0,
 			'transport' => 'refresh',
 		)
 	);
@@ -1366,215 +1367,6 @@ function apera_bags_customize_register( $wp_customize ) {
 				'type'        => 'select',
 				'description' => 'About the brand button link',
 				'choices'     => $products,
-			)
-		)
-	);
-
-	/**
-	* Perks settings Section
-	*
-	* @since  1.0.0
-	*/
-	$wp_customize->add_section(
-		'apera_perks_section',
-		array(
-			'capability'     => 'edit_theme_options',
-			'theme_supports' => '',
-			'priority'       => 10,
-			'title'          => __( 'Apera Perks Section', 'apera-bags' ),
-			'description'    => __( 'Apera Perks version 1.0.0', 'apera-bags' ),
-			'panel'          => 'wonkasoft_theme_options',
-		)
-	);
-
-	/**
-	* Enables Perks settings Section
-	*
-	* @since  1.0.0
-	*/
-	$wp_customize->add_setting(
-		'perks_checkbox',
-		array(
-			'default'   => '',
-			'transport' => 'refresh',
-		)
-	);
-
-	// Enable perks section Setting Control.
-	$wp_customize->add_control(
-		new WP_Customize_Control(
-			$wp_customize,
-			'perks_checkbox_control',
-			array(
-				'label'       => __( 'Apera Perks Display CTA Option', 'apera-bags' ),
-				'section'     => 'apera_perks_section',
-				'settings'    => 'perks_checkbox',
-				'type'        => 'checkbox',
-				'description' => 'Enable Perks CTA',
-			)
-		)
-	);
-
-	/**
-	 * Perks section title settings Section
-	 *
-	 * @since  1.0.0
-	 */
-	$wp_customize->add_setting(
-		'perks_section_title',
-		array(
-			'default'   => '',
-			'transport' => 'refresh',
-		)
-	);
-
-	// Perks section title Setting Control.
-	$wp_customize->add_control(
-		new WP_Customize_Control(
-			$wp_customize,
-			'perks_section_title_control',
-			array(
-				'label'       => __( 'Perks Program Section Title ', 'apera-bags' ),
-				'section'     => 'apera_perks_section',
-				'settings'    => 'perks_section_title',
-				'type'        => 'text',
-				'description' => 'Add Perks section Title',
-			)
-		)
-	);
-
-	// Perks description list icon Setting.
-	$wp_customize->add_setting(
-		'perks_description_list_icon',
-		array(
-			'default'   => '',
-			'transport' => 'refresh',
-		)
-	);
-
-	// Perks description list icon Setting Control.
-	$wp_customize->add_control(
-		new WP_Customize_Image_Control(
-			$wp_customize,
-			'perks_description_list_icon_control',
-			array(
-				'label'       => 'Perks Description Icon',
-				'section'     => 'apera_perks_section',
-				'settings'    => 'perks_description_list_icon',
-				'type'        => 'image',
-				'description' => 'Add icon for Perks description list Item',
-			)
-		)
-	);
-		
-
-	for ( $i = 1; $i <= 3; $i++ ) :
-		/**
-		 * Perks description settings Section
-		 *
-		 * @since  1.0.0
-		 */
-		$wp_customize->add_setting(
-			'perks_section_description_' . $i,
-			array(
-				'default'   => '',
-				'transport' => 'refresh',
-			)
-		);
-
-		// Perks description Setting Control.
-		$wp_customize->add_control(
-			new WP_Customize_Control(
-				$wp_customize,
-				'perks_section_description_' . $i . '_control',
-				array(
-					'label'       => __( 'Perks Program bullet ' . $i, 'apera-bags' ),
-					'section'     => 'apera_perks_section',
-					'settings'    => 'perks_section_description_' . $i,
-					'type'        => 'text',
-					'description' => 'Add Perks section bullet #' . $i,
-				)
-			)
-		);
-
-	endfor;
-
-	/**
-	 * Perks button text settings Section
-	 *
-	 * @since  1.0.0
-	 */
-	$wp_customize->add_setting(
-		'perks_button_text',
-		array(
-			'default'   => '',
-			'transport' => 'refresh',
-		)
-	);
-
-	// Perks button text Setting Control.
-	$wp_customize->add_control(
-		new WP_Customize_Control(
-			$wp_customize,
-			'perks_button_text_control',
-			array(
-				'label'       => __( 'Perks Button Text', 'apera-bags' ),
-				'section'     => 'apera_perks_section',
-				'settings'    => 'perks_button_text',
-				'type'        => 'text',
-				'description' => 'Add Perks Button Text',
-			)
-		)
-	);
-
-	/**
-	 * Perks button  settings Section
-	 *
-	 * @since  1.0.0
-	 */
-	$wp_customize->add_setting(
-		'perks_button',
-		array(
-			'default'   => '',
-			'transport' => 'refresh',
-		)
-	);
-
-	// Perks button Setting Control.
-	$wp_customize->add_control(
-		new WP_Customize_Control(
-			$wp_customize,
-			'perks_button_control',
-			array(
-				'label'       => __( 'Apera Perks Button', 'apera-bags' ),
-				'section'     => 'apera_perks_section',
-				'settings'    => 'perks_button',
-				'type'        => 'dropdown-pages',
-				'description' => 'Apera Perks Button choose the destination page',
-			)
-		)
-	);
-
-	// Perks image Setting.
-	$wp_customize->add_setting(
-		'perks_section_image',
-		array(
-			'default'   => '',
-			'transport' => 'refresh',
-		)
-	);
-
-	// Perks image Setting Control.
-	$wp_customize->add_control(
-		new WP_Customize_Image_Control(
-			$wp_customize,
-			'perks_section_image_control',
-			array(
-				'label'       => __( 'Perks image', 'apera-bags' ),
-				'section'     => 'apera_perks_section',
-				'settings'    => 'perks_section_image',
-				'type'        => 'image',
-				'description' => 'Add image for Perks sections ',
 			)
 		)
 	);
@@ -1901,7 +1693,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				'label'       => __( 'Instagram Username', 'apera-bags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_insta_username',
-				'type'      => 'text',
+				'type'        => 'text',
 				'description' => 'Example: @MYUSERNAME',
 			)
 		)
@@ -1925,7 +1717,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				'label'       => __( 'Instagram link', 'apera-bags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_insta_username_link',
-				'type'      => 'text',
+				'type'        => 'text',
 				'description' => 'Example: https://www.instagram.com/myusername/',
 			)
 		)
@@ -1935,8 +1727,8 @@ function apera_bags_customize_register( $wp_customize ) {
 		$wp_customize->add_setting(
 			'footer_insta_hashtags',
 			array(
-				'default'           => '',
-				'transport'         => 'refresh',
+				'default'   => '',
+				'transport' => 'refresh',
 			)
 		);
 
@@ -1949,7 +1741,7 @@ function apera_bags_customize_register( $wp_customize ) {
 					'label'       => __( 'Instgram Hashtag Page', 'apera-bags' ),
 					'section'     => 'footer_section',
 					'settings'    => 'footer_insta_hashtags',
-					'type'      => 'text',
+					'type'        => 'text',
 					'description' => 'Example: #MYHASHTAG',
 				)
 			)
@@ -1959,8 +1751,8 @@ function apera_bags_customize_register( $wp_customize ) {
 		$wp_customize->add_setting(
 			'footer_insta_hashtags_link',
 			array(
-				'default'           => '',
-				'transport'         => 'refresh',
+				'default'   => '',
+				'transport' => 'refresh',
 			)
 		);
 
@@ -1973,7 +1765,7 @@ function apera_bags_customize_register( $wp_customize ) {
 					'label'       => __( 'Instagram Hashtag link', 'apera-bags' ),
 					'section'     => 'footer_section',
 					'settings'    => 'footer_insta_hashtags_link',
-					'type'      => 'text',
+					'type'        => 'text',
 					'description' => 'Example: https://www.instagram.com/explore/tags/hashtaghere/',
 				)
 			)
@@ -2252,6 +2044,34 @@ function apera_bags_customize_register( $wp_customize ) {
 				'settings'    => 'newsletter_popup_message_session_length',
 				'type'        => 'number',
 				'description' => 'Hours to reset the popup when a user dismisses it. logged in users will not see it unless they are not opted in.',
+			)
+		)
+	);
+
+	/**
+	 * Newsletter time to pop settings
+	 *
+	 * @since  1.0.0
+	 */
+	$wp_customize->add_setting(
+		'newsletter_popup_time_to_pop',
+		array(
+			'default'   => '20',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Newsletter session length Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+			'newsletter_popup_time_to_pop_control',
+			array(
+				'label'       => __( 'Newsletter Popup Timer', 'apera-bags' ),
+				'section'     => 'newsletter_popup_section',
+				'settings'    => 'newsletter_popup_time_to_pop',
+				'type'        => 'number',
+				'description' => 'Seconds to popup after the page loads.',
 			)
 		)
 	);
