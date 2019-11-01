@@ -157,6 +157,7 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		 * @since 1.0.0
 		 */
 		add_image_size( 'custom_products_size', 370, 550, false );
+		add_image_size( 'cart_products_size', 75, 115, false );
 	}
 endif;
 add_action( 'after_setup_theme', 'apera_bags_setup' );
