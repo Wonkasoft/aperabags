@@ -79,57 +79,17 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 				<button type="button" class="create-account-full button wonka-btn" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>"><?php esc_html_e( 'Create Account', 'woocommerce' ); ?></button>
 		<!-- </p> -->
 
-		<form method="post" class="woocommerce-form woocommerce-form-register" <?php do_action( 'woocommerce_register_form_tag' ); ?> >
-
-			<?php do_action( 'woocommerce_register_form_start' ); ?>
-
-			<?php if ( 'no' === get_option( 'woocommerce_registration_generate_username' ) ) : ?>
-				<div class="form-group">
-					<label for="reg_username" class="sr-only"><?php esc_html_e( 'Username', 'woocommerce' ); ?>&nbsp;<span class="required sr-only">*</span></label>	
-					<div class="input-group">
-
-						<input type="text" class="form-control input-text" name="username" id="reg_username" placeholder="<?php esc_html_e( 'Username *', 'woocommerce' ); ?>" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" /><?php // @codingStandardsIgnoreLine ?>
-						<div class="invalid-feedback reg_username"></div>
-					</div>
-				</div>
-
-			<?php endif; ?>
-
-			<div class="form-group">
-				<label for="reg_email" class="sr-only"><?php esc_html_e( 'Email address', 'woocommerce' ); ?>&nbsp;<span class="required sr-only">*</span></label>			
-				<div class="input-group">
-
-					<input type="email" class="form-control input-text" name="email" id="reg_email" autocomplete="email" placeholder="<?php esc_html_e( 'Email address *', 'woocommerce' ); ?>" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( wp_unslash( $_POST['email'] ) ) : ''; ?>" /><?php // @codingStandardsIgnoreLine ?>
-					<div class="invalid-feedback reg_email"></div>
-				</div>
-			</div>
-
-			<?php if ( 'no' === get_option( 'woocommerce_registration_generate_password' ) ) : ?>
-			<div class="form-group">
-				<label for="register_password" class="sr-only"><?php esc_html_e( 'Password', 'woocommerce' ); ?>&nbsp;<span class="required sr-only">*</span></label>
-				<div class="input-group">
-					
-					<input type="password" class="form-control input-text" name="password" id="register_password" autocomplete="new-password" placeholder="<?php esc_html_e( 'Password *', 'woocommerce' ); ?>" /><div class="input-group-append"><div class="input-group-text"><i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i></div></div>
-					<div class="invalid-feedback register_password"></div>
-				</div>
-		</div>
-
-			<?php endif; ?>
-
-			<p class="woocommerce-FormRow form-row">
-				<?php wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ); ?>
-				<button type="submit" class="woocommerce-Button button wonka-btn" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>"><?php esc_html_e( 'Create My Account', 'woocommerce' ); ?></button>
-			</p>
+		<div class="apera-registration-form-container">
+			<?php echo gravity_form( 'Apera Perks Registration', false, false, false, null, true, 0, false ); ?>
 
 			<?php do_action( 'woocommerce_register_form' ); ?>
 
 			<?php do_action( 'woocommerce_register_form_end' ); ?>
-
-		</form>
-			<div class="loggin-toggle-wrapper">
-				<p><?php esc_html_e( 'Already have an account?', 'woocommerce' ); ?></p>
-				<button type="submit" class="login-slide-btn button wonka-btn" name="register" ><?php esc_html_e( 'Back to Login', 'woocommerce' ); ?></button>
-			</div>
+		</div>
+		<div class="loggin-toggle-wrapper">
+			<p><?php esc_html_e( 'Already have an account?', 'woocommerce' ); ?></p>
+			<button type="submit" class="login-slide-btn button wonka-btn" name="register" ><?php esc_html_e( 'Back to Login', 'woocommerce' ); ?></button>
+		</div>
 
 	</div>
 

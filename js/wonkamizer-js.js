@@ -977,7 +977,7 @@ if ( wonkasoft_request.ga_id !== '' )
 		{
 			var footer_height = document.querySelector( 'footer#colophon' ).offsetHeight,
 			new_space;
-
+			console.log(footer_height);
 			new_space = document.getElementById( 'footer-spacer' );
 			new_space.style.width = '100%';
 			new_space.style.height = footer_height + 'px';
@@ -1682,7 +1682,7 @@ if ( wonkasoft_request.ga_id !== '' )
 			login_toggle_btn = document.querySelector( '.login-slide-btn' );
 			login_col = document.querySelector( 'div.login' );
 			register_col = document.querySelector( 'div.register' );
-			register_form = document.querySelector( 'form.woocommerce-form-register' );
+			register_form = document.querySelector( '.apera-registration-form-container' );
 			loggin_toggle_wrapper = document.querySelector( 'div.loggin-toggle-wrapper' );
 
 			create_toggle_btn.addEventListener( 'click', function( e )

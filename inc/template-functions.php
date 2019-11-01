@@ -1490,7 +1490,7 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 		if ( ! empty( $company_logo->url ) ) {
 
 			$output .= '<div class="current-logo-wrap">';
-			$output .= '<img src="' . esc_url( $company_logo->url ) . '" class="current-logo" />';
+			$output .= '<img srcset="' . wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', true ) . '" class="current-logo" />';
 			$output .= '</div>';
 			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
 			$output .= '<div class="form-wrap">';
@@ -1539,7 +1539,7 @@ function wonkasoft_parse_account_logo() {
 
 		if ( ! empty( $company_logo->url ) ) {
 
-			$output .= '<img src="' . esc_url( $company_logo->url ) . '" data-attachment-id="' . $company_logo->id . '" class="current-logo" />';
+			$output .= '<img srcset="' . wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', true ) . '" data-attachment-id="' . $company_logo->id . '" class="current-logo" />';
 
 		} else {
 
