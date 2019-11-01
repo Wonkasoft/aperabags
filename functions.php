@@ -408,3 +408,13 @@ function wonkasoft_wordfence_ls_require_captcha( $requireCAPTCHA ) {
 	return false;
 }
 add_filter( 'wordfence_ls_require_captcha', 'wonkasoft_wordfence_ls_require_captcha' );
+
+
+function wonkasoft_add_defer_attribute( $tag, $handle ) {
+	if ( 'googleapis' !== $handle ) {
+		return $tag;
+	}
+
+	return str_replace( ' src', ' defer src', $tag );
+}
+add_filter( 'script_loader_tag', 'wonkasoft_add_defer_attribute', 10, 2 );
