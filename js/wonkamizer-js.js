@@ -1652,116 +1652,6 @@ if ( wonkasoft_request.ga_id !== '' )
 	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
-	function initAutocomplete() 
-	{
-	  // Create the autocomplete object, restricting the search to geographical
-	  // location types.
-	  autocomplete = new google.maps.places.Autocomplete(
-	      /** @type {!HTMLInputElement} */( document.getElementById( 'shipping_address_1' ) ),
-	      {types: ['geocode']});
-
-	  // Avoid paying for data that you don't need by restricting the set of
-		// place fields that are returned to just the address components.
-	  autocomplete.setFields(['address_component']);
-
-	  // When the user selects an address from the dropdown, populate the address
-	  // fields in the form.
-	  autocomplete.addListener('place_changed', fillInAddress);
-	}
-
-	function fillInAddress() 
-	{
-		// Get the place details from the autocomplete object.
-		var place = autocomplete.getPlace();
-		var addressType = '';
-		var val = '';
-		var current_street_number = '';
-		var shipping_address_1 = document.getElementById( 'shipping_address_1' );
-		var shipping_city = document.getElementById( 'shipping_city' );
-		var shipping_state = document.getElementById( 'shipping_state' );
-		var select2_shipping_state = document.getElementById( 'select2-shipping_state-container' );
-		var shipping_postcode = document.getElementById( 'shipping_postcode' );
-		// Get each component of the address from the place details
-		// and fill the corresponding field on the form.
-		for (var i = 0; i < place.address_components.length; i++) 
-		{
-			addressType = '';
-			addressType = place.address_components[i].types[0];
-			if ( addressType === 'street_number' ) 
-			{
-				val = place.address_components[i][componentForm[addressType]];
-				current_street_number = val;
-			}
-
-			if ( addressType === 'route' ) 
-			{
-				val = place.address_components[i][componentForm[addressType]];
-				if ( i === 0 ) 
-				{
-					shipping_address_1.value = shipping_address_1.value.split( ' ' )[0];
-					shipping_address_1.value += ' ' + val;
-				}
-				else
-				{
-					shipping_address_1.value = current_street_number + ' ' + val;
-				}
-			}
-
-			if ( addressType === 'locality' ) 
-			{
-				shipping_city.value = '';
-				val = place.address_components[i][componentForm[addressType]];
-				shipping_city.value = val;
-			}
-
-			if ( addressType === 'administrative_area_level_1' ) 
-			{
-				shipping_state.value = '';
-				val = place.address_components[i][componentForm[addressType]];
-				shipping_state.value = val;
-				select2_shipping_state.title = shipping_state.options[shipping_state.selectedIndex].innerText;
-				select2_shipping_state.innerText = shipping_state.options[shipping_state.selectedIndex].innerText;
-			}
-
-			if ( addressType === 'postal_code' ) 
-			{
-				shipping_postcode.value = '';
-				val = place.address_components[i][componentForm[addressType]];
-				shipping_postcode.value = val;
-			}
-
-			if ( addressType === 'postal_code_suffix' ) 
-			{
-				val = place.address_components[i][componentForm[addressType]];
-				shipping_postcode.value += '-' + val;
-			}
-		}
-	}
-
-	// Bias the autocomplete object to the user's geographical location,
-	// as supplied by the browser's 'navigator.geolocation' object.
-	function geolocate() 
-	{
-	  if ( navigator.geolocation ) 
-	  {
-	    navigator.geolocation.getCurrentPosition( function( position ) 
-	    {
-	      var geolocation = 
-	      {
-	        lat: position.coords.latitude,
-	        lng: position.coords.longitude
-	      };
-	      var circle = new google.maps.Circle(
-	      {
-	        center: geolocation,
-	        radius: position.coords.accuracy
-	      });
-	      autocomplete.setBounds( circle.getBounds() );
-	    });
-	  }
-	}
-	/*=====  End of This is for the google maps api  ======*/
-
 	/*====================================================================
 	=            This is for loading calls on window resizing            =
 	====================================================================*/
@@ -3216,3 +3106,112 @@ if ( wonkasoft_request.ga_id !== '' )
 
 })( jQuery );
 
+function initAutocomplete() 
+{
+  // Create the autocomplete object, restricting the search to geographical
+  // location types.
+  autocomplete = new google.maps.places.Autocomplete(
+      /** @type {!HTMLInputElement} */( document.getElementById( 'shipping_address_1' ) ),
+      {types: ['geocode']});
+
+  // Avoid paying for data that you don't need by restricting the set of
+	// place fields that are returned to just the address components.
+  autocomplete.setFields(['address_component']);
+
+  // When the user selects an address from the dropdown, populate the address
+  // fields in the form.
+  autocomplete.addListener('place_changed', fillInAddress);
+}
+
+function fillInAddress() 
+{
+	// Get the place details from the autocomplete object.
+	var place = autocomplete.getPlace();
+	var addressType = '';
+	var val = '';
+	var current_street_number = '';
+	var shipping_address_1 = document.getElementById( 'shipping_address_1' );
+	var shipping_city = document.getElementById( 'shipping_city' );
+	var shipping_state = document.getElementById( 'shipping_state' );
+	var select2_shipping_state = document.getElementById( 'select2-shipping_state-container' );
+	var shipping_postcode = document.getElementById( 'shipping_postcode' );
+	// Get each component of the address from the place details
+	// and fill the corresponding field on the form.
+	for (var i = 0; i < place.address_components.length; i++) 
+	{
+		addressType = '';
+		addressType = place.address_components[i].types[0];
+		if ( addressType === 'street_number' ) 
+		{
+			val = place.address_components[i][componentForm[addressType]];
+			current_street_number = val;
+		}
+
+		if ( addressType === 'route' ) 
+		{
+			val = place.address_components[i][componentForm[addressType]];
+			if ( i === 0 ) 
+			{
+				shipping_address_1.value = shipping_address_1.value.split( ' ' )[0];
+				shipping_address_1.value += ' ' + val;
+			}
+			else
+			{
+				shipping_address_1.value = current_street_number + ' ' + val;
+			}
+		}
+
+		if ( addressType === 'locality' ) 
+		{
+			shipping_city.value = '';
+			val = place.address_components[i][componentForm[addressType]];
+			shipping_city.value = val;
+		}
+
+		if ( addressType === 'administrative_area_level_1' ) 
+		{
+			shipping_state.value = '';
+			val = place.address_components[i][componentForm[addressType]];
+			shipping_state.value = val;
+			select2_shipping_state.title = shipping_state.options[shipping_state.selectedIndex].innerText;
+			select2_shipping_state.innerText = shipping_state.options[shipping_state.selectedIndex].innerText;
+		}
+
+		if ( addressType === 'postal_code' ) 
+		{
+			shipping_postcode.value = '';
+			val = place.address_components[i][componentForm[addressType]];
+			shipping_postcode.value = val;
+		}
+
+		if ( addressType === 'postal_code_suffix' ) 
+		{
+			val = place.address_components[i][componentForm[addressType]];
+			shipping_postcode.value += '-' + val;
+		}
+	}
+}
+
+// Bias the autocomplete object to the user's geographical location,
+// as supplied by the browser's 'navigator.geolocation' object.
+function geolocate() 
+{
+  if ( navigator.geolocation ) 
+  {
+    navigator.geolocation.getCurrentPosition( function( position ) 
+    {
+      var geolocation = 
+      {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      var circle = new google.maps.Circle(
+      {
+        center: geolocation,
+        radius: position.coords.accuracy
+      });
+      autocomplete.setBounds( circle.getBounds() );
+    });
+  }
+}
+/*=====  End of This is for the google maps api  ======*/
