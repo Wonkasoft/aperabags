@@ -1835,7 +1835,7 @@ function wonkasoft_single_product_archive_thumbnail_size( $size ) {
 	return $size;
 }
 
-add_filter( 'single_product_archive_thumbnail_size', 'wonkasoft_single_product_archive_thumbnail_size' );
+add_filter( 'single_product_archive_thumbnail_size', 'wonkasoft_single_product_archive_thumbnail_size', 50 );
 
 function wonkasoft_filter_yith_woocompare_filter_table_fields( $fields, $products ) {
 	$fields['title'] = 'Product';
