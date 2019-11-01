@@ -411,6 +411,7 @@ add_filter( 'wordfence_ls_require_captcha', 'wonkasoft_wordfence_ls_require_capt
 
 
 function wonkasoft_add_defer_attribute( $tag, $handle ) {
+
 	if ( 'googleapi' !== $handle ) {
 		return $tag;
 	}

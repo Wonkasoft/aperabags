@@ -22,6 +22,8 @@ if ( wonkasoft_request.ga_id !== '' )
 	ga('send', 'pageview');
 }
 /*=====  End of For Google Analytics  ======*/
+var placeSearch, autocomplete;
+var componentForm;
 
 ( function( $ )
 {
@@ -3088,8 +3090,7 @@ if ( wonkasoft_request.ga_id !== '' )
 			// parameter when you first load the API. For example:
 			// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-			var placeSearch, autocomplete;
-		    var componentForm = 
+		    componentForm = 
 		    {
 		        street_number: 'long_name', // Address_1 Numbers only
 		        route: 'short_name', // Street only
