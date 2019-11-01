@@ -22,6 +22,8 @@ if ( wonkasoft_request.ga_id !== '' )
 	ga('send', 'pageview');
 }
 /*=====  End of For Google Analytics  ======*/
+var placeSearch, autocomplete;
+var componentForm;
 
 ( function( $ )
 {
@@ -778,19 +780,12 @@ if ( wonkasoft_request.ga_id !== '' )
 				{
 					drop_down = setTimeout( function() 
 					{
-						if ( window.pageYOffset > header_height ) 
-						{
-							header_el.style = 'height: ' + header_height + 'px; top: 0;';
-							setTimeout( function() 
-								{
-									header_el.style = 'height: ' + header_height + 'px; top: 0; overflow: unset;';
+						header_el.style = 'height: ' + header_height + 'px; top: 0;';
+						setTimeout( function() 
+							{
+								header_el.style = 'height: ' + header_height + 'px; top: 0; overflow: unset;';
 
-								}, 400 );
-						}
-						else
-						{
-							header_el.style = '';
-						}
+							}, 400 );
 					}, 300 );
 				}
 			}
@@ -824,7 +819,7 @@ if ( wonkasoft_request.ga_id !== '' )
 
 			search_results.classList.add( 'autocomplete-suggestions' );
 			document.querySelector( 'body' ).appendChild( search_results );
-			search_field.setAttribute( 'autocomplete', 'off' );
+			search_field.setAttribute( 'autocomplete', 'false' );
 	
 			search_field.addEventListener( 'focus', function () 
 			{
@@ -1689,7 +1684,7 @@ if ( wonkasoft_request.ga_id !== '' )
 			login_toggle_btn = document.querySelector( '.login-slide-btn' );
 			login_col = document.querySelector( 'div.login' );
 			register_col = document.querySelector( 'div.register' );
-			register_form = document.querySelector( 'form.woocommerce-form-register' );
+			register_form = document.querySelector( '.apera-registration-form-container' );
 			loggin_toggle_wrapper = document.querySelector( 'div.loggin-toggle-wrapper' );
 
 			create_toggle_btn.addEventListener( 'click', function( e )
@@ -3081,35 +3076,36 @@ if ( wonkasoft_request.ga_id !== '' )
 		}
 		/*=====  End of Setup for the search form  ======*/
 		/*=====  End of Setup for the nabar menu transparency  ======*/
+
+		/*=======================================================
+		=            This is for the google maps api            =
+		=======================================================*/
+		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
+		{
+
+			// This example displays an address form, using the autocomplete feature
+			// of the Google Places API to help users fill in the information.
+
+			// This example requires the Places library. Include the libraries=places
+			// parameter when you first load the API. For example:
+			// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+		    componentForm = 
+		    {
+		        street_number: 'long_name', // Address_1 Numbers only
+		        route: 'short_name', // Street only
+		        locality: 'long_name', // City Name
+		        administrative_area_level_1: 'short_name', // State
+		        postal_code: 'long_name', // Zip Code
+		        postal_code_suffix: 'long_name', // Zip Code
+		    };	
+
+		}
+
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 
 })( jQuery );
-
-/*=======================================================
-=            This is for the google maps api            =
-=======================================================*/
-if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
-{
-
-	// This example displays an address form, using the autocomplete feature
-	// of the Google Places API to help users fill in the information.
-
-	// This example requires the Places library. Include the libraries=places
-	// parameter when you first load the API. For example:
-	// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-	var placeSearch, autocomplete;
-    var componentForm = 
-    {
-        street_number: 'long_name', // Address_1 Numbers only
-        route: 'short_name', // Street only
-        locality: 'long_name', // City Name
-        administrative_area_level_1: 'short_name', // State
-        postal_code: 'long_name', // Zip Code
-        postal_code_suffix: 'long_name', // Zip Code
-    };	
-}
 
 function initAutocomplete() 
 {

@@ -157,6 +157,7 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		 * @since 1.0.0
 		 */
 		add_image_size( 'custom_products_size', 370, 550, false );
+		add_image_size( 'cart_products_size', 75, 115, false );
 	}
 endif;
 add_action( 'after_setup_theme', 'apera_bags_setup' );
@@ -361,6 +362,10 @@ function apera_bags_scripts() {
 
 	wp_enqueue_script( 'apera-bags-skip-link-js', get_stylesheet_directory_uri() . '/js/skip-link-focus-fix.js', array( 'jquery' ), time(), true );
 
+	if ( is_page( 'checkout' ) && ! empty( get_option( 'google_api_key' ) ) ) :
+			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'google_api_key' ) . '&libraries=places&callback=initAutocomplete', array( 'apera-bags-wonkamizer-js' ), 'all', true );
+	endif;
+
 	if ( $slick_js_load ) :
 		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'slick-js' ), time(), true );
 	else :
@@ -377,10 +382,6 @@ function apera_bags_scripts() {
 			'security' => wp_create_nonce( 'ws-request-nonce' ),
 		)
 	);
-
-	if ( is_page( 'checkout' ) && ! empty( get_option( 'google_api_key' ) ) ) :
-			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'google_api_key' ) . '&libraries=places&callback=initAutocomplete', array( 'apera-bags-wonkamizer-js' ), 'all', true );
-	endif;
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) :
 		wp_enqueue_script( 'comment-reply' );
@@ -407,3 +408,14 @@ function wonkasoft_wordfence_ls_require_captcha( $requireCAPTCHA ) {
 	return false;
 }
 add_filter( 'wordfence_ls_require_captcha', 'wonkasoft_wordfence_ls_require_captcha' );
+
+
+function wonkasoft_add_defer_attribute( $tag, $handle ) {
+
+	if ( 'googleapi' !== $handle ) {
+		return $tag;
+	}
+
+	return str_replace( ' src', ' defer src', $tag );
+}
+add_filter( 'script_loader_tag', 'wonkasoft_add_defer_attribute', 10, 2 );

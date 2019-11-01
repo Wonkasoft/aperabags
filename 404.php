@@ -10,18 +10,21 @@
 get_header();
 ?>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
+	<div id="primary" class="content-area container-fluid 404-background">
+		<main id="main" class="site-main row">
+			<section class="error-404 not-found text-center col">
+				<header class="page-header text-center">
+					<h1 class="404-title">404</h1>
+					<h2 class="sub-title"><?php esc_html_e( 'Four, oh four', 'apera-bags' ); ?></h2>
+					<h3 class="title-message">Wherefore Art Thou Four?</h3>
 
-			<section class="error-404 not-found text-center">
-				<header class="page-header">
-					<h1>404-page</h1>
-					<h2 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'apera-bags' ); ?></h2>
-					<?php get_search_form(); ?>
 				</header><!-- .page-header -->
 
-				<div class="page-content">
-					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'apera-bags' ); ?></p>
+				<div class="page-content fixed-divider-460">
+					<p><?php esc_html_e( 'Like a great workout coming to a grinding halt!', 'apera-bags' ); ?></p>
+					<p><?php esc_html_e( "Unfortunately, this page doesn't seem to exist.", 'apera-bags' ); ?></p>
+					<p><strong><?php esc_html_e( 'Try a search instead?', 'apera-bags' ); ?></strong></p>
+					<span class="search-container"><?php get_search_form(); ?></span>  <span class="or-more">or...</span>  <span class="back-home"><a href="<?php echo get_site_url(); ?>" class="wonka-btn">Back Home</a></span>
 
 				</div><!-- .page-content -->
 			</section><!-- .error-404 -->

@@ -39,7 +39,7 @@ main#main.main-my-account {
         opacity: 0;
       }
 
-      .woocommerce-form-register {
+      .apera-registration-form-container {
         padding: 0 8px;
         height: 0;
         overflow: hidden;
@@ -47,7 +47,7 @@ main#main.main-my-account {
       }
 
       .form-register-toggle {
-        height: 360px;
+        height: 100%;
       }
 
       &.collapse-col-login {

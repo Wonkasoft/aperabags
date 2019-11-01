@@ -103,18 +103,18 @@ function the_mods_for_section( $section ) {
 				$slide                      = new stdClass();
 				$slide->slide_img           = get_theme_mod( 'cta_slider_' . $i );
 				$slide->slide_text_position = get_theme_mod( 'cta_slider_text_position_' . $i );
-				$slide->slide_title  = get_theme_mod( 'cta_slider_title_' . $i );
+				$slide->slide_title         = get_theme_mod( 'cta_slider_title_' . $i );
 
-				$slide->slide_text_message  = get_theme_mod( 'cta_slider_text_' . $i );
+				$slide->slide_text_message = get_theme_mod( 'cta_slider_text_' . $i );
 
 				for ( $a = 1; $a <= 3; $a++ ) {
 
 					$slide->{ 'cta_description_' . $a } = get_theme_mod( 'cta_slider_' . $i . '_description_' . $a );
 
 				}
-				$slide->slide_description_icon  = get_theme_mod( 'slider_description_list_icon_' . $i );
-				$slide->slide_link_btn      = get_theme_mod( 'cta_slider_btn_text_' . $i );
-				$slide->slide_link          = get_theme_mod( 'cta_slider_btn_link_' . $i );
+				$slide->slide_description_icon = get_theme_mod( 'slider_description_list_icon_' . $i );
+				$slide->slide_link_btn         = get_theme_mod( 'cta_slider_btn_text_' . $i );
+				$slide->slide_link             = get_theme_mod( 'cta_slider_btn_link_' . $i );
 				// Mobile Theme mod.
 				$slide->slide_mobile_img = get_theme_mod( 'cta_slider_mobile_' . $i );
 
@@ -146,7 +146,8 @@ function the_mods_for_section( $section ) {
 				${"cause_$i"}              = new stdClass();
 				${"cause_$i"}->img         = get_theme_mod( 'cause_image_' . $i );
 				${"cause_$i"}->img_link    = get_theme_mod( 'cause_image_link_' . $i );
-				${"cause_$i"}->img_srcset  = wp_get_attachment_image_srcset( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', true );
+				${"cause_$i"}->img_src     = wp_get_attachment_image_src( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', false );
+				${"cause_$i"}->img_srcset  = wp_get_attachment_image_srcset( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', null );
 				${"cause_$i"}->position    = get_theme_mod( 'cause_message_position_' . $i );
 				${"cause_$i"}->header      = get_theme_mod( 'cause_header_' . $i );
 				${"cause_$i"}->header_link = get_theme_mod( 'cause' . $i . '_header_link' );
@@ -164,18 +165,36 @@ function the_mods_for_section( $section ) {
 	if ( 'about' === $section ) :
 		if ( ! empty( get_theme_mod( 'about_the_brand_header' ) ) ) :
 			$count++;
-			$about                               = new stdClass();
-			$about->about_header                 = get_theme_mod( 'about_the_brand_header' );
-			$about->about_subheader              = get_theme_mod( 'about_the_brand_subheader' );
-			$about->about_message                = get_theme_mod( 'about_the_brand_message' );
-			$about->about_the_brand_btn_text     = get_theme_mod( 'about_the_brand_btn_text' );
-			$about->about_the_brand_button_link  = get_permalink( get_theme_mod( 'about_the_brand_button_link' ) );
-			$about->about_the_brand_second_image = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_second_image' ), 'custom_products_size', true );
-			$about->about_the_brand_image_link   = get_permalink( get_theme_mod( 'about_the_brand_second_image_link', '#' ) );
-			$about->about_videoplaceholder       = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_video_placeholder' ), 'custom_products_size', true );
+			$about                                      = new stdClass();
+			$about->about_header                        = get_theme_mod( 'about_the_brand_header' );
+			$about->about_subheader                     = get_theme_mod( 'about_the_brand_subheader' );
+			$about->about_message                       = get_theme_mod( 'about_the_brand_message' );
+			$about->about_the_brand_btn_text            = get_theme_mod( 'about_the_brand_btn_text' );
+			$about->about_the_brand_button_link         = get_permalink( get_theme_mod( 'about_the_brand_button_link' ) );
+			$about->about_the_brand_second_image_src    = wp_get_attachment_image_src( get_theme_mod( 'about_the_brand_second_image' ), 'custom_products_size', false );
+			$about->about_the_brand_second_image_srcset = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_second_image' ), 'custom_products_size', null );
+			$about->about_the_brand_image_link          = get_permalink( get_theme_mod( 'about_the_brand_second_image_link', '#' ) );
+			$about->about_videoplaceholder_src          = wp_get_attachment_image_src( get_theme_mod( 'about_the_brand_video_placeholder' ), 'custom_products_size', false );
+			$about->about_videoplaceholder_srcset       = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_video_placeholder' ), 'custom_products_size', null );
 
 			$mods_class->{'about_the_brand'}        = $about;
 			$mods_class->{'about_the_brand'}->count = $count;
+		endif;
+
+		return $mods_class;
+	endif;
+
+	if ( 'perks' === $section ) :
+		if ( ! empty( get_theme_mod( 'perks_checkbox' ) ) ) :
+			$count++;
+			$perks                     = new stdClass();
+			$perks->perks_checkbox     = get_theme_mod( 'perks_checkbox' );
+			$perks->perks_message      = get_theme_mod( 'perks_section_message' );
+			$perks->perks_image_src    = wp_get_attachment_image_src( get_theme_mod( 'perks_section_image' ), 'custom_products_size', false );
+			$perks->perks_image_srcset = wp_get_attachment_image_srcset( get_theme_mod( 'perks_section_image' ), 'custom_products_size', null );
+
+			$mods_class->{'apera_perks'}        = $perks;
+			$mods_class->{'apera_perks'}->count = $count;
 		endif;
 
 		return $mods_class;
@@ -338,13 +357,13 @@ add_filter( 'gform_field_css_class', 'custom_class', 10, 3 );
 function custom_class( $classes, $field, $form ) {
 
 	if ( 'Apera Perks Registration' === $form['title'] ) :
-    if ( $field->type == 'password' ) {
+		if ( $field->type == 'password' ) {
 
-		foreach ( $field['inputs'] as &$input ) {
-			$input['class'] = "form-control";
+			foreach ( $field['inputs'] as &$input ) {
+				$input['class'] = 'form-control';
+			}
 		}
-	}
-		
+
 	endif;
 	return $classes;
 }
@@ -379,9 +398,7 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 
 	endif;
 
-
 	if ( 'Apera Perks Registration' === $form['title'] ) :
-
 
 		if ( 'Password' === $field['label'] ) :
 
@@ -391,16 +408,15 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 				if ( strpos( $value, "input type='password'" ) !== false ) :
 					$element_array = explode( ' ', $value );
 
-					foreach ( $element_array as $key => $values) {
-						if ( empty($values) )
-						{
-							unset($element_array[$key]);
+					foreach ( $element_array as $key => $values ) {
+						if ( empty( $values ) ) {
+							unset( $element_array[ $key ] );
 						}
 					}
 
 					array_splice( $element_array, 2, 0, "class='form-control'" );
 
-					$element_string = implode( " ", $element_array );
+					$element_string = implode( ' ', $element_array );
 					echo $element_string;
 
 					$new_content .= 'div class="input-group"><' . $element_string . '<div class="input-group-append"><div class="input-group-text"> <i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i> </div></div></div>';
@@ -415,7 +431,6 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 		endif;
 
 	endif;
-
 
 	if ( 'fileupload' === $field['type'] ) :
 
@@ -1537,7 +1552,7 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 		if ( ! empty( $company_logo->url ) ) {
 
 			$output .= '<div class="current-logo-wrap">';
-			$output .= '<img src="' . esc_url( $company_logo->url ) . '" class="current-logo" />';
+			$output .= '<img src="' . wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) . '" srcset="' . wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) . '" class="current-logo" />';
 			$output .= '</div>';
 			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
 			$output .= '<div class="form-wrap">';
@@ -1586,7 +1601,7 @@ function wonkasoft_parse_account_logo() {
 
 		if ( ! empty( $company_logo->url ) ) {
 
-			$output .= '<img src="' . esc_url( $company_logo->url ) . '" data-attachment-id="' . $company_logo->id . '" class="current-logo" />';
+			$output .= '<img src="' . esc_attr( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ) . '" data-attachment-id="' . $company_logo->id . '" class="current-logo" />';
 
 		} else {
 
@@ -1764,6 +1779,87 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 
 }
 add_action( 'gform_after_submission', 'wonkasoft_after_code_entry', 10, 2 );
+
+/**
+ * This handles the submission of the perks registration form.
+ *
+ * @param  array $entry contains the entry fields.
+ * @param  array $form  contains the form array.
+ */
+function wonkasoft_after_perks_registration_entry( $entry, $form ) {
+
+	if ( 'Apera Perks Registration' !== $form['title'] ) {
+		return;
+	}
+
+	$entry_fields                  = array();
+	$entry_fields['custom_fields'] = array();
+	$set_labels                    = array(
+		'First Name',
+		'Last Name',
+		'Email',
+		'Password',
+		'MSE Request',
+		'MSE Occupation',
+		'Military Active',
+		'Military Date',
+		'Military Branch',
+		'Street Address',
+		'Address Line 2',
+		'State / Province',
+		'ZIP / Postal Code',
+		'Country',
+		'Military Occupational Code',
+		'Military Note',
+		'Student School Website',
+		'Student School Email',
+		'Student Grad Date',
+		'Student Sports',
+		'Student Note',
+		'Educator School Website',
+		'Educator School Email',
+		'Educator Subject',
+		'Educator Years',
+		'Educator Note',
+	);
+
+	$custom_fields = array();
+
+	$pattern = '/([ \/]{1,5})/';
+
+	foreach ( $form['fields'] as $field ) {
+		if ( 'honeypot' !== $field['type'] ) :
+			if ( in_array( $field['label'], $set_labels ) ) :
+				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
+			endif;
+
+			if ( in_array( $field['label'], $custom_fields ) ) :
+				$current_label = strtolower( preg_replace( $pattern, $field['label'] ) );
+					array_push(
+						$entry_fields['custom_fields'],
+						array(
+							'label' => esc_html( $current_label ),
+							'value' => esc_html( $entry[ $field['id'] ] ),
+						)
+					);
+			endif;
+
+			if ( ! empty( $field->inputs ) ) :
+				foreach ( $field->inputs as $input ) {
+					if ( in_array( $input['label'], $set_labels ) ) :
+						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
+					endif;
+				}
+			endif;
+		endif;
+	}
+
+	echo "<pre>\n";
+	print_r( $entry_fields );
+	echo "</pre>\n";
+
+}
+add_action( 'gform_after_submission', 'wonkasoft_after_perks_registration_entry', 10, 2 );
 
 /**
  * This function handles the api request to send data to getResponse.
@@ -1960,7 +2056,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 							<label for="club-gym-logo">Club/Gym Logo</label>
 						</th>
 						<td>
-							<img src="<?php echo wp_kses_post( $company_logo->url ); ?>" id="club-gym-logo" class="company-logo" />
+							<img src="<?php echo esc_attr( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) ); ?>" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ); ?>" id="club-gym-logo" class="company-logo" />
 						</td>
 					</tr>
 					<?php endif; ?>
@@ -2035,3 +2131,4 @@ function wonkasoft_get_refersion_data( $user_id ) {
 	return $refersion;
 
 }
+
