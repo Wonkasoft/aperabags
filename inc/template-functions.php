@@ -334,6 +334,21 @@ add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );
 
 add_filter( 'gform_enable_password_field', '__return_true' );
 
+add_filter( 'gform_field_css_class', 'custom_class', 10, 3 );
+function custom_class( $classes, $field, $form ) {
+
+	if ( 'Apera Perks Registration' === $form['title'] ) :
+    if ( $field->type == 'password' ) {
+
+		foreach ( $field['inputs'] as &$input ) {
+			$input['class'] = "form-control";
+		}
+	}
+		
+	endif;
+	return $classes;
+}
+
 /**
  * This is to add a prepend element to a specific field.
  *
@@ -363,6 +378,44 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 		endif;
 
 	endif;
+
+
+	if ( 'Apera Perks Registration' === $form['title'] ) :
+
+
+		if ( 'Password' === $field['label'] ) :
+
+			$slit_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+			foreach ( $slit_content as $key => $value ) {
+
+				if ( strpos( $value, "input type='password'" ) !== false ) :
+					$element_array = explode( ' ', $value );
+
+					foreach ( $element_array as $key => $values) {
+						if ( empty($values) )
+						{
+							unset($element_array[$key]);
+						}
+					}
+
+					array_splice( $element_array, 2, 0, "class='form-control'" );
+
+					$element_string = implode( " ", $element_array );
+					echo $element_string;
+
+					$new_content .= 'div class="input-group"><' . $element_string . '<div class="input-group-append"><div class="input-group-text"> <i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i> </div></div></div>';
+
+				else :
+					$new_content .= $value;
+				endif;
+			}
+
+			return $new_content;
+
+		endif;
+
+	endif;
+
 
 	if ( 'fileupload' === $field['type'] ) :
 
