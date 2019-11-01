@@ -137,7 +137,8 @@ function the_mods_for_section( $section ) {
 				${"cause_$i"}              = new stdClass();
 				${"cause_$i"}->img         = get_theme_mod( 'cause_image_' . $i );
 				${"cause_$i"}->img_link    = get_theme_mod( 'cause_image_link_' . $i );
-				${"cause_$i"}->img_srcset  = wp_get_attachment_image_srcset( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', true );
+				${"cause_$i"}->img_src     = wp_get_attachment_image_src( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', false );
+				${"cause_$i"}->img_srcset  = wp_get_attachment_image_srcset( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', null );
 				${"cause_$i"}->position    = get_theme_mod( 'cause_message_position_' . $i );
 				${"cause_$i"}->header      = get_theme_mod( 'cause_header_' . $i );
 				${"cause_$i"}->header_link = get_theme_mod( 'cause' . $i . '_header_link' );
@@ -155,15 +156,17 @@ function the_mods_for_section( $section ) {
 	if ( 'about' === $section ) :
 		if ( ! empty( get_theme_mod( 'about_the_brand_header' ) ) ) :
 			$count++;
-			$about                               = new stdClass();
-			$about->about_header                 = get_theme_mod( 'about_the_brand_header' );
-			$about->about_subheader              = get_theme_mod( 'about_the_brand_subheader' );
-			$about->about_message                = get_theme_mod( 'about_the_brand_message' );
-			$about->about_the_brand_btn_text     = get_theme_mod( 'about_the_brand_btn_text' );
-			$about->about_the_brand_button_link  = get_permalink( get_theme_mod( 'about_the_brand_button_link' ) );
-			$about->about_the_brand_second_image = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_second_image' ), 'custom_products_size', true );
-			$about->about_the_brand_image_link   = get_permalink( get_theme_mod( 'about_the_brand_second_image_link', '#' ) );
-			$about->about_videoplaceholder       = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_video_placeholder' ), 'custom_products_size', true );
+			$about                                      = new stdClass();
+			$about->about_header                        = get_theme_mod( 'about_the_brand_header' );
+			$about->about_subheader                     = get_theme_mod( 'about_the_brand_subheader' );
+			$about->about_message                       = get_theme_mod( 'about_the_brand_message' );
+			$about->about_the_brand_btn_text            = get_theme_mod( 'about_the_brand_btn_text' );
+			$about->about_the_brand_button_link         = get_permalink( get_theme_mod( 'about_the_brand_button_link' ) );
+			$about->about_the_brand_second_image_src    = wp_get_attachment_image_src( get_theme_mod( 'about_the_brand_second_image' ), 'custom_products_size', false );
+			$about->about_the_brand_second_image_srcset = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_second_image' ), 'custom_products_size', null );
+			$about->about_the_brand_image_link          = get_permalink( get_theme_mod( 'about_the_brand_second_image_link', '#' ) );
+			$about->about_videoplaceholder_src          = wp_get_attachment_image_src( get_theme_mod( 'about_the_brand_video_placeholder' ), 'custom_products_size', false );
+			$about->about_videoplaceholder_srcset       = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_video_placeholder' ), 'custom_products_size', null );
 
 			$mods_class->{'about_the_brand'}        = $about;
 			$mods_class->{'about_the_brand'}->count = $count;
@@ -175,10 +178,11 @@ function the_mods_for_section( $section ) {
 	if ( 'perks' === $section ) :
 		if ( ! empty( get_theme_mod( 'perks_checkbox' ) ) ) :
 			$count++;
-			$perks                 = new stdClass();
-			$perks->perks_checkbox = get_theme_mod( 'perks_checkbox' );
-			$perks->perks_message  = get_theme_mod( 'perks_section_message' );
-			$perks->perks_image    = wp_get_attachment_image_srcset( get_theme_mod( 'perks_section_image' ), 'custom_products_size', true );
+			$perks                     = new stdClass();
+			$perks->perks_checkbox     = get_theme_mod( 'perks_checkbox' );
+			$perks->perks_message      = get_theme_mod( 'perks_section_message' );
+			$perks->perks_image_src    = wp_get_attachment_image_src( get_theme_mod( 'perks_section_image' ), 'custom_products_size', false );
+			$perks->perks_image_srcset = wp_get_attachment_image_srcset( get_theme_mod( 'perks_section_image' ), 'custom_products_size', null );
 
 			$mods_class->{'apera_perks'}        = $perks;
 			$mods_class->{'apera_perks'}->count = $count;
@@ -1490,7 +1494,7 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 		if ( ! empty( $company_logo->url ) ) {
 
 			$output .= '<div class="current-logo-wrap">';
-			$output .= '<img srcset="' . wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', true ) . '" class="current-logo" />';
+			$output .= '<img src="' . wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) . '" srcset="' . wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) . '" class="current-logo" />';
 			$output .= '</div>';
 			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
 			$output .= '<div class="form-wrap">';
@@ -1539,7 +1543,7 @@ function wonkasoft_parse_account_logo() {
 
 		if ( ! empty( $company_logo->url ) ) {
 
-			$output .= '<img srcset="' . wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', true ) . '" data-attachment-id="' . $company_logo->id . '" class="current-logo" />';
+			$output .= '<img src="' . esc_attr( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ) . '" data-attachment-id="' . $company_logo->id . '" class="current-logo" />';
 
 		} else {
 
@@ -1913,7 +1917,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 							<label for="club-gym-logo">Club/Gym Logo</label>
 						</th>
 						<td>
-							<img src="<?php echo wp_kses_post( $company_logo->url ); ?>" id="club-gym-logo" class="company-logo" />
+							<img src="<?php echo esc_attr( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) ); ?>" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ); ?>" id="club-gym-logo" class="company-logo" />
 						</td>
 					</tr>
 					<?php endif; ?>
