@@ -1831,7 +1831,7 @@ function add_customer_order_notes( $order_id ) {
 add_action( 'woocommerce_payment_complete', 'add_customer_order_notes', 10, 1 );
 
 function wonkasoft_single_product_archive_thumbnail_size( $size ) {
-	$size = 'woocommerce_gallery_thumbnail';
+	$size = 'cart_products_size';
 	return $size;
 }
 
