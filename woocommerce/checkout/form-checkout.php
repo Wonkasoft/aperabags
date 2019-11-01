@@ -27,7 +27,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 	do_action( 'wonka_checkout_before_checkout_form_custom', $checkout );
 ?>
 
-<form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
+<form name="checkout" autocomplete="off" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 	
 
 	<?php if ( $checkout->get_checkout_fields() ) : ?>
@@ -44,7 +44,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 		</div><!-- #customer_details -->
 		</div><!-- .row -->
 		
-		<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
+		<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>x
 
 	<?php endif; ?>
 

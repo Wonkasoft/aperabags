@@ -20,9 +20,8 @@ defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 <?php if ( 'yes' === get_option( 'woocommerce_enable_myaccount_registration' ) ) : ?>
-<div class="row row-account-wrapper justify-content-center">
-	<div class="col-8">
-
+<div class="row-account-wrapper justify-content-center">
+	<div class="my-account-forms-wrap">
 
 <div class="row justify-content-center" id="customer_login">
 
@@ -85,10 +84,11 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 			<?php do_action( 'woocommerce_register_form' ); ?>
 
 			<?php do_action( 'woocommerce_register_form_end' ); ?>
-		</div>
-		<div class="loggin-toggle-wrapper">
-			<p><?php esc_html_e( 'Already have an account?', 'woocommerce' ); ?></p>
-			<button type="submit" class="login-slide-btn button wonka-btn" name="register" ><?php esc_html_e( 'Back to Login', 'woocommerce' ); ?></button>
+			
+			<div class="loggin-toggle-wrapper">
+				<p><?php esc_html_e( 'Already have an account?', 'woocommerce' ); ?></p>
+				<button type="submit" class="login-slide-btn button wonka-btn" name="register" ><?php esc_html_e( 'Back to Login', 'woocommerce' ); ?></button>
+			</div>
 		</div>
 
 	</div>

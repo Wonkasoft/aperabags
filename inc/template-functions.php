@@ -1746,6 +1746,23 @@ function wonkasoft_after_perks_registration_entry( $entry, $form ) {
 		'Military Active',
 		'Military Date',
 		'Military Branch',
+		'Street Address',
+		'Address Line 2',
+		'State / Province',
+		'ZIP / Postal Code',
+		'Country',
+		'Military Occupational Code',
+		'Military Note',
+		'Student School Website',
+		'Student School Email',
+		'Student Grad Date',
+		'Student Sports',
+		'Student Note',
+		'Educator School Website',
+		'Educator School Email',
+		'Educator Subject',
+		'Educator Years',
+		'Educator Note',
 	);
 
 	$custom_fields = array();
@@ -1778,6 +1795,10 @@ function wonkasoft_after_perks_registration_entry( $entry, $form ) {
 			endif;
 		endif;
 	}
+
+	echo "<pre>\n";
+	print_r( $entry_fields );
+	echo "</pre>\n";
 
 }
 add_action( 'gform_after_submission', 'wonkasoft_after_perks_registration_entry', 10, 2 );
