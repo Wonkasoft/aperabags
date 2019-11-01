@@ -819,7 +819,7 @@ var componentForm;
 
 			search_results.classList.add( 'autocomplete-suggestions' );
 			document.querySelector( 'body' ).appendChild( search_results );
-			search_field.setAttribute( 'autocomplete', 'off' );
+			search_field.setAttribute( 'autocomplete', 'false' );
 	
 			search_field.addEventListener( 'focus', function () 
 			{

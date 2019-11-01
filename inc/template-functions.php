@@ -1723,6 +1723,66 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 add_action( 'gform_after_submission', 'wonkasoft_after_code_entry', 10, 2 );
 
 /**
+ * This handles the submission of the perks registration form.
+ *
+ * @param  array $entry contains the entry fields.
+ * @param  array $form  contains the form array.
+ */
+function wonkasoft_after_perks_registration_entry( $entry, $form ) {
+
+	if ( 'Apera Perks Registration' !== $form['title'] ) {
+		return;
+	}
+
+	$entry_fields                  = array();
+	$entry_fields['custom_fields'] = array();
+	$set_labels                    = array(
+		'First Name',
+		'Last Name',
+		'Email',
+		'Password',
+		'MSE Request',
+		'MSE Occupation',
+		'Military Active',
+		'Military Date',
+		'Military Branch',
+	);
+
+	$custom_fields = array();
+
+	$pattern = '/([ \/]{1,5})/';
+
+	foreach ( $form['fields'] as $field ) {
+		if ( 'honeypot' !== $field['type'] ) :
+			if ( in_array( $field['label'], $set_labels ) ) :
+				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
+			endif;
+
+			if ( in_array( $field['label'], $custom_fields ) ) :
+				$current_label = strtolower( preg_replace( $pattern, $field['label'] ) );
+					array_push(
+						$entry_fields['custom_fields'],
+						array(
+							'label' => esc_html( $current_label ),
+							'value' => esc_html( $entry[ $field['id'] ] ),
+						)
+					);
+			endif;
+
+			if ( ! empty( $field->inputs ) ) :
+				foreach ( $field->inputs as $input ) {
+					if ( in_array( $input['label'], $set_labels ) ) :
+						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
+					endif;
+				}
+			endif;
+		endif;
+	}
+
+}
+add_action( 'gform_after_submission', 'wonkasoft_after_perks_registration_entry', 10, 2 );
+
+/**
  * This function handles the api request to send data to getResponse.
  *
  * @param  array $api_args an array of args for the api call.
@@ -1992,3 +2052,4 @@ function wonkasoft_get_refersion_data( $user_id ) {
 	return $refersion;
 
 }
+
