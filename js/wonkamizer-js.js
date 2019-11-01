@@ -3102,6 +3102,17 @@ var componentForm;
 
 		}
 
+		if ( document.querySelector( '.ui-datepicker-trigger' ) ) 
+		{
+			var datepicker_triggers = document.querySelectorAll( '.ui-datepicker-trigger' );
+
+			datepicker_triggers.forEach( function( picker, i ) 
+				{
+					var parent_el = picker.parentElement;
+					var close_span = parent_el.querySelector( 'span.input-group-text' );
+					close_span.appendChild( picker );
+				});
+		}
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 

@@ -156,6 +156,12 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form, form.wo
 		text-align: center;
 	}
 }
+form.wonka-gform.wonka-perks-form{
+	
+	.input-group {
+		margin: auto;
+	}
+}
 
 form.wonka-gform.wonka-refersion-form {
 	padding: 0 15px;
@@ -481,6 +487,56 @@ form.wonka-gform.wonka-refersion-form {
 		&.loading {
 			opacity: 1;
 			z-index: 200;
+		}
+	}
+}
+
+div#ui-datepicker-div {
+	width: 250px;
+	padding: 8px;
+	background: #fff;
+	@include prefix( box-shadow, 0 1px 2px .5px rgba( #000, .5 ), o moz webkit );
+
+	.ui-datepicker-header {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 8px;
+		padding: 0 0 8px;
+
+		.ui-datepicker-prev {
+			text-align: center;
+			color: #fff;
+			background: #5d5d5d;
+		}
+
+		.ui-datepicker-next {
+			text-align: center;
+			color: #fff;
+			background: #5d5d5d;
+		}
+
+		.ui-datepicker-title {
+			grid-area: auto / 1 / auto / 3;
+			display: grid;
+			grid-auto-columns: 1fr 1fr;
+			grid-auto-flow: column;
+			grid-gap: 8px;
+			align-items: center;
+			justify-content: space-between;
+		}
+	}
+
+	.ui-datepicker-calendar {
+		border-top: 3px solid #52abf6;
+		margin-bottom: 0;
+
+		th {
+			text-align: center;
+			@include font-size( 1.3 );
+		}
+
+		td {
+			text-align: center;
 		}
 	}
 }
