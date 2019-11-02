@@ -417,7 +417,6 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 					array_splice( $element_array, 2, 0, "class='form-control'" );
 
 					$element_string = implode( ' ', $element_array );
-					echo $element_string;
 
 					$new_content .= 'div class="input-group"><' . $element_string . '<div class="input-group-append"><div class="input-group-text"> <i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i> </div></div></div>';
 
@@ -1786,7 +1785,7 @@ add_action( 'gform_after_submission', 'wonkasoft_after_code_entry', 10, 2 );
  * @param  array $entry contains the entry fields.
  * @param  array $form  contains the form array.
  */
-function wonkasoft_after_perks_registration_entry( $entry, $form ) {
+function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry, $ajax ) {
 
 	if ( 'Apera Perks Registration' !== $form['title'] ) {
 		return;
@@ -1795,8 +1794,8 @@ function wonkasoft_after_perks_registration_entry( $entry, $form ) {
 	$entry_fields                  = array();
 	$entry_fields['custom_fields'] = array();
 	$set_labels                    = array(
-		'First Name',
-		'Last Name',
+		'First',
+		'Last',
 		'Email',
 		'Password',
 		'MSE Request',
@@ -1829,6 +1828,7 @@ function wonkasoft_after_perks_registration_entry( $entry, $form ) {
 
 	foreach ( $form['fields'] as $field ) {
 		if ( 'honeypot' !== $field['type'] ) :
+
 			if ( in_array( $field['label'], $set_labels ) ) :
 				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
 			endif;
@@ -1851,15 +1851,37 @@ function wonkasoft_after_perks_registration_entry( $entry, $form ) {
 					endif;
 				}
 			endif;
-		endif;
+
+		endif;			
+
 	}
 
-	echo "<pre>\n";
-	print_r( $entry_fields );
-	echo "</pre>\n";
+	if ( email_exists( $entry_fields['email'] ) ) {
+		$output = "";
+		$output .= "<p>" . $entry_fields['email'] . " is already being used. You can login at the link below</p>";
 
+		$confirmation['redirect'] = '';
+		return $output;
+
+
+	} else {
+
+		$role          = 'apera_perks_partner';
+		$role_display  = 'Apera Perks Partner';
+
+		$user_id = wonkasoft_make_user_account( $entry_fields, $role );
+
+		$user = new WP_User( $user_id );
+
+		if ( ! in_array( $role, $user->roles ) ) :
+			$user->add_role( $role, $role_display );
+		endif;
+
+	}
+
+return $confirmation;
 }
-add_action( 'gform_after_submission', 'wonkasoft_after_perks_registration_entry', 10, 2 );
+add_filter( 'gform_confirmation', 'wonkasoft_after_perks_registration_entry', 10, 4 );
 
 /**
  * This function handles the api request to send data to getResponse.
