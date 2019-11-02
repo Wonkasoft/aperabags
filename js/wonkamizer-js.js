@@ -3104,7 +3104,9 @@ var componentForm;
 
 		if ( document.querySelector( '.ui-datepicker-trigger' ) ) 
 		{
+			
 			var datepicker_triggers = document.querySelectorAll( '.ui-datepicker-trigger' );
+			var datepicker_div = document.querySelector( '#ui-datepicker-div' );
 
 			datepicker_triggers.forEach( function( picker, i ) 
 				{
@@ -3112,6 +3114,25 @@ var componentForm;
 					var close_span = parent_el.querySelector( 'span.input-group-text' );
 					close_span.appendChild( picker );
 				});
+
+			var observer_callback = function( mutationsList, observer ) 
+			{
+				for( var mutation of mutationsList ) {
+					if ( 'attributes' === mutation.type )
+					{
+						datepicker_div.style.zIndex = 2000;
+						var datepicer_month = document.querySelector( '.ui-datepicker-month' );
+						var datepicer_year = document.querySelector( '.ui-datepicker-year' );
+						document.querySelector( '.ui-datepicker-prev span' ).innerText = 'Prev';
+						datepicer_month.classList.add( 'custom-select' );
+						datepicer_year.classList.add( 'custom-select' );
+					}
+				}
+			};
+
+			var config = { attributes: true };
+			var observer = new MutationObserver( observer_callback );
+			observer.observe( datepicker_div, config);
 		}
 	};
 		/*=====  End of This is for running after document is ready  ======*/

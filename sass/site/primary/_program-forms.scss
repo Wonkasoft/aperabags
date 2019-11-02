@@ -156,10 +156,23 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form, form.wo
 		text-align: center;
 	}
 }
-form.wonka-gform.wonka-perks-form{
-	
-	.input-group {
-		margin: auto;
+
+main#main.main-my-account {
+
+	div#customer_login {
+
+		form.wonka-gform.wonka-perks-form{
+			
+			ul {
+
+				li {
+
+					div.input-group {
+						margin: auto;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -495,24 +508,59 @@ div#ui-datepicker-div {
 	width: 250px;
 	padding: 8px;
 	background: #fff;
+	z-index: 2000;
 	@include prefix( box-shadow, 0 1px 2px .5px rgba( #000, .5 ), o moz webkit );
 
 	.ui-datepicker-header {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
+		justify-content: space-around;
 		grid-gap: 8px;
 		padding: 0 0 8px;
+
+		.ui-corner-all {
+			position: relative;
+			margin: auto;
+			padding: 2px 8px;
+			@include font-size( 1.2 );
+			font-weight: 700;
+			text-transform: uppercase;
+			cursor: pointer;
+			align-self: center;
+			justify-self: center;
+		}
 
 		.ui-datepicker-prev {
 			text-align: center;
 			color: #fff;
 			background: #5d5d5d;
+
+			&:before {
+				content: "";
+				position: absolute;
+				top: 0;
+				right: 100%;
+				height: 100%;
+				border: 13px solid transparent;
+				border-right: 20px solid #5d5d5d;
+			}
 		}
 
 		.ui-datepicker-next {
 			text-align: center;
 			color: #fff;
 			background: #5d5d5d;
+
+			&:after {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 100%;
+				height: 100%;
+				border: 13px solid transparent;
+				border-left: 20px solid #5d5d5d;
+
+			}
 		}
 
 		.ui-datepicker-title {
@@ -520,9 +568,29 @@ div#ui-datepicker-div {
 			display: grid;
 			grid-auto-columns: 1fr 1fr;
 			grid-auto-flow: column;
-			grid-gap: 8px;
+			grid-gap: 4px;
 			align-items: center;
 			justify-content: space-between;
+
+			.ui-datepicker-month {
+				border-radius: 6px;
+				color: #52abf6;
+				font-weight: 700;
+				text-align: center;
+				font-family: $font__main_jose;
+				text-transform: uppercase;
+				@include font-size( 1.3 );
+			}
+
+			.ui-datepicker-year {
+				border-radius: 6px;
+				color: #52abf6;
+				font-family: $font__main_jose;
+				text-align: center;
+				font-weight: 700;
+				text-transform: uppercase;
+				@include font-size( 1.3 );
+			}
 		}
 	}
 
