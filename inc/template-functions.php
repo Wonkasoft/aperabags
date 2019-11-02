@@ -353,21 +353,6 @@ add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );
 
 add_filter( 'gform_enable_password_field', '__return_true' );
 
-add_filter( 'gform_field_css_class', 'custom_class', 10, 3 );
-function custom_class( $classes, $field, $form ) {
-
-	if ( 'Apera Perks Registration' === $form['title'] ) :
-		if ( $field->type == 'password' ) {
-
-			foreach ( $field['inputs'] as &$input ) {
-				$input['class'] = 'form-control';
-			}
-		}
-
-	endif;
-	return $classes;
-}
-
 /**
  * This is to add a prepend element to a specific field.
  *
@@ -382,8 +367,8 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 
 		if ( 'Company' === $field['label'] ) :
 
-			$slit_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
-			foreach ( $slit_content as $key => $value ) {
+			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+			foreach ( $split_content as $key => $value ) {
 				if ( strpos( $value, 'input name' ) !== false ) :
 					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text">@</span> </div><' . $value . '</div>';
 
@@ -402,8 +387,8 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 
 		if ( 'Password' === $field['label'] ) :
 
-			$slit_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
-			foreach ( $slit_content as $key => $value ) {
+			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+			foreach ( $split_content as $key => $value ) {
 
 				if ( strpos( $value, "input type='password'" ) !== false ) :
 					$element_array = explode( ' ', $value );
@@ -429,13 +414,39 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 
 		endif;
 
+		if ( 'Military Date' === $field['label'] || 'Student Grad Date' === $field['label'] ) :
+
+			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+
+			foreach ( $split_content as $key => $value ) {
+
+				if ( strpos( $value, "class='datepicker" ) !== false ) :
+
+					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value;
+
+					elseif ( strpos( $value, "id='gforms_calendar_icon" ) !== false ) :
+
+						$new_content .= $value . '</div>';
+
+				else :
+
+					$new_content .= $value;
+
+				endif;
+
+			}
+
+			return $new_content;
+
+		endif;
+
 	endif;
 
 	if ( 'fileupload' === $field['type'] ) :
 
-		$slit_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
-		$element      = '';
-		foreach ( $slit_content as $key => $value ) {
+		$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+		$element       = '';
+		foreach ( $split_content as $key => $value ) {
 			if ( strpos( $value, 'input name' ) !== false ) :
 				$element   .= '<' . $value;
 				$attributes = simplexml_load_string( $element );
