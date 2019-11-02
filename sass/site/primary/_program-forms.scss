@@ -67,6 +67,15 @@ form.wonka-gform.wonka-zip-form, form.wonka-gform.wonka-ambassador-form, form.wo
 			grid-area: auto / 1 / auto / 3;
 		}
 
+		li.perks-password {
+
+			.ginput_container_password {
+				display: grid;
+				grid-gap: 15px;
+				grid-template-columns: 1fr 1fr;
+			}
+		}
+
 		li.zip-phone, li.ambassador-phone {
 			grid-area: 3 / 1 / 4 / 3;
 		}
@@ -521,8 +530,9 @@ div#ui-datepicker-div {
 		.ui-corner-all {
 			position: relative;
 			margin: auto;
-			padding: 2px 8px;
+			padding: 5px 8px 2px;
 			@include font-size( 1.2 );
+			font-family: $font__main_jose;
 			font-weight: 700;
 			text-transform: uppercase;
 			cursor: pointer;
