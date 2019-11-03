@@ -122,8 +122,8 @@ div.wonka-newsletter-wrap {
 
     .popup-btn-wrap {
       display: grid;
-      width: 25%;
-      grid-template-columns: auto auto;
+      width: 33%;
+      grid-template-columns: 1fr 1fr;
 
       a.wonka-btn {
         display: grid;

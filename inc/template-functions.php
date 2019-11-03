@@ -422,7 +422,7 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 
 				if ( strpos( $value, "class='datepicker" ) !== false ) :
 
-					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value;
+					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value . '<input type="hidden" class="new-cal-icon" value="' . get_stylesheet_directory_uri() . '/assets/img/calendar-icon.svg" />';
 
 					elseif ( strpos( $value, "id='gforms_calendar_icon" ) !== false ) :
 

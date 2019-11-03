@@ -1837,7 +1837,6 @@ var componentForm;
 					{
 						e.preventDefault();
 						var el = e.target;
-						console.log(el);
 						var data = {};
 						data.action = 'wonkasoft_dismiss_popup';
 						data.security = wonkasoft_request.security;
@@ -3112,25 +3111,23 @@ var componentForm;
 				{
 					var parent_el = picker.parentElement;
 					var close_span = parent_el.querySelector( 'span.input-group-text' );
+					var datepicker_new_icon_url = parent_el.querySelector( '.new-cal-icon' ).value;
 					close_span.appendChild( picker );
+					picker.src = datepicker_new_icon_url;
 				});
 
 			var observer_callback = function( mutationsList, observer ) 
 			{
-				for( var mutation of mutationsList ) {
-					if ( 'attributes' === mutation.type )
+				for( var mutation of mutationsList ) 
+				{
+					if ( 'childList' === mutation.type ) 
 					{
-						datepicker_div.style.zIndex = 2000;
-						var datepicer_month = document.querySelector( '.ui-datepicker-month' );
-						var datepicer_year = document.querySelector( '.ui-datepicker-year' );
 						document.querySelector( '.ui-datepicker-prev span' ).innerText = 'Prev';
-						datepicer_month.classList.add( 'custom-select' );
-						datepicer_year.classList.add( 'custom-select' );
 					}
 				}
 			};
 
-			var config = { attributes: true };
+			var config = { attributes: true, childList: true };
 			var observer = new MutationObserver( observer_callback );
 			observer.observe( datepicker_div, config);
 		}
