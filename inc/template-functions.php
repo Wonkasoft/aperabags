@@ -406,7 +406,7 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 
 				if ( strpos( $value, "class='datepicker" ) !== false ) :
 
-					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value;
+					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value . '<input type="hidden" class="new-cal-icon" value="' . get_stylesheet_directory_uri() . '/assets/img/calendar-icon.svg" />';
 
 					elseif ( strpos( $value, "id='gforms_calendar_icon" ) !== false ) :
 
@@ -1783,7 +1783,7 @@ add_action( 'gform_after_submission', 'wonkasoft_after_code_entry', 10, 2 );
 function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry, $ajax ) {
 
 	if ( 'Apera Perks Registration' !== $form['title'] ) {
-		return;
+		return $confirmation;
 	}
 
 	$entry_fields                  = array();
@@ -1847,22 +1847,21 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 				}
 			endif;
 
-		endif;			
+		endif;
 
 	}
 
 	if ( email_exists( $entry_fields['email'] ) ) {
-		$output = "";
-		$output .= "<p>" . $entry_fields['email'] . " is already being used. You can login at the link below</p>";
+		$output  = '';
+		$output .= '<p>' . $entry_fields['email'] . ' is already being used. You can login at the link below</p>';
 
 		$confirmation['redirect'] = '';
 		return $output;
 
-
 	} else {
 
-		$role          = 'apera_perks_partner';
-		$role_display  = 'Apera Perks Partner';
+		$role         = 'apera_perks_partner';
+		$role_display = 'Apera Perks Partner';
 
 		$user_id = wonkasoft_make_user_account( $entry_fields, $role );
 
@@ -1872,9 +1871,42 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 			$user->add_role( $role, $role_display );
 		endif;
 
+		// Setting Apera Perks affiliate link to send to getResponse.
+		$api_args['custom_fields']        = array(
+			'affiliate_link',
+		);
+		$api_args['custom_fields_values'] = array(
+			'affiliate_link' => get_site_url() . '/?ref=' . $user_id,
+		);
+
+		$getresponse = get_response_api_call( $api_args );
+
+		update_user_meta( $user_id, 'getResponse_data', $getresponse );
+		update_user_meta( $user_id, 'mse_occupation', $entry_fields['mse_occupation'] );
+		update_user_meta( $user_id, 'military_active', $entry_fields['military_active'] );
+		update_user_meta( $user_id, 'military_date', $entry_fields['military_date'] );
+		update_user_meta( $user_id, 'military_branch', $entry_fields['military_branch'] );
+		update_user_meta( $user_id, 'military_street_address', $entry_fields['street_address'] );
+		update_user_meta( $user_id, 'military_address_line_2', $entry_fields['address_line_2'] );
+		update_user_meta( $user_id, 'military_state_province', $entry_fields['state_province'] );
+		update_user_meta( $user_id, 'military_zip_postal_code', $entry_fields['zip_postal_code'] );
+		update_user_meta( $user_id, 'military_country', $entry_fields['country'] );
+		update_user_meta( $user_id, 'military_occupation_code', $entry_fields['military_occupation_code'] );
+		update_user_meta( $user_id, 'mse_note', $entry_fields['mse_note'] );
+		update_user_meta( $user_id, 'student_school_website', $entry_fields['student_school_website'] );
+		update_user_meta( $user_id, 'student_school_email', $entry_fields['student_school_email'] );
+		update_user_meta( $user_id, 'student_grad_date', $entry_fields['student_grad_date'] );
+		update_user_meta( $user_id, 'student_sports', $entry_fields['student_sports'] );
+		update_user_meta( $user_id, 'student_note', $entry_fields['student_note'] );
+		update_user_meta( $user_id, 'educator_school_website', $entry_fields['educator_school_website'] );
+		update_user_meta( $user_id, 'educator_school_email', $entry_fields['educator_school_email'] );
+		update_user_meta( $user_id, 'educator_subject', $entry_fields['educator_subject'] );
+		update_user_meta( $user_id, 'educator_years', $entry_fields['educator_years'] );
+		update_user_meta( $user_id, 'educator_note', $entry_fields['educator_note'] );
 	}
 
-return $confirmation;
+	return $confirmation;
+
 }
 add_filter( 'gform_confirmation', 'wonkasoft_after_perks_registration_entry', 10, 4 );
 
@@ -2050,6 +2082,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
  * @param  object $user contains an object of the user.
  */
 function wonkasoft_api_responses_user_data( $user ) {
+
 	if ( in_array( $role, $user->roles ) ) :
 		$user_id         = $user->ID;
 		$refersion       = ( ! empty( get_user_meta( $user_id, 'refersion_data', true ) ) ) ? get_user_meta( $user_id, 'refersion_data', true ) : '';

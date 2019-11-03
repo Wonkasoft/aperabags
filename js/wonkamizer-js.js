@@ -1837,7 +1837,6 @@ var componentForm;
 					{
 						e.preventDefault();
 						var el = e.target;
-						console.log(el);
 						var data = {};
 						data.action = 'wonkasoft_dismiss_popup';
 						data.security = wonkasoft_request.security;
@@ -3104,14 +3103,33 @@ var componentForm;
 
 		if ( document.querySelector( '.ui-datepicker-trigger' ) ) 
 		{
+			
 			var datepicker_triggers = document.querySelectorAll( '.ui-datepicker-trigger' );
+			var datepicker_div = document.querySelector( '#ui-datepicker-div' );
 
 			datepicker_triggers.forEach( function( picker, i ) 
 				{
 					var parent_el = picker.parentElement;
 					var close_span = parent_el.querySelector( 'span.input-group-text' );
+					var datepicker_new_icon_url = parent_el.querySelector( '.new-cal-icon' ).value;
 					close_span.appendChild( picker );
+					picker.src = datepicker_new_icon_url;
 				});
+
+			var observer_callback = function( mutationsList, observer ) 
+			{
+				for( var mutation of mutationsList ) 
+				{
+					if ( 'childList' === mutation.type ) 
+					{
+						document.querySelector( '.ui-datepicker-prev span' ).innerText = 'Prev';
+					}
+				}
+			};
+
+			var config = { attributes: true, childList: true };
+			var observer = new MutationObserver( observer_callback );
+			observer.observe( datepicker_div, config);
 		}
 	};
 		/*=====  End of This is for running after document is ready  ======*/
