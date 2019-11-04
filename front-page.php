@@ -155,7 +155,7 @@ get_header();
 												if ( strpos( $slide->slide_img, '.mp4' ) !== false ) {
 													?>
 													<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>">
-														<video autoplay loop muted controls class="cta-slide">
+														<video autoplay loop muted class="cta-slide">
 															<source src="<?php echo esc_attr( $slide->slide_img ); ?>" type="video/mp4">
 																Your browser does not support the video tag.
 															</video>
