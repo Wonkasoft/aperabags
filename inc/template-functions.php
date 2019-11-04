@@ -2182,3 +2182,9 @@ function wonkasoft_get_refersion_data( $user_id ) {
 
 }
 
+add_filter( 'gform_validation', 'custom_validation' );
+function custom_validation( $validation_result ) {
+	echo $validation_result;
+	return $validation_result;
+
+}
