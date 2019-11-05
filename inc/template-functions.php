@@ -2285,6 +2285,9 @@ function testing() {
 
 	$getresponse_init = new Wonkasoft_GetResponse_Api( $api_args );
 	$getresponse_mse  = '';
+	echo "<pre>\n";
+	print_r( $api_args );
+	echo "</pre>\n";
 
 	if ( empty( $getresponse_init->campaign_id ) ) :
 		foreach ( $getresponse_init->campaign_list as $campaign ) :
