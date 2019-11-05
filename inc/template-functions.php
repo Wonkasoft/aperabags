@@ -2309,7 +2309,7 @@ function testing() {
 		endforeach;
 
 		echo "<pre>\n";
-		print_r( $getresponse_init->custom_fields_to_update );
+		print_r( $getresponse_init );
 		echo "</pre>\n";
 		$getresponse_perks = $getresponse_init->create_a_new_contact();
 	endif;
