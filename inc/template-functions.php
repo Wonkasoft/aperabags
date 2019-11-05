@@ -2326,7 +2326,7 @@ function testing() {
 	endif;
 
 	echo "<pre>\n";
-	print_r( $getresponse_perks );
+	print_r( $getresponse_init );
 	echo "</pre>\n";
 
 }
