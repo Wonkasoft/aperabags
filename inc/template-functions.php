@@ -1697,6 +1697,7 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 		'Tag',
 		'First Name',
 		'Last Name',
+		'Users Discount',
 	);
 
 	$custom_fields = array();
@@ -1730,9 +1731,9 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 		endif;
 	}
 
-	$affiliate_apera_id = get_user_by( 'email', $entry_fields['email'] )->data->ID;
+	$user_id = get_user_by( 'email', $entry_fields['email'] )->data->ID;
 
-	$refersion_data = wonkasoft_get_refersion_data( $affiliate_apera_id );
+	$refersion_data = wonkasoft_get_refersion_data( $user_id );
 
 	$coupon_code = wonkasoft_coupon_creation( $entry_fields, $form['title'] );
 
@@ -1767,8 +1768,9 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 		// Send to getResponse.
 		$getresponse = get_response_api_call( $api_args );
 
-		update_user_meta( $user_id, 'refersion_data', $refersion_data );
-		update_user_meta( $user_id, 'getResponse_data', $getresponse );
+		update_user_meta( $user_id, 'users_discount_percentage', $entry_fields['users_discount'] );
+		update_user_meta( $user_id, 'refersion_discount_code', $refersion_data );
+		update_user_meta( $user_id, 'getResponse_discount_code', $getresponse );
 	}
 
 }
@@ -1918,39 +1920,17 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 
 			$getresponse_mse = $getresponse_init->create_a_new_contact();
 		endif;
-
-		update_user_meta( $user_id, 'getResponse_data_parks', $getresponse_perks );
+		$getresponse_perks = json_encode( $getresponse_perks );
+		update_user_meta( $user_id, 'getResponse_data_perks', $getresponse_perks );
 
 		if ( ! empty( $getresponse_mse ) ) {
-
+			$getresponse_mse = json_encode( $getresponse_mse );
 			update_user_meta( $user_id, 'getResponse_data_mse', $getresponse_mse );
-
 		}
 
 		if ( ! empty( $entry_fields['mse_occupation'] ) ) {
-
-			update_user_meta( $user_id, 'mse_occupation', $entry_fields['mse_occupation'] );
-			update_user_meta( $user_id, 'military_active', $entry_fields['military_active'] );
-			update_user_meta( $user_id, 'military_date', $entry_fields['military_date'] );
-			update_user_meta( $user_id, 'military_branch', $entry_fields['military_branch'] );
-			update_user_meta( $user_id, 'military_street_address', $entry_fields['street_address'] );
-			update_user_meta( $user_id, 'military_address_line_2', $entry_fields['address_line_2'] );
-			update_user_meta( $user_id, 'military_state_province', $entry_fields['state_province'] );
-			update_user_meta( $user_id, 'military_zip_postal_code', $entry_fields['zip_postal_code'] );
-			update_user_meta( $user_id, 'military_country', $entry_fields['country'] );
-			update_user_meta( $user_id, 'military_occupation_code', $entry_fields['military_occupation_code'] );
-			update_user_meta( $user_id, 'mse_note', $entry_fields['mse_note'] );
-			update_user_meta( $user_id, 'student_school_website', $entry_fields['student_school_website'] );
-			update_user_meta( $user_id, 'student_school_email', $entry_fields['student_school_email'] );
-			update_user_meta( $user_id, 'student_grad_date', $entry_fields['student_grad_date'] );
-			update_user_meta( $user_id, 'student_sports', $entry_fields['student_sports'] );
-			update_user_meta( $user_id, 'student_note', $entry_fields['student_note'] );
-			update_user_meta( $user_id, 'educator_school_website', $entry_fields['educator_school_website'] );
-			update_user_meta( $user_id, 'educator_school_email', $entry_fields['educator_school_email'] );
-			update_user_meta( $user_id, 'educator_subject', $entry_fields['educator_subject'] );
-			update_user_meta( $user_id, 'educator_years', $entry_fields['educator_years'] );
-			update_user_meta( $user_id, 'educator_note', $entry_fields['educator_note'] );
-
+			$entry_fields = json_encode( $entry_fields );
+			update_user_meta( $user_id, 'mse_data', $entry_fields );
 		}
 	}
 
