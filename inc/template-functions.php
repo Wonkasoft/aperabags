@@ -2287,6 +2287,15 @@ function testing() {
 	$getresponse_init = new Wonkasoft_GetResponse_Api( $api_args );
 	$getresponse_mse  = '';
 
+	if ( empty( $getresponse_init->campaign_id ) ) :
+		foreach ( $getresponse_init->campaign_list as $campaign ) :
+			if ( 'perks_program_signups' === $campaign->name ) :
+				$getresponse_init->campaign_id = $campaign->campaignId;
+			endif;
+		endforeach;
+
+	endif;
+
 	if ( ! empty( $getresponse_init->custom_fields ) ) :
 		foreach ( $getresponse_init->custom_fields_list as $field ) {
 			if ( in_array( $field->name, $getresponse_init->custom_fields ) ) :
@@ -2299,20 +2308,8 @@ function testing() {
 				array_push( $getresponse_init->custom_fields_to_update, $add_field );
 			endif;
 		}
+		$getresponse_perks = $getresponse_init->create_a_new_contact();
 	endif;
-
-	if ( empty( $getresponse_init->campaign_id ) ) :
-		foreach ( $getresponse_init->campaign_list as $campaign ) :
-			if ( 'perks_program_signups' === $campaign->name ) :
-				$getresponse_init->campaign_id = $campaign->campaignId;
-			endif;
-		endforeach;
-
-	endif;
-	echo "<pre>\n";
-	print_r( $getresponse_init );
-	echo "</pre>\n";
-	$getresponse_perks = $getresponse_init->create_a_new_contact();
 	echo "<pre>\n";
 	print_r( $getresponse_perks );
 	echo "</pre>\n";
