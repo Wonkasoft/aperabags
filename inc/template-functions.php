@@ -1876,7 +1876,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 			'affiliate_link',
 		);
 		$api_args['custom_fields_values'] = array(
-			'affiliate_link' => get_site_url() . '/?ref=' . $user_id,
+			'affiliate_link' => get_site_url() . '?ref=' . $user_id,
 		);
 
 		$getresponse = get_response_api_call( $api_args );
@@ -2182,9 +2182,61 @@ function wonkasoft_get_refersion_data( $user_id ) {
 
 }
 
-add_filter( 'gform_validation', 'custom_validation' );
-function custom_validation( $validation_result ) {
-	echo $validation_result;
-	return $validation_result;
+/**
+ * Adds the javascript required to view your password.
+ *  Turn the the input type into text and back to password.
+ *
+ * @param   [object]  $form  form object
+ *
+ * @author Carlos
+ */
+function wonka_gform_validation( $form ) {
+
+	$output = "if ( document.querySelectorAll( 'div.input-group-append' ) )
+	{
+		var password_toggle_btns = document.querySelectorAll( 'div.input-group-append' );
+		password_toggle_btns.forEach( function( password_toggle_btn )
+		{
+			password_toggle_btn.addEventListener( 'click', function( e )
+			{
+				var parent_input, password_input, password_icon_btn, password_type;
+				var target = e.target;
+
+				if ( target.nodeName === 'DIV' ) 
+				{
+					password_icon_btn = target.firstElementChild;
+					parent_input = target.parentElement.parentElement;
+					password_input = parent_input.firstElementChild;
+					password_type = password_input.getAttribute( 'type' );
+				}
+
+				if ( target.nodeName === 'I' ) 
+				{
+					password_icon_btn = target;
+					target = target.parentElement;
+					parent_input = target.parentElement.parentElement;
+					password_input = parent_input.firstElementChild;
+					password_type = password_input.getAttribute( 'type' );
+				}
+
+				if( password_type === 'password' )
+				{
+					password_icon_btn.classList.toggle( 'fa-eye' );
+					password_icon_btn.classList.toggle( 'fa-eye-slash' );
+					password_input.type = 'text';
+				}
+
+				if ( password_type === 'text' ) 
+				{
+					password_icon_btn.classList.toggle( 'fa-eye' );
+					password_icon_btn.classList.toggle( 'fa-eye-slash' );
+					password_input.type = 'password';
+				}
+			});
+		});
+	}";
+
+	GFFormDisplay::add_init_script( $form['id'], 'myaccoutn_validation', GFFormDisplay::ON_PAGE_RENDER, $output );
 
 }
+add_action( 'gform_register_init_scripts', 'wonka_gform_validation' );

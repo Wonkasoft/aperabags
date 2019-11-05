@@ -122,7 +122,8 @@ div.wonka-newsletter-wrap {
 
     .popup-btn-wrap {
       display: grid;
-      width: 33%;
+      align-items: center;
+      justify-content: center;
       grid-template-columns: 1fr 1fr;
 
       a.wonka-btn {
@@ -130,8 +131,9 @@ div.wonka-newsletter-wrap {
         align-items: center;
         justify-content: center;
         height: 58px;
+        max-width: 300px;
         margin: 15px;
-        padding: 0 8px;
+        padding: 0 30px;
         @include font-size( 1.6 );
         @include prefix( box-shadow, 0 1px 2px .5px rgba( 0, 0, 0, .7 ), o moz webkit );
 
