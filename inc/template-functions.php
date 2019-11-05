@@ -2273,7 +2273,7 @@ add_action( 'gform_register_init_scripts', 'wonka_gform_validation' );
 
 function testing() {
 
-	$user_id = get_user_by( 'email', $entry_fields['email'] )->data->ID;
+	$user_id = get_user_by( 'email', 'rlister@wonkasoft.com' )->data->ID;
 	// Setting Apera Perks affiliate link to send to getResponse.
 	$api_args['contact_name']         = 'Rudy Lister';
 	$api_args['email']                = 'rlister@wonkasoft.com';
