@@ -2215,7 +2215,7 @@ function wonkasoft_get_refersion_data( $user_id ) {
  * Adds the javascript required to view your password.
  *  Turn the the input type into text and back to password.
  *
- * @param   [object]  $form  form object
+ * @param   [object] $form  form object
  *
  * @author Carlos
  */
