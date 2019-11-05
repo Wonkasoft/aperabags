@@ -2276,7 +2276,7 @@ function testing() {
 	$user_id = get_user_by( 'email', 'rlister@wonkasoft.com' )->data->ID;
 	// Setting Apera Perks affiliate link to send to getResponse.
 	$api_args['contact_name']         = 'Rudy Lister';
-	$api_args['email']                = 'rlister@wonkasoft.com';
+	$api_args['email']                = 'support@wonkasoft.com';
 	$api_args['custom_fields']        = array(
 		'affiliate_link',
 	);
