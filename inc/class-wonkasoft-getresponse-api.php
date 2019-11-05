@@ -73,6 +73,18 @@ class Wonkasoft_GetResponse_Api {
 	 */
 	public function __construct( $data = null ) {
 
+		// whether ip is from share internet
+		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+			$ip_address = $_SERVER['HTTP_CLIENT_IP'];
+		}
+		// whether ip is from proxy
+		elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		}
+		// whether ip is from remote address
+		else {
+			$ip_address = $_SERVER['REMOTE_ADDR'];
+		}
 		$this->data                    = ( ! empty( $data ) ) ? $data : null;
 		$this->getresponse_api         = ( ! empty( get_option( 'getresponse_api_key' ) ) ) ? get_option( 'getresponse_api_key' ) : null;
 		$this->getresponse_url         = ( ! empty( get_option( 'getresponse_api_url' ) ) ) ? get_option( 'getresponse_api_url' ) : null;
@@ -98,7 +110,7 @@ class Wonkasoft_GetResponse_Api {
 		$this->contact_name            = ( ! empty( $data['contact_name'] ) ) ? $data['contact_name'] : null;
 		$this->tag_id                  = ( ! empty( $data['tag_id'] ) ) ? $data['tag_id'] : null;
 		$this->day_of_cycle            = ( ! empty( $data['day_of_cycle'] ) ) ? $data['day_of_cycle'] : 0;
-		$this->ip_address              = ( ! empty( $data['ip_address'] ) ) ? $data['ip_address'] : null;
+		$this->ip_address              = ( ! empty( $data['ip_address'] ) ) ? $data['ip_address'] : $ip_address;
 		$this->note                    = ( ! empty( $data['note'] ) ) ? $data['note'] : null;
 		$this->scoring                 = ( ! empty( $data['scoring'] ) ) ? $data['scoring'] : null;
 		$this->contact_list            = $this->get_contact_list();
