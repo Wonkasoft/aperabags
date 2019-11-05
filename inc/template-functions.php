@@ -2269,3 +2269,61 @@ function wonka_gform_validation( $form ) {
 
 }
 add_action( 'gform_register_init_scripts', 'wonka_gform_validation' );
+
+
+function testing() {
+
+	// Setting Apera Perks affiliate link to send to getResponse.
+	$api_args['contact_name']         = 'Rudy Lister';
+	$api_args['email']                = 'rlister@wonkasoft.com';
+	$api_args['custom_fields']        = array(
+		'affiliate_link',
+	);
+	$api_args['custom_fields_values'] = array(
+		'affiliate_link' => get_site_url() . '?ref=' . $user_id,
+	);
+
+	$getresponse_init = new Wonkasoft_GetResponse_Api( $api_args );
+	$getresponse_mse  = '';
+
+	if ( empty( $getresponse_init->campaign_id ) ) :
+		foreach ( $getresponse_init->campaign_list as $campaign ) :
+			if ( 'perks_program_signups' === $campaign->name ) :
+				$getresponse_init->campaign_id = $campaign->campaignId;
+			endif;
+		endforeach;
+
+	endif;
+
+	if ( ! empty( $getresponse_init->custom_fields ) ) :
+		foreach ( $getresponse_init->custom_fields_list as $field ) {
+			if ( in_array( $field->name, $getresponse_init->custom_fields ) ) :
+				$add_field = array(
+					'customFieldId' => $field->customFieldId,
+					'value'         => array(
+						$getresponse_init->custom_fields_values[ $field->name ],
+					),
+				);
+				array_push( $getresponse_init->custom_fields_to_update, $add_field );
+			endif;
+		}
+	endif;
+
+	$getresponse_perks = $getresponse_init->create_a_new_contact();
+
+	if ( ! empty( $entry_fields['mse_occupation'] ) ) :
+		foreach ( $getresponse_init->campaign_list as $campaign ) :
+			if ( 'perks_mse_program_signups' === $campaign->name ) :
+				$getresponse_init->campaign_id = $campaign->campaignId;
+			endif;
+		endforeach;
+
+		$getresponse_mse = $getresponse_init->create_a_new_contact();
+	endif;
+
+	echo "<pre>\n";
+	print_r( $getresponse_perks );
+	echo "</pre>\n";
+
+}
+add_action( 'wp', 'testing' );
