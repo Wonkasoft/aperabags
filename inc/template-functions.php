@@ -2308,6 +2308,9 @@ function testing() {
 			}
 		endif;
 
+		echo "<pre>\n";
+		print_r( ! empty( $getresponse_init->custom_fields ) );
+		echo "</pre>\n";
 		$getresponse_perks = $getresponse_init->create_a_new_contact();
 	endif;
 
@@ -2320,10 +2323,6 @@ function testing() {
 
 		$getresponse_mse = $getresponse_init->create_a_new_contact();
 	endif;
-
-	echo "<pre>\n";
-	print_r( $getresponse_init );
-	echo "</pre>\n";
 
 }
 add_action( 'edit_user_profile', 'testing' );
