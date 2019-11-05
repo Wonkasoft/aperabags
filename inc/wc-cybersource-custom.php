@@ -8,6 +8,9 @@ defined( 'ABSPATH' ) or exit;
 class WONKA_WC_Gateway_CyberSource extends WC_Gateway_CyberSource {
 
 
+
+
+
 	/**
 	 * Payment fields for CyberSource.
 	 *
@@ -20,9 +23,12 @@ class WONKA_WC_Gateway_CyberSource extends WC_Gateway_CyberSource {
 			<?php
 			if ( $this->get_description() ) :
 				?>
-				<?php echo wpautop( wptexturize( $this->get_description() ) ); ?><?php endif; ?>
+				<?php echo wpautop( wptexturize( $this->get_description() ) ); ?>
+						   <?php
+			endif;
+			?>
 
-			<div class="form-row form-row-first">
+			<div class="form-row form-row-first test">
 				<label for="cybersource_accountNumber" class="sr-only"><?php esc_html_e( 'Credit Card number', 'woocommerce-gateway-cybersource' ); ?> <span class="required">*</span></label>
 				<input type="text" class="input-text" id="cybersource_accountNumber" name="cybersource_accountNumber" maxlength="19" autocomplete="off" />
 			</div>
@@ -36,8 +42,8 @@ class WONKA_WC_Gateway_CyberSource extends WC_Gateway_CyberSource {
 							?>
 								<option value="<?php echo esc_attr( preg_replace( '/-.*$/', '', $type ) ); ?>" rel="<?php echo esc_attr( $type ); ?>"><?php esc_html_e( $this->card_type_options[ $type ], 'woocommerce-gateway-cybersource' ); ?></option>
 								<?php
-							endif;
-						endforeach;
+						endif;
+					endforeach;
 					?>
 				</select>
 			</div>
@@ -59,7 +65,6 @@ class WONKA_WC_Gateway_CyberSource extends WC_Gateway_CyberSource {
 				</select>
 			</div>
 			<?php if ( $this->is_cvv_required() ) : ?>
-
 				<div class="form-row form-row-last">
 					<label for="cybersource_cvNumber" class="sr-only"><?php esc_html_e( 'Card security code', 'woocommerce-gateway-cybersource' ); ?> <span class="required">*</span></label>
 					<input type="text" class="input-text" id="cybersource_cvNumber" name="cybersource_cvNumber" maxlength="4" style="width:60px" autocomplete="off" />
@@ -70,9 +75,8 @@ class WONKA_WC_Gateway_CyberSource extends WC_Gateway_CyberSource {
 		</fieldset>
 		<?php
 	}
-
 }
-// $new_fields = WONKA_WC_Gateway_CyberSource::payment_fields();
+// WONKA_WC_Gateway_CyberSource::payment_fields();
 // runkit_method_redefine( 'WC_Gateway_CyberSource', 'payment_fields', '', function() {
 
 // return "test"

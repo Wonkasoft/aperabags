@@ -26,20 +26,25 @@ textarea {
 	}
 }
 
-select {
-	// display: block;
- //    padding: .375rem .75rem;
- //    font-size: 1rem;
- //    line-height: 1.5;
- //    color: #495057;
- //    background-color: #fff;
- //    background-clip: padding-box;
- //    border: 1px solid $color__border-input;
- //    border-radius: 2px;
-}
-
 textarea {
 	width: 100%;
+}
+
+// Validation in ZIP and Ambassador
+.elementor-page-8062,
+.elementor-page-8245 {
+	.validation_error,
+	.validation_message {
+		font-size: 15px;
+		color:#dc3545;
+	}
+	input[aria-invalid="true"] {
+		border-color: #dc3545;
+		box-shadow: 0 0 5px rgba(226,64,28,.6);
+	}
+	.validation_error {
+		padding-bottom: 10px;
+	}
 }
 
 input.input-text.is-invalid {
@@ -49,11 +54,23 @@ input.input-text.is-invalid {
 .form-inline {
 	align-items: stretch;
 	justify-content: center;
+	flex-flow: row nowrap;
 
 	input {
 
 		&:focus {
 			@include prefix( box-shadow, 0 1px 6px 0 rgba( #52abf6, .7 ), webkit moz o);
 		}
+	}
+}
+
+.gform_validation_container {
+    display: none;
+}
+
+.woocommerce-page #main.main-my-account div.col-12 {
+	p,
+	label {
+		margin: 7px 0;
 	}
 }

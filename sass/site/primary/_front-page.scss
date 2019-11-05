@@ -12,6 +12,13 @@
 	}
 	
 	section {
+		position: relative;
+
+		&:nth-child(5) {
+			margin: 0;
+			background: #f0f0f0;
+			@include prefix( box-shadow, 0 0 4px 0 rgba( #000, .6 ), o moz webkit );
+		}
 
 		p.price,
 		span.price {
@@ -21,6 +28,10 @@
 		a.button.product_type_variable {
 			display: none;
 		}
+	}
+
+	section:not(:first-of-type):not(:nth-of-type(3)) {
+		padding: 70px 0;
 	}
 }
 /*----------  Header Slider  ----------*/
@@ -42,7 +53,7 @@ section.header-slider-section {
 			@include prefix( transition, $trans_1, o moz webkit );
 
 			div.top-slide-img-holder {
-				background-position: center .5vh;
+				background-position: center 0vh;
 				background-repeat: no-repeat;
 				@include prefix( background-size, cover, o moz webkit );
 				width: 100%;
@@ -58,7 +69,7 @@ section.header-slider-section {
 					.img-header-text-container {
 						display: flex;
 						flex-direction: column;
-						top: 10%;
+						top: 20%;
 
 						.set-align-left {
 							align-self: flex-start;
@@ -266,7 +277,6 @@ section.shop-section {
 	-webkit-background-size: cover;
 	background-size: cover;
 	background-position: center;
-	padding: 15px 0;
 
 	.wonka-row {
 		margin: 15px auto;
@@ -314,6 +324,7 @@ section.desirable-slider-section {
 				height: 100%;
 
 				.img-header-text-wrap {
+					background: radial-gradient(rgba(0, 0, 0, .55),rgba(0, 0, 0, 0.0));
 					position: relative;
 					margin: auto;
 					width: 100%;
@@ -321,7 +332,6 @@ section.desirable-slider-section {
 
 					.img-header-text-container {
 						margin: auto;
-						margin-bottom: 15%;
 						display: flex;
 						flex-direction: column;
 
@@ -340,16 +350,46 @@ section.desirable-slider-section {
 						.text-box {
 							color: #ffffff;
 							max-width: 100%;
+							display: grid;
 
 							h2 {
 								color: #ffffff;
 								font-weight: 800;
 								@include prefix( text-shadow, 1px 1px 2px rgba( #000, .8 ), o moz webkit );
+								padding-bottom: 20px;
+								font-size: 2rem;
+							}
+
+							h3 {
+								margin: auto;
+								max-width: 300px;
+								text-transform: unset;
+								padding-bottom: 30px;
+								font-size: 1.1rem;
+								font-weight: 400;
+							}
+
+							ul {
+								margin: auto;
+								text-align: left;
+								padding: 20px 0;
+								list-style-position: inside;
+				
+								li.perks-description {
+									@include font-size( 1.1 );
+									font-family: $font__main_jose;
+									margin-bottom: .5em;
+									font-weight: 400;
+								}
+							}
+
+							.wonka-btn.img-cta-link {
+								font-size: 1rem;
+								padding: 6px 10px;
 							}
 
 							@include media-breakpoint( md ) {
 								max-width: 1200px;
-								white-space: nowrap;
 							}
 						}
 					}	
@@ -416,7 +456,25 @@ section.desirable-slider-section {
 
 								h2 {
 									line-height: 1.1;
-									@include font-size( 2.5 );
+									@include font-size( 2.8 );
+								}
+
+								h3 {
+									max-width: 500px;
+									line-height: 1.7;
+									font-size: 1.5rem;
+								}
+
+								ul {
+									li.perks-description {
+										line-height: 1.4;
+										@include font-size( 1.5 );
+									}
+								}
+
+								.wonka-btn.img-cta-link {
+									font-size: 1.6rem;
+									padding: 10px 20px;
 								}
 							}
 						}
@@ -436,6 +494,23 @@ section.desirable-slider-section {
 									line-height: 1.1;
 									@include font-size( 2.8 );
 								}
+								
+
+								h3 {
+									font-size: 1.5rem;
+								}
+
+								ul {
+									li.perks-description {
+										line-height: 1.4;
+										@include font-size( 1.5 );
+									}
+								}
+
+								.wonka-btn.img-cta-link {
+									font-size: 1.6rem;
+									padding: 10px 20px;
+								}
 							}
 						}
 					}	
@@ -452,6 +527,23 @@ section.desirable-slider-section {
 								h2 {
 									line-height: 1.1;
 									@include font-size( 3.2 );
+								}
+
+								h3 {
+									line-height: 1.8;
+									font-size: 1.5rem;
+								}
+
+								ul {
+									li.perks-description {
+										line-height: 1.4;
+										@include font-size( 1.5 );
+									}
+								}
+
+								.wonka-btn.img-cta-link {
+									font-size: 1.6rem;
+									padding: 10px 20px;
 								}
 							}
 						}
@@ -483,7 +575,6 @@ section.desirable-slider-section {
 /*----------  Our Cause Section  ----------*/
 section.our-cause-section {
 	margin: 0;
-	padding: 15px 0;
 
 	.wonka-row {
 		margin: 15px auto;
@@ -504,16 +595,17 @@ section.our-cause-section {
 				align-items: center;
 				max-width: 300px;
 				height: auto;
-				@include prefix( box-shadow, $box_shadow_4, o moz webkit );
+				@include prefix( box-shadow, 0 0 4px .5px rgba, o moz webkit );
 
 				img {
-					height: auto;
-					width: auto;
+					height: 550px;
+					width: 370px;
 				}
 			}
 
 			.cause-title {
 				padding: 0 15px;
+				color: #000;
 			}
 
 			.cause-message {
@@ -552,10 +644,6 @@ div.modal-backdrop {
 }
 
 section.about-brand-section {
-	margin: 0;
-	padding: 15px 0;
-	background: #f0f0f0;
-	@include prefix( box-shadow, $box_shadow_4, o moz webkit );
 
 	.wonka-row {
 		margin: 15px auto;
@@ -704,7 +792,6 @@ section.about-brand-section {
 ======================================*/
 section.social-section {
 	margin: 0;
-	padding: 15px 0;
 
 	.wonka-row {
 		margin: 15px auto;

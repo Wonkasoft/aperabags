@@ -1,0 +1,93 @@
+.error404 {
+
+	#content {
+		background: url("./assets/img/404background.jpg") center top no-repeat, rgba(  #fff, .5) center center no-repeat;
+		background-blend-mode: overlay;
+		background-size: cover;
+		padding: 50px 15px;
+
+		.error-404 {
+			margin: 30px auto;
+		}
+	}
+
+	.page-header {
+		display: grid;
+		grid-template-columns: auto;
+		margin: 30px auto;
+		padding: 30px 15px;
+
+		h1 {
+			display: grid;
+			align-items: end;
+			margin: auto;
+			font-weight: 800;
+			color: rgba(#000, .26 );
+			@include font-size( 10.875 );
+			line-height: 0.65;
+		}
+
+		h2 {
+			display: grid;
+			align-items: center;
+			margin: auto;
+			font-weight: 800;
+			color: rgba(#000, .26 );
+			@include font-size( 2.1 );
+			line-height: 1;
+		}
+
+		h3 {
+			display: grid;
+			align-items: center;
+			margin: auto;
+			font-weight: 800;
+			color: rgba(#000, .26 );
+			@include font-size( 1.1 );
+			line-height: 1;
+		}
+	}
+
+	.page-content {
+		position: relative;
+		padding: 30px 15px;
+
+		&.fixed-divider-460 {
+
+			&:before {
+				left: calc( 50% - 10%);
+				width: 20%;
+			}
+		}
+
+		p {
+			margin: 0 auto 15px;
+		}
+
+		span {
+			display: inline-block;
+			height: 39px;
+			margin: auto 8px;
+
+			&.or-more {
+				font-style: italic;
+				font-weight: 600;
+			}
+
+			.wonka-btn {
+				display: grid;
+				align-items: center;
+				justify-content: center;
+				padding: 0 35px;
+				height: 39px;
+				@include font-size( 1.4 );
+				font-weight: 800;
+			}
+		}
+		
+		#searchform {
+			justify-content: flex-start;
+			margin: auto;
+		}
+	}
+}

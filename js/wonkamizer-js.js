@@ -3,15 +3,27 @@
 ============================================*/
 if ( wonkasoft_request.ga_id !== '' ) 
 {
-	(function(i,s,o,g,r,a,m){i.GoogleAnalyticsObject=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments);},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m);
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	(function(i,s,o,g,r,a,m)
+	{
+		i.GoogleAnalyticsObject=r;i[r]=i[r]||function()
+		{
+			(i[r].q=i[r].q||[]).push(arguments);
+		}; 
+
+		i[r].l=1*new Date();
+		a=s.createElement(o);
+		m=s.getElementsByTagName(o)[0];
+		a.async=1;
+		a.src=g;
+		m.parentNode.insertBefore(a,m);
+	} )( window,document,'script','https://www.google-analytics.com/analytics.js','ga' );
 
 	ga('create', wonkasoft_request.ga_id, 'auto');
 	ga('send', 'pageview');
 }
 /*=====  End of For Google Analytics  ======*/
+var placeSearch, autocomplete;
+var componentForm;
 
 ( function( $ )
 {
@@ -24,6 +36,9 @@ if ( wonkasoft_request.ga_id !== '' )
 	admin_bar,
 	message_timer,
 	admin_height,
+	drop_down,
+	header_el,
+	header_height,
 	xhr = new XMLHttpRequest();
 
 	if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
@@ -60,7 +75,126 @@ if ( wonkasoft_request.ga_id !== '' )
 	}
 	/*=====  End of vars set for script use  ======*/
 
-	
+	/**
+	 * This is for the zip and ambassador thank you pages.
+	 * 
+	 */
+	if (document.getElementById("ambassadar-first-name") || document.getElementById("zip-first-name") || document.getElementById("confirm-email") ) {
+		if ( getUrlVars().firstname ) 
+		{
+			var firstname = decodeURIComponent( getUrlVars().firstname ).replace( /\+/gi, ' ' );
+			document.getElementById("ambassadar-first-name").innerHTML = "HI " + firstname + "!";
+		}
+
+		if ( getUrlVars().fname ) 
+		{
+			var zip_firstname = decodeURIComponent( getUrlVars().fname ).replace( /\+/gi, ' ' );
+			document.getElementById("zip-first-name").innerHTML = "HI " + zip_firstname + "!";
+		}
+
+		if ( getUrlVars().email ) 
+		{
+			var confirm_email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("confirm-email").innerHTML = confirm_email;
+		}
+	}
+
+	if ( document.getElementById("for-fname") ) {
+		if ( getUrlVars().email ) 
+		{
+			var for_email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("for-email").innerHTML = for_email;
+		}
+
+		if ( getUrlVars().fname ) 
+		{
+			var for_fname = decodeURIComponent( getUrlVars().fname ).replace( /\+/gi, ' ' );
+			document.getElementById("for-fname").innerHTML = for_fname;
+		}
+
+		if ( getUrlVars().lname ) 
+		{
+			var for_lname = decodeURIComponent( getUrlVars().lname ).replace( /\+/gi, ' ' );
+			document.getElementById("for-lname").innerHTML = for_lname;
+		}
+	}
+
+	if ( document.querySelector( '#tag' ) ) 
+	{
+		if ( getUrlVars().email ) 
+		{
+			var email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("email").innerHTML = email;
+		}
+
+		if ( getUrlVars().tag ) 
+		{
+			var tag = decodeURIComponent( getUrlVars().tag ).replace( /\+/gi, ' ' );
+			document.getElementById("tag").innerHTML = tag;
+		}
+
+	}
+
+	if ( document.querySelector( '#subscriber-email' ) ) 
+	{
+		if ( getUrlVars().email ) 
+		{
+			var subscriber_email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
+			document.getElementById("subscriber-email").innerHTML = subscriber_email;
+		}
+	}
+
+	if ( document.querySelector( 'input[type=file].custom-file-input' ) ) 
+	{
+		var file_input = document.querySelector( 'input[type=file].custom-file-input' );
+		var input_label = document.querySelector( 'label.custom-file-label' );
+		var file_name;
+		var current_logo_wrap = document.querySelector( 'div.current-logo-wrap' );
+
+		file_input.addEventListener( 'change', function( e ) 
+			{
+				if ( '' === file_input.value ) 
+				{
+					input_label.innerText = 'Choose file';
+				}
+				else
+				{
+					file_name = file_input.value.split('\\')[file_input.value.split('\\').length - 1];
+					input_label.innerText = file_name;
+				}
+			} );
+
+		document.ongform_confirmation_loaded = function( e ) 
+			{
+				var data = {
+					'url': wonkasoft_request.ajax,
+					'action': 'wonkasoft_parse_account_logo',
+					'security': wonkasoft_request.security
+				};
+				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+				xhr.onreadystatechange = function() {
+
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+						var response = JSON.parse( this.responseText );
+						if ( response.success ) 
+						{
+							current_logo_wrap.innerHTML = response.data;
+						}
+						else
+						{
+							current_logo_wrap.innerText = 'There was an issue with your upload. Please try again.';
+						}
+					}
+				};
+
+				xhr.open('GET', data.url + "?" + query_string );
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+			};
+
+	}
+
 	/**
 	 * This is for the checkout multistep tabs 
 	 * @author Rudy
@@ -569,6 +703,109 @@ if ( wonkasoft_request.ga_id !== '' )
 	=            This is area for writing callable functions            =
 	===================================================================*/
 
+	function add_transparent( height ) {
+
+		if ( document.body.scrollTop > height || document.documentElement.scrollTop > height ) {
+			document.querySelector('#masthead').classList.add('transparent-header');
+			
+		} else {
+			document.querySelector('#masthead').classList.remove('transparent-header');
+		}
+	}
+
+	function add_fixed_header( win_y_offset, header_el, header_height ) 
+	{
+		var content_area = document.querySelector( '#content' );
+		if ( win_y_offset > header_height ) 
+		{
+			if ( document.querySelector( '#wpadminbar' ) ) 
+			{
+				admin_bar = document.querySelector( '#wpadminbar' );
+				admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
+				
+				if ( getComputedStyle( admin_bar ).position == 'fixed' ) 
+				{
+					header_el.classList.add( 'fixed' );
+					content_area.style = 'padding-top: ' + header_height + 'px;';
+					if ( '' == header_el.style.height ) 
+					{
+						drop_down = setTimeout( function() 
+						{
+							if ( window.pageYOffset > header_height ) 
+							{
+								header_el.style = 'height: ' + header_height + 'px; top: ' + admin_height + 'px;';
+								setTimeout( function() 
+									{
+										header_el.style = 'height: ' + header_height + 'px; top: ' + admin_height + 'px; overflow: unset;';
+
+									}, 400 );
+							}
+							else
+							{
+								header_el.style = '';
+							}
+						}, 300 );
+					}
+				}
+				else
+				{
+					header_el.classList.add( 'fixed' );
+					content_area.style = 'padding-top: ' + header_height + 'px;';
+					if ( '' == header_el.style.height ) 
+					{
+						drop_down = setTimeout( function() 
+						{
+							if ( window.pageYOffset > header_height ) 
+							{
+								header_el.style = 'height: ' + header_height + 'px; top: 0;';
+								setTimeout( function() 
+									{
+										header_el.style = 'height: ' + header_height + 'px; top: 0; overflow: unset;';
+
+									}, 400 );
+							}
+							else
+							{
+								header_el.style = '';
+							}
+						}, 300 );
+					}
+				}
+			}
+			else
+			{
+				header_el.classList.add( 'fixed' );
+				content_area.style = 'padding-top: ' + header_height + 'px;';
+				if ( '' == header_el.style.height ) 
+				{
+					drop_down = setTimeout( function() 
+					{
+						header_el.style = 'height: ' + header_height + 'px; top: 0;';
+						setTimeout( function() 
+							{
+								header_el.style = 'height: ' + header_height + 'px; top: 0; overflow: unset;';
+
+							}, 400 );
+					}, 300 );
+				}
+			}
+
+		} 
+		else
+		{
+			if ( 0 === win_y_offset ) 
+			{
+				if ( header_el.classList.contains( 'fixed' ) ) 
+				{
+					header_el.classList.remove( 'fixed' );
+					content_area.style = '';
+				}
+				clearTimeout( drop_down );
+				header_el.style = '';
+			}
+		}
+	}
+
 	function wonka_ajax_request( xhr, action, data ) 
 	{
 		if ( action === "search_site" ) 
@@ -582,7 +819,7 @@ if ( wonkasoft_request.ga_id !== '' )
 
 			search_results.classList.add( 'autocomplete-suggestions' );
 			document.querySelector( 'body' ).appendChild( search_results );
-			search_field.setAttribute( 'autocomplete', 'off' );
+			search_field.setAttribute( 'autocomplete', 'false' );
 	
 			search_field.addEventListener( 'focus', function () 
 			{
@@ -775,6 +1012,13 @@ if ( wonkasoft_request.ga_id !== '' )
 		}, 300);
 	}
 
+	function getUrlVars() {
+	   var vars = {};
+	   var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+	       vars[key] = value;
+	   });
+	   return vars;
+	}
 
 	function shifting_parallax() 
 	{	
@@ -809,7 +1053,7 @@ if ( wonkasoft_request.ga_id !== '' )
 				});
 		}
 
-		if ( window.pageYOffset < top_slider_section.offsetTop ) 
+		if ( window.pageYOffset <= top_slider_section.offsetTop ) 
 		{
 			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
@@ -832,7 +1076,7 @@ if ( wonkasoft_request.ga_id !== '' )
 				});
 		}
 
-		if ( window.pageYOffset < cta_section.offsetTop ) 
+		if ( window.pageYOffset <= cta_section.offsetTop ) 
 		{
 			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
@@ -844,26 +1088,24 @@ if ( wonkasoft_request.ga_id !== '' )
 		
 	}
 
-	function stickyThumbnails() 
+	function stickyThumbnails( header_el, header_height ) 
 	{
-		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 40;
+		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 80;
 		target_stop = wonka_single_product_img_area.offsetHeight - thumbnail_controls.offsetHeight;
 		var scrolling_spacer = document.querySelector( 'div.sticky-spacer' );
 		win_y = window.pageYOffset;
 
-		if ( win_y < img_area_top ) 
+		if ( win_y + header_height < img_area_top ) 
 		{
 			thumbnail_controls.classList.remove( 'sticky-on' );
 			thumbnail_controls.removeAttribute( 'style' );
-			scrolling_spacer.classList.remove( 'spacing-now' );
 			scrolling_spacer.removeAttribute( 'style' );
 		}
-		else if ( win_y - img_area_top > target_stop ) 
+		else if ( win_y + header_height - img_area_top > target_stop ) 
 		{
 			thumbnail_controls.style.top = target_stop + 'px';
 			thumbnail_controls.classList.remove( 'sticky-on' );
 			scrolling_spacer.style.top = target_stop + 'px';
-			scrolling_spacer.classList.remove( 'spacing-now' );
 		} 
 		else
 		{
@@ -875,42 +1117,39 @@ if ( wonkasoft_request.ga_id !== '' )
 				if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
 				{
 					thumbnail_controls.classList.add( 'sticky-on' );
-					thumbnail_controls.style.top = 30 + 'px';
-					scrolling_spacer.classList.add( 'spacing-now' );
+					thumbnail_controls.style.top = header_height + 'px';
 					scrolling_spacer.style.top = 0;
 				}
 				else
 				{
 					thumbnail_controls.classList.add( 'sticky-on' );
-					thumbnail_controls.style.top = admin_height + 30 + 'px';
-					scrolling_spacer.classList.add( 'spacing-now' );
+					thumbnail_controls.style.top = admin_height + header_height + 'px';
 					scrolling_spacer.style.top = admin_height + 'px';
 				}
 			}
 			else
 			{
 				thumbnail_controls.classList.add( 'sticky-on' );
-				thumbnail_controls.style.top = 30 + 'px';
-				scrolling_spacer.classList.add( 'spacing-now' );
+				thumbnail_controls.style.top = header_height + 'px';
 				scrolling_spacer.style.top = 0;
 			}
 		} 
 	}
 
-	function stickySummary() 
+	function stickySummary( header_el, header_height ) 
 	{
-		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 40;
+		img_area_top = product_img_section.parentElement.offsetTop + wonka_single_product_img_area.offsetTop - 80;
 		target_stop = wonka_single_product_img_area.offsetHeight - summary_section.offsetHeight;
 		win_y = window.pageYOffset;
 
 		if ( wonka_single_product_img_area.offsetHeight > summary_section.offsetHeight ) 
 		{
-			if ( window.innerWidth > 767 && win_y < img_area_top ) 
+			if ( window.innerWidth > 767 + header_height && win_y + header_height < img_area_top ) 
 			{
 				summary_section.classList.remove( 'sticky-on' );
 				summary_section.removeAttribute( 'style' );
 			}
-			else if ( window.innerWidth > 767 && win_y - img_area_top > target_stop ) 
+			else if ( window.innerWidth > 767 && win_y + header_height - img_area_top > target_stop ) 
 			{
 				summary_section.style.top = target_stop + 'px';
 				summary_section.classList.remove( 'sticky-on' );
@@ -925,18 +1164,18 @@ if ( wonkasoft_request.ga_id !== '' )
 					if ( getComputedStyle( admin_bar ).position == 'absolute' && window.pageYOffset > admin_height ) 
 					{
 						summary_section.classList.add( 'sticky-on' );
-						summary_section.style.top = 30 + 'px';
+						summary_section.style.top = header_height + 'px';
 					}
 					else
 					{
 						summary_section.classList.add( 'sticky-on' );
-						summary_section.style.top = admin_height + 30 + 'px';
+						summary_section.style.top = admin_height + header_height + 'px';
 					}
 				}
 				else
 				{
 					summary_section.classList.add( 'sticky-on' );
-					summary_section.style.top = 30 + 'px';
+					summary_section.style.top = header_height + 'px';
 				}
 			}
 		}
@@ -1434,6 +1673,54 @@ if ( wonkasoft_request.ga_id !== '' )
 	===================================================================*/
 	window.onload = function()
 	{
+		/**
+		 * Allows register side on my account page to slide out and in.
+		 *
+		 * @auther  Carlos
+		 */
+		if ( document.querySelector( '.create-account-full' ) )
+		{
+			create_toggle_btn = document.querySelector( '.create-account-full' );
+			login_toggle_btn = document.querySelector( '.login-slide-btn' );
+			login_col = document.querySelector( 'div.login' );
+			register_col = document.querySelector( 'div.register' );
+			register_form = document.querySelector( '.apera-registration-form-container' );
+			loggin_toggle_wrapper = document.querySelector( 'div.loggin-toggle-wrapper' );
+
+			create_toggle_btn.addEventListener( 'click', function( e )
+			{
+				create_toggle_btn.classList.toggle('btn-create-toggle');
+				setTimeout( function() 
+				{
+					create_toggle_btn.classList.toggle('display-none');
+					create_toggle_btn.toggleAttribute('disabled');
+					login_col.classList.toggle( 'collapse-col-login' );
+					register_col.classList.toggle( 'col-lg-12' );
+					register_form.classList.toggle( 'form-register-toggle' );
+					loggin_toggle_wrapper.classList.toggle( 'loggin-toggle-wrapper-visable' );
+				}, 200 );
+			});
+
+			login_toggle_btn.addEventListener( 'click', function( e )
+			{
+				create_toggle_btn.classList.toggle('btn-create-toggle');
+				setTimeout( function() 
+				{
+					create_toggle_btn.toggleAttribute('disabled');
+					login_col.classList.toggle( 'collapse-col-login' );
+					register_col.classList.toggle( 'col-lg-12' );
+					register_form.classList.toggle( 'form-register-toggle' );
+					loggin_toggle_wrapper.classList.toggle( 'loggin-toggle-wrapper-visable' );
+					create_toggle_btn.classList.toggle('display-none');
+				}, 200 );
+			});
+			
+			if ( '1' === getUrlVars().create ) 
+			{
+				create_toggle_btn.click();
+			}
+		}
+
 		// if ( document.querySelector( 'div.xoo-wsc-modal' ) ) 
 		// {
 		// 	var side_cart_btn = document.querySelector( '.wonka-cart-open' );
@@ -1494,20 +1781,27 @@ if ( wonkasoft_request.ga_id !== '' )
 		==========================================================*/
 		if ( document.querySelector( '.home' ) ) 
 		{
-			// var top_slider_section_positionY, cta_section_positionY;
-			// if ( document.querySelector( '.header-slider-section' ) ) 
-			// {
-			// 	top_slider_section_positionY = ( parseInt( getComputedStyle( document.querySelector( '.header-slider-section .top-slide-img-holder' ) ).backgroundPositionY ) / 100 ) * ( document.querySelector( '.header-slider-section' ).offsetHeight / -2 );
-			// }
 
-			// if ( document.querySelector( '.desirable-slider-section' ) ) 
-			// {
-			// 	cta_section_positionY = ( parseInt( getComputedStyle( document.querySelector( '.desirable-slider-section .cta-slide-img-holder' ) ).backgroundPositionY ) / 100 ) * ( document.querySelector( '.desirable-slider-section' ).offsetHeight / -2 );
-			// }
+			var screen_height = window.innerHeight;
+			add_transparent( screen_height );
 
 			window.onscroll = function()
 			{
 				shifting_parallax();
+				add_transparent( screen_height );
+			};
+			
+		}
+
+		if ( document.querySelector( '.page-template-default' ) || document.querySelector( '.page-template' ) || document.querySelector( '.error404' ) ) 
+		{
+			header_el = document.querySelector( '#masthead' );
+			header_height = header_el.offsetHeight;
+			add_fixed_header( window.pageYOffset, header_el, header_height );
+
+			window.onscroll = function() 
+			{
+				add_fixed_header( window.pageYOffset, header_el, header_height );
 			};
 		}
 		/*=====  End of For parallax on front page sliders  ======*/
@@ -1523,64 +1817,53 @@ if ( wonkasoft_request.ga_id !== '' )
 		===========================================================================================*/
 		footer_adjustment();
 		/*=====  End of This makes the adjustment of space for the footer to show correctly  ======*/
-
+		
 		/*=================================
 		=            For Popup            =
 		=================================*/
 		if ( document.querySelector( 'div.wonka-newsletter-wrap' ) ) 
 		{
 			var popup_wrap = document.querySelector( 'div.wonka-newsletter-wrap' );
-			var popup_dismiss_btn = document.querySelector( 'a.wonka-newsletter-close-btn' );
-			var popup_form = document.querySelector( 'div.wonka-newsletter-wrap form' );
+			var time_to_pop = document.querySelector( 'div.wonka-newsletter-wrap' ).getAttribute('time-to-pop') * 1000;
+			var popup_dismiss_btns = document.querySelectorAll( 'a.wonka-newsletter-close-btn' );
 			setTimeout( function() 
 				{
 					popup_wrap.classList.add( 'popped-up' );
-				}, 3000 );
-			popup_dismiss_btn.addEventListener( 'click', function( e ) 
-				{
-					e.preventDefault();
-					var el = e.target;
-					var data = {};
-					data.action = 'wonkasoft_dismiss_popup';
-					data.security = wonkasoft_request.security;
-					
-					if ( el.nodeName === 'SPAN' ) 
-					{
-						el = el.parentElement;
-					}
-					
-					if ( popup_wrap.classList.contains( 'popped-up' ) ) 
-					{
-						popup_wrap.classList.remove( 'popped-up' );
-					}
-					
-	        xhr.onreadystatechange = function() {
-		        if ( this.readyState == 4 && this.status == 200 )  {
-		        	var response =   this;
-		        }
-	        };
-	        xhr.open('POST', wonkasoft_request.ajax + '?action=' + data.action + '&security=' + data.security );
-	        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-	        xhr.send();
+				}, time_to_pop );
 
-				});
-
-			popup_form.addEventListener( 'submit', function( e ) 
+			popup_dismiss_btns.forEach( function( btn, i ) 
 				{
-					setTimeout( function() 
+					btn.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						var el = e.target;
+						var data = {};
+						data.action = 'wonkasoft_dismiss_popup';
+						data.security = wonkasoft_request.security;
+						
+						if ( el.nodeName === 'SPAN' ) 
 						{
-							if ( document.querySelector( 'div.wonka-newsletter-wrap .gform_confirmation_wrapper' ) ) 
-							{
-								if ( popup_wrap.classList.contains( 'popped-up' ) ) 
-								{
-									popup_wrap.classList.remove( 'popped-up' );
-								}
-							}
-						}, 2000 );
+							el = el.parentElement;
+						}
+						
+						if ( popup_wrap.classList.contains( 'popped-up' ) ) 
+						{
+							popup_wrap.classList.remove( 'popped-up' );
+						}
+						
+				        xhr.onreadystatechange = function() {
+					        if ( this.readyState == 4 && this.status == 200 )  {
+					        	var response =   this;
+					        }
+				        };
+				        xhr.open('POST', wonkasoft_request.ajax + '?action=' + data.action + '&security=' + data.security );
+				        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+				        xhr.send();
+
+					});
 				});
 		}
 		/*=====  End of For Popup  ======*/
-		
 
 		/**************************************************************************
 		 * This allow the user to view their password in the the sign in form CARLOS
@@ -2104,19 +2387,51 @@ if ( wonkasoft_request.ga_id !== '' )
 		{
 			var about_vid_modal = document.querySelector( 'div#videoModal' );
 			var about_vid_close = document.querySelector( 'div#videoModal button.close' );
-			var about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
-			var about_vid_iframe_link = about_vid_iframe.src;
+			var about_vid_iframe;
+			about_vid_modal.style.opacity = 0;
+			
+			document.getElementById("about-modal-link").addEventListener("click", function(e) {
+				e.preventDefault();
+				var data = {
+					'url': wonkasoft_request.ajax,
+					'action': 'wonkasoft_add_youtube_source',
+					'section': 'about',
+					'security': wonkasoft_request.security
+				};
+				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+				xhr.onreadystatechange = function() {
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+						var response = JSON.parse( this.responseText );
+						if ( response.success ) 
+						{
+							about_vid_modal.style.opacity = 1;
+							document.getElementById('about-youtube-source').innerHTML = response.data.src;
+						}
+						else
+						{
+							console.log('error '+ response);
+						}
+					}
+				};
+
+				xhr.open('GET', data.url + "?" + query_string );
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+			});
 
 			about_vid_close.onclick = function()
 			{
+				about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
 				about_vid_iframe.src = '';
-				about_vid_iframe.src = about_vid_iframe_link;
+				about_vid_modal.style.opacity = 0;
 			};
 
 			about_vid_modal.onclick = function() 
 			{
+				about_vid_iframe = document.querySelector( 'div#videoModal iframe' );
 				about_vid_iframe.src = '';
-				about_vid_iframe.src = about_vid_iframe_link;
+				about_vid_modal.style.opacity = 0;
 			};
 		}
 		/*=====  End of This is to kill the about us video on close  ======*/
@@ -2126,21 +2441,55 @@ if ( wonkasoft_request.ga_id !== '' )
 		===================================================================*/
 		if ( document.querySelector( 'div#videoModalpop' ) ) 
 		{
+
 			var cause_vid_modal = document.querySelector( 'div#videoModalpop' );
 			var cause_vid_close = document.querySelector( 'div#videoModalpop button.close' );
-			var cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
-			var cause_vid_iframe_link = cause_vid_iframe.src;
+			var cause_vid_iframe;
+			cause_vid_modal.style.opacity = 0;
+			
+			document.getElementById("cause-modal-link").addEventListener("click", function(e) {
+				e.preventDefault();
+				var data = {
+					'url': wonkasoft_request.ajax,
+					'action': 'wonkasoft_add_youtube_source',
+					'section': 'cause',
+					'security': wonkasoft_request.security
+				};
+				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+				xhr.onreadystatechange = function() {
+
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+						var response = JSON.parse( this.responseText );
+						if ( response.success ) 
+						{
+							cause_vid_modal.style.opacity = 1;
+							document.getElementById('cause-youtube-source').innerHTML = response.data.src;
+						}
+						else
+						{
+							console.log('error '+ response);
+						}
+					}
+				};
+
+				xhr.open('GET', data.url + "?" + query_string );
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.send();
+			});
 
 			cause_vid_close.onclick = function()
 			{
+				cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
 				cause_vid_iframe.src = '';
-				cause_vid_iframe.src = cause_vid_iframe_link;
+				cause_vid_modal.style.opacity = 0;
 			};
 
 			cause_vid_modal.onclick = function() 
 			{
+				cause_vid_iframe = document.querySelector( 'div#videoModalpop iframe' );
 				cause_vid_iframe.src = '';
-				cause_vid_iframe.src = cause_vid_iframe_link;
+				cause_vid_modal.style.opacity = 0;
 			};
 		}
 		/*=====  End of This is to kill the about us video on close  ======*/
@@ -2286,12 +2635,15 @@ if ( wonkasoft_request.ga_id !== '' )
 				
 			}
 			/*=====  End of This is the setup for the Wonka Express Checkout Button  ======*/
-
+			header_el = document.querySelector( '#masthead' );
+			header_height = header_el.offsetHeight;
+			add_fixed_header( window.pageYOffset, header_el, header_height );
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
-				stickyThumbnails();
-				stickySummary();
+				stickyThumbnails( header_el, header_height );
+				stickySummary( header_el, header_height );
+				add_fixed_header( window.pageYOffset, header_el, header_height );
 			};
 		}
 		/*=====  End of For single product page  ======*/
@@ -2337,9 +2689,22 @@ if ( wonkasoft_request.ga_id !== '' )
 
 		if ( document.querySelector( 'body.home .instagram-wrap') ) 
 		{
+			var image_containers = document.querySelectorAll( '.wonka-insta-box' );
+			var slides_to_show = 0;
+			var slides_to_scroll = 0;
+			if ( image_containers.length >= 5 ) 
+			{
+				slides_to_show = 5;
+				slides_to_scroll = 3;
+			}
+			else
+			{
+				slides_to_show = image_containers.length;
+				slides_to_scroll = image_containers.length;
+			}
 			$( 'body.home .instagram-wrap' ).slick({
-			  slidesToShow: 5,
-			  slidesToScroll: 3,
+			  slidesToShow: slides_to_show,
+			  slidesToScroll: slides_to_scroll,
 			  autoplay: true,
 			  autoplaySpeed: 4000,
 			  dots: false,
@@ -2349,8 +2714,8 @@ if ( wonkasoft_request.ga_id !== '' )
     			{
 			      breakpoint: 1200,
 			      settings: {
-			        slidesToShow: 4,
-			        slidesToScroll: 3,
+			        slidesToShow: ( slides_to_show < 4) ? slides_to_show: 4,
+			        slidesToScroll: slides_to_scroll,
 			      }
 			    },
 			    {
@@ -2636,17 +3001,14 @@ if ( wonkasoft_request.ga_id !== '' )
 			}
 		}
 
-/**
- * Settup for the compare plugin No Scroll
- *
- * @author Carlos
- * @return  {[type]}  [return description]
- */		
-
+		/**
+		 * Settup for the compare plugin No Scroll
+		 *
+		 * @author Carlos
+		 */		
  		if(document.querySelector('table.compare-list')) {
  			var compare_table = document.querySelector('table.compare-list');
 
-			console.log(compare_table);
 			compare_table.classList.add('table');
 		}
 
@@ -2674,7 +3036,6 @@ if ( wonkasoft_request.ga_id !== '' )
 
 						if ( compare_close_btn )
 						{
-							// console.log(compare_close_btn);
 
 							compare_close_btn.addEventListener( 'click', function( e )
 							{
@@ -2705,44 +3066,75 @@ if ( wonkasoft_request.ga_id !== '' )
 		/**********  End of Settup for the compare plugin No Scroll  *********/
 
 	
-	/*=================================================
-	=            Setup for the search form            =
-	=================================================*/
-	if ( document.querySelector('input#s') )
-	{
-		wonka_ajax_request( xhr, "search_site", null);
-	}
-	/*=====  End of Setup for the search form  ======*/
+		/*=================================================
+		=            Setup for the search form            =
+		=================================================*/
+		if ( document.querySelector('input#s') )
+		{
+			wonka_ajax_request( xhr, "search_site", null);
+		}
+		/*=====  End of Setup for the search form  ======*/
+		/*=====  End of Setup for the nabar menu transparency  ======*/
 
-};
-	/*=====  End of This is for running after document is ready  ======*/
+		/*=======================================================
+		=            This is for the google maps api            =
+		=======================================================*/
+		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
+		{
+
+			// This example displays an address form, using the autocomplete feature
+			// of the Google Places API to help users fill in the information.
+
+			// This example requires the Places library. Include the libraries=places
+			// parameter when you first load the API. For example:
+			// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+		    componentForm = 
+		    {
+		        street_number: 'long_name', // Address_1 Numbers only
+		        route: 'short_name', // Street only
+		        locality: 'long_name', // City Name
+		        administrative_area_level_1: 'short_name', // State
+		        postal_code: 'long_name', // Zip Code
+		        postal_code_suffix: 'long_name', // Zip Code
+		    };	
+
+		}
+
+		if ( document.querySelector( '.ui-datepicker-trigger' ) ) 
+		{
+			
+			var datepicker_triggers = document.querySelectorAll( '.ui-datepicker-trigger' );
+			var datepicker_div = document.querySelector( '#ui-datepicker-div' );
+
+			datepicker_triggers.forEach( function( picker, i ) 
+				{
+					var parent_el = picker.parentElement;
+					var close_span = parent_el.querySelector( 'span.input-group-text' );
+					var datepicker_new_icon_url = parent_el.querySelector( '.new-cal-icon' ).value;
+					close_span.appendChild( picker );
+					picker.src = datepicker_new_icon_url;
+				});
+
+			var observer_callback = function( mutationsList, observer ) 
+			{
+				for( var mutation of mutationsList ) 
+				{
+					if ( 'childList' === mutation.type ) 
+					{
+						document.querySelector( '.ui-datepicker-prev span' ).innerText = 'Prev';
+					}
+				}
+			};
+
+			var config = { attributes: true, childList: true };
+			var observer = new MutationObserver( observer_callback );
+			observer.observe( datepicker_div, config);
+		}
+	};
+		/*=====  End of This is for running after document is ready  ======*/
 
 })( jQuery );
-
-/*=======================================================
-=            This is for the google maps api            =
-=======================================================*/
-if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
-{
-
-	// This example displays an address form, using the autocomplete feature
-	// of the Google Places API to help users fill in the information.
-
-	// This example requires the Places library. Include the libraries=places
-	// parameter when you first load the API. For example:
-	// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-	var placeSearch, autocomplete;
-    var componentForm = 
-    {
-        street_number: 'long_name', // Address_1 Numbers only
-        route: 'short_name', // Street only
-        locality: 'long_name', // City Name
-        administrative_area_level_1: 'short_name', // State
-        postal_code: 'long_name', // Zip Code
-        postal_code_suffix: 'long_name', // Zip Code
-    };	
-}
 
 function initAutocomplete() 
 {

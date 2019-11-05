@@ -19,10 +19,35 @@ footer#colophon {
 	}
 
 	.upper-footer {
-		padding: 15px 0;
+		padding: 25px 0 15px 0;
 
-		div.col {
-			margin-bottom: 15px;
+		> div.col {
+			margin-bottom: 25px;
+
+			div.col-12 {
+
+				div.footer-insta {
+					font-display: $font__main_jose;
+					font-weight: 500;
+					display: flex;
+					justify-content: center;
+					display: grid;
+					grid-gap: 8px;
+					grid-auto-flow: column;
+					margin-bottom: 1.2rem;
+
+					@include media-breakpoint( md ) {
+						margin-bottom: 1.6rem;
+					}
+					@include media-breakpoint( lg ) {
+						margin-bottom: 1.9rem;
+					}
+				}
+
+				div.menu-footer-main-container {
+					justify-content: end;
+				}
+			}
 		}
 
 		.footer-title {
@@ -31,23 +56,23 @@ footer#colophon {
 			@include prefix( text-shadow, 1px 1px 4px rgba( #000, .8 ), o moz webkit );
 
 			@include media-breakpoint( md ) {
-				@include font-size( 1.3 );
+			@include font-size( 1.3 );
 			}
 		}
 
 		.social-components-wrap {
-			margin: auto;
-			width: 100%;
-		    max-width: 225px;
+			justify-content: flex-end;
+			align-items: center;
 
 			.social-icons-btns {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				flex-wrap: wrap;
-				margin-bottom: 1.5rem;
+				margin-bottom: 1.2rem;
 				@include font-size( 1.4 );
+
+				a {
+					padding: 0 15px 0 15px;
+				}
 			}
+
 		}
 
 		ul {
@@ -55,26 +80,26 @@ footer#colophon {
 			padding: 0;
 			list-style: none;
 		}
-
-		.wonka-footer-menu {
-			margin-bottom: 15px;
-		}
 	}
 
-	.wonka-row-footer {
-		margin: 15px auto;
+	.wonka-menu-footer {
 
-		@include media-breakpoint( md ) {
-			margin: 0 auto 15px;
-		}
+			div.col-12 {
+				display: flex;
+				justify-content: center;
+
+				@include media-breakpoint( lg ) {
+					display: unset;
+					justify-content: unset;
+				}
+			}
 	}
 
-
+	
 	.wonka-email-form {
-		margin: 15px 0;
 		
 		.wonka-newsletter-form_wrapper {
-			margin-bottom: 8px;
+			// margin-bottom: 8px;
 
 			form.wonka-newsletter-form {
 
@@ -183,7 +208,7 @@ footer#colophon {
 				form.wonka-newsletter-form {
 
 					.gform_body {
-						width: 75%;
+						width: 70%;
 
 						ul {
 
@@ -216,7 +241,7 @@ footer#colophon {
 					}
 
 					.gform_footer {
-						width: 22%;
+						flex: 1 30%;
 						margin-left: -3px;
 
 						input[type=submit].wonka-btn {

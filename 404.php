@@ -10,47 +10,21 @@
 get_header();
 ?>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
+	<div id="primary" class="content-area container-fluid 404-background">
+		<main id="main" class="site-main row">
+			<section class="error-404 not-found text-center col">
+				<header class="page-header text-center">
+					<h1 class="404-title">404</h1>
+					<h2 class="sub-title"><?php esc_html_e( 'Four, oh four', 'apera-bags' ); ?></h2>
+					<h3 class="title-message">Wherefore Art Thou Four?</h3>
 
-			<section class="error-404 not-found">
-				<header class="page-header">
-					<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'apera-bags' ); ?></h1>
 				</header><!-- .page-header -->
 
-				<div class="page-content">
-					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'apera-bags' ); ?></p>
-
-					<?php
-					get_search_form();
-
-					the_widget( 'WP_Widget_Recent_Posts' );
-					?>
-
-					<div class="widget widget_categories">
-						<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'apera-bags' ); ?></h2>
-						<ul>
-							<?php
-							wp_list_categories(
-								array(
-									'orderby'    => 'count',
-									'order'      => 'DESC',
-									'show_count' => 1,
-									'title_li'   => '',
-									'number'     => 10,
-								)
-							);
-							?>
-						</ul>
-					</div><!-- .widget -->
-
-					<?php
-					/* translators: %1$s: smiley */
-					$apera_bags_archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'apera-bags' ), convert_smilies( ':)' ) ) . '</p>';
-					the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$apera_bags_archive_content" );
-
-					the_widget( 'WP_Widget_Tag_Cloud' );
-					?>
+				<div class="page-content fixed-divider-460">
+					<p><?php esc_html_e( 'Like a great workout coming to a grinding halt!', 'apera-bags' ); ?></p>
+					<p><?php esc_html_e( "Unfortunately, this page doesn't seem to exist.", 'apera-bags' ); ?></p>
+					<p><strong><?php esc_html_e( 'Try a search instead?', 'apera-bags' ); ?></strong></p>
+					<span class="search-container"><?php get_search_form(); ?></span>  <span class="or-more">or...</span>  <span class="back-home"><a href="<?php echo get_site_url(); ?>" class="wonka-btn">Back Home</a></span>
 
 				</div><!-- .page-content -->
 			</section><!-- .error-404 -->

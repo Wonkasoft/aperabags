@@ -1,11 +1,109 @@
-main.main-my-account {
+
+
+main#main.main-my-account {
 
   div#customer_login {
+    overflow: hidden;
+
+    .login,
+    .register {
+      margin-bottom: 15px;
+      transition: all .35s ease-in-out;
+
+      .gr-comment-checkbox {
+        display: none;
+      }
+
+      h2 {
+        text-transform: none;
+        margin-bottom: 15px;
+      }
+      
+      button {
+        margin: 15px 0;
+      }
+
+      .woocommerce-LostPassword {
+        margin: 15px 0;
+      }
+
+      .create-account-full {
+        margin-top: 0;
+        opacity: 1;
+        transition: all .35s ease-in-out;
+        
+        &.display-none {
+          display: none;
+        }
+      }
+
+      .btn-create-toggle {
+        opacity: 0;
+      }
+
+      .apera-registration-form-container {
+        padding: 0 8px;
+        height: 0;
+        overflow: hidden;
+        transition: all .35s ease-in-out;
+      }
+
+      .form-register-toggle {
+        height: 100%;
+      }
+
+      &.collapse-col-login {
+        display: block;
+        margin: -200% 0 0 0;
+
+        @include media-breakpoint( md ) {
+          margin: 0 0 0 -100%
+        }
+
+        @include media-breakpoint( lg ) {
+          margin: 0 0 0 -50%
+        }
+      }
+
+      .loggin-toggle-wrapper {
+        opacity: 0;
+        margin: 8px auto;
+      }
+
+      .loggin-toggle-wrapper-visable {
+        opacity: 1;
+      }
+
+      
+
+      ul.the_champ_login_ul {
+        display: flex;
+        justify-content: flex-start;
+
+        li {
+          margin: 15px 15px 15px 0 !important;
+        }
+      }
+    }
 
     div.input-group {
+      margin: 15px auto;
 
       input.input-text.is-invalid {
         @include prefix( box-shadow, 0px 0px 5px rgba(#e2401c, .6 ), o moz webkit );
+      }
+    }
+
+    .gform_wrapper {
+      
+      .gfield_error input {
+        border-color: #dc3545!important;
+        @include prefix( box-shadow, 0px 0px 5px rgba(#e2401c, .6 ), o moz webkit );
+      }
+
+      .validation_message,
+      .validation_error {
+        color: #dc3545;
       }
     }
   }
@@ -30,5 +128,27 @@ body.woocommerce-lost-password {
   
   div.woocommerce-notices-wrapper {
     display: none;
+  }
+}
+
+div.my-account-logo-content-wrap {
+  padding: 0 8px;
+  max-width: 800px;
+
+  .no-logo {
+    padding: 8px;
+  }
+
+  .current-logo-wrap {
+    padding: 8px;
+
+    img {
+      max-width: 200px;
+      @include box-shadow( 0 1px 6px 0 rgba( 0, 0, 0, .3 ) );
+    }
+  }
+
+  .form-wrap {
+    padding: 8px;
   }
 }

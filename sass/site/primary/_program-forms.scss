@@ -1,0 +1,787 @@
+.program-form-section {
+	
+	.column-with-form {
+
+		.elementor-element {
+			width: 100%;
+			max-width: 100%;
+		}
+	}
+}
+
+form.wonka-gform.wonka-perks-form {
+	
+	input[type="checkbox"], input[type="radio"] {
+		transform: scale( 1.4 );
+	}
+}
+
+form.wonka-gform.wonka-zip-form, 
+form.wonka-gform.wonka-ambassador-form, 
+form.wonka-gform.wonka-perks-form {
+	font-family: $font__main;
+
+	ul.gform_fields {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-auto-flow: row;
+		grid-gap: 15px;
+
+		ul.gfield_radio, ul.gfield_checkbox {
+			list-style: none;
+			margin: 0;
+			padding: 8px;
+		}
+
+		ul.gfield_checkbox {
+
+			li {
+				display: grid;
+			    align-items: center;
+			    grid-template-columns: 15px auto;
+			    grid-auto-flow: column;
+			    grid-gap: 8px;
+			}
+		}
+
+		.form-group {
+			margin-bottom: 0;
+		}
+
+		input:not([type=radio]):not([type=checkbox]), 
+		textarea, 
+		select, 
+		.input-group-text {
+			font-family: $font__main;
+		}
+
+		li.zip-name, li.ambassador-name, li.perks-name {
+			grid-area: 1 / 1 / 2 / 3;
+
+			> div {
+				display: grid;
+				grid-auto-columns: auto;
+				grid-auto-rows: auto;
+				grid-auto-flow: row;
+				grid-gap: 15px;
+			}
+
+			@include media-breakpoint( md ) {
+				
+				> div {
+					grid-auto-flow: column;
+				}
+			}
+		}
+
+		li.zip-email, 
+		li.ambassador-email, 
+		li.perks-email {
+			grid-area: 2 / 1 / 3 / 3;
+		}
+
+		li.perks-password, 
+		li.perks-mse-option, 
+		li.perks-mse-occupation, 
+		li.military-active,
+		li.military-date,
+		li.military-branch,
+		li.military-stationed,
+		li.military-occupation-code, 
+		li.military-note,
+		li.student-school-web,
+		li.student-email,
+		li.student-grad-date,
+		li.student-sports,
+		li.student-note,
+		li.educator-school-web,
+		li.educator-email,
+		li.educator-subject,
+		li.educator-years,
+		li.educator-note,
+		 {
+			grid-area: auto / 1 / auto / 3;
+		}
+
+		li.perks-password {
+
+			.ginput_container_password {
+				display: grid;
+				grid-gap: 15px;
+				grid-template-columns: 1fr 1fr;
+			}
+		}
+
+		li.military-branch {
+
+			input[type=text] {
+				width: 50%;
+			}
+		}
+
+		li.military-date,
+		li.student-grad-date {
+
+			img.ui-datepicker-trigger {
+				width: 24px;
+				height: 24px;
+			}
+		}
+
+		li.military-stationed {
+
+			.ginput_container {
+				display: grid;
+				grid-gap: 15px;
+			}
+		}
+
+		li.zip-phone, 
+		li.ambassador-phone {
+			grid-area: 3 / 1 / 4 / 3;
+		}
+
+		li.zip-association {
+			grid-area: 4 / 1 / 5 / 3;
+		}
+
+		li.zip-org, 
+		li.ambassador-org {
+			grid-area: 5 / 1 / 6 / 3;
+		}
+
+		li.zip-feedback, 
+		li.ambassador-feedback {
+			grid-column-start: 1;
+			grid-column-end: 3;
+			position: relative;
+
+			textarea.textarea {
+				height: 100px;
+			}
+
+			.charleft.ginput_counter {
+				background: #fff;
+				text-align: right;
+				padding: 0 8px;
+				font-weight: 300;
+				position: absolute;
+				bottom: 3px;
+				right: 8px;
+				font-size: .8rem;
+				line-height: 1;
+			}
+		}
+
+		select {
+			display: inline-block;
+		    width: 100%;
+		    height: calc(1.5em + .75rem + 2px);
+		    padding: .375rem 1.75rem .375rem .75rem;
+		    font-size: 1rem;
+		    font-weight: 400;
+		    line-height: 1.5;
+		    color: #495057;
+		    vertical-align: middle;
+		    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .7rem center/13px 30px;
+		    background-color: #fff;
+		    border: 1px solid #ced4da;
+		    border-radius: .25rem;
+		    -webkit-appearance: none;
+		    -moz-appearance: none;
+		    appearance: none;
+		}
+
+
+		@include media-breakpoint( md ) {
+			
+			li.zip-email, 
+			li.ambassador-email {
+				grid-area: 2 / 1 / 3 / 2;
+
+			}
+			
+			li.zip-phone, 
+			li.ambassador-phone {
+				grid-area: 2 / 2 / 3 / 3;
+			}
+
+			li.zip-association {
+				grid-area: 3 / 1 / 4 / 2;
+			}
+
+			li.zip-org {
+				grid-area: 3 / 2 / 4 / 3;
+			}
+
+			li.ambassador-org {
+				grid-area: 3 / 1 / 4 / 3;
+
+			}
+
+			li.zip-feedback, 
+			li.ambassador-feedback {
+
+				textarea.textarea {
+					height: 75px;
+				}
+			}
+		}
+
+		@include media-breakpoint( lg ) {
+
+			li.perks-mse-occupation {
+				grid-area: 5 / 1 / 7 / 2;
+			}
+
+			li.military-branch {
+				grid-area: 7 / 1 / 9 / 2;
+			}
+
+			li.military-active {
+				grid-area: 5 / 2 / 6 / 3;
+			}
+
+			li.military-date {
+				grid-area: 6 / 2 / 7 / 3;
+			}
+
+			li.military-occupation-code {
+				grid-area: 7 / 2 / 8 / 3;
+			}
+
+			li.military-note {
+				grid-area: 8 / 2 / 9 / 3;
+			}
+
+			li.military-stationed {
+				grid-area: 9 / 1 / 10 / 3;
+			}
+
+			li.student-school-web,
+			li.educator-school-web {
+				grid-area: 5 / 2 / 6 / 3;
+			}
+
+			li.student-email,
+			li.educator-email {
+				grid-area: 6 / 2 / 7 / 3;
+			}
+
+			li.student-grad-date,
+			li.educator-subject {
+				grid-area: 7 / 1 / 8 / 2;
+			}
+
+			li.student-sports,
+			li.educator-years {
+				grid-area: 7 / 2 / 8 / 3;
+			}
+		}
+	}
+
+	[type=radio] {
+		margin: auto 8px;
+	}
+
+	.gform_validation_container {
+		display: none;
+	}
+
+	.gform_footer {
+		display: grid;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.wonka-btn {
+		margin: 15px 0;
+	}
+}
+
+.reg-form {
+
+	h5 {
+		text-align: center;
+	}
+}
+
+main#main.main-my-account {
+
+	div#customer_login {
+
+		form.wonka-gform.wonka-perks-form{
+			
+			ul {
+
+				li {
+
+					div.input-group {
+						margin: auto;
+					}
+				}
+			}
+		}
+	}
+}
+
+form.wonka-gform.wonka-refersion-form {
+	padding: 0 15px;
+
+	ul.gform_fields {
+		display: grid;
+		grid-auto-columns: 1fr 1fr;
+		grid-auto-flow: row;
+		grid-column-gap: 15px;
+
+		li.names {
+			grid-area: 1 / 1 / 2 / 3;
+
+			> div {
+				display: grid;
+				grid-auto-columns: auto;
+				grid-auto-flow: row;
+				grid-gap: 15px;
+			}
+
+			@include media-breakpoint( md ) {
+				
+				> div {
+					grid-auto-flow: column;
+				}
+			}
+		}
+
+		li.company_field {
+			grid-area: 2 / 1 / 3 / 3;
+		}
+
+		li.company-logo-field {
+			grid-area: 3 / 1 / 4 / 3;
+
+			.input-group-prepend {
+				height: calc(1.5em + .75rem + 2px);
+			}
+		}
+
+		li.email {
+			grid-area: 4 / 1 / 5 / 2;
+		}
+
+		li.phone_number {
+			grid-area: 4 / 2 / 5 / 3;
+		}
+
+		li.address_fields {
+			grid-area: 5 / 1 / 6 / 3;
+			position: relative;
+
+			> div:first-of-type {
+				display: grid;
+				grid-auto-columns: auto;
+				grid-auto-rows: auto;
+				grid-gap: 15px;
+
+				span.address_line_1, span.address_line_2 {
+					grid-area: auto / 1 / auto / 4;
+				}
+
+				span.address_state {
+					grid-area: auto;	
+
+					select {
+						padding: 7px;
+						width: 100%;
+						border: 1px solid #ccc;
+						background: #ffffff;
+					}
+				}
+
+				span.address_city {
+					grid-area: auto / 1 / auto / 2;
+				}
+
+				span.address_zip {
+					grid-area: auto / 3 / auto / 4;
+				}
+			}
+		}
+
+		li.pass_fields {
+			grid-area: 6 / 1 / 7 / 3;
+
+
+			> div:first-of-type {
+				display: grid;
+				grid-auto-columns: auto;
+				grid-auto-rows: auto;
+				grid-auto-flow: row; 
+				grid-gap: 15px;
+
+				span {
+					grid-area: 1 / auto / 2 / auto;
+				}
+			}
+			
+			.gfield_password_strength {
+				position: relative;
+				padding: 4px 8px 0;
+				display: inline-block;
+				width: auto;
+				height: 4px;
+				z-index: -2;
+				@include prefix( transition, all .35s ease-in-out, o moz webkit );
+
+				&.blank {
+					background: #fff;
+				}
+
+				&.short {
+					width: 35%;
+					background: #deff5c;
+					font-weight: 200;
+					@include box-shadow( 0 1px 3px 0 rgba( #000, .4 ) );
+				}
+
+				&.good {
+					width: 75%;
+					font-weight: 600;
+					background: var(--teal);
+					@include box-shadow( 0 1px 3px 0 rgba( #000, .4 ) );
+				}
+
+				&.strong {
+					width: 100%;
+					background: var(--green);
+					font-weight: 800;
+					@include box-shadow( 0 1px 3px 0 rgba( #000, .4 ) );
+				}
+				
+				&.bad {
+					width: 20%;
+					background: #ff1b1b;
+					@include box-shadow( 0 1px 3px 0 rgba( #000, .4 ) );
+				}
+
+				&.mismatch {
+					width: 50%;
+					background: #ff1999;
+					@include box-shadow( 0 1px 3px 0 rgba( #000, .4 ) );
+				}
+
+			}
+		}
+
+		@include media-breakpoint( md ) {
+			
+			li.names {
+				grid-area: 1 / 1 / 2 / 3;
+			}
+
+			li.company_field {
+				grid-area: 2 / 1 / 3 / 3;
+			}
+
+			li.company-logo-field {
+				grid-area: 3 / 1 / 4 / 3;
+			}
+
+			li.email {
+				grid-area: 4 / 1 / 5 / 2;
+			}
+
+			li.phone_number {
+				grid-area: 4 / 2 / 5 / 3;
+			}
+
+			li.address_fields {
+				grid-area: 5 / 1 / 6 / 3;
+				position: relative;
+
+				> div:first-of-type {
+					display: grid;
+					grid-auto-columns: auto;
+					grid-auto-rows: auto;
+					grid-gap: 15px;
+
+					span.address_line_1, span.address_line_2 {
+						grid-area: auto / 1 / auto / 4;
+					}
+
+					span.address_state {
+						grid-area: auto;	
+
+						select {
+							padding: 7px;
+							width: 100%;
+							border: 1px solid #ccc;
+							background: #ffffff;
+						}
+					}
+
+					span.address_city {
+						grid-area: auto / 1 / auto / 2;
+					}
+
+					span.address_zip {
+						grid-area: auto / 3 / auto / 4;
+					}
+				}
+			}
+
+			li.pass_fields {
+				grid-area: 6 / 1 / 7 / 3;
+
+
+				> div:first-of-type {
+					display: grid;
+					grid-auto-columns: auto;
+					grid-auto-rows: auto;
+					grid-auto-flow: row; 
+					grid-gap: 15px;
+
+					span {
+						grid-area: 1 / auto / 2 / auto;
+					}
+				}
+			}
+		}
+	}
+
+	.gf_clear.gf_clear_complex {
+	  display: none;
+  }
+
+	.gform_validation_container {
+		display: none;
+	}
+
+	.gform_footer {
+		display: grid;
+		align-items: center;
+		justify-content: center;
+	}
+}
+
+#registration-login-container {
+	display: grid;
+	align-items: center;
+	justify-content: center;
+
+	.card {
+		position: relative;
+		width: 600px;
+		@include box-shadow( 0 1px 4px 0 rgba( #000, .3 ) );
+
+		.card-header {
+
+			.to-complete-message {
+				margin: 0;
+				padding: 0;	
+			}
+		}
+		
+		form {
+
+			.card-body {
+				display: grid;
+				align-items: center;
+				justify-content: stretch;
+
+				input {
+					width: 100%;
+					@include box-shadow( 0 1px 4px 0 rgba( #000, .3 ) );
+				}
+
+				> div {
+					text-align: center;
+					padding: 8px;
+					display: grid;
+					align-items: center;
+					justify-content: stretch;
+
+					p {
+						margin: auto;
+						padding: 8px;
+					}
+				}
+			}
+			
+			.card-footer {
+				display: grid;
+				grid-gap: 15px;
+			}
+		}
+	}
+
+	#loading_box {
+		position: absolute;
+		background: #fafafa;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		opacity: 0;
+		display: grid;
+		grid-auto-rows: auto;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+		z-index: -200;
+		@include prefix( transition, all .45s ease-in-out, o moz webkit );
+
+		img {
+			margin: auto;
+			grid-area: auto;
+			height: 40px;
+			width: 40px;
+			@include prefix( transition, all .3s ease-in-out, o moz webkit );
+		}
+
+		div {
+			grid-area: 1 / 1 / 2 / 2;
+
+			p {
+				text-align: center;
+			}
+		}
+
+		&.loading {
+			opacity: 1;
+			z-index: 200;
+		}
+	}
+}
+
+div#ui-datepicker-div {
+	display: none;
+	width: 250px;
+	padding: 8px;
+	background: #fff;
+	z-index: 2000;
+	@include prefix( box-shadow, 0 1px 2px .5px rgba( #000, .5 ), o moz webkit );
+
+	.ui-datepicker-header {
+		display: grid !important;
+		grid-template-columns: 1fr 1fr !important;
+		justify-content: space-around !important;
+		grid-gap: 4px !important;
+		padding: 0 0 8px !important;
+
+		.ui-corner-all {
+			position: relative !important;
+			margin: auto !important;
+			padding: 4px 8px 0px !important;
+			@include font-size( 1);
+			font-family: $font__main_jose !important;
+			font-weight: 700 !important;
+			text-transform: uppercase !important;
+			cursor: pointer !important;
+			align-self: center !important;
+			justify-self: center !important;
+		}
+
+		.ui-datepicker-prev {
+			text-align: center !important;
+			color: #fff !important;
+			background: #5d5d5d !important;
+
+			&:before {
+				content: "" !important;
+				position: absolute !important;
+				top: 0 !important;
+				right: 100% !important;
+				height: 100% !important;
+				border: 11px solid transparent !important;
+				border-right: 20px solid #5d5d5d !important;
+			}
+		}
+
+		.ui-datepicker-next {
+			text-align: center !important;
+			color: #fff !important;
+			background: #5d5d5d !important;
+
+			&:after {
+				content: "" !important;
+				position: absolute !important;
+				top: 0 !important;
+				left: 100% !important;
+				height: 100% !important;
+				border: 11px solid transparent !important;
+				border-left: 20px solid #5d5d5d !important;
+
+			}
+		}
+
+		.ui-datepicker-title {
+			grid-area: auto / 1 / auto / 3 !important;
+			display: grid !important;
+			grid-auto-columns: 1fr 1fr !important;
+			grid-auto-flow: column !important;
+			grid-gap: 4px !important;
+			align-items: center !important;
+			justify-content: space-between !important;
+
+			.ui-datepicker-month {
+				border-radius: 1rem !important;
+				border: 3px solid #ced4da !important;
+				color: #52abf6 !important;
+				font-weight: 700 !important;
+				text-align: center !important;
+				font-family: $font__main_jose !important;
+				text-transform: uppercase !important;
+				@include font-size( 1.7 );
+				display: inline-block;
+				width: 100%;
+				height: calc(1.5em + .75rem + 2px);
+				padding: .3rem 1.7rem .3rem .75rem;
+				line-height: 1.8;
+				vertical-align: middle;
+				background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 -2L0 2h4zm0 8.8L0 3h4z'/%3e%3c/svg%3e") no-repeat right .7rem center/17px 40px;
+				background-color: #fff;
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				appearance: none;
+				@include prefix( transition, all .15s ease-in-out );
+			}
+
+			.ui-datepicker-year {
+				border-radius: 1rem !important;
+				border: 3px solid #ced4da !important;
+				color: #52abf6 !important;
+				text-align: center !important;
+				font-weight: 700 !important;
+				font-family: $font__main_jose !important;
+				text-transform: uppercase !important;
+				@include font-size( 1.7 );
+				width: 100%;
+				height: calc(1.5em + .75rem + 2px);
+				padding: .3rem 1.7rem .3rem .75rem;
+				line-height: 1.8;
+				vertical-align: middle;
+				background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 -2L0 2h4zm0 8.8L0 3h4z'/%3e%3c/svg%3e") no-repeat right .7rem center/17px 40px;
+				background-color: #fff;
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				appearance: none;
+				@include prefix( transition, all .15s ease-in-out );
+			}
+		}
+	}
+
+	.ui-datepicker-calendar {
+		border-top: 3px solid #52abf6 !important;
+		margin-bottom: 0 !important;
+
+		th {
+			color: #333e48;
+			text-align: center !important;
+			@include font-size( 1.3 );
+		}
+
+		td {
+			text-align: center !important;
+		}
+	}
+}
