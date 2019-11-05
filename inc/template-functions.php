@@ -2308,14 +2308,14 @@ function testing() {
 			endif;
 		endforeach;
 
-		echo "<pre>\n";
-		print_r( $getresponse_init );
-		echo "</pre>\n";
-		$getresponse_perks = $getresponse_init->create_a_new_contact();
-		echo "<pre>\n";
-		print_r( $getresponse_perks );
-		echo "</pre>\n";
 	endif;
+	echo "<pre>\n";
+	print_r( $getresponse_init );
+	echo "</pre>\n";
+	$getresponse_perks = $getresponse_init->create_a_new_contact();
+	echo "<pre>\n";
+	print_r( $getresponse_perks );
+	echo "</pre>\n";
 
 	if ( ! empty( $entry_fields['mse_occupation'] ) ) :
 		foreach ( $getresponse_init->campaign_list as $campaign ) :
