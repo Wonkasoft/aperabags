@@ -21,6 +21,28 @@
   background: #78bdf7; 
 }
 
+.lined-title {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.lined-title:before,
+.lined-title:after {
+content: '';
+border-top: 3px solid;
+margin: 0 20px 0 20px;
+flex: 1 0 20px;
+color: #fff;
+}
+
+a.perks-btn {
+width: 9rem;
+font-size: 1.5rem
+}
+
 .sticky {
 	display: block;
 }
