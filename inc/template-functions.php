@@ -2281,7 +2281,7 @@ function testing() {
 		'affiliate_link',
 	);
 	$api_args['custom_fields_values'] = array(
-		'affiliate_link' => get_site_url() . '?ref=' . $user_id,
+		'affiliate_link' => get_site_url() . '/?ref=' . $user_id,
 	);
 
 	$getresponse_init = new Wonkasoft_GetResponse_Api( $api_args );
