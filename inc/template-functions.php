@@ -2312,6 +2312,9 @@ function testing() {
 		print_r( $getresponse_init );
 		echo "</pre>\n";
 		$getresponse_perks = $getresponse_init->create_a_new_contact();
+		echo "<pre>\n";
+		print_r( $getresponse_perks );
+		echo "</pre>\n";
 	endif;
 
 	if ( ! empty( $entry_fields['mse_occupation'] ) ) :
