@@ -2286,9 +2286,6 @@ function testing() {
 
 	$getresponse_init = new Wonkasoft_GetResponse_Api( $api_args );
 	$getresponse_mse  = '';
-	echo "<pre>\n";
-	print_r( $api_args );
-	echo "</pre>\n";
 
 	if ( empty( $getresponse_init->campaign_id ) ) :
 		foreach ( $getresponse_init->campaign_list as $campaign ) :
@@ -2297,23 +2294,22 @@ function testing() {
 			endif;
 		endforeach;
 
-	endif;
+		if ( ! empty( $getresponse_init->custom_fields ) ) :
+			foreach ( $getresponse_init->custom_fields_list as $field ) {
+				if ( in_array( $field->name, $getresponse_init->custom_fields ) ) :
+					$add_field = array(
+						'customFieldId' => $field->customFieldId,
+						'value'         => array(
+							$getresponse_init->custom_fields_values[ $field->name ],
+						),
+					);
+					array_push( $getresponse_init->custom_fields_to_update, $add_field );
+				endif;
+			}
+		endif;
 
-	if ( ! empty( $getresponse_init->custom_fields ) ) :
-		foreach ( $getresponse_init->custom_fields_list as $field ) {
-			if ( in_array( $field->name, $getresponse_init->custom_fields ) ) :
-				$add_field = array(
-					'customFieldId' => $field->customFieldId,
-					'value'         => array(
-						$getresponse_init->custom_fields_values[ $field->name ],
-					),
-				);
-				array_push( $getresponse_init->custom_fields_to_update, $add_field );
-			endif;
-		}
+		$getresponse_perks = $getresponse_init->create_a_new_contact();
 	endif;
-
-	$getresponse_perks = $getresponse_init->create_a_new_contact();
 
 	if ( ! empty( $entry_fields['mse_occupation'] ) ) :
 		foreach ( $getresponse_init->campaign_list as $campaign ) :
