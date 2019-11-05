@@ -2326,4 +2326,4 @@ function testing() {
 	echo "</pre>\n";
 
 }
-add_action( 'wp', 'testing' );
+// add_action( 'wp', 'testing' );
