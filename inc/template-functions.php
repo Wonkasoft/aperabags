@@ -1880,7 +1880,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 			'affiliate_link',
 		);
 		$api_args['custom_fields_values'] = array(
-			'affiliate_link' => get_site_url() . '?ref=' . $user_id,
+			'affiliate_link' => get_site_url() . '/?ref=' . $user_id,
 		);
 
 		$getresponse_init = new Wonkasoft_GetResponse_Api( $api_args );
@@ -2215,7 +2215,7 @@ function wonkasoft_get_refersion_data( $user_id ) {
  * Adds the javascript required to view your password.
  *  Turn the the input type into text and back to password.
  *
- * @param   [object]  $form  form object
+ * @param   [object] $form  form object
  *
  * @author Carlos
  */
