@@ -1878,9 +1878,11 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		$api_args['email']                = $entry_fields['email'];
 		$api_args['custom_fields']        = array(
 			'affiliate_link',
+			'apera_id',
 		);
 		$api_args['custom_fields_values'] = array(
 			'affiliate_link' => get_site_url() . '/?ref=' . $user_id,
+			'apera_id'       => $user_id,
 		);
 
 		$getresponse_init = new Wonkasoft_GetResponse_Api( $api_args );
@@ -2112,7 +2114,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
  */
 function wonkasoft_api_responses_user_data( $user ) {
 
-	if ( in_array( $role, $user->roles ) ) :
+	if ( in_array( 'apera_ambassador_affiliate', $user->roles ) || in_array( 'apera_zip_affiliate', $user->roles ) || in_array( 'apera_perks_partner', $user->roles ) ) :
 		$user_id         = $user->ID;
 		$refersion       = ( ! empty( get_user_meta( $user_id, 'refersion_data', true ) ) ) ? get_user_meta( $user_id, 'refersion_data', true ) : '';
 		$refersion_error = ( ! empty( get_user_meta( $user_id, 'refersion_error', true ) ) ) ? get_user_meta( $user_id, 'refersion_error', true ) : '';
