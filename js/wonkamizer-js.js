@@ -3130,6 +3130,16 @@ var componentForm;
 			var observer = new MutationObserver( observer_callback );
 			observer.observe( datepicker_div, config);
 		}
+
+		if ( document.querySelector( '.sbi_photo' ) ) 
+		{
+			var sbi_photos = document.querySelectorAll( '.sbi_photo' );
+
+			sbi_photos.forEach( function( photo_link ) 
+				{
+					photo_link.href = 'https://aperabags.com/shop/';
+				});
+		}
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 
