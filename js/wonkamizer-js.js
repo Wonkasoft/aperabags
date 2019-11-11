@@ -3138,6 +3138,7 @@ var componentForm;
 			sbi_photos.forEach( function( photo_link ) 
 				{
 					photo_link.href = 'https://aperabags.com/shop/';
+					photo_link.target = '_self';
 				});
 		}
 	};
