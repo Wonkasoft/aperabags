@@ -13,6 +13,7 @@ form.wonka-gform.wonka-perks-form {
 	
 	input[type="checkbox"], input[type="radio"] {
 		transform: scale( 1.4 );
+		justify-self: center;
 	}
 }
 
@@ -38,13 +39,9 @@ form.wonka-gform.wonka-perks-form {
 			li {
 				display: grid;
 			    align-items: center;
-			    grid-template-columns: 25px auto;
+			    grid-template-columns: 26px auto;
 			    grid-auto-flow: column;
 			    grid-gap: 8px;
-
-			    input {
-			    	justify-self: center;
-			    }
 			}
 		}
 
