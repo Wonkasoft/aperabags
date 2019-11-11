@@ -336,9 +336,9 @@ function wonka_customized_shop_loop() {
 
 	$output  = '';
 	$output .= '<div class="wonka-shop-img-wrap">';
-	$output .= '<img class="img-fluid wonka-img-fluid" src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'custom_products_size', false ) ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'custom_products_size', null ) ) . '" />';
+	$output .= '<img class="img-fluid wonka-img-fluid" src="' . esc_attr( wp_get_attachment_url( $post_thumbnail_id, 'custom_products_size', false ) ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'custom_products_size', null ) ) . '" />';
 	if ( $attachment_ids ) :
-		$output .= '<img title="' . $secondary_image_title . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" src="' . esc_attr( wp_get_attachment_image_src( $secondary_image_id, 'custom_products_size', false ) ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $secondary_image_id, 'custom_products_size', null ) ) . '" />';
+		$output .= '<img title="' . $secondary_image_title . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" src="' . esc_attr( wp_get_attachment_url( $secondary_image_id, 'custom_products_size', false ) ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $secondary_image_id, 'custom_products_size', null ) ) . '" />';
 	endif;
 	$output .= '</div><!-- .wonka-shop-img-wrap -->';
 
