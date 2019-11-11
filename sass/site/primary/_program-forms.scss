@@ -38,9 +38,13 @@ form.wonka-gform.wonka-perks-form {
 			li {
 				display: grid;
 			    align-items: center;
-			    grid-template-columns: 15px auto;
+			    grid-template-columns: 25px auto;
 			    grid-auto-flow: column;
 			    grid-gap: 8px;
+
+			    input {
+			    	justify-self: center;
+			    }
 			}
 		}
 
