@@ -3118,13 +3118,12 @@ var componentForm;
 
 			var observer_callback = function( mutationsList, observer ) 
 			{
-				for( var mutation of mutationsList ) 
-				{
+				mutationsList.forEach( function( mutation ) {
 					if ( 'childList' === mutation.type ) 
 					{
 						document.querySelector( '.ui-datepicker-prev span' ).innerText = 'Prev';
 					}
-				}
+				});
 			};
 
 			var config = { attributes: true, childList: true };
