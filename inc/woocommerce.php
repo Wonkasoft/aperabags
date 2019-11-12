@@ -336,9 +336,9 @@ function wonka_customized_shop_loop() {
 
 	$output  = '';
 	$output .= '<div class="wonka-shop-img-wrap">';
-	$output .= '<img class="img-fluid wonka-img-fluid" src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'custom_products_size', false ) ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'custom_products_size', null ) ) . '" />';
+	$output .= '<img class="img wonka-img" src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'custom_products_size', false )[0] ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'custom_products_size', null ) ) . '" />';
 	if ( $attachment_ids ) :
-		$output .= '<img title="' . $secondary_image_title . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" src="' . esc_attr( wp_get_attachment_image_src( $secondary_image_id, 'custom_products_size', false ) ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $secondary_image_id, 'custom_products_size', null ) ) . '" />';
+		$output .= '<img title="' . $secondary_image_title . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" src="' . esc_attr( wp_get_attachment_image_src( $secondary_image_id, 'custom_products_size', false )[0] ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $secondary_image_id, 'custom_products_size', null ) ) . '" />';
 	endif;
 	$output .= '</div><!-- .wonka-shop-img-wrap -->';
 
@@ -1363,11 +1363,11 @@ function wonka_single_product_image_thumbnail_html_custom( $data, $attachment_id
 	ob_start();
 	if ( $post_thumbnail_id === $product->get_image_id() ) :
 		$output .= '<a href="#scroll_image_' . esc_attr( $post_thumbnail_id ) . '_2" class="nav-link active woocommerce-product-gallery__image">';
-		$output .= '<img class="wp-post-image" src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium', false ) ) . '" alt="' . esc_attr( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . esc_attr( get_the_title( $post_thumbnail_id ) ) . '" data-caption="' . esc_attr( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', null ) ) . '" />';
+		$output .= '<img class="wp-post-image" src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium', false )[0] ) . '" alt="' . esc_attr( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . esc_attr( get_the_title( $post_thumbnail_id ) ) . '" data-caption="' . esc_attr( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', null ) ) . '" />';
 		$output .= '</a>';
 	else :
 		$output .= '<a href="#scroll_image_' . esc_attr( $post_thumbnail_id ) . '" class="nav-link woocommerce-product-gallery__image">';
-		$output .= '<img class="wp-post-image" src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium', false ) ) . '" alt="' . esc_attr( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . esc_attr( get_the_title( $post_thumbnail_id ) ) . '" data-caption="' . esc_attr( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', null ) ) . '" />';
+		$output .= '<img class="wp-post-image" src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium', false )[0] ) . '" alt="' . esc_attr( get_post_meta( $post_thumbnail_id, '_wp_attachment_image_alt', true ) ) . '" title="' . esc_attr( get_the_title( $post_thumbnail_id ) ) . '" data-caption="' . esc_attr( wp_get_attachment_caption( $wonka_post_id ) ) . '" data-variant-color="' . esc_attr( get_post_meta( $post_thumbnail_id, 'ws_variant_name', true ) ) . '" data-src="' . esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'medium' )[0] ) . '" data-large_image="' . wp_get_attachment_url( $post_thumbnail_id ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'medium', null ) ) . '" />';
 		$output .= '</a>';
 	endif;
 	$output .= ob_get_clean();

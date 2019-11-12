@@ -3118,18 +3118,28 @@ var componentForm;
 
 			var observer_callback = function( mutationsList, observer ) 
 			{
-				for( var mutation of mutationsList ) 
-				{
+				mutationsList.forEach( function( mutation ) {
 					if ( 'childList' === mutation.type ) 
 					{
 						document.querySelector( '.ui-datepicker-prev span' ).innerText = 'Prev';
 					}
-				}
+				});
 			};
 
 			var config = { attributes: true, childList: true };
 			var observer = new MutationObserver( observer_callback );
 			observer.observe( datepicker_div, config);
+		}
+
+		if ( document.querySelector( '.sbi_photo' ) ) 
+		{
+			var sbi_photos = document.querySelectorAll( '.sbi_photo' );
+
+			sbi_photos.forEach( function( photo_link ) 
+				{
+					photo_link.href = 'https://aperabags.com/shop/';
+					photo_link.target = '_self';
+				});
 		}
 	};
 		/*=====  End of This is for running after document is ready  ======*/

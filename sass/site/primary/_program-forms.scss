@@ -13,6 +13,7 @@ form.wonka-gform.wonka-perks-form {
 	
 	input[type="checkbox"], input[type="radio"] {
 		transform: scale( 1.4 );
+		justify-self: center;
 	}
 }
 
@@ -38,7 +39,7 @@ form.wonka-gform.wonka-perks-form {
 			li {
 				display: grid;
 			    align-items: center;
-			    grid-template-columns: 15px auto;
+			    grid-template-columns: 26px auto;
 			    grid-auto-flow: column;
 			    grid-gap: 8px;
 			}
@@ -108,14 +109,21 @@ form.wonka-gform.wonka-perks-form {
 			.ginput_container_password {
 				display: grid;
 				grid-gap: 15px;
-				grid-template-columns: 1fr 1fr;
+				grid-template-columns: 1fr;
+			}
+
+			@include media-breakpoint( md ) {
+				
+				.ginput_container_password {
+					grid-template-columns: 1fr 1fr;
+				}
 			}
 		}
 
 		li.military-branch {
 
 			input[type=text] {
-				width: 50%;
+				width: 87%;
 			}
 		}
 
@@ -265,12 +273,12 @@ form.wonka-gform.wonka-perks-form {
 
 			li.student-email,
 			li.educator-email {
-				grid-area: 6 / 2 / 7 / 3;
+				grid-area: 7 / 1 / 8 / 2;
 			}
 
 			li.student-grad-date,
 			li.educator-subject {
-				grid-area: 7 / 1 / 8 / 2;
+				grid-area: 6 / 2 / 7 / 3;
 			}
 
 			li.student-sports,
