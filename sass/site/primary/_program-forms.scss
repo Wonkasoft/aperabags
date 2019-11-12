@@ -115,7 +115,7 @@ form.wonka-gform.wonka-perks-form {
 			@include media-breakpoint( md ) {
 				
 				.ginput_container_password {
-					grid-template-columns: 1fr;
+					grid-template-columns: 1fr 1fr;
 				}
 			}
 		}
