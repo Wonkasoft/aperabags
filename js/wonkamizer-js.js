@@ -3141,6 +3141,46 @@ var componentForm;
 					photo_link.target = '_self';
 				});
 		}
+	
+		if( document.querySelector('#perks-upgrade-btn')  ) 
+		{
+			var upgrade_btn = document.querySelector("#perks-upgrade-btn");
+			var upgrade_btn_wrapper = document.querySelector("#upgrade-btn-wrapper");
+
+			upgrade_btn.addEventListener( 'click', function( e ) {
+					e.preventDefault();
+					var data = {
+						'url': wonkasoft_request.ajax,
+						'action': 'wonkasoft_upgrade_account_perks',
+						'user_id': upgrade_btn.getAttribute('data-user'),
+						'security': wonkasoft_request.security
+					};
+					var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+					xhr.onreadystatechange = function() {
+	
+						if ( this.readyState == 4 && this.status == 200 ) 
+						{
+							var response = JSON.parse( this.responseText );
+							if ( response.success ) 
+							{
+								if ( 'role added' === response.data.msg ) {
+									upgrade_btn_wrapper.remove();
+
+								}
+							}
+							else
+							{
+								console.log('error '+ response);
+							}
+						}
+					};
+	
+					xhr.open('POST', data.url );
+					xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xhr.send( query_string );
+			});
+		}
+		
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 
