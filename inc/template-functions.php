@@ -2099,7 +2099,11 @@ function wonkasoft_getresponse_endpoint( $data ) {
 
 		$data_send = json_decode( json_encode( $data_send ) );
 		$data_send = http_build_query( $data_send );
-		$url       = 'https://aperabags.com/response-page/?' . $data_send;
+		if ( 'apera_195932' === $campaign_name ) {
+			$url = 'https://aperabags.com/iff-thankyou/?' . $data_send;
+		} else {
+			$url = 'https://aperabags.com/response-page/?' . $data_send;
+		}
 		header( 'Content-Type: application/x-www-form-urlencoded' );
 		header( 'Location: ' . $url );
 	endif;
