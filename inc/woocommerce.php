@@ -937,9 +937,9 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 add_action( 'wonka_checkout_after_checkout_form_custom', 'wonka_checkout_after_checkout_form_custom', 50 );
 
 function wonka_woocommerce_before_custom_checkout( $checkout ) {
-	$output = '';
-	ob_start();
+	$output  = '';
 	$capture = do_action( 'wonka_checkout_express_btns' );
+	ob_start();
 	$output .= '<div class="row wonka-row">';
 	$output .= '<div class="col-12">';
 	$output .= '<ul class="nav nav-fill" id="wonka-checkout-nav-steps" role="tablist">';
@@ -967,10 +967,10 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '<span class="express-btns-text">';
 	$output .= _x( 'Express checkout', 'aperabags' );
 	$output .= '</span><!-- .express-btns-text -->';
+	$output .= '</div><!-- .express-btns-text-wrap -->';
 	$output .= '<div class="express-checkout-btns">';
 	$output .= $capture;
 	$output .= '</div><!-- .express-checkout-btns -->';
-	$output .= '</div><!-- .express-btns-text-wrap -->';
 	$output .= '</div><!-- .col-12 -->';
 	$output .= '<div class="col col-12">';
 	$output .= '<div class="row below-express-checkout-btns no-gutters"><div class="col-12 col-md"><hr /></div><!-- .col-12 --><div class="col-12 col-md">';
@@ -2168,6 +2168,6 @@ function testing() {
 	ob_start();
 	$output .= 'Testing';
 	$output .= ob_get_clean();
-	return $output;
+	echo $output;
 }
 add_action( 'wonka_checkout_express_btns', 'testing', 20 );
