@@ -2166,6 +2166,6 @@ add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_re
 function testing() {
 	ob_start();
 	echo 'testing';
-	ob_clean();
+	ob_get_clean();
 }
-add_action( 'wonka_checkout_express_btns', 'testing' );
+add_action( 'wonka_checkout_express_btns', 'testing', 20 );
