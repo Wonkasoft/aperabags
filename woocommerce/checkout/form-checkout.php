@@ -44,7 +44,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 		</div><!-- #customer_details -->
 		</div><!-- .row -->
 		
-		<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>x
+		<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
 
 	<?php endif; ?>
 

@@ -11,9 +11,8 @@
  * the readme will list any important changes.
  *
  * @see     https://docs.woocommerce.com/document/template-structure/
- * @author  WooThemes
  * @package WooCommerce/Templates
- * @version 2.4.0
+ * @version 3.8.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,19 +26,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @see woocommerce_default_product_tabs()
  */
-$tabs = apply_filters( 'woocommerce_product_tabs', array() );
+$product_tabs = apply_filters( 'woocommerce_product_tabs', array() );
 
-if ( ! empty( $tabs ) ) : ?>
+if ( ! empty( $product_tabs ) ) : ?>
 	<section class="product-tabs-section">
 	<div class="wonka-tabs wonka-tabs-wrapper">
-		<?php foreach ( $tabs as $key => $tab ) : ?>
-			<?php if ( ! empty( $tab['section'] ) ) : ?>
-				<?php $serialize_section_title = str_replace( ' ', '-', strtolower( $tab['section'] ) ); ?>
+		<?php foreach ( $product_tabs as $key => $product_tab ) : ?>
+			<?php if ( ! empty( $product_tab['section'] ) ) : ?>
+				<?php $serialize_section_title = str_replace( ' ', '-', strtolower( $product_tab['section'] ) ); ?>
 				<section id="section-<?php echo esc_attr( $serialize_section_title ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $serialize_section_title ); ?>">
 					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $serialize_section_title ); ?> panel entry-content" id="tab-<?php echo esc_attr( $serialize_section_title ); ?>" aria-data="tab-title-<?php echo esc_attr( $serialize_section_title ); ?>">
 						<?php
-						if ( isset( $tab['callback'] ) ) {
-							call_user_func( $tab['callback'], $key, $tab ); }
+						if ( isset( $product_tab['callback'] ) ) {
+							call_user_func( $product_tab['callback'], $key, $product_tab ); }
 						?>
 					</div>
 				</section>
@@ -47,8 +46,8 @@ if ( ! empty( $tabs ) ) : ?>
 				<section id="section-<?php echo esc_attr( $key ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
 					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key ); ?>" aria-data="tab-title-<?php echo esc_attr( $key ); ?>">
 						<?php
-						if ( isset( $tab['callback'] ) ) {
-							call_user_func( $tab['callback'], $key, $tab ); }
+						if ( isset( $product_tab['callback'] ) ) {
+							call_user_func( $product_tab['callback'], $key, $product_tab ); }
 						?>
 					</div>
 				</section>

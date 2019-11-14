@@ -2146,3 +2146,7 @@ function wonkasoft_upgrade_account_perks() {
 }
 add_action( 'wp_ajax_wonkasoft_upgrade_account_perks', 'wonkasoft_upgrade_account_perks' );
 add_action( 'wp_ajax_nopriv_wonkasoft_upgrade_account_perks', 'wonkasoft_upgrade_account_perks' );
+
+
+remove_action( 'woocommerce_after_cart_table', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ) );
+add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ) );
