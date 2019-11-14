@@ -2150,3 +2150,14 @@ add_action( 'wp_ajax_nopriv_wonkasoft_upgrade_account_perks', 'wonkasoft_upgrade
 
 remove_action( 'woocommerce_after_cart_table', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ) );
 add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ) );
+
+/**
+ * Express payment buttons Apple Pay and Google Pay
+ *
+ * @author Louis
+ * @since 1.2.0
+ */
+
+remove_action( 'woocommerce_checkout_before_customer_details', array( 'WC_Stripe_Payment_Request', 'display_payment_request_button_html' ), 1 );
+
+add_action( 'woocommerce_checkout_shipping', array( 'WC_Stripe_Payment_Request', 'display_payment_request_button_html' ), 1 );
