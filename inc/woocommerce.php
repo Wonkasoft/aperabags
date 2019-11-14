@@ -937,8 +937,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 add_action( 'wonka_checkout_after_checkout_form_custom', 'wonka_checkout_after_checkout_form_custom', 50 );
 
 function wonka_woocommerce_before_custom_checkout( $checkout ) {
-	$output  = '';
-	$capture = do_action( 'wonka_checkout_express_btns' );
+	$output = '';
 	ob_start();
 	$output .= '<div class="row wonka-row">';
 	$output .= '<div class="col-12">';
@@ -969,7 +968,8 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '</span><!-- .express-btns-text -->';
 	$output .= '</div><!-- .express-btns-text-wrap -->';
 	$output .= '<div class="express-checkout-btns">';
-	$output .= $capture;
+	$output .= 'newtest';
+	$output .= do_action( 'wonka_checkout_express_btns' );
 	$output .= '</div><!-- .express-checkout-btns -->';
 	$output .= '</div><!-- .col-12 -->';
 	$output .= '<div class="col col-12">';
@@ -2170,4 +2170,4 @@ function testing() {
 	$output .= ob_get_clean();
 	return $output;
 }
-add_action( 'wonka_checkout_express_btns', 'testing', 20 );
+add_action( 'wonka_checkout_express_btns', 'testing', 50 );
