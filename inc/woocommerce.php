@@ -939,6 +939,7 @@ add_action( 'wonka_checkout_after_checkout_form_custom', 'wonka_checkout_after_c
 function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output = '';
 	ob_start();
+	$capture = do_action( 'wonka_checkout_express_btns' );
 	$output .= '<div class="row wonka-row">';
 	$output .= '<div class="col-12">';
 	$output .= '<ul class="nav nav-fill" id="wonka-checkout-nav-steps" role="tablist">';
@@ -968,7 +969,7 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '</span><!-- .express-btns-text -->';
 	$output .= '</div><!-- .express-btns-text-wrap -->';
 	$output .= '<div class="express-checkout-btns">';
-	$output .= do_action( 'wonka_checkout_express_btns' );
+	$output .= $capture;
 	$output .= '</div><!-- .express-checkout-btns -->';
 	$output .= '</div><!-- .col-12 -->';
 	$output .= '<div class="col col-12">';
