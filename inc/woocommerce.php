@@ -2161,3 +2161,8 @@ add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_re
 remove_action( 'woocommerce_checkout_before_customer_details', array( 'WC_Stripe_Payment_Request', 'display_payment_request_button_html' ), 1 );
 
 add_action( 'wonka_checkout_express_btns', array( 'WC_Stripe_Payment_Request', 'display_payment_request_button_html' ), 1 );
+
+function testing() {
+	echo 'testing';
+}
+add_action( 'wonka_checkout_express_btns', 'testing', 1 );
