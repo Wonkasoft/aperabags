@@ -987,7 +987,7 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 
 	echo $output;
 
-	return $checkout;
+	// return $checkout;
 }
 
 add_action( 'wonka_checkout_before_checkout_form_custom', 'wonka_woocommerce_before_custom_checkout', 10, 1 );
