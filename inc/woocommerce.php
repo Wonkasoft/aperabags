@@ -2168,6 +2168,6 @@ function testing() {
 	ob_start();
 	$output .= 'Testing';
 	$output .= ob_get_clean();
-	echo $output;
+	return $output;
 }
 add_action( 'wonka_checkout_express_btns', 'testing', 20 );
