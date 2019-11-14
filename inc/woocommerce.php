@@ -2164,8 +2164,10 @@ add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_re
 // add_action( 'wonka_checkout_express_btns', array( 'WC_Stripe_Payment_Request', 'display_payment_request_button_html' ), 1 );
 
 function testing() {
+	$output = '';
 	ob_start();
-	echo 'testing';
-	ob_get_clean();
+	$output .= 'Testing';
+	$output .= ob_get_clean();
+	echo $output;
 }
 add_action( 'wonka_checkout_express_btns', 'testing', 20 );
