@@ -2120,12 +2120,12 @@ function wonkasoft_woocommerce_created_customer( $customer_id ) {
 add_action( 'woocommerce_created_customer', 'wonkasoft_woocommerce_created_customer', 1 );
 
 function wonkasoft_upgrade_account_perks() {
-	$nonce = (isset($_POST['security'])) ? wp_kses_post(wp_unslash($_POST['security'])) : '';
-	( wp_verify_nonce( $nonce, 'ws-request-nonce' ) ) || die('die');
+	$nonce = ( isset( $_POST['security'] ) ) ? wp_kses_post( wp_unslash( $_POST['security'] ) ) : '';
+	( wp_verify_nonce( $nonce, 'ws-request-nonce' ) ) || die( 'die' );
 
-	if (isset($_POST)) {
+	if ( isset( $_POST ) ) {
 		$user_id = wp_get_current_user()->ID;
-		$user = new WP_User( $user_id );
+		$user    = new WP_User( $user_id );
 
 		$role         = 'apera_perks_partner';
 		$role_display = 'Apera Perks Partner';
@@ -2134,15 +2134,14 @@ function wonkasoft_upgrade_account_perks() {
 		if ( $_POST['user_id'] == $user_id ) {
 			if ( ! in_array( $role, $user->roles ) ) :
 				$user->add_role( $role, $role_display );
-				$output['msg'] = "role added";
+				$output['msg'] = 'role added';
 			endif;
 		}
-		
-			$output['user_id']   = $user->ID;
-			$output['user_roles'] = $user->roles;
 
-	
-		wp_send_json_success($output);
+		$output['user_id']    = $user->ID;
+		$output['user_roles'] = $user->roles;
+
+		wp_send_json_success( $output );
 	}
 }
 add_action( 'wp_ajax_wonkasoft_upgrade_account_perks', 'wonkasoft_upgrade_account_perks' );

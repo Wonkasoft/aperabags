@@ -18,22 +18,23 @@
     "gulp-clean-css": "^4.2.0",
     "gulp-cli": "^2.2.0",
     "gulp-concat": "^2.6.1",
-    "gulp-imagemin": "^6.1.1",
+    "gulp-imagemin": "^6.2.0",
     "gulp-js-minify": "^0.0.3",
     "gulp-jshint": "^2.1.0",
     "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
-    "jshint": "^2.10.2",
+    "jshint": "^2.10.3",
     "json-file": "^0.1.0",
     "node-fs": "^0.1.7",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.0",
     "path": "^0.12.7"
   },
   "siteName": "aperabags.com",
   "localhost": "https://wonkasoft.dev/",
   "dependencies": {
+    "check-node-version": "^4.0.1",
     "smoothscroll-polyfill": "^0.4.4"
   }
 }
