@@ -967,10 +967,10 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '<span class="express-btns-text">';
 	$output .= _x( 'Express checkout', 'aperabags' );
 	$output .= '</span><!-- .express-btns-text -->';
-	$output .= '</div><!-- .express-btns-text-wrap -->';
 	$output .= '<div class="express-checkout-btns">';
 	$output .= $capture;
 	$output .= '</div><!-- .express-checkout-btns -->';
+	$output .= '</div><!-- .express-btns-text-wrap -->';
 	$output .= '</div><!-- .col-12 -->';
 	$output .= '<div class="col col-12">';
 	$output .= '<div class="row below-express-checkout-btns no-gutters"><div class="col-12 col-md"><hr /></div><!-- .col-12 --><div class="col-12 col-md">';
