@@ -3165,7 +3165,7 @@ var componentForm;
 							{
 								if ( 'role added' === response.data.msg ) {
 									upgrade_btn_wrapper.remove();
-
+									document.location.reload( true );
 								}
 							}
 							else

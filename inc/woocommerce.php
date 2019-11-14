@@ -2135,9 +2135,9 @@ function wonkasoft_upgrade_account_perks() {
 			if ( ! in_array( $role, $user->roles ) ) :
 				$user->add_role( $role, $role_display );
 				$output['msg'] = 'role added';
+				RSActionRewardModule::award_points_for_account_signup( $user_id );
 			endif;
 		}
-
 		$output['user_id']    = $user->ID;
 		$output['user_roles'] = $user->roles;
 
