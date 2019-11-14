@@ -124,7 +124,6 @@
 					li {
 						padding: 8px;
 						height: 100%;
-						background: rgba( #777, .9 );
 						@include prefix( transition, $trans_25, webkit moz o);
 					}
 				}
@@ -273,6 +272,7 @@
 								padding: 8px;
 								overflow: visible;
 								position: relative;
+								background: rgba( #777, 1 );
 							}
 						}
 					}
