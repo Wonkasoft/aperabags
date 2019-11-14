@@ -968,7 +968,6 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '</span><!-- .express-btns-text -->';
 	$output .= '</div><!-- .express-btns-text-wrap -->';
 	$output .= '<div class="express-checkout-btns">';
-	$output .= 'newtest';
 	$output .= do_action( 'wonka_checkout_express_btns' );
 	$output .= '</div><!-- .express-checkout-btns -->';
 	$output .= '</div><!-- .col-12 -->';
@@ -987,7 +986,7 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 
 	echo $output;
 
-	// return $checkout;
+	return $checkout;
 }
 
 add_action( 'wonka_checkout_before_checkout_form_custom', 'wonka_woocommerce_before_custom_checkout', 10, 1 );
@@ -2163,11 +2162,11 @@ add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_re
 
 // add_action( 'wonka_checkout_express_btns', array( 'WC_Stripe_Payment_Request', 'display_payment_request_button_html' ), 1 );
 
-function testing() {
-	$output = '';
-	ob_start();
-	$output .= 'Testing';
-	$output .= ob_get_clean();
-	echo $output;
-}
-add_action( 'wonka_checkout_express_btns', 'testing', 50 );
+// function testing() {
+// $output = '';
+// ob_start();
+// $output .= 'Testing';
+// $output .= ob_get_clean();
+// echo $output;
+// }
+// add_action( 'wonka_checkout_express_btns', 'testing', 50 );
