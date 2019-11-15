@@ -723,7 +723,6 @@ var componentForm;
 				admin_bar = document.querySelector( '#wpadminbar' );
 				admin_height = document.querySelector( '#wpadminbar' ).offsetHeight;
 				
-				console.log( getComputedStyle( admin_bar ).position );
 				if ( getComputedStyle( admin_bar ).position == 'fixed' ) 
 				{
 					header_el.classList.add( 'fixed' );
