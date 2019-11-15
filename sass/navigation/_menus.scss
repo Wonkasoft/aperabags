@@ -7,7 +7,7 @@
 	flex-wrap: wrap;
 	height: 100%;
 	width: 100%;
-	z-index: 999999;
+	z-index: 999;
 	@include prefix( transition, $trans_25, webkit moz o);
 
 	button {
@@ -73,7 +73,7 @@
 			height: 0;
 			top: -30px;
 			opacity: 0;
-			z-index: 999999;
+			z-index: -1;
 			background: rgba( #777, .9 );
 			@include prefix( transition, $trans_25, webkit moz o);
 
@@ -128,8 +128,6 @@
 						@include prefix( transition, $trans_25, webkit moz o);
 					}
 				}
-
-
 			}
 
 			li {
@@ -139,7 +137,6 @@
 					top: 0;
 					height: auto;
 					opacity: 1;
-					z-index: 999;
 				}
 
 				&.focus {
@@ -153,6 +150,10 @@
 						}
 					}
 				}
+			}
+
+			&[aria-expanded="true"] {
+				z-index: 999;
 			}
 
 			a {
@@ -222,6 +223,7 @@
 
 			@include media-breakpoint( lg ) {
 				background: rgba( #777, 1 );
+				z-index: 99999999;
 
 				> li {
 					height: 100%;
@@ -235,6 +237,7 @@
 					}
 				}
 			}
+			
 		}
 
 		@include media-breakpoint( lg ) {
