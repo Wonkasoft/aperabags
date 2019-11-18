@@ -364,6 +364,8 @@ function apera_bags_scripts() {
 
 	if ( is_page( 'checkout' ) && ! empty( get_option( 'google_api_key' ) ) ) :
 			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'google_api_key' ) . '&libraries=places&callback=initAutocomplete', array( 'apera-bags-wonkamizer-js' ), 'all', true );
+
+			wp_enqueue_script( 'jquery-inputmask', get_stylesheet_directory_uri() . '/assets/js/jquery.inputmask.min.js', array( 'jquery' ), 'all', true );
 	endif;
 
 	if ( $slick_js_load ) :
