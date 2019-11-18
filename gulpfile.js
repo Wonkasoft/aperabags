@@ -107,7 +107,10 @@ gulp.task('js', function () {
 
 	.pipe(browserSync.stream())
 
-	.pipe(notify({ message: "✔︎ JS task complete"}));
+	.pipe(notify({ 
+		message: "✔︎ JS task complete",
+		onLast: true
+	}));
 
 });
 
