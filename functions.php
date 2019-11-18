@@ -428,9 +428,7 @@ function add_new_roles() {
 	if ( ! empty( $user_query->get_results() ) ) {
 		foreach ( $user_query->get_results() as $user ) {
 			$userobj = new WP_User( $user->ID );
-			if ( ! in_array( 'customer', $user->roles ) ) {
 				$userobj->add_role( 'customer', 'Customer' );
-			}
 		}
 	} else {
 		echo 'No users found.';
