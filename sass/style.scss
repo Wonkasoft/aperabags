@@ -52,6 +52,15 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 @import "normalize";
 
 /*--------------------------------------------------------------
+# FontAwesome
+--------------------------------------------------------------*/
+@import "fontawesome/solid.scss";
+@import "fontawesome/v4-shims.scss";
+@import "fontawesome/regular.scss";
+@import "fontawesome/brands.scss";
+@import "fontawesome/fontawesome.scss";
+
+/*--------------------------------------------------------------
 # Typography
 --------------------------------------------------------------*/
 @import "typography/typography";
