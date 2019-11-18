@@ -3181,7 +3181,7 @@ var componentForm;
 			});
 		}
 		
-		if ( docmuent.getElementById('shipping_phone') ) {
+		if ( $('#shipping_phone').length ) {
 
 			var options =  {
 			  onKeyPress: function(cep, e, field, options) {
