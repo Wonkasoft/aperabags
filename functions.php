@@ -333,7 +333,7 @@ function apera_bags_scripts() {
 		wp_enqueue_style( 'slick-js-theme-style', get_stylesheet_directory_uri() . '/assets/slick/slick-theme.css', array(), '1.8.0', 'all' );
 	endif;
 
-	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), '1.0.0' );
+	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time(), 'all' );
 
 	/**
 	 * For enqueues of scripts
