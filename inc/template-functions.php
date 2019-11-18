@@ -2088,6 +2088,14 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		endforeach;
 	endif;
 
+	if ( 'apera_195932' === $campaign_name && empty( $getresponse->contact_id ) ) {
+		foreach ( $getresponse->contact_list as $contact ) :
+			if ( $getresponse->email === $contact->email ) :
+				$getresponse->contact_id = $contact->contactId;
+			endif;
+		endforeach;
+	}
+
 	if ( ! empty( $getresponse->tags ) && ! empty( $getresponse->contact_id ) ) :
 		$getresponse->tags_to_update = array();
 		foreach ( $getresponse->tag_list as $tag ) {
