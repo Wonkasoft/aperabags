@@ -2127,7 +2127,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 			$url = 'https://aperabags.com/response-page/?' . $data_send;
 		}
 		header( 'Content-Type: application/x-www-form-urlencoded' );
-		// header( 'Location: ' . $url );
+		header( 'Location: ' . $url );
 	endif;
 
 	return $getresponse;
