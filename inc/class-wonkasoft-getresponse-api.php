@@ -129,7 +129,9 @@ class Wonkasoft_GetResponse_Api {
 
 		$payload = array(
 			'name'              => $this->contact_name,
-			'campaign'          => $this->campaign_name,
+			'campaign'          => array(
+				'campaignId' => $this->campaign_id,
+			),
 			'email'             => $this->email,
 			'dayOfCycle'        => $this->day_of_cycle,
 			'scoring'           => $this->scoring,
