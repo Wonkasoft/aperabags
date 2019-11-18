@@ -419,3 +419,20 @@ function wonkasoft_add_defer_attribute( $tag, $handle ) {
 	return str_replace( ' src', ' defer src', $tag );
 }
 add_filter( 'script_loader_tag', 'wonkasoft_add_defer_attribute', 10, 2 );
+
+
+
+function add_new_roles() {
+	$user_query = new WP_User_Query( array( 'role' => 'Customer' ) );
+	// User Loop
+	if ( ! empty( $user_query->get_results() ) ) {
+		foreach ( $user_query->get_results() as $user ) {
+			$userobj = new WP_User( $user->ID );
+			$userobj->add_role( 'apera_perks_partner', 'Apera Perks Partner' );
+		}
+	} else {
+		echo 'No users found.';
+	}
+}
+
+add_action( 'admin_head', 'add_new_roles' );
