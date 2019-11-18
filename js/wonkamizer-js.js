@@ -3183,14 +3183,7 @@ var componentForm;
 		
 		if ( $('#shipping_phone').length ) {
 
-			var options =  {
-			  onKeyPress: function(cep, e, field, options) {
-			    var masks = ['(000) 000-0000', '(000) 000-0000'];
-			    var mask = (cep.length>10) ? masks[1] : masks[0];
-			    $('#shipping_phone').mask(mask, options);
-			}};
-
-			$('#shipping_phone').mask('(000) 000-0000', options);
+			$('#shipping_phone').inputmask('(000) 000-0000');
 		}
 	};
 		/*=====  End of This is for running after document is ready  ======*/
