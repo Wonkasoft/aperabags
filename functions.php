@@ -364,6 +364,8 @@ function apera_bags_scripts() {
 
 	if ( is_page( 'checkout' ) && ! empty( get_option( 'google_api_key' ) ) ) :
 			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'google_api_key' ) . '&libraries=places&callback=initAutocomplete', array( 'apera-bags-wonkamizer-js' ), 'all', true );
+
+			wp_enqueue_script( 'jquery-input-mask-input', get_stylesheet_directory_uri() . '/assets/js/jquery-input-mask-phone-number.min.js', array( 'jquery' ), 'all', true );
 	endif;
 
 	if ( $slick_js_load ) :
@@ -419,20 +421,3 @@ function wonkasoft_add_defer_attribute( $tag, $handle ) {
 	return str_replace( ' src', ' defer src', $tag );
 }
 add_filter( 'script_loader_tag', 'wonkasoft_add_defer_attribute', 10, 2 );
-
-
-
-function add_new_roles() {
-	$user_query = new WP_User_Query( array( 'role' => 'apera_perks_partner' ) );
-	// User Loop
-	if ( ! empty( $user_query->get_results() ) ) {
-		foreach ( $user_query->get_results() as $user ) {
-			$userid = $user->ID;
-				RSActionRewardModule::award_points_for_account_signup( $userid );
-		}
-	} else {
-		echo 'No users found.';
-	}
-}
-
-add_action( 'admin_head', 'add_new_roles' );
