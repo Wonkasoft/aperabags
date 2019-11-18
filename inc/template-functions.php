@@ -2085,10 +2085,6 @@ function wonkasoft_getresponse_endpoint( $data ) {
 			if ( $getresponse->campaign_id === $contact->campaign->campaignId ) :
 				$getresponse->contact_id = $contact->contactId;
 			endif;
-			echo "<pre>\n";
-			print_r( $contact );
-			echo "</pre>\n";
-
 		endforeach;
 	endif;
 
@@ -2099,7 +2095,9 @@ function wonkasoft_getresponse_endpoint( $data ) {
 			endif;
 		endforeach;
 	}
-
+	echo "<pre>\n";
+	print_r( $getresponse->contact_id );
+	echo "</pre>\n";
 	if ( ! empty( $getresponse->tags ) && ! empty( $getresponse->contact_id ) ) :
 		$getresponse->tags_to_update = array();
 		foreach ( $getresponse->tag_list as $tag ) {
