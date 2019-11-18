@@ -1867,12 +1867,19 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		$role         = 'apera_perks_partner';
 		$role_display = 'Apera Perks Partner';
 
+		$role2         = 'customer';
+		$role_display2 = 'Customer';
+
 		$user_id = wonkasoft_make_user_account( $entry_fields, $role );
 
 		$user = new WP_User( $user_id );
 
 		if ( ! in_array( $role, $user->roles ) ) :
 			$user->add_role( $role, $role_display );
+		endif;
+
+		if ( ! in_array( $role2, $user->roles ) ) :
+			$user->add_role( $role2, $role_display2 );
 		endif;
 
 		// Setting Apera Perks affiliate link to send to getResponse.
