@@ -2085,6 +2085,10 @@ function wonkasoft_getresponse_endpoint( $data ) {
 			if ( $getresponse->campaign_id === $contact->campaign->campaignId ) :
 				$getresponse->contact_id = $contact->contactId;
 			endif;
+			echo "<pre>\n";
+			print_r( $contact );
+			echo "</pre>\n";
+
 		endforeach;
 	endif;
 
