@@ -3183,7 +3183,7 @@ var componentForm;
 		
 		if ( $('#shipping_phone').length ) {
 
-			$('#shipping_phone').inputmask('(000) 000-0000');
+			$('#shipping_phone').inputmask('(999) 999-9999');
 		}
 	};
 		/*=====  End of This is for running after document is ready  ======*/
