@@ -72,8 +72,8 @@
 			padding: 0;
 			height: 0;
 			top: -30px;
+			right: 115%;
 			opacity: 0;
-			z-index: -1;
 			background: rgba( #777, .9 );
 			@include prefix( transition, $trans_25, webkit moz o);
 
@@ -142,6 +142,7 @@
 				&.focus {
 
 					> ul {
+						right: unset;
 
 						> li {
 							padding: 8px;
@@ -153,7 +154,8 @@
 			}
 
 			&[aria-expanded="true"] {
-				z-index: 999;
+				z-index: 9999;
+				right: 0;
 			}
 
 			a {
@@ -223,7 +225,6 @@
 
 			@include media-breakpoint( lg ) {
 				background: rgba( #777, 1 );
-				z-index: 99999999;
 
 				> li {
 					height: 100%;
@@ -232,7 +233,7 @@
 						top: 100%;
 						height: auto;
 						opacity: 1;
-						z-index: 999;
+						z-index: 99999;
 						@include prefix( box-shadow, 0 0 0 0 rgba(#000, 0.4), webkit moz o );					
 					}
 				}
@@ -249,6 +250,7 @@
 				justify-content: flex-end;
 				background: transparent;
 				top: 100%;
+				right: unset;
 				height: 45px;
 				opacity: 1;
 				@include prefix( box-shadow, 0 1px 6px 0 rgba(#000, 0), webkit moz o );

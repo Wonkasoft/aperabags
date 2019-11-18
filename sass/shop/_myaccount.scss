@@ -52,6 +52,15 @@ main#main.main-my-account {
         height: 0;
         overflow: hidden;
         transition: all .35s ease-in-out;
+
+        .wonka-btn {
+          color: #fff;
+          margin: 15px 0;
+
+          &[disabled] {
+            cursor: not-allowed;
+          }
+        }
       }
 
       .form-register-toggle {

@@ -1858,8 +1858,11 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		$output .= '<p>' . $entry_fields['email'] . ' is already being used. You can login at the link below</p>';
 		$output .= '<p>Once you are logged in go to your account dashboard and click the following button to receive your $10 AperaCash</p>';
 		$output .= '<p><a class="wonka-btn" disabled>Join Perks and Earn</a></p>';
+		$output .= '<p>Or you can click here to register with another email.</p>';
+		$output .= '<p><a class="wonka-btn" href="' . get_site_url() . '/my-account/?create=1">Back to Registration</a></p>';
 
 		$confirmation = $output;
+
 		return $confirmation;
 
 	} else {
