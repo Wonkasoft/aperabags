@@ -423,7 +423,7 @@ add_filter( 'script_loader_tag', 'wonkasoft_add_defer_attribute', 10, 2 );
 
 
 function add_new_roles() {
-	$user_query = new WP_User_Query( array( 'role' => 'Apera Perks Partner' ) );
+	$user_query = new WP_User_Query( array( 'role' => 'apera_perks_partner' ) );
 	// User Loop
 	if ( ! empty( $user_query->get_results() ) ) {
 		foreach ( $user_query->get_results() as $user ) {
