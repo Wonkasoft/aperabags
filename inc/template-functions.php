@@ -2090,10 +2090,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 
 	if ( 'apera_195932' === $campaign_name && empty( $getresponse->contact_id ) ) {
 		foreach ( $getresponse->contact_list as $contact ) :
-			echo "<pre>\n";
-			print_r( $contact );
-			echo "</pre>\n";
-			if ( $getresponse->email === $contact->email ) :
+			if ( $email === $contact->email ) :
 				$getresponse->contact_id = $contact->contactId;
 			endif;
 		endforeach;
@@ -2109,7 +2106,12 @@ function wonkasoft_getresponse_endpoint( $data ) {
 				array_push( $getresponse->tags_to_update, $tag_id );
 			endif;
 		}
-		$response = $getresponse->upsert_the_tags_of_contact();
+
+		if ( 'apera_195932' === $campaign_name ) {
+			$response = $getresponse->update_contact_details();
+		} else {
+			$response = $getresponse->upsert_the_tags_of_contact();
+		}
 
 		$data_send = array(
 			'email'      => $email,
