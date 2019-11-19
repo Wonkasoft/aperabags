@@ -46,43 +46,10 @@ function apera_bags_woocommerce_scripts() {
 
 	wp_add_inline_style( 'apera-bags-woocommerce-style', $inline_font );
 
-	remove_action( 'woocommerce_checkout_before_customer_details', array( 'WC_Stripe_Payment_Request', 'display_payment_request_button_html' ), 1 );
-	remove_action( 'woocommerce_checkout_before_customer_details', array( 'WC_Stripe_Payment_Request', 'display_payment_request_button_separator_html' ), 2 );
-	add_action( 'wonka_checkout_express_btns', array( 'WC_Stripe_Payment_Request', 'display_payment_request_button_html' ), 1 );
-	add_action( 'wonka_checkout_express_btns', array( 'WC_Stripe_Payment_Request', 'display_payment_request_button_separator_html' ), 2 );
-
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_woocommerce_scripts' );
 
-if ( function_exists( 'wc_stripe_show_payment_request_on_checkout' ) ) :
-	/**
-	 * Add stripe on checkout page
-	 *
-	 * @since  1.0.0 Filter to add Apple Pay on checkout
-	 */
-	add_filter( 'wc_stripe_show_payment_request_on_checkout', '__return_true' );
 
-	/**
-	 * Remove Stripe from single product page
-	 *
-	 * @since  1.0.0 Remove Apple Pay on single product page
-	 */
-	// add_filter( 'wc_stripe_hide_payment_request_on_product_page', '__return_true' );
-
-	/**
-	 * Remove Stripe payment button on the cart page
-	 *
-	 * @since  1.0.0 This will remove the Apple Google Pay buttons from the cart page
-	 */
-	// remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
-
-	/**
-	 * This will remove the payment button from the cart page
-	 *
-	 * @since  1.0.0 Remove Stripe buttons on the cart page
-	 */
-	// remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
-endif;
 
 /**
  * Disable the default WooCommerce stylesheet.
@@ -2164,59 +2131,46 @@ add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_re
  * @author Louis
  * @since 1.2.0
  */
-function testing() {
-	$output = '';
-	global $post;
+function wonkasoft_express_buttons_checkout() {
+	if ( class_exists( 'WC_Stripe_Payment_Request' ) ) :
+		/**
+		 * Add stripe on checkout page
+		 *
+		 * @since  1.0.0 Filter to add Apple Pay on checkout
+		 */
+		add_filter( 'wc_stripe_show_payment_request_on_checkout', '__return_true' );
 
-	$gateways = WC()->payment_gateways->get_available_payment_gateways();
+		/**
+		 * Remove Stripe from single product page
+		 *
+		 * @since  1.0.0 Remove Apple Pay on single product page
+		 */
+		add_filter( 'wc_stripe_hide_payment_request_on_product_page', '__return_true' );
 
-	if ( ! isset( $gateways['stripe'] ) ) {
-		return;
+		/**
+		 * Remove Stripe payment button on the cart page
+		 *
+		 * @since  1.0.0 This will remove the Apple Google Pay buttons from the cart page
+		 */
+		remove_action( 'woocommerce_proceed_to_checkout', array( new WC_Stripe_Payment_Request(), 'display_payment_request_button_html' ), 1 );
+
+		/**
+		 * This will remove the payment button from the cart page
+		 *
+		 * @since  1.0.0 Remove Stripe buttons on the cart page
+		 */
+		remove_action( 'woocommerce_proceed_to_checkout', array( new WC_Stripe_Payment_Request(), 'display_payment_request_button_separator_html' ), 2 );
+
+		add_action( 'wonka_checkout_express_btns', array( new WC_Stripe_Payment_Request(), 'display_payment_request_button_html' ), 1 );
+		add_action( 'wonka_checkout_express_btns', array( new WC_Stripe_Payment_Request(), 'display_payment_request_button_separator_html' ), 2 );
+
+	endif;
+
+	if ( class_exists( 'Angelleye_PayPal_Express_Checkout_Helper' ) ) {
+		remove_action( 'woocommerce_before_checkout_form', array( Angelleye_PayPal_Express_Checkout_Helper::instance(), 'angelleye_display_custom_message_review_page' ), 5 );
+		remove_action( 'woocommerce_before_checkout_form', array( Angelleye_PayPal_Express_Checkout_Helper::instance(), 'checkout_message' ), 5 );
+		add_action( 'wonka_checkout_express_btns', array( Angelleye_PayPal_Express_Checkout_Helper::instance(), 'angelleye_display_custom_message_review_page' ), 5 );
+		add_action( 'wonka_checkout_express_btns', array( Angelleye_PayPal_Express_Checkout_Helper::instance(), 'checkout_message' ), 5 );
 	}
-
-	if ( ! is_cart() && ! is_checkout() && ! is_product() && ! isset( $_GET['pay_for_order'] ) ) {
-		return;
-	}
-
-	if ( is_product() && apply_filters( 'wc_stripe_hide_payment_request_on_product_page', false, $post ) ) {
-		return;
-	}
-
-	if ( is_checkout() && ! apply_filters( 'wc_stripe_show_payment_request_on_checkout', false, $post ) ) {
-		return;
-	}
-
-	if ( is_product() ) {
-		$product = wc_get_product( $post->ID );
-
-		if ( ! is_object( $product ) || ! in_array( ( WC_Stripe_Helper::is_wc_lt( '3.0' ) ? $product->product_type : $product->get_type() ), $this->supported_product_types() ) ) {
-			return;
-		}
-
-		// Trial subscriptions with shipping are not supported
-		if ( class_exists( 'WC_Subscriptions_Order' ) && $product->needs_shipping() && WC_Subscriptions_Product::get_trial_length( $product ) > 0 ) {
-			return;
-		}
-
-		// Pre Orders charge upon release not supported .
-		if ( class_exists( 'WC_Pre_Orders_Order' ) && WC_Pre_Orders_Product::product_is_charged_upon_release( $product ) ) {
-			WC_Stripe_Logger::log( 'Pre Order charge upon release is not supported. ( Payment Request button disabled )' );
-			return;
-		}
-	} else {
-		if ( ! $this->allowed_items_in_cart() ) {
-			WC_Stripe_Logger::log( 'Items in the cart has unsupported product type ( Payment Request button disabled )' );
-			return;
-		}
-	}
-
-	ob_start();
-	$output .= '<div id="wc-stripe-payment-request-wrapper" style="clear:both;padding-top:1.5em;display:none;">';
-	$output .= '<div id="wc-stripe-payment-request-button">';
-	$output .= '<!-- A Stripe Element will be inserted here. -->';
-	$output .= '</div>';
-	$output .= '</div>';
-	$output .= ob_get_clean();
-	echo $output;
 }
-// add_action( 'wonka_checkout_express_btns', 'testing', 50 );
+add_action( 'wp', 'wonkasoft_express_buttons_checkout', 10 );
