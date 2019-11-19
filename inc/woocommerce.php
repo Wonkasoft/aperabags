@@ -2175,8 +2175,7 @@ function wonkasoft_express_buttons_checkout() {
 		 */
 		remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
 
-		add_action( 'wonka_checkout_express_btns', array( new WC_Stripe_Payment_Request(), 'display_payment_request_button_html' ), 1 );
-		add_action( 'wonka_checkout_express_btns', array( new WC_Stripe_Payment_Request(), 'display_payment_request_button_separator_html' ), 2 );
+		add_action( 'wonka_checkout_express_btns', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
 
 	endif;
 
