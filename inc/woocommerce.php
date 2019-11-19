@@ -2145,7 +2145,7 @@ function wonkasoft_express_buttons_checkout() {
 		 *
 		 * @since  1.0.0 Remove Apple Pay on single product page
 		 */
-		// add_filter( 'wc_stripe_hide_payment_request_on_product_page', '__return_true' );
+		add_filter( 'wc_stripe_hide_payment_request_on_product_page', '__return_true' );
 
 		/**
 		 * Remove Stripe payment button on the cart page
