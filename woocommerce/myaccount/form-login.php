@@ -47,7 +47,12 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 			<div class="form-group">
 				<label for="password" class="sr-only"><?php esc_html_e( 'Password', 'woocommerce' ); ?>&nbsp;<span class="required sr-only">*</span></label>
 				<div class="input-group">
-					<input class="form-control input-text" type="password" name="password" id="password" autocomplete="current-password" placeholder="<?php esc_html_e( 'Password *', 'woocommerce' ); ?>" /><div class="input-group-append"><div class="input-group-text"><i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i></div></div>
+					<input class="form-control input-text" type="password" name="password" id="password" autocomplete="current-password" placeholder="<?php esc_html_e( 'Password *', 'woocommerce' ); ?>" />
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i>
+						</div>
+					</div>
 					<div class="invalid-feedback password"></div>
 				</div>
 			</div>

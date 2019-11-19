@@ -39,6 +39,7 @@ var componentForm;
 	drop_down,
 	header_el,
 	header_height,
+	config = { attributes: true, childList: true },
 	xhr = new XMLHttpRequest();
 
 	if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
@@ -1345,7 +1346,50 @@ var componentForm;
 
 	} 
 
+	function set_password_events() {
+		var password_toggle_btns = document.querySelectorAll( 'div.input-group-text' );
+		password_toggle_btns.forEach( function( password_toggle_btn )
+		{
 
+			password_toggle_btn.addEventListener( 'click', function( e )
+			{
+				e.stopImmediatePropagation();
+				var parent_input, password_input, password_icon_btn, password_type;
+				var target = e.target;
+
+				if ( target.nodeName === 'DIV' ) 
+				{
+					password_icon_btn = target.firstElementChild;
+					parent_input = target.parentElement.parentElement;
+					password_input = parent_input.firstElementChild;
+					password_type = password_input.getAttribute( "type" );
+				}
+
+				if ( target.nodeName === "I" ) 
+				{
+					password_icon_btn = target;
+					target = target.parentElement;
+					parent_input = target.parentElement.parentElement;
+					password_input = parent_input.firstElementChild;
+					password_type = password_input.getAttribute( "type" );
+				}
+
+				if( password_type === "password" )
+				{
+					password_icon_btn.classList.toggle( 'fa-eye' );
+					password_icon_btn.classList.toggle( 'fa-eye-slash' );
+					password_input.type = "text";
+				}
+
+				if ( password_type === "text" ) 
+				{
+					password_icon_btn.classList.toggle( 'fa-eye' );
+					password_icon_btn.classList.toggle( 'fa-eye-slash' );
+					password_input.type = "password";
+				}
+			});
+		});
+	}
 	/**
 	 * Single Product variant set up for images
 	 * @author Rudy
@@ -1870,46 +1914,9 @@ var componentForm;
 		 **************************************************************************/
 		if ( document.querySelectorAll( 'div.input-group-append' ) )
 		{
-			var password_toggle_btns = document.querySelectorAll( 'div.input-group-append' );
-			password_toggle_btns.forEach( function( password_toggle_btn )
-			{
-				password_toggle_btn.addEventListener( 'click', function( e )
-				{
-					var parent_input, password_input, password_icon_btn, password_type;
-					var target = e.target;
-
-					if ( target.nodeName === 'DIV' ) 
-					{
-						password_icon_btn = target.firstElementChild;
-						parent_input = target.parentElement.parentElement;
-						password_input = parent_input.firstElementChild;
-						password_type = password_input.getAttribute( "type" );
-					}
-
-					if ( target.nodeName === "I" ) 
-					{
-						password_icon_btn = target;
-						target = target.parentElement;
-						parent_input = target.parentElement.parentElement;
-						password_input = parent_input.firstElementChild;
-						password_type = password_input.getAttribute( "type" );
-					}
-
-					if( password_type === "password" )
-					{
-						password_icon_btn.classList.toggle( 'fa-eye' );
-						password_icon_btn.classList.toggle( 'fa-eye-slash' );
-						password_input.type = "text";
-					}
-
-					if ( password_type === "text" ) 
-					{
-						password_icon_btn.classList.toggle( 'fa-eye' );
-						password_icon_btn.classList.toggle( 'fa-eye-slash' );
-						password_input.type = "password";
-					}
-				});
-			});
+			set_password_events();
+			document.body.addEventListener( 'keyup', set_password_events );
+			document.body.addEventListener( 'change', set_password_events );
 		}
 		/*===============================================================================
 		=            This is the setup for the Wonka Express Checkout Button            =
@@ -3126,7 +3133,6 @@ var componentForm;
 				});
 			};
 
-			var config = { attributes: true, childList: true };
 			var observer = new MutationObserver( observer_callback );
 			observer.observe( datepicker_div, config);
 		}
