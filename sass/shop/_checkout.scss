@@ -163,7 +163,6 @@ div.checkout-order-details {
 		strong.wonka-badge {
 			position: absolute;
 			top: 5px;
-			left: calc( 50% - 11px );
 			right: 5px;
 			width: 22px;
 			height: 22px;
@@ -247,6 +246,7 @@ span.wonka-badge {
 	justify-content: center;
 	width: 22px;
 	height: 22px;
+	left: calc( 50% - 11px );
 	padding: 0;
 	font-family: 'Open Sans';
 }
