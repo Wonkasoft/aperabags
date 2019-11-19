@@ -2145,7 +2145,7 @@ function wonkasoft_express_buttons_checkout() {
 		 *
 		 * @since  1.0.0 Remove Apple Pay on single product page
 		 */
-		add_filter( 'wc_stripe_hide_payment_request_on_product_page', '__return_true' );
+		// add_filter( 'wc_stripe_hide_payment_request_on_product_page', '__return_true' );
 
 		/**
 		 * Remove Stripe payment button on the cart page
@@ -2178,12 +2178,5 @@ function wonkasoft_express_buttons_checkout() {
 		add_action( 'wonka_checkout_express_btns', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
 
 	endif;
-
-	if ( class_exists( 'Angelleye_PayPal_Express_Checkout_Helper' ) ) {
-		remove_action( 'woocommerce_before_checkout_form', array( Angelleye_PayPal_Express_Checkout_Helper::instance(), 'angelleye_display_custom_message_review_page' ), 5 );
-		remove_action( 'woocommerce_before_checkout_form', array( Angelleye_PayPal_Express_Checkout_Helper::instance(), 'checkout_message' ), 5 );
-		add_action( 'wonka_checkout_express_btns', array( Angelleye_PayPal_Express_Checkout_Helper::instance(), 'angelleye_display_custom_message_review_page' ), 5 );
-		add_action( 'wonka_checkout_express_btns', array( Angelleye_PayPal_Express_Checkout_Helper::instance(), 'checkout_message' ), 5 );
-	}
 }
 add_action( 'wp', 'wonkasoft_express_buttons_checkout', 10 );
