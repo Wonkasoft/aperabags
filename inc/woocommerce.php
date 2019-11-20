@@ -2104,12 +2104,20 @@ function wonkasoft_upgrade_account_perks() {
 		$role         = 'apera_perks_partner';
 		$role_display = 'Apera Perks Partner';
 
+		$role2         = 'customer';
+		$role_display2 = 'Customer';
+
 		$output = array();
 		if ( $_POST['user_id'] == $user_id ) {
 			if ( ! in_array( $role, $user->roles ) ) :
 				$user->add_role( $role, $role_display );
 				$output['msg'] = 'role added';
 				RSActionRewardModule::award_points_for_account_signup( $user_id );
+			endif;
+
+			if ( ! in_array( $role2, $user->roles ) ) :
+				$user->add_role( $role2, $role_display2 );
+				$output['msg'] = 'roles added';
 			endif;
 		}
 		$output['user_id']    = $user->ID;

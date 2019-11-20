@@ -328,6 +328,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 			if ( empty( $field['placeholder'] ) ) :
 				$field['placeholder'] = $field['label'];
 			endif;
+
+			if ( 'hidden' === $field['type'] && 'Agree To Fees' === $field['label'] ) :
+				$field['cssClass'] = ' hidden-agree-to-fees';
+			endif;
 		endif;
 	endforeach;
 
@@ -1087,6 +1091,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 		'State / Province',
 		'ZIP / Postal Code',
 		'Phone',
+		'Agree To Fees',
 	);
 	$custom_fields                 = array();
 
@@ -2296,7 +2301,109 @@ function wonka_gform_validation( $form ) {
 		});
 	}";
 
-	GFFormDisplay::add_init_script( $form['id'], 'myaccoutn_validation', GFFormDisplay::ON_PAGE_RENDER, $output );
+	$output .= "if ( document.querySelector( 'input[type=file].custom-file-input' ) ) 
+	{
+		var file_input = document.querySelector( 'input[type=file].custom-file-input' );
+		var input_label = document.querySelector( 'label.custom-file-label' );
+		var file_name;
+		var current_logo_wrap = document.querySelector( 'div.current-logo-wrap' );
+		if ( true !== document.querySelector( '#agree-to-fee-modal' ) ) 
+		{
+			var agree_to_fee_modal_wrap = document.createElement('DIV');
+			agree_to_fee_modal_wrap.classList.add( 'agree-to-fee-modal-wrap');
+			agree_to_fee_modal_wrap.classList.add( 'modal');
+			agree_to_fee_modal_wrap.classList.add( 'fade');
+			agree_to_fee_modal_wrap.setAttribute( 'id', 'agree-to-fee-modal');
+			var innerMarkup = '<div class=\"modal-dialog modal-dialog-centered\">';
+	        innerMarkup += '<div class=\"modal-content\">';
+	        innerMarkup += '<!-- Modal Header -->';
+	        innerMarkup += '<div class=\"modal-header\">';
+	        innerMarkup += '<button type=\"button\" class=\"btn close\" data-dismiss=\"modal\">&times;</button>';
+	        innerMarkup += '</div>';
+	        innerMarkup += '<!-- Modal body -->';
+	        innerMarkup += '<div class=\"modal-body\">';
+	        innerMarkup += '<p><strong>Oops!</strong> Looks like you are not uploading an .ai, .eps, .pdf, or vector image. Please close this box and upload your logo as one of those image files.</p>';
+	        innerMarkup += '<p>Don’t worry, if you do not have your logo as one of those file types, we can create one for you! Simply check the box below to continue submitting this image and accept the one-time $75 design fee.</p>';
+	        innerMarkup += '<p>';
+	        innerMarkup += '<div id=\"agree-to-fee-input-group\" class=\"input-group\">';
+	        innerMarkup += '<div class=\"input-group-prepend\">';
+	        innerMarkup += '<div class=\"input-group-text\">';
+	        innerMarkup += '<input type=\"checkbox\" />';
+	        innerMarkup += '</div>';
+	        innerMarkup += '</div>';
+	        innerMarkup += '<input type=\"text\" class=\"form-control\" placeholder=\"I agree to the design fee above.\" />';
+	        innerMarkup += '</div>';
+	        innerMarkup += '</p>';
+	        innerMarkup += '</div>';
+	        innerMarkup += '<!-- Modal footer -->';
+	        innerMarkup += '<div class=\"modal-footer\">';
+	        innerMarkup += '<button type=\"button\" class=\"wonka-btn\" data-dismiss=\"modal\">Close</button>';
+	        innerMarkup += '</div>';
+	        innerMarkup += '<button id=\"agree-to-open\" type=\"button\" class=\"btn btn-primary\" style=\"display: none;\" data-toggle=\"modal\" data-target=\"#agree-to-fee-modal\">';
+	        innerMarkup += '</button>';
+	        innerMarkup += '</div>';
+	        innerMarkup += '</div>';
+			agree_to_fee_modal_wrap.innerHTML = innerMarkup;
+		}
+
+
+		file_input.addEventListener( 'change', function( e ) 
+			{
+				if ( '' === file_input.value ) 
+				{
+					input_label.innerText = 'Choose file';
+				}
+				else
+				{
+					file_name = file_input.value.split('\\\\')[file_input.value.split('\\\\').length - 1];
+					input_label.innerText = file_name;
+				}
+
+				if ( file_name.includes( '.png' ) !== false || file_name.includes( '.jpg' ) !== false || file_name.includes( '.jpeg' ) !== false ) 
+				{
+					document.body.appendChild( agree_to_fee_modal_wrap );
+					var closebtns = document.querySelectorAll( 'button[data-dismiss=modal]' );
+					var agree_to_fee_checkbox = document.querySelector( '#agree-to-fee-input-group input[type=checkbox]' );
+					var agree_to_fee_text = document.querySelector( '#agree-to-fee-input-group input[type=text]' );
+					agree_to_fee_checkbox.addEventListener( 'change', function( e ) 
+						{
+							if ( true === agree_to_fee_checkbox.checked ) 
+							{
+								document.querySelector( '.hidden-agree-to-fees input' ).value = agree_to_fee_text.placeholder;
+								document.querySelector( 'button[data-dismiss=modal]' ).click();
+							}
+							else
+							{
+								document.querySelector( '.hidden-agree-to-fees input' ).value = 'Not set';
+							}
+						} );
+					closebtns.forEach( function( btn, i ) 
+						{
+							btn.addEventListener( 'click', function( e ) 
+								{
+									setTimeout( function() 
+									{
+										if ( false === agree_to_fee_checkbox.checked ) 
+										{
+											file_input.value = '';
+											input_label.innerText = 'Choose file';
+										}
+									}, 200 );
+								} );
+						});
+					agree_to_fee_modal_wrap.addEventListener( 'click', function( e ) 
+						{
+							if ( agree_to_fee_modal_wrap.classList.contains( 'show' ) ) 
+							{
+								document.querySelector( 'button[data-dismiss=modal]' ).click();
+							}
+						});
+					document.querySelector( '#agree-to-open' ).click();
+				}
+			} );
+	}";
+
+	GFFormDisplay::add_init_script( $form['id'], 'myaccount_validation', GFFormDisplay::ON_PAGE_RENDER, $output );
 
 }
 add_action( 'gform_register_init_scripts', 'wonka_gform_validation' );

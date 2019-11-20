@@ -300,6 +300,7 @@ form.wonka-gform.wonka-perks-form {
 		display: grid;
 		align-items: center;
 		justify-content: center;
+		grid-auto-flow: column;
 	}
 
 	.wonka-btn {
@@ -558,7 +559,7 @@ form.wonka-gform.wonka-refersion-form {
 
 	.gf_clear.gf_clear_complex {
 	  display: none;
-  }
+  	}
 
 	.gform_validation_container {
 		display: none;
@@ -568,6 +569,7 @@ form.wonka-gform.wonka-refersion-form {
 		display: grid;
 		align-items: center;
 		justify-content: center;
+		grid-auto-flow: column;
 	}
 }
 
@@ -791,5 +793,23 @@ div#ui-datepicker-div {
 		td {
 			text-align: center !important;
 		}
+	}
+}
+
+#agree-to-fee-modal {
+
+	.modal-header {
+		border-bottom: none;
+
+		.close {
+			padding: 0.1rem 0.5rem;
+		    margin: -1rem -1rem -1rem auto;
+		    font-size: 2rem;
+		    line-height: 1;
+		}
+	}
+
+	.modal-footer {
+		border-top: none;
 	}
 }
