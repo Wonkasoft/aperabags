@@ -151,9 +151,14 @@ var componentForm;
 		var input_label = document.querySelector( 'label.custom-file-label' );
 		var file_name;
 		var current_logo_wrap = document.querySelector( 'div.current-logo-wrap' );
-		if ( true !== document.querySelector( '#agree-to-fee-modal' ) ) 
+		var agree_to_fee_modal_wrap;
+		if ( document.querySelector( '#agree-to-fee-modal' ) ) 
 		{
-			var agree_to_fee_modal_wrap = document.createElement('DIV');
+			agree_to_fee_modal_wrap = document.querySelector( '#agree-to-fee-modal' );
+		}
+		else
+		{
+			agree_to_fee_modal_wrap = document.createElement('DIV');
 			agree_to_fee_modal_wrap.classList.add( 'agree-to-fee-modal-wrap');
 			agree_to_fee_modal_wrap.classList.add( 'modal');
 			agree_to_fee_modal_wrap.classList.add( 'fade');
@@ -188,6 +193,7 @@ var componentForm;
 	        innerMarkup += '</div>';
 	        innerMarkup += '</div>';
 			agree_to_fee_modal_wrap.innerHTML = innerMarkup;
+			document.body.appendChild( agree_to_fee_modal_wrap );
 		}
 
 
@@ -205,7 +211,6 @@ var componentForm;
 
 				if ( file_name.includes( '.png' ) !== false || file_name.includes( '.jpg' ) !== false || file_name.includes( '.jpeg' ) !== false ) 
 				{
-					document.body.appendChild( agree_to_fee_modal_wrap );
 					var closebtns = document.querySelectorAll( 'button[data-dismiss=modal]' );
 					var agree_to_fee_checkbox = document.querySelector( '#agree-to-fee-input-group input[type=checkbox]' );
 					var agree_to_fee_text = document.querySelector( '#agree-to-fee-input-group input[type=text]' );

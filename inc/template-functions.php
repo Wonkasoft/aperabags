@@ -2307,46 +2307,12 @@ function wonka_gform_validation( $form ) {
 		var input_label = document.querySelector( 'label.custom-file-label' );
 		var file_name;
 		var current_logo_wrap = document.querySelector( 'div.current-logo-wrap' );
-		if ( true !== document.querySelector( '#agree-to-fee-modal' ) ) 
+		var agree_to_fee_modal_wrap;
+		if ( document.querySelector( '#agree-to-fee-modal' ) ) 
 		{
-			var agree_to_fee_modal_wrap = document.createElement('DIV');
-			agree_to_fee_modal_wrap.classList.add( 'agree-to-fee-modal-wrap');
-			agree_to_fee_modal_wrap.classList.add( 'modal');
-			agree_to_fee_modal_wrap.classList.add( 'fade');
-			agree_to_fee_modal_wrap.setAttribute( 'id', 'agree-to-fee-modal');
-			var innerMarkup = '<div class=\"modal-dialog modal-dialog-centered\">';
-	        innerMarkup += '<div class=\"modal-content\">';
-	        innerMarkup += '<!-- Modal Header -->';
-	        innerMarkup += '<div class=\"modal-header\">';
-	        innerMarkup += '<button type=\"button\" class=\"btn close\" data-dismiss=\"modal\">&times;</button>';
-	        innerMarkup += '</div>';
-	        innerMarkup += '<!-- Modal body -->';
-	        innerMarkup += '<div class=\"modal-body\">';
-	        innerMarkup += '<p><strong>Oops!</strong> Looks like you are not uploading an .ai, .eps, .pdf, or vector image. Please close this box and upload your logo as one of those image files.</p>';
-	        innerMarkup += '<p>Don’t worry, if you do not have your logo as one of those file types, we can create one for you! Simply check the box below to continue submitting this image and accept the one-time $75 design fee.</p>';
-	        innerMarkup += '<p>';
-	        innerMarkup += '<div id=\"agree-to-fee-input-group\" class=\"input-group\">';
-	        innerMarkup += '<div class=\"input-group-prepend\">';
-	        innerMarkup += '<div class=\"input-group-text\">';
-	        innerMarkup += '<input type=\"checkbox\" />';
-	        innerMarkup += '</div>';
-	        innerMarkup += '</div>';
-	        innerMarkup += '<input type=\"text\" class=\"form-control\" placeholder=\"I agree to the design fee above.\" />';
-	        innerMarkup += '</div>';
-	        innerMarkup += '</p>';
-	        innerMarkup += '</div>';
-	        innerMarkup += '<!-- Modal footer -->';
-	        innerMarkup += '<div class=\"modal-footer\">';
-	        innerMarkup += '<button type=\"button\" class=\"wonka-btn\" data-dismiss=\"modal\">Close</button>';
-	        innerMarkup += '</div>';
-	        innerMarkup += '<button id=\"agree-to-open\" type=\"button\" class=\"btn btn-primary\" style=\"display: none;\" data-toggle=\"modal\" data-target=\"#agree-to-fee-modal\">';
-	        innerMarkup += '</button>';
-	        innerMarkup += '</div>';
-	        innerMarkup += '</div>';
-			agree_to_fee_modal_wrap.innerHTML = innerMarkup;
+			agree_to_fee_modal_wrap = document.querySelector( '#agree-to-fee-modal' );
 		}
-
-
+		
 		file_input.addEventListener( 'change', function( e ) 
 			{
 				if ( '' === file_input.value ) 
@@ -2361,7 +2327,6 @@ function wonka_gform_validation( $form ) {
 
 				if ( file_name.includes( '.png' ) !== false || file_name.includes( '.jpg' ) !== false || file_name.includes( '.jpeg' ) !== false ) 
 				{
-					document.body.appendChild( agree_to_fee_modal_wrap );
 					var closebtns = document.querySelectorAll( 'button[data-dismiss=modal]' );
 					var agree_to_fee_checkbox = document.querySelector( '#agree-to-fee-input-group input[type=checkbox]' );
 					var agree_to_fee_text = document.querySelector( '#agree-to-fee-input-group input[type=text]' );
