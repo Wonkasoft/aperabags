@@ -1,6 +1,6 @@
 # [Apera Bags](http://wonkasoft.com/aperabags)
 
-Custom Built for Hit And Run
+Custom Built for Aperabags.com
 
 * Project: [github.com/wonkasoft/aperabags](https://github.com/wonkasoft/aperabags)
 * Website: [wonkasoft.com](http://wonkasoft.com)
