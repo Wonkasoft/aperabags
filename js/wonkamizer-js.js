@@ -3324,7 +3324,7 @@ var componentForm;
 							var response = JSON.parse( this.responseText );
 							if ( response.success ) 
 							{
-								if ( 'role added' === response.data.msg ) {
+								if ( 'role added' === response.data.msg || 'roles added' === response.data.msg ) {
 									upgrade_btn_wrapper.remove();
 									document.location.reload( true );
 								}
