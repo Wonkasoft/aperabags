@@ -251,10 +251,16 @@ if ( class_exists( 'WC_Gateway_CyberSource' ) ) {
 	require_once get_stylesheet_directory() . '/inc/wc-cybersource-custom.php';
 }
 
+/**
+ * Load Wonkasoft_Refersion_Api class file.
+ */
 if ( ! class_exists( 'Wonkasoft_Refersion_Api' ) ) {
 	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-refersion-api.php';
 }
 
+/**
+ * Load Wonkasoft_GetResponse_Api class file.
+ */
 if ( ! class_exists( 'Wonkasoft_GetResponse_Api' ) ) {
 	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-getresponse-api.php';
 }

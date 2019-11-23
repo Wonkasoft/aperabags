@@ -2093,42 +2093,6 @@ function wonkasoft_woocommerce_created_customer( $customer_id ) {
 }
 add_action( 'woocommerce_created_customer', 'wonkasoft_woocommerce_created_customer', 1 );
 
-function wonkasoft_upgrade_account_perks() {
-	$nonce = ( isset( $_POST['security'] ) ) ? wp_kses_post( wp_unslash( $_POST['security'] ) ) : '';
-	( wp_verify_nonce( $nonce, 'ws-request-nonce' ) ) || die( 'die' );
-
-	if ( isset( $_POST ) ) {
-		$user_id = wp_get_current_user()->ID;
-		$user    = new WP_User( $user_id );
-
-		$role         = 'apera_perks_partner';
-		$role_display = 'Apera Perks Partner';
-
-		$role2         = 'customer';
-		$role_display2 = 'Customer';
-
-		$output = array();
-		if ( $_POST['user_id'] == $user_id ) {
-			if ( ! in_array( $role, $user->roles ) ) :
-				$user->add_role( $role, $role_display );
-				$output['msg'] = 'role added';
-				RSActionRewardModule::award_points_for_account_signup( $user_id );
-			endif;
-
-			if ( ! in_array( $role2, $user->roles ) ) :
-				$user->add_role( $role2, $role_display2 );
-				$output['msg'] = 'roles added';
-			endif;
-		}
-		$output['user_id']    = $user->ID;
-		$output['user_roles'] = $user->roles;
-
-		wp_send_json_success( $output );
-	}
-}
-add_action( 'wp_ajax_wonkasoft_upgrade_account_perks', 'wonkasoft_upgrade_account_perks' );
-add_action( 'wp_ajax_nopriv_wonkasoft_upgrade_account_perks', 'wonkasoft_upgrade_account_perks' );
-
 
 remove_action( 'woocommerce_after_cart_table', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ) );
 add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ) );

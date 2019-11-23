@@ -128,7 +128,7 @@ else :
 	$user_cookie       = new stdclass();
 	$user_cookie->show = true;
 endif;
-if ( ! empty( $newsletter_section ) && $newsletter_section->newsletter_mods->enable_popup && $user_cookie->show && ! is_account_page() ) :
+if ( ! empty( $newsletter_section ) && $newsletter_section->newsletter_mods->enable_popup && $user_cookie->show && ! is_account_page() && ! is_cart() && ! Is_checkout() ) :
 	$bg_img   = ( ! empty( $newsletter_section->newsletter_mods->background_image ) ) ? $newsletter_section->newsletter_mods->background_image : '';
 	$bg_color = ( ! empty( $newsletter_section->newsletter_mods->background_color ) ) ? $newsletter_section->newsletter_mods->background_color : '';
 	if ( ! empty( $newsletter_section->newsletter_mods->background_color ) ) :

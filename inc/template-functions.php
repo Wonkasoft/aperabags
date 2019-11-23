@@ -306,6 +306,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] .= ' inline-form wonka-discount-form';
 	endif;
 
+	if ( in_array( $form['title'], array( 'Design Fees Capture' ) ) ) :
+		$form['cssClass'] .= ' inline-form wonka-design-fees-form';
+	endif;
+
 	foreach ( $form['fields'] as &$field ) :
 
 		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
@@ -1556,7 +1560,7 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
 			$output .= '<div class="form-wrap">';
 			$output .= '<div class="form-container">';
-			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 0, false );
+			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 1, false );
 			$output .= '</div>';
 			$output .= '</div>';
 
@@ -1568,11 +1572,13 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
 			$output .= '<div class="form-wrap">';
 			$output .= '<div class="form-container">';
-			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 0, false );
+			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 1, false );
 			$output .= '</div>';
 			$output .= '</div>';
 
 		}
+
+		$output .= gravity_form( 'Design Fees Capture', false, false, false, null, true, 1, false );
 
 		$output .= '</div>';
 
@@ -1582,38 +1588,6 @@ function wonkasoft_my_account_logo_link_endpoint_content() {
 
 }
 add_action( 'woocommerce_account_club-gym-logo_endpoint', 'wonkasoft_my_account_logo_link_endpoint_content' );
-
-
-function wonkasoft_parse_account_logo() {
-
-	$user         = wp_get_current_user();
-	$user_id      = $user->ID;
-	$company_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
-
-	$output = '';
-
-	if ( ! empty( $company_logo ) ) {
-		$company_logo = json_decode( $company_logo );
-	}
-
-	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) {
-
-		if ( ! empty( $company_logo->url ) ) {
-
-			$output .= '<img src="' . esc_attr( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ) . '" data-attachment-id="' . $company_logo->id . '" class="current-logo" />';
-
-		} else {
-
-			$output .= '<div class="no-logo">You have no logo on file. If you just tried to update your logo there must have been a problem with the upload. Try again or contact us for further help.</div>';
-
-		}
-
-		wp_send_json_success( $output );
-
-	}
-}
-add_action( 'wp_ajax_wonkasoft_parse_account_logo', 'wonkasoft_parse_account_logo' );
-add_action( 'wp_ajax_nopriv_wonkasoft_parse_account_logo', 'wonkasoft_parse_account_logo' );
 
 /**
  * This will check for coupons and create one if needed.
@@ -2301,74 +2275,8 @@ function wonka_gform_validation( $form ) {
 		});
 	}";
 
-	$output .= "if ( document.querySelector( 'input[type=file].custom-file-input' ) ) 
-	{
-		var file_input = document.querySelector( 'input[type=file].custom-file-input' );
-		var input_label = document.querySelector( 'label.custom-file-label' );
-		var file_name;
-		var current_logo_wrap = document.querySelector( 'div.current-logo-wrap' );
-		var agree_to_fee_modal_wrap;
-		if ( document.querySelector( '#agree-to-fee-modal' ) ) 
-		{
-			agree_to_fee_modal_wrap = document.querySelector( '#agree-to-fee-modal' );
-		}
-		
-		file_input.addEventListener( 'change', function( e ) 
-			{
-				if ( '' === file_input.value ) 
-				{
-					input_label.innerText = 'Choose file';
-				}
-				else
-				{
-					file_name = file_input.value.split('\\\\')[file_input.value.split('\\\\').length - 1];
-					input_label.innerText = file_name;
-				}
-
-				if ( file_name.includes( '.png' ) !== false || file_name.includes( '.jpg' ) !== false || file_name.includes( '.jpeg' ) !== false ) 
-				{
-					var closebtns = document.querySelectorAll( 'button[data-dismiss=modal]' );
-					var agree_to_fee_checkbox = document.querySelector( '#agree-to-fee-input-group input[type=checkbox]' );
-					var agree_to_fee_text = document.querySelector( '#agree-to-fee-input-group input[type=text]' );
-					agree_to_fee_checkbox.addEventListener( 'change', function( e ) 
-						{
-							if ( true === agree_to_fee_checkbox.checked ) 
-							{
-								document.querySelector( '.hidden-agree-to-fees input' ).value = agree_to_fee_text.placeholder;
-								document.querySelector( 'button[data-dismiss=modal]' ).click();
-							}
-							else
-							{
-								document.querySelector( '.hidden-agree-to-fees input' ).value = 'Not set';
-							}
-						} );
-					closebtns.forEach( function( btn, i ) 
-						{
-							btn.addEventListener( 'click', function( e ) 
-								{
-									setTimeout( function() 
-									{
-										if ( false === agree_to_fee_checkbox.checked ) 
-										{
-											file_input.value = '';
-											input_label.innerText = 'Choose file';
-										}
-									}, 200 );
-								} );
-						});
-					agree_to_fee_modal_wrap.addEventListener( 'click', function( e ) 
-						{
-							if ( agree_to_fee_modal_wrap.classList.contains( 'show' ) ) 
-							{
-								document.querySelector( 'button[data-dismiss=modal]' ).click();
-							}
-						});
-					document.querySelector( '#agree-to-open' ).click();
-				}
-			} );
-	}";
-
 	GFFormDisplay::add_init_script( $form['id'], 'myaccount_validation', GFFormDisplay::ON_PAGE_RENDER, $output );
 
 }
 add_action( 'gform_register_init_scripts', 'wonka_gform_validation' );
+
