@@ -8,13 +8,13 @@ ul {
 }
 
 ol {
-	list-style: decimal;
+	list-style: olive;
 }
 
 li > ul,
 li > ol {
 	margin-bottom: 0;
-	margin-left: 1.2rem;
+	margin-left: 0;
     padding-left: 2rem;
 }
 
