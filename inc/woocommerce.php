@@ -1748,6 +1748,7 @@ function add_customer_order_notes( $order_id ) {
 	// because I already have the ID from the hook I am using.
 	$order        = new WC_Order( $order_id );
 	$free_logo_id = '';
+	$quantity     = 1;
 
 	$query          = new WC_Product_Query();
 	$query_products = $query->get_products();
@@ -1760,10 +1761,13 @@ function add_customer_order_notes( $order_id ) {
 	}
 
 	if ( ! empty( $free_logo_id ) ) {
-		$product = wc_get_product( $free_logo_id );
+		$free_logo = wc_get_product( $free_logo_id );
 	}
 
 	$coupon_codes = $order->get_used_coupons();
+	if ( empty( $coupon_codes ) ) {
+		return;
+	}
 
 	$user_query = new WP_User_Query(
 		array(
@@ -1783,8 +1787,8 @@ function add_customer_order_notes( $order_id ) {
 				$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
 
 				if ( $coupon_code === $company_logo->coupon_code ) :
-					if ( ! empty( $product ) ) {
-						$order->add_product( $product, 1 );
+					if ( ! empty( $free_logo ) ) {
+						$order->add_product( $free_logo, $quantity );
 					}
 					// The text for the note.
 					$note  = 'This is a ' . $company_logo->company_name . " order, make sure to add custom logo before shipping\n";
@@ -1802,7 +1806,7 @@ function add_customer_order_notes( $order_id ) {
 
 }
 
-add_action( 'woocommerce_payment_complete', 'add_customer_order_notes', 10, 1 );
+add_action( 'woocommerce_payment_complete', 'add_customer_order_notes', 15, 1 );
 
 function wonkasoft_single_product_archive_thumbnail_size( $size ) {
 	$size = 'cart_products_size';

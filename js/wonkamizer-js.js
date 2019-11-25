@@ -3355,9 +3355,15 @@ function initAutocomplete()
 {
   // Create the autocomplete object, restricting the search to geographical
   // location types.
-  autocomplete = new google.maps.places.Autocomplete(
-      /** @type {!HTMLInputElement} */( document.getElementById( 'shipping_address_1' ) ),
-      {types: ['geocode']});
+  try {
+	  autocomplete = new google.maps.places.Autocomplete(
+	      /** @type {!HTMLInputElement} */( document.getElementById( 'shipping_address_1' ) ),
+	      {types: ['geocode']});
+  }
+  catch( err ) {
+  	console.log( err );
+  	return;
+  }
 
   // Avoid paying for data that you don't need by restricting the set of
 	// place fields that are returned to just the address components.
