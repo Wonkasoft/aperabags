@@ -2352,3 +2352,17 @@ function wonkasoft_plugins_remove_actions() {
 
 }
 add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_plugins_remove_actions', 1 );
+
+/**
+ * Allowing tags in the editor.
+ *
+ * @param  [type] $initArray [description]
+ * @return [type]            [description]
+ */
+function override_mce_options( $initArray ) {
+	$opts                                 = '*[*]';
+	$initArray['valid_elements']          = $opts;
+	$initArray['extended_valid_elements'] = $opts;
+	return $initArray;
+}
+add_filter( 'tiny_mce_before_init', 'override_mce_options' );

@@ -1,11 +1,21 @@
+div.sgpb-popup-dialog-main-div-theme-wrapper-2 {
+  @include prefix( box-shadow, 0 1px 4px 0 rgba( 0,0,0, .7 ), moz o webkit );
+}
+
+img.sgpb-popup-close-button-2 {
+  border: 2px solid #fff;
+  border-radius: 50%;
+  padding: 0;
+}
+
 div.popup-content-wrapper {
 	position: relative;
 	display: grid;
-  grid-template-columns: 1fr 450px;
+  grid-template-columns: 1fr 370px;
   grid-auto-flow: column;
   align-items: center;
   background: #333e48;
-  width: 1000px;
+  width: 996px;
   height: 600px;
   margin: auto;
   overflow: hidden;
@@ -13,7 +23,6 @@ div.popup-content-wrapper {
   background-size: cover;
   background-position: 100% center;
   background-repeat: no-repeat;
-  border: 2px solid red;
   
    &::before {
      content: "";
