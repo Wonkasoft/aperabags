@@ -1,0 +1,136 @@
+div.popup-content-wrapper {
+	position: relative;
+	display: grid;
+  grid-template-columns: 1fr 450px;
+  grid-auto-flow: column;
+  align-items: center;
+  background: #333e48;
+  width: 1000px;
+  height: 600px;
+  margin: auto;
+  overflow: hidden;
+  background-image: url('https://aperabags.com/wp-content/uploads/2019/11/bf-dt-bg-photo.jpg');
+  background-size: cover;
+  background-position: 100% center;
+  background-repeat: no-repeat;
+  border: 2px solid red;
+  
+   &::before {
+     content: "";
+     position: absolute;
+     background: #333e48;
+     top: 0;
+     left: 0;
+     bottom: 0;
+     width: 30%;
+     z-index: 0;
+  }
+  
+  > div.popup-col {
+    width: 100%;
+    height: 100%;
+  }
+  
+  div.popup-left-col {
+  	position: relative;
+    background: #333e48;
+    display: grid;
+    align-items: center;
+    justify-content: start;
+    grid-auto-flow: row;
+    z-index: 195;
+    -webkit-transform: skew(20deg);
+      -moz-transform: skew(20deg);
+      -o-transform: skew(20deg);
+      transform: skew(20deg);
+    
+    > div {
+      position: relative;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #fff;
+      -webkit-transform: skew(-20deg);
+        -moz-transform: skew(-20deg);
+        -o-transform: skew(-20deg);
+        transform: skew(-20deg);
+    }
+    
+    div.popup-left-content {
+        position: relative;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        z-index: 200;
+        
+        > div {
+          padding: 20px;
+          width: 85%;
+        }
+        
+        div.popup-left-preheader {
+          font-size: 1.5rem;
+        }
+        
+        div.popup-left-header {
+          width: 85%;
+          background: #000000;
+          padding: 15px;
+          font-size: 2.5rem;
+          overflow: hidden;
+          margin-left: -16px;
+          -webkit-transform: skew(20deg);
+          -moz-transform: skew(20deg);
+          -o-transform: skew(20deg);
+          transform: skew(20deg);
+          
+          div.popup-left-header-inner {
+            margin-left: 16px;
+            -webkit-transform: skew(-20deg);
+            -moz-transform: skew(-20deg);
+            -o-transform: skew(-20deg);
+            transform: skew(-20deg);
+          }
+        }
+        
+        div.popup-left-subheader {
+          
+        }
+        
+        div.popup-left-sale {
+          
+        }
+        
+        div.popup-left-subsale {
+          
+        }
+        
+        div.popup-left-message {
+          
+        }
+        
+        div.popup-left-cta {
+          
+        }
+        
+        div.popup-left-disclaimer {
+          width: 105%;
+          text-align: left;
+          font-size: .9rem;
+        }
+      }
+  }
+  
+  div.popup-right-col {
+  	position: relative;
+    
+    div.popup-right-content {
+      position: relative;
+      
+    }
+  }
+}

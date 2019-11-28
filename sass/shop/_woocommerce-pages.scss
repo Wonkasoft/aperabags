@@ -394,11 +394,13 @@ div.wonka-row-express-checkout-btns {
     text-align: center;
     margin: 0 auto 15px;
     padding: 12px 8px;
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    min-width: 170px;
+    grid-auto-columns: auto;
+    grid-auto-flow: column;
+    min-width: 200px;
+    grid-gap: 8px;
 
     > div:not(:last-child) {
       margin-bottom: 8px;
@@ -408,11 +410,6 @@ div.wonka-row-express-checkout-btns {
       margin: 8px auto;
       height: 2px;
       background: rgba( #333, .5 );
-    }
-
-    div#wc-stripe-payment-request-wrapper,
-    div#wc-stripe-payment-request-button {
-      width: 100%;
     }
   }
 
@@ -431,7 +428,7 @@ div.wonka-row-express-checkout-btns {
       div.express-checkout-btns {
 
         > div {
-          margin: 0 4px 0 0 !important;
+          margin: auto !important;
         }
 
         > div:first-child {
@@ -739,7 +736,8 @@ div.cart-collaterals {
 
     &:before {
       content: "\f05a";
-      font-family: FontAwesome;
+      font-family: 'FontAwesome';
+      font-weight: 900;
       display: inline-block;
       flex: 0 0 100%;
       width: 45px;

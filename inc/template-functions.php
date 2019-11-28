@@ -2280,3 +2280,75 @@ function wonka_gform_validation( $form ) {
 }
 add_action( 'gform_register_init_scripts', 'wonka_gform_validation' );
 
+/**
+ * This is replacing the re-order btns on the site.
+ *
+ * @param  object $order contains the current order.
+ */
+function wonkasoft_btn_fix_for_re_order( $order ) {
+
+	if ( WC()->version < '3.0.0' ) {
+		if ( ! $order->has_status( 'completed' ) ) {
+			?>
+					<p>
+						<a class="button ced_my_account_reorder wonka-btn" href="javascript:void(0);" data-order_id="<?php echo $order->id; ?>">
+							<?php _e( 'Re-Order', 'one-click-order-reorder' ); ?>
+						</a>
+					</p>
+					<?php
+
+					$settings = get_option( 'ced_ocor_general_settings', false );
+					if ( ! empty( $settings ) ) {
+						if ( $settings['same_order_btn'] == '1' ) {
+							?>
+							<p>
+								<a class="button ced_my_account_place_same_order wonka-btn" href="javascript:void(0);" data-order_id="<?php echo $order->id; ?>">
+									<?php _e( 'Place Same Order', 'one-click-order-reorder' ); ?>
+								</a>
+							</p>
+							<?php
+						}
+					}
+					?>
+					<?php
+		}
+	} else {
+
+		if ( ! $order->has_status( 'completed' ) ) {
+			?>
+					<p>
+						<a class="button ced_my_account_reorder wonka-btn" href="javascript:void(0);" data-order_id="<?php echo $order->get_id(); ?>">
+					<?php _e( 'Re-Order', 'one-click-order-reorder' ); ?>
+						</a>
+					</p>
+					<?php
+
+					$settings = get_option( 'ced_ocor_general_settings', false );
+					if ( ! empty( $settings ) ) {
+						if ( $settings['same_order_btn'] == '1' ) {
+							?>
+							<p>
+								<a class="button ced_my_account_place_same_order wonka-btn" href="javascript:void(0);" data-order_id="<?php echo $order->get_id(); ?>">
+									<?php _e( 'Place Same Order', 'one-click-order-reorder' ); ?>
+								</a>
+							</p>
+							<?php
+						}
+					}
+					?>
+					<?php
+		}
+	}
+
+}
+add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_btn_fix_for_re_order', 10, 1 );
+
+function wonkasoft_plugins_remove_actions() {
+
+	if ( class_exists( 'Ced_Click_n_Go' ) ) {
+
+		// remove_action( 'woocommerce_order_details_after_order_table', array( 'Ced_Click_n_Go', CNG_PREFIX . '_add_edit_order_button' ), 10, 1 );
+	}
+
+}
+add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_plugins_remove_actions', 1 );
