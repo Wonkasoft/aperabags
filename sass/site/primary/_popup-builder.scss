@@ -3,143 +3,362 @@ div.sgpb-popup-dialog-main-div-theme-wrapper-2 {
 }
 
 img.sgpb-popup-close-button-2 {
-  border: 2px solid #fff;
+  border: 2px ridge #fff;
   border-radius: 50%;
   padding: 0;
+  margin: -4px 0;
 }
 
 div.popup-content-wrapper {
-	position: relative;
-	display: grid;
-  grid-template-columns: 1fr 370px;
-  grid-auto-flow: column;
-  align-items: center;
-  background: #333e48;
-  width: 996px;
-  height: 600px;
-  margin: auto;
-  overflow: hidden;
-  background-image: url('https://aperabags.com/wp-content/uploads/2019/11/bf-dt-bg-photo.jpg');
-  background-size: cover;
-  background-position: 100% center;
-  background-repeat: no-repeat;
-  
-   &::before {
-     content: "";
-     position: absolute;
-     background: #333e48;
-     top: 0;
-     left: 0;
-     bottom: 0;
-     width: 30%;
-     z-index: 0;
-  }
-  
-  > div.popup-col {
-    width: 100%;
-    height: 100%;
-  }
-  
-  div.popup-left-col {
-  	position: relative;
-    background: #333e48;
+    position: relative;
     display: grid;
-    align-items: center;
-    justify-content: start;
-    grid-auto-flow: row;
-    z-index: 195;
-    -webkit-transform: skew(20deg);
-      -moz-transform: skew(20deg);
-      -o-transform: skew(20deg);
-      transform: skew(20deg);
+    grid-template-columns: 1fr;
+    grid-auto-flow: column;
+    align-items: stretch;
+    background: #333e48;
+    width: 100%;
+    max-width: 996px;
+    height: 700px;
+    overflow: hidden;
+    font-family: $font__main_jose;
+    color: #fff;
+    margin: auto;
+    background-image: url('https://aperabags.com/wp-content/uploads/2019/11/bf-mob-bg-photo-b.jpg');
+    background-size: cover;
+    background-position: 100% center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+
+    * {
+      box-sizing: border-box;
+    }
     
-    > div {
+    > div.popup-col {
+      width: 100%;
+      height: 100%;
+    }
+
+    div.popup-left-col {
       position: relative;
       display: grid;
       align-items: center;
-      justify-content: center;
-      height: 100%;
-      color: #fff;
-      -webkit-transform: skew(-20deg);
-        -moz-transform: skew(-20deg);
-        -o-transform: skew(-20deg);
-        transform: skew(-20deg);
-    }
-    
-    div.popup-left-content {
+      justify-content: start;
+      grid-auto-flow: row;
+      z-index: 195;
+      
+      > div {
         position: relative;
         display: grid;
         align-items: center;
         justify-content: center;
-        width: 100%;
         height: 100%;
-        text-align: center;
-        z-index: 200;
-        
-        > div {
-          padding: 20px;
-          width: 85%;
-        }
-        
-        div.popup-left-preheader {
-          font-size: 1.5rem;
-        }
-        
-        div.popup-left-header {
-          width: 85%;
-          background: #000000;
-          padding: 15px;
-          font-size: 2.5rem;
-          overflow: hidden;
-          margin-left: -16px;
-          -webkit-transform: skew(20deg);
-          -moz-transform: skew(20deg);
-          -o-transform: skew(20deg);
-          transform: skew(20deg);
+        color: #fff;
+      }
+      
+      div.popup-left-content {
+          position: relative;
+          display: grid;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          z-index: 200;
           
-          div.popup-left-header-inner {
-            margin-left: 16px;
-            -webkit-transform: skew(-20deg);
-            -moz-transform: skew(-20deg);
-            -o-transform: skew(-20deg);
-            transform: skew(-20deg);
+          > div {
+            padding: 4px 15px;
+            width: 100%;
+          }
+          
+          div.popup-left-preheader {
+            font-size: 1.4rem;
+            font-weight: 700;
+            padding-top: 260px;
+            padding-bottom: 0;
+          }
+          
+          div.popup-left-header {
+            position: relative;
+            width: 100%;
+            background: #111418;
+            padding: 15px;
+            font-size: 2.5rem;
+            
+            div.popup-left-header-inner {
+              position: relative;
+              top: 2px;
+              font-size: 1.7rem;
+              font-weight: 800;
+              line-height: 1;
+            }
+          }
+          
+          div.popup-left-subheader {
+            font-size: 1.4rem;
+            font-weight: 700;
+            padding: 0;
+          }
+          
+          div.popup-left-sale {
+            margin: auto;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+
+            > span {
+              background: #52abf6;
+              position: relative;
+              display: inline-block;
+              padding: 0 15px;
+              @include prefix( transform, skew(15deg), o moz webkit );
+              
+              span {
+                position: relative;
+                display: inline-block;
+                top: 4px;
+                @include prefix( transform, skew(-15deg), o moz webkit );
+              }
+            }
+          }
+          
+          div.popup-left-subsale {
+            font-size: 1rem;
+            font-weight: 300;
+            padding: 0;
+          }
+          
+          div.popup-left-message {
+            font-size: 1rem;
+            font-weight: 300;
+            padding: 8px 15px;
+          }
+          
+          div.popup-left-cta {
+            padding: 8px;
+
+            a{
+              position: relative;
+              display: inline;
+              font-size: 1rem;
+              line-height: 1;
+              font-weight: 700;
+              padding: 8px 30px;
+
+              > span {
+                position: relative;
+                top: 2px;
+                display: inline;
+              }
+            }
+          }
+          
+          div.popup-left-disclaimer {
+            padding: 8px 15px;
+            width: 100%;
+            text-align: left;
+            font-size: .8rem;
+            font-weight: 300;
+
+            a{
+              position: relative;
+              display: inline;
+
+              > span {
+                position: relative;
+                top: 2px;
+                display: inline;
+              }
+            }
           }
         }
-        
-        div.popup-left-subheader {
-          
-        }
-        
-        div.popup-left-sale {
-          
-        }
-        
-        div.popup-left-subsale {
-          
-        }
-        
-        div.popup-left-message {
-          
-        }
-        
-        div.popup-left-cta {
-          
-        }
-        
-        div.popup-left-disclaimer {
-          width: 105%;
-          text-align: left;
-          font-size: .9rem;
-        }
-      }
-  }
-  
-  div.popup-right-col {
+    }
+}
+
+@include media-breakpoint( lg ) {
+
+  div.popup-content-wrapper {
   	position: relative;
+  	display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: column;
+    align-items: center;
+    background: #333e48;
+    width: 996px;
+    height: 600px;
+    overflow: hidden;
+    font-family: $font__main_jose;
+    margin: auto;
+    background-image: url('https://aperabags.com/wp-content/uploads/2019/11/bf-dt-bg-photo.jpg');
+    background-size: cover;
+    background-position: 100% center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
     
-    div.popup-right-content {
-      position: relative;
+    div.popup-left-col {
+    	position: relative;
+      background: #333e48;
+      display: grid;
+      align-items: center;
+      justify-content: start;
+      grid-auto-flow: row;
+      z-index: 195;
+
+      &:before {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        top: 0;
+        left: 100%;
+        bottom: 0;
+        border: 600px solid transparent;
+        border-left: 100px solid #333e48;
+      }
       
+      > div {
+        position: relative;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: #fff;
+      }
+      
+      div.popup-left-content {
+          position: relative;
+          display: grid;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          z-index: 200;
+          
+          > div {
+            padding: 4px 15px;
+            width: 100%;
+          }
+          
+          div.popup-left-preheader {
+            font-size: 1.8rem;
+            font-weight: 700;
+            padding-top: 35px;
+            padding-bottom: 0;
+          }
+          
+          div.popup-left-header {
+            position: relative;
+            width: calc( 100% + 14px );
+            background: #111418;
+            padding: 15px;
+            font-size: 2.5rem;
+            
+            div.popup-left-header-inner {
+              position: relative;
+              top: 2px;
+              font-size: 2.8rem;
+              font-weight: 800;
+            }
+
+            &:before {
+              content: "";
+              position: absolute;
+              display: inline-block;
+              left: calc(100% - 14px);
+              bottom: 0;
+              border: 14px solid transparent;
+              border-bottom: 84px solid #111418;
+              z-index: 0;
+            }
+          }
+          
+          div.popup-left-subheader {
+            font-size: 1.8rem;
+            font-weight: 700;
+            padding: 0;
+          }
+          
+          div.popup-left-sale {
+            margin: auto;
+            font-size: 2.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+
+            > span {
+              background: #52abf6;
+              position: relative;
+              display: inline-block;
+              padding: 4px 20px;
+              @include prefix( transform, skew(15deg), o moz webkit );
+              
+              span {
+                position: relative;
+                display: inline-block;
+                top: 4px;
+                @include prefix( transform, skew(-15deg), o moz webkit );
+              }
+            }
+          }
+          
+          div.popup-left-subsale {
+            font-size: 1.7rem;
+            font-weight: 500;
+            padding: 0;
+          }
+          
+          div.popup-left-message {
+            font-size: 1.1rem;
+            font-weight: 300;
+            padding: 25px 50px;
+          }
+          
+          div.popup-left-cta {
+            padding: 15px;
+
+            a{
+              position: relative;
+              display: inline;
+              font-size: 1.4rem;
+              line-height: 1;
+              font-weight: 700;
+              padding: 8px 35px;
+
+              > span {
+                position: relative;
+                top: 2px;
+                display: inline;
+              }
+            }
+          }
+          
+          div.popup-left-disclaimer {
+            padding: 15px;
+            width: 120%;
+            text-align: left;
+            font-size: .95rem;
+            font-weight: 300;
+
+            a{
+              position: relative;
+              display: inline;
+
+              > span {
+                position: relative;
+                top: 2px;
+                display: inline;
+              }
+            }
+          }
+        }
+    }
+    
+    div.popup-right-col {
+    	position: relative;
+      
+      div.popup-right-content {
+        position: relative;
+        
+      }
     }
   }
+
 }
