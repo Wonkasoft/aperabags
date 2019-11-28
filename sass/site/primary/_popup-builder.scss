@@ -17,6 +17,7 @@ div.popup-content-wrapper {
     max-width: 996px;
     height: 600px;
     overflow: hidden;
+    overflow-y: auto;
     font-family: $font__main_jose;
     color: #fff;
     margin: auto;
