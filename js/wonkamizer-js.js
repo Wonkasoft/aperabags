@@ -1992,7 +1992,7 @@ var componentForm;
 			
 		}
 
-		if ( document.querySelector( '.page-template-default' ) || document.querySelector( '.page-template' ) || document.querySelector( '.error404' ) ) 
+		if ( document.querySelector( 'body:not(.home) #masthead' ) ) 
 		{
 			header_el = document.querySelector( '#masthead' );
 			header_height = header_el.offsetHeight;

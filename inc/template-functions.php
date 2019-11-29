@@ -2341,17 +2341,36 @@ function wonkasoft_btn_fix_for_re_order( $order ) {
 	}
 
 }
-add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_btn_fix_for_re_order', 10, 1 );
+add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_btn_fix_for_re_order', 8, 1 );
 
 function wonkasoft_plugins_remove_actions() {
 
 	if ( class_exists( 'Ced_Click_n_Go' ) ) {
 
-		// remove_action( 'woocommerce_order_details_after_order_table', array( 'Ced_Click_n_Go', CNG_PREFIX . '_add_edit_order_button' ), 10, 1 );
+		remove_action( 'woocommerce_order_details_after_order_table', array( 'Ced_Click_n_Go', CNG_PREFIX . '_add_edit_order_button' ), 15, 1 );
+
 	}
 
 }
-add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_plugins_remove_actions', 1 );
+// add_action( 'wp_head', 'wonkasoft_plugins_remove_actions', 500 );
+
+function get_hooks( $tag ) {
+	global $wp_current_filter;
+	global $debug_tags;
+
+	if ( in_array( $tag, $debug_tags ) ) {
+		return;
+	}
+
+	if ( substr( $tag, 0, 1 ) === '<' ) :
+		return;
+	endif;
+
+	print_r( '<pre class="found-hook">' . $tag . '</pre>' );
+	$debug_tags[] = $tag;
+
+}
+// add_action( 'all', 'get_hooks', 999 );
 
 /**
  * Allowing tags in the editor.
