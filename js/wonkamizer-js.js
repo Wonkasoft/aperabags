@@ -3346,6 +3346,9 @@ var componentForm;
 
 			$('#shipping_phone').inputmask('(999) 999-9999');
 		}
+
+		$('#loader-wrapper').fadeOut();
+		
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 

@@ -22,6 +22,9 @@
 </head>
 
 <body <?php body_class(); ?>>
+	<div id="loader-wrapper">
+		<span class="loader"><span class="loader-inner"></span></span>
+	</div>
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'apera-bags' ); ?></a>
 

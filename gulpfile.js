@@ -31,7 +31,7 @@ sass.compiler = require('node-sass');
 gulp.task('browser-sync', function() {
 	browserSync.init({
 		proxy: local + siteName,
-		https: true,
+		https: false,
 		port: 4000
 	});
 });
