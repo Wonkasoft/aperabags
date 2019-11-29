@@ -2343,16 +2343,6 @@ function wonkasoft_btn_fix_for_re_order( $order ) {
 }
 // add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_btn_fix_for_re_order', 8, 1 );
 
-function wonkasoft_plugins_remove_actions() {
-
-	if ( class_exists( 'Ced_Click_n_Go' ) ) {
-
-		remove_action( 'woocommerce_order_details_after_order_table', array( 'Ced_Click_n_Go', CNG_PREFIX . '_add_edit_order_button' ), 15, 1 );
-
-	}
-
-}
-// add_action( 'wp_head', 'wonkasoft_plugins_remove_actions', 500 );
 
 function get_hooks( $tag ) {
 	global $wp_current_filter;
