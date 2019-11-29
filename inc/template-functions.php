@@ -2341,7 +2341,7 @@ function wonkasoft_btn_fix_for_re_order( $order ) {
 	}
 
 }
-add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_btn_fix_for_re_order', 8, 1 );
+// add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_btn_fix_for_re_order', 8, 1 );
 
 function wonkasoft_plugins_remove_actions() {
 
@@ -2375,13 +2375,13 @@ function get_hooks( $tag ) {
 /**
  * Allowing tags in the editor.
  *
- * @param  [type] $initArray [description]
+ * @param  [type] $mceInit [description]
  * @return [type]            [description]
  */
-function override_mce_options( $initArray ) {
-	$opts                                 = '*[*]';
-	$initArray['valid_elements']          = $opts;
-	$initArray['extended_valid_elements'] = $opts;
-	return $initArray;
+function override_mce_options( $mceInit ) {
+	$opts                               = '*[*]';
+	$mceInit['valid_elements']          = $opts;
+	$mceInit['extended_valid_elements'] = $opts;
+	return $mceInit;
 }
 add_filter( 'tiny_mce_before_init', 'override_mce_options' );
