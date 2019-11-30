@@ -1512,6 +1512,10 @@ function wonkasoft_my_account_club_gym_logo( $menu_links ) {
 
 	endif;
 
+	// Edits My Account Menu titles
+	$menu_links['orders'] = 'My Orders';
+	$menu_links['edit-account'] = 'My Account';
+
 	return $menu_links;
 
 }
