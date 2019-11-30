@@ -2156,3 +2156,22 @@ function wonkasoft_express_buttons_checkout() {
 	endif;
 }
 add_action( 'wp', 'wonkasoft_express_buttons_checkout', 10 );
+
+/** 
+ * Removes My account menu Items
+ *
+ * @author Carlos
+ */  
+function wonka_remove_account_menu_items( $menu_items ) {
+unset($menu_items['downloads']);
+unset($menu_items['edit-address']);
+unset($menu_items['customer-logout']);
+
+return $menu_items;
+}
+add_filter( 'woocommerce_account_menu_items', 'wonka_remove_account_menu_items', 999 );
+
+ /**
+	* Combines the address my account page with the account details page
+	*/
+add_action( 'woocommerce_account_edit-account_endpoint', 'woocommerce_account_edit_address' );
