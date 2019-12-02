@@ -604,7 +604,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				)
 			)
 		);
-		
+
 		/**
 		* Slider title settings Section
 		*
@@ -660,8 +660,6 @@ function apera_bags_customize_register( $wp_customize ) {
 				)
 			)
 		);
-
-
 
 		/**
 		* Slider 3 description settings Section
