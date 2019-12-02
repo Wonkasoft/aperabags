@@ -1512,6 +1512,10 @@ function wonkasoft_my_account_club_gym_logo( $menu_links ) {
 
 	endif;
 
+	// Edits My Account Menu titles
+	$menu_links['orders'] = 'My Orders';
+	$menu_links['edit-account'] = 'My Account';
+
 	return $menu_links;
 
 }
@@ -2341,18 +2345,8 @@ function wonkasoft_btn_fix_for_re_order( $order ) {
 	}
 
 }
-add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_btn_fix_for_re_order', 8, 1 );
+// add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_btn_fix_for_re_order', 8, 1 );
 
-function wonkasoft_plugins_remove_actions() {
-
-	if ( class_exists( 'Ced_Click_n_Go' ) ) {
-
-		remove_action( 'woocommerce_order_details_after_order_table', array( 'Ced_Click_n_Go', CNG_PREFIX . '_add_edit_order_button' ), 15, 1 );
-
-	}
-
-}
-// add_action( 'wp_head', 'wonkasoft_plugins_remove_actions', 500 );
 
 function get_hooks( $tag ) {
 	global $wp_current_filter;
@@ -2375,13 +2369,13 @@ function get_hooks( $tag ) {
 /**
  * Allowing tags in the editor.
  *
- * @param  [type] $initArray [description]
+ * @param  [type] $mceInit [description]
  * @return [type]            [description]
  */
-function override_mce_options( $initArray ) {
-	$opts                                 = '*[*]';
-	$initArray['valid_elements']          = $opts;
-	$initArray['extended_valid_elements'] = $opts;
-	return $initArray;
+function override_mce_options( $mceInit ) {
+	$opts                               = '*[*]';
+	$mceInit['valid_elements']          = $opts;
+	$mceInit['extended_valid_elements'] = $opts;
+	return $mceInit;
 }
 add_filter( 'tiny_mce_before_init', 'override_mce_options' );

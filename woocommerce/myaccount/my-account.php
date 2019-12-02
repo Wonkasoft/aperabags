@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
  * @since 2.6.0
  */
 do_action( 'woocommerce_account_navigation' ); ?>
-<div class="col-12 col-md-10">
+<div class="col-12 col-md-9">
 <div class="woocommerce-MyAccount-content">
 	<?php
 		/**
