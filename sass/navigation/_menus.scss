@@ -475,17 +475,16 @@
 /*============================================================
 =            This is for the my account dashboard            =
 ============================================================*/
-#main div.woocommerce {
+#main div.woocommerce .MyAccount-navigation-col {
+	max-width: 210px;
+	padding: 0 16px 0 0;
 
 	nav.woocommerce-MyAccount-navigation {
-		position: absolute;
-		border-right: 8px solid rgba( #52abf6, 1 );
 
 		ul {
 			display: flex;
 			justify-content: flex-end;
 			flex-wrap: wrap;
-			padding-right: 16px;
 
 			li{
 				height: 30px;
@@ -506,15 +505,15 @@
 				a.wonka-account-btn {
 					text-align: right;
 					border-radius: 100px;
-					background: #fff;
 					color: #4b5965;
 					font-family: $font__main_jose;
 					font-size: 18px;
 					font-weight: 600;
 					text-transform: uppercase;
+					transition: unset;
 					 
-					svg {
-						vertical-align: unset;
+					.myaccount-svg {
+						display: inline-flex;
 					}						
 				}
 
@@ -522,12 +521,12 @@
 
 					a.wonka-account-btn {
 						color: #19191a;
+						font-weight: 700;
 
 						.myaccount-svg {
 							border-radius: 50%;
 							background-color: #52abf6;
 							padding: 4px;
-							display: inline-flex;
 							
 							path,
 							polygon,
@@ -541,6 +540,32 @@
 						width: 100%;
 					}
 				}
+
+				&.is-active,
+				&.is-active:hover {
+					.wonka-account-btn {
+						background: #52abf6;
+						color: #ffffff;
+						font-weight: 700;
+						padding: 8px 15px 3px 15px;
+
+						.myaccount-svg {
+							border-radius: unset;
+							background-color: #52abf6;
+							padding: 0;
+
+							path,
+							polygon,
+							circle	{
+								fill: #ffffff
+							}
+						}
+					}
+					&::after {
+						display: none;
+					}
+				}
+
 			}
 		}
 	}

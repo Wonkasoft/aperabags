@@ -24,14 +24,14 @@ if (!defined('ABSPATH')) {
 do_action('woocommerce_before_account_navigation');
 ?>
 <div class="row wonka-row">
-	<div class="col-12 col-md-3">
+	<div class="col-12 col-md-3 MyAccount-navigation-col">
 		<nav class="woocommerce-MyAccount-navigation">
 			<ul>
 				<?php foreach (wc_get_account_menu_items() as $endpoint => $label) : ?>
 					<li class="<?php echo wc_get_account_menu_item_classes($endpoint); ?>">
 						<a class="wonka-account-btn" href="<?php echo esc_url(wc_get_account_endpoint_url($endpoint)); ?>">
-							<span class="menu-myaccount-label"><?php echo esc_html($label); ?></span>
-							<span class="myaccount-svg">
+							<?php echo esc_html($label); ?>
+							<div class="myaccount-svg">
 
 								<?php
 									switch ($endpoint) {
@@ -112,7 +112,7 @@ do_action('woocommerce_before_account_navigation');
 									<?php
 											break;
 									} ?>
-							</span>
+							</div>
 						</a>
 					</li>
 				<?php endforeach; ?>
