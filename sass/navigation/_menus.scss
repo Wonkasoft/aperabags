@@ -475,59 +475,75 @@
 /*============================================================
 =            This is for the my account dashboard            =
 ============================================================*/
-#main div.woocommerce {
+#main div.woocommerce .MyAccount-navigation-col {
+	max-width: 210px;
+	padding: 0 16px 0 0;
 
 	nav.woocommerce-MyAccount-navigation {
-		position: absolute;
-		border-right: 8px solid rgba( #52abf6, 1 );
 
 		ul {
 			display: flex;
 			justify-content: flex-end;
 			flex-wrap: wrap;
-			padding-right: 16px;
 
 			li{
-				height: 30px;
-				margin-bottom: 8px;
+				height: 40px;
 				position: relative;
+				display: grid;
+				align-items: center;
+
+				// &::before {
+				// 	content: "";
+				// 	display: inline-block;
+				// 	position: absolute;
+				// 	height: 8px;
+				// 	width: 8px;
+				// 	right: 0;
+				// 	background: #52abf6;
+				// }
 
 				&::after {
 					content: '';
 					display: block;
 					position: absolute;
-					right: 0;
+					right: 15px;
 					width: 0;
+					bottom: 3px;
 					height: 3px;
 					background: #52abf6;
-					transition: width .3s;
+					transition: all .3s;
 				}
 
 				a.wonka-account-btn {
 					text-align: right;
 					border-radius: 100px;
-					background: #fff;
 					color: #4b5965;
 					font-family: $font__main_jose;
+					padding: 0 5px 0 10px;
 					font-size: 18px;
 					font-weight: 600;
 					text-transform: uppercase;
+					transition: unset;
 					 
-					svg {
-						vertical-align: unset;
+					.myaccount-svg {
+						transition: all .3s;
+						display: inline-flex;
+						padding: 5.5px;
+						background: transparent;
 					}						
 				}
 
-				&:hover {
+				&:hover:not(.is-active) {
 
 					a.wonka-account-btn {
 						color: #19191a;
+						font-weight: 700;
 
 						.myaccount-svg {
+							position: relative;
+							bottom: -3px;
 							border-radius: 50%;
 							background-color: #52abf6;
-							padding: 4px;
-							display: inline-flex;
 							
 							path,
 							polygon,
@@ -538,9 +554,42 @@
 					}
 
 					&::after {
-						width: 100%;
+						width: 86%;
 					}
 				}
+
+				&.is-active,
+				&.is-active:hover {
+					&::before {
+						content: "";
+						display: inline-block;
+						position: absolute;
+						height: 8px;
+						width: 8px;
+						right: -16px;
+						background: #52abf6;
+					}
+
+					.wonka-account-btn {
+						background: #52abf6;
+						color: #ffffff;
+						font-weight: 700;
+
+						.myaccount-svg {
+							background-color: transparent;
+
+							path,
+							polygon,
+							circle	{
+								fill: #ffffff
+							}
+						}
+					}
+					&::after {
+						display: none;
+					}
+				}
+
 			}
 		}
 	}
