@@ -13,16 +13,6 @@
  */
 
 get_header();
-$users_query = new WP_User_Query( array( 'role' => 'apera_perks_partner' ) );
-$users       = $users_query->get_results();
-foreach ( $users as $key => $user ) {
-	if ( 1593 === $user->ID ) {
-		$this_user = get_user_meta( $user->ID );
-		echo "<pre>\n";
-		print_r( $this_user );
-		echo "</pre>\n";
-	}
-}
 ?>
 <?php if ( is_home() ) : ?>
 	<?php
