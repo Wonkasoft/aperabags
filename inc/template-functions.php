@@ -2346,8 +2346,8 @@ if ( class_exists( 'RSFunctionForReferralSystem' ) ) {
 						<td>
 							<div style="display: grid; align-items: center; justify-content: start; grid-auto-flow: column; grid-gap: 8px;">
 							<?php if ( get_option( 'rs_account_show_hide_facebook_share_button' ) == '1' ) { ?>
-								<div class="share_wrapper_static_url" id="share_wrapper_static_url" href="<?php echo $refurl; ?>" data-image="<?php echo get_option( 'rs_fbshare_image_url_upload' ); ?>" data-title="<?php echo get_option( 'rs_facebook_title' ); ?>" data-description="<?php echo get_option( 'rs_facebook_description' ); ?>" style="display: grid; align-items: center; justify-content: space-evenly; grid-auto-flow: column; margin: 0; height: 20px;">
-									<img class='fb_share_img' src="<?php echo SRP_PLUGIN_URL; ?>/assets/images/icon1.png"> <span class="label" style="padding: 0 3px; font-weight: normal;"><?php echo get_option( 'rs_fbshare_button_label' ); ?> </span>
+								<div class="share_wrapper_static_url" id="share_wrapper_static_url" href="<?php echo $refurl; ?>" data-image="<?php echo get_option( 'rs_fbshare_image_url_upload' ); ?>" data-title="<?php echo get_option( 'rs_facebook_title' ); ?>" data-description="<?php echo get_option( 'rs_facebook_description' ); ?>" style="display: grid; align-items: center; justify-content: space-evenly; grid-auto-flow: column; grid-gap: 4px; margin: 0; height: 20px; padding: 0 8px;">
+									<i class='fa fa-facebook'></i> <span class="label" style="font-weight: normal;"><?php echo get_option( 'rs_fbshare_button_label' ); ?> </span>
 								</div>
 							<?php } ?>
 							<?php if ( get_option( 'rs_account_show_hide_twitter_tweet_button' ) == '1' ) { ?>

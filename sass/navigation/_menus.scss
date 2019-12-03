@@ -486,32 +486,22 @@
 			justify-content: flex-end;
 			flex-wrap: wrap;
 
-			li{
+			li {
 				height: 40px;
 				position: relative;
 				display: grid;
 				align-items: center;
 
-				// &::before {
-				// 	content: "";
-				// 	display: inline-block;
-				// 	position: absolute;
-				// 	height: 8px;
-				// 	width: 8px;
-				// 	right: 0;
-				// 	background: #52abf6;
-				// }
-
 				&::after {
 					content: '';
 					display: block;
 					position: absolute;
-					right: 15px;
-					width: 0;
+					right: 18px;
+					left: 100%;
 					bottom: 3px;
 					height: 3px;
 					background: #52abf6;
-					transition: all .3s;
+					@include prefix( transition, all .3s ease-in-out, o moz webkit );
 				}
 
 				a.wonka-account-btn {
@@ -519,18 +509,33 @@
 					border-radius: 100px;
 					color: #4b5965;
 					font-family: $font__main_jose;
-					padding: 0 5px 0 10px;
 					font-size: 18px;
+					padding: 0 6px 0 10px;
 					font-weight: 600;
 					text-transform: uppercase;
 					transition: unset;
 					 
 					.myaccount-svg {
-						transition: all .3s;
+						position: relative;
 						display: inline-flex;
-						padding: 5.5px;
+						padding: 6px;
+						border-radius: 50%;
+						bottom: -3px;
 						background: transparent;
+						@include prefix( transition, all .55s ease-in-out, o moz webkit );
+
 					}						
+				}
+
+				&.is-active {
+
+					a.wonka-account-btn {
+
+						.myaccount-svg {
+							bottom: 0;
+						}
+					}
+
 				}
 
 				&:hover:not(.is-active) {
@@ -540,10 +545,8 @@
 						font-weight: 700;
 
 						.myaccount-svg {
-							position: relative;
-							bottom: -3px;
-							border-radius: 50%;
 							background-color: #52abf6;
+							@include prefix( transition, all .25s ease-in-out, o moz webkit );
 							
 							path,
 							polygon,
@@ -554,13 +557,13 @@
 					}
 
 					&::after {
-						width: 86%;
+						left: 10px;
 					}
 				}
 
-				&.is-active,
-				&.is-active:hover {
-					&::before {
+				&.is-active {
+
+					&:before {
 						content: "";
 						display: inline-block;
 						position: absolute;
@@ -568,8 +571,9 @@
 						width: 8px;
 						right: -16px;
 						background: #52abf6;
+						@include prefix( transition, all .3s ease-in-out, o moz webkit );
 					}
-
+					
 					.wonka-account-btn {
 						background: #52abf6;
 						color: #ffffff;
@@ -590,6 +594,12 @@
 					}
 				}
 
+				&.is-active:hover {
+
+					&:before {
+						width: 20px;
+					}
+				}
 			}
 		}
 	}
