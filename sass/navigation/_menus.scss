@@ -492,6 +492,16 @@
 				display: grid;
 				align-items: center;
 
+				// &::before {
+				// 	content: "";
+				// 	display: inline-block;
+				// 	position: absolute;
+				// 	height: 8px;
+				// 	width: 8px;
+				// 	right: 0;
+				// 	background: #52abf6;
+				// }
+
 				&::after {
 					content: '';
 					display: block;
@@ -550,6 +560,16 @@
 
 				&.is-active,
 				&.is-active:hover {
+					&::before {
+						content: "";
+						display: inline-block;
+						position: absolute;
+						height: 8px;
+						width: 8px;
+						right: -16px;
+						background: #52abf6;
+					}
+
 					.wonka-account-btn {
 						background: #52abf6;
 						color: #ffffff;
