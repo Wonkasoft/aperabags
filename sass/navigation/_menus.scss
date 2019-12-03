@@ -487,19 +487,21 @@
 			flex-wrap: wrap;
 
 			li{
-				height: 30px;
-				margin-bottom: 8px;
+				height: 40px;
 				position: relative;
+				display: grid;
+				align-items: center;
 
 				&::after {
 					content: '';
 					display: block;
 					position: absolute;
-					right: 0;
+					right: 15px;
 					width: 0;
+					bottom: 3px;
 					height: 3px;
 					background: #52abf6;
-					transition: width .3s;
+					transition: all .3s;
 				}
 
 				a.wonka-account-btn {
@@ -507,26 +509,31 @@
 					border-radius: 100px;
 					color: #4b5965;
 					font-family: $font__main_jose;
+					padding: 0 5px 0 10px;
 					font-size: 18px;
 					font-weight: 600;
 					text-transform: uppercase;
 					transition: unset;
 					 
 					.myaccount-svg {
+						transition: all .3s;
 						display: inline-flex;
+						padding: 5.5px;
+						background: transparent;
 					}						
 				}
 
-				&:hover {
+				&:hover:not(.is-active) {
 
 					a.wonka-account-btn {
 						color: #19191a;
 						font-weight: 700;
 
 						.myaccount-svg {
+							position: relative;
+							bottom: -3px;
 							border-radius: 50%;
 							background-color: #52abf6;
-							padding: 4px;
 							
 							path,
 							polygon,
@@ -537,7 +544,7 @@
 					}
 
 					&::after {
-						width: 100%;
+						width: 86%;
 					}
 				}
 
@@ -547,12 +554,9 @@
 						background: #52abf6;
 						color: #ffffff;
 						font-weight: 700;
-						padding: 8px 15px 3px 15px;
 
 						.myaccount-svg {
-							border-radius: unset;
-							background-color: #52abf6;
-							padding: 0;
+							background-color: transparent;
 
 							path,
 							polygon,
