@@ -33,7 +33,7 @@
     "path": "^0.12.7"
   },
   "siteName": "aperabags.com",
-  "localhost": "http://localhost/",
+  "localhost": "http://wonkasoft.dev/",
   "dependencies": {
     "check-node-version": "^4.0.1",
     "smoothscroll-polyfill": "^0.4.4"
