@@ -2157,17 +2157,17 @@ function wonkasoft_express_buttons_checkout() {
 }
 add_action( 'wp', 'wonkasoft_express_buttons_checkout', 10 );
 
-/** 
+/**
  * Removes My account menu Items
  *
  * @author Carlos
- */  
+ */
 function wonka_remove_account_menu_items( $menu_items ) {
-unset($menu_items['downloads']);
-unset($menu_items['edit-address']);
-unset($menu_items['customer-logout']);
+	unset( $menu_items['downloads'] );
+	unset( $menu_items['edit-address'] );
+	unset( $menu_items['customer-logout'] );
 
-return $menu_items;
+	return $menu_items;
 }
 add_filter( 'woocommerce_account_menu_items', 'wonka_remove_account_menu_items', 999 );
 
@@ -2175,3 +2175,53 @@ add_filter( 'woocommerce_account_menu_items', 'wonka_remove_account_menu_items',
 	* Combines the address my account page with the account details page
 	*/
 add_action( 'woocommerce_account_edit-account_endpoint', 'woocommerce_account_edit_address' );
+
+
+
+
+
+/**
+ * This is for the adding of the endpoint for my account page Earn AperaCash.
+ */
+function wonkasoft_add_all_endpoints() {
+
+	add_rewrite_endpoint( 'earn-aperacash', EP_PAGES );
+	add_rewrite_endpoint( 'zip-program', EP_PAGES );
+	add_rewrite_endpoint( 'ambassador-program', EP_PAGES );
+
+}
+add_action( 'init', 'wonkasoft_add_all_endpoints' );
+
+/**
+ * This is the earn AperaCash endpoint page
+ *
+ * @return echo parse the earn AperaCash end-point content
+ */
+function wonkasoft_my_account_earn_aperacash_endpoint_content() {
+	include get_stylesheet_directory() . '/woocommerce/myaccount/earn-aperacash.php';
+}
+
+add_action( 'woocommerce_account_earn-aperacash_endpoint', 'wonkasoft_my_account_earn_aperacash_endpoint_content' );
+
+
+/**
+ * This is the earn ZIP Program endpoint page
+ *
+ * @return echo parse the earn ZIP Program end-point content
+ */
+function wonkasoft_my_account_zip_program_endpoint_content() {
+	include get_stylesheet_directory() . '/woocommerce/myaccount/zip-program.php';
+}
+
+add_action( 'woocommerce_account_zip-program_endpoint', 'wonkasoft_my_account_zip_program_endpoint_content' );
+
+/**
+ * This is the earn Ambassador Program endpoint page
+ *
+ * @return echo parse the earn Ambassador Program end-point content
+ */
+function wonkasoft_my_account_ambassador_program_endpoint_content() {
+	include get_stylesheet_directory() . '/woocommerce/myaccount/ambassador-program.php';
+}
+
+add_action( 'woocommerce_account_ambassador-program_endpoint', 'wonkasoft_my_account_ambassador_program_endpoint_content' );

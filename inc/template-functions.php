@@ -1504,6 +1504,16 @@ function wonkasoft_my_account_club_gym_logo( $menu_links ) {
 
 	$user = wp_get_current_user();
 
+	// Edits My Account Menu titles
+	$menu_links = array(
+		'dashboard'          => __( 'Dashboard', 'woocommerce' ),
+		'earn-aperacash'     => __( 'Earn AperaCash', 'woocommerce' ),
+		'orders'             => __( 'My Orders', 'woocommerce' ),
+		'edit-account'       => __( 'My Account', 'woocommerce' ),
+		'zip-program'        => __( 'ZIP Program', 'woocommerce' ),
+		'ambassador-program' => __( 'Ambassador Program', 'woocommerce' ),
+	);
+
 	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) :
 
 		$menu_links = array_slice( $menu_links, 0, 5, true )
@@ -1511,10 +1521,6 @@ function wonkasoft_my_account_club_gym_logo( $menu_links ) {
 		+ array_slice( $menu_links, 5, null, true );
 
 	endif;
-
-	// Edits My Account Menu titles
-	$menu_links['orders'] = 'My Orders';
-	$menu_links['edit-account'] = 'My Account';
 
 	return $menu_links;
 
@@ -2285,6 +2291,88 @@ function wonka_gform_validation( $form ) {
 add_action( 'gform_register_init_scripts', 'wonka_gform_validation' );
 
 /**
+ * Allowing tags in the editor.
+ *
+ * @param  [type] $mceInit [description]
+ * @return [type]            [description]
+ */
+function override_mce_options( $mceInit ) {
+	$opts                               = '*[*]';
+	$mceInit['valid_elements']          = $opts;
+	$mceInit['extended_valid_elements'] = $opts;
+	return $mceInit;
+}
+add_filter( 'tiny_mce_before_init', 'override_mce_options' );
+
+
+if ( class_exists( 'RSFunctionForReferralSystem' ) ) {
+
+	/* Display the list of generated link */
+
+	function static_url_table( $referralperson ) {
+			wp_enqueue_script( 'fp_referral_frontend', SRP_PLUGIN_DIR_URL . 'includes/frontend/js/modules/fp-referral-frontend.js', array( 'jquery' ), SRP_VERSION );
+			$LocalizedScript = array(
+				'ajaxurl'        => SRP_ADMIN_AJAX_URL,
+				'buttonlanguage' => get_option( 'rs_language_selection_for_button' ),
+				'wplanguage'     => get_option( 'WPLANG' ),
+				'fbappid'        => get_option( 'rs_facebook_application_id' ),
+			);
+			wp_localize_script( 'fp_referral_frontend', 'fp_referral_frontend_params', $LocalizedScript );
+			$referralperson = ( '' !== $referralperson ) ? $referralperson : wp_get_current_user()->data->ID;
+			$query          = ( get_option( 'rs_restrict_referral_points_for_same_ip' ) == 'yes' ) ? array(
+				'ref' => $referralperson,
+				'ip'  => base64_encode( get_referrer_ip_address() ),
+			) : array( 'ref' => $referralperson );
+			$refurl         = add_query_arg( $query, get_option( 'rs_static_generate_link' ) );
+			?>
+			<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+			<h3 class="rs_my_referral_link_title" style="margin: 15px auto 8px;"><?php echo get_option( 'rs_my_referral_link_button_label' ); ?></h3>
+			<table class="shop_table my_account_referral_link_static" id="my_account_referral_link_static">
+				<thead>
+					<tr>
+						<th class="referral-number_static"><span class="nobr"><?php echo get_option( 'rs_generate_link_sno_label' ); ?></span></th>                        
+						<th class="referral-link_static"><span class="nobr"><?php echo get_option( 'rs_generate_link_referrallink_label' ); ?></span></th>
+						<th class="referral-social_static"><span class="nobr"><?php echo get_option( 'rs_generate_link_social_label' ); ?></span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="referrals_static">
+						<td><?php echo 1; ?></td>
+						<td class="copy_clip_icon">
+							<?php echo $refurl; ?>
+							<?php if ( get_option( 'rs_enable_copy_to_clipboard' ) == 'yes' ) { ?>
+								<i data-referralurl="<?php echo $refurl; ?>" title="<?php _e( 'Click to copy the link', SRP_LOCALE ); ?>" alt="<?php _e( 'Click to copy the link', SRP_LOCALE ); ?>" id="rs_copy_clipboard_image" class="rs_copy_clipboard_image fa fa-copy float-right"></i>
+								<div style="display:none;"class="rs_alert_div_for_copy">
+									<div class="rs_alert_div_for_copy_content">
+										<p><?php _e( 'Referral Link Copied', SRP_LOCALE ); ?></p>
+									</div>
+								</div>
+							<?php } ?>
+						</td>
+						<td>
+							<div style="display: grid; align-items: center; justify-content: start; grid-auto-flow: column; grid-gap: 8px;">
+							<?php if ( get_option( 'rs_account_show_hide_facebook_share_button' ) == '1' ) { ?>
+								<div class="share_wrapper_static_url" id="share_wrapper_static_url" href="<?php echo $refurl; ?>" data-image="<?php echo get_option( 'rs_fbshare_image_url_upload' ); ?>" data-title="<?php echo get_option( 'rs_facebook_title' ); ?>" data-description="<?php echo get_option( 'rs_facebook_description' ); ?>" style="display: grid; align-items: center; justify-content: space-evenly; grid-auto-flow: column; grid-gap: 4px; margin: 0; height: 20px; padding: 0 8px;">
+									<i class='fa fa-facebook'></i> <span class="label" style="font-weight: normal;"><?php echo get_option( 'rs_fbshare_button_label' ); ?> </span>
+								</div>
+							<?php } ?>
+							<?php if ( get_option( 'rs_account_show_hide_twitter_tweet_button' ) == '1' ) { ?>
+								<a href="https://twitter.com/share" class="twitter-share-button" data-count="none" style="display: inline-block;" data-url="<?php echo $refurl; ?>">Tweet</a>
+							<?php } ?>
+						</div>
+						</td>
+					</tr>                    
+				</tbody>
+			</table>
+			<?php
+	}
+
+	add_action( 'woocommerce_before_my_account', 'static_url_table' );
+	remove_action( 'woocommerce_before_my_account', array( 'RSFunctionForReferralSystem', 'static_referral_link_in_my_account' ) );
+}
+
+
+/**
  * This is replacing the re-order btns on the site.
  *
  * @param  object $order contains the current order.
@@ -2365,17 +2453,3 @@ function get_hooks( $tag ) {
 
 }
 // add_action( 'all', 'get_hooks', 999 );
-
-/**
- * Allowing tags in the editor.
- *
- * @param  [type] $mceInit [description]
- * @return [type]            [description]
- */
-function override_mce_options( $mceInit ) {
-	$opts                               = '*[*]';
-	$mceInit['valid_elements']          = $opts;
-	$mceInit['extended_valid_elements'] = $opts;
-	return $mceInit;
-}
-add_filter( 'tiny_mce_before_init', 'override_mce_options' );

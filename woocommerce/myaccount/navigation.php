@@ -17,34 +17,36 @@
  * @version 2.6.0
  */
 
-if (!defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-do_action('woocommerce_before_account_navigation');
+do_action( 'woocommerce_before_account_navigation' );
 ?>
 <div class="row wonka-row">
-	<div class="col-12 col-md-3">
+	<div class="col-12 col-md-3 MyAccount-navigation-col">
 		<nav class="woocommerce-MyAccount-navigation">
 			<ul>
-				<?php foreach (wc_get_account_menu_items() as $endpoint => $label) : ?>
-					<li class="<?php echo wc_get_account_menu_item_classes($endpoint); ?>">
-						<a class="wonka-account-btn" href="<?php echo esc_url(wc_get_account_endpoint_url($endpoint)); ?>">
-							<span class="menu-myaccount-label"><?php echo esc_html($label); ?></span>
-							<span class="myaccount-svg">
+				<?php foreach ( wc_get_account_menu_items() as $endpoint => $label ) : ?>
+					<li class="<?php echo wc_get_account_menu_item_classes( $endpoint ); ?>">
+						<a class="wonka-account-btn" href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>">
+							<?php echo esc_html( $label ); ?>
+							<div class="myaccount-svg">
 
 								<?php
-									switch ($endpoint) {
-										case "dashboard": ?>
+								switch ( $endpoint ) {
+									case 'dashboard':
+										?>
 										<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
 											<g id="Dashboard_1_">
 												<polygon fill="#4B5965" points="741.851,357 375.495,17.476 9.136,357 103,357 103,732 297,732 297,484 458,484 458,732 648,732    648,357  " />
 											</g>
 										</svg>
-									<?php
-											break;
+										<?php
+										break;
 
-										case "earn-aperacash": ?>
+									case 'earn-aperacash':
+										?>
 										<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
 											<g id="Earn_AperaCash">
 												<g>
@@ -52,10 +54,11 @@ do_action('woocommerce_before_account_navigation');
 												</g>
 											</g>
 										</svg>
-									<?php
-											break;
+										<?php
+										break;
 
-										case "orders": ?>
+									case 'orders':
+										?>
 										<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
 											<g id="My_Orders">
 												<g>
@@ -67,20 +70,22 @@ do_action('woocommerce_before_account_navigation');
 												</g>
 											</g>
 										</svg>
-									<?php
-											break;
+										<?php
+										break;
 
-										case "edit-account": ?>
+									case 'edit-account':
+										?>
 										<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
 											<g id="My_Account">
 												<circle fill="#4B5965" cx="376" cy="193.305" r="190.581" />
 												<path fill="#4B5965" d="M660.879,699.045c0,7.518-0.86,47.955-0.86,47.955H92.148c0,0-1.027-39.754-1.027-47.955   c0-157.338,127.545-284.881,284.879-284.881C533.335,414.164,660.879,541.707,660.879,699.045z" />
 											</g>
 										</svg>
-									<?php
-											break;
+										<?php
+										break;
 
-										case "zip": ?>
+									case 'zip-program':
+										?>
 										<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
 											<g id="Zip_Program">
 												<g>
@@ -96,10 +101,11 @@ do_action('woocommerce_before_account_navigation');
 												</g>
 											</g>
 										</svg>
-									<?php
-											break;
+										<?php
+										break;
 
-										case "ambassadors": ?>
+									case 'ambassador-program':
+										?>
 										<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
 											<g id="Ambassadors">
 												<g>
@@ -109,14 +115,15 @@ do_action('woocommerce_before_account_navigation');
 												</g>
 											</g>
 										</svg>
-									<?php
-											break;
-									} ?>
-							</span>
+										<?php
+										break;
+								}
+								?>
+							</div>
 						</a>
 					</li>
 				<?php endforeach; ?>
 			</ul>
 		</nav>
 	</div><!-- .col-12 -->
-	<?php do_action('woocommerce_after_account_navigation'); ?>
+	<?php do_action( 'woocommerce_after_account_navigation' ); ?>

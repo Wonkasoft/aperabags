@@ -604,7 +604,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				)
 			)
 		);
-		
+
 		/**
 		* Slider title settings Section
 		*
@@ -660,8 +660,6 @@ function apera_bags_customize_register( $wp_customize ) {
 				)
 			)
 		);
-
-
 
 		/**
 		* Slider 3 description settings Section
@@ -905,7 +903,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		$wp_customize->add_setting(
 			'cause_image_' . $i,
 			array(
-				'default'   => 0,
+				'default'   => '',
 				'transport' => 'refresh',
 			)
 		);
@@ -949,7 +947,7 @@ function apera_bags_customize_register( $wp_customize ) {
 					'section'     => 'cause_section',
 					'settings'    => 'cause_image_link_' . $i,
 					'type'        => 'text',
-					'description' => 'Slect a product to link the image to.',
+					'description' => 'Select a product to link the image to.',
 				)
 			)
 		);

@@ -31,6 +31,7 @@ get_header();
 				<?php
 				/* Foreach loop to build slider according to slides entered in the customizer */
 				foreach ( $top_slider->slides as $slide ) :
+
 					/* Checks for an img set in the slide object */
 					if ( ! empty( $slide->slide_img ) ) :
 						?>
