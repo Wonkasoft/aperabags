@@ -2131,23 +2131,23 @@ function wonkasoft_express_buttons_checkout() {
 		remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
 
 		/**
-		 * This will remove the payment button from the cart page
+		 * This will remove the payment button from the cart page.
 		 *
-		 * @since  1.0.0 Remove Stripe buttons on the cart page
+		 * @since  1.0.0 Remove Stripe buttons on the cart page.
 		 */
 		remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
 
 		/**
-		 * Remove Stripe payment button on the checkout page for move
+		 * Remove Stripe payment button on the checkout page for move.
 		 *
-		 * @since  1.0.0 This will remove the Apple Google Pay buttons from the checkout page for move
+		 * @since  1.0.0 This will remove the Apple Google Pay buttons from the checkout page for move.
 		 */
 		remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
 
 		/**
-		 * This will remove the payment button from the checkout page for move
+		 * This will remove the payment button from the checkout page for move.
 		 *
-		 * @since  1.0.0 Remove Stripe buttons on the checkout page for move
+		 * @since  1.0.0 Remove Stripe buttons on the checkout page for move.
 		 */
 		remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
 
@@ -2158,7 +2158,7 @@ function wonkasoft_express_buttons_checkout() {
 add_action( 'wp', 'wonkasoft_express_buttons_checkout', 10 );
 
 /**
- * Removes My account menu Items
+ * Removes My account menu Items.
  *
  * @author Carlos
  */
@@ -2172,7 +2172,7 @@ function wonka_remove_account_menu_items( $menu_items ) {
 add_filter( 'woocommerce_account_menu_items', 'wonka_remove_account_menu_items', 999 );
 
 /**
- * Combines the address my account page with the account details page
+ * Combines the address my account page with the account details page.
  */
 add_action( 'woocommerce_account_edit-account_endpoint', 'woocommerce_account_edit_address' );
 
@@ -2180,3 +2180,49 @@ function wonkasoft_add_dashboard_extention() {
 	include get_stylesheet_directory() . '/woocommerce/myaccount/dashboard-extention.php';
 }
 add_action( 'woocommerce_account_dashboard', 'wonkasoft_add_dashboard_extention' );
+
+/**
+ * This is for the adding of the endpoint for my account page Earn AperaCash.
+ */
+function wonkasoft_add_all_endpoints() {
+
+	add_rewrite_endpoint( 'earn-aperacash', EP_PAGES );
+	add_rewrite_endpoint( 'zip-program', EP_PAGES );
+	add_rewrite_endpoint( 'ambassador-program', EP_PAGES );
+
+}
+add_action( 'init', 'wonkasoft_add_all_endpoints' );
+
+/**
+ * This is the earn AperaCash endpoint page
+ *
+ * @return echo parse the earn AperaCash end-point content.
+ */
+function wonkasoft_my_account_earn_aperacash_endpoint_content() {
+	include get_stylesheet_directory() . '/woocommerce/myaccount/earn-aperacash.php';
+}
+
+add_action( 'woocommerce_account_earn-aperacash_endpoint', 'wonkasoft_my_account_earn_aperacash_endpoint_content' );
+
+
+/**
+ * This is the earn ZIP Program endpoint page
+ *
+ * @return echo parse the earn ZIP Program end-point content.
+ */
+function wonkasoft_my_account_zip_program_endpoint_content() {
+	include get_stylesheet_directory() . '/woocommerce/myaccount/zip-program.php';
+}
+
+add_action( 'woocommerce_account_zip-program_endpoint', 'wonkasoft_my_account_zip_program_endpoint_content' );
+
+/**
+ * This is the earn Ambassador Program endpoint page
+ *
+ * @return echo parse the earn Ambassador Program end-point content.
+ */
+function wonkasoft_my_account_ambassador_program_endpoint_content() {
+	include get_stylesheet_directory() . '/woocommerce/myaccount/ambassador-program.php';
+}
+
+add_action( 'woocommerce_account_ambassador-program_endpoint', 'wonkasoft_my_account_ambassador_program_endpoint_content' );

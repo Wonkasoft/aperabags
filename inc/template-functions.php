@@ -1506,6 +1506,16 @@ function wonkasoft_my_account_club_gym_logo( $menu_links ) {
 
 	$user = wp_get_current_user();
 
+	// Edits My Account Menu titles
+	$menu_links = array(
+		'dashboard'          => __( 'Dashboard', 'woocommerce' ),
+		'earn-aperacash'     => __( 'Earn AperaCash', 'woocommerce' ),
+		'orders'             => __( 'My Orders', 'woocommerce' ),
+		'edit-account'       => __( 'My Account', 'woocommerce' ),
+		'zip-program'        => __( 'ZIP Program', 'woocommerce' ),
+		'ambassador-program' => __( 'Ambassador Program', 'woocommerce' ),
+	);
+
 	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) :
 
 		$menu_links = array_slice( $menu_links, 0, 5, true )
@@ -1513,10 +1523,6 @@ function wonkasoft_my_account_club_gym_logo( $menu_links ) {
 		+ array_slice( $menu_links, 5, null, true );
 
 	endif;
-
-	// Edits My Account Menu titles
-	$menu_links['orders']       = 'My Orders';
-	$menu_links['edit-account'] = 'My Account';
 
 	return $menu_links;
 
