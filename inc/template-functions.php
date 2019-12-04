@@ -45,6 +45,7 @@ add_action( 'wp_head', 'apera_bags_pingback_header' );
 function get_section_mods( $section ) {
 	return the_mods_for_section( $section );
 }
+
 /**
  * This grabs all slides that are set in the customizer for the section that is passed in.
  *
@@ -557,7 +558,8 @@ function aperabags_options_sanitize( $option ) {
 /**
  * This builds the display of the options page.
  */
-function aperabags_theme_options_page() {   ?>
+function aperabags_theme_options_page() {
+	?>
 		<div class="container">
 			<div class="row">
 				<div class="col-12 title-column">

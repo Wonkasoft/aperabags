@@ -83,29 +83,6 @@ font-size: 1.3rem;
 		max-width: 1500px;
 	}
 
-	main#main.main-my-account {
-		width: 100%;
-		max-width: 1024px;
-		padding: 0;
-
-		.woocommerce {
-			padding: 0;
-
-			.MyAccount-content-col {
-				padding: 0;
-				border-left: 8px solid rgba( #52abf6, 1 );
-				background-color: #f5f5f5;
-			
-				.woocommerce-MyAccount-content {
-					height: 100%;
-					width: 762px;
-					padding: 18px 18px 0 10px;
-					background-color: #ffffff;
-				}
-			}
-		}
-	}
-
 	main.main-contact-us {
 
 		.entry-title {
@@ -159,6 +136,10 @@ font-size: 1.3rem;
 .entry-summary {
 	p {
 		line-height: 1.1;
+
+		&.form-submit {
+			padding: 8px;
+		}
 	}
 }
 

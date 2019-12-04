@@ -2797,9 +2797,7 @@ var componentForm;
 				
 			}
 			/*=====  End of This is the setup for the Wonka Express Checkout Button  ======*/
-			header_el = document.querySelector( '#masthead' );
-			header_height = header_el.offsetHeight;
-			add_fixed_header( window.pageYOffset, header_el, header_height );
+
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
