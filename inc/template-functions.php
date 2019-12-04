@@ -1513,7 +1513,7 @@ function wonkasoft_my_account_club_gym_logo( $menu_links ) {
 		'orders'             => __( 'My Orders', 'woocommerce' ),
 		'edit-account'       => __( 'My Account', 'woocommerce' ),
 		'zip-program'        => __( 'ZIP Program', 'woocommerce' ),
-		'ambassador-program' => __( 'Ambassador Program', 'woocommerce' ),
+		'ambassador-program' => __( 'Ambassadors', 'woocommerce' ),
 	);
 
 	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) :
