@@ -1497,6 +1497,111 @@ function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null ) {
 }
 
 /**
+ * This adds the my account menu link for the logo.
+ *
+ * @param  array $menu_links contains the current my account links.
+ * @return [type]             [description]
+ */
+function wonkasoft_my_account_club_gym_logo( $menu_links ) {
+
+	$user = wp_get_current_user();
+
+	// Edits My Account Menu titles
+	$menu_links = array(
+		'dashboard'          => __( 'Dashboard', 'woocommerce' ),
+		'earn-aperacash'     => __( 'Earn AperaCash', 'woocommerce' ),
+		'orders'             => __( 'My Orders', 'woocommerce' ),
+		'edit-account'       => __( 'My Account', 'woocommerce' ),
+		'zip-program'        => __( 'ZIP Program', 'woocommerce' ),
+		'ambassador-program' => __( 'Ambassadors', 'woocommerce' ),
+	);
+
+	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) :
+
+		$menu_links = array_slice( $menu_links, 0, 5, true )
+		+ array( 'club-gym-logo' => 'Club/Gym Logo' )
+		+ array_slice( $menu_links, 5, null, true );
+
+	endif;
+
+	return $menu_links;
+
+}
+add_filter( 'woocommerce_account_menu_items', 'wonkasoft_my_account_club_gym_logo', 50 );
+
+/**
+ * This is for the adding of the endpoint for my account page logo link.
+ */
+function wonkasoft_add_endpoint_my_account() {
+
+	add_rewrite_endpoint( 'club-gym-logo', EP_PAGES );
+
+}
+add_action( 'init', 'wonkasoft_add_endpoint_my_account' );
+
+/**
+ * This is the content that is parsed at the logo end point.
+ */
+function wonkasoft_my_account_logo_link_endpoint_content() {
+
+	$user         = wp_get_current_user();
+	$user_id      = $user->ID;
+	$company_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
+
+	$output = '';
+	if ( ! empty( $company_logo ) ) {
+		$company_logo = json_decode( $company_logo );
+	}
+
+	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) {
+
+		$output .= '<div class="my-account-logo-content-wrap">';
+		$output .= '<h2>Club/Gym Logo</h2>';
+
+		if ( ! empty( $company_logo->company_name ) ) {
+			$output .= '<span>' . $company_logo->coupon_code . '</span>';
+		} else {
+			$output .= '<span>need a coupon code</span>';
+		}
+
+		if ( ! empty( $company_logo->url ) ) {
+
+			$output .= '<div class="current-logo-wrap">';
+			$output .= '<img src="' . wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) . '" srcset="' . wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) . '" class="current-logo" />';
+			$output .= '</div>';
+			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
+			$output .= '<div class="form-wrap">';
+			$output .= '<div class="form-container">';
+			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 1, false );
+			$output .= '</div>';
+			$output .= '</div>';
+
+		} else {
+
+			$output .= '<div class="current-logo-wrap">';
+			$output .= '<div class="no-logo">You have no logo on file.</div>';
+			$output .= '</div>';
+			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
+			$output .= '<div class="form-wrap">';
+			$output .= '<div class="form-container">';
+			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 1, false );
+			$output .= '</div>';
+			$output .= '</div>';
+
+		}
+
+		$output .= gravity_form( 'Design Fees Capture', false, false, false, null, true, 1, false );
+
+		$output .= '</div>';
+
+		echo $output;
+
+	}
+
+}
+add_action( 'woocommerce_account_club-gym-logo_endpoint', 'wonkasoft_my_account_logo_link_endpoint_content' );
+
+/**
  * This will check for coupons and create one if needed.
  *
  * @param  array  $entry_fields contains the entry fields from submitted form.
