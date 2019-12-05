@@ -2158,28 +2158,10 @@ function wonkasoft_express_buttons_checkout() {
 add_action( 'wp', 'wonkasoft_express_buttons_checkout', 10 );
 
 /**
- * Removes My account menu Items.
- *
- * @author Carlos
- */
-function wonka_remove_account_menu_items( $menu_items ) {
-	unset( $menu_items['downloads'] );
-	unset( $menu_items['edit-address'] );
-	unset( $menu_items['customer-logout'] );
-
-	return $menu_items;
-}
-add_filter( 'woocommerce_account_menu_items', 'wonka_remove_account_menu_items', 999 );
-
-/**
  * Combines the address my account page with the account details page.
  */
 add_action( 'woocommerce_account_edit-account_endpoint', 'woocommerce_account_edit_address' );
 
-function wonkasoft_add_dashboard_extention() {
-	include get_stylesheet_directory() . '/woocommerce/myaccount/dashboard-extention.php';
-}
-add_action( 'woocommerce_account_dashboard', 'wonkasoft_add_dashboard_extention' );
 
 /**
  * This is for the adding of the endpoint for my account page Earn AperaCash.
@@ -2194,6 +2176,54 @@ function wonkasoft_add_all_endpoints() {
 add_action( 'init', 'wonkasoft_add_all_endpoints' );
 
 /**
+ * This adds the my account menu link for the logo.
+ *
+ * @param  array $menu_links contains the current my account links.
+ * @return [type]             [description]
+ */
+function wonkasoft_my_account_nav_menu_items( $menu_links ) {
+
+	$user = wp_get_current_user();
+
+	// Edits My Account Menu titles
+	$menu_links = array(
+		'dashboard'          => __( 'Dashboard', 'woocommerce' ),
+		'earn-aperacash'     => __( 'Earn AperaCash', 'woocommerce' ),
+		'orders'             => __( 'My Orders', 'woocommerce' ),
+		'edit-account'       => __( 'My Account', 'woocommerce' ),
+		'zip-program'        => __( 'ZIP Program', 'woocommerce' ),
+		'ambassador-program' => __( 'Ambassador', 'woocommerce' ),
+	);
+
+	/**
+	 * once goes live these nav items need to be removed for those without the roles.
+	if ( ! in_array( 'apera_zip_affiliate', $user->roles ) ) :
+
+		unset( $menu_links['zip-program'] );
+
+	endif;
+
+	if ( ! in_array( 'apera_ambassador_affiliate', $user->roles ) ) :
+
+		unset( $menu_links['ambassador-program'] );
+
+	endif;
+	 */
+
+	return $menu_links;
+
+}
+add_filter( 'woocommerce_account_menu_items', 'wonkasoft_my_account_nav_menu_items', 50 );
+
+/**
+ * This adds my account dashboard extention.
+ */
+function wonkasoft_add_dashboard_extention() {
+	include get_stylesheet_directory() . '/woocommerce/myaccount/dashboard-extention.php';
+}
+add_action( 'woocommerce_account_dashboard', 'wonkasoft_add_dashboard_extention' );
+
+/**
  * This is the earn AperaCash endpoint page
  *
  * @return echo parse the earn AperaCash end-point content.
@@ -2201,9 +2231,7 @@ add_action( 'init', 'wonkasoft_add_all_endpoints' );
 function wonkasoft_my_account_earn_aperacash_endpoint_content() {
 	include get_stylesheet_directory() . '/woocommerce/myaccount/earn-aperacash.php';
 }
-
 add_action( 'woocommerce_account_earn-aperacash_endpoint', 'wonkasoft_my_account_earn_aperacash_endpoint_content' );
-
 
 /**
  * This is the earn ZIP Program endpoint page
@@ -2213,7 +2241,6 @@ add_action( 'woocommerce_account_earn-aperacash_endpoint', 'wonkasoft_my_account
 function wonkasoft_my_account_zip_program_endpoint_content() {
 	include get_stylesheet_directory() . '/woocommerce/myaccount/zip-program.php';
 }
-
 add_action( 'woocommerce_account_zip-program_endpoint', 'wonkasoft_my_account_zip_program_endpoint_content' );
 
 /**
@@ -2224,5 +2251,19 @@ add_action( 'woocommerce_account_zip-program_endpoint', 'wonkasoft_my_account_zi
 function wonkasoft_my_account_ambassador_program_endpoint_content() {
 	include get_stylesheet_directory() . '/woocommerce/myaccount/ambassador-program.php';
 }
-
 add_action( 'woocommerce_account_ambassador-program_endpoint', 'wonkasoft_my_account_ambassador_program_endpoint_content' );
+
+
+function wonkasoft_woocommerce_my_account_my_orders_columns( $columns ) {
+
+	$columns = array(
+		'order-date'      => __( 'Date', 'woocommerce' ),
+		'order-price'     => __( 'Price', 'woocommerce' ),
+		'order-aperacash' => __( 'AperaCash', 'woocommerce' ),
+		'order-status'    => __( 'Status', 'woocommerce' ),
+		'order-actions'   => __( 'Actions', 'woocommerce' ),
+	);
+
+	return $columns;
+}
+add_filter( 'woocommerce_my_account_my_orders_columns', 'wonkasoft_woocommerce_my_account_my_orders_columns', 10 );

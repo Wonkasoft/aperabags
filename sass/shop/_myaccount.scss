@@ -175,7 +175,7 @@ div#content {
 
   main#main.main-my-account {
     width: 100%;
-    max-width: 1024px;
+    max-width: 1050px;
     padding: 0;
 
     header.entry-header {
@@ -205,8 +205,8 @@ div#content {
 
       div.MyAccount-navigation-col {
         position: relative;
-        max-width: 210px;
-        padding: 0 24px 0 0;
+        padding: 15px 24px 0 0;
+        max-width: 254px;
 
         &:after {
           content: '';
@@ -221,6 +221,7 @@ div#content {
         }
 
         nav.woocommerce-MyAccount-navigation {
+          max-width: 220px;
 
           ul {
             position: relative;
@@ -234,36 +235,47 @@ div#content {
               display: grid;
               align-items: center;
 
-              &:after {
-                content: '';
-                display: block;
-                position: absolute;
-                right: 22px;
-                left: 100%;
-                bottom: 3px;
-                height: 3px;
-                background: #52abf6;
-                @include prefix( transition, all .3s ease-in-out, o moz webkit );
-              }
-
               a.wonka-account-btn {
+                position: relative;
+                display: grid;
+                align-items: center;
+                justify-content: end;
+                grid-gap: 4px;
+                grid-auto-flow: column;
                 text-align: right;
                 border-radius: 100px;
                 color: #4b5965;
                 font-family: $font__main_jose;
                 font-size: 18px;
-                padding: 0 6px 0 10px;
+                padding: 0 6px 0 0;
                 font-weight: 600;
-                height: 30px;
+                height: 31px;
                 text-transform: uppercase;
                 transition: unset;
+
+                &:after {
+                  content: '';
+                  display: block;
+                  position: absolute;
+                  right: 22px;
+                  left: 100%;
+                  bottom: 1px;
+                  height: 3px;
+                  background: #52abf6;
+                  @include prefix( transition, all .3s ease-in-out, o moz webkit );
+                }
+
+                span {
+                  position: relative;
+                  display: inline-block;
+                  top: 2px;
+                }
                  
                 .myaccount-svg {
                   position: relative;
                   display: inline-flex;
                   padding: 6px;
                   border-radius: 50%;
-                  bottom: -3px;
                   background: transparent;
                   @include prefix( transition, all .55s ease-in-out, o moz webkit );
 
@@ -273,6 +285,7 @@ div#content {
               &.is-active {
 
                 a.wonka-account-btn {
+                  padding-left: 10px;
 
                   .myaccount-svg {
                     bottom: 0;
@@ -287,6 +300,10 @@ div#content {
                   color: #19191a;
                   font-weight: 700;
 
+                  &::after {
+                    left: 0;
+                  }
+
                   .myaccount-svg {
                     background-color: #52abf6;
                     @include prefix( transition, all .25s ease-in-out, o moz webkit );
@@ -299,9 +316,6 @@ div#content {
                   }
                 }
 
-                &::after {
-                  left: 10px;
-                }
               }
 
               &.is-active {
@@ -456,23 +470,25 @@ div#content {
 
             div.dashboard-third-left {
               display: grid;
-              grid-template-columns: auto auto;
+              grid-template-columns: 1fr 1fr;
               font-weight: 700;
+              grid-gap: 8px;
 
               div.dashboard-third-boxes {
                 display: grid;
                 align-items: start;
-                justify-content: center;
-                grid-gap: 4px;
-
-                span {
-                  display: inline-block;
-                }
 
                 div.aperacash-box-title {
+                  text-align: center;
                   padding: 12px 0;
                   height: 44px;
+                  width: 100%;
                   @include font-size( 1.15 );
+                  
+                  span {
+                    display: inline-block;
+                    width: 100%;
+                  }
                 }
               }
 
@@ -492,16 +508,67 @@ div#content {
                 background: #ffded8;
                 color: #f67152;
               }
+
+              div.sidebox-bottom {
+                background: #c6e1f4;
+                color: #ffffff;
+              }
             }
 
             div.dashboard-third-right {
               max-width: 310px;
               color: #19191a;
+              display: grid;
+              align-items: stretch;
 
               i.circle {
                 position: relative;
                 top: -2px;
                 font-size: 7px;
+              }
+
+              div.apera-points {
+                display: grid;
+                align-items: stretch;
+
+                ul.list-of-points {
+                  display: grid;
+                  align-items: stretch;
+                }
+              }
+
+              li {
+                @include font-size( 1 );
+              }
+
+              li:not( :last-child ) {
+                margin-bottom: 20px;
+              }
+            }
+          }
+
+          section.dashboard-fourth {
+            position: relative;
+            padding: 15px;
+
+            header.history-title {
+              padding: 15px;
+
+              h3.history-title-text {
+                position: relative;
+                margin: auto;
+                display: inline-block;
+
+                &:after {
+                  content: "";
+                  display: inline-block;
+                  position: absolute;
+                  height: 6px;
+                  left: 0;
+                  right: 0;
+                  top: 100%;
+                  background: #52abf6;
+                }
               }
             }
           }

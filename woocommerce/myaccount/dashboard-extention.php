@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 	<div class="dashboard-third-col dashboard-third-left">
 		<div class="dashboard-third-boxes main-box-left">
 			<div class="aperacash-box-title"><span>My AperaCash Balance</span></div>
-			<div><span></span></div>
+			<div class="box-content"><span><?php echo do_shortcode( '[rs_user_total_points_in_value] ' ); ?></span></div>
 		</div>
 		<div class="dashboard-third-boxes sidebox-top">
 			<div class="aperacash-box-title"><span>Spent</span></div>
@@ -51,9 +51,9 @@ defined( 'ABSPATH' ) || exit;
 </section>
 
 <section class="dashboard-fourth">
-	<div class="history-title">
+	<header class="history-title">
 		<h3 class="history-title-text">My AperaCash History</h3>
-	</div>
+	</header>
 </section>
 
 <?php

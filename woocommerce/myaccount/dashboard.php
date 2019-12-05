@@ -24,14 +24,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 $user = wp_get_current_user();
 
 if ( ! in_array( 'apera_perks_partner', $user->roles ) ) { ?>
-  <div id="upgrade-btn-wrapper">
+	<div id="upgrade-btn-wrapper">
 	<?php
 	echo sprintf(
 		__( '<a href="#" data-user="%s" id="perks-upgrade-btn" class="wonka-btn">Join Perks and Earn</a>.', 'woocommerce' ),
 		esc_attr( $user->ID )
 	);
 	?>
-								</div>
+	</div>
 	<?php
 }
 ?>

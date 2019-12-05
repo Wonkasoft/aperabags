@@ -20,58 +20,57 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$customer_id = get_current_user_id();
+$user             = wp_get_current_user();
+	$user_id      = $user->ID;
+	$company_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
 
-if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) {
-	$get_addresses = apply_filters(
-		'woocommerce_my_account_get_addresses',
-		array(
-			'billing'  => __( 'Billing address', 'woocommerce' ),
-			'shipping' => __( 'Shipping address', 'woocommerce' ),
-		),
-		$customer_id
-	);
-} else {
-	$get_addresses = apply_filters(
-		'woocommerce_my_account_get_addresses',
-		array(
-			'billing' => __( 'Billing address', 'woocommerce' ),
-		),
-		$customer_id
-	);
+	$output = '';
+if ( ! empty( $company_logo ) ) {
+	$company_logo = json_decode( $company_logo );
 }
 
-$oldcol = 1;
-$col    = 1;
 ?>
+<div class="my-account-logo-content-wrap">
+<h2>Club/Gym Logo</h2>
+<?php
+if ( ! empty( $company_logo->company_name ) ) {
+	?>
+	<span><?php esc_html_e( $company_logo->coupon_code ); ?></span>
+	<?php
+} else {
+	?>
+	<span>need a coupon code</span>
+	<?php
+}
 
-<p>
-	<?php echo apply_filters( 'woocommerce_my_account_my_address_description', __( 'The following addresses will be used on the checkout page by default.', 'woocommerce' ) ); ?>
-</p>
-
-<?php if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) : ?>
-	<div class="u-columns woocommerce-Addresses col2-set addresses">
-<?php endif; ?>
-
-<div class="row wonka-row">
-<?php foreach ( $get_addresses as $name => $title ) : ?>
-
-	<div class="u-column<?php echo ( ( $col = $col * -1 ) < 0 ) ? 1 : 2; ?> col-12 col-md-6 woocommerce-Address">
-		<header class="woocommerce-Address-title title">
-			<h3><?php echo $title; ?></h3>
-			<a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>" class="edit"><?php _e( 'Edit', 'woocommerce' ); ?></a>
-		</header>
-		<address>
-		<?php
-			$address = wc_get_account_formatted_address( $name );
-			echo $address ? wp_kses_post( $address ) : esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' );
-		?>
-		</address>
+if ( ! empty( $company_logo->url ) ) {
+	?>
+	<div class="current-logo-wrap">
+		<img src="' . wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) . '" srcset="' . wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) . '" class="current-logo" />
 	</div>
-
-<?php endforeach; ?>
-</div>
-<?php if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) : ?>
+	<p>To update/change your logo, simply upload a new one below.</p>
+	<div class="form-wrap">
+	<div class="form-container">
+	<?php gravity_form( 'Media Upload', false, false, false, null, true, 1, true ); ?>
+	</div>
 	</div>
 	<?php
-endif;
+} else {
+	?>
+
+	<div class="current-logo-wrap">
+	<div class="no-logo">You have no logo on file.</div>
+	</div>
+	<p>To update/change your logo, simply upload a new one below.</p>
+	<div class="form-wrap">
+	<div class="form-container">
+	<?php gravity_form( 'Media Upload', false, false, false, null, true, 1, true ); ?>
+	</div>
+	</div>
+	<?php
+}
+
+gravity_form( 'Design Fees Capture', false, false, false, null, true, 1, true );
+?>
+
+</div>
