@@ -2993,7 +2993,7 @@ var componentForm;
 		 * 
 		 */
 
-		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ||document.querySelector( 'form.woocommerce-ResetPassword' ) ) 
+		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) || document.querySelector( 'form.woocommerce-ResetPassword' ) ) 
 		{
 			
 			var validation_div = document.querySelector( '.woocommerce-error' );
@@ -3003,9 +3003,10 @@ var componentForm;
 			var count = 0;
 
 			/** Form structure for edit my account  */
-			if ( document.querySelector( 'form.woocommerce-EditAccountForm' ) || document.querySelector('form.woocommerce-ResetPassword') )
+			if ( document.querySelector( 'form.woocommerce-EditAccountForm' ) || document.querySelector('form.woocommerce-ResetPassword') && document.querySelector( 'form.strength-checker #password_1' ) )
 			{
 				var password_one = document.querySelector( 'form.strength-checker #password_1' );
+				console.log( password_one );
 				var password_parent = document.querySelector( 'form.strength-checker #password_1' ).parentElement;
 
 				password_one.addEventListener( 'keyup', function ( e ) 
