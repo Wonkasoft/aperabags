@@ -8,10 +8,44 @@
 
 defined( 'ABSPATH' ) || exit;
 
+$PointsData          = new RS_Points_Data( get_current_user_id() );
+$Points              = $PointsData->total_available_points();
+$TotalRedeemedPoints = round_off_type( $PointsData->total_redeemed_points() );
+$TotalPendingPoints  = 0;
+$args                = array(
+	'post_type'     => 'shop_order',
+	'numberposts'   => '-1',
+	'meta_query'    => array(
+		array(
+			'key'     => 'reward_points_awarded',
+			'compare' => 'NOT EXISTS',
+		),
+		array(
+			'key'     => 'rs_points_for_current_order_as_value',
+			'value'   => 0,
+			'compare' => '>',
+		),
+		array(
+			'key'     => '_customer_user',
+			'value'   => get_current_user_id(),
+			'compare' => '=',
+		),
+	),
+	'post_status'   => $Status,
+	'fields'        => 'ids',
+	'cache_results' => false,
+);
+$OrderList           = get_posts( $args );
+foreach ( $OrderList as $OrderId ) {
+	$TotalPendingPoints += (float) get_post_meta( $OrderId, 'rs_points_for_current_order_as_value', true );
+}
 ?>
 
 <section class="dashboard-second">
-	<div class="dashboard-second-divider"><span><i class="fa fa-arrow-left"></i> Use this menu to navigate through your account.</span></div>
+	<div class="dashboard-second-divider"><span><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="25px" height="18px" viewBox="0 0 25 18" enable-background="new 0 0 25 18" xml:space="preserve">
+<polygon fill="#ffffff" points="25,5 12,5 12,0 -0.075,9.001 12,18 12,13 25,13 "/>
+</svg> Use this menu to navigate through your account.</span></div>
 </section>
 
 <section class="dashboard-third">
@@ -22,15 +56,15 @@ defined( 'ABSPATH' ) || exit;
 	<div class="dashboard-third-col dashboard-third-left">
 		<div class="dashboard-third-boxes main-box-left">
 			<div class="aperacash-box-title"><span>My AperaCash Balance</span></div>
-			<div class="box-content"><span><?php echo do_shortcode( '[rs_user_total_points_in_value] ' ); ?></span></div>
+			<div class="box-content box-content-main"><span><?php echo sprintf( __( '$%s', 'aperabags' ), esc_html( $Points ) ); ?></span></div>
 		</div>
 		<div class="dashboard-third-boxes sidebox-top">
 			<div class="aperacash-box-title"><span>Spent</span></div>
-			<div><span></span></div>
+			<div class="box-content box-content-right"><span><?php echo sprintf( __( '$%s', 'aperabags' ), esc_html( $TotalRedeemedPoints ) ); ?></span></div>
 		</div>
 		<div class="dashboard-third-boxes sidebox-bottom">
 			<div class="aperacash-box-title"><span>Pending</span></div>
-			<div><span></span></div>
+			<div class="box-content box-content-right"><span><?php echo sprintf( __( '$%s', 'aperabags' ), esc_html( $TotalPendingPoints ) ); ?></span></div>
 		</div>
 	</div>
 	<div class="dashboard-third-col dashboard-third-right">
@@ -51,19 +85,109 @@ defined( 'ABSPATH' ) || exit;
 </section>
 
 <section class="dashboard-fourth">
-	<header class="history-title">
-		<h3 class="history-title-text">My AperaCash History</h3>
-	</header>
-</section>
-
-<?php
-
+	<?php
 	/**
 	 * Deprecated woocommerce_before_my_account action.
 	 *
 	 * @deprecated 2.6.0
 	 */
-	do_action( 'woocommerce_before_my_account' );
+		do_action( 'woocommerce_before_my_account' );
+	?>
+</section>
+<section class="dashboard-fifth">
+	<header class="history-title">
+		<h3 class="history-title-text">My AperaCash History</h3>
+	</header>
+	<div class="aperacash-history-wrap">
+				<label><?php _e( 'Page Size:', SRP_LOCALE ); ?></label>
+				<select id="change-page-sizesss">
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+				</select>
+			<table class = "list_of_orders demo shop_table my_account_orders table-bordered" data-page-size="5" data-page-previous-text = "prev" data-filter-text-only = "true" data-page-next-text = "next">
+				<thead>
+					<tr>
+						<th data-type="Numeric"><?php _e( 'S.No', SRP_LOCALE ); ?></th> 
+						<th data-type="Numeric"><?php _e( 'User name', SRP_LOCALE ); ?></th>
+						<th data-type="Numeric"><?php _e( 'Status', SRP_LOCALE ); ?></th>
+						<th data-type="Numeric"><?php _e( 'Description', SRP_LOCALE ); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$WCOrderStatus   = array_keys( wc_get_order_statuses() );
+					$i               = 1;
+					$SUMOOrderStatus = get_option( 'rs_order_status_control' );
+					$SUMOOrderStatus = ( srp_check_is_array( $SUMOOrderStatus ) ) ? $SUMOOrderStatus : array();
+					$Status          = array();
+					foreach ( $WCOrderStatus as $WCStatus ) {
+						$WCStatus = str_replace( 'wc-', '', $WCStatus );
+						if ( ! in_array( $WCStatus, $SUMOOrderStatus ) ) {
+							$Status[] = 'wc-' . $WCStatus;
+						}
+					}
+					$args      = array(
+						'post_type'     => 'shop_order',
+						'numberposts'   => '-1',
+						'meta_query'    => array(
+							array(
+								'key'     => 'reward_points_awarded',
+								'compare' => 'NOT EXISTS',
+							),
+							array(
+								'key'     => 'rs_points_for_current_order_as_value',
+								'value'   => 0,
+								'compare' => '>',
+							),
+							array(
+								'key'     => '_customer_user',
+								'value'   => get_current_user_id(),
+								'compare' => '=',
+							),
+						),
+						'post_status'   => $Status,
+						'fields'        => 'ids',
+						'cache_results' => false,
+					);
+					$OrderList = get_posts( $args );
+					foreach ( $OrderList as $OrderId ) {
+						$OrderObj    = new WC_Order( $OrderId );
+						$OrderObj    = srp_order_obj( $OrderObj );
+						$OrderStatus = $OrderObj['order_status'];
+						$Firstname   = $OrderObj['first_name'];
+						$Points      = (float) get_post_meta( $OrderId, 'rs_points_for_current_order_as_value', true );
+						if ( $Points > 0 ) {
+							echo RS_Rewardsystem_Shortcodes::order_status_settings( $OrderId, $OrderStatus, $Firstname, $i, $Points, $SUMOOrderStatus );
+							$i ++;
+						}
+					}
+					?>
+				</tbody>
+				<tfoot>
+					<tr style = "clear:both;">
+						<td colspan = "4">
+							<div class = "pagination pagination-centered"></div>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+			<script type="text/javascript">
+				jQuery( document ).ready( function () {
+					jQuery( '.list_of_orders' ).footable() ;
+					jQuery( '#change-page-sizesss' ).change( function ( e ) {
+						e.preventDefault() ;
+						var pageSize = jQuery( this ).val() ;
+						jQuery( '.footable' ).data( 'page-size' , pageSize ) ;
+						jQuery( '.footable' ).trigger( 'footable_initialized' ) ;
+					} ) ;
+
+				} ) ;
+			</script>
+		</div>
+
+<?php
 
 	/**
 	 * Deprecated woocommerce_after_my_account action.
@@ -73,3 +197,7 @@ defined( 'ABSPATH' ) || exit;
 	do_action( 'woocommerce_after_my_account' );
 
 /* Omit closing PHP tag at the end of PHP files to avoid "headers already sent" issues. */
+?>
+</section>
+
+<?php

@@ -3347,6 +3347,7 @@ var componentForm;
 
 		$('#loader-wrapper').fadeOut();
 		
+		$('[data-toggle="tooltip"]').tooltip();
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 

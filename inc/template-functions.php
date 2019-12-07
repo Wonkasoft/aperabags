@@ -2328,18 +2328,16 @@ if ( class_exists( 'RSFunctionForReferralSystem' ) ) {
 			$refurl         = add_query_arg( $query, get_option( 'rs_static_generate_link' ) );
 			?>
 			<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-			<h3 class="rs_my_referral_link_title" style="margin: 15px auto 8px;"><?php echo get_option( 'rs_my_referral_link_button_label' ); ?></h3>
+			<h3 class="rs_my_referral_link_title" style="margin: 15px auto;"><?php echo get_option( 'rs_my_referral_link_button_label' ); ?></h3>
 			<table class="shop_table my_account_referral_link_static" id="my_account_referral_link_static">
 				<thead>
-					<tr>
-						<th class="referral-number_static"><span class="nobr"><?php echo get_option( 'rs_generate_link_sno_label' ); ?></span></th>                        
+					<tr>                       
 						<th class="referral-link_static"><span class="nobr"><?php echo get_option( 'rs_generate_link_referrallink_label' ); ?></span></th>
 						<th class="referral-social_static"><span class="nobr"><?php echo get_option( 'rs_generate_link_social_label' ); ?></span></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="referrals_static">
-						<td><?php echo 1; ?></td>
 						<td class="copy_clip_icon">
 							<?php echo $refurl; ?>
 							<?php if ( get_option( 'rs_enable_copy_to_clipboard' ) == 'yes' ) { ?>
@@ -2369,8 +2367,8 @@ if ( class_exists( 'RSFunctionForReferralSystem' ) ) {
 			<?php
 	}
 
-	add_action( 'woocommerce_before_my_account', 'static_url_table' );
 	remove_action( 'woocommerce_before_my_account', array( 'RSFunctionForReferralSystem', 'static_referral_link_in_my_account' ) );
+	add_action( 'woocommerce_before_my_account', 'static_url_table' );
 }
 
 
@@ -2380,68 +2378,40 @@ if ( class_exists( 'RSFunctionForReferralSystem' ) ) {
  * @param  object $order contains the current order.
  */
 function wonkasoft_btn_fix_for_re_order( $actions, $order ) {
-	echo "<pre>\n";
-	print_r( $actions );
-	echo "</pre>\n";
 
-	if ( WC()->version < '3.0.0' ) {
-		if ( ! $order->has_status( 'completed' ) ) {
-			?>
-					<p>
-						<a class="button ced_my_account_reorder wonka-btn" href="javascript:void(0);" data-order_id="<?php echo $order->id; ?>">
-							<span><?php _e( 'Re-Order', 'one-click-order-reorder' ); ?></span>
-						</a>
-					</p>
-					<?php
+	$status = $order->status;
 
-					$settings = get_option( 'ced_ocor_general_settings', false );
-					if ( ! empty( $settings ) ) {
-						if ( $settings['same_order_btn'] == '1' ) {
-							?>
-							<p>
-								<a class="button ced_my_account_place_same_order wonka-btn" href="javascript:void(0);" data-order_id="<?php echo $order->id; ?>">
-									<span><?php _e( 'Place Same Order', 'one-click-order-reorder' ); ?></span>
-								</a>
-							</p>
-							<?php
-						}
-					}
-					?>
-					<?php
-		}
-	} else {
+	unset( $actions['view'] );
 
-		if ( ! $order->has_status( 'completed' ) ) {
-			?>
-					<p>
-						<a class="button ced_my_account_reorder wonka-btn" href="javascript:void(0);" data-order_id="<?php echo $order->get_id(); ?>">
-							<span><?php _e( 'Re-Order', 'one-click-order-reorder' ); ?></span>
-						</a>
-					</p>
-					<?php
+	if ( 'completed' !== $status ) {
+		$wp_nonce_url = wp_nonce_url(
+			add_query_arg(
+				array(
+					'cancel_order' => 'true',
+					'order'        => $order->get_order_key(),
+					'order_id'     => $order->get_id(),
+					'redirect'     => $redirect,
+				),
+				$order->get_cancel_endpoint()
+			),
+			'woocommerce-cancel_order'
+		);
 
-					$settings = get_option( 'ced_ocor_general_settings', false );
-					if ( ! empty( $settings ) ) {
-						if ( $settings['same_order_btn'] == '1' ) {
-							?>
-							<p>
-								<a class="button ced_my_account_place_same_order wonka-btn" href="javascript:void(0);" data-order_id="<?php echo $order->get_id(); ?>">
-									<span><?php _e( 'Place Same Order', 'one-click-order-reorder' ); ?></span>
-								</a>
-							</p>
-							<?php
-						}
-					}
-					?>
-					<?php
-		}
+		$actions['cancel'] = array(
+			'url'  => $wp_nonce_url,
+			'name' => 'Cancel',
+		);
 	}
+
 	return $actions;
 }
-// add_filter( 'woocommerce_my_account_my_orders_actions', 'wonkasoft_btn_fix_for_re_order', 10, 2 );
-// add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_btn_fix_for_re_order', 8, 1 );
+add_filter( 'woocommerce_my_account_my_orders_actions', 'wonkasoft_btn_fix_for_re_order', 10, 2 );
 
-
+/**
+ * This is for debugging.
+ *
+ * @param  array $tag contains all hooks on page.
+ */
 function get_hooks( $tag ) {
 	global $wp_current_filter;
 	global $debug_tags;

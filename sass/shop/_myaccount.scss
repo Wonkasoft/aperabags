@@ -1,4 +1,14 @@
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes reorder {
+  from {transform: rotate( 0deg );}
+  to {transform: rotate( 360deg );}
+}
 
+/* Standard syntax */
+@keyframes reorder {
+  from {transform: rotate( 0deg );}
+  to {transform: rotate( 360deg );}
+}
 
 main#main.main-my-account {
 
@@ -379,7 +389,8 @@ div#content {
             margin: auto;
           }
 
-          section.dashboard-first {
+          section.dashboard-first,
+          section.orders-first {
             display: grid;
             align-items: center;
             justify-content: space-between;
@@ -425,7 +436,8 @@ div#content {
               grid-gap: 10px;
               top: 2px;
 
-              i {
+              i,
+              svg {
                 position: relative;
                 top: -2px;
               }
@@ -476,11 +488,12 @@ div#content {
 
               div.dashboard-third-boxes {
                 display: grid;
+                grid-template-rows: 33px 75px;
                 align-items: start;
 
                 div.aperacash-box-title {
                   text-align: center;
-                  padding: 12px 0;
+                  padding: 12px 0 0;
                   height: 44px;
                   width: 100%;
                   @include font-size( 1.15 );
@@ -492,8 +505,20 @@ div#content {
                 }
               }
 
+              div.box-content {
+                position: relative;
+                display: grid;
+                align-items: center;
+                height: 100%;
+                text-align: center;
+                @include font-size( 3.75 );
+                line-height: 1;
+              }
+
               div.main-box-left {
                 grid-area: 1 / 1 / 3 / 2;
+                grid-template-rows: 45px 187px;
+                align-items: center;
                 width: 295px;
                 height: 232px;
                 color: #27b700;
@@ -501,6 +526,13 @@ div#content {
 
                 div.aperacash-box-title {
                   background: #d1f6bd;
+                }
+
+                div.box-content-main {
+                  top: 3px;
+                  text-align: center;
+                  vertical-align: middle;
+                  @include font-size( 8.25 );
                 }
               }
 
@@ -513,6 +545,7 @@ div#content {
                 background: #c6e1f4;
                 color: #ffffff;
               }
+
             }
 
             div.dashboard-third-right {
@@ -551,6 +584,29 @@ div#content {
             position: relative;
             padding: 15px;
 
+            h3.rs_my_referral_link_title {
+              position: relative;
+              margin: auto;
+              display: inline-block;
+              padding: 0 15px;
+
+              &:after {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                height: 6px;
+                left: 15px;
+                right: 15px;
+                top: 100%;
+                background: #52abf6;
+              }
+            }
+          }
+
+          section.dashboard-fifth {
+            position: relative;
+            padding: 15px;
+
             header.history-title {
               padding: 15px;
 
@@ -571,7 +627,60 @@ div#content {
                 }
               }
             }
+
+            h2.my_rewards_title {
+              position: relative;
+              margin: auto;
+              display: inline-block;
+              padding: 0 15px;
+              margin-bottom: 15px;
+
+              &:after {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                height: 6px;
+                left: 15px;
+                right: 15px;
+                top: 100%;
+                background: #52abf6;
+              }
+            }
+          } 
+          /* END DASHBOARD ENDPOINT */
+
+          /* ORDERS ENDPOINT */
+          section.orders-second {
+            padding: 15px;
+
+            table.account-orders-table {
+
+              thead {
+                border: 1px solid transparent;
+
+              }
+            }
+
+            div.orders-actions-wrap {
+              display: grid;
+              align-items: center;
+              justify-content: start;
+              grid-auto-flow: column;
+              grid-gap: 15px;
+
+              a[data-reorder=reorder] {
+                display: inline-block;
+
+                &:hover {
+                  animation-name: reorder;
+                  animation-duration: 2s;
+                  animation-iteration-count: infinite;
+                  animation-timing-function: linear;
+                }
+              }
+            }
           }
+          /* END ORDERS ENDPOINT */
         }
       }
     }
