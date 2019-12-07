@@ -30,8 +30,17 @@ if ( ! empty( $company_logo ) ) {
 }
 
 ?>
-<div class="my-account-logo-content-wrap">
-<h2>Club/Gym Logo</h2>
+
+<section class="zip-first">
+	<p><strong>Welcome to the Apera Zip Program!</strong> Use this dashboard to manage your Zip features, upload your gym/club logo and view sales made with your unique Zip Code.</p>
+</section>
+
+<section class="zip-second">
+	<div class="zip-second-divider"><span>Gym/Club Details</span></div>
+</section>
+
+<section class="zip-third">
+<!-- <h2>Club/Gym Logo</h2> -->
 <?php
 if ( ! empty( $company_logo->company_name ) ) {
 	?>
@@ -73,4 +82,32 @@ if ( ! empty( $company_logo->url ) ) {
 gravity_form( 'Design Fees Capture', false, false, false, null, true, 1, true );
 ?>
 
-</div>
+</section>
+
+<section class="zip-fourth">
+	<div class="zip-fourth-divider"><span>Zip Code Sales Stats</span></div>
+</section>
+
+<section class="zip-fifth">
+	<div class="table-responsive">
+	<table class="">
+		<thead>
+			<tr>
+				<th class=""><span class="nobr">Date</span></th>
+				<th class=""><span class="nobr">Item Qty.</span></th>
+				<th class=""><span class="nobr">Cart Total</span></th>
+				<th class=""><span class="nobr">Commission</span></th>
+			</tr>
+		</thead>
+
+		<tbody>
+
+				<tr class="">
+						<td class="" data-title="">
+
+						</td>
+				</tr>
+		</tbody>
+	</table>
+	</div>
+</section>

@@ -390,7 +390,9 @@ div#content {
           }
 
           section.dashboard-first,
-          section.orders-first {
+          section.orders-first,
+          section.zip-first,
+          section.ambassador-first {
             display: grid;
             align-items: center;
             justify-content: space-between;
@@ -418,7 +420,11 @@ div#content {
             }
           }
 
-          section.dashboard-second {
+          section.dashboard-second,
+          section.zip-second,
+          section.zip-fourth,
+          section.ambassador-second,
+          section.ambassador-fourth {
             @include font-size( 1.2 );
             font-weight: 700;
             background: #52abf6;

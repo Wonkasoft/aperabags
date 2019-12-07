@@ -2196,18 +2196,18 @@ function wonkasoft_my_account_nav_menu_items( $menu_links ) {
 	);
 
 	/**
-	 * once goes live these nav items need to be removed for those without the roles.
-	if ( ! in_array( 'apera_zip_affiliate', $user->roles ) ) :
-
-		unset( $menu_links['zip-program'] );
-
-	endif;
-
-	if ( ! in_array( 'apera_ambassador_affiliate', $user->roles ) ) :
-
-		unset( $menu_links['ambassador-program'] );
-
-	endif;
+	* once goes live these nav items need to be removed for those without the roles.
+	*if ( ! in_array( 'apera_zip_affiliate', $user->roles ) ) :
+	*
+	*		unset( $menu_links['zip-program'] );
+	*
+	*	endif;
+	*
+	*	if ( ! in_array( 'apera_ambassador_affiliate', $user->roles ) ) :
+	*
+	*		unset( $menu_links['ambassador-program'] );
+	*
+	*	endif;
 	 */
 
 	return $menu_links;
