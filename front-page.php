@@ -18,10 +18,19 @@ get_header();
 	<?php
 
 	/* This can be used to filter slide object */
-	do_action( 'get_mods_before_section', 'top' );
+	do_action( 'get_mods_before_section', 'all' );
+
+	$page_mods = get_section_mods( 'all' );
+
+	do_action( 'get_mods_after_section', 'all', $page_mods );
+
+	echo "<pre>\n";
+	print_r( $page_mods );
+	echo "</pre>\n";
 
 	/* This gets the slides as an object */
-	$top_slider = get_section_mods( 'top' );
+	$top_slider = get_section_mods( 'top_slider' );
+	do_action( 'get_mods_before_section', 'top_slider' );
 
 	/* This checks for slider object in order to parse slider section */
 	if ( ! empty( $top_slider->slides ) ) :
@@ -99,9 +108,9 @@ get_header();
 
 			<?php
 
-			do_action( 'get_mods_before_section', 'shop' );
+			do_action( 'get_mods_before_section', 'shop_area' );
 
-			$shop_section = get_section_mods( 'shop' );
+			$shop_section = get_section_mods( 'shop_area' );
 			if ( ! empty( $shop_section->shop_mods ) ) :
 				?>
 
@@ -133,8 +142,8 @@ get_header();
 					</section><!-- .shop-section -->
 				<?php endif; ?>
 				<?php
-				do_action( 'get_mods_before_section', 'cta' );
-				$cta_slider = get_section_mods( 'cta' );
+				do_action( 'get_mods_before_section', 'cta_slider' );
+				$cta_slider = get_section_mods( 'cta_slider' );
 
 				if ( ! empty( $cta_slider->slides ) ) :
 					?>
@@ -212,14 +221,21 @@ get_header();
 
 												</div><!-- .cta-slide-img-holder -->
 											</div><!-- .cta-section-slide -->
+
+
+										<?php elseif ( ! empty( $slide->slide_html ) ) : ?>
+										  <h1>jfdkfklasjfasklj</h1>
 										<?php endif; ?>
+
+
+
 									<?php endforeach; ?>
 								</div><!-- .cta-section-slider-wrap -->
 							</section><!-- .desirable-slider-section -->
 						<?php endif; ?>
 						<?php
-						do_action( 'get_mods_before_section', 'cause' );
-						$cause_section = get_section_mods( 'cause' );
+						do_action( 'get_mods_before_section', 'cause_area' );
+						$cause_section = get_section_mods( 'cause_area' );
 
 						/* Check for Cause object */
 						if ( ! empty( $cause_section->cause_mods ) ) :
@@ -294,8 +310,8 @@ get_header();
 
 
 						<?php
-						do_action( 'get_mods_before_section', 'about' );
-						$about_section = get_section_mods( 'about' );
+						do_action( 'get_mods_before_section', 'about_area' );
+						$about_section = get_section_mods( 'about_area' );
 
 						if ( ! empty( $about_section->about_the_brand->about_header ) ) :
 							?>
@@ -361,8 +377,8 @@ get_header();
 						<?php endif; ?>
 
 						<?php
-						do_action( 'get_mods_before_section', 'social' );
-						$social_section = get_section_mods( 'social' );
+						do_action( 'get_mods_before_section', 'social_area' );
+						$social_section = get_section_mods( 'social_area' );
 
 						if ( ! empty( $social_section->social_mods->social_title ) ) :
 							?>

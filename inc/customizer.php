@@ -178,14 +178,38 @@ function apera_bags_customize_register( $wp_customize ) {
 
 		// Slider Setting Control.
 		$wp_customize->add_control(
-			new WP_Customize_Image_Control(
+			new WP_Customize_Media_Control(
 				$wp_customize,
-				'slider_' . $i . '_control',
+				'slider_control_' . $i,
 				array(
 					'label'       => 'Slider Image ' . $i,
 					'section'     => 'slider_section',
 					'settings'    => 'slider_' . $i,
-					'type'        => 'image',
+					'type'        => 'media',
+					'description' => 'Add image for slider ' . $i,
+				)
+			)
+		);
+
+		// Slider Mobile Setting.
+		$wp_customize->add_setting(
+			'slider_mobile_' . $i,
+			array(
+				'default'   => '',
+				'transport' => 'refresh',
+			)
+		);
+
+		// Slider Mobile Setting Control.
+		$wp_customize->add_control(
+			new WP_Customize_Media_Control(
+				$wp_customize,
+				'slider_mobile_' . $i . '_control',
+				array(
+					'label'       => 'Slider Mobile Image ' . $i,
+					'section'     => 'slider_section',
+					'settings'    => 'slider_mobile_' . $i,
+					'type'        => 'media',
 					'description' => 'Add image for slider ' . $i,
 				)
 			)
@@ -336,29 +360,6 @@ function apera_bags_customize_register( $wp_customize ) {
 			)
 		);
 
-		// Slider Mobile Setting.
-		$wp_customize->add_setting(
-			'slider_mobile_' . $i,
-			array(
-				'default'   => '',
-				'transport' => 'refresh',
-			)
-		);
-
-		// Slider Mobile Setting Control.
-		$wp_customize->add_control(
-			new WP_Customize_Image_Control(
-				$wp_customize,
-				'slider_mobile_' . $i . '_control',
-				array(
-					'label'       => 'Slider Mobile Image ' . $i,
-					'section'     => 'slider_section',
-					'settings'    => 'slider_mobile_' . $i,
-					'type'        => 'image',
-					'description' => 'Add image for slider ' . $i,
-				)
-			)
-		);
 	endfor;
 
 	 /**
@@ -413,14 +414,14 @@ function apera_bags_customize_register( $wp_customize ) {
 
 	// Shop background image Setting Control.
 	$wp_customize->add_control(
-		new WP_Customize_Image_Control(
+		new WP_Customize_Media_Control(
 			$wp_customize,
 			'shop_background_image_control',
 			array(
 				'label'       => __( 'Shop background image', 'apera-bags' ),
 				'section'     => 'shop_section',
 				'settings'    => 'shop_background_image',
-				'type'        => 'image',
+				'type'        => 'media',
 				'description' => 'Add image for shop background ',
 			)
 		)
@@ -563,11 +564,62 @@ function apera_bags_customize_register( $wp_customize ) {
 				$wp_customize,
 				'cta_slider_' . $i . '_control',
 				array(
-					'label'       => 'Slider Image ' . $i,
+					'label'       => 'CTA Slider Image ' . $i,
 					'section'     => 'lg_cta_section',
 					'settings'    => 'cta_slider_' . $i,
-					'type'        => 'image',
+					'type'        => 'media',
 					'description' => 'Add image for slider ' . $i,
+				)
+			)
+		);
+
+		// CTA Slider mobile Setting.
+		$wp_customize->add_setting(
+			'cta_slider_mobile_' . $i,
+			array(
+				'default'   => '',
+				'transport' => 'refresh',
+			)
+		);
+		// CTA Slider mobile Setting Control.
+		$wp_customize->add_control(
+			new WP_Customize_Media_Control(
+				$wp_customize,
+				'cta_slider_mobile_' . $i . '_control',
+				array(
+					'label'       => 'CTA Slider Mobile Image ' . $i,
+					'section'     => 'lg_cta_section',
+					'settings'    => 'cta_slider_mobile_' . $i,
+					'type'        => 'media',
+					'description' => 'Add image for mobile slider ' . $i,
+				)
+			)
+		);
+
+		/**
+		* Slider HTML settings Section
+		*
+		* @since  1.0.0
+		*/
+		$wp_customize->add_setting(
+			'cta_slider_html_' . $i,
+			array(
+				'default'   => '',
+				'transport' => 'refresh',
+			)
+		);
+
+		// Slider HTML Setting Control.
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'cta_slider_html_' . $i . '_control',
+				array(
+					'label'       => 'Slider HTML ' . $i,
+					'section'     => 'lg_cta_section',
+					'settings'    => 'cta_slider_html_' . $i,
+					'type'        => 'textarea',
+					'description' => 'Add HTML code for slider ' . $i,
 				)
 			)
 		);
@@ -589,7 +641,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
-				'cta_slider_text_position_' . $i . '_control',
+				'cta_slider_text_position_control_' . $i,
 				array(
 					'label'       => 'Slider message position ' . $i,
 					'section'     => 'lg_cta_section',
@@ -622,7 +674,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
-				'cta_slider_title_' . $i . '_control',
+				'cta_slider_title_control_' . $i,
 				array(
 					'label'       => 'Slider Title ' . $i,
 					'section'     => 'lg_cta_section',
@@ -650,7 +702,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
-				'cta_slider_text_' . $i . '_control',
+				'cta_slider_text_control_' . $i,
 				array(
 					'label'       => 'Slider message ' . $i,
 					'section'     => 'lg_cta_section',
@@ -707,14 +759,14 @@ function apera_bags_customize_register( $wp_customize ) {
 
 		// Slider description list icon Setting Control.
 		$wp_customize->add_control(
-			new WP_Customize_Image_Control(
+			new WP_Customize_Media_Control(
 				$wp_customize,
 				'slider_' . $i . '_description_list_icon_control',
 				array(
 					'label'       => 'Slider ' . $i . ' list Description Icon',
 					'section'     => 'lg_cta_section',
 					'settings'    => 'slider_description_list_icon_' . $i,
-					'type'        => 'image',
+					'type'        => 'media',
 					'description' => 'Add icon for Slider ' . $i . ' description list Item',
 				)
 			)
@@ -772,30 +824,6 @@ function apera_bags_customize_register( $wp_customize ) {
 					'settings'    => 'cta_slider_btn_link_' . $i,
 					'type'        => 'dropdown-pages',
 					'description' => 'CTA Button Link ' . $i,
-				)
-			)
-		);
-
-		// CTA Slider mobile Setting.
-		$wp_customize->add_setting(
-			'cta_slider_mobile_' . $i,
-			array(
-				'default'   => '',
-				'transport' => 'refresh',
-			)
-		);
-
-		// CTA Slider mobile Setting Control.
-		$wp_customize->add_control(
-			new WP_Customize_Image_Control(
-				$wp_customize,
-				'cta_slider_mobile_' . $i . '_control',
-				array(
-					'label'       => 'CTA Slider Mobile Image ' . $i,
-					'section'     => 'lg_cta_section',
-					'settings'    => 'cta_slider_mobile_' . $i,
-					'type'        => 'image',
-					'description' => 'Add image for mobile slider ' . $i,
 				)
 			)
 		);
@@ -861,14 +889,14 @@ function apera_bags_customize_register( $wp_customize ) {
 
 	// Cause section background Setting Control.
 	$wp_customize->add_control(
-		new WP_Customize_Image_Control(
+		new WP_Customize_Media_Control(
 			$wp_customize,
 			'cause_section_background_control',
 			array(
 				'label'       => __( 'Section background image', 'apera-bags' ),
 				'section'     => 'cause_section',
 				'settings'    => 'cause_section_background',
-				'type'        => 'image',
+				'type'        => 'media',
 				'description' => 'Add section background image for cause',
 			)
 		)

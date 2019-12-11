@@ -723,6 +723,21 @@ main#full-width {
     background: #52abf6;
 }
 
+body.elementor-page-12687 {
+
+	.fixed-divider-460:before {
+		content: "";
+			position: absolute;
+			display: inline-block;
+			top: -4px;
+			left: calc(50% - 17.5%);
+			margin: auto;
+			height: 8px;
+			width: 35%;
+			background: #52abf6;
+	}	
+}
+
 /*=========================================
 =            Back to top style            =
 =========================================*/
@@ -774,3 +789,100 @@ main#full-width {
    top: 0;
 }
 /*=====  End of Back to top style  ======*/
+
+/*=========================================
+=      Shipping and returns page        =
+=========================================*/
+.shipping-column-container ul, .contact-column-container ul {
+	margin: 0 0 1.5em 1em;
+}
+
+.shipping-column-container li {
+	list-style: outside;
+}
+
+.fixed-divider-under-460:after {
+	content: "";
+    position: absolute;
+    display: inline-block;
+    left: calc(50% - 50%);
+    margin: auto;
+    height: 5px;
+    width: 100%;
+    background: #52abf6;
+}
+
+a.wonka-btn.shipping-btn {
+	padding: 8px 20px;
+	font-size: 1.4rem;
+
+}
+/*=====  End of Shipping and returns page  ======*/
+
+/*=========================================
+=               FAQ page                 =
+=========================================*/
+.faq-toggle .elementor-active>a {
+	background-color: #52abf6;
+	color: #ffffff!important;
+	padding: 8px 20px;
+	display: inline-grid;
+	font-weight: 400;
+}
+/*=====  End of FAQ page  ======*/
+
+/*=========================================
+=               MSE Page                 =
+=========================================*/
+.join-mse-gform {
+
+		.gfield_description {
+		padding-bottom: 12px
+	}
+}
+
+
+.join-mse-gform .gform_footer {
+	text-align: center;
+}
+.join-mse-gform .gform_footer input {
+	font-size: 25px;
+	font-weight: 700;
+	padding: 5px 20px;
+}
+
+.join-mse-gform input,
+.join-mse-gform textarea {
+	border: none;
+	border-radius:5px;
+}
+
+.mse-email .gfield_description {
+	font-weight: bold;
+}
+
+.mse-email input {
+	height: 48px;
+	width: 270px;
+}
+
+.mse-type ul {
+	padding: 0;
+}
+.mse-type li {
+	margin-bottom: 8px;
+}
+
+.mse-comments textarea {
+	height: 72px;
+	width: 270px;
+}
+		@media screen and ( min-width: 576px ) {
+	
+	.mse-comments textarea {
+		height: 72px;
+		width: 470px;
+	}
+}
+
+/*=====  End of MSE Page  ======*/
