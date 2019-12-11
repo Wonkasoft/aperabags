@@ -303,6 +303,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] .= ' inline-form wonka-perks-form';
 	endif;
 
+	if ( in_array( $form['title'], array( 'Join MSE+' ) ) ) :
+		$form['cssClass'] .= ' inline-form wonka-join-mse-form';
+	endif;
+
 	if ( in_array( $form['title'], array( 'Add Discount Code' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-discount-form';
 	endif;
@@ -406,6 +410,36 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 			return $new_content;
 
 		endif;
+
+		if ( 'Military Date' === $field['label'] || 'Student Grad Date' === $field['label'] ) :
+
+			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+
+			foreach ( $split_content as $key => $value ) {
+
+				if ( strpos( $value, "class='datepicker" ) !== false ) :
+
+					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value . '<input type="hidden" class="new-cal-icon" value="' . get_stylesheet_directory_uri() . '/assets/img/calendar-icon.svg" />';
+
+					elseif ( strpos( $value, "id='gforms_calendar_icon" ) !== false ) :
+
+						$new_content .= $value . '</div>';
+
+				else :
+
+					$new_content .= $value;
+
+				endif;
+
+			}
+
+			return $new_content;
+
+		endif;
+
+	endif;
+
+	if ( 'Join MSE+' === $form['title'] ) :
 
 		if ( 'Military Date' === $field['label'] || 'Student Grad Date' === $field['label'] ) :
 
@@ -2406,6 +2440,38 @@ function wonkasoft_btn_fix_for_re_order( $actions, $order ) {
 	return $actions;
 }
 add_filter( 'woocommerce_my_account_my_orders_actions', 'wonkasoft_btn_fix_for_re_order', 10, 2 );
+
+/**
+ * This function is an override of Sumo for my account page.
+ *
+ * @param  number $order_id     contains current orders ID.
+ * @param  array  $OrderObj    contains current order.
+ * @param  string $order_status contains current orders status.
+ * @param  string $Firstname   contains current users first name.
+ * @param  number $i           contains line number.
+ * @param  number $points      contains points for current user.
+ * @param  array  $order_list   contains the list of orders for user.
+ */
+function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, $first_name, $i, $points, $order_list ) {
+	$my_acc_link           = get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
+	$order_link            = esc_url_raw( add_query_arg( 'view-order', $order_id, $my_acc_link ) );
+	$order_link            = '<a href="' . $order_link . '">#' . $order_id . '</a>';
+	$order_status_to_reach = ucfirst( implode( ',', $order_list ) );
+	$message               = __( 'Currently, the order status is in [status]. Once the order status reached to the [order_status_to_reach], [points] points for purchasing the product(s) in this order([order_id]) will be added to your account', 'aperabags' );
+	$replace_msg           = str_replace( '[points]', $points, str_replace( '[order_id]', $order_link, str_replace( '[status]', ucfirst( $order_status ), $message ) ) );
+	$replace_msg           = str_replace( '[order_status_to_reach]', $order_status_to_reach, $replace_msg );
+	$date                  = ( ! empty( $order ) ) ? esc_html( $order->get_date_created()->date( 'm/d/Y' ) ) : '-';
+	?>
+	<tr>
+		<td data-value="<?php echo $i; ?>"><?php echo $date; ?></td>  
+		<td><?php echo $first_name; ?></td> 
+		<td><?php echo ucfirst( $order_status ); ?></td>
+		<td><?php echo $replace_msg; ?></td> 	
+		<td><?php echo $replace_msg; ?></td> 	
+		<td></td> 	
+	</tr>
+	<?php
+}
 
 /**
  * This is for debugging.

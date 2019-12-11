@@ -19,7 +19,8 @@ form.wonka-gform.wonka-perks-form {
 
 form.wonka-gform.wonka-zip-form, 
 form.wonka-gform.wonka-ambassador-form, 
-form.wonka-gform.wonka-perks-form {
+form.wonka-gform.wonka-perks-form,
+form.wonka-join-mse-form {
 	font-family: $font__main;
 
 	ul.gform_fields {
@@ -305,6 +306,67 @@ form.wonka-gform.wonka-perks-form {
 
 	.wonka-btn {
 		margin: 15px 0;
+	}
+}
+
+form.wonka-join-mse-form {
+
+	ul.gform_fields {
+
+		li.perks-email {
+			grid-area: 1 / 1 / 2 / 3;
+		}
+
+		@include media-breakpoint( lg ) {
+
+			li.perks-mse-occupation {
+				grid-area: 3 / 1 / 5 / 2;
+			}
+
+			li.military-branch {
+				grid-area: 5 / 1 / 7 / 2;
+			}
+
+			li.military-active {
+				grid-area: 3 / 2 / 4 / 3;
+			}
+
+			li.military-date {
+				grid-area: 4 / 2 / 5 / 3;
+			}
+
+			li.military-occupation-code {
+				grid-area: 5 / 2 / 6 / 3;
+			}
+
+			li.military-note {
+				grid-area: 7 / 2 / 8 / 3;
+			}
+
+			li.military-stationed {
+				grid-area: 8 / 1 / 9 / 3;
+			}
+
+			li.student-school-web,
+			li.educator-school-web {
+				grid-area: 3 / 2 / 4 / 3;
+			}
+
+			li.student-email,
+			li.educator-email {
+				grid-area: 5 / 1 / 6 / 2;
+			}
+
+			li.student-grad-date,
+			li.educator-subject {
+				grid-area: 4 / 2 / 5 / 3;
+			}
+
+			li.student-sports,
+			li.educator-years {
+				grid-area: 5 / 2 / 6 / 3;
+			}
+		}
 	}
 }
 

@@ -653,6 +653,24 @@ div#content {
                 background: #52abf6;
               }
             }
+
+            table.my_account_orders {
+
+              th {
+                padding: 8px;
+                text-align: center;
+              }
+
+              tr.dark-headers {
+                background: #333e48;
+                color: #fff;
+                text-transform: uppercase;
+
+                th {
+                  border-right: 1px solid #fff;
+                }
+              }
+            }
           } 
           /* END DASHBOARD ENDPOINT */
 
@@ -725,7 +743,6 @@ div#content {
             div.aperacash-boxes {
               position: relative;
               display: inline-block;
-              width: 240px;
               height: 240px;
               color: #ffffff;
               background: #52abf6;
@@ -786,6 +803,30 @@ div#content {
               grid-template-columns: 1fr 1fr 1fr;
             }
           }
+
+          section.earn-aperacash-third {
+            position: relative;
+            padding: 15px;
+
+            h2.my_rewards_title {
+              position: relative;
+              margin: auto;
+              display: inline-block;
+              padding: 0 15px;
+              margin-bottom: 15px;
+
+              &:after {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                height: 6px;
+                left: 15px;
+                right: 15px;
+                top: 100%;
+                background: #52abf6;
+              }
+            }
+          }
           /* END EARN APERACASH */
 
           /* ORDERS ENDPOINT */
@@ -797,6 +838,11 @@ div#content {
 
               thead {
                 border: 1px solid transparent;
+                
+                tr, 
+                th {
+                  border: 1px solid transparent;
+                }
 
               }
             }

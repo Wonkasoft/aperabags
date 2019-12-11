@@ -42,6 +42,7 @@ $customer_id = get_current_user_id();
 	</ul>
 </section>
 <section class="earn-aperacash-second">
+	<a href="#" class="aperacash-boxes-achor">
 	<div class="aperacash-boxes aperacash-boxes-birthday unlimited">
 		<i class="arrow-right">
 			<svg version="1.1" id="Arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 15 15" enable-background="new 0 0 15 15" xml:space="preserve">
@@ -117,6 +118,8 @@ $customer_id = get_current_user_id();
 			<div class="box-content-text"><span>$10 AperaCash is automatically added to your balance on your birthday!</span></div>
 		</div>
 	</div>
+	</a>
+	<a href="#" class="aperacash-boxes-achor">
 	<div class="aperacash-boxes aperacash-boxes-refer-friend unlimited">
 		<i class="arrow-right">
 			<svg version="1.1" id="Arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 15 15" enable-background="new 0 0 15 15" xml:space="preserve">
@@ -164,6 +167,8 @@ $customer_id = get_current_user_id();
 			<div class="box-content-text"><span>Earn $5 AperaCash per friend who signs up with the Apera Perks Program!</span></div>
 		</div>
 	</div>
+	</a>
+	<a href="#" class="aperacash-boxes-achor">
 	<div class="aperacash-boxes aperacash-boxes-shop unlimited">
 		<i class="arrow-right">
 			<svg version="1.1" id="Arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 15 15" enable-background="new 0 0 15 15" xml:space="preserve">
@@ -216,6 +221,8 @@ $customer_id = get_current_user_id();
 			<div class="box-content-text"><span>Earn $1 of AperaCash for every $10 spent Apply it to future purchases for a deal!</span></div>
 		</div>
 	</div>
+	</a>
+	<a href="#" class="aperacash-boxes-achor">
 	<div class="aperacash-boxes aperacash-boxes-follow-like one-time">
 		<i class="arrow-right">
 			<svg version="1.1" id="Arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 15 15" enable-background="new 0 0 15 15" xml:space="preserve">
@@ -258,6 +265,8 @@ $customer_id = get_current_user_id();
 			<div class="box-content-text"><span>Earn $5 AperaCash just for following Apera Bags on Social Media!</span></div>
 		</div>
 	</div>
+	</a>
+	<a href="#" class="aperacash-boxes-achor">
 	<div class="aperacash-boxes aperacash-boxes-review one-time">
 		<div class="box-content-wrap">
 			<div class="box-content-icon">
@@ -303,6 +312,8 @@ $customer_id = get_current_user_id();
 			<div class="box-content-text"><span>Earn $5 AperaCash when you leave a review for AperaBags.com!</span></div>
 		</div>
 	</div>
+	</a>
+	<a href="#" class="aperacash-boxes-achor">
 	<div class="aperacash-boxes aperacash-boxes-signup already-done">
 		<div class="box-content-wrap">
 			<div class="box-content-icon">
@@ -345,4 +356,18 @@ $customer_id = get_current_user_id();
 			<div class="box-content-text"><span>You earned $10 AperaCash just for signing up with the Apera Perks Program!</span></div>
 		</div>
 	</div>
+	</a>
+</section>
+<section class="earn-aperacash-third">
+	<?php
+
+		/**
+		 * Deprecated woocommerce_after_my_account action.
+		 *
+		 * @deprecated 2.6.0
+		 */
+		do_action( 'woocommerce_after_my_account' );
+
+	/* Omit closing PHP tag at the end of PHP files to avoid "headers already sent" issues. */
+	?>
 </section>
