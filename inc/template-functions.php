@@ -99,13 +99,13 @@ function the_mods_for_section( $section ) {
 	if ( 'cta' === $section ) :
 		$mods_class->slides = new stdClass();
 		for ( $i = 1; $i <= 5; $i++ ) {
-			if ( ! empty( get_theme_mod( 'cta_slider_' . $i ) ) ) :
+			if ( ! empty( get_theme_mod( 'cta_slider_' . $i ) ) || ! empty( get_theme_mod( 'cta_slider_html_' . $i ) ) ) :
 				$count++;
 				$slide                      = new stdClass();
 				$slide->slide_img           = get_theme_mod( 'cta_slider_' . $i );
 				$slide->slide_text_position = get_theme_mod( 'cta_slider_text_position_' . $i );
 				$slide->slide_title         = get_theme_mod( 'cta_slider_title_' . $i );
-
+				$slide->slide_html = get_theme_mod( 'cta_slider_html_' . $i );
 				$slide->slide_text_message = get_theme_mod( 'cta_slider_text_' . $i );
 
 				for ( $a = 1; $a <= 3; $a++ ) {

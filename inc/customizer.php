@@ -634,6 +634,34 @@ function apera_bags_customize_register( $wp_customize ) {
 		);
 
 		/**
+		* Slider HTML settings Section
+		*
+		* @since  1.0.0
+		*/
+		$wp_customize->add_setting(
+			'cta_slider_html_' . $i,
+			array(
+				'default'   => '',
+				'transport' => 'refresh',
+			)
+		);
+
+		// Slider HTML Setting Control.
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'cta_slider_html_' . $i . '_control',
+				array(
+					'label'       => 'Slider HTML ' . $i,
+					'section'     => 'lg_cta_section',
+					'settings'    => 'cta_slider_html_' . $i,
+					'type'        => 'text',
+					'description' => 'Add HTML code for slider ' . $i,
+				)
+			)
+		);
+
+		/**
 		* Slider message settings Section
 		*
 		* @since  1.0.0

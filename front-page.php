@@ -136,6 +136,13 @@ get_header();
 				do_action( 'get_mods_before_section', 'cta' );
 				$cta_slider = get_section_mods( 'cta' );
 
+
+				echo "<pre>\n";
+				print_r( $cta_slider );
+				echo "</pre>\n";
+
+
+				
 				if ( ! empty( $cta_slider->slides ) ) :
 					?>
 					<section class="desirable-slider-section">
@@ -212,7 +219,14 @@ get_header();
 
 												</div><!-- .cta-slide-img-holder -->
 											</div><!-- .cta-section-slide -->
+
+
+										<?php elseif ( ! empty( $slide->slide_html ) ) : ?>
+										  <h1>jfdkfklasjfasklj</h1>
 										<?php endif; ?>
+
+
+
 									<?php endforeach; ?>
 								</div><!-- .cta-section-slider-wrap -->
 							</section><!-- .desirable-slider-section -->
