@@ -34,7 +34,7 @@
     "path": "^0.12.7"
   },
   "siteName": "aperabags.com",
-  "localhost": "https://wonkasoft.dev/",
+  "localhost": "http://wonkasoft.dev/",
   "dependencies": {
     "smoothscroll-polyfill": "^0.4.4"
   }

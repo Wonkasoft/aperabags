@@ -303,6 +303,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] .= ' inline-form wonka-perks-form';
 	endif;
 
+	if ( in_array( $form['title'], array( 'Join MSE+' ) ) ) :
+		$form['cssClass'] .= ' inline-form wonka-join-mse-form';
+	endif;
+
 	if ( in_array( $form['title'], array( 'Add Discount Code' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-discount-form';
 	endif;
@@ -406,6 +410,36 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 			return $new_content;
 
 		endif;
+
+		if ( 'Military Date' === $field['label'] || 'Student Grad Date' === $field['label'] ) :
+
+			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+
+			foreach ( $split_content as $key => $value ) {
+
+				if ( strpos( $value, "class='datepicker" ) !== false ) :
+
+					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value . '<input type="hidden" class="new-cal-icon" value="' . get_stylesheet_directory_uri() . '/assets/img/calendar-icon.svg" />';
+
+					elseif ( strpos( $value, "id='gforms_calendar_icon" ) !== false ) :
+
+						$new_content .= $value . '</div>';
+
+				else :
+
+					$new_content .= $value;
+
+				endif;
+
+			}
+
+			return $new_content;
+
+		endif;
+
+	endif;
+
+	if ( 'Join MSE+' === $form['title'] ) :
 
 		if ( 'Military Date' === $field['label'] || 'Student Grad Date' === $field['label'] ) :
 
@@ -2328,18 +2362,16 @@ if ( class_exists( 'RSFunctionForReferralSystem' ) ) {
 			$refurl         = add_query_arg( $query, get_option( 'rs_static_generate_link' ) );
 			?>
 			<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-			<h3 class="rs_my_referral_link_title" style="margin: 15px auto 8px;"><?php echo get_option( 'rs_my_referral_link_button_label' ); ?></h3>
+			<h3 class="rs_my_referral_link_title" style="margin: 15px auto;"><?php echo get_option( 'rs_my_referral_link_button_label' ); ?></h3>
 			<table class="shop_table my_account_referral_link_static" id="my_account_referral_link_static">
 				<thead>
-					<tr>
-						<th class="referral-number_static"><span class="nobr"><?php echo get_option( 'rs_generate_link_sno_label' ); ?></span></th>                        
+					<tr>                       
 						<th class="referral-link_static"><span class="nobr"><?php echo get_option( 'rs_generate_link_referrallink_label' ); ?></span></th>
 						<th class="referral-social_static"><span class="nobr"><?php echo get_option( 'rs_generate_link_social_label' ); ?></span></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="referrals_static">
-						<td><?php echo 1; ?></td>
 						<td class="copy_clip_icon">
 							<?php echo $refurl; ?>
 							<?php if ( get_option( 'rs_enable_copy_to_clipboard' ) == 'yes' ) { ?>
@@ -2369,8 +2401,8 @@ if ( class_exists( 'RSFunctionForReferralSystem' ) ) {
 			<?php
 	}
 
-	add_action( 'woocommerce_before_my_account', 'static_url_table' );
 	remove_action( 'woocommerce_before_my_account', array( 'RSFunctionForReferralSystem', 'static_referral_link_in_my_account' ) );
+	add_action( 'woocommerce_before_my_account', 'static_url_table' );
 }
 
 
@@ -2380,68 +2412,72 @@ if ( class_exists( 'RSFunctionForReferralSystem' ) ) {
  * @param  object $order contains the current order.
  */
 function wonkasoft_btn_fix_for_re_order( $actions, $order ) {
-	echo "<pre>\n";
-	print_r( $actions );
-	echo "</pre>\n";
 
-	if ( WC()->version < '3.0.0' ) {
-		if ( ! $order->has_status( 'completed' ) ) {
-			?>
-					<p>
-						<a class="button ced_my_account_reorder wonka-btn" href="javascript:void(0);" data-order_id="<?php echo $order->id; ?>">
-							<span><?php _e( 'Re-Order', 'one-click-order-reorder' ); ?></span>
-						</a>
-					</p>
-					<?php
+	$status = $order->status;
 
-					$settings = get_option( 'ced_ocor_general_settings', false );
-					if ( ! empty( $settings ) ) {
-						if ( $settings['same_order_btn'] == '1' ) {
-							?>
-							<p>
-								<a class="button ced_my_account_place_same_order wonka-btn" href="javascript:void(0);" data-order_id="<?php echo $order->id; ?>">
-									<span><?php _e( 'Place Same Order', 'one-click-order-reorder' ); ?></span>
-								</a>
-							</p>
-							<?php
-						}
-					}
-					?>
-					<?php
-		}
-	} else {
+	unset( $actions['view'] );
 
-		if ( ! $order->has_status( 'completed' ) ) {
-			?>
-					<p>
-						<a class="button ced_my_account_reorder wonka-btn" href="javascript:void(0);" data-order_id="<?php echo $order->get_id(); ?>">
-							<span><?php _e( 'Re-Order', 'one-click-order-reorder' ); ?></span>
-						</a>
-					</p>
-					<?php
+	if ( 'completed' !== $status ) {
+		$wp_nonce_url = wp_nonce_url(
+			add_query_arg(
+				array(
+					'cancel_order' => 'true',
+					'order'        => $order->get_order_key(),
+					'order_id'     => $order->get_id(),
+					'redirect'     => $redirect,
+				),
+				$order->get_cancel_endpoint()
+			),
+			'woocommerce-cancel_order'
+		);
 
-					$settings = get_option( 'ced_ocor_general_settings', false );
-					if ( ! empty( $settings ) ) {
-						if ( $settings['same_order_btn'] == '1' ) {
-							?>
-							<p>
-								<a class="button ced_my_account_place_same_order wonka-btn" href="javascript:void(0);" data-order_id="<?php echo $order->get_id(); ?>">
-									<span><?php _e( 'Place Same Order', 'one-click-order-reorder' ); ?></span>
-								</a>
-							</p>
-							<?php
-						}
-					}
-					?>
-					<?php
-		}
+		$actions['cancel'] = array(
+			'url'  => $wp_nonce_url,
+			'name' => 'Cancel',
+		);
 	}
+
 	return $actions;
 }
-// add_filter( 'woocommerce_my_account_my_orders_actions', 'wonkasoft_btn_fix_for_re_order', 10, 2 );
-// add_action( 'woocommerce_order_details_after_order_table', 'wonkasoft_btn_fix_for_re_order', 8, 1 );
+add_filter( 'woocommerce_my_account_my_orders_actions', 'wonkasoft_btn_fix_for_re_order', 10, 2 );
 
+/**
+ * This function is an override of Sumo for my account page.
+ *
+ * @param  number $order_id     contains current orders ID.
+ * @param  array  $OrderObj    contains current order.
+ * @param  string $order_status contains current orders status.
+ * @param  string $Firstname   contains current users first name.
+ * @param  number $i           contains line number.
+ * @param  number $points      contains points for current user.
+ * @param  array  $order_list   contains the list of orders for user.
+ */
+function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, $first_name, $i, $points, $order_list ) {
+	$my_acc_link           = get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
+	$order_link            = esc_url_raw( add_query_arg( 'view-order', $order_id, $my_acc_link ) );
+	$order_link            = '<a href="' . $order_link . '">#' . $order_id . '</a>';
+	$order_status_to_reach = ucfirst( implode( ',', $order_list ) );
+	$message               = __( 'Currently, the order status is in [status]. Once the order status reached to the [order_status_to_reach], [points] points for purchasing the product(s) in this order([order_id]) will be added to your account', 'aperabags' );
+	$replace_msg           = str_replace( '[points]', $points, str_replace( '[order_id]', $order_link, str_replace( '[status]', ucfirst( $order_status ), $message ) ) );
+	$replace_msg           = str_replace( '[order_status_to_reach]', $order_status_to_reach, $replace_msg );
+	$date                  = ( ! empty( $order ) ) ? esc_html( $order->get_date_created()->date( 'm/d/Y' ) ) : '-';
+	?>
+	<tr>
+		<td data-value="<?php echo $i; ?>"><?php echo $date; ?></td>  
+		<td><?php echo $first_name; ?></td> 
+		<td><?php echo ucfirst( $order_status ); ?></td>
+		<td><?php echo $replace_msg; ?></td> 	
+		<td><?php echo $replace_msg; ?></td> 	
+		<td></td> 	
+	</tr>
+	<?php
+}
 
+/**
+ * This is for debugging.
+ *
+ * @param  array $tag contains all hooks on page.
+ */
 function get_hooks( $tag ) {
 	global $wp_current_filter;
 	global $debug_tags;
