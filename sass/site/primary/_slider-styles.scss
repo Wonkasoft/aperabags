@@ -1,0 +1,128 @@
+div.slider-1-content-wrap {
+	position: relative;
+	display: grid;
+	align-items: stretch;
+	grid-gap: 8px;
+	margin: auto;
+	color: #ffffff;
+	padding: 30px 15px;
+	width: 100%;
+	@include prefix( transition, all .25s ease-in-out, o moz webkit );
+
+	.slider-content-header {
+		text-align: center;
+		margin-bottom: 15px;
+		@include prefix( transition, all .25s ease-in-out, o moz webkit );
+
+		.slider-content-header-title {
+			margin: auto;
+			margin-bottom: 15px;
+			font-weight: 700;
+			@include font-size( 1.5 );
+			@include prefix( transition, all .25s ease-in-out, o moz webkit );
+		}
+
+		.sub-header {
+			margin: auto;
+			@include prefix( transition, all .25s ease-in-out, o moz webkit );
+
+			span {
+				background: #52abf6;
+				padding: 8px;
+				font-weight: 700;
+				@include font-size( 1.1 );
+				@include prefix( transition, all .25s ease-in-out, o moz webkit );
+			}
+		}
+	}
+
+	.slider-content-body {
+		text-align: center;
+		margin-bottom: 200px;
+		@include prefix( transition, all .25s ease-in-out, o moz webkit );
+		
+		span {
+			display: inline-block;
+			max-width: 800px;
+			line-height: 1.5;
+			@include font-size( .9 );
+		}
+	}
+
+	.slider-content-footer {
+		margin-top: 40px;
+		margin-bottom: 200px;
+		@include prefix( transition, all .25s ease-in-out, o moz webkit );
+
+		.wonka-btn {
+			margin-left: 13%;
+			@include font-size( 1.1 );
+		}
+	}
+
+	@include media-breakpoint( md ) {
+		.slider-content-header {
+			margin-bottom: 50px;
+
+			.slider-content-header-title {
+				@include font-size( 2 );
+			}
+
+			.sub-header {
+
+				span {
+					@include font-size( 1.8 );
+				}
+			}
+		}
+
+		.slider-content-body {
+
+			span {
+				@include font-size( 1.4 );
+			}
+		}
+
+		.slider-content-footer {
+			margin-top: 220px;
+			margin-bottom: 20px;
+
+			.wonka-btn {
+				@include font-size( 1.5 );
+			}
+		}
+	}
+
+	@include media-breakpoint( lg ) {
+		.slider-content-header {
+			margin-bottom: 50px;
+
+			.slider-content-header-title {
+				@include font-size( 2 );
+			}
+
+			.sub-header {
+
+				span {
+					@include font-size( 1.8 );
+				}
+			}
+		}
+
+		.slider-content-body {
+
+			span {
+				@include font-size( 1.2 );
+			}
+		}
+
+		.slider-content-footer {
+			margin-top: 220px;
+			margin-bottom: 20px;
+
+			.wonka-btn {
+				@include font-size( 1.5 );
+			}
+		}
+	}
+}

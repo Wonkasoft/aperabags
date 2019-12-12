@@ -201,6 +201,30 @@ get_header();
 																			'id' => array(),
 																			'class' => array(),
 																		),
+																		'h1' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'h2' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'h3' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'h4' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'h5' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'h6' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
 																	)
 																);
 													?>
