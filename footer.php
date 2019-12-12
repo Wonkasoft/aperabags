@@ -9,8 +9,12 @@
  * @package aperabags
  */
 
-do_action( 'get_mods_before_section', 'footer' );
-$footer_section = get_section_mods( 'footer' );
+if ( ! empty( $page_mods ) ) {
+	$footer_section = $page_mods->footer_area;
+} else {
+	$footer_section = get_section_mods( 'footer_area' );
+}
+do_action( 'get_mods_before_section', 'footer_area', $footer_section );
 ?>
 
 	</div><!-- #content .container-fluid -->
@@ -117,8 +121,12 @@ $footer_section = get_section_mods( 'footer' );
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 <?php
-$newsletter_section = get_section_mods( 'newsletter' );
-$user_id            = get_current_user_id();
+if ( ! empty( $page_mods ) ) {
+	$newsletter_section = $page_mods->newsletter;
+} else {
+	$newsletter_section = get_section_mods( 'newsletter' );
+}
+$user_id = get_current_user_id();
 
 if ( isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
 	$user_cookie = $_COOKIE['wonkasoft_newsletter_popup'];
