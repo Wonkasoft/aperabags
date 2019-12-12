@@ -55,7 +55,6 @@ div.slider-1-content-wrap {
 		@include prefix( transition, all .25s ease-in-out, o moz webkit );
 
 		.wonka-btn {
-			margin-left: 13%;
 			@include font-size( 1.1 );
 		}
 	}
@@ -84,7 +83,7 @@ div.slider-1-content-wrap {
 		}
 
 		.slider-content-footer {
-			margin-top: 220px;
+			margin-top: 200px;
 			margin-bottom: 20px;
 
 			.wonka-btn {
@@ -117,10 +116,12 @@ div.slider-1-content-wrap {
 		}
 
 		.slider-content-footer {
-			margin-top: 220px;
+			margin: auto;
+			margin-top: 200px;
 			margin-bottom: 20px;
 
 			.wonka-btn {
+				margin: auto;
 				@include font-size( 1.5 );
 			}
 		}

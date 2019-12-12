@@ -750,7 +750,7 @@ function apera_bags_customize_register( $wp_customize ) {
 
 			// Slider description list icon Setting.
 		$wp_customize->add_setting(
-			'slider_description_list_icon_' . $i,
+			'cta_slider_description_list_icon_' . $i,
 			array(
 				'default'   => '',
 				'transport' => 'refresh',
@@ -761,11 +761,11 @@ function apera_bags_customize_register( $wp_customize ) {
 		$wp_customize->add_control(
 			new WP_Customize_Media_Control(
 				$wp_customize,
-				'slider_' . $i . '_description_list_icon_control',
+				'cta_slider_' . $i . '_description_list_icon_control',
 				array(
 					'label'       => 'Slider ' . $i . ' list Description Icon',
 					'section'     => 'lg_cta_section',
-					'settings'    => 'slider_description_list_icon_' . $i,
+					'settings'    => 'cta_slider_description_list_icon_' . $i,
 					'type'        => 'media',
 					'description' => 'Add icon for Slider ' . $i . ' description list Item',
 				)
