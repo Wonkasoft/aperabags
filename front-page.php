@@ -174,8 +174,40 @@ get_header();
 												}
 														endif;
 														/* Checks for an message set in the slide object */
-											if ( ! empty( $slide->slide_title ) ) :
+											if ( ! empty( $slide->slide_html ) ) :
 												?>
+															<div class="row img-header-text-wrap">
+													<?php
+																echo wp_kses(
+																	$slide->slide_html,
+																	array(
+																		'div' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'span' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'a' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'ul' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'li' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																	)
+																);
+													?>
+															</div><!-- .img-header-text-wrap -->
+														<?php
+														elseif ( ! empty( $slide->slide_title ) ) :
+															?>
 															<div class="row img-header-text-wrap">
 																<div class="col col-12 img-header-text-container">
 																	<div class="text-box text-center
@@ -192,12 +224,12 @@ get_header();
 																		<?php
 																	endif;
 
-																	if ( ! empty( $slide->cta_description_1 ) ) :
+																	if ( ! empty( $slide->cta_descriptions ) ) :
 																		?>
 																		<ul class="perks-description-ul">
 																			<?php
 																			for ( $i = 1; $i <= 3; $i++ ) :
-																				echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->slide_description_icon ) . ')">' . esc_html( $slide->{'cta_description_' . $i } ) . '</li>';
+																				echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->slide_description_icon ) . ')">' . esc_html( $slide->cta_descriptions->{'description_' . $i } ) . '</li>';
 																				endfor;
 																			?>
 																		</ul>

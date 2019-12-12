@@ -130,7 +130,7 @@ function the_mods_for_section( $section ) {
 
 				for ( $a = 1; $a <= 3; $a++ ) {
 
-					$slide[ 'cta_description_' . $a ] = get_theme_mod( 'cta_slider_' . $i . '_description_' . $a );
+					$slide['cta_descriptions'][ "description_$a" ] = get_theme_mod( 'cta_slider_' . $i . '_description_' . $a );
 
 				}
 
