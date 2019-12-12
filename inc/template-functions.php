@@ -117,7 +117,8 @@ function the_mods_for_section( $section ) {
 			if ( ! empty( get_theme_mod( 'cta_slider_' . $i ) ) || ! empty( get_theme_mod( 'cta_slider_html_' . $i ) ) ) :
 				$cta_slider_count++;
 				$slide = array(
-					'slide_img'              => get_theme_mod( 'cta_slider_' . $i ),
+					'slide_img_id'           => get_theme_mod( 'cta_slider_' . $i ),
+					'slide_mobile_img_id'    => get_theme_mod( 'cta_slider_mobile_' . $i ),
 					'slide_text_position'    => get_theme_mod( 'cta_slider_text_position_' . $i ),
 					'slide_title'            => get_theme_mod( 'cta_slider_title_' . $i ),
 					'slide_html'             => get_theme_mod( 'cta_slider_html_' . $i ),
@@ -125,7 +126,6 @@ function the_mods_for_section( $section ) {
 					'slide_description_icon' => get_theme_mod( 'slider_description_list_icon_' . $i ),
 					'slide_link_btn'         => get_theme_mod( 'cta_slider_btn_text_' . $i ),
 					'slide_link'             => get_theme_mod( 'cta_slider_btn_link_' . $i ),
-					'slide_mobile_img_id'    => get_theme_mod( 'cta_slider_mobile_' . $i ),
 				);
 
 				for ( $a = 1; $a <= 3; $a++ ) {
