@@ -29,8 +29,8 @@ get_header();
 	echo "</pre>\n";
 
 	/* This gets the slides as an object */
-	$top_slider = get_section_mods( 'top_slider' );
-	do_action( 'get_mods_before_section', 'top_slider' );
+	$top_slider = $page_mods->top_slider;
+	do_action( 'get_mods_before_section', 'top_slider', $top_slider );
 
 	/* This checks for slider object in order to parse slider section */
 	if ( ! empty( $top_slider->slides ) ) :
@@ -42,26 +42,26 @@ get_header();
 				foreach ( $top_slider->slides as $slide ) :
 
 					/* Checks for an img set in the slide object */
-					if ( ! empty( $slide->slide_img ) ) :
+					if ( ! empty( $slide->slide_img_id ) ) :
 						?>
 						<div class="top-page-slide">
 							<?php
 							if ( wp_is_mobile() ) :
 								?>
-								<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_mobile_img ); ?>');">
+								<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_mobile_img_id ) ); ?>" style="background-image:url('<?php echo esc_url( wp_get_attachment_url( $slide->slide_mobile_img_id ) ); ?>');">
 									<?php
 								else :
-									if ( strpos( $slide->slide_img, '.mp4' ) !== false ) {
+									if ( strpos( $slide->slide_img_id, '.mp4' ) !== false ) {
 										?>
-										<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>">
+										<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img_id ) ); ?>">
 											<video autoplay="true" loop muted class="cta-slide">
-												<source src="<?php echo esc_attr( $slide->slide_img ); ?>" type="video/mp4">
+												<source src="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img_id ) ); ?>" type="video/mp4">
 													Your browser does not support the video tag.
 												</video>
 												<?php
 									} else {
 										?>
-												<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_img ); ?>');">
+												<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img_id ) ); ?>" style="background-image:url('<?php echo esc_url( wp_get_attachment_url( $slide->slide_img_id ) ); ?>');">
 											<?php
 									}
 											endif;
@@ -159,14 +159,14 @@ get_header();
 										<?php
 										if ( wp_is_mobile() ) :
 											?>
-											<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_mobile_img ); ?>');">
+											<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_mobile_img ) ); ?>" style="background-image:url('<?php echo esc_url( wp_get_attachment_url( $slide->slide_mobile_img ) ); ?>');">
 												<?php
 											else :
 												if ( strpos( $slide->slide_img, '.mp4' ) !== false ) {
 													?>
-													<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>">
+													<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img ) ); ?>">
 														<video autoplay loop muted class="cta-slide">
-															<source src="<?php echo esc_attr( $slide->slide_img ); ?>" type="video/mp4">
+															<source src="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img ) ); ?>" type="video/mp4">
 																Your browser does not support the video tag.
 															</video>
 															<?php
