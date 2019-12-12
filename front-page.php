@@ -252,9 +252,6 @@ get_header();
 																		?>
 																		<ul class="perks-description-ul">
 																			<?php
-																			echo "<pre>\n";
-																			print_r( $slide );
-																			echo "</pre>\n";
 
 																			for ( $i = 1; $i <= 3; $i++ ) :
 																				echo '<li class="perks-description" style="list-style-image: url(' . esc_url( wp_get_attachment_url( $slide->slide_description_icon ) ) . ')">' . esc_html( $slide->cta_descriptions->{"description_$i"} ) . '</li>';
