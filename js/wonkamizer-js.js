@@ -1072,7 +1072,7 @@ var componentForm;
 	{
 		var current_el = document.querySelector( '#' + scroll_to_id );
 		$('body,html').animate({
-			scrollTop : $('#' + scroll_to_id).offset().top                     // Scroll to top of body
+			scrollTop : $('#' + scroll_to_id).offset().top + 10                     // Scroll to top of body
 		}, 1000);
 	}
 
