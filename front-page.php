@@ -24,10 +24,6 @@ get_header();
 
 	do_action( 'get_mods_after_section', 'all', $page_mods );
 
-	echo "<pre>\n";
-	print_r( $page_mods );
-	echo "</pre>\n";
-
 	/* This gets the slides as an object */
 	$top_slider = $page_mods->top_slider;
 	do_action( 'get_mods_before_section', 'top_slider', $top_slider );
@@ -108,9 +104,9 @@ get_header();
 
 			<?php
 
-			do_action( 'get_mods_before_section', 'shop_area' );
+			$shop_section = $page_mods->shop_area;
+			do_action( 'get_mods_before_section', 'shop_area', $shop_section );
 
-			$shop_section = get_section_mods( 'shop_area' );
 			if ( ! empty( $shop_section->shop_mods ) ) :
 				?>
 
@@ -142,8 +138,9 @@ get_header();
 					</section><!-- .shop-section -->
 				<?php endif; ?>
 				<?php
+
+				$cta_slider = $page_mods->cta_slider;
 				do_action( 'get_mods_before_section', 'cta_slider' );
-				$cta_slider = get_section_mods( 'cta_slider' );
 
 				if ( ! empty( $cta_slider->slides ) ) :
 					?>
@@ -153,26 +150,26 @@ get_header();
 							/* Foreach loop to build slider according to slides entered in the customizer */
 							foreach ( $cta_slider->slides as $slide ) :
 								/* Checks for an img set in the slide object */
-								if ( ! empty( $slide->slide_img ) ) :
+								if ( ! empty( $slide->slide_img_id ) ) :
 									?>
 									<div class="cta-section-slide">
 										<?php
 										if ( wp_is_mobile() ) :
 											?>
-											<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_mobile_img ) ); ?>" style="background-image:url('<?php echo esc_url( wp_get_attachment_url( $slide->slide_mobile_img ) ); ?>');">
+											<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_mobile_img_id ) ); ?>" style="background-image:url('<?php echo esc_url( wp_get_attachment_url( $slide->slide_mobile_img_id ) ); ?>');">
 												<?php
 											else :
 												if ( strpos( $slide->slide_img, '.mp4' ) !== false ) {
 													?>
-													<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img ) ); ?>">
+													<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img_id ) ); ?>">
 														<video autoplay loop muted class="cta-slide">
-															<source src="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img ) ); ?>" type="video/mp4">
+															<source src="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img_id ) ); ?>" type="video/mp4">
 																Your browser does not support the video tag.
 															</video>
 															<?php
 												} else {
 													?>
-															<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_img ); ?>');">
+															<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img_id ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_img_id ); ?>');">
 														<?php
 												}
 														endif;
@@ -234,8 +231,9 @@ get_header();
 							</section><!-- .desirable-slider-section -->
 						<?php endif; ?>
 						<?php
-						do_action( 'get_mods_before_section', 'cause_area' );
-						$cause_section = get_section_mods( 'cause_area' );
+
+						$cause_section = $page_mods->cause_area;
+						do_action( 'get_mods_before_section', 'cause_area', $cause_section );
 
 						/* Check for Cause object */
 						if ( ! empty( $cause_section->cause_mods ) ) :
@@ -249,14 +247,14 @@ get_header();
 								<div class="row wonka-row">
 									<?php
 									foreach ( $cause_section->causes as $cause ) :
-										if ( ! empty( $cause->img ) ) :
+										if ( ! empty( $cause->img_id ) ) :
 											?>
 											<div class="col-12 col-md-4">
 												<div class="cause-section-module">
 													<div class="module-component-wrap">
 														<div class="img-container">
 															<a href="<?php echo esc_url( $cause->img_link ); ?>">
-																<img class="cause-img img-fluid" src="<?php echo esc_attr( $cause->img_src ); ?>" srcset="<?php echo esc_attr( $cause->img_srcset ); ?>" />
+																<img class="cause-img img-fluid" src="<?php echo esc_url( wp_get_attachment_image_src( $cause->img_id, 'custom_products_size', false ), array( 'https' ), 'display' ); ?>" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $cause->img_id ), 'custom_products_size', false ); ?>" />
 															</a>
 														</div>
 														<?php if ( ! empty( $cause->header_link ) ) : ?>
@@ -310,8 +308,9 @@ get_header();
 
 
 						<?php
-						do_action( 'get_mods_before_section', 'about_area' );
-						$about_section = get_section_mods( 'about_area' );
+
+						$about_section = $page_mods->about_area;
+						do_action( 'get_mods_before_section', 'about_area', $about_section );
 
 						if ( ! empty( $about_section->about_the_brand->about_header ) ) :
 							?>
@@ -377,8 +376,9 @@ get_header();
 						<?php endif; ?>
 
 						<?php
-						do_action( 'get_mods_before_section', 'social_area' );
-						$social_section = get_section_mods( 'social_area' );
+
+						$social_section = $page_mods->social_area;
+						do_action( 'get_mods_before_section', 'social_area', $social_section );
 
 						if ( ! empty( $social_section->social_mods->social_title ) ) :
 							?>
