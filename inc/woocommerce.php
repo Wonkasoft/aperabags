@@ -2158,12 +2158,6 @@ function wonkasoft_express_buttons_checkout() {
 add_action( 'wp', 'wonkasoft_express_buttons_checkout', 10 );
 
 /**
- * Combines the address my account page with the account details page.
- */
-add_action( 'woocommerce_account_edit-account_endpoint', 'woocommerce_account_edit_address' );
-
-
-/**
  * This is for the adding of the endpoint for my account page Earn AperaCash.
  */
 function wonkasoft_add_all_endpoints() {
