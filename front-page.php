@@ -159,23 +159,79 @@ get_header();
 											<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_mobile_img_id ) ); ?>" style="background-image:url('<?php echo esc_url( wp_get_attachment_url( $slide->slide_mobile_img_id ) ); ?>');">
 												<?php
 											else :
-												if ( strpos( $slide->slide_img, '.mp4' ) !== false ) {
+												if ( strpos( wp_get_attachment_url( $slide->slide_img_id ), '.mp4' ) !== false ) {
 													?>
 													<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img_id ) ); ?>">
 														<video autoplay loop muted class="cta-slide">
-															<source src="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img_id ) ); ?>" type="video/mp4">
+															<source src="<?php echo esc_url( wp_get_attachment_url( $slide->slide_img_id ) ); ?>" type="video/mp4">
 																Your browser does not support the video tag.
 															</video>
 															<?php
 												} else {
 													?>
-															<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img_id ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_img_id ); ?>');">
+															<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img_id ) ); ?>" style="background-image:url('<?php echo esc_url( wp_get_attachment_url( $slide->slide_img_id ) ); ?>');">
 														<?php
 												}
 														endif;
 														/* Checks for an message set in the slide object */
-											if ( ! empty( $slide->slide_title ) ) :
+											if ( ! empty( $slide->slide_html ) ) :
 												?>
+															<div class="row img-header-text-wrap">
+													<?php
+																echo wp_kses(
+																	$slide->slide_html,
+																	array(
+																		'div' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'span' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'a' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'ul' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'li' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'h1' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'h2' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'h3' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'h4' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'h5' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																		'h6' => array(
+																			'id' => array(),
+																			'class' => array(),
+																		),
+																	)
+																);
+													?>
+															</div><!-- .img-header-text-wrap -->
+														<?php
+														elseif ( ! empty( $slide->slide_title ) ) :
+															?>
 															<div class="row img-header-text-wrap">
 																<div class="col col-12 img-header-text-container">
 																	<div class="text-box text-center
@@ -184,20 +240,21 @@ get_header();
 																		echo wp_kses_data( $set_text_align );
 																		?>
 																	">
-																	<h2 class="img-header-text text-center"><?php echo wp_kses_data( $slide->slide_title ); ?></h2>
+																	<h2 class="img-header-text text-center"><?php echo esc_html( $slide->slide_title ); ?></h2>
 																	<?php
 																	if ( ! empty( $slide->slide_text_message ) ) :
 																		?>
-																	<h3 class="img-header-text text-center "><?php echo wp_kses_data( $slide->slide_text_message ); ?></h3>
+																	<h3 class="img-header-text text-center "><?php echo esc_html( $slide->slide_text_message ); ?></h3>
 																		<?php
 																	endif;
 
-																	if ( ! empty( $slide->cta_description_1 ) ) :
+																	if ( ! empty( $slide->cta_descriptions ) ) :
 																		?>
 																		<ul class="perks-description-ul">
 																			<?php
+
 																			for ( $i = 1; $i <= 3; $i++ ) :
-																				echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->slide_description_icon ) . ')">' . esc_html( $slide->{'cta_description_' . $i } ) . '</li>';
+																				echo '<li class="perks-description" style="list-style-image: url(' . esc_url( wp_get_attachment_url( $slide->slide_description_icon ) ) . ')">' . esc_html( $slide->cta_descriptions->{"description_$i"} ) . '</li>';
 																				endfor;
 																			?>
 																		</ul>
@@ -207,7 +264,7 @@ get_header();
 																	/* Checks for an subheader set in the slide object */
 																	if ( ! empty( $slide->slide_link ) ) :
 																		?>
-																		<a href="<?php echo esc_url( get_the_permalink( $slide->slide_link, false ) ); ?>" class="wonka-btn img-cta-link text-center"><?php echo wp_kses_data( $slide->slide_link_btn ); ?></a>
+																		<a href="<?php echo esc_url( get_the_permalink( $slide->slide_link, false ) ); ?>" class="wonka-btn img-cta-link text-center"><?php echo esc_html( $slide->slide_link_btn ); ?></a>
 																	<?php endif; ?>
 																</div><!-- .text-box -->
 															</div><!-- .img-header-text-container -->
@@ -219,12 +276,7 @@ get_header();
 												</div><!-- .cta-slide-img-holder -->
 											</div><!-- .cta-section-slide -->
 
-
-										<?php elseif ( ! empty( $slide->slide_html ) ) : ?>
-										  <h1>jfdkfklasjfasklj</h1>
 										<?php endif; ?>
-
-
 
 									<?php endforeach; ?>
 								</div><!-- .cta-section-slider-wrap -->
@@ -241,7 +293,7 @@ get_header();
 							<section class="container-fluid our-cause-section">
 								<div class="row wonka-row">
 									<div class="col-12 text-center title-wrap">
-										<h3 class="section-title our-cause-title"><?php echo wp_kses_data( $cause_section->cause_mods->cause_section_title ); ?></h3>
+										<h3 class="section-title our-cause-title"><?php echo esc_html( $cause_section->cause_mods->cause_section_title ); ?></h3>
 									</div>
 								</div>
 								<div class="row wonka-row">
@@ -259,10 +311,10 @@ get_header();
 														</div>
 														<?php if ( ! empty( $cause->header_link ) ) : ?>
 															<a href="<?php echo esc_url( $cause->header_link ); ?>" >
-																<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>
+																<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo esc_html( $cause->header ); ?></h3>
 															</a>
 														<?php else : ?>
-															<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>										
+															<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo esc_html( $cause->header ); ?></h3>										
 														<?php endif; ?>
 														<p class="cause-message text-<?php echo esc_attr( $cause->position ); ?>">
 															<?php
