@@ -2984,6 +2984,97 @@ var componentForm;
 						}
 					} );
 			}
+
+			if ( document.querySelector( '#faq-general' ) ) 
+			{
+				var faq_general_jump = document.querySelector( '#faq-general a' );
+
+				faq_general_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							one_click = false;
+							scrollToSection( 'general', 15 );
+						}
+					} );
+			}
+
+			if ( document.querySelector( '#faq-payment' ) ) 
+			{
+				var faq_payment_jump = document.querySelector( '#faq-payment a' );
+
+				faq_payment_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							one_click = false;
+							scrollToSection( 'payment', 15 );
+						}
+					} );
+			}
+
+			if ( document.querySelector( '#faq-shipping' ) ) 
+			{
+				var faq_shipping_jump = document.querySelector( '#faq-shipping a' );
+
+				faq_shipping_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							one_click = false;
+							scrollToSection( 'shipping-returns', 15 );
+						}
+					} );
+			}
+
+			if ( document.querySelector( '#faq-perks' ) ) 
+			{
+				var faq_perks_jump = document.querySelector( '#faq-perks a' );
+
+				faq_perks_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							one_click = false;
+							scrollToSection( 'perks', 15 );
+						}
+					} );
+			}
+
+			if ( document.querySelector( '#faq-ambassador' ) ) 
+			{
+				var faq_ambassador_jump = document.querySelector( '#faq-ambassador a' );
+
+				faq_ambassador_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							one_click = false;
+							scrollToSection( 'ambassador', 15 );
+						}
+					} );
+			}
+
+			if ( document.querySelector( '#faq-zip' ) ) 
+			{
+				var faq_zip_jump = document.querySelector( '#faq-zip a' );
+
+				faq_zip_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							one_click = false;
+							scrollToSection( 'zip', 15 );
+						}
+					} );
+			}
+
 		/*=====  End of This is for single product page short description scrolling  ======*/
 	
 
