@@ -3272,9 +3272,7 @@ var componentForm;
 				{
 					var parent_el = picker.parentElement;
 					var close_span = parent_el.querySelector( 'span.input-group-text' );
-					var datepicker_new_icon_url = parent_el.querySelector( '.new-cal-icon' ).value;
 					close_span.appendChild( picker );
-					picker.src = datepicker_new_icon_url;
 				});
 
 			var observer_callback = function( mutationsList, observer ) 
@@ -3349,6 +3347,31 @@ var componentForm;
 		$('#loader-wrapper').fadeOut();
 		
 		$('[data-toggle="tooltip"]').tooltip();
+
+		if ( document.querySelector( '#earn-aperacash-modal' ) ) 
+		{
+			var the_modal_content = document.querySelector( '#earn-aperacash-modal .modal-body' );
+			var aperacash_btns = document.querySelectorAll( 'a[data-target="#earn-aperacash-modal"]' );
+			var modal_contents = {
+				birthday: document.querySelector( '#birthday-for-modal' ),
+				refer: document.querySelector( '#refer-for-modal' ),
+				follow: document.querySelector( '#follow-for-modal' ),
+				review: document.querySelector( '#review-for-modal' ),
+				signup: document.querySelector( '#signup-for-modal' )
+			};
+			aperacash_btns.forEach( function( btn, i ) 
+				{
+					btn.addEventListener( 'click', function( e ) 
+						{
+							e.preventDefault();
+							var target = this;
+							var target_id = target.id.split( '-' )[0];
+							var target_content = modal_contents[target_id];
+							the_modal_content.innerHTML = '';
+							the_modal_content.appendChild( target_content );
+						});
+				});
+		}
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 

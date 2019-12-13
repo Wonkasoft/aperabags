@@ -41,8 +41,8 @@ foreach ( $OrderList as $OrderId ) {
 }
 ?>
 
-<section class="dashboard-second">
-	<div class="dashboard-second-divider"><span><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<section class="myaccount-section-divider">
+	<div class="myaccount-divider"><span><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="25px" height="18px" viewBox="0 0 25 18" enable-background="new 0 0 25 18" xml:space="preserve">
 <polygon fill="#ffffff" points="25,5 12,5 12,0 -0.075,9.001 12,18 12,13 25,13 "/>
 </svg> Use this menu to navigate through your account.</span></div>
@@ -85,16 +85,6 @@ foreach ( $OrderList as $OrderId ) {
 </section>
 
 <section class="dashboard-fourth">
-	<?php
-	/**
-	 * Deprecated woocommerce_before_my_account action.
-	 *
-	 * @deprecated 2.6.0
-	 */
-		do_action( 'woocommerce_before_my_account' );
-	?>
-</section>
-<section class="dashboard-fifth">
 	<header class="history-title">
 		<h3 class="history-title-text">My AperaCash History</h3>
 	</header>

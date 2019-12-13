@@ -35,13 +35,13 @@ if ( ! empty( $company_logo ) ) {
 	<p><strong>Welcome to the Apera Ambassador Program!</strong> Use this dashboard to manage your Ambassador features, upload your gym/club logo and view sales made with your unique Ambassador Code.</p>
 </section>
 
-<section class="ambassador-second">
-	<div class="ambassador-second-divider"><span>Gym/Club Details</span></div>
+<section class="myaccount-section-divider">
+	<div class="myaccount-divider"><span>Gym/Club Details</span></div>
 </section>
 
-<section class="zip-third">
+<section class="ambassador-third">
 	<div class="table-responsive">
-	<table class="">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th class=""><span class="nobr">Date</span></th>

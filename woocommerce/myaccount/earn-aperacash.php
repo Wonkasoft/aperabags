@@ -42,7 +42,7 @@ $customer_id = get_current_user_id();
 	</ul>
 </section>
 <section class="earn-aperacash-second">
-	<a href="#" class="aperacash-boxes-achor">
+	<a id="birthday-button" href="#" class="aperacash-boxes-achor" data-toggle="modal" data-target="#earn-aperacash-modal">
 	<div class="aperacash-boxes aperacash-boxes-birthday unlimited">
 		<i class="arrow-right">
 			<svg version="1.1" id="Arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 15 15" enable-background="new 0 0 15 15" xml:space="preserve">
@@ -116,10 +116,13 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>My Birthday</span></div>
 			<div class="box-content-text"><span>$10 AperaCash is automatically added to your balance on your birthday!</span></div>
+			<div id="birthday-for-modal">
+				<?php gravity_form( 'User Birthday', false, false, false, null, true, 1, true ); ?>
+			</div>
 		</div>
 	</div>
 	</a>
-	<a href="#" class="aperacash-boxes-achor">
+	<a id="refer-button" href="#" class="aperacash-boxes-achor" data-toggle="modal" data-target="#earn-aperacash-modal">
 	<div class="aperacash-boxes aperacash-boxes-refer-friend unlimited">
 		<i class="arrow-right">
 			<svg version="1.1" id="Arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 15 15" enable-background="new 0 0 15 15" xml:space="preserve">
@@ -165,10 +168,20 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>Refer Friends</span></div>
 			<div class="box-content-text"><span>Earn $5 AperaCash per friend who signs up with the Apera Perks Program!</span></div>
+			<div id="refer-for-modal">
+				<?php
+				/**
+				 * Deprecated woocommerce_before_my_account action.
+				 *
+				 * @deprecated 2.6.0
+				 */
+					do_action( 'woocommerce_before_my_account' );
+				?>
+			</div>
 		</div>
 	</div>
 	</a>
-	<a href="#" class="aperacash-boxes-achor">
+	<a id="shop-button" href="<?php echo esc_url( get_site_url() . '/shop/' ); ?>" class="aperacash-boxes-achor">
 	<div class="aperacash-boxes aperacash-boxes-shop unlimited">
 		<i class="arrow-right">
 			<svg version="1.1" id="Arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 15 15" enable-background="new 0 0 15 15" xml:space="preserve">
@@ -222,7 +235,7 @@ $customer_id = get_current_user_id();
 		</div>
 	</div>
 	</a>
-	<a href="#" class="aperacash-boxes-achor">
+	<a id="follow-button" href="#" class="aperacash-boxes-achor" data-toggle="modal" data-target="#earn-aperacash-modal">
 	<div class="aperacash-boxes aperacash-boxes-follow-like one-time">
 		<i class="arrow-right">
 			<svg version="1.1" id="Arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 15 15" enable-background="new 0 0 15 15" xml:space="preserve">
@@ -263,10 +276,11 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>Follow & Like Us</span></div>
 			<div class="box-content-text"><span>Earn $5 AperaCash just for following Apera Bags on Social Media!</span></div>
+			<div id="follow-for-modal"><?php echo do_shortcode( '[facebook_share_reward_points]' ); ?></div>
 		</div>
 	</div>
 	</a>
-	<a href="#" class="aperacash-boxes-achor">
+	<a id="review-button" href="#" class="aperacash-boxes-achor" data-toggle="modal" data-target="#earn-aperacash-modal">
 	<div class="aperacash-boxes aperacash-boxes-review one-time">
 		<div class="box-content-wrap">
 			<div class="box-content-icon">
@@ -310,10 +324,11 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>Leave a Review</span></div>
 			<div class="box-content-text"><span>Earn $5 AperaCash when you leave a review for AperaBags.com!</span></div>
+			<div id="review-for-modal"><?php echo do_shortcode( '[facebook_share_reward_points]' ); ?></div>
 		</div>
 	</div>
 	</a>
-	<a href="#" class="aperacash-boxes-achor">
+	<a id="signup-button" href="#" class="aperacash-boxes-achor" data-toggle="modal" data-target="#earn-aperacash-modal">
 	<div class="aperacash-boxes aperacash-boxes-signup already-done">
 		<div class="box-content-wrap">
 			<div class="box-content-icon">
@@ -354,6 +369,7 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>Sign Up</span></div>
 			<div class="box-content-text"><span>You earned $10 AperaCash just for signing up with the Apera Perks Program!</span></div>
+			<div id="signup-for-modal"><?php esc_html_e( 'You have already received your reward', 'apera-bags' ); ?></div>
 		</div>
 	</div>
 	</a>
@@ -371,3 +387,26 @@ $customer_id = get_current_user_id();
 	/* Omit closing PHP tag at the end of PHP files to avoid "headers already sent" issues. */
 	?>
 </section>
+
+<!-- The Modal -->
+<div class="modal fade" id="earn-aperacash-modal">
+  <div class="modal-dialog modal-dialog-centered">
+	<div class="modal-content">
+
+	  <!-- Modal Header -->
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+	  </div>
+
+	  <!-- Modal body -->
+	  <div class="modal-body">
+
+	  </div>
+
+	  <!-- Modal footer -->
+	  <div class="modal-footer">
+	  </div>
+
+	</div>
+  </div>
+</div>

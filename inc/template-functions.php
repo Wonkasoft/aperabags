@@ -363,6 +363,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] .= ' inline-form wonka-join-mse-form';
 	endif;
 
+	if ( in_array( $form['title'], array( 'User Birthday' ) ) ) :
+		$form['cssClass'] .= ' inline-form wonka-birthday-form';
+	endif;
+
 	if ( in_array( $form['title'], array( 'Add Discount Code' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-discount-form';
 	endif;
@@ -475,7 +479,7 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 
 				if ( strpos( $value, "class='datepicker" ) !== false ) :
 
-					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value . '<input type="hidden" class="new-cal-icon" value="' . get_stylesheet_directory_uri() . '/assets/img/calendar-icon.svg" />';
+					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value;
 
 					elseif ( strpos( $value, "id='gforms_calendar_icon" ) !== false ) :
 
@@ -495,9 +499,9 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 
 	endif;
 
-	if ( 'Join MSE+' === $form['title'] ) :
+	if ( 'Join MSE+' === $form['title'] || 'User Birthday' === $form['title'] ) :
 
-		if ( 'Military Date' === $field['label'] || 'Student Grad Date' === $field['label'] ) :
+		if ( 'Military Date' === $field['label'] || 'Student Grad Date' === $field['label'] || 'Birthday Date' === $field['label'] ) :
 
 			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
 
@@ -505,7 +509,7 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 
 				if ( strpos( $value, "class='datepicker" ) !== false ) :
 
-					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value . '<input type="hidden" class="new-cal-icon" value="' . get_stylesheet_directory_uri() . '/assets/img/calendar-icon.svg" />';
+					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value;
 
 					elseif ( strpos( $value, "id='gforms_calendar_icon" ) !== false ) :
 
