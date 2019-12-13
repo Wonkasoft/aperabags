@@ -392,7 +392,8 @@ div#content {
           section.dashboard-first,
           section.orders-first,
           section.zip-first,
-          section.ambassador-first {
+          section.ambassador-first,
+          section.earn-aperacash-first {
             display: grid;
             align-items: center;
             justify-content: space-between;
@@ -654,6 +655,57 @@ div#content {
             }
           } 
           /* END DASHBOARD ENDPOINT */
+
+          /* EARN APERACASH */
+          section.earn-aperacash-first {
+            grid-auto-flow: row;
+
+            h5.earn-aperacash-title-text {
+              font-weight: bold;
+            }
+
+            p {
+              margin: 0;
+              padding: 0 8px;
+              @include font-size( 1 );
+            }
+
+            ul {
+              padding: 0 15px;
+
+              li {
+                display: grid;
+                align-items: center;
+                justify-content: start;
+                grid-auto-flow: column;
+                grid-gap: 8px;
+
+                div.legend-color {
+                  position: relative;
+                  display: inline-block;
+                  width: 15px;
+                  height: 15px;
+
+                  &-green {
+                    background: #96e46b;
+                  }
+
+                  &-blue {
+                    background: #52abf6;
+                  }
+
+                  &-grey {
+                    background: #414e59;
+                  }
+                }
+
+                div.legend-color-text {
+
+                }
+              }
+            }
+          }
+          /* END EARN APERACASH */
 
           /* ORDERS ENDPOINT */
           section.orders-second {

@@ -598,7 +598,7 @@ section.our-cause-section {
 				@include prefix( box-shadow, 0 0 4px .5px rgba, o moz webkit );
 
 				img {
-					height: 550px;
+					height: auto;
 					width: 370px;
 				}
 			}

@@ -37,6 +37,7 @@ if ( ! empty( $company_logo ) ) {
 
 <section class="zip-second">
 	<div class="zip-second-divider"><span>Gym/Club Details</span></div>
+	<button type="button" class="btm account-btn account-save">Save & Update</button>
 </section>
 
 <section class="zip-third">
