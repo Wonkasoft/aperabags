@@ -106,15 +106,27 @@ foreach ( $OrderList as $OrderId ) {
 					<option value="50">50</option>
 					<option value="100">100</option>
 				</select>
-			<table class = "list_of_orders demo shop_table my_account_orders table-bordered" data-page-size="5" data-page-previous-text = "prev" data-filter-text-only = "true" data-page-next-text = "next">
+			<table class = "list_of_orders demo shop_table my_account_orders table-striped" data-page-size="5" data-page-previous-text = "prev" data-filter-text-only = "true" data-page-next-text = "next">
 				<thead>
 					<tr>
-						<th data-type="Numeric"><?php _e( 'S.No', SRP_LOCALE ); ?></th> 
-						<th data-type="Numeric"><?php _e( 'User name', SRP_LOCALE ); ?></th>
-						<th data-type="Numeric"><?php _e( 'Status', SRP_LOCALE ); ?></th>
-						<th data-type="Numeric"><?php _e( 'Description', SRP_LOCALE ); ?></th>
+						<th data-type="Numeric"><?php _e( 'Date', 'aperabags' ); ?></th> 
+						<th data-type="Numeric"><?php _e( 'Action', 'aperabags' ); ?></th>
+						<th data-type="Numeric"><?php _e( 'Purchases', 'aperabags' ); ?></th>
+						<th data-type="Numeric"><?php _e( 'Earned', 'aperabags' ); ?></th>
+						<th data-type="Numeric"><?php _e( 'Spent', 'aperabags' ); ?></th>
+						<th></th>
 					</tr>
 				</thead>
+				<tbody>
+					<tr class="dark-headers">
+						<th class="second-header-totals"><?php _e( 'Totals', 'aperabags' ); ?></th> 
+						<th class="second-header-blank"></th>
+						<th class="second-header-purchases"></th>
+						<th class="second-header-earned"></th>
+						<th class="second-header-spent"></th>
+						<th class="second-header-blank"></th>
+					</tr>
+				</tbody>
 				<tbody>
 					<?php
 					$WCOrderStatus   = array_keys( wc_get_order_statuses() );
@@ -123,11 +135,14 @@ foreach ( $OrderList as $OrderId ) {
 					$SUMOOrderStatus = ( srp_check_is_array( $SUMOOrderStatus ) ) ? $SUMOOrderStatus : array();
 					$Status          = array();
 					foreach ( $WCOrderStatus as $WCStatus ) {
+
 						$WCStatus = str_replace( 'wc-', '', $WCStatus );
+
 						if ( ! in_array( $WCStatus, $SUMOOrderStatus ) ) {
 							$Status[] = 'wc-' . $WCStatus;
 						}
 					}
+
 					$args      = array(
 						'post_type'     => 'shop_order',
 						'numberposts'   => '-1',
@@ -152,14 +167,14 @@ foreach ( $OrderList as $OrderId ) {
 						'cache_results' => false,
 					);
 					$OrderList = get_posts( $args );
-					foreach ( $OrderList as $OrderId ) {
-						$OrderObj    = new WC_Order( $OrderId );
+					foreach ( $OrderList as $order_id ) {
+						$OrderObj    = new WC_Order( $order_id );
 						$OrderObj    = srp_order_obj( $OrderObj );
 						$OrderStatus = $OrderObj['order_status'];
 						$Firstname   = $OrderObj['first_name'];
-						$Points      = (float) get_post_meta( $OrderId, 'rs_points_for_current_order_as_value', true );
+						$Points      = (float) get_post_meta( $order_id, 'rs_points_for_current_order_as_value', true );
 						if ( $Points > 0 ) {
-							echo RS_Rewardsystem_Shortcodes::order_status_settings( $OrderId, $OrderStatus, $Firstname, $i, $Points, $SUMOOrderStatus );
+							echo wonkasoft_order_status_settings( $order_id, $OrderObj, $OrderStatus, $Firstname, $i, $Points, $SUMOOrderStatus );
 							$i ++;
 						}
 					}
@@ -187,17 +202,6 @@ foreach ( $OrderList as $OrderId ) {
 			</script>
 		</div>
 
-<?php
-
-	/**
-	 * Deprecated woocommerce_after_my_account action.
-	 *
-	 * @deprecated 2.6.0
-	 */
-	do_action( 'woocommerce_after_my_account' );
-
-/* Omit closing PHP tag at the end of PHP files to avoid "headers already sent" issues. */
-?>
 </section>
 
 <?php

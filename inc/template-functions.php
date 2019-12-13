@@ -53,213 +53,269 @@ function get_section_mods( $section ) {
  * @return bool/object    returns false if no slides are set in customizer.
  */
 function the_mods_for_section( $section ) {
-	$mods_class = new stdClass();
-	$count      = 0;
-	if ( 'top' === $section ) :
-		$mods_class->slides = new stdClass();
+
+	$section_mods = array();
+	if ( 'top_slider' === $section || 'all' === $section ) :
+		$top_slider_count     = 0;
+		$top_slider           = array();
+		$top_slider['slides'] = array();
 		for ( $i = 1; $i <= 5; $i++ ) {
 			if ( ! empty( get_theme_mod( 'slider_' . $i ) ) ) :
-				$count++;
-				$slide                       = new stdClass();
-				$slide->slide_img            = get_theme_mod( 'slider_' . $i );
-				$slide->slide_text_position  = get_theme_mod( 'slider_text_position_' . $i );
-				$slide->slide_header_message = get_theme_mod( 'slider_header_' . $i );
-				$slide->slide_subheader      = get_theme_mod( 'slider_subheader_' . $i );
-				$slide->slide_link_btn       = get_theme_mod( 'slider_btn_text_' . $i );
-				$slide->slide_link           = get_theme_mod( 'slider_btn_link_' . $i );
-				// Mobile theme mod.
-				$slide->slide_mobile_img = get_theme_mod( 'slider_mobile_' . $i );
+				$top_slider_count++;
+				$slide = array(
+					'slide_img_id'         => get_theme_mod( 'slider_' . $i ),
+					'slide_mobile_img_id'  => get_theme_mod( 'slider_mobile_' . $i ),
+					'slide_text_position'  => get_theme_mod( 'slider_text_position_' . $i ),
+					'slide_header_message' => get_theme_mod( 'slider_header_' . $i ),
+					'slide_subheader'      => get_theme_mod( 'slider_subheader_' . $i ),
+					'slide_link_btn'       => get_theme_mod( 'slider_btn_text_' . $i ),
+					'slide_link'           => get_theme_mod( 'slider_btn_link_' . $i ),
+				);
 
-				$mods_class->slides->{"slide_{$i}"} = $slide;
+				$top_slider['slides'][ "slide_$i" ] = $slide;
 			endif;
 		}
 
-		$mods_class->slides->count = $count;
+		$top_slider['slides']['count'] = $top_slider_count;
 
-		return $mods_class;
+		if ( 'top_slider' === $section ) {
+			return json_decode( json_encode( $top_slider ) );
+		} else {
+			$section_mods['top_slider'] = $top_slider;
+		}
 	endif;
 
-	if ( 'shop' === $section ) :
+	if ( 'shop_area' === $section || 'all' === $section ) :
+		$shop_area_count = 0;
+		$shop_area       = array();
 		if ( ! empty( get_theme_mod( 'shop_title' ) ) ) :
-			$count++;
-			$shop                        = new stdClass();
-			$shop->shop_title            = get_theme_mod( 'shop_title' );
-			$shop->shop_background_image = get_theme_mod( 'shop_background_image' );
-			$shop->enable_sale_banner    = get_theme_mod( 'enable_sale_banner' );
-			$shop->shop_product_per_row  = get_theme_mod( 'shop_product_per_row' );
-			$shop->shop_num_of_products  = get_theme_mod( 'shop_num_of_products' );
+			$shop_area_count++;
+			$shop = array(
+				'shop_title'            => get_theme_mod( 'shop_title' ),
+				'shop_background_image' => get_theme_mod( 'shop_background_image' ),
+				'enable_sale_banner'    => get_theme_mod( 'enable_sale_banner' ),
+				'shop_product_per_row'  => get_theme_mod( 'shop_product_per_row' ),
+				'shop_num_of_products'  => get_theme_mod( 'shop_num_of_products' ),
+			);
 
-			$mods_class->{'shop_mods'}        = $shop;
-			$mods_class->{'shop_mods'}->count = $count;
+			$shop_area['shop_mods']          = $shop;
+			$shop_area['shop_mods']['count'] = $shop_area_count;
 		endif;
 
-		return $mods_class;
+		if ( 'shop_area' === $section ) {
+			return json_decode( json_encode( $shop_area ) );
+		} else {
+			$section_mods['shop_area'] = $shop_area;
+		}
 	endif;
 
-	if ( 'cta' === $section ) :
-		$mods_class->slides = new stdClass();
+	if ( 'cta_slider' === $section || 'all' === $section ) :
+		$cta_slider           = array();
+		$cta_slider['slides'] = array();
+		$cta_slider_count     = 0;
 		for ( $i = 1; $i <= 5; $i++ ) {
-			if ( ! empty( get_theme_mod( 'cta_slider_' . $i ) ) ) :
-				$count++;
-				$slide                      = new stdClass();
-				$slide->slide_img           = get_theme_mod( 'cta_slider_' . $i );
-				$slide->slide_text_position = get_theme_mod( 'cta_slider_text_position_' . $i );
-				$slide->slide_title         = get_theme_mod( 'cta_slider_title_' . $i );
-
-				$slide->slide_text_message = get_theme_mod( 'cta_slider_text_' . $i );
+			if ( ! empty( get_theme_mod( 'cta_slider_' . $i ) ) || ! empty( get_theme_mod( 'cta_slider_html_' . $i ) ) ) :
+				$cta_slider_count++;
+				$slide = array(
+					'slide_img_id'           => get_theme_mod( 'cta_slider_' . $i ),
+					'slide_mobile_img_id'    => get_theme_mod( 'cta_slider_mobile_' . $i ),
+					'slide_text_position'    => get_theme_mod( 'cta_slider_text_position_' . $i ),
+					'slide_title'            => get_theme_mod( 'cta_slider_title_' . $i ),
+					'slide_html'             => get_theme_mod( 'cta_slider_html_' . $i ),
+					'slide_text_message'     => get_theme_mod( 'cta_slider_text_' . $i ),
+					'slide_description_icon' => get_theme_mod( 'slider_description_list_icon_' . $i ),
+					'slide_link_btn'         => get_theme_mod( 'cta_slider_btn_text_' . $i ),
+					'slide_link'             => get_theme_mod( 'cta_slider_btn_link_' . $i ),
+				);
 
 				for ( $a = 1; $a <= 3; $a++ ) {
 
-					$slide->{ 'cta_description_' . $a } = get_theme_mod( 'cta_slider_' . $i . '_description_' . $a );
+					$slide['cta_descriptions'][ "description_$a" ] = get_theme_mod( 'cta_slider_' . $i . '_description_' . $a );
 
 				}
-				$slide->slide_description_icon = get_theme_mod( 'slider_description_list_icon_' . $i );
-				$slide->slide_link_btn         = get_theme_mod( 'cta_slider_btn_text_' . $i );
-				$slide->slide_link             = get_theme_mod( 'cta_slider_btn_link_' . $i );
-				// Mobile Theme mod.
-				$slide->slide_mobile_img = get_theme_mod( 'cta_slider_mobile_' . $i );
 
-				$mods_class->slides->{"slide_{$i}"} = $slide;
+				$cta_slider['slides'][ "slide_$i" ] = $slide;
 			endif;
 		}
 
-		$mods_class->slides->count = $count;
+		$cta_slider['slides']['count'] = $cta_slider_count;
 
-		return $mods_class;
+		if ( 'cta_slider' === $section ) {
+			return json_decode( json_encode( $cta_slider ) );
+		} else {
+			$section_mods['cta_slider'] = $cta_slider;
+		}
 	endif;
 
-	if ( 'cause' === $section ) :
+	if ( 'cause_area' === $section || 'all' === $section ) :
+		$cause_area       = array();
+		$cause_area_count = 0;
 		if ( ! empty( get_theme_mod( 'cause_section_title' ) ) ) :
-			$count++;
-			$cause                           = new stdClass();
-			$cause->cause_section_title      = get_theme_mod( 'cause_section_title' );
-			$cause->cause_section_background = get_theme_mod( 'cause_section_background' );
+			$cause_area_count++;
+			$cause = array(
+				'cause_section_title'      => get_theme_mod( 'cause_section_title' ),
+				'cause_section_background' => get_theme_mod( 'cause_section_background' ),
+			);
 
-			$mods_class->{'cause_mods'}        = $cause;
-			$mods_class->{'cause_mods'}->count = $count;
+			$cause_area['cause_mods']          = $cause;
+			$cause_area['cause_mods']['count'] = $cause_area_count;
 		endif;
 
-		$count              = 0;
-		$mods_class->causes = new stdClass();
+		$cause_area_count2    = 0;
+		$cause_area['causes'] = array();
 		for ( $i = 1; $i <= 3; $i++ ) {
 			if ( ! empty( get_theme_mod( 'cause_image_' . $i ) ) ) :
-				$count++;
-				${"cause_$i"}              = new stdClass();
-				${"cause_$i"}->img         = get_theme_mod( 'cause_image_' . $i );
-				${"cause_$i"}->img_link    = get_theme_mod( 'cause_image_link_' . $i );
-				${"cause_$i"}->img_src     = wp_get_attachment_image_src( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', false );
-				${"cause_$i"}->img_srcset  = wp_get_attachment_image_srcset( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', null );
-				${"cause_$i"}->position    = get_theme_mod( 'cause_message_position_' . $i );
-				${"cause_$i"}->header      = get_theme_mod( 'cause_header_' . $i );
-				${"cause_$i"}->header_link = get_theme_mod( 'cause' . $i . '_header_link' );
-				${"cause_$i"}->message     = get_theme_mod( 'cause_message_' . $i );
+				$cause_area_count2++;
+				$cause = array(
+					'img_id'      => get_theme_mod( 'cause_image_' . $i ),
+					'img_link'    => get_theme_mod( 'cause_image_link_' . $i ),
+					'position'    => get_theme_mod( 'cause_message_position_' . $i ),
+					'header'      => get_theme_mod( 'cause_header_' . $i ),
+					'header_link' => get_theme_mod( 'cause' . $i . '_header_link' ),
+					'message'     => get_theme_mod( 'cause_message_' . $i ),
+				);
 
-				$mods_class->causes->{"cause_$i"} = ${"cause_$i"};
+				$cause_area['causes'][ "cause_$i" ] = $cause;
 			endif;
 		}
 
-		$mods_class->causes->count = $count;
+		$cause_area['causes']['count'] = $cause_area_count2;
 
-		return $mods_class;
+		if ( 'cta_slider' === $section ) {
+			return json_decode( json_encode( $cause_area ) );
+		} else {
+			$section_mods['cause_area'] = $cause_area;
+		}
 	endif;
 
-	if ( 'about' === $section ) :
+	if ( 'about_area' === $section || 'all' === $section ) :
+		$about_area       = array();
+		$about_area_count = 0;
 		if ( ! empty( get_theme_mod( 'about_the_brand_header' ) ) ) :
-			$count++;
-			$about                                      = new stdClass();
-			$about->about_header                        = get_theme_mod( 'about_the_brand_header' );
-			$about->about_subheader                     = get_theme_mod( 'about_the_brand_subheader' );
-			$about->about_message                       = get_theme_mod( 'about_the_brand_message' );
-			$about->about_the_brand_btn_text            = get_theme_mod( 'about_the_brand_btn_text' );
-			$about->about_the_brand_button_link         = get_permalink( get_theme_mod( 'about_the_brand_button_link' ) );
-			$about->about_the_brand_second_image_src    = wp_get_attachment_image_src( get_theme_mod( 'about_the_brand_second_image' ), 'custom_products_size', false );
-			$about->about_the_brand_second_image_srcset = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_second_image' ), 'custom_products_size', null );
-			$about->about_the_brand_image_link          = get_permalink( get_theme_mod( 'about_the_brand_second_image_link', '#' ) );
-			$about->about_videoplaceholder_src          = wp_get_attachment_image_src( get_theme_mod( 'about_the_brand_video_placeholder' ), 'custom_products_size', false );
-			$about->about_videoplaceholder_srcset       = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_video_placeholder' ), 'custom_products_size', null );
+			$about_area_count++;
+			$about = array(
+				'about_header'                    => get_theme_mod( 'about_the_brand_header' ),
+				'about_subheader'                 => get_theme_mod( 'about_the_brand_subheader' ),
+				'about_message'                   => get_theme_mod( 'about_the_brand_message' ),
+				'about_the_brand_btn_text'        => get_theme_mod( 'about_the_brand_btn_text' ),
+				'about_the_brand_button_link'     => get_permalink( get_theme_mod( 'about_the_brand_button_link' ) ),
+				'about_the_brand_second_image_id' => get_theme_mod( 'about_the_brand_second_image' ),
+				'about_the_brand_image_link'      => get_permalink( get_theme_mod( 'about_the_brand_second_image_link', '#' ) ),
+				'about_videoplaceholder_src_id'   => get_theme_mod( 'about_the_brand_video_placeholder' ),
+			);
 
-			$mods_class->{'about_the_brand'}        = $about;
-			$mods_class->{'about_the_brand'}->count = $count;
+			$about_area['about_area']               = $about;
+			$about_area->{'about_the_brand'}->count = $about_area_count;
 		endif;
 
-		return $mods_class;
+		if ( 'about_area' === $section ) {
+			return json_decode( json_encode( $about_area ) );
+		} else {
+			$section_mods['about_area'] = $about_area;
+		}
 	endif;
 
-	if ( 'social' === $section ) :
+	if ( 'social_area' === $section || 'all' === $section ) :
+		$social_area       = array();
+		$social_area_count = 0;
 		if ( ! empty( get_theme_mod( 'social_section_title' ) ) ) :
-			$count++;
-			$social                     = new stdClass();
-			$social->social_title       = get_theme_mod( 'social_section_title' );
-			$social->social_message     = get_theme_mod( 'social_section_message' );
-			$social->social_shortcode   = get_theme_mod( 'social_shortcode' );
-			$social->social_btn_text    = get_theme_mod( 'social_btn_text' );
-			$social->social_shop_button = get_permalink( get_theme_mod( 'social_shop_button' ) );
+			$social_area_count++;
+			$social = array(
+				'social_title'       => get_theme_mod( 'social_section_title' ),
+				'social_message'     => get_theme_mod( 'social_section_message' ),
+				'social_shortcode'   => get_theme_mod( 'social_shortcode' ),
+				'social_btn_text'    => get_theme_mod( 'social_btn_text' ),
+				'social_shop_button' => get_permalink( get_theme_mod( 'social_shop_button' ) ),
+			);
 
-			$mods_class->{'social_mods'} = $social;
+			$social_area['social_mods'] = $social;
 		endif;
 
-		$mods_class->count = $count;
+		$social_area['count'] = $social_area_count;
 
-		return $mods_class;
+		if ( 'social_area' === $section ) {
+			return json_decode( json_encode( $social_area ) );
+		} else {
+			$section_mods['social_area'] = $social_area;
+		}
 	endif;
 
-	if ( 'footer' === $section ) :
+	if ( 'footer_area' === $section || 'all' === $section ) :
+		$footer_area       = array();
+		$footer_area_count = 0;
 		if ( ! empty( get_theme_mod( 'footer_social_instagram' ) ) ) :
-			$count++;
-			$footer                               = new stdClass();
-			$footer->footer_social_title          = get_theme_mod( 'footer_social_title' );
-			$footer->footer_social_instagram      = get_theme_mod( 'footer_social_instagram' );
-			$footer->footer_social_twitter        = get_theme_mod( 'footer_social_twitter' );
-			$footer->footer_social_facebook       = get_theme_mod( 'footer_social_facebook' );
-			$footer->footer_social_pinterest      = get_theme_mod( 'footer_social_pinterest' );
-			$footer->footer_contact_message       = get_theme_mod( 'footer_contact_message' );
-			$footer->footer_contact_support_email = get_theme_mod( 'footer_contact_support_email' );
+			$footer_area_count++;
+			$footer = array(
+				'footer_social_title'          => get_theme_mod( 'footer_social_title' ),
+				'footer_social_instagram'      => get_theme_mod( 'footer_social_instagram' ),
+				'footer_social_twitter'        => get_theme_mod( 'footer_social_twitter' ),
+				'footer_social_facebook'       => get_theme_mod( 'footer_social_facebook' ),
+				'footer_social_pinterest'      => get_theme_mod( 'footer_social_pinterest' ),
+				'footer_contact_message'       => get_theme_mod( 'footer_contact_message' ),
+				'footer_contact_support_email' => get_theme_mod( 'footer_contact_support_email' ),
+				'footer_insta_username'        => get_theme_mod( 'footer_insta_username' ),
+				'footer_insta_username_link'   => get_theme_mod( 'footer_insta_username_link' ),
+				'footer_insta_hashtag'         => get_theme_mod( 'footer_insta_hashtags' ),
+				'footer_insta_hashtag_link'    => get_theme_mod( 'footer_insta_hashtags_link' ),
+				'footer_logo'                  => get_theme_mod( 'footer_logo' ),
+				'footer_form_shortcode'        => get_theme_mod( 'footer_form_shortcode' ),
+			);
 
-			$footer->footer_insta_username      = get_theme_mod( 'footer_insta_username' );
-			$footer->footer_insta_username_link = get_theme_mod( 'footer_insta_username_link' );
-			$footer->footer_insta_hashtag       = get_theme_mod( 'footer_insta_hashtags' );
-			$footer->footer_insta_hashtag_link  = get_theme_mod( 'footer_insta_hashtags_link' );
-
-			$footer->footer_logo           = get_theme_mod( 'footer_logo' );
-			$footer->footer_form_shortcode = get_theme_mod( 'footer_form_shortcode' );
-
-			$mods_class->{'footer_mods'}        = $footer;
-			$mods_class->{'footer_mods'}->count = $count;
+			$footer_area['footer_mods']          = $footer;
+			$footer_area['footer_mods']['count'] = $footer_area_count;
 		endif;
 
-		$count                     = 0;
-		$mods_class->footer_titles = new stdClass();
+		$footer_area_count2           = 0;
+		$footer_area['footer_titles'] = array();
 		for ( $i = 1; $i <= 5; $i++ ) {
 			if ( ! empty( get_theme_mod( 'footer_menu_header_' . $i ) ) ) :
-				$count++;
-				$mods_class->footer_titles->{"footer_title_$i"} = get_theme_mod( 'footer_menu_header_' . $i );
+				$footer_area_count2++;
+				$footer_area['footer_titles'][ "footer_title_$i" ] = get_theme_mod( 'footer_menu_header_' . $i );
 			endif;
 		}
 
-		$mods_class->footer_titles->count = $count;
+		$footer_area['footer_titles']['count'] = $footer_area_count2;
 
-		return $mods_class;
+		if ( 'footer_area' === $section ) {
+			return json_decode( json_encode( $footer_area ) );
+		} else {
+			$section_mods['footer_area'] = $footer_area;
+		}
 	endif;
 
-	if ( 'newsletter' === $section ) :
+	if ( 'newsletter_area' === $section || 'all' === $section ) :
+		$newsletter_area       = array();
+		$newsletter_area_count = 0;
 		if ( ! empty( get_theme_mod( 'enable_newsletter_popup' ) ) ) :
-			$count++;
-			$newsletter                    = new stdClass();
-			$newsletter->enable_popup      = get_theme_mod( 'enable_newsletter_popup' );
-			$newsletter->message_text      = get_theme_mod( 'newsletter_popup_message_text' );
-			$newsletter->background_image  = get_theme_mod( 'newsletter_background_image' );
-			$newsletter->background_color  = ( ! empty( get_theme_mod( 'newsletter_background_color' ) ) ) ? get_theme_mod( 'newsletter_background_color' ) : '#ffffff';
-			$newsletter->popup_form_select = get_theme_mod( 'newsletter_popup_form_select' );
-			$newsletter->session_length    = ( ! empty( get_theme_mod( 'newsletter_popup_message_session_length' ) ) ) ? get_theme_mod( 'newsletter_popup_message_session_length' ) : 24;
-			$newsletter->time_to_pop       = ( ! empty( get_theme_mod( 'newsletter_popup_time_to_pop' ) ) ) ? get_theme_mod( 'newsletter_popup_time_to_pop' ) : 20;
+			$newsletter_area_count++;
+			$background_color = ( ! empty( get_theme_mod( 'newsletter_background_color' ) ) ) ? get_theme_mod( 'newsletter_background_color' ) : '#ffffff';
+			$session_length   = ( ! empty( get_theme_mod( 'newsletter_popup_message_session_length' ) ) ) ? get_theme_mod( 'newsletter_popup_message_session_length' ) : 24;
+			$time_to_pop      = ( ! empty( get_theme_mod( 'newsletter_popup_time_to_pop' ) ) ) ? get_theme_mod( 'newsletter_popup_time_to_pop' ) : 20;
+			$newsletter       = array(
+				'enable_popup'      => get_theme_mod( 'enable_newsletter_popup' ),
+				'message_text'      => get_theme_mod( 'newsletter_popup_message_text' ),
+				'background_image'  => get_theme_mod( 'newsletter_background_image' ),
+				'background_color'  => $background_color,
+				'popup_form_select' => get_theme_mod( 'newsletter_popup_form_select' ),
+				'session_length'    => $session_length,
+				'time_to_pop'       => $time_to_pop,
+			);
 
-			$mods_class->{'newsletter_mods'} = $newsletter;
+			$newsletter_area['newsletter_mods'] = $newsletter;
 		endif;
 
-		$mods_class->count = $count;
+		$newsletter_area['count'] = $newsletter_area_count;
 
-		return $mods_class;
+		if ( 'newsletter_area' === $section ) {
+			return json_decode( json_encode( $newsletter_area ) );
+		} else {
+			$section_mods['newsletter_area'] = $newsletter_area;
+		}
 	endif;
+
+	if ( 'all' === $section ) {
+		return json_decode( json_encode( $section_mods ) );
+	}
 
 	return false;
 }
@@ -301,6 +357,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 
 	if ( in_array( $form['title'], array( 'Apera Perks Registration' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-perks-form';
+	endif;
+
+	if ( in_array( $form['title'], array( 'Join MSE+' ) ) ) :
+		$form['cssClass'] .= ' inline-form wonka-join-mse-form';
 	endif;
 
 	if ( in_array( $form['title'], array( 'Add Discount Code' ) ) ) :
@@ -406,6 +466,36 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 			return $new_content;
 
 		endif;
+
+		if ( 'Military Date' === $field['label'] || 'Student Grad Date' === $field['label'] ) :
+
+			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+
+			foreach ( $split_content as $key => $value ) {
+
+				if ( strpos( $value, "class='datepicker" ) !== false ) :
+
+					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value . '<input type="hidden" class="new-cal-icon" value="' . get_stylesheet_directory_uri() . '/assets/img/calendar-icon.svg" />';
+
+					elseif ( strpos( $value, "id='gforms_calendar_icon" ) !== false ) :
+
+						$new_content .= $value . '</div>';
+
+				else :
+
+					$new_content .= $value;
+
+				endif;
+
+			}
+
+			return $new_content;
+
+		endif;
+
+	endif;
+
+	if ( 'Join MSE+' === $form['title'] ) :
 
 		if ( 'Military Date' === $field['label'] || 'Student Grad Date' === $field['label'] ) :
 
@@ -2406,6 +2496,38 @@ function wonkasoft_btn_fix_for_re_order( $actions, $order ) {
 	return $actions;
 }
 add_filter( 'woocommerce_my_account_my_orders_actions', 'wonkasoft_btn_fix_for_re_order', 10, 2 );
+
+/**
+ * This function is an override of Sumo for my account page.
+ *
+ * @param  number $order_id     contains current orders ID.
+ * @param  array  $OrderObj    contains current order.
+ * @param  string $order_status contains current orders status.
+ * @param  string $Firstname   contains current users first name.
+ * @param  number $i           contains line number.
+ * @param  number $points      contains points for current user.
+ * @param  array  $order_list   contains the list of orders for user.
+ */
+function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, $first_name, $i, $points, $order_list ) {
+	$my_acc_link           = get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
+	$order_link            = esc_url_raw( add_query_arg( 'view-order', $order_id, $my_acc_link ) );
+	$order_link            = '<a href="' . $order_link . '">#' . $order_id . '</a>';
+	$order_status_to_reach = ucfirst( implode( ',', $order_list ) );
+	$message               = __( 'Currently, the order status is in [status]. Once the order status reached to the [order_status_to_reach], [points] points for purchasing the product(s) in this order([order_id]) will be added to your account', 'aperabags' );
+	$replace_msg           = str_replace( '[points]', $points, str_replace( '[order_id]', $order_link, str_replace( '[status]', ucfirst( $order_status ), $message ) ) );
+	$replace_msg           = str_replace( '[order_status_to_reach]', $order_status_to_reach, $replace_msg );
+	$date                  = ( ! empty( $order ) ) ? esc_html( $order->get_date_created()->date( 'm/d/Y' ) ) : '-';
+	?>
+	<tr>
+		<td data-value="<?php echo $i; ?>"><?php echo $date; ?></td>  
+		<td><?php echo $first_name; ?></td> 
+		<td><?php echo ucfirst( $order_status ); ?></td>
+		<td><?php echo $replace_msg; ?></td> 	
+		<td><?php echo $replace_msg; ?></td> 	
+		<td></td> 	
+	</tr>
+	<?php
+}
 
 /**
  * This is for debugging.
