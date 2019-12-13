@@ -123,7 +123,7 @@ function the_mods_for_section( $section ) {
 					'slide_title'            => get_theme_mod( 'cta_slider_title_' . $i ),
 					'slide_html'             => get_theme_mod( 'cta_slider_html_' . $i ),
 					'slide_text_message'     => get_theme_mod( 'cta_slider_text_' . $i ),
-					'slide_description_icon' => get_theme_mod( 'slider_description_list_icon_' . $i ),
+					'slide_description_icon' => get_theme_mod( 'cta_slider_description_list_icon_' . $i ),
 					'slide_link_btn'         => get_theme_mod( 'cta_slider_btn_text_' . $i ),
 					'slide_link'             => get_theme_mod( 'cta_slider_btn_link_' . $i ),
 				);

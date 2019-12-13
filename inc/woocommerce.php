@@ -2158,12 +2158,6 @@ function wonkasoft_express_buttons_checkout() {
 add_action( 'wp', 'wonkasoft_express_buttons_checkout', 10 );
 
 /**
- * Combines the address my account page with the account details page.
- */
-add_action( 'woocommerce_account_edit-account_endpoint', 'woocommerce_account_edit_address' );
-
-
-/**
  * This is for the adding of the endpoint for my account page Earn AperaCash.
  */
 function wonkasoft_add_all_endpoints() {
@@ -2190,7 +2184,7 @@ function wonkasoft_my_account_nav_menu_items( $menu_links ) {
 		'dashboard'          => __( 'Dashboard', 'woocommerce' ),
 		'earn-aperacash'     => __( 'Earn AperaCash', 'woocommerce' ),
 		'orders'             => __( 'My Orders', 'woocommerce' ),
-		'edit-account'       => __( 'My Account', 'woocommerce' ),
+		'edit-account'       => __( 'Account Details', 'woocommerce' ),
 		'zip-program'        => __( 'ZIP Program', 'woocommerce' ),
 		'ambassador-program' => __( 'Ambassador', 'woocommerce' ),
 	);
@@ -2199,15 +2193,15 @@ function wonkasoft_my_account_nav_menu_items( $menu_links ) {
 	* once goes live these nav items need to be removed for those without the roles.
 	*if ( ! in_array( 'apera_zip_affiliate', $user->roles ) ) :
 	*
-	*		unset( $menu_links['zip-program'] );
+	*       unset( $menu_links['zip-program'] );
 	*
-	*	endif;
+	*   endif;
 	*
-	*	if ( ! in_array( 'apera_ambassador_affiliate', $user->roles ) ) :
+	*   if ( ! in_array( 'apera_ambassador_affiliate', $user->roles ) ) :
 	*
-	*		unset( $menu_links['ambassador-program'] );
+	*       unset( $menu_links['ambassador-program'] );
 	*
-	*	endif;
+	*   endif;
 	 */
 
 	return $menu_links;

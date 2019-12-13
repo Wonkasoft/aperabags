@@ -262,7 +262,7 @@ get_header();
 																	endif;
 
 																	/* Checks for an subheader set in the slide object */
-																	if ( ! empty( $slide->slide_link ) ) :
+																	if ( ! empty( $slide->slide_link_btn ) ) :
 																		?>
 																		<a href="<?php echo esc_url( get_the_permalink( $slide->slide_link, false ) ); ?>" class="wonka-btn img-cta-link text-center"><?php echo esc_html( $slide->slide_link_btn ); ?></a>
 																	<?php endif; ?>

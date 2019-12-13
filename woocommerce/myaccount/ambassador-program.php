@@ -36,7 +36,7 @@ if ( ! empty( $company_logo ) ) {
 </section>
 
 <section class="myaccount-section-divider">
-	<div class="myaccount-divider"><span>Gym/Club Details</span></div>
+	<div class="myaccount-divider"><span>Ambassador Details</span></div>
 </section>
 
 <section class="ambassador-third">

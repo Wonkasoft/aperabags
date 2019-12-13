@@ -16,9 +16,7 @@
  * @version 1.0.1
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 $user             = wp_get_current_user();
 	$user_id      = $user->ID;
@@ -37,6 +35,7 @@ if ( ! empty( $company_logo ) ) {
 
 <section class="myaccount-section-divider">
 	<div class="myaccount-divider"><span>Gym/Club Details</span></div>
+	<button type="button" class="btm account-btn account-save">Save & Update</button>
 </section>
 
 <section class="zip-third">
@@ -44,7 +43,7 @@ if ( ! empty( $company_logo ) ) {
 <?php
 if ( ! empty( $company_logo->company_name ) ) {
 	?>
-	<span><?php esc_html_e( $company_logo->coupon_code ); ?></span>
+	<span><?php echo esc_html( $company_logo->coupon_code ); ?></span>
 	<?php
 } else {
 	?>
@@ -55,7 +54,7 @@ if ( ! empty( $company_logo->company_name ) ) {
 if ( ! empty( $company_logo->url ) ) {
 	?>
 	<div class="current-logo-wrap">
-		<img src="' . wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) . '" srcset="' . wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) . '" class="current-logo" />
+		<img src="<?php echo esc_url( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) ); ?>" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ); ?>" class="current-logo" />
 	</div>
 	<p>To update/change your logo, simply upload a new one below.</p>
 	<div class="form-wrap">
