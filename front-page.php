@@ -176,7 +176,7 @@ get_header();
 														/* Checks for an message set in the slide object */
 											if ( ! empty( $slide->slide_html ) ) :
 												?>
-															<div class="row img-header-text-wrap">
+															<div class="row img-header-html-wrap">
 													<?php
 																echo wp_kses(
 																	$slide->slide_html,
