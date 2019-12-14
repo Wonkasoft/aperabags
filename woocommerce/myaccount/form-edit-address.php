@@ -25,7 +25,7 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 	<?php wc_get_template( 'myaccount/my-address.php' ); ?>
 <?php else : ?>
 
-	<form method="post">
+	<form method="post" class="form-<?php echo strtolower( $load_address ); ?>-address">
 
 		<h3><?php echo apply_filters( 'woocommerce_my_account_edit_address_title', $page_title, $load_address ); ?></h3><?php // @codingStandardsIgnoreLine ?>
 
@@ -44,8 +44,8 @@ do_action( 'woocommerce_before_edit_account_address_form' ); ?>
 
 			<p>
 				<button type="submit" class="button" name="save_address" value="<?php esc_attr_e( 'Save address', 'woocommerce' ); ?>"><?php esc_html_e( 'Save address', 'woocommerce' ); ?></button>
-				<?php wp_nonce_field( 'woocommerce-edit_address', 'woocommerce-edit-address-nonce' ); ?>
-				<input type="hidden" name="action" value="edit_address" />
+				<?php wp_nonce_field( 'woocommerce' . strtolower( $load_address ) . '-edit_address', 'woocommerce' . strtolower( $load_address ) . '-edit-address-nonce' ); ?>
+				<input type="hidden" name="action" value="<?php echo strtolower( $load_address ); ?>_edit_address" />
 			</p>
 		</div>
 

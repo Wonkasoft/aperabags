@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_account_navigation' ); ?>
 
 <div class="MyAccount-content-col">
-<div class="woocommerce-MyAccount-content">
+<div class="woocommerce-MyAccount-content <?php echo WC()->query->get_current_endpoint(); ?>">
 	<?php
 		/**
 		 * My Account content.

@@ -2158,7 +2158,7 @@ function wonkasoft_express_buttons_checkout() {
 add_action( 'wp', 'wonkasoft_express_buttons_checkout', 10 );
 
 /**
- * This is for the adding of the endpoint for my account page Earn AperaCash.
+ * This is for the adding of the endpoints to WordPress.
  */
 function wonkasoft_add_all_endpoints() {
 
@@ -2169,6 +2169,38 @@ function wonkasoft_add_all_endpoints() {
 }
 add_action( 'init', 'wonkasoft_add_all_endpoints' );
 
+/**
+ * This is for adding the endpoints to the woocommerce query vars.
+ *
+ * @param  array $vars contains the current query vars to be filtered.
+ * @return array       returns the modified query vars.
+ */
+function wonkasoft_add_endpoint_query_vars( $vars ) {
+	$added_endpoints = array(
+		'earn-aperacash',
+		'zip-program',
+		'ambassador-program',
+	);
+
+	foreach ( $added_endpoints as $key => $e ) {
+		$vars[ $e ] = $e;
+	}
+
+	return $vars;
+}
+add_filter( 'woocommerce_get_query_vars', 'wonkasoft_add_endpoint_query_vars' );
+
+/**
+ * This is for the redirect after save address in the myaccount area.
+ *
+ * @param  number $user_id      contains user ID.
+ * @param  string $load_address contains the load address.
+ */
+function wonkasoft_action_woocommerce_save_account_details( $user_id ) {
+	   wp_safe_redirect( wc_get_endpoint_url( 'edit-account' ) );
+	   exit;
+};
+add_action( 'woocommerce_save_account_details', 'wonkasoft_action_woocommerce_save_account_details', 10, 1 );
 /**
  * This adds the my account menu link for the logo.
  *

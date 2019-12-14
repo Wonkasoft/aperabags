@@ -313,7 +313,6 @@ var componentForm;
 							{
 								if ( null === response.success && 'Design Fees Capture' === response.data.form_title ) 
 								{
-									console.log( response );
 									document.querySelector( '#agree-to-fee-input-group' ).innerHTML = 'There was a error during processing. please contact our Customer Care.';
 
 									parent_el.appendChild( agree_to_fee_form_wrap );
@@ -3097,7 +3096,6 @@ var componentForm;
 			if ( document.querySelector( 'form.woocommerce-EditAccountForm' ) || document.querySelector('form.woocommerce-ResetPassword') && document.querySelector( 'form.strength-checker #password_1' ) )
 			{
 				var password_one = document.querySelector( 'form.strength-checker #password_1' );
-				console.log( password_one );
 				var password_parent = document.querySelector( 'form.strength-checker #password_1' ).parentElement;
 
 				password_one.addEventListener( 'keyup', function ( e ) 
@@ -3460,6 +3458,33 @@ var componentForm;
 							var target_content = modal_contents[target_id];
 							the_modal_content.innerHTML = '';
 							the_modal_content.appendChild( target_content );
+						});
+				});
+		}
+
+		if ( document.querySelector( 'div.woocommerce-MyAccount-content.edit-account' ) ) 
+		{
+			var save_btns = document.querySelectorAll( 'button[data-btn_id]' );
+			
+			save_btns.forEach( function( btn, i ) 
+				{
+					btn.addEventListener( 'click', function( e ) 
+						{
+							e.preventDefault();
+							var target = this;
+							var form = document.querySelector( 'form.' + target.getAttribute( 'data-btn_id' ) );
+							var form_submit_btn = document.querySelector( 'form.' + target.getAttribute( 'data-btn_id' ) + ' button[type=submit]' );
+
+							if ( 'form-contact-details' === target.getAttribute( 'data-btn_id' ) ) 
+							{
+								form.appendChild( document.querySelector( '#save-account-details-nonce') );
+								form_submit_btn.click();
+							}
+							else 
+							{
+								form_submit_btn.click();
+							}
+
 						});
 				});
 		}

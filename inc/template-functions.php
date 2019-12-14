@@ -1869,7 +1869,7 @@ add_action( 'gform_after_submission', 'wonkasoft_after_code_entry', 10, 2 );
  */
 function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry, $ajax ) {
 
-	if ( 'Apera Perks Registration' !== $form['title'] ) {
+	if ( 'Apera Perks Registration' !== $form['title'] && 'User Birthday' !== $form['title'] ) {
 		return $confirmation;
 	}
 
@@ -1879,6 +1879,8 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		'First',
 		'Last',
 		'Email',
+		'Birthday Email',
+		'Birthday Date',
 		'Password',
 		'MSE Request',
 		'MSE Occupation',
@@ -1936,6 +1938,14 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 
 		endif;
 
+	}
+
+	if ( 'User Birthday' === $form['title'] ) {
+
+		$user = get_user_by( 'email', $entry_fields['birthday_email'] );
+		update_user_meta( $user->ID, 'users_birthday', $entry_fields['birthday_date'], '' );
+
+		return $confirmation;
 	}
 
 	if ( email_exists( $entry_fields['email'] ) ) {

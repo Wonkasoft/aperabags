@@ -276,7 +276,9 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>Follow & Like Us</span></div>
 			<div class="box-content-text"><span>Earn $5 AperaCash just for following Apera Bags on Social Media!</span></div>
-			<div id="follow-for-modal"><?php echo do_shortcode( '[facebook_share_reward_points]' ); ?></div>
+			<div id="follow-for-modal">
+				<span><?php esc_html_e( 'This award option will be available soon.', 'apera-bags' ); ?></span>
+			</div>
 		</div>
 	</div>
 	</a>
@@ -324,7 +326,9 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>Leave a Review</span></div>
 			<div class="box-content-text"><span>Earn $5 AperaCash when you leave a review for AperaBags.com!</span></div>
-			<div id="review-for-modal"><?php echo do_shortcode( '[facebook_share_reward_points]' ); ?></div>
+			<div id="review-for-modal">
+				<span><?php esc_html_e( 'This award option will be available soon.', 'apera-bags' ); ?></span>
+			</div>
 		</div>
 	</div>
 	</a>
