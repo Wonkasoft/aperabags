@@ -192,6 +192,7 @@ get_header();
 																		'a' => array(
 																			'id' => array(),
 																			'class' => array(),
+																			'href' => array(),
 																		),
 																		'ul' => array(
 																			'id' => array(),
