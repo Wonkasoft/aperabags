@@ -17,7 +17,13 @@
 
 defined( 'ABSPATH' ) || exit;
 $user       = wp_get_current_user();
+$user_id    = $user->ID;
 $user_roles = $user->roles;
+
+echo "<pre>\n";
+print_r( get_user_meta( $user_id, 'refersion_data' ) );
+echo "</pre>\n";
+
 
 ?>
 <section class="account-detail-first">
@@ -49,42 +55,42 @@ $user_roles = $user->roles;
 			<div class="apera-programs-side apera-programs-left-side">
 				<?php
 					$zip_title  = ( in_array( 'apera_zip_affiliate', $user_roles ) ) ? 'My Zip Program >' : 'Learn More >';
-					$zip_status = ( in_array( 'apera_zip_affiliate', $user_roles ) ) ? 'Approved' : 'Non-member';
+					$zip_status = ( ! empty( get_user_meta( $user_id, 'zip_affiliate_status', true ) ) ) ? get_user_meta( $user_id, 'zip_affiliate_status', true ) : 'Non-member';
 					$zip_link   = ( in_array( 'apera_zip_affiliate', $user_roles ) ) ? esc_url( wc_get_endpoint_url( 'zip-program' ) ) : get_site_url() . '/zip';
-					$zip_class  = ( in_array( 'apera_zip_affiliate', $user_roles ) ) ? 'active-account' : '';
+					$zip_class  = ' status-' . strtolower( $zip_status );
 				?>
-				<a class="program-save-wonka-btn" href="<?php echo $zip_link; ?>"><span class="icon-prepend"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
-											<g id="Zip_Program">
-												<g>
-													<path fill="#4B5965" d="M546.275,81.087c4.747,2.457-3.247,25.73-18.983,56.13L270.883,632.544    c-15.733,30.394-32.316,54.596-35.762,49.626l-32.237-13.502c-3.445-4.97,4.856-30.271,20.589-60.666l256.41-495.327    c15.735-30.4,30.711-50.06,35.456-47.603L546.275,81.087z" />
-													<path fill="#4B5965" d="M717.765,249.712c-3.897,7.531-13.858,8.447-25.098,2.629l-183.123-94.795    c-11.239-5.816-18.245-15.696-13.415-22.747l24.533-49.672c4.827-7.049,16.622-8.695,27.859-2.878l183.124,94.795    c11.24,5.818,15.425,16.055,11.529,23.582L717.765,249.712z" />
-													<path fill="#4B5965" d="M639.81,400.308c-3.899,7.53-13.859,8.448-25.099,2.63l-183.124-94.795    c-11.237-5.817-18.245-15.696-13.415-22.748l24.534-49.672c4.826-7.048,16.622-8.695,27.858-2.878L653.69,327.64    c11.238,5.817,15.424,16.055,11.528,23.582L639.81,400.308z" />
-													<path fill="#4B5965" d="M463.119,213.369c-3.898,7.531-13.858,8.447-25.099,2.63l-183.124-94.796    c-11.237-5.816-18.244-15.696-13.415-22.747l24.534-49.672c4.828-7.049,16.622-8.695,27.859-2.878L477,140.701    c11.238,5.818,15.424,16.055,11.528,23.582L463.119,213.369z" />
-													<path fill="#4B5965" d="M385.162,363.965c-3.898,7.53-13.859,8.446-25.098,2.629L176.94,271.799    c-11.237-5.817-18.244-15.696-13.415-22.748l24.534-49.672c4.827-7.048,16.622-8.695,27.858-2.878l183.125,94.795    c11.238,5.818,15.426,16.055,11.527,23.583L385.162,363.965z" />
-													<path fill="#4B5965" d="M561.853,550.904c-3.898,7.529-13.859,8.446-25.098,2.629l-183.125-94.796    c-11.237-5.816-18.244-15.695-13.415-22.747l24.534-49.673c4.828-7.048,16.623-8.694,27.859-2.877l183.125,94.796    c11.239,5.816,15.426,16.055,11.529,23.582L561.853,550.904z" />
-													<path fill="#4B5965" d="M483.896,701.5c-3.897,7.531-13.859,8.446-25.098,2.629l-183.125-94.795    c-11.237-5.816-18.244-15.697-13.415-22.748l24.534-49.671c4.828-7.05,16.622-8.695,27.859-2.879l183.125,94.795    c11.237,5.818,15.425,16.056,11.529,23.582L483.896,701.5z" />
-													<path fill="#4B5965" d="M307.206,514.561c-3.898,7.529-13.859,8.446-25.098,2.629L98.983,422.394    c-11.237-5.816-18.244-15.695-13.415-22.747l24.534-49.671c4.828-7.049,16.622-8.695,27.859-2.878l183.125,94.795    c11.239,5.817,15.426,16.056,11.529,23.583L307.206,514.561z" />
-													<path fill="#4B5965" d="M229.249,665.156c-3.898,7.53-13.859,8.447-25.098,2.629L21.027,572.99    C9.79,567.174,2.783,557.293,7.612,550.242l24.534-49.671c4.827-7.05,16.622-8.695,27.858-2.879l183.125,94.795    c11.238,5.819,15.425,16.056,11.529,23.582L229.249,665.156z" />
-												</g>
-											</g>
-										</svg></span> <?php echo $zip_title; ?></a>
+				<a class="program-wonka-btn" href="<?php echo $zip_link; ?>"><span class="icon-prepend"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
+				<g id="Zip_Program">
+					<g>
+						<path fill="#4B5965" d="M546.275,81.087c4.747,2.457-3.247,25.73-18.983,56.13L270.883,632.544    c-15.733,30.394-32.316,54.596-35.762,49.626l-32.237-13.502c-3.445-4.97,4.856-30.271,20.589-60.666l256.41-495.327    c15.735-30.4,30.711-50.06,35.456-47.603L546.275,81.087z" />
+						<path fill="#4B5965" d="M717.765,249.712c-3.897,7.531-13.858,8.447-25.098,2.629l-183.123-94.795    c-11.239-5.816-18.245-15.696-13.415-22.747l24.533-49.672c4.827-7.049,16.622-8.695,27.859-2.878l183.124,94.795    c11.24,5.818,15.425,16.055,11.529,23.582L717.765,249.712z" />
+						<path fill="#4B5965" d="M639.81,400.308c-3.899,7.53-13.859,8.448-25.099,2.63l-183.124-94.795    c-11.237-5.817-18.245-15.696-13.415-22.748l24.534-49.672c4.826-7.048,16.622-8.695,27.858-2.878L653.69,327.64    c11.238,5.817,15.424,16.055,11.528,23.582L639.81,400.308z" />
+						<path fill="#4B5965" d="M463.119,213.369c-3.898,7.531-13.858,8.447-25.099,2.63l-183.124-94.796    c-11.237-5.816-18.244-15.696-13.415-22.747l24.534-49.672c4.828-7.049,16.622-8.695,27.859-2.878L477,140.701    c11.238,5.818,15.424,16.055,11.528,23.582L463.119,213.369z" />
+						<path fill="#4B5965" d="M385.162,363.965c-3.898,7.53-13.859,8.446-25.098,2.629L176.94,271.799    c-11.237-5.817-18.244-15.696-13.415-22.748l24.534-49.672c4.827-7.048,16.622-8.695,27.858-2.878l183.125,94.795    c11.238,5.818,15.426,16.055,11.527,23.583L385.162,363.965z" />
+						<path fill="#4B5965" d="M561.853,550.904c-3.898,7.529-13.859,8.446-25.098,2.629l-183.125-94.796    c-11.237-5.816-18.244-15.695-13.415-22.747l24.534-49.673c4.828-7.048,16.623-8.694,27.859-2.877l183.125,94.796    c11.239,5.816,15.426,16.055,11.529,23.582L561.853,550.904z" />
+						<path fill="#4B5965" d="M483.896,701.5c-3.897,7.531-13.859,8.446-25.098,2.629l-183.125-94.795    c-11.237-5.816-18.244-15.697-13.415-22.748l24.534-49.671c4.828-7.05,16.622-8.695,27.859-2.879l183.125,94.795    c11.237,5.818,15.425,16.056,11.529,23.582L483.896,701.5z" />
+						<path fill="#4B5965" d="M307.206,514.561c-3.898,7.529-13.859,8.446-25.098,2.629L98.983,422.394    c-11.237-5.816-18.244-15.695-13.415-22.747l24.534-49.671c4.828-7.049,16.622-8.695,27.859-2.878l183.125,94.795    c11.239,5.817,15.426,16.056,11.529,23.583L307.206,514.561z" />
+						<path fill="#4B5965" d="M229.249,665.156c-3.898,7.53-13.859,8.447-25.098,2.629L21.027,572.99    C9.79,567.174,2.783,557.293,7.612,550.242l24.534-49.671c4.827-7.05,16.622-8.695,27.858-2.879l183.125,94.795    c11.238,5.819,15.425,16.056,11.529,23.582L229.249,665.156z" />
+					</g>
+				</g>
+			</svg></span> <?php echo $zip_title; ?></a>
 				<ul>
 				<li>
 					<p>Zip Program</p>
 				</li>
 				<li>
-					<p>Status: <span class="program-status <?php echo $zip_class; ?>"><?php echo $zip_status; ?></span></p>
+					<p>Status: <span class="program-status<?php echo $zip_class; ?>"><?php echo $zip_status; ?></span></p>
 				</li>	
 				</ul>
 			</div>
 			<div class="apera-programs-side apera-programs-right-side">
 				<?php
 					$ambassador_title  = ( in_array( 'apera_ambassador_affiliate', $user_roles ) ) ? 'My Ambassador Program >' : 'Learn More >';
-					$ambassador_status = ( in_array( 'apera_ambassador_affiliate', $user_roles ) ) ? 'Approved' : 'Non-member';
+					$ambassador_status = ( ! empty( get_user_meta( $user_id, 'ambassador_affiliate_status', true ) ) ) ? get_user_meta( $user_id, 'ambassador_affiliate_status', true ) : 'Non-member';
 					$ambassador_link   = ( in_array( 'apera_ambassador_affiliate', $user_roles ) ) ? esc_url( wc_get_endpoint_url( 'ambassador-program' ) ) : get_site_url() . '/ambassador';
-					$ambassador_class  = ( in_array( 'apera_ambassador_affiliate', $user_roles ) ) ? 'active-account' : '';
+					$ambassador_class  = ' status-' . strtolower( $ambassador_status );
 				?>
-				<a class="program-save-wonka-btn" href="<?php echo $ambassador_link; ?>"><span class="icon-prepend"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
+				<a class="program-wonka-btn" href="<?php echo $ambassador_link; ?>"><span class="icon-prepend"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
 					<g id="Ambassadors">
 						<g>
 							<path fill="#4B5965" d="M725.787,494.786c13.453-38.395,20.793-79.661,20.793-122.648c0-185.455-136.147-339.107-313.945-366.471    C500.617,119.278,625.225,327.155,725.787,494.786z" />
@@ -95,7 +101,7 @@ $user_roles = $user->roles;
 				</svg></span> <?php echo $ambassador_title; ?></a>
 				<ul>
 					<li><p>Ambassador Program</p></li>
-					<li><p>Status: <span class="program-status <?php echo $ambassador_class; ?>"><?php echo $ambassador_status; ?></span></p></li>
+					<li><p>Status: <span class="program-status<?php echo $ambassador_class; ?>"><?php echo $ambassador_status; ?></span></p></li>
 				</ul>
 			</div>
 		</div>

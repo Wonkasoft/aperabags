@@ -1253,10 +1253,14 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 		if ( email_exists( $entry_fields['email'] ) ) {
 
 			$user    = get_user_by( 'email', $entry_fields['email'] );
-			$user_id = $user->data->ID;
+			$user_id = $user->ID;
 			$user    = new WP_User( $user_id );
 			if ( ! in_array( $role, $user->roles ) ) :
 				$user->add_role( $role, $role_display );
+			endif;
+
+			if ( ! in_array( $role2, $user->roles ) ) :
+				$user->add_role( $role2, $role_display2 );
 			endif;
 
 			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
@@ -1463,6 +1467,14 @@ function wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fi
 	);
 	// Send to getResponse.
 	$getresponse = get_response_api_call( $api_args );
+
+	if ( 'ambassador_program_signups' === $api_args['campaign_name'] ) {
+		update_user_meta( $user_id, 'ambassador_affiliate_status', 'Pending' );
+	}
+
+	if ( 'zip_program_signups' === $api_args['campaign_name'] ) {
+		update_user_meta( $user_id, 'zip_affiliate_status', 'Pending' );
+	}
 
 	update_user_meta( $user_id, 'refersion_data', $refersion_response );
 	update_user_meta( $user_id, 'getResponse_data', $getresponse );
@@ -2167,6 +2179,33 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		),
 		'campaign_name' => $campaign_name,
 	);
+
+	if ( 'ambassador_program_signups' === $campaign_name || 'zip_program_signups' === $campaign_name ) {
+		$user    = get_user_by( 'email', $email );
+		$user_id = $user->ID;
+
+		if ( 'ambassador_program_signups' === $campaign_name ) {
+
+			if ( 'approved' === $passed_tag ) {
+				update_user_meta( $user_id, 'ambassador_affiliate_status', 'Approved', 'Pending' );
+			}
+
+			if ( 'denial' === $passed_tag ) {
+				update_user_meta( $user_id, 'ambassador_affiliate_status', 'Denied', 'Pending' );
+			}
+		}
+
+		if ( 'zip_program_signups' === $campaign_name ) {
+
+			if ( 'zipapproved' === $passed_tag ) {
+				update_user_meta( $user_id, 'zip_affiliate_status', 'Approved', 'Pending' );
+			}
+
+			if ( 'zipdenial' === $passed_tag ) {
+				update_user_meta( $user_id, 'zip_affiliate_status', 'Denied', 'Pending' );
+			}
+		}
+	}
 
 	$getresponse = new Wonkasoft_GetResponse_Api( $prep_data );
 

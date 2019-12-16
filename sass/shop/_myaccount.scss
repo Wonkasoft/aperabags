@@ -321,7 +321,7 @@ div#content {
                     path,
                     polygon,
                     circle  {
-                      fill: #ffffff
+                      fill: #ffffff;
                     }
                   }
                 }
@@ -969,7 +969,7 @@ div#content {
               }
             }
 
-            .program-save-wonka-btn {
+            .program-wonka-btn {
               position: relative;
               display: inline-grid;
               align-items: center;
@@ -982,6 +982,8 @@ div#content {
               margin: auto;
               top: 2px;
               background: #e6e6e6;
+              color: #414e59;
+              @include prefix( transition, all .25s ease-in-out, o moz webkit );
 
               span.icon-prepend {
                 display: inline-grid;
@@ -991,10 +993,34 @@ div#content {
                 height: 40px;
                 position: relative;
                 background: #d9d9d9;
+                @include prefix( transition, all .25s ease-in-out, o moz webkit );
 
                 svg {
                   width: 25px;
                   height: 25px;
+                  @include prefix( transition, all .25s ease-in-out, o moz webkit );
+
+                  path {
+                    fill: #414e59;
+                    @include prefix( transition, all .25s ease-in-out, o moz webkit );  
+                  }
+                }
+              }
+
+              &:hover {
+                background: #4b5965;
+                color: #b4ff00;
+
+                span.icon-prepend {
+                  background: #333e48;
+
+                  svg {
+
+                    path {
+                      fill: #b4ff00;
+
+                    }
+                  }
                 }
               }
             }
@@ -1026,6 +1052,35 @@ div#content {
                 margin: 8px auto;
                 padding: 0 15px;
                 width: 100%;
+
+                li {
+                  margin-bottom: 8px;
+                }
+
+                p {
+                  font-weight: 700;
+                  color: #19191a;
+
+                  .status-non-member {
+                    font-weight: 300;
+                    color: #52abf6;
+                  }
+
+                  .status-pending {
+                    font-weight: 400;
+                    color: #ff5a00;
+                  }
+
+                  .status-approved {
+                    font-weight: 400;
+                    color: #27b700;
+                  }
+
+                  .status-denied {
+                    font-weight: 300;
+                    color: #d00000;
+                  }
+                }
               }
             }
 
