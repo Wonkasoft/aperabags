@@ -53,8 +53,7 @@ $user_roles = $user->roles;
 					$zip_link   = ( in_array( 'apera_zip_affiliate', $user_roles ) ) ? esc_url( wc_get_endpoint_url( 'zip-program' ) ) : get_site_url() . '/zip';
 					$zip_class  = ( in_array( 'apera_zip_affiliate', $user_roles ) ) ? 'active-account' : '';
 				?>
-				<div class="inline-group">
-				<a class="btn program-save-wonka-btn" href="<?php echo $zip_link; ?>"><span class="input-group-prepend"><span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
+				<a class="program-save-wonka-btn" href="<?php echo $zip_link; ?>"><span class="icon-prepend"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
 											<g id="Zip_Program">
 												<g>
 													<path fill="#4B5965" d="M546.275,81.087c4.747,2.457-3.247,25.73-18.983,56.13L270.883,632.544    c-15.733,30.394-32.316,54.596-35.762,49.626l-32.237-13.502c-3.445-4.97,4.856-30.271,20.589-60.666l256.41-495.327    c15.735-30.4,30.711-50.06,35.456-47.603L546.275,81.087z" />
@@ -68,7 +67,7 @@ $user_roles = $user->roles;
 													<path fill="#4B5965" d="M229.249,665.156c-3.898,7.53-13.859,8.447-25.098,2.629L21.027,572.99    C9.79,567.174,2.783,557.293,7.612,550.242l24.534-49.671c4.827-7.05,16.622-8.695,27.858-2.879l183.125,94.795    c11.238,5.819,15.425,16.056,11.529,23.582L229.249,665.156z" />
 												</g>
 											</g>
-										</svg></span> <?php echo $zip_title; ?></span></a></div>
+										</svg></span> <?php echo $zip_title; ?></a>
 				<ul>
 				<li>
 					<p>Zip Program</p>
@@ -85,7 +84,7 @@ $user_roles = $user->roles;
 					$ambassador_link   = ( in_array( 'apera_ambassador_affiliate', $user_roles ) ) ? esc_url( wc_get_endpoint_url( 'ambassador-program' ) ) : get_site_url() . '/ambassador';
 					$ambassador_class  = ( in_array( 'apera_ambassador_affiliate', $user_roles ) ) ? 'active-account' : '';
 				?>
-				<a class="btn program-save-wonka-btn" href="<?php echo $ambassador_link; ?>"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
+				<a class="program-save-wonka-btn" href="<?php echo $ambassador_link; ?>"><span class="icon-prepend"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
 					<g id="Ambassadors">
 						<g>
 							<path fill="#4B5965" d="M725.787,494.786c13.453-38.395,20.793-79.661,20.793-122.648c0-185.455-136.147-339.107-313.945-366.471    C500.617,119.278,625.225,327.155,725.787,494.786z" />
@@ -93,7 +92,7 @@ $user_roles = $user->roles;
 							<path fill="#4B5965" d="M382.758,186.408L209.316,473.541c119.976-1.434,275.845,40.903,371.669,109.516    c1.614,1.156,1.162,2.346-0.613,1.792c-50.963-15.198-103.959-26.554-195.065-26.554c-80.461,0-170.591,17.158-278.265,69.343    c67.553,71.03,162.969,115.309,268.729,115.309c110.477,0,209.65-48.331,277.582-124.982L382.758,186.408z" />
 						</g>
 					</g>
-				</svg> <?php echo $ambassador_title; ?></a>
+				</svg></span> <?php echo $ambassador_title; ?></a>
 				<ul>
 					<li><p>Ambassador Program</p></li>
 					<li><p>Status: <span class="program-status <?php echo $ambassador_class; ?>"><?php echo $ambassador_status; ?></span></p></li>
