@@ -20,14 +20,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$user             = wp_get_current_user();
-	$user_id      = $user->ID;
-	$company_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
+global $wpdb;
+$table_name = $wpdb->prefix . 'refersion_affiliates_data';
+
+$user         = wp_get_current_user();
+$user_id      = $user->ID;
+$company_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
 
 	$output = '';
 if ( ! empty( $company_logo ) ) {
 	$company_logo = json_decode( $company_logo );
 }
+
+$results = $wpdb->get_results( "SELECT * FROM $table_name" );
+
+echo "<pre>\n";
+print_r( $results );
+echo "</pre>\n";
 
 ?>
 

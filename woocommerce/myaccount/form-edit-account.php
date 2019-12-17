@@ -20,11 +20,6 @@ $user       = wp_get_current_user();
 $user_id    = $user->ID;
 $user_roles = $user->roles;
 
-echo "<pre>\n";
-print_r( get_user_meta( $user_id, 'refersion_data' ) );
-echo "</pre>\n";
-
-
 ?>
 <section class="account-detail-first">
 	<p>
@@ -54,7 +49,7 @@ echo "</pre>\n";
 		<div class="program-wrapper">
 			<div class="apera-programs-side apera-programs-left-side">
 				<?php
-					$zip_title  = ( in_array( 'apera_zip_affiliate', $user_roles ) ) ? 'My Zip Program >' : 'Learn More >';
+					$zip_title  = ( ! empty( get_user_meta( $user_id, 'zip_affiliate_status', true ) ) && 'Non-member' !== get_user_meta( $user_id, 'zip_affiliate_status', true ) ) ? 'My Zip Program >' : 'Learn More >';
 					$zip_status = ( ! empty( get_user_meta( $user_id, 'zip_affiliate_status', true ) ) ) ? get_user_meta( $user_id, 'zip_affiliate_status', true ) : 'Non-member';
 					$zip_link   = ( in_array( 'apera_zip_affiliate', $user_roles ) ) ? esc_url( wc_get_endpoint_url( 'zip-program' ) ) : get_site_url() . '/zip';
 					$zip_class  = ' status-' . strtolower( $zip_status );
@@ -73,24 +68,24 @@ echo "</pre>\n";
 						<path fill="#4B5965" d="M229.249,665.156c-3.898,7.53-13.859,8.447-25.098,2.629L21.027,572.99    C9.79,567.174,2.783,557.293,7.612,550.242l24.534-49.671c4.827-7.05,16.622-8.695,27.858-2.879l183.125,94.795    c11.238,5.819,15.425,16.056,11.529,23.582L229.249,665.156z" />
 					</g>
 				</g>
-			</svg></span> <?php echo $zip_title; ?></a>
+			</svg></span> <?php echo esc_html( $zip_title ); ?></a>
 				<ul>
 				<li>
 					<p>Zip Program</p>
 				</li>
 				<li>
-					<p>Status: <span class="program-status<?php echo $zip_class; ?>"><?php echo $zip_status; ?></span></p>
+					<p>Status: <span class="program-status<?php echo esc_attr( $zip_class ); ?>"><?php echo esc_html( $zip_status ); ?></span></p>
 				</li>	
 				</ul>
 			</div>
 			<div class="apera-programs-side apera-programs-right-side">
 				<?php
-					$ambassador_title  = ( in_array( 'apera_ambassador_affiliate', $user_roles ) ) ? 'My Ambassador Program >' : 'Learn More >';
+					$ambassador_title  = ( ! empty( get_user_meta( $user_id, 'ambassador_affiliate_status', true ) ) && 'Non-member' !== get_user_meta( $user_id, 'ambassador_affiliate_status', true ) ) ? 'My Ambassador Program >' : 'Learn More >';
 					$ambassador_status = ( ! empty( get_user_meta( $user_id, 'ambassador_affiliate_status', true ) ) ) ? get_user_meta( $user_id, 'ambassador_affiliate_status', true ) : 'Non-member';
 					$ambassador_link   = ( in_array( 'apera_ambassador_affiliate', $user_roles ) ) ? esc_url( wc_get_endpoint_url( 'ambassador-program' ) ) : get_site_url() . '/ambassador';
 					$ambassador_class  = ' status-' . strtolower( $ambassador_status );
 				?>
-				<a class="program-wonka-btn" href="<?php echo $ambassador_link; ?>"><span class="icon-prepend"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
+				<a class="program-wonka-btn" href="<?php echo esc_url( $ambassador_link ); ?>"><span class="icon-prepend"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="17px" height="17px" viewBox="0 0 750 750" enable-background="new 0 0 750 750" xml:space="preserve">
 					<g id="Ambassadors">
 						<g>
 							<path fill="#4B5965" d="M725.787,494.786c13.453-38.395,20.793-79.661,20.793-122.648c0-185.455-136.147-339.107-313.945-366.471    C500.617,119.278,625.225,327.155,725.787,494.786z" />
@@ -98,10 +93,10 @@ echo "</pre>\n";
 							<path fill="#4B5965" d="M382.758,186.408L209.316,473.541c119.976-1.434,275.845,40.903,371.669,109.516    c1.614,1.156,1.162,2.346-0.613,1.792c-50.963-15.198-103.959-26.554-195.065-26.554c-80.461,0-170.591,17.158-278.265,69.343    c67.553,71.03,162.969,115.309,268.729,115.309c110.477,0,209.65-48.331,277.582-124.982L382.758,186.408z" />
 						</g>
 					</g>
-				</svg></span> <?php echo $ambassador_title; ?></a>
+				</svg></span> <?php echo esc_html( $ambassador_title ); ?></a>
 				<ul>
 					<li><p>Ambassador Program</p></li>
-					<li><p>Status: <span class="program-status<?php echo $ambassador_class; ?>"><?php echo $ambassador_status; ?></span></p></li>
+					<li><p>Status: <span class="program-status<?php echo esc_attr( $ambassador_class ); ?>"><?php echo esc_html( $ambassador_status ); ?></span></p></li>
 				</ul>
 			</div>
 		</div>

@@ -968,16 +968,24 @@ add_filter( 'gform_address_types', 'filter_states_to_abbriviations', 10, 2 );
  * @param  array $form  Contains an array of the form.
  */
 function wonkasoft_after_form_submission( $entry, $form ) {
+
 	$set_forms = array(
 		'Refersion Registration Ambassador',
 		'Refersion Registration Zip',
 		'Media Upload',
+		'Ambassador Program',
+		'ZIP Program',
 	);
-	update_option( 'registration_passing_args', null );
+
+	// Get current user object.
+	$current_user = wp_get_current_user();
+
 	// Check to see if form should be processed here.
 	if ( ! in_array( $form['title'], $set_forms ) ) :
 		return;
 	endif;
+
+	update_option( 'registration_passing_args', null );
 	// Setting the campaign name.
 	if ( 'Refersion Registration Ambassador' === $form['title'] ) :
 		$campaign_name = 'ambassador_program_signups';
@@ -995,8 +1003,6 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 	$role2         = 'customer';
 	$role_display2 = 'Customer';
 
-	// Get current user object.
-	$current_user = wp_get_current_user();
 	// Get current user ID.
 	$user_id                       = $current_user->ID;
 	$entry_fields                  = array();
@@ -1062,7 +1068,18 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 		if ( email_exists( $entry_fields['email'] ) ) {
 			$user    = get_user_by( 'email', $entry_fields['email'] );
 			$user_id = $user->ID;
-			$user    = new WP_User( $user_id );
+
+			if ( 'Ambassador Program' === $form['title'] ) :
+				update_user_meta( $user_id, 'ambassador_affiliate_status', 'Pending', '' );
+				return;
+			endif;
+
+			if ( 'ZIP Program' === $form['title'] ) :
+				update_user_meta( $user_id, 'zip_affiliate_status', 'Pending', '' );
+				return;
+			endif;
+
+			$user = new WP_User( $user_id );
 			if ( ! in_array( $role, $user->roles ) ) :
 				$user->add_role( $role, $role_display );
 			endif;
@@ -1092,7 +1109,18 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 			endif;
 		} else {
 			$user_id = wonkasoft_make_user_account( $entry_fields, $role );
-			$user    = new WP_User( $user_id );
+
+			if ( 'Ambassador Program' === $form['title'] ) :
+				update_user_meta( $user_id, 'ambassador_affiliate_status', 'Pending', '' );
+				return;
+			endif;
+
+			if ( 'ZIP Program' === $form['title'] ) :
+				update_user_meta( $user_id, 'zip_affiliate_status', 'Pending', '' );
+				return;
+			endif;
+
+			$user = new WP_User( $user_id );
 
 			if ( ! in_array( $role, $user->roles ) ) :
 				$user->add_role( $role, $role_display );
@@ -1123,8 +1151,6 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 			endif;
 		}
 		else :
-			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
-			$refersion_response = $refersion_api_init->add_new_affiliate();
 			if ( email_exists( $entry_fields['email'] ) ) {
 				$user    = get_user_by( 'email', $entry_fields['email'] );
 				$user_id = $user->data->ID;
@@ -1133,6 +1159,19 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 				$user_id = wonkasoft_make_user_account( $entry_fields, $role );
 				$user    = new WP_User( $user_id );
 			}
+
+			if ( 'Ambassador Program' === $form['title'] ) :
+				update_user_meta( $user_id, 'ambassador_affiliate_status', 'Pending', '' );
+				return;
+			endif;
+
+			if ( 'ZIP Program' === $form['title'] ) :
+				update_user_meta( $user_id, 'zip_affiliate_status', 'Pending', '' );
+				return;
+			endif;
+
+			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
+			$refersion_response = $refersion_api_init->add_new_affiliate();
 
 			if ( ! in_array( $role, $user->roles ) ) :
 				$user->add_role( $role, $role_display );
@@ -2166,17 +2205,19 @@ function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, 
 
 
 
-// Scheduled Action Hook
-function refersion_cron_hook() {
-	// Init API Class
+/**
+ * Cron executed function.
+ */
+function refersion_cron_exec() {
+	// Init API Class.
 	$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
-	// Generate download link
+	// Generate download link.
 	$refersion_response = $refersion_api_init->generate_download_link;
-	// Convert string response to an object
+	// Convert string response to an object.
 	$refersion_response = json_decode( $refersion_response );
-	// Data Declaration as String
+	// Data Declaration as String.
 	$data = '';
-	// CSV data link from refersion
+	// CSV data link from refersion.
 	$download_link = $refersion_response->download_link;
 
 	$csvdata = array();
@@ -2193,7 +2234,6 @@ function refersion_cron_hook() {
 
 	foreach ( $csvheaders[0] as $key => $header ) {
 		$csvheaders[0][ $key ] = str_replace( ' ', '_', preg_replace( '/[\(\)]/', '', strtolower( $header ) ) );
-
 	}
 
 	$data = array_slice( $csvdata, 1 );
@@ -2228,27 +2268,32 @@ function refersion_cron_hook() {
 		);
 	}
 
+	exit;
 }
 
-add_action( 'refersion_cron_hook', 'refersion_cron_hook' );
+add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
 
-// Schedule Cron Job Event
+/**
+ * Schedule Cron Job Event
+ */
 function REFERSION_CronJob() {
+
 	if ( ! wp_next_scheduled( 'refersion_cron_hook' ) ) {
-		wp_schedule_event( current_time( 'timestamp' ), 'daily', 'refersion_cron_hook' );
+			wp_schedule_event( time(), 'twicedaily', 'refersion_cron_hook' );
 	}
+
 }
 
-add_action( 'wp', 'REFERSION_CronJob' );
+add_action( 'after_setup_theme', 'REFERSION_CronJob' );
 
 function create_custom_database_tables() {
 	global $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
 	$table_name      = $wpdb->prefix . 'refersion_affiliates_data';
-	if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) !== $table_name ) :
+	if ( $wpdb->get_var( "SHOW TABLES LIKE '%s'", $table_name ) !== $table_name ) :
 		$sql = "CREATE TABLE $table_name (
       id INT(11) NOT NULL AUTO_INCREMENT,
-			affiliate_id INT(11) NOT NULL,
+	  affiliate_id INT(11) NOT NULL,
       affiliate_name VARCHAR(150) NOT NULL,
       affiliate_email VARCHAR(150) NOT NULL,
       company_name VARCHAR(150) NOT NULL,
@@ -2270,20 +2315,20 @@ function create_custom_database_tables() {
   else :
 	  $sql = "CREATE TABLE $table_name (
         id INT(11) NOT NULL AUTO_INCREMENT,
-				affiliate_id INT(11) NOT NULL,
-	      affiliate_name VARCHAR(150) NOT NULL,
-	      affiliate_email VARCHAR(150) NOT NULL,
-	      company_name VARCHAR(150) NOT NULL,
-	      subid INT(15) NOT NULL,
-	      offer_id VARCHAR(16) NOT NULL,
-	      offer_name VARCHAR(150) NOT NULL,
-	      visits INT(15) NOT NULL,
-	      conversions INT(15) NOT NULL,
-	      revenue_usd VARCHAR(150) NOT NULL,
-	      commission_usd VARCHAR(150) NOT NULL,
-	      conversion_rate VARCHAR(150) NOT NULL,
-	      eepc_usd VARCHAR(150) NOT NULL,
-	      updated DATE NOT NULL,
+		affiliate_id INT(11) NOT NULL,
+        affiliate_name VARCHAR(150) NOT NULL,
+        affiliate_email VARCHAR(150) NOT NULL,
+        company_name VARCHAR(150) NOT NULL,
+        subid INT(15) NOT NULL,
+        offer_id VARCHAR(16) NOT NULL,
+        offer_name VARCHAR(150) NOT NULL,
+        visits INT(15) NOT NULL,
+        conversions INT(15) NOT NULL,
+        revenue_usd VARCHAR(150) NOT NULL,
+        commission_usd VARCHAR(150) NOT NULL,
+        conversion_rate VARCHAR(150) NOT NULL,
+        eepc_usd VARCHAR(150) NOT NULL,
+        updated DATE NOT NULL,
         PRIMARY KEY (id) 
         )$charset_collate;";
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
