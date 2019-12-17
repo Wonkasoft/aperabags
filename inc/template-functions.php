@@ -2231,14 +2231,13 @@ function refersion_cron_exec() {
 
 	$finaldata  = array();
 	$csvheaders = array_slice( $csvdata, 0, 1 );
-
 	foreach ( $csvheaders[0] as $key => $header ) {
 		$csvheaders[0][ $key ] = str_replace( ' ', '_', preg_replace( '/[\(\)]/', '', strtolower( $header ) ) );
 	}
 
 	$data = array_slice( $csvdata, 1 );
 	foreach ( $data as $key => $value ) {
-			array_push( $finaldata, array_combine( $csvheaders[0], $data[ $key ] ) );
+		array_push( $finaldata, array_combine( $csvheaders[0], $value ) );
 	}
 
 	global $wpdb;
@@ -2260,18 +2259,28 @@ function refersion_cron_exec() {
 		'%s',
 	);
 
+	$where_format = array(
+		'%d',
+	);
+
 	foreach ( $finaldata as $key => $value ) {
-		$wpdb->replace(
+		// $wpdb->update(
+		// $table_name,
+		// $value,
+		// array( 'affiliate_id' => $value['affiliate_id'] ),
+		// $format,
+		// $where_format,
+		// );
+
+		$wpdb->insert(
 			$table_name,
 			$value,
-			$format
+			$format,
 		);
 	}
-
-	exit;
 }
 
-add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
+add_action( 'wp', 'refersion_cron_exec' );
 
 /**
  * Schedule Cron Job Event
@@ -2306,7 +2315,7 @@ function create_custom_database_tables() {
       commission_usd VARCHAR(150) NOT NULL,
       conversion_rate VARCHAR(150) NOT NULL,
       eepc_usd VARCHAR(150) NOT NULL,
-      updated DATE NOT NULL,
+      updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (id) 
       )$charset_collate;";
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -2328,7 +2337,7 @@ function create_custom_database_tables() {
         commission_usd VARCHAR(150) NOT NULL,
         conversion_rate VARCHAR(150) NOT NULL,
         eepc_usd VARCHAR(150) NOT NULL,
-        updated DATE NOT NULL,
+        updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id) 
         )$charset_collate;";
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
