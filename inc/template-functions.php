@@ -2238,7 +2238,7 @@ function refersion_cron_exec() {
 
 	$data = array_slice( $csvdata, 1 );
 	foreach ( $data as $key => $value ) {
-			array_push( $finaldata, array_combine( $csvheaders[0], $data[ $key ] ) );
+		array_push( $finaldata, array_combine( $csvheaders[0], $value ) );
 	}
 
 	global $wpdb;
@@ -2258,33 +2258,58 @@ function refersion_cron_exec() {
 		'%s',
 		'%s',
 		'%s',
+		'%s',
+	);
+
+	$where_format = array(
+		'%d',
 	);
 
 	foreach ( $finaldata as $key => $value ) {
-		$wpdb->replace(
-			$table_name,
-			$value,
-			$format
-		);
-	}
 
-	exit;
+		$query = $wpdb->prepare(
+			'SELECT affiliate_id FROM ' . $table_name . '
+		WHERE affiliate_id = %s',
+			$value['affiliate_id']
+		);
+
+		$wpdb->query( $query );
+
+		if ( $wpdb->num_rows ) {
+			$wpdb->update(
+				$table_name,
+				$value,
+				array(
+					'affiliate_id' => $value['affiliate_id'],
+				),
+				$format,
+				$where_format
+			);
+		} else {
+			$wpdb->insert(
+				$table_name,
+				$value,
+				$format
+			);
+		}
+	}
 }
 
-add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
+	// add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
+	add_action( 'admin_menu', 'refersion_cron_exec' );
 
-/**
- * Schedule Cron Job Event
- */
+	/**
+	 * Schedule Cron Job Event
+	 */
 function REFERSION_CronJob() {
 
 	if ( ! wp_next_scheduled( 'refersion_cron_hook' ) ) {
-			wp_schedule_event( time(), 'twicedaily', 'refersion_cron_hook' );
+		wp_schedule_event( time(), 'daily', 'refersion_cron_hook' );
 	}
 
 }
 
-add_action( 'after_setup_theme', 'REFERSION_CronJob' );
+	add_action( 'after_setup_theme', 'REFERSION_CronJob' );
 
 function create_custom_database_tables() {
 	global $wpdb;
@@ -2293,7 +2318,7 @@ function create_custom_database_tables() {
 	if ( $wpdb->get_var( "SHOW TABLES LIKE '%s'", $table_name ) !== $table_name ) :
 		$sql = "CREATE TABLE $table_name (
       id INT(11) NOT NULL AUTO_INCREMENT,
-	  affiliate_id INT(11) NOT NULL,
+	  	affiliate_id INT(11) NOT NULL,
       affiliate_name VARCHAR(150) NOT NULL,
       affiliate_email VARCHAR(150) NOT NULL,
       company_name VARCHAR(150) NOT NULL,
@@ -2306,16 +2331,17 @@ function create_custom_database_tables() {
       commission_usd VARCHAR(150) NOT NULL,
       conversion_rate VARCHAR(150) NOT NULL,
       eepc_usd VARCHAR(150) NOT NULL,
-      updated DATE NOT NULL,
+      updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (id) 
       )$charset_collate;";
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
+		echo $wp->lasterror;
 		update_option( 'refersion_affiliates_database_version', '1.0.0' );
-  else :
-	  $sql = "CREATE TABLE $table_name (
+	  else :
+		  $sql = "CREATE TABLE $table_name (
         id INT(11) NOT NULL AUTO_INCREMENT,
-		affiliate_id INT(11) NOT NULL,
+				affiliate_id INT(11) NOT NULL,
         affiliate_name VARCHAR(150) NOT NULL,
         affiliate_email VARCHAR(150) NOT NULL,
         company_name VARCHAR(150) NOT NULL,
@@ -2328,24 +2354,24 @@ function create_custom_database_tables() {
         commission_usd VARCHAR(150) NOT NULL,
         conversion_rate VARCHAR(150) NOT NULL,
         eepc_usd VARCHAR(150) NOT NULL,
-        updated DATE NOT NULL,
+        updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id) 
         )$charset_collate;";
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $sql );
 			update_option( 'refersion_affiliates_database_version', '1.0.0' );
-  endif;
+	  endif;
 
 }
 
-add_action( 'after_setup_theme', 'create_custom_database_tables' );
+	add_action( 'after_setup_theme', 'create_custom_database_tables' );
 
 
-/**
- * This is for debugging.
- *
- * @param  array $tag contains all hooks on page.
- */
+	/**
+	 * This is for debugging.
+	 *
+	 * @param  array $tag contains all hooks on page.
+	 */
 function get_hooks( $tag ) {
 	global $wp_current_filter;
 	global $debug_tags;
@@ -2354,8 +2380,8 @@ function get_hooks( $tag ) {
 	}
 	if ( substr( $tag, 0, 1 ) === '<' ) :
 		return;
-	endif;
+		endif;
 	print_r( '<pre class="found-hook">' . $tag . '</pre>' );
 	$debug_tags[] = $tag;
 }
-// add_action( 'all', 'get_hooks', 999 );
+	// add_action( 'all', 'get_hooks', 999 );
