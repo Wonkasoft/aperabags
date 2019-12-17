@@ -7,6 +7,8 @@
  * @package aperabags
  */
 
+define( 'REFERSION_AFFILIATES_DATABASE_VERSION', '1.0.0' );
+
 if ( ! function_exists( 'apera_bags_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.

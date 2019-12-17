@@ -2209,25 +2209,30 @@ function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, 
  * Cron executed function.
  */
 function refersion_cron_exec() {
+
+	$entry_fields = array( 'report_id' => 141082 );
 	// Init API Class.
 	$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
 	// Generate download link.
-	$refersion_response = $refersion_api_init->generate_download_link;
-	// Convert string response to an object.
-	$refersion_response = json_decode( $refersion_response );
+	$refersion_response = $refersion_api_init->generate_download_link();
 	// Data Declaration as String.
 	$data = '';
 	// CSV data link from refersion.
 	$download_link = $refersion_response->download_link;
 
 	$csvdata = array();
-	// $file    = fopen( $download_link, 'r' );
-	$file = fopen( '/opt/lampp/htdocs/aperabags.com/wp-content/uploads/2019/12/report.csv', 'r' );
+
+	$file = fopen( $download_link, 'r' );
+
 	while ( ( $data = fgetcsv( $file ) ) !== false ) {
 		array_push( $csvdata, $data );
 	}
 
 	fclose( $file );
+
+	if ( empty( $data ) ) {
+		return false;
+	}
 
 	$finaldata  = array();
 	$csvheaders = array_slice( $csvdata, 0, 1 );
@@ -2254,7 +2259,6 @@ function refersion_cron_exec() {
 		'%s',
 		'%d',
 		'%d',
-		'%s',
 		'%s',
 		'%s',
 		'%s',
@@ -2336,8 +2340,7 @@ function create_custom_database_tables() {
       )$charset_collate;";
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
-		echo $wp->lasterror;
-		update_option( 'refersion_affiliates_database_version', '1.0.0' );
+		update_option( 'refersion_affiliates_database_version', REFERSION_AFFILIATES_DATABASE_VERSION );
 	  else :
 		  $sql = "CREATE TABLE $table_name (
         id INT(11) NOT NULL AUTO_INCREMENT,
@@ -2359,7 +2362,7 @@ function create_custom_database_tables() {
         )$charset_collate;";
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $sql );
-			update_option( 'refersion_affiliates_database_version', '1.0.0' );
+			update_option( 'refersion_affiliates_database_version', REFERSION_AFFILIATES_DATABASE_VERSION );
 	  endif;
 
 }
