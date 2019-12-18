@@ -2230,10 +2230,6 @@ function refersion_cron_exec() {
 
 	fclose( $file );
 
-	if ( empty( $data ) ) {
-		return false;
-	}
-
 	$finaldata  = array();
 	$csvheaders = array_slice( $csvdata, 0, 1 );
 
@@ -2242,6 +2238,11 @@ function refersion_cron_exec() {
 	}
 
 	$data = array_slice( $csvdata, 1 );
+
+	if ( empty( $data ) ) {
+		return false;
+	}
+
 	foreach ( $data as $key => $value ) {
 		array_push( $finaldata, array_combine( $csvheaders[0], $value ) );
 	}
@@ -2300,7 +2301,6 @@ function refersion_cron_exec() {
 }
 
 	add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
-	// add_action( 'admin_menu', 'refersion_cron_exec' );
 
 	/**
 	 * Schedule Cron Job Event
