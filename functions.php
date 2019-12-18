@@ -364,10 +364,6 @@ function apera_bags_scripts() {
 		wp_enqueue_script( 'slick-js', get_stylesheet_directory_uri() . '/assets/slick/slick.min.js', array( 'jquery' ), '1.8.0', true );
 	endif;
 
-	wp_enqueue_script( 'apera-bags-navigation-js', get_stylesheet_directory_uri() . '/js/navigation.js', array( 'jquery' ), time(), true );
-
-	wp_enqueue_script( 'apera-bags-skip-link-js', get_stylesheet_directory_uri() . '/js/skip-link-focus-fix.js', array( 'jquery' ), time(), true );
-
 	if ( is_page( 'checkout' ) && ! empty( get_option( 'google_api_key' ) ) ) :
 			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'google_api_key' ) . '&libraries=places&callback=initAutocomplete', array( 'apera-bags-wonkamizer-js' ), 'all', true );
 

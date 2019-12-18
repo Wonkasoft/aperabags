@@ -2175,9 +2175,9 @@ add_filter( 'woocommerce_my_account_my_orders_actions', 'wonkasoft_btn_fix_for_r
  * This function is an override of Sumo for my account page.
  *
  * @param  number $order_id     contains current orders ID.
- * @param  array  $OrderObj    contains current order.
+ * @param  array  $order_obj    contains current order.
  * @param  string $order_status contains current orders status.
- * @param  string $Firstname   contains current users first name.
+ * @param  string $first_name   contains current users first name.
  * @param  number $i           contains line number.
  * @param  number $points      contains points for current user.
  * @param  array  $order_list   contains the list of orders for user.
@@ -2193,11 +2193,11 @@ function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, 
 	$date                  = ( ! empty( $order ) ) ? esc_html( $order->get_date_created()->date( 'm/d/Y' ) ) : '-';
 	?>
 	<tr>
-		<td data-value="<?php echo $i; ?>"><?php echo $date; ?></td>  
-		<td><?php echo $first_name; ?></td> 
-		<td><?php echo ucfirst( $order_status ); ?></td>
-		<td><?php echo $replace_msg; ?></td> 	
-		<td><?php echo $replace_msg; ?></td> 	
+		<td data-value="<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $date ); ?></td>  
+		<td><?php echo esc_html( $first_name ); ?></td> 
+		<td><?php echo esc_html( ucfirst( $order_status ) ); ?></td>
+		<td><?php echo esc_html( $replace_msg ); ?></td> 	
+		<td><?php echo esc_html( $replace_msg ); ?></td> 	
 		<td></td> 	
 	</tr>
 	<?php
@@ -2209,12 +2209,14 @@ function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, 
  * Cron executed function.
  */
 function refersion_cron_exec() {
+
+	$entry_fields = array(
+		'report_id' => 141082,
+	);
 	// Init API Class.
 	$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
 	// Generate download link.
-	$refersion_response = $refersion_api_init->generate_download_link;
-	// Convert string response to an object.
-	$refersion_response = json_decode( $refersion_response );
+	$refersion_response = $refersion_api_init->generate_download_link();
 	// Data Declaration as String.
 	$data = '';
 	// CSV data link from refersion.
@@ -2226,7 +2228,6 @@ function refersion_cron_exec() {
 	while ( ( $data = fgetcsv( $file ) ) !== false ) {
 		array_push( $csvdata, $data );
 	}
-
 	fclose( $file );
 
 	$finaldata  = array();
@@ -2264,36 +2265,48 @@ function refersion_cron_exec() {
 	);
 
 	foreach ( $finaldata as $key => $value ) {
-		// $wpdb->update(
-		// $table_name,
-		// $value,
-		// array( 'affiliate_id' => $value['affiliate_id'] ),
-		// $format,
-		// $where_format,
-		// );
 
-		$wpdb->insert(
-			$table_name,
-			$value,
-			$format,
-		);
+		$prepare = $wpdb->prepare( "SELECT * FROM %s WHERE 'affiliate_id' = %d", $table_name, $value['affiliate_id'] );
+		$query   = $wpdb->query( $prepare );
+		echo "<pre>\n";
+		print_r( $prepare );
+		echo "</pre>\n";
+
+		if ( $wpdb->num_rows ) {
+			$wpdb->update(
+				$table_name,
+				$value,
+				array(
+					'affiliate_id' => $value['affiliate_id'],
+				),
+				$format,
+				$where_format
+			);
+		} else {
+			// $wpdb->insert(
+			// $table_name,
+			// $value,
+			// $format
+			// );
+		}
 	}
 }
 
-add_action( 'wp', 'refersion_cron_exec' );
+	// add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
+	add_action( 'wp', 'refersion_cron_exec' );
 
-/**
- * Schedule Cron Job Event
- */
+	/**
+	 * Schedule Cron Job Event
+	 */
 function REFERSION_CronJob() {
 
 	if ( ! wp_next_scheduled( 'refersion_cron_hook' ) ) {
-			wp_schedule_event( time(), 'twicedaily', 'refersion_cron_hook' );
+		wp_schedule_event( time(), 'daily', 'refersion_cron_hook' );
 	}
 
 }
 
-add_action( 'after_setup_theme', 'REFERSION_CronJob' );
+	add_action( 'after_setup_theme', 'REFERSION_CronJob' );
 
 function create_custom_database_tables() {
 	global $wpdb;
@@ -2302,7 +2315,7 @@ function create_custom_database_tables() {
 	if ( $wpdb->get_var( "SHOW TABLES LIKE '%s'", $table_name ) !== $table_name ) :
 		$sql = "CREATE TABLE $table_name (
       id INT(11) NOT NULL AUTO_INCREMENT,
-	  affiliate_id INT(11) NOT NULL,
+	  	affiliate_id INT(11) NOT NULL,
       affiliate_name VARCHAR(150) NOT NULL,
       affiliate_email VARCHAR(150) NOT NULL,
       company_name VARCHAR(150) NOT NULL,
@@ -2315,16 +2328,17 @@ function create_custom_database_tables() {
       commission_usd VARCHAR(150) NOT NULL,
       conversion_rate VARCHAR(150) NOT NULL,
       eepc_usd VARCHAR(150) NOT NULL,
-      updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (id) 
       )$charset_collate;";
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
+		echo $wp->lasterror;
 		update_option( 'refersion_affiliates_database_version', '1.0.0' );
-  else :
-	  $sql = "CREATE TABLE $table_name (
+	  else :
+		  $sql = "CREATE TABLE $table_name (
         id INT(11) NOT NULL AUTO_INCREMENT,
-		affiliate_id INT(11) NOT NULL,
+				affiliate_id INT(11) NOT NULL,
         affiliate_name VARCHAR(150) NOT NULL,
         affiliate_email VARCHAR(150) NOT NULL,
         company_name VARCHAR(150) NOT NULL,
@@ -2337,24 +2351,24 @@ function create_custom_database_tables() {
         commission_usd VARCHAR(150) NOT NULL,
         conversion_rate VARCHAR(150) NOT NULL,
         eepc_usd VARCHAR(150) NOT NULL,
-        updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id) 
         )$charset_collate;";
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $sql );
 			update_option( 'refersion_affiliates_database_version', '1.0.0' );
-  endif;
+	  endif;
 
 }
 
-add_action( 'after_setup_theme', 'create_custom_database_tables' );
+	add_action( 'after_setup_theme', 'create_custom_database_tables' );
 
 
-/**
- * This is for debugging.
- *
- * @param  array $tag contains all hooks on page.
- */
+	/**
+	 * This is for debugging.
+	 *
+	 * @param  array $tag contains all hooks on page.
+	 */
 function get_hooks( $tag ) {
 	global $wp_current_filter;
 	global $debug_tags;
@@ -2363,8 +2377,8 @@ function get_hooks( $tag ) {
 	}
 	if ( substr( $tag, 0, 1 ) === '<' ) :
 		return;
-	endif;
+		endif;
 	print_r( '<pre class="found-hook">' . $tag . '</pre>' );
 	$debug_tags[] = $tag;
 }
-// add_action( 'all', 'get_hooks', 999 );
+	// add_action( 'all', 'get_hooks', 999 );
