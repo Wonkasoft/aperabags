@@ -2299,8 +2299,8 @@ function refersion_cron_exec() {
 	}
 }
 
-	// add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
-	add_action( 'admin_menu', 'refersion_cron_exec' );
+	add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
+	// add_action( 'admin_menu', 'refersion_cron_exec' );
 
 	/**
 	 * Schedule Cron Job Event
