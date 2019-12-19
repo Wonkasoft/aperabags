@@ -58,6 +58,7 @@ foreach ( $OrderList as $OrderId ) {
 			<div class="aperacash-box-title"><span>My AperaCash Balance</span></div>
 			<div class="box-content box-content-main"><span><?php echo sprintf( __( '$%s', 'aperabags' ), esc_html( $Points ) ); ?></span></div>
 		</div>
+		<span class="d-none-md"><i class="circle fas fa-circle"></i> <strong>My AperaCash Balance:</strong> Your current total spendable AperaCash Balance.</span>
 		<div class="dashboard-third-boxes sidebox-top">
 			<div class="aperacash-box-title"><span>Spent</span></div>
 			<div class="box-content box-content-right"><span><?php echo sprintf( __( '$%s', 'aperabags' ), esc_html( $TotalRedeemedPoints ) ); ?></span></div>
@@ -89,7 +90,7 @@ foreach ( $OrderList as $OrderId ) {
 		<h3 class="history-title-text">My AperaCash History</h3>
 	</header>
 	<div class="aperacash-history-wrap">
-				<label><?php _e( 'Page Size:', SRP_LOCALE ); ?></label>
+				<label><?php esc_html_e( 'Page Size:', SRP_LOCALE ); ?></label>
 				<select id="change-page-sizesss">
 					<option value="5">5</option>
 					<option value="10">10</option>
@@ -99,17 +100,17 @@ foreach ( $OrderList as $OrderId ) {
 			<table class = "list_of_orders demo shop_table my_account_orders table-striped" data-page-size="5" data-page-previous-text = "prev" data-filter-text-only = "true" data-page-next-text = "next">
 				<thead>
 					<tr>
-						<th data-type="Numeric"><?php _e( 'Date', 'aperabags' ); ?></th> 
-						<th data-type="Numeric"><?php _e( 'Action', 'aperabags' ); ?></th>
-						<th data-type="Numeric"><?php _e( 'Purchases', 'aperabags' ); ?></th>
-						<th data-type="Numeric"><?php _e( 'Earned', 'aperabags' ); ?></th>
-						<th data-type="Numeric"><?php _e( 'Spent', 'aperabags' ); ?></th>
+						<th data-type="Numeric"><?php esc_html_e( 'Date', 'aperabags' ); ?></th> 
+						<th data-type="Numeric"><?php esc_html_e( 'Action', 'aperabags' ); ?></th>
+						<th data-type="Numeric"><?php esc_html_e( 'Purchases', 'aperabags' ); ?></th>
+						<th data-type="Numeric"><?php esc_html_e( 'Earned', 'aperabags' ); ?></th>
+						<th data-type="Numeric"><?php esc_html_e( 'Spent', 'aperabags' ); ?></th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="dark-headers">
-						<th class="second-header-totals"><?php _e( 'Totals', 'aperabags' ); ?></th> 
+						<th class="second-header-totals"><?php esc_html_e( 'Totals', 'aperabags' ); ?></th> 
 						<th class="second-header-blank"></th>
 						<th class="second-header-purchases"></th>
 						<th class="second-header-earned"></th>

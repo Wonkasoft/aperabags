@@ -4,6 +4,7 @@
  *
  * @package aperabags
  */
+
 /**
  * Adds custom classes to the array of body classes.
  *
@@ -318,6 +319,9 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	endif;
 	if ( in_array( $form['title'], array( 'Design Fees Capture' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-design-fees-form';
+	endif;
+	if ( in_array( $form['title'], array( 'Media Upload' ) ) ) :
+		$form['cssClass'] .= ' inline-form wonka-media-upload-form form-zip-logo';
 	endif;
 	foreach ( $form['fields'] as &$field ) :
 		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
@@ -1104,7 +1108,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 						return;
 				endif;
 					else :
-						echo $refersion_response->status;
+						echo esc_html( $refersion_response->status );
 						return;
 			endif;
 		} else {
@@ -1146,7 +1150,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 						return;
 				endif;
 					else :
-						echo $refersion_response->status;
+						echo esc_html( $refersion_response->status );
 						return;
 			endif;
 		}
@@ -1195,7 +1199,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 						return;
 				endif;
 					else :
-						echo $refersion_response->status;
+						echo esc_html( $refersion_response->status );
 						return;
 			endif;
 	endif;
@@ -1338,8 +1342,13 @@ function wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api
 		wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
 	endif;
 }
+
 /**
  * This adds a company logo.
+ *
+ * @param string $url contains the logo url.
+ * @param number $user_id contains the user id.
+ * @param string $company_name contains the users company.
  */
 function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null ) {
 	$current_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
@@ -1369,84 +1378,7 @@ function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null ) {
 		update_user_meta( $user_id, 'company_logo', $image );
 	}
 }
-/**
- * This adds the my account menu link for the logo.
- *
- * @param  array $menu_links contains the current my account links.
- * @return [type]             [description]
- */
-function wonkasoft_my_account_club_gym_logo( $menu_links ) {
-	$user = wp_get_current_user();
-	// Edits My Account Menu titles
-	$menu_links = array(
-		'dashboard'          => __( 'Dashboard', 'woocommerce' ),
-		'earn-aperacash'     => __( 'Earn AperaCash', 'woocommerce' ),
-		'orders'             => __( 'My Orders', 'woocommerce' ),
-		'edit-account'       => __( 'My Account', 'woocommerce' ),
-		'zip-program'        => __( 'ZIP Program', 'woocommerce' ),
-		'ambassador-program' => __( 'Ambassadors', 'woocommerce' ),
-	);
-	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) :
-		$menu_links = array_slice( $menu_links, 0, 5, true )
-		+ array( 'club-gym-logo' => 'Club/Gym Logo' )
-		+ array_slice( $menu_links, 5, null, true );
-	endif;
-	return $menu_links;
-}
-add_filter( 'woocommerce_account_menu_items', 'wonkasoft_my_account_club_gym_logo', 50 );
-/**
- * This is for the adding of the endpoint for my account page logo link.
- */
-function wonkasoft_add_endpoint_my_account() {
-	add_rewrite_endpoint( 'club-gym-logo', EP_PAGES );
-}
-add_action( 'init', 'wonkasoft_add_endpoint_my_account' );
-/**
- * This is the content that is parsed at the logo end point.
- */
-function wonkasoft_my_account_logo_link_endpoint_content() {
-	$user         = wp_get_current_user();
-	$user_id      = $user->ID;
-	$company_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
-	$output       = '';
-	if ( ! empty( $company_logo ) ) {
-		$company_logo = json_decode( $company_logo );
-	}
-	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) {
-		$output .= '<div class="my-account-logo-content-wrap">';
-		$output .= '<h2>Club/Gym Logo</h2>';
-		if ( ! empty( $company_logo->company_name ) ) {
-			$output .= '<span>' . $company_logo->coupon_code . '</span>';
-		} else {
-			$output .= '<span>need a coupon code</span>';
-		}
-		if ( ! empty( $company_logo->url ) ) {
-			$output .= '<div class="current-logo-wrap">';
-			$output .= '<img src="' . wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) . '" srcset="' . wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) . '" class="current-logo" />';
-			$output .= '</div>';
-			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
-			$output .= '<div class="form-wrap">';
-			$output .= '<div class="form-container">';
-			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 1, false );
-			$output .= '</div>';
-			$output .= '</div>';
-		} else {
-			$output .= '<div class="current-logo-wrap">';
-			$output .= '<div class="no-logo">You have no logo on file.</div>';
-			$output .= '</div>';
-			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
-			$output .= '<div class="form-wrap">';
-			$output .= '<div class="form-container">';
-			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 1, false );
-			$output .= '</div>';
-			$output .= '</div>';
-		}
-		$output .= gravity_form( 'Design Fees Capture', false, false, false, null, true, 1, false );
-		$output .= '</div>';
-		echo $output;
-	}
-}
-add_action( 'woocommerce_account_club-gym-logo_endpoint', 'wonkasoft_my_account_logo_link_endpoint_content' );
+
 /**
  * This will check for coupons and create one if needed.
  *
@@ -1578,6 +1510,7 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 	}
 }
 add_action( 'gform_after_submission', 'wonkasoft_after_code_entry', 10, 2 );
+
 /**
  * This handles the submission of the perks registration form.
  *
@@ -2210,9 +2143,7 @@ function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, 
  */
 function refersion_cron_exec() {
 
-	$entry_fields = array(
-		'report_id' => 141082,
-	);
+	$entry_fields = array( 'report_id' => 141082 );
 	// Init API Class.
 	$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
 	// Generate download link.
@@ -2223,7 +2154,8 @@ function refersion_cron_exec() {
 	$download_link = $refersion_response->download_link;
 
 	$csvdata = array();
-	// $file    = fopen( $download_link, 'r' );
+
+	// $file = fopen( $download_link, 'r' );
 	$file = fopen( '/opt/lampp/htdocs/aperabags.com/wp-content/uploads/2019/12/report.csv', 'r' );
 	while ( ( $data = fgetcsv( $file ) ) !== false ) {
 		array_push( $csvdata, $data );
@@ -2237,6 +2169,10 @@ function refersion_cron_exec() {
 	}
 
 	$data = array_slice( $csvdata, 1 );
+
+	if ( empty( $data ) ) {
+		return false;
+	}
 	foreach ( $data as $key => $value ) {
 		array_push( $finaldata, array_combine( $csvheaders[0], $value ) );
 	}
@@ -2266,34 +2202,18 @@ function refersion_cron_exec() {
 
 	foreach ( $finaldata as $key => $value ) {
 
-		$prepare = $wpdb->prepare( "SELECT * FROM %s WHERE 'affiliate_id' = %d", $table_name, $value['affiliate_id'] );
-		$query   = $wpdb->query( $prepare );
-		echo "<pre>\n";
-		print_r( $prepare );
-		echo "</pre>\n";
+		$query = $wpdb->query( $wpdb->prepare( "SELECT affiliate_id FROM $table_name WHERE affiliate_id = %d", $value['affiliate_id'] ) );
 
-		if ( $wpdb->num_rows ) {
-			$wpdb->update(
-				$table_name,
-				$value,
-				array(
-					'affiliate_id' => $value['affiliate_id'],
-				),
-				$format,
-				$where_format
-			);
+		if ( $query ) {
+			$wpdb->update( $table_name, $value, array( 'affiliate_id' => $value['affiliate_id'] ), $format, $where_format );
 		} else {
-			// $wpdb->insert(
-			// $table_name,
-			// $value,
-			// $format
-			// );
+			$wpdb->insert( $table_name, $value, $format );
 		}
 	}
 }
 
-	// add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
-	add_action( 'wp', 'refersion_cron_exec' );
+// add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
+add_action( 'wp', 'refersion_cron_exec' );
 
 	/**
 	 * Schedule Cron Job Event
@@ -2333,8 +2253,7 @@ function create_custom_database_tables() {
       )$charset_collate;";
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
-		echo $wp->lasterror;
-		update_option( 'refersion_affiliates_database_version', '1.0.0' );
+		update_option( 'refersion_affiliates_database_version', REFERSION_AFFILIATES_DATABASE_VERSION );
 	  else :
 		  $sql = "CREATE TABLE $table_name (
         id INT(11) NOT NULL AUTO_INCREMENT,
@@ -2356,7 +2275,7 @@ function create_custom_database_tables() {
         )$charset_collate;";
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $sql );
-			update_option( 'refersion_affiliates_database_version', '1.0.0' );
+			update_option( 'refersion_affiliates_database_version', REFERSION_AFFILIATES_DATABASE_VERSION );
 	  endif;
 
 }

@@ -3462,7 +3462,7 @@ var componentForm;
 				});
 		}
 
-		if ( document.querySelector( 'div.woocommerce-MyAccount-content.edit-account' ) ) 
+		if ( document.querySelectorAll( 'button[data-btn_id]' ) ) 
 		{
 			var save_btns = document.querySelectorAll( 'button[data-btn_id]' );
 			
@@ -3473,7 +3473,7 @@ var componentForm;
 							e.preventDefault();
 							var target = this;
 							var form = document.querySelector( 'form.' + target.getAttribute( 'data-btn_id' ) );
-							var form_submit_btn = document.querySelector( 'form.' + target.getAttribute( 'data-btn_id' ) + ' button[type=submit]' );
+							var form_submit_btn = document.querySelector( 'form.' + target.getAttribute( 'data-btn_id' ) + ' *[type=submit]' );
 
 							if ( 'form-contact-details' === target.getAttribute( 'data-btn_id' ) ) 
 							{

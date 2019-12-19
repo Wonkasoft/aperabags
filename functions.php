@@ -7,6 +7,8 @@
  * @package aperabags
  */
 
+define( 'REFERSION_AFFILIATES_DATABASE_VERSION', '1.0.0' );
+
 if ( ! function_exists( 'apera_bags_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
@@ -297,7 +299,7 @@ function wonka_get_nav_menu_object( $items, $args ) {
 		foreach ( (object) $items as $key => $item ) {
 
 			if ( in_array( 'account-menu-icon', $item->classes, true ) ) {
-				$apera_icon  = '<i><svg version="1.1" id="svg2" xml:space="preserve" width="25" height="20" viewBox="0 0 500 500" sodipodi:docname="apera_logo_A_only_white.svg" inkscape:version="0.92.3 (2405546, 2018-03-11)" inkscape:export-filename="/home/lister/Downloads/aperabags/logo/apera_logo_bw200x100.png" inkscape:export-xdpi="96" inkscape:export-ydpi="96"><metadata id="metadata8"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:title/></cc:Work></rdf:RDF></metadata><defs id="defs6"/><sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="1230" inkscape:window-height="675" id="namedview4" showgrid="false" units="px" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0" inkscape:zoom="0.77083333" inkscape:cx="88.015803" inkscape:cy="242.4555" inkscape:window-x="0" inkscape:window-y="140" inkscape:window-maximized="0" inkscape:current-layer="g12" inkscape:lockguides="false"/><g id="g10" inkscape:groupmode="layer" inkscape:label="ink_ext_XXXXXX" transform="matrix(1.3333333,0,0,-1.3333333,-1.7231138e-4,499.99957)"><g id="g12" transform="matrix(0.18889578,0,0,0.18889578,9.2463299,33.587505)"><path d="m 1472.7964,269.43961 c 0,0 221.5336,-107.34265 419.3909,-261.9102764 13.1318,-10.215312 22.4693,1.5980153 14.85,12.9998264 -7.5784,11.353938 -857.6408,1428.84614 -959.24082,1599.75454 -4.64627,7.7318 -15.40947,7.425 -19.93199,0 C 845.1236,1481.3152 272.04308,510.34465 -19.526687,20.52916 -28.211903,6.1510517 -15.703437,-0.62853237 -6.2751566,6.5585482 398.54964,314.08484 694.543,398.16448 943.15021,398.16448 c 177.33629,0 280.49899,-22.09301 379.69359,-51.6724 3.4568,-1.08205 4.3364,1.23034 1.1966,3.48751 C 1137.5149,483.5297 834.12517,565.93206 600.59504,563.15126 L 938.19202,1122.0404 1472.7964,269.43961" style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.02272987" id="path14" inkscape:connector-curvature="0" inkscape:export-xdpi="96" inkscape:export-ydpi="96"/></g></g></svg></i>';
+				$apera_icon  = '<i><svg version="1.1" id="svg2" xml:space="preserve" width="20" height="20" viewBox="0 0 500 500" sodipodi:docname="apera_logo_A_only_white.svg" inkscape:version="0.92.3 (2405546, 2018-03-11)" inkscape:export-filename="/home/lister/Downloads/aperabags/logo/apera_logo_bw200x100.png" inkscape:export-xdpi="96" inkscape:export-ydpi="96"><metadata id="metadata8"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:title/></cc:Work></rdf:RDF></metadata><defs id="defs6"/><sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="1230" inkscape:window-height="675" id="namedview4" showgrid="false" units="px" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0" inkscape:zoom="0.77083333" inkscape:cx="88.015803" inkscape:cy="242.4555" inkscape:window-x="0" inkscape:window-y="140" inkscape:window-maximized="0" inkscape:current-layer="g12" inkscape:lockguides="false"/><g id="g10" inkscape:groupmode="layer" inkscape:label="ink_ext_XXXXXX" transform="matrix(1.3333333,0,0,-1.3333333,-1.7231138e-4,499.99957)"><g id="g12" transform="matrix(0.18889578,0,0,0.18889578,9.2463299,33.587505)"><path d="m 1472.7964,269.43961 c 0,0 221.5336,-107.34265 419.3909,-261.9102764 13.1318,-10.215312 22.4693,1.5980153 14.85,12.9998264 -7.5784,11.353938 -857.6408,1428.84614 -959.24082,1599.75454 -4.64627,7.7318 -15.40947,7.425 -19.93199,0 C 845.1236,1481.3152 272.04308,510.34465 -19.526687,20.52916 -28.211903,6.1510517 -15.703437,-0.62853237 -6.2751566,6.5585482 398.54964,314.08484 694.543,398.16448 943.15021,398.16448 c 177.33629,0 280.49899,-22.09301 379.69359,-51.6724 3.4568,-1.08205 4.3364,1.23034 1.1966,3.48751 C 1137.5149,483.5297 834.12517,565.93206 600.59504,563.15126 L 938.19202,1122.0404 1472.7964,269.43961" style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.02272987" id="path14" inkscape:connector-curvature="0" inkscape:export-xdpi="96" inkscape:export-ydpi="96"/></g></g></svg></i>';
 				$item->title = $apera_icon;
 			}
 		}
@@ -326,9 +328,9 @@ function apera_bags_scripts() {
 			$slick_themecss_load = false;
 		endif;
 	}
-	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1', 'all' );
+	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css', array(), '4.4.1', 'all' );
 
-	wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', 'anonymous' ) );
+	wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh', 'anonymous' ) );
 
 	wp_enqueue_style( 'jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css', array(), '1.0.7' );
 	if ( $slick_css_load ) :
@@ -355,10 +357,11 @@ function apera_bags_scripts() {
 		endif;
 	}
 
-	wp_enqueue_script( 'popperjs', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array( 'jquery' ), '4.3.1', true );
+	wp_enqueue_script( 'popperjs', 'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', array( 'jquery' ), '1.16.0', true );
+	wp_script_add_data( 'popperjs', array( 'integrity', 'crossorigin' ), array( 'sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', 'anonymous' ) );
 
-	wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array( 'jquery', 'popperjs' ), '4.3.1', true );
-	wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', 'anonymous' ) );
+	wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', array( 'jquery', 'popperjs' ), '4.4.1', true );
+	wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', 'anonymous' ) );
 
 	if ( $slick_js_load ) :
 		wp_enqueue_script( 'slick-js', get_stylesheet_directory_uri() . '/assets/slick/slick.min.js', array( 'jquery' ), '1.8.0', true );

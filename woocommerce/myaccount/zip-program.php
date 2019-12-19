@@ -34,12 +34,16 @@ if ( ! empty( $company_logo ) ) {
 </section>
 
 <section class="myaccount-section-divider">
-	<div class="myaccount-divider"><span>Gym/Club Details</span></div>
-	<button type="button" class="btm account-btn account-save">Save & Update</button>
+	<div class="myaccount-divider">
+		<h4 id="contact-details-section"><?php esc_html_e( 'Gym/Club Details', 'apera-bags' ); ?></h4>
+		<button class="btn save-wonka-btn" data-btn_id="form-zip-logo"><i class="fas fa-check-circle"></i> Save & Update</button>
+	</div>
 </section>
 
 <section class="zip-third">
-<!-- <h2>Club/Gym Logo</h2> -->
+	<header>
+		<h3>Club/Gym Logo</h3>	
+	</header>
 <?php
 if ( ! empty( $company_logo->company_name ) ) {
 	?>
@@ -84,7 +88,9 @@ gravity_form( 'Design Fees Capture', false, false, false, null, true, 1, true );
 </section>
 
 <section class="myaccount-section-divider">
-	<div class="myaccount-divider"><span>Zip Code Sales Stats</span></div>
+	<div class="myaccount-divider">
+		<h4 id="contact-details-section"><?php esc_html_e( 'Zip Code Sales Stats', 'apera-bags' ); ?></h4>
+	</div>
 </section>
 
 <section class="zip-fifth">
