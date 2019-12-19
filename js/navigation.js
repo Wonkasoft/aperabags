@@ -51,23 +51,25 @@
 		links[i].addEventListener( 'blur', toggleFocus, true );
 	}
 
-	var myaccount_nav = {
-		nav_container: document.querySelector( 'nav.woocommerce-MyAccount-navigation' ),
-		button: document.querySelector( 'nav.woocommerce-MyAccount-navigation button.menu-toggle' ),
-		menu: document.querySelector( 'nav.woocommerce-MyAccount-navigation ul#myaccount-nav-menu' )
-	};
+	if ( document.querySelector( 'nav.woocommerce-MyAccount-navigation' ) ) {
+		var myaccount_nav = {
+			nav_container: document.querySelector( 'nav.woocommerce-MyAccount-navigation' ),
+			button: document.querySelector( 'nav.woocommerce-MyAccount-navigation button.menu-toggle' ),
+			menu: document.querySelector( 'nav.woocommerce-MyAccount-navigation ul#myaccount-nav-menu' )
+		};
 
-	myaccount_nav.button.onclick = function() {
-		if ( -1 !== myaccount_nav.nav_container.className.indexOf( 'toggled' ) ) {
-			myaccount_nav.nav_container.className = myaccount_nav.nav_container.className.replace( ' toggled', '' );
-			myaccount_nav.button.setAttribute( 'aria-expanded', 'false' );
-			myaccount_nav.menu.setAttribute( 'aria-expanded', 'false' );
-		} else {
-			myaccount_nav.nav_container.className += ' toggled';
-			myaccount_nav.button.setAttribute( 'aria-expanded', 'true' );
-			myaccount_nav.menu.setAttribute( 'aria-expanded', 'true' );
-		}
-	};
+		myaccount_nav.button.onclick = function() {
+			if ( -1 !== myaccount_nav.nav_container.className.indexOf( 'toggled' ) ) {
+				myaccount_nav.nav_container.className = myaccount_nav.nav_container.className.replace( ' toggled', '' );
+				myaccount_nav.button.setAttribute( 'aria-expanded', 'false' );
+				myaccount_nav.menu.setAttribute( 'aria-expanded', 'false' );
+			} else {
+				myaccount_nav.nav_container.className += ' toggled';
+				myaccount_nav.button.setAttribute( 'aria-expanded', 'true' );
+				myaccount_nav.menu.setAttribute( 'aria-expanded', 'true' );
+			}
+		};
+	}
 
 	/**
 	 * Sets or removes .focus class on an element.

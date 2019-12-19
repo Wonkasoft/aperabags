@@ -2173,6 +2173,7 @@ function refersion_cron_exec() {
 	if ( empty( $data ) ) {
 		return false;
 	}
+
 	foreach ( $data as $key => $value ) {
 		array_push( $finaldata, array_combine( $csvheaders[0], $value ) );
 	}
@@ -2212,8 +2213,7 @@ function refersion_cron_exec() {
 	}
 }
 
-// add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
-add_action( 'wp', 'refersion_cron_exec' );
+add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
 
 	/**
 	 * Schedule Cron Job Event
