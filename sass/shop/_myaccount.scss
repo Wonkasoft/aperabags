@@ -1217,6 +1217,15 @@ div#content {
             }
           }
           /* END ZIP PROGRAM */
+          /* AMBASSADOR PROGRAM */
+          section.ambassador-first {
+            
+            > p:first-of-type {
+              padding: 15px;
+              background: #ffffff;
+            }
+          }
+          /* END AMBASSADOR PROGRAM */
         }
       }
     }
