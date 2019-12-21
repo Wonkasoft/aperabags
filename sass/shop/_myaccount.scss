@@ -249,15 +249,15 @@ div#content {
 
           ul {
             position: relative;
-            display: flex;
-            justify-content: flex-end;
-            flex-wrap: wrap;
+            display: grid;
+            justify-content: end;
             
             li {
               height: 40px;
               position: relative;
               display: grid;
               align-items: center;
+              justify-content: end;
 
               a.wonka-account-btn {
                 position: relative;
@@ -270,7 +270,7 @@ div#content {
                 border-radius: 100px;
                 color: #4b5965;
                 font-family: $font__main_jose;
-                font-size: 18px;
+                @include font-size( 1.1 );
                 padding: 0 6px 0 0;
                 font-weight: 600;
                 height: 31px;
