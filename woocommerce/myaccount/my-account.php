@@ -17,6 +17,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+$current_endpoint = ( WC()->query->get_current_endpoint() ) ? ' ' . WC()->query->get_current_endpoint() : '';
+
 /**
  * My Account navigation.
  *
@@ -25,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_account_navigation' ); ?>
 
 <div class="MyAccount-content-col">
-<div class="woocommerce-MyAccount-content <?php echo WC()->query->get_current_endpoint(); ?>">
+<div class="woocommerce-MyAccount-content<?php echo esc_attr( $current_endpoint ); ?>">
 	<?php
 		/**
 		 * My Account content.

@@ -23,8 +23,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 do_action( 'woocommerce_before_account_navigation' );
 ?>
-
-<div class="row wonka-row">
 	<div class="MyAccount-navigation-col">
 		<nav class="woocommerce-MyAccount-navigation">
 			<button class="menu-toggle wonka-btn" aria-controls="myaccount-nav-menu" aria-expanded="false">

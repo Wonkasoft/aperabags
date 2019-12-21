@@ -227,7 +227,7 @@ function wonkasoft_parse_account_logo_or_process_fees() {
 			$company_logo = json_decode( $company_logo );
 		}
 
-		if ( in_array( 'apera_zip_affiliate', $user->roles ) ) {
+		if ( in_array( 'apera_zip_affiliate', $user->roles ) || in_array( 'administrator', $user->roles ) ) {
 
 			if ( ! empty( $company_logo->url ) ) {
 
@@ -243,6 +243,8 @@ function wonkasoft_parse_account_logo_or_process_fees() {
 
 		}
 	}
+
+	wp_send_json_success( $output );
 }
 add_action( 'wp_ajax_wonkasoft_parse_account_logo_or_process_fees', 'wonkasoft_parse_account_logo_or_process_fees' );
 add_action( 'wp_ajax_nopriv_wonkasoft_parse_account_logo_or_process_fees', 'wonkasoft_parse_account_logo_or_process_fees' );

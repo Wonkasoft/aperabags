@@ -1055,7 +1055,6 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 	if ( 'Media Upload' === $form['title'] ) :
 		if ( ! empty( $entry_fields['logo_upload'] ) ) :
 			wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
-			header( 'Refresh:0' );
 			return;
 		endif;
 	endif;
@@ -1210,7 +1209,7 @@ add_action( 'gform_after_submission', 'wonkasoft_after_form_submission', 10, 2 )
  *
  * @param  array  $entry_fields contains the form fields.
  * @param  string $role         the role set to give new user.
- * @return number               returns the new user id.
+ * @return integer               returns the new user id.
  */
 function wonkasoft_make_user_account( $entry_fields, $role ) {
 	// Setting time stamp.
@@ -1346,9 +1345,9 @@ function wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api
 /**
  * This adds a company logo.
  *
- * @param string $url contains the logo url.
- * @param number $user_id contains the user id.
- * @param string $company_name contains the users company.
+ * @param string  $url contains the logo url.
+ * @param integer $user_id contains the user id.
+ * @param string  $company_name contains the users company.
  */
 function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null ) {
 	$current_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
@@ -1359,7 +1358,8 @@ function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null ) {
 	require_once ABSPATH . 'wp-admin/includes/image.php';
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/media.php';
-	$attachment_id = media_sideload_image( $url, $user_id, ' ' . $user_id, 'id' );
+	$attachment_id = wonkasoft_media_sideload_image( $url, $user_id, ' ' . $user_id, 'id' );
+
 	if ( is_wp_error( $attachment_id ) ) {
 		$error = $attachment_id->get_error_messages();
 		update_user_meta( $user_id, 'company_logo', $error );
@@ -1375,7 +1375,68 @@ function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null ) {
 		if ( ! empty( $current_logo ) ) {
 			wp_delete_post( $current_logo->id, true );
 		}
+
 		update_user_meta( $user_id, 'company_logo', $image );
+	}
+}
+
+/**
+ * A modified version of the core function
+ *
+ * @param  string  $file    contains file url.
+ * @param  integer $post_id contains the parent post ID.
+ * @param  string  $desc    contains passed description.
+ * @param  string  $return  contains desired return of html, src, or id.
+ * @return            returns error or desired return.
+ */
+function wonkasoft_media_sideload_image( $file, $post_id = 0, $desc = null, $return = 'html' ) {
+	if ( ! empty( $file ) ) {
+
+		// Set variables for storage, fix file filename for query strings.
+		preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png|svg|eps)\b/i', $file, $matches );
+
+		if ( ! $matches ) {
+			return new WP_Error( 'image_sideload_failed', __( 'Invalid image URL' ) );
+		}
+
+		$file_array         = array();
+		$file_array['name'] = wp_basename( $matches[0] );
+
+		// Download file to temp location.
+		$file_array['tmp_name'] = download_url( $file );
+
+		// If error storing temporarily, return the error.
+		if ( is_wp_error( $file_array['tmp_name'] ) ) {
+			return $file_array['tmp_name'];
+		}
+
+		// Do the validation and storage stuff.
+		$id = media_handle_sideload( $file_array, $post_id, $desc );
+
+		// If error storing permanently, unlink.
+		if ( is_wp_error( $id ) ) {
+			@unlink( $file_array['tmp_name'] );
+			return $id;
+			// If attachment id was requested, return it early.
+		} elseif ( 'id' === $return ) {
+			return $id;
+		}
+
+		$src = wp_get_attachment_url( $id );
+	}
+
+	// Finally, check to make sure the file has been saved, then return the HTML.
+	if ( ! empty( $src ) ) {
+		if ( 'src' === $return ) {
+			return $src;
+		}
+
+		$alt  = isset( $desc ) ? esc_attr( $desc ) : '';
+		$html = "<img src='$src' alt='$alt' />";
+
+		return $html;
+	} else {
+		return new WP_Error( 'image_sideload_failed' );
 	}
 }
 
@@ -1769,7 +1830,7 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		'campaign_name' => $campaign_name,
 	);
 
-	if ( 'ambassador_program_signups' === $campaign_name || 'zip_program_signups' === $campaign_name ) {
+	if ( 'ambassador_program_signups' === $campaign_name || 'zip_program_signups' === $campaign_name || 'perks_mse_program_signups' === $campaign_name ) {
 		$user    = get_user_by( 'email', $email );
 		$user_id = $user->ID;
 
@@ -1793,6 +1854,16 @@ function wonkasoft_getresponse_endpoint( $data ) {
 			if ( 'zipdenial' === $passed_tag ) {
 				update_user_meta( $user_id, 'zip_affiliate_status', 'Denied', 'Pending' );
 			}
+		}
+
+		if ( 'perks_mse_program_signups' === $campaign_name ) {
+			$role         = 'apera_mse_partner';
+			$role_display = 'Apera Mse Partner';
+
+			$user = new WP_User( $user_id );
+			if ( ! in_array( $role, $user->roles ) ) :
+				$user->add_role( $role, $role_display );
+			endif;
 		}
 	}
 
@@ -2107,13 +2178,13 @@ add_filter( 'woocommerce_my_account_my_orders_actions', 'wonkasoft_btn_fix_for_r
 /**
  * This function is an override of Sumo for my account page.
  *
- * @param  number $order_id     contains current orders ID.
- * @param  array  $order_obj    contains current order.
- * @param  string $order_status contains current orders status.
- * @param  string $first_name   contains current users first name.
- * @param  number $i           contains line number.
- * @param  number $points      contains points for current user.
- * @param  array  $order_list   contains the list of orders for user.
+ * @param  integer $order_id     contains current orders ID.
+ * @param  array   $order_obj    contains current order.
+ * @param  string  $order_status contains current orders status.
+ * @param  string  $first_name   contains current users first name.
+ * @param  integer $i           contains line integer.
+ * @param  integer $points      contains points for current user.
+ * @param  array   $order_list   contains the list of orders for user.
  */
 function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, $first_name, $i, $points, $order_list ) {
 	$my_acc_link           = get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
@@ -2155,8 +2226,8 @@ function refersion_cron_exec() {
 
 	$csvdata = array();
 
-	// $file = fopen( $download_link, 'r' );
-	$file = fopen( '/opt/lampp/htdocs/aperabags.com/wp-content/uploads/2019/12/report.csv', 'r' );
+	$file = fopen( $download_link, 'r' );
+
 	while ( ( $data = fgetcsv( $file ) ) !== false ) {
 		array_push( $csvdata, $data );
 	}
@@ -2212,7 +2283,6 @@ function refersion_cron_exec() {
 		}
 	}
 }
-
 add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
 
 	/**
@@ -2225,9 +2295,11 @@ function REFERSION_CronJob() {
 	}
 
 }
+add_action( 'after_setup_theme', 'REFERSION_CronJob' );
 
-	add_action( 'after_setup_theme', 'REFERSION_CronJob' );
-
+/**
+ * This creates the table for Refersion Data to be stored.
+ */
 function create_custom_database_tables() {
 	global $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
@@ -2279,15 +2351,13 @@ function create_custom_database_tables() {
 	  endif;
 
 }
+add_action( 'after_setup_theme', 'create_custom_database_tables' );
 
-	add_action( 'after_setup_theme', 'create_custom_database_tables' );
-
-
-	/**
-	 * This is for debugging.
-	 *
-	 * @param  array $tag contains all hooks on page.
-	 */
+/**
+ * This is for debugging.
+ *
+ * @param  array $tag contains all hooks on page.
+ */
 function get_hooks( $tag ) {
 	global $wp_current_filter;
 	global $debug_tags;

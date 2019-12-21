@@ -23,6 +23,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $user = wp_get_current_user();
 
+$img_args = array(
+	'post_type'   => array( 'attachment' ),
+	'post_status' => array( 'inherit' ),
+);
+
+$attachments      = new WP_Query( $img_args );
+$aperacash_img_id = null;
+
+foreach ( $attachments->posts as $img_post ) {
+
+	if ( strpos( $img_post->guid, 'earn-more-cta.jpg' ) ) {
+		$aperacash_img_id = $img_post->ID;
+	}
+}
+
 if ( ! in_array( 'apera_perks_partner', $user->roles ) ) { ?>
 	<div id="upgrade-btn-wrapper">
 	<?php
@@ -37,6 +52,7 @@ if ( ! in_array( 'apera_perks_partner', $user->roles ) ) { ?>
 ?>
 
 <section class="dashboard-first">
+	<div class="dashboard-first-content">
 	<div class="dashboard-first-col dashboard-first-left">
 		
 <p>
@@ -63,14 +79,11 @@ if ( ! in_array( 'apera_perks_partner', $user->roles ) ) { ?>
 	</div>
 
 	<div class="dashboard-first-col dashboard-first-right">
-<?php
-/** Only to be used on the live site.
- *  $attachment_id = 12593;
- *  <img srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $attachment_id, 'thumbnail', false ) ); ?>" />
- */
-?>
-<img src="https://aperabags.com/wp-content/uploads/2019/12/earn-more-cta.jpg" />
-</div>
+		<a href="<?php echo esc_url( wc_get_endpoint_url( 'earn-aperacash' ) ); ?>">
+			<img src="<?php echo esc_url( wp_get_attachment_image_src( $aperacash_img_id, 'medium', false )[0] ); ?>" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $aperacash_img_id, 'medium', null ) ); ?>" />
+		</a>
+	</div>
+	</div>
 </section>
 
 

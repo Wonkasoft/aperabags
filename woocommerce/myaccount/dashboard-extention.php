@@ -39,6 +39,7 @@ $OrderList           = get_posts( $args );
 foreach ( $OrderList as $OrderId ) {
 	$TotalPendingPoints += (float) get_post_meta( $OrderId, 'rs_points_for_current_order_as_value', true );
 }
+
 ?>
 
 <section class="myaccount-section-divider">
@@ -58,15 +59,17 @@ foreach ( $OrderList as $OrderId ) {
 			<div class="aperacash-box-title"><span>My AperaCash Balance</span></div>
 			<div class="box-content box-content-main"><span><?php echo sprintf( __( '$%s', 'aperabags' ), esc_html( $Points ) ); ?></span></div>
 		</div>
-		<span class="d-none-md"><i class="circle fas fa-circle"></i> <strong>My AperaCash Balance:</strong> Your current total spendable AperaCash Balance.</span>
+		<span class="d-md-none"><i class="circle fas fa-circle"></i> <strong>My AperaCash Balance:</strong> Your current total spendable AperaCash Balance.</span>
 		<div class="dashboard-third-boxes sidebox-top">
 			<div class="aperacash-box-title"><span>Spent</span></div>
 			<div class="box-content box-content-right"><span><?php echo sprintf( __( '$%s', 'aperabags' ), esc_html( $TotalRedeemedPoints ) ); ?></span></div>
 		</div>
+		<span class="d-md-none"><i class="circle fas fa-circle"></i> <strong>Spent:</strong> The total AperaCash you’ve spent towards purchases as an Apera Perks Member.</span>
 		<div class="dashboard-third-boxes sidebox-bottom">
 			<div class="aperacash-box-title"><span>Pending</span></div>
 			<div class="box-content box-content-right"><span><?php echo sprintf( __( '$%s', 'aperabags' ), esc_html( $TotalPendingPoints ) ); ?></span></div>
 		</div>
+		<span class="d-md-none"><i class="circle fas fa-circle"></i> <strong>Pending:</strong> Total AperaCash balance pending from purchases made within the last 30 days.</span>
 	</div>
 	<div class="dashboard-third-col dashboard-third-right">
 		<div class="apera-points">
@@ -97,6 +100,7 @@ foreach ( $OrderList as $OrderId ) {
 					<option value="50">50</option>
 					<option value="100">100</option>
 				</select>
+				<div class="table-responsive-sm">
 			<table class = "list_of_orders demo shop_table my_account_orders table-striped" data-page-size="5" data-page-previous-text = "prev" data-filter-text-only = "true" data-page-next-text = "next">
 				<thead>
 					<tr>
@@ -114,7 +118,7 @@ foreach ( $OrderList as $OrderId ) {
 						<th class="second-header-blank"></th>
 						<th class="second-header-purchases"></th>
 						<th class="second-header-earned"></th>
-						<th class="second-header-spent"></th>
+						<th class="second-header-spent"><?php echo sprintf( __( '$%s', 'aperabags' ), esc_html( $TotalRedeemedPoints ) ); ?></th>
 						<th class="second-header-blank"></th>
 					</tr>
 				</tbody>
@@ -179,6 +183,7 @@ foreach ( $OrderList as $OrderId ) {
 					</tr>
 				</tfoot>
 			</table>
+		</div>
 			<script type="text/javascript">
 				jQuery( document ).ready( function () {
 					jQuery( '.list_of_orders' ).footable() ;

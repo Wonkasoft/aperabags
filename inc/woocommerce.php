@@ -2201,6 +2201,7 @@ function wonkasoft_action_woocommerce_save_account_details( $user_id ) {
 	   exit;
 };
 add_action( 'woocommerce_save_account_details', 'wonkasoft_action_woocommerce_save_account_details', 10, 1 );
+
 /**
  * This adds the my account menu link for the logo.
  *
@@ -2221,20 +2222,13 @@ function wonkasoft_my_account_nav_menu_items( $menu_links ) {
 		'ambassador-program' => __( 'Ambassador', 'woocommerce' ),
 	);
 
-	/**
-	* once goes live these nav items need to be removed for those without the roles.
-	*if ( ! in_array( 'apera_zip_affiliate', $user->roles ) ) :
-	*
-	*       unset( $menu_links['zip-program'] );
-	*
-	*   endif;
-	*
-	*   if ( ! in_array( 'apera_ambassador_affiliate', $user->roles ) ) :
-	*
-	*       unset( $menu_links['ambassador-program'] );
-	*
-	*   endif;
-	 */
+	if ( ! in_array( 'apera_zip_affiliate', $user->roles ) && ! in_array( 'administrator', $user->roles ) ) :
+		unset( $menu_links['zip-program'] );
+	endif;
+
+	if ( ! in_array( 'apera_ambassador_affiliate', $user->roles ) && ! in_array( 'administrator', $user->roles ) ) :
+		unset( $menu_links['ambassador-program'] );
+	endif;
 
 	return $menu_links;
 
@@ -2293,3 +2287,27 @@ function wonkasoft_woocommerce_my_account_my_orders_columns( $columns ) {
 	return $columns;
 }
 add_filter( 'woocommerce_my_account_my_orders_columns', 'wonkasoft_woocommerce_my_account_my_orders_columns', 10 );
+
+/**
+ * This makes sure that new users have proper roles.
+ *
+ * @param  number $user_id contains the user ID.
+ */
+function wonkasoft_registration_save( $user_id ) {
+	$role         = 'apera_perks_partner';
+	$role_display = 'Apera Perks Partner';
+
+	$role2         = 'customer';
+	$role_display2 = 'Customer';
+
+	$user = new WP_User( $user_id );
+	if ( ! in_array( $role, $user->roles ) ) :
+		$user->add_role( $role, $role_display );
+	endif;
+
+	if ( ! in_array( $role2, $user->roles ) ) :
+		$user->add_role( $role2, $role_display2 );
+	endif;
+
+}
+add_action( 'user_register', 'wonkasoft_registration_save', 10, 1 );

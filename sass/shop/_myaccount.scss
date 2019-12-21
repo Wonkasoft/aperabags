@@ -208,16 +208,22 @@ div#content {
     }
 
     div.woocommerce {
+      display: grid;
+      align-items: stretch;
+      justify-content: center;
+      grid-auto-columns: 100%;
+      grid-auto-flow: row;
 
-      .wonka-row {
-        align-items: stretch;
+      @include media-breakpoint( md ) {
+        grid-auto-columns: auto;
+        grid-auto-flow: column;
       }
 
       div.MyAccount-navigation-col {
         position: relative;
         padding: 0;
         margin: 0;
-        max-width: 254px;
+        max-width: 264px;
 
         &:after {
           display: none;
@@ -382,7 +388,7 @@ div#content {
 
       div.MyAccount-content-col {
         flex: 0 0 100%;
-        max-width: 798px;
+        max-width: 762px;
         padding: 0;
         background: #f5f5f5;
         font-family: $font__main_jose;
@@ -396,6 +402,7 @@ div#content {
           /* GENERAL CLASSES */
           section {
             padding: 15px;
+            max-width: 762px;
           }
 
           section.myaccount-section-divider {
@@ -451,37 +458,50 @@ div#content {
             margin: auto;
           }
 
-          section.dashboard-first,
-          section.orders-first,
-          section.zip-first,
-          section.ambassador-first,
-          section.earn-aperacash-first,
-          section.account-detail-first {
-            display: grid;
-            align-items: center;
-            justify-content: space-between;
-            grid-auto-flow: row;
-            grid-gap: 8px;
-            margin: 15px auto 0;
-            padding: 8px;
-            max-width: 762px;
-            background: #ffffff;
+          section.dashboard-first {
 
-            div.dashboard-first-col {
+            div.dashboard-first-content {
+              display: grid;
+              align-items: center;
+              justify-content: space-between;
+              grid-auto-flow: row;
+              grid-gap: 8px;
+              margin: 0 auto;
+              background: #ffffff;
 
-            }
-
-            div.dashboard-first-left {
-              padding: 8px;
-
-              p {
-                line-height: 1.4;
+              div.dashboard-first-col {
+                padding: 8px 15px;
               }
-            }
 
-            div.dashboard-first-right {
-              max-width: 175px;
-              margin: auto;
+              div.dashboard-first-left {
+
+                p {
+                  line-height: 1.4;
+                }
+              }
+
+              div.dashboard-first-right {
+                max-width: 100%;
+                margin: auto;
+
+                a {
+                  display: inline-block;
+                  cursor: pointer;
+                  
+                  img {
+                    width: 100%;
+                    max-width: 265px;
+                  }
+                }
+
+                @include media-breakpoint( md ) {
+                  max-width: 175px;
+                }
+              }
+              
+              @include media-breakpoint( md ) {
+                grid-auto-flow: column;
+              }
             }
           }
 
@@ -491,15 +511,19 @@ div#content {
             grid-template-columns: auto; 
             grid-gap: 8px;
 
+            @include media-breakpoint( md ) {
+              grid-template-columns: 475px auto;
+            }
+
             div.dashboard-third-top {
-              grid-area: 1 / 1 / 2 / 3;
+              grid-area: 1 / 1 / 2 / 2;
               padding: 15px;
               display: grid;
               grid-gap: 8px;
 
               div.aperacash-overview-text {
                 font-weight: 700;
-                @include font-size( 1.3 );
+                @include font-size( 1.2 );
 
                 span {
                   display: grid;
@@ -519,18 +543,32 @@ div#content {
               div.earn-aperacash-link {
 
               }
+
+              @include media-breakpoint( md ) {
+                grid-area: 1 / 1 / 2 / 3;
+              }
             }
 
             div.dashboard-third-left {
               display: grid;
               grid-template-columns: auto;
-              font-weight: 700;
               grid-gap: 8px;
+
+              i.circle {
+                position: relative;
+                top: -2px;
+                font-size: 7px;
+              }
+
+              @include media-breakpoint( md ) {
+                grid-template-columns: auto auto;
+              }
 
               div.dashboard-third-boxes {
                 display: grid;
                 grid-template-rows: 33px 75px;
                 align-items: start;
+                font-weight: 700;
 
                 div.aperacash-box-title {
                   text-align: center;
@@ -560,7 +598,7 @@ div#content {
                 grid-area: 1 / 1 / 3 / 2;
                 grid-template-rows: 45px 187px;
                 align-items: center;
-                width: 295px;
+                width: 100%;
                 height: 232px;
                 color: #27b700;
                 background: #e2ffd8;
@@ -592,7 +630,7 @@ div#content {
             div.dashboard-third-right {
               max-width: 310px;
               color: #19191a;
-              display: grid;
+              display: none;
               align-items: stretch;
 
               i.circle {
@@ -617,6 +655,10 @@ div#content {
 
               li:not( :last-child ) {
                 margin-bottom: 20px;
+              }
+
+              @include media-breakpoint( md ) {
+                display: grid;
               }
             }
           }
@@ -951,21 +993,57 @@ div#content {
               }
             }
           }
+
+          &.view-order {
+
+            > p:first-of-type {
+              margin: 15px;
+              padding: 15px;
+              background: #ffffff;
+            }
+
+            img {
+              margin: 0 8px 8px;
+              @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .5 ), o moz webkit );
+            }
+
+            td.product-name {
+              position: relative;
+
+              .product-quantity {
+                position: absolute;
+                top: 0;
+                right: 0;
+                display: grid;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background: #ffffff;
+                width: 30px;
+                height: 30px;
+                @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .5 ), o moz webkit );
+              }
+            }
+          }
           /* END ORDERS ENDPOINT */
 
           /* ACCOUNT DETAILS */
           &.edit-account,
           &.zip-program {
 
-            button[type=submit],
-            input[type=submit] {
+            button[type=submit] {
               display: none;
+            }
+
+            input[type=submit] {
+              visibility: hidden;
             }
 
             .save-wonka-btn {
               position: relative;
               font-family: $font__main_jose;
               font-weight: 700;
+              letter-spacing: -.1rem;
               text-transform: uppercase;
               padding-left: 12px;
               padding-right: 12px;
@@ -1146,61 +1224,85 @@ div#content {
 }
 
 /* MY ACCOUNT NAV */
-nav.woocommerce-MyAccount-navigation {
-  position: fixed;
-  left: -30px;
-  top: 25%;
-  width: 0;
-  padding-right: 24px;
-  z-index: 200;
-  @include prefix( transition, all .25s ease-in-out, o moz webkit );
+div#content {
 
-  ul#myaccount-nav-menu {
-    position: relative;
-    @include prefix( transition, all .25s ease-in-out, o moz webkit );
-  }
+  main#main.main-my-account {
 
-  button.wonka-btn {
-    display: flex;
-    position: absolute;
-    left: 100%;
-    border-radius: 0 100px 100px 0;
-    @include prefix( box-shadow, 0 1px 6px 0 rgba( #000, .6 ), o moz webkit );
-    @include prefix( transition, all .25s ease-in-out, o moz webkit );
-  }
+    div.woocommerce {
 
-  &:after {
-    content: '';
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 8px;
-    background: #52abf6;
-    z-index: 250;
-    @include prefix( transition, all .3s ease-in-out, o moz webkit );
-  }
+      div.MyAccount-navigation-col {
 
-  &.toggled {
-    width: 75%;
-    left: 0;
-    background: #ffffff;
-    @include prefix( box-shadow, 0 1px 6px 0 rgba( #000, .6 ), o moz webkit );
-  }
+        nav.woocommerce-MyAccount-navigation {
+          position: fixed;
+          left: -30px;
+          top: 25%;
+          width: 0;
+          padding-right: 24px;
+          background: #fafafa;
+          z-index: 200;
+          @include prefix( transition, all .25s ease-in-out, o moz webkit );
 
-  &:hover {
-    left: -20px;
-  }
+          ul#myaccount-nav-menu {
+            position: relative;
+            display: grid;
+            @include prefix( transition, all .25s ease-in-out, o moz webkit );
+          }
 
-  @include media-breakpoint( md ) {
-    position: relative;
-    width: 225px;
-    left: 0;
-    background: #fafafa;
+          button.wonka-btn {
+            display: flex;
+            position: absolute;
+            left: 100%;
+            border-radius: 0 100px 100px 0;
+            @include prefix( box-shadow, 0 1px 6px 0 rgba( #000, .6 ), o moz webkit );
+            @include prefix( transition, all .25s ease-in-out, o moz webkit );
+          }
 
-    button.wonka-btn {
-      display: none;
+          &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            background: #52abf6;
+            z-index: 250;
+            @include prefix( transition, all .3s ease-in-out, o moz webkit );
+          }
+
+          &:hover {
+            left: -20px;
+          }
+
+          &.toggled {
+            width: 75%;
+            left: 0;
+            background: #ffffff;
+            @include prefix( box-shadow, 0 1px 6px 0 rgba( #000, .6 ), o moz webkit );
+          }
+
+          @include media-breakpoint( md ) {
+            position: relative;
+            width: 240px;
+            padding-right: 0;
+            top: 0;
+            left: 0;
+            background: transparent;
+
+            &:after {
+              display: none;
+            }
+
+            button.wonka-btn {
+              display: none;
+            }
+
+            &:hover {
+              left: 0;
+            }
+          }
+        }
+      }
     }
   }
 }

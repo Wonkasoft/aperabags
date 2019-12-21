@@ -147,17 +147,18 @@ var componentForm;
 
 	if ( document.querySelector( 'input[type=file].custom-file-input' ) ) 
 	{
+		var file_input = document.querySelector( 'input[type=file].custom-file-input' );
+		var input_label = document.querySelector( 'label.custom-file-label' );
+		var file_name;
+		var current_logo_wrap = document.querySelector( 'div.current-logo-wrap' );
+		var agree_to_fee_modal_wrap;
+		var inner_markup = '';
+		var closebtns;
+		var consent_checkbox;
+
 		document.ongform_post_render = function( event, form_id, current_page )
 		{
 
-			var file_input = document.querySelector( 'input[type=file].custom-file-input' );
-			var input_label = document.querySelector( 'label.custom-file-label' );
-			var file_name;
-			var current_logo_wrap = document.querySelector( 'div.current-logo-wrap' );
-			var agree_to_fee_modal_wrap;
-			var inner_markup = '';
-			var closebtns;
-			var consent_checkbox;
 			if ( document.querySelector( '#agree-to-fee-modal' ) ) 
 			{
 				agree_to_fee_modal_wrap = document.querySelector( '#agree-to-fee-modal' );
@@ -3474,7 +3475,6 @@ var componentForm;
 							var target = this;
 							var form = document.querySelector( 'form.' + target.getAttribute( 'data-btn_id' ) );
 							var form_submit_btn = document.querySelector( 'form.' + target.getAttribute( 'data-btn_id' ) + ' *[type=submit]' );
-
 							if ( 'form-contact-details' === target.getAttribute( 'data-btn_id' ) ) 
 							{
 								form.appendChild( document.querySelector( '#save-account-details-nonce') );

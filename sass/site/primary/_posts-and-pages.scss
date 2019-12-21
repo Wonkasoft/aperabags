@@ -134,12 +134,17 @@ font-size: 1.3rem;
 .page-content,
 .entry-content,
 .entry-summary {
+	
 	p {
 		line-height: 1.1;
 
 		&.form-submit {
 			padding: 8px;
 		}
+	}
+
+	footer.entry-footer {
+		padding: 15px;
 	}
 }
 

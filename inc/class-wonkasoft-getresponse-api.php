@@ -281,25 +281,30 @@ class Wonkasoft_GetResponse_Api {
 	 * This returns the object of the tag query that is send in.
 	 *
 	 * @rest_endpoint GET /tags
+	 * @param array $passed_query contains passed query.
 	 * @return object            contains the object found from query.
 	 */
-	public function get_the_list_of_tags() {
+	public function get_the_list_of_tags( $passed_query = null ) {
 
-		$current_query = array(
-			'query'   => array(
-				'name'      => $this->tags,
-				'createdAt' => array(
-					'from' => null,
-					'to'   => null,
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'query'   => array(
+					'name'      => $this->tags,
+					'createdAt' => array(
+						'from' => null,
+						'to'   => null,
+					),
 				),
-			),
-			'sort'    => array(
-				'createdAt' => null,
-			),
-			'fields'  => null,
-			'perPage' => null,
-			'page'    => null,
-		);
+				'sort'    => array(
+					'createdAt' => null,
+				),
+				'fields'  => null,
+				'perPage' => null,
+				'page'    => null,
+			);
+		}
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
@@ -336,36 +341,67 @@ class Wonkasoft_GetResponse_Api {
 	/**
 	 * This functions gets a list of the contacts from passed query.
 	 *
+	 * $current_query = array(
+	 *      'query'           => array(
+	 *          'email'      => $this->email,
+	 *          'name'       => null,
+	 *          'campaignId' => null,
+	 *          'origin'     => null,
+	 *          'createdOn'  => array(
+	 *              'from' => null,
+	 *              'to'   => null,
+	 *          ),
+	 *          'changedOn'  => array(
+	 *              'from' => null,
+	 *              'to'   => null,
+	 *          ),
+	 *      ),
+	 *      'sort'            => array(
+	 *          'createdOn'  => null,
+	 *          'changedOn'  => null,
+	 *          'campaignId' => null,
+	 *      ),
+	 *      'additionalFlags' => null,
+	 *      'fields'          => null,
+	 *      'perPage'         => null,
+	 *      'page'            => null,
+	 *  );
+	 *
 	 * @rest_endpoint GET /contacts
+	 * @param array $passed_query contains passed query.
 	 * @return object        return an object of a list of contacts.
 	 */
-	public function get_contact_list() {
+	public function get_contact_list( $passed_query = null ) {
 
-		$current_query = array(
-			'query'           => array(
-				'email'      => $this->email,
-				'name'       => null,
-				'campaignId' => null,
-				'origin'     => null,
-				'createdOn'  => array(
-					'from' => null,
-					'to'   => null,
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'query'           => array(
+					'email'      => $this->email,
+					'name'       => null,
+					'campaignId' => null,
+					'origin'     => null,
+					'createdOn'  => array(
+						'from' => null,
+						'to'   => null,
+					),
+					'changedOn'  => array(
+						'from' => null,
+						'to'   => null,
+					),
 				),
-				'changedOn'  => array(
-					'from' => null,
-					'to'   => null,
+				'sort'            => array(
+					'createdOn'  => null,
+					'changedOn'  => null,
+					'campaignId' => null,
 				),
-			),
-			'sort'            => array(
-				'createdOn'  => null,
-				'changedOn'  => null,
-				'campaignId' => null,
-			),
-			'additionalFlags' => null,
-			'fields'          => null,
-			'perPage'         => null,
-			'page'            => null,
-		);
+				'additionalFlags' => null,
+				'fields'          => null,
+				'perPage'         => null,
+				'page'            => null,
+			);
+		}
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
@@ -402,24 +438,43 @@ class Wonkasoft_GetResponse_Api {
 	/**
 	 * This public function will get a list of campaigns.
 	 *
+	 * $current_query = array(
+	 *      'query'   => array(
+	 *          'name'      => $this->campaign_name,
+	 *          'isDefault' => null,
+	 *      ),
+	 *      'sort'    => array(
+	 *          'name'      => null,
+	 *          'createdOn' => null,
+	 *      ),
+	 *      'fields'  => null,
+	 *      'perPage' => null,
+	 *      'page'    => null,
+	 *  );
+	 *
 	 * @rest_endpoint GET /campaigns
+	 * @param array $passed_query contains passed query.
 	 * @return object                returns object of campaigns.
 	 */
-	public function get_a_list_of_campaigns() {
+	public function get_a_list_of_campaigns( $passed_query = null ) {
 
-		$current_query = array(
-			'query'   => array(
-				'name'      => $this->campaign_name,
-				'isDefault' => null,
-			),
-			'sort'    => array(
-				'name'      => null,
-				'createdOn' => null,
-			),
-			'fields'  => null,
-			'perPage' => null,
-			'page'    => null,
-		);
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'query'   => array(
+					'name'      => $this->campaign_name,
+					'isDefault' => null,
+				),
+				'sort'    => array(
+					'name'      => null,
+					'createdOn' => null,
+				),
+				'fields'  => null,
+				'perPage' => null,
+				'page'    => null,
+			);
+		}
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
@@ -456,21 +511,38 @@ class Wonkasoft_GetResponse_Api {
 	/**
 	 * You can filter the resource using criteria specified as "query[*]". You can provide multiple criteria, to use AND logic. You can sort the resource using parameters specified as "sort[*]". You can specify multiple fields to sort by.
 	 *
+	 * $current_query = array(
+	 *      'query'   => array(
+	 *          'name' => null,
+	 *      ),
+	 *      'sort'    => array(
+	 *          'name' => null,
+	 *      ),
+	 *      'fields'  => null,
+	 *      'perPage' => null,
+	 *      'page'    => null,
+	 *  );
+	 *
+	 * @param array $passed_query contains passed query.
 	 * @return object returns an object of a list of custom fields.
 	 */
-	public function get_a_list_of_custom_fields() {
+	public function get_a_list_of_custom_fields( $passed_query = null ) {
 
-		$current_query = array(
-			'query'   => array(
-				'name' => null,
-			),
-			'sort'    => array(
-				'name' => null,
-			),
-			'fields'  => null,
-			'perPage' => null,
-			'page'    => null,
-		);
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'query'   => array(
+					'name' => null,
+				),
+				'sort'    => array(
+					'name' => null,
+				),
+				'fields'  => null,
+				'perPage' => null,
+				'page'    => null,
+			);
+		}
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
@@ -547,5 +619,47 @@ class Wonkasoft_GetResponse_Api {
 
 			return $response;
 		endif;
+	}
+
+	/**
+	 * Gets contact by ID
+	 *
+	 * @param array $passed_query contains passed query.
+	 * @return object returns an object of a contacts details.
+	 */
+	public function get_contact_details_by_contact_id( $passed_id = null ) {
+
+		if ( empty( $passed_id ) ) {
+			$msg = 'No contact ID passed in to function.';
+			return $msg;
+		}
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . '/contacts/' . $passed_id;
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+	  else :
+		  curl_close( $ch );
+		  $response = json_decode( $response );
+
+		  return $response;
+	  endif;
 	}
 }

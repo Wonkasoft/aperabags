@@ -94,25 +94,29 @@ gravity_form( 'Design Fees Capture', false, false, false, null, true, 1, true );
 </section>
 
 <section class="zip-fifth">
-	<div class="table-responsive">
-	<table class="">
-		<thead>
-			<tr>
-				<th class=""><span class="nobr">Date</span></th>
-				<th class=""><span class="nobr">Item Qty.</span></th>
-				<th class=""><span class="nobr">Cart Total</span></th>
-				<th class=""><span class="nobr">Commission</span></th>
-			</tr>
-		</thead>
-
-		<tbody>
-
-				<tr class="">
-						<td class="" data-title="">
-
-						</td>
+	<?php if ( ! $refersion_data ) : ?>
+		<div class="no-data-to-display">No data to display as of right now.</div>
+	<?php else : ?>
+		<div class="table-responsive">
+		<table class="table border-collapse table-striped">
+			<thead>
+				<tr>
+					<th class=""><span class="nobr"><?php esc_html_e( 'Date', 'apera-bags' ); ?></span></th>
+					<th class=""><span class="nobr"><?php esc_html_e( 'Item Qty', 'apera-bags' ); ?></span></th>
+					<th class=""><span class="nobr"><?php esc_html_e( 'Cart Total', 'apera-bags' ); ?></span></th>
+					<th class=""><span class="nobr"><?php esc_html_e( 'Commission', 'apera-bags' ); ?></span></th>
 				</tr>
-		</tbody>
-	</table>
-	</div>
+			</thead>
+
+			<tbody>
+
+					<tr class="">
+							<td class="" data-title="">
+
+							</td>
+					</tr>
+			</tbody>
+		</table>
+		</div>
+	<?php endif; ?>
 </section>
