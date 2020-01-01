@@ -27,11 +27,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<span class="wonka-payment-method-title"><?php echo $gateway->get_title(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></span><span class="wonka-payment-method-icon"><?php echo $gateway->get_icon(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?></span>
 	</label>
 	</div>
-	</li>
 	<?php if ( $gateway->has_fields() || $gateway->get_description() ) : ?>
-	<li class="list-group-item">
 		<div class="payment_box payment_method_<?php echo esc_attr( $gateway->id ); ?>" <?php if ( ! $gateway->chosen ) : /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>style="display:none;"<?php endif; /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>>
 			<?php $gateway->payment_fields(); ?>
 		</div>
-	</li>
 	<?php endif; ?>
+	</li>

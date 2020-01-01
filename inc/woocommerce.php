@@ -627,7 +627,7 @@ function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 	$field           = '';
 	$label_id        = $args['id'];
 	$sort            = $args['priority'] ? $args['priority'] : '';
-	$field_container = '<div class="form-row %1$s" id="%2$s" data-priority="' . esc_attr( $sort ) . '">%3$s</div>';
+	$field_container = '<div class="%1$s" id="%2$s" data-priority="' . esc_attr( $sort ) . '">%3$s</div>';
 
 	switch ( $args['type'] ) {
 		case 'country':
@@ -1679,7 +1679,6 @@ function wonka_woocommerce_review_order_before_submit() {
 					if ( this.readyState == 4 && this.status == 200 ) 
 					{
 						var response = JSON.parse( this.responseText );
-						console.log( response );
 					}
 				};
 				xhr.open('GET', wonkasoft_request.ajax + "?" + "action=" + action + data + "&security=" + wonkasoft_request.security);

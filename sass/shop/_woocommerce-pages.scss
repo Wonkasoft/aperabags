@@ -174,75 +174,6 @@ span.woocommerce-input-wrapper {
   }
 }
 
-#payment {
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .wonka-row {
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
-
-  input[type=checkbox] {
-    margin-right: 8px;
-  }
-
-  .woocommerce-terms-and-conditions-wrapper {
-    padding: 0 8px;
-  }
-
-  ul.payment_methods {
-
-    li {
-      width: 100%;
-      padding: 8px;
-
-      &.payment_method_paypal {
-
-        img {
-          display: none;
-        }
-      }
-
-      .wonka-custom-control-label {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        width: 100%;
-        padding-right: 15px;
-
-        .wonka-payment-method-icon {
-          flex: .5 20%;
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          flex-wrap: wrap;
-
-        }
-      }
-    }
-
-    .stripe-card-group {
-      width: 100%;
-    }
-
-  }
-
-  div.place-order {
-    padding: 15px 0;
-    display: none;
-  }
-
-  .wc-stripe-elements-field {
-    width: 100%;
-  }
-}
-
 table.wonka-customer-information-table {
   margin: 0;
 
@@ -296,6 +227,10 @@ div.woocommerce-billing-fields {
     &.active {
       height: 100%;
       overflow: visible;
+    }
+
+    .billing-address-section-title {
+      margin-bottom: .7rem;
     }
   }
 }

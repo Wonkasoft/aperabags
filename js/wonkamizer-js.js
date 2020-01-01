@@ -44,6 +44,7 @@ var componentForm;
 
 	if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 	{
+
 		if ( document.querySelector( '#shipping_address_1' ) ) 
 		{
 			$( 'docmuent body' ).on( 'update_checkout', function( e ) 
