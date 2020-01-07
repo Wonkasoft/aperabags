@@ -216,7 +216,19 @@ div#content {
 
       @include media-breakpoint( md ) {
         grid-auto-columns: auto;
-        
+      }
+      
+      div.myaccount-nav-content-container {
+        display: grid;
+        align-items: stretch;
+        justify-content: center;
+        grid-auto-columns: 100%;
+        grid-auto-flow: row;
+
+        @include media-breakpoint( md ) {
+          grid-auto-columns: auto;
+          grid-auto-flow: column;
+        }
       }
 
       div.MyAccount-navigation-col {

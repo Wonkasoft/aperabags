@@ -18,13 +18,16 @@
 defined( 'ABSPATH' ) || exit;
 
 $current_endpoint = ( WC()->query->get_current_endpoint() ) ? ' ' . WC()->query->get_current_endpoint() : '';
-
+?>
+<div class="myaccount-nav-content-container">
+<?php
 /**
  * My Account navigation.
  *
  * @since 2.6.0
  */
-do_action( 'woocommerce_account_navigation' ); ?>
+do_action( 'woocommerce_account_navigation' );
+?>
 
 <div class="MyAccount-content-col">
 <div class="woocommerce-MyAccount-content<?php echo esc_attr( $current_endpoint ); ?>">
@@ -36,4 +39,6 @@ do_action( 'woocommerce_account_navigation' ); ?>
 		 */
 		do_action( 'woocommerce_account_content' );
 	?>
-</div>
+</div><!-- end woocommerce-MyAccount-content -->
+</div><!-- end MyAccount-content-col -->
+</div><!-- end myaccount-nav-content-container -->
