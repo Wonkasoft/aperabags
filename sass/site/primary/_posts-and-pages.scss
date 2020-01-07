@@ -112,11 +112,13 @@ font-size: 1.3rem;
 	}
 
 	button.wrapper-AtBcr {
-		padding: .8rem 1.6rem;
+		padding: .7rem 1.5rem;
 		border-radius: 999rem;
 		font-size: 1.07143rem;
 		text-transform: capitalize;
 		line-height: 1;
+		display: grid;
+		align-items: center;
 
 		i {
 			font-weight: 200;
