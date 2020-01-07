@@ -321,18 +321,18 @@ body.search {
 	}
 }
 
-#searchform {
+form.search-form {
 	margin: 15px;
 	justify-content: flex-end;
 
-	input#s {
+	input.field.wonka-form-control {
 		border-radius: 100px;
 		border-width: 1px;
 		padding: 8px;
-		line-height: 1.2;
+		line-height: 1;
 		height: 100%;
 		border-radius: 100px 0 0 100px;
-		@include font-size( 1.1 );
+		@include font-size( 1.2);
 
 		&::placeholder {
 			font-style: italic;
@@ -342,11 +342,10 @@ body.search {
 	button.wonka-btn {
 		padding: 8px 15px;
 		border-radius: 100px;
-		line-height: 1.2;
+		line-height: 1;
 		text-transform: none;
-		height: 100%;
 		border-radius: 0 100px 100px 0;
-		@include font-size( 1.1 );
+		@include font-size( 1.2 );
 
 		i {
 			color: rgba( #fff, .8 );
@@ -363,7 +362,7 @@ body.search {
 
 	@include media-breakpoint( md ) {
 
-		input#s {
+		input.field.wonka-form-control {
 			border-radius: 100px 0 0 100px;
 		}
 
@@ -406,7 +405,7 @@ body.search {
 	overflow: hidden;
 	@include prefix( transition, $trans_25, o moz webkit );
 
-	form#searchform {
+	form.search-form {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -416,8 +415,8 @@ body.search {
 		/* Style the search field */
 		input[type=text] {
 			width: 70%;
-			padding: 13px;
-			@include font-size( 1.1 );
+			padding: 15px;
+			@include font-size( 1.2 );
 			@include prefix( transition, $trans_25, o moz webkit );
 		}
 
@@ -429,12 +428,15 @@ body.search {
 			width: auto;
 			margin-top: 0px;
 			margin-left: 0;
+			padding: 15px;
+			border: 1px solid #52abf6;
+			@include font-size( 1.2 );
 			@include prefix( transition, $trans_25, o moz webkit );
 		}
 	}
 	@include media-breakpoint( md ) {
 		width: 80%;
-		form#searchform {
+		form.search-form {
 			width: 65%;
 
 			input[type=text] {
