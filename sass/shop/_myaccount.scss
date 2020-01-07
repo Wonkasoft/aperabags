@@ -216,7 +216,6 @@ div#content {
 
       @include media-breakpoint( md ) {
         grid-auto-columns: auto;
-        grid-auto-flow: column;
       }
 
       div.MyAccount-navigation-col {
