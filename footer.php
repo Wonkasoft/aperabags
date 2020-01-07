@@ -180,7 +180,13 @@ endif;
 <div id="search_overlay" class="overlay">
   <span class="closebtn" title="Close Overlay">x</span>
   <div class="overlay-content">
-	<?php get_search_form(); ?>
+	<?php
+	get_search_form(
+		array(
+			'aria_label' => 'main_site_search',
+		)
+	);
+	?>
   </div>
 </div>
 <?php wp_footer(); ?>
