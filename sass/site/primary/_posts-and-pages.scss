@@ -119,6 +119,8 @@ font-size: 1.3rem;
 		line-height: 1;
 		display: grid !important;
 		align-items: center;
+		grid-auto-flow: column;
+		grid-gap: 10px;
 
 		i {
 			font-weight: 200;
