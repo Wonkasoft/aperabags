@@ -117,10 +117,8 @@ font-size: 1.3rem;
 		font-size: 1.07143rem;
 		text-transform: capitalize;
 		line-height: 1;
-		display: grid !important;
-		align-items: center;
-		grid-auto-flow: column;
-		grid-gap: 10px;
+		display: flex !important;
+		justify-content: space-evenly;
 
 		i {
 			font-weight: 200;
