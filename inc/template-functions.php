@@ -1940,6 +1940,13 @@ function wonkasoft_api_responses_user_data( $user ) {
 		?>
 	<hr />
 		<div class="header-container"><h3 class="h3 header-text"><?php esc_html_e( 'Apera Affiliate and Contact Info', 'aperabags' ); ?></h3></div>
+
+		<?php
+			echo "<pre>\n";
+			print_r( get_user_meta( $user_id ) );
+			echo "</pre>\n";
+
+		?>
 		<table class="form-table">
 			<tbody>
 					<?php
