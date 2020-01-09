@@ -1945,7 +1945,6 @@ function wonkasoft_api_responses_user_data( $user ) {
 			echo "<pre>\n";
 			print_r( get_user_meta( $user_id ) );
 			echo "</pre>\n";
-
 		?>
 		<table class="form-table">
 			<tbody>
