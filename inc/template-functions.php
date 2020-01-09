@@ -1929,6 +1929,10 @@ function wonkasoft_getresponse_endpoint( $data ) {
  */
 function wonkasoft_api_responses_user_data( $user ) {
 	if ( in_array( 'apera_ambassador_affiliate', $user->roles ) || in_array( 'apera_zip_affiliate', $user->roles ) || in_array( 'apera_perks_partner', $user->roles ) ) :
+		echo "<pre>\n";
+		print_r( $user );
+		echo "</pre>\n";
+
 		$user_id         = $user->data->ID;
 		$refersion       = ( ! empty( get_user_meta( $user_id, 'refersion_data', true ) ) ) ? get_user_meta( $user_id, 'refersion_data', true ) : '';
 		$refersion_error = ( ! empty( get_user_meta( $user_id, 'refersion_error', true ) ) ) ? get_user_meta( $user_id, 'refersion_error', true ) : '';
@@ -2016,8 +2020,8 @@ function wonkasoft_api_responses_user_data( $user ) {
 		<?php
 		endif;
 }
-add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 1 );
-add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 1 );
+add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 2 );
+add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 2 );
 /**
  * This returns the refersion data that is set for the user.
  *
