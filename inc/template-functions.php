@@ -1093,6 +1093,9 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 			endif;
 
 			if ( 'Refersion Registration Ambassador' === $form['title'] || 'Refersion Registration Zip' === $form['title'] ) :
+
+				wp_set_password( $entry_fields['password'], $user_id );
+
 				$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
 				$refersion_response = $refersion_api_init->add_new_affiliate();
 
@@ -1115,6 +1118,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 				endif;
 			endif;
 		} else {
+
 			$user_id = wonkasoft_make_user_account( $entry_fields, $role );
 
 			if ( 'Ambassador Program' === $form['title'] ) :
@@ -1127,17 +1131,18 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 				return;
 			endif;
 
-			$user = new WP_User( $user_id );
-
-			if ( ! empty( $role ) && ! in_array( $role, $user->roles ) ) :
-				$user->add_role( $role, $role_display );
-			endif;
-
-			if ( ! empty( $role2 ) && ! in_array( $role2, $user->roles ) ) :
-				$user->add_role( $role2, $role_display2 );
-			endif;
-
 			if ( 'Refersion Registration Ambassador' === $form['title'] || 'Refersion Registration Zip' === $form['title'] ) :
+
+				$user = new WP_User( $user_id );
+
+				if ( ! empty( $role ) && ! in_array( $role, $user->roles ) ) :
+					$user->add_role( $role, $role_display );
+				endif;
+
+				if ( ! empty( $role2 ) && ! in_array( $role2, $user->roles ) ) :
+					$user->add_role( $role2, $role_display2 );
+				endif;
+
 				$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
 				$refersion_response = $refersion_api_init->add_new_affiliate();
 
@@ -1161,6 +1166,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 			endif;
 		}
 		else :
+
 			if ( email_exists( $entry_fields['email'] ) ) {
 				$user    = get_user_by( 'email', $entry_fields['email'] );
 				$user_id = $user->data->ID;
@@ -1189,6 +1195,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 			endif;
 
 			if ( 'Refersion Registration Ambassador' === $form['title'] || 'Refersion Registration Zip' === $form['title'] ) :
+
 				$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
 				$refersion_response = $refersion_api_init->add_new_affiliate();
 
@@ -1225,6 +1232,7 @@ function wonkasoft_make_user_account( $entry_fields, $role = 'apera_perks_partne
 	$ts   = time();
 	$date = new DateTime( "@$ts" );
 	$date->setTimezone( new DateTimeZone( get_option( 'timezone_string' ) ) );
+	$user_pass = ( ! empty( $entry_fields['password'] ) ) ? $entry_fields['password'] : wp_generate_password( 19, true, false );
 	// Setting new user args.
 	$userdata = array(
 		'user_pass'            => $entry_fields['password'],   // (string) The plain-text user password.
