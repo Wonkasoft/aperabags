@@ -1192,6 +1192,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 			if ( ! empty( $role2 ) && ! in_array( $role2, $user->roles ) ) :
 				$user->add_role( $role2, $role_display2 );
+
 			endif;
 
 			if ( 'Refersion Registration Ambassador' === $form['title'] || 'Refersion Registration Zip' === $form['title'] ) :
