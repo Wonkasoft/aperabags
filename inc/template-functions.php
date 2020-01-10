@@ -1083,32 +1083,36 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 			endif;
 
 			$user = new WP_User( $user_id );
-			if ( ! in_array( $role, $user->roles ) ) :
+
+			if ( ! empty( $role ) && ! in_array( $role, $user->roles ) ) :
 				$user->add_role( $role, $role_display );
 			endif;
 
-			if ( ! in_array( $role2, $user->roles ) ) :
+			if ( ! empty( $role2 ) && ! in_array( $role2, $user->roles ) ) :
 				$user->add_role( $role2, $role_display2 );
 			endif;
 
-			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
-			$refersion_response = $refersion_api_init->add_new_affiliate();
-			if ( 'failed' !== $refersion_response->status ) :
-				if ( ! empty( $refersion_response->errors ) ) :
-					if ( ! empty( $refersion_api_init->affiliate_code ) ) :
-						wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-						return;
-					else :
-						wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-						return;
+			if ( 'Refersion Registration Ambassador' === $form['title'] || 'Refersion Registration Zip' === $form['title'] ) :
+				$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
+				$refersion_response = $refersion_api_init->add_new_affiliate();
+
+				if ( 'failed' !== $refersion_response->status ) :
+					if ( ! empty( $refersion_response->errors ) ) :
+						if ( ! empty( $refersion_api_init->affiliate_code ) ) :
+							wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
+							return;
+						else :
+							wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
+							return;
+						endif;
+						else :
+							wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
+							return;
 					endif;
-					else :
-						wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-						return;
+						else :
+							echo esc_html( $refersion_response->status );
+							return;
 				endif;
-					else :
-						echo esc_html( $refersion_response->status );
-						return;
 			endif;
 		} else {
 			$user_id = wonkasoft_make_user_account( $entry_fields, $role );
@@ -1125,32 +1129,35 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 
 			$user = new WP_User( $user_id );
 
-			if ( ! in_array( $role, $user->roles ) ) :
+			if ( ! empty( $role ) && ! in_array( $role, $user->roles ) ) :
 				$user->add_role( $role, $role_display );
 			endif;
 
-			if ( ! in_array( $role2, $user->roles ) ) :
+			if ( ! empty( $role2 ) && ! in_array( $role2, $user->roles ) ) :
 				$user->add_role( $role2, $role_display2 );
 			endif;
 
-			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
-			$refersion_response = $refersion_api_init->add_new_affiliate();
-			if ( 'failed' !== $refersion_response->status ) :
-				if ( ! empty( $refersion_response->errors ) ) :
-					if ( ! empty( $refersion_api_init->affiliate_code ) ) :
-						wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-						return;
-					else :
-						wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-						return;
+			if ( 'Refersion Registration Ambassador' === $form['title'] || 'Refersion Registration Zip' === $form['title'] ) :
+				$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
+				$refersion_response = $refersion_api_init->add_new_affiliate();
+
+				if ( 'failed' !== $refersion_response->status ) :
+					if ( ! empty( $refersion_response->errors ) ) :
+						if ( ! empty( $refersion_api_init->affiliate_code ) ) :
+							wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
+							return;
+						else :
+							wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
+							return;
+						endif;
+						else :
+							wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
+							return;
 					endif;
-					else :
-						wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-						return;
+						else :
+							echo esc_html( $refersion_response->status );
+							return;
 				endif;
-					else :
-						echo esc_html( $refersion_response->status );
-						return;
 			endif;
 		}
 		else :
@@ -1173,33 +1180,35 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 				return;
 			endif;
 
-			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
-			$refersion_response = $refersion_api_init->add_new_affiliate();
-
-			if ( ! in_array( $role, $user->roles ) ) :
+			if ( ! empty( $role ) && ! in_array( $role, $user->roles ) ) :
 				$user->add_role( $role, $role_display );
 			endif;
 
-			if ( ! in_array( $role2, $user->roles ) ) :
+			if ( ! empty( $role2 ) && ! in_array( $role2, $user->roles ) ) :
 				$user->add_role( $role2, $role_display2 );
 			endif;
 
-			if ( 'failed' !== $refersion_response->status ) :
-				if ( ! empty( $refersion_response->errors ) ) :
-					if ( ! empty( $refersion_api_init->affiliate_code ) ) :
-						wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-						return;
-					else :
-						wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-						return;
+			if ( 'Refersion Registration Ambassador' === $form['title'] || 'Refersion Registration Zip' === $form['title'] ) :
+				$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
+				$refersion_response = $refersion_api_init->add_new_affiliate();
+
+				if ( 'failed' !== $refersion_response->status ) :
+					if ( ! empty( $refersion_response->errors ) ) :
+						if ( ! empty( $refersion_api_init->affiliate_code ) ) :
+							wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
+							return;
+						else :
+							wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
+							return;
+						endif;
+						else :
+							wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
+							return;
 					endif;
-					else :
-						wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-						return;
+						else :
+							echo esc_html( $refersion_response->status );
+							return;
 				endif;
-					else :
-						echo esc_html( $refersion_response->status );
-						return;
 			endif;
 	endif;
 }
@@ -1211,7 +1220,7 @@ add_action( 'gform_after_submission', 'wonkasoft_after_form_submission', 10, 2 )
  * @param  string $role         the role set to give new user.
  * @return integer               returns the new user id.
  */
-function wonkasoft_make_user_account( $entry_fields, $role ) {
+function wonkasoft_make_user_account( $entry_fields, $role = 'apera_perks_partner' ) {
 	// Setting time stamp.
 	$ts   = time();
 	$date = new DateTime( "@$ts" );
