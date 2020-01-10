@@ -1450,7 +1450,7 @@ function wonkasoft_media_sideload_image( $file, $post_id = 0, $desc = null, $ret
 		}
 
 		$alt  = isset( $desc ) ? esc_attr( $desc ) : '';
-		$html = "<img src='$src' alt='$alt' />";
+		$html = "<img src='" . esc_url( wp_get_attachment_image_src( $id, 'thumbnail', false )[0] ) . "' srcset='" . esc_attr( wp_get_attachment_image_srcset( $id, 'thumbnail', null ) ) . "' alt='$alt' />";
 
 		return $html;
 	} else {
