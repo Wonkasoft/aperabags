@@ -1968,7 +1968,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 							<label for="club-gym-logo">Club/Gym Logo</label>
 						</th>
 						<td>
-							<img src="<?php echo esc_attr( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) ); ?>" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ); ?>" id="club-gym-logo" class="company-logo" />
+							<img src="<?php echo esc_url( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false )[0] ); ?>" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ); ?>" id="club-gym-logo" class="company-logo" />
 						</td>
 					</tr>
 					<?php endif; ?>
