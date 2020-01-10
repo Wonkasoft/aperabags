@@ -1584,8 +1584,10 @@ add_action( 'gform_after_submission', 'wonkasoft_after_code_entry', 10, 2 );
 /**
  * This handles the submission of the perks registration form.
  *
- * @param  array $entry contains the entry fields.
+ * @param  array $confirmation  contains the form confirmation response.
  * @param  array $form  contains the form array.
+ * @param  array $entry contains the entry fields.
+ * @param  bool  $ajax contains ajax.
  */
 function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry, $ajax ) {
 	if ( 'Apera Perks Registration' !== $form['title'] && 'User Birthday' !== $form['title'] ) {
