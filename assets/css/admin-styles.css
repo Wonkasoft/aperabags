@@ -10,3 +10,8 @@ form#custom-options-form input:not( #submit ) {
 table.subscription-settings td.subscription-settings-cell {
 	width: 100%;
 }
+
+.affiliates-table #club-gym-logo {
+	width: 100%;
+	max-width: 150px;
+}
