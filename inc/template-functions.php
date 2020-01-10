@@ -1411,7 +1411,7 @@ function wonkasoft_media_sideload_image( $file, $post_id = 0, $desc = null, $ret
 	if ( ! empty( $file ) ) {
 
 		// Set variables for storage, fix file filename for query strings.
-		preg_match( '/[^\?]+\.(jpe?g|jpg|gif|png|svg|eps)\b/i', $file, $matches );
+		preg_match( '/[^\?]+\.(jpe?g|jpg|gif|png|svg|ai|eps)\b/i', $file, $matches );
 
 		if ( ! $matches ) {
 			return new WP_Error( 'image_sideload_failed', __( 'Invalid image URL' ) );
