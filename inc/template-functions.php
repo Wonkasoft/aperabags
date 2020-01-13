@@ -1284,6 +1284,11 @@ function wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fi
 
 	update_user_meta( $user_id, 'refersion_data', $refersion_response );
 	update_user_meta( $user_id, 'getResponse_data', $getresponse );
+
+	if ( ! empty( $entry_fields['company'] ) ) :
+		update_user_meta( $user_id, 'company_name', $entry_fields['company'] );
+	endif;
+
 	if ( ! empty( $entry_fields['logo_upload'] ) ) :
 		wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
 	endif;

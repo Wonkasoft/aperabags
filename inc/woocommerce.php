@@ -2098,66 +2098,10 @@ add_action( 'woocommerce_created_customer', 'wonkasoft_woocommerce_created_custo
 
 
 remove_action( 'woocommerce_after_cart_table', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ) );
-add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ) );
+add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ), 11 );
 
 /**
- * Express payment buttons Apple Pay and Google Pay
- *
- * @author Louis
- * @since 1.2.0
- */
-function wonkasoft_express_buttons_checkout() {
-	if ( class_exists( 'WC_Stripe_Payment_Request' ) ) :
-		/**
-		 * Add stripe on checkout page
-		 *
-		 * @since  1.0.0 Filter to add Apple Pay on checkout
-		 */
-		add_filter( 'wc_stripe_show_payment_request_on_checkout', '__return_true' );
-
-		/**
-		 * Remove Stripe from single product page
-		 *
-		 * @since  1.0.0 Remove Apple Pay on single product page
-		 */
-		add_filter( 'wc_stripe_hide_payment_request_on_product_page', '__return_true' );
-
-		/**
-		 * Remove Stripe payment button on the cart page
-		 *
-		 * @since  1.0.0 This will remove the Apple Google Pay buttons from the cart page
-		 */
-		remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
-
-		/**
-		 * This will remove the payment button from the cart page.
-		 *
-		 * @since  1.0.0 Remove Stripe buttons on the cart page.
-		 */
-		remove_action( 'woocommerce_proceed_to_checkout', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
-
-		/**
-		 * Remove Stripe payment button on the checkout page for move.
-		 *
-		 * @since  1.0.0 This will remove the Apple Google Pay buttons from the checkout page for move.
-		 */
-		remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
-
-		/**
-		 * This will remove the payment button from the checkout page for move.
-		 *
-		 * @since  1.0.0 Remove Stripe buttons on the checkout page for move.
-		 */
-		remove_action( 'woocommerce_checkout_before_customer_details', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_separator_html' ), 2 );
-
-		add_action( 'wonka_checkout_express_btns', array( WC_Stripe_Payment_Request::instance(), 'display_payment_request_button_html' ), 1 );
-
-	endif;
-}
-add_action( 'wp', 'wonkasoft_express_buttons_checkout', 10 );
-
-/**
- * This is for the adding of the endpoints to WordPress.
+ * This is for the adding of the endpoints to WordPress.x
  */
 function wonkasoft_add_all_endpoints() {
 

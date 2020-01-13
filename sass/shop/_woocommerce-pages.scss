@@ -23,6 +23,11 @@
       @include prefix( transition, all .3s ease-in-out, o moz webkit );
     }
 
+    .woocommerce-info {
+      margin: 0;
+      padding: 8px 0;
+    }
+
     .woocommerce-error {
       background-color: #e8fcff;
     }
