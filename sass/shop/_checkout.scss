@@ -7,6 +7,42 @@
  	.wonka-btn {
  		padding: 2px 8px;
  	}
+
+ 	form.checkout_redeeming {
+ 		height: 0;
+ 		overflow: hidden;
+		@include transition( all .25s ease-in-out );
+
+		&.show {
+ 			height: 42px;
+		}
+ 	}
+
+ 	.fp_apply_reward {
+
+ 		.input-group {
+ 			position: relative;
+ 			display: grid;
+ 			align-items: center;
+ 			justify-content: start;
+ 			grid-auto-flow: column;
+ 			@include transition( all .25s ease-in-out );
+
+ 			input {
+ 				height: 40px;
+ 				@include transition( all .25s ease-in-out );
+
+ 				&#rs_apply_coupon_code_field {
+ 					width: 210px;
+ 					border-radius: 100px 0 0 100px;
+ 				}
+
+ 				&.wonka-btn {
+ 					border-radius: 0 100px 100px 0;
+ 				}
+ 			}
+ 		}
+ 	}
  }
 
  .woocommerce-checkout p.woocommerce-invalid-required-field {

@@ -28,6 +28,10 @@
 	width: map-get( $columns, $numberColumns ) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
 }
 
+@mixin transition( $value ) {
+  @include prefix( transition, $value, o moz webkit );
+}
+
 @mixin box-shadow( $value ) {
   @include prefix( box-shadow, $value, o moz webkit );
 }
