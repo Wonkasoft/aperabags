@@ -69,6 +69,7 @@ var componentForm;
 						else
 						{
 							redeem_it_form.classList.add( 'show' );
+							
 						}
 					}, 200 );
 			});
