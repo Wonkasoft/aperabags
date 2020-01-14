@@ -2196,8 +2196,6 @@ add_action( 'woocommerce_account_dashboard', 'wonkasoft_add_dashboard_extention'
 
 /**
  * This is the earn AperaCash endpoint page
- *
- * @return echo parse the earn AperaCash end-point content.
  */
 function wonkasoft_my_account_earn_aperacash_endpoint_content() {
 	include get_stylesheet_directory() . '/woocommerce/myaccount/earn-aperacash.php';
