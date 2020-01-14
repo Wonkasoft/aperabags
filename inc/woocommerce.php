@@ -941,11 +941,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 }
 add_action( 'wonka_checkout_after_checkout_form_custom', 'wonka_checkout_after_checkout_form_custom', 50 );
 
-if ( class_exists( 'RSFrontendAssets' ) ) {
-	remove_action( 'woocommerce_before_checkout_form', array( 'RSFrontendAssets', 'complete_message_for_purchase' ), 999 );
-	add_action( 'woocommerce_before_checkout_form', array( 'RSFrontendAssets', 'complete_message_for_purchase' ), 15 );
 
-}
 /**
  * [wonka_woocommerce_before_custom_checkout description]
  *
@@ -2108,6 +2104,9 @@ add_action( 'woocommerce_created_customer', 'wonkasoft_woocommerce_created_custo
 
 remove_action( 'woocommerce_after_cart_table', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ) );
 add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ), 11 );
+
+remove_action( 'woocommerce_before_checkout_form', array( 'RSFrontendAssets', 'complete_message_for_purchase' ), 999 );
+add_action( 'woocommerce_before_checkout_form', array( 'RSFrontendAssets', 'complete_message_for_purchase' ), 15 );
 
 /**
  * This is for the adding of the endpoints to WordPress.x
