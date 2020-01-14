@@ -939,9 +939,18 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 </div><!-- .row -->
 	<?php
 }
-
 add_action( 'wonka_checkout_after_checkout_form_custom', 'wonka_checkout_after_checkout_form_custom', 50 );
 
+if ( class_exists( 'RSFrontendAssets' ) ) {
+	remove_action( 'woocommerce_before_checkout_form', array( 'RSFrontendAssets', 'complete_message_for_purchase' ), 999 );
+	add_action( 'woocommerce_before_checkout_form', array( 'RSFrontendAssets', 'complete_message_for_purchase' ), 15 );
+
+}
+/**
+ * [wonka_woocommerce_before_custom_checkout description]
+ *
+ * @param  [type] $checkout [description]
+ */
 function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output = '';
 	ob_start();
