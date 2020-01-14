@@ -44,35 +44,38 @@ var componentForm;
 
 	if ( document.querySelector( '.fp_apply_reward' ) ) 
 	{
-		var redeem_it_btn = document.querySelector( '.redeemit' );
-		var redeem_it_form = document.querySelector( 'form.checkout_redeeming' );
+		if ( document.querySelector( '.redeemit' ) ) 
+		{
+			var redeem_it_btn = document.querySelector( '.redeemit' );
+			var redeem_it_form = document.querySelector( 'form.checkout_redeeming' );
+			redeem_it_btn.classList.add( 'wonka-btn' );
+			redeem_it_btn.addEventListener( 'click', function( e ) 
+				{
+					e.stopPropagation();
+					redeem_it_form.style = 'display: block;';
+					setTimeout( function() 
+						{
+							if ( redeem_it_form.classList.contains( 'show' ) ) 
+							{
+								redeem_it_form.classList.remove( 'show' );
+								
+								setTimeout( function() 
+									{
+										redeem_it_form.style = 'display: none;';
+									}, 200 );
+							}
+							else
+							{
+								redeem_it_form.classList.add( 'show' );
+								
+							}
+						}, 200 );
+				});
+		}
 		var apply_reward_container = document.querySelector( '.fp_apply_reward' );
 		var new_div_group = document.createElement( 'DIV' );
 		var input_text = apply_reward_container.querySelectorAll( 'input' )[0];
 		var input_btn = apply_reward_container.querySelectorAll( 'input' )[1];
-		redeem_it_btn.classList.add( 'wonka-btn' );
-		redeem_it_btn.addEventListener( 'click', function( e ) 
-			{
-				e.stopPropagation();
-				redeem_it_form.style = 'display: block;';
-				setTimeout( function() 
-					{
-						if ( redeem_it_form.classList.contains( 'show' ) ) 
-						{
-							redeem_it_form.classList.remove( 'show' );
-							
-							setTimeout( function() 
-								{
-									redeem_it_form.style = 'display: none;';
-								}, 200 );
-						}
-						else
-						{
-							redeem_it_form.classList.add( 'show' );
-							
-						}
-					}, 200 );
-			});
 		new_div_group.classList.add( 'input-group' );
 		new_div_group.appendChild( input_text );
 		new_div_group.appendChild( input_btn );
