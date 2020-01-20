@@ -277,7 +277,9 @@ $customer_id = get_current_user_id();
 			<div class="box-content-title"><span>Follow & Like Us</span></div>
 			<div class="box-content-text"><span>Earn $5 AperaCash just for following Apera Bags on Social Media!</span></div>
 			<div id="follow-for-modal">
-				<span><?php esc_html_e( 'This award option will be available soon.', 'apera-bags' ); ?></span>
+				<div id="fb-root"></div>
+				<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0&appId=487253148485930&autoLogAppEvents=1"></script>
+				<div class="fb-like" data-href="https://www.facebook.com/aperabags/" data-width="" data-layout="button_count" data-action="like" data-size="large" data-share="true"></div>
 			</div>
 		</div>
 	</div>
