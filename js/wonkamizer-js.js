@@ -3481,14 +3481,30 @@ var componentForm;
 
 		if ( document.querySelector( '#earn-aperacash-modal' ) ) 
 		{
+			var the_modal_title = document.querySelector( '#earn-aperacash-modal .modal-header h3' );
 			var the_modal_content = document.querySelector( '#earn-aperacash-modal .modal-body' );
 			var aperacash_btns = document.querySelectorAll( 'a[data-target="#earn-aperacash-modal"]' );
 			var modal_contents = {
-				birthday: document.querySelector( '#birthday-for-modal' ),
-				refer: document.querySelector( '#refer-for-modal' ),
-				follow: document.querySelector( '#follow-for-modal' ),
-				review: document.querySelector( '#review-for-modal' ),
-				signup: document.querySelector( '#signup-for-modal' )
+				birthday: {
+					title: document.querySelector( '#birthday-for-modal' ).getAttribute( 'data-title' ),
+					content: document.querySelector( '#birthday-for-modal' )
+				},
+				refer: {
+					title: document.querySelector( '#refer-for-modal' ).getAttribute( 'data-title' ),
+					content: document.querySelector( '#refer-for-modal' )
+				},
+				follow: {
+					title: document.querySelector( '#follow-for-modal' ).getAttribute( 'data-title' ),
+					content: document.querySelector( '#follow-for-modal' )
+				},
+				review: {
+					title: document.querySelector( '#review-for-modal' ).getAttribute( 'data-title' ),
+					content: document.querySelector( '#review-for-modal' )
+				},
+				signup: {
+					title: document.querySelector( '#signup-for-modal' ).getAttribute( 'data-title' ),
+					content: document.querySelector( '#signup-for-modal' )
+				}
 			};
 			aperacash_btns.forEach( function( btn, i ) 
 				{
@@ -3497,7 +3513,10 @@ var componentForm;
 							e.preventDefault();
 							var target = this;
 							var target_id = target.id.split( '-' )[0];
-							var target_content = modal_contents[target_id];
+							var target_header = modal_contents[target_id].title;
+							var target_content = modal_contents[target_id].content;
+							the_modal_title.innerText = '';
+							the_modal_title.innerText = target_header;
 							the_modal_content.innerHTML = '';
 							the_modal_content.appendChild( target_content );
 						});
@@ -3525,7 +3544,6 @@ var componentForm;
 							{
 								form_submit_btn.click();
 							}
-
 						});
 				});
 		}

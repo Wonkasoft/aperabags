@@ -116,7 +116,7 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>My Birthday</span></div>
 			<div class="box-content-text"><span>$10 AperaCash is automatically added to your balance on your birthday!</span></div>
-			<div id="birthday-for-modal">
+			<div id="birthday-for-modal" data-title="My Birthday">
 				<?php gravity_form( 'User Birthday', false, false, false, null, true, 1, true ); ?>
 			</div>
 		</div>
@@ -168,7 +168,7 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>Refer Friends</span></div>
 			<div class="box-content-text"><span>Earn $5 AperaCash per friend who signs up with the Apera Perks Program!</span></div>
-			<div id="refer-for-modal">
+			<div id="refer-for-modal" data-title="Refer Friends">
 				<?php
 				/**
 				 * Deprecated woocommerce_before_my_account action.
@@ -276,10 +276,9 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>Follow & Like Us</span></div>
 			<div class="box-content-text"><span>Earn $5 AperaCash just for following Apera Bags on Social Media!</span></div>
-			<div id="follow-for-modal">
-				<div id="fb-root"></div>
-				<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0&appId=487253148485930&autoLogAppEvents=1"></script>
-				<div class="fb-like" data-href="https://www.facebook.com/aperabags/" data-width="" data-layout="button_count" data-action="like" data-size="large" data-share="true"></div>
+			<div id="follow-for-modal" data-title="Follow & Like Us">
+				<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0&appId=487253148485930&autoLogAppEvents=1&redirect_uri=<?php echo home_url( 'my-account/aperacash', null ); ?>"></script>
+				<div class="fb-like" data-href="https://www.facebook.com/aperabags/" data-callback="receive" data-layout="standard" data-action="like" data-show-faces="true" data-size="large" data-share="true"></div>
 			</div>
 		</div>
 	</div>
@@ -288,8 +287,7 @@ $customer_id = get_current_user_id();
 	<div class="aperacash-boxes aperacash-boxes-review one-time">
 		<div class="box-content-wrap">
 			<div class="box-content-icon">
-				<svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-		 width="75px" height="75px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+				<svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="75px" height="75px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
 				<rect y="-0.29" display="none" fill-rule="evenodd" clip-rule="evenodd" fill="#444444" width="100" height="100"/>
 				<g id="review">
 					<path display="inline" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M94.283,69.582c0,2.071,0,4.054,0,6.143
@@ -328,7 +326,7 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>Leave a Review</span></div>
 			<div class="box-content-text"><span>Earn $5 AperaCash when you leave a review for AperaBags.com!</span></div>
-			<div id="review-for-modal">
+			<div id="review-for-modal" data-title="Leave a Review">
 				<span><?php esc_html_e( 'This award option will be available soon.', 'apera-bags' ); ?></span>
 			</div>
 		</div>
@@ -375,7 +373,7 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>Sign Up</span></div>
 			<div class="box-content-text"><span>You earned $10 AperaCash just for signing up with the Apera Perks Program!</span></div>
-			<div id="signup-for-modal"><?php esc_html_e( 'You have already received your reward', 'apera-bags' ); ?></div>
+			<div id="signup-for-modal" data-title="Sign Up"><?php esc_html_e( 'You have already received your reward', 'apera-bags' ); ?></div>
 		</div>
 	</div>
 	</a>
@@ -401,6 +399,7 @@ $customer_id = get_current_user_id();
 
 	  <!-- Modal Header -->
 	  <div class="modal-header">
+		  <h3></h3>
 		<button type="button" class="close" data-dismiss="modal">&times;</button>
 	  </div>
 

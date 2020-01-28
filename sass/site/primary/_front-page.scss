@@ -38,6 +38,7 @@
 section.header-slider-section {
 	position: relative;
 	height: 650px;
+	max-height: 2880px;
 	@include prefix( transition, $trans_1, o moz webkit );
 
 	.top-page-slider-wrap {
@@ -294,6 +295,7 @@ section.shop-section {
 section.desirable-slider-section {
 	position: relative;
 	height: 650px;
+	max-height: 2880px;
 	@include prefix( transition, $trans_1, o moz webkit );
 
 	.cta-section-slider-wrap {
