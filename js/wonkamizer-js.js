@@ -40,8 +40,7 @@ var componentForm;
 	header_el,
 	header_height,
 	config = { attributes: true, childList: true },
-	xhr = new XMLHttpRequest();
-
+	xhr;
 	if ( document.querySelector( '.fp_apply_reward' ) ) 
 	{
 		if ( document.querySelector( '.redeemit' ) ) 
@@ -332,6 +331,7 @@ var componentForm;
 						'security': wonkasoft_request.security
 					};
 					var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+					xhr = new XMLHttpRequest();
 					xhr.onreadystatechange = function() {
 
 						if ( this.readyState == 4 && this.status == 200 ) 
@@ -432,6 +432,7 @@ var componentForm;
 						item.addEventListener( 'change', function( event ) 
 							{
 								var target = event.target;
+								xhr = new XMLHttpRequest();
 								if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
 								{
 									wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=billing' );
@@ -2090,7 +2091,8 @@ var componentForm;
 						{
 							popup_wrap.classList.remove( 'popped-up' );
 						}
-						
+
+						xhr = new XMLHttpRequest();
 				        xhr.onreadystatechange = function() {
 					        if ( this.readyState == 4 && this.status == 200 )  {
 					        	var response =   this;
@@ -2470,6 +2472,7 @@ var componentForm;
 			        {
 
 				        //Post Form with data
+				        xhr = new XMLHttpRequest();
 				        xhr.onreadystatechange = function() {
 					        if ( this.readyState == 4 && this.status == 200 )  {
 					        	var response =   this;
@@ -2602,6 +2605,7 @@ var componentForm;
 					'security': wonkasoft_request.security
 				};
 				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+				xhr = new XMLHttpRequest();
 				xhr.onreadystatechange = function() {
 					if ( this.readyState == 4 && this.status == 200 ) 
 					{
@@ -2659,6 +2663,7 @@ var componentForm;
 					'security': wonkasoft_request.security
 				};
 				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+				xhr = new XMLHttpRequest();
 				xhr.onreadystatechange = function() {
 
 					if ( this.readyState == 4 && this.status == 200 ) 
@@ -3363,6 +3368,7 @@ var componentForm;
 		=================================================*/
 		if ( document.querySelector('input#s') )
 		{
+			xhr = new XMLHttpRequest();
 			wonka_ajax_request( xhr, "search_site", null);
 		}
 		/*=====  End of Setup for the search form  ======*/
@@ -3445,6 +3451,7 @@ var componentForm;
 						'security': wonkasoft_request.security
 					};
 					var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+					xhr = new XMLHttpRequest();
 					xhr.onreadystatechange = function() {
 	
 						if ( this.readyState == 4 && this.status == 200 ) 
