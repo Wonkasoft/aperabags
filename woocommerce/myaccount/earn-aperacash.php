@@ -235,54 +235,6 @@ $customer_id = get_current_user_id();
 		</div>
 	</div>
 	</a>
-	<a id="follow-button" href="#" class="aperacash-boxes-achor" data-toggle="modal" data-target="#earn-aperacash-modal">
-	<div class="aperacash-boxes aperacash-boxes-follow-like one-time">
-		<i class="arrow-right">
-			<svg version="1.1" id="Arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 15 15" enable-background="new 0 0 15 15" xml:space="preserve">
-				<g>
-					<path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M2.038,14.849l10.03-10.03l0.043,7.63l2.683-2.682L14.74,0.229
-						L5.201,0.176L2.52,2.859l7.63,0.042L0.12,12.932L2.038,14.849z"/>
-				</g>
-			</svg>
-		</i>
-		<div class="box-content-wrap">
-			<div class="box-content-icon">
-				<svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-		 width="75px" height="75px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-				<rect y="-0.29" display="none" fill-rule="evenodd" clip-rule="evenodd" fill="#444444" width="100" height="100"/>
-				<g id="Like__x26__Follow">
-					<path display="inline" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M1.077,31.493
-						c0.114-7.374,2.088-14.087,6.888-19.788c4.4-5.228,9.98-8.451,16.832-9.099c7.521-0.71,13.842,1.93,19.02,7.377
-						c2.408,2.533,4.231,5.461,5.713,8.612c0.072,0.153,0.119,0.322,0.212,0.461c0.083,0.124,0.212,0.216,0.321,0.322
-						c0.078-0.104,0.174-0.198,0.231-0.312c0.396-0.788,0.758-1.594,1.178-2.368c2.444-4.503,5.654-8.339,10.217-10.78
-						c8.76-4.688,17.346-3.97,25.478,1.492c6.521,4.38,10.138,10.749,11.318,18.446c1.671,10.898-1.487,20.437-8.459,28.834
-						c-3.629,4.372-7.829,8.18-11.882,12.137c-7.548,7.37-15.154,14.688-22.22,22.53c-1.854,2.06-3.459,4.345-5.169,6.533
-						c-0.255,0.326-0.462,0.689-0.691,1.036c-0.212-0.342-0.388-0.714-0.644-1.02c-1.413-1.688-2.725-3.483-4.295-5.014
-						c-4.056-3.953-8.228-7.786-12.354-11.667c-0.099-0.093-0.209-0.175-0.3-0.274c-0.153-0.169-0.293-0.349-0.439-0.523
-						c0.246-0.047,0.49-0.115,0.739-0.137c3.003-0.255,6.022-0.391,9.008-0.786c2.578-0.341,4.168-2.153,5.25-4.367
-						c0.389-0.796,0.525-1.749,0.612-2.646c0.081-0.836,0.256-1.564,0.758-2.263c1.232-1.711,1.86-3.611,1.493-5.748
-						c-0.068-0.396-0.137-0.823-0.336-1.157c-0.422-0.708-0.343-1.353,0.061-2.009c0.231-0.375,0.468-0.747,0.709-1.116
-						c0.796-1.222,0.832-2.485,0.175-3.765c-0.294-0.571-0.624-1.131-0.988-1.659c-0.644-0.934-0.821-1.896-0.425-2.984
-						c0.171-0.47,0.263-0.988,0.287-1.489c0.126-2.683-0.997-4.595-3.47-5.661c-2.438-1.05-5.011-1.379-7.654-1.044
-						c-1.177,0.149-2.349,0.342-3.526,0.481c-0.286,0.034-0.587-0.067-0.882-0.105c0.08-0.312,0.093-0.666,0.255-0.927
-						c0.302-0.486,0.669-0.938,1.048-1.37c2.007-2.281,3.407-4.89,4.207-7.813c0.818-2.989,0.092-5.786-1.233-8.454
-						c-0.617-1.242-1.838-1.739-3.156-1.679c-1.214,0.057-2.184,0.695-2.662,1.892c-0.352,0.881-0.656,1.781-1.02,2.656
-						c-0.584,1.405-1.139,2.828-1.818,4.188c-0.95,1.905-2.223,3.539-4.095,4.683c-1.036,0.633-1.92,1.509-2.923,2.203
-						c-2.351,1.629-4.073,3.868-5.879,6.017c-1.286,1.53-2.436,3.175-3.658,4.76c-0.989,1.284-2.174,2.303-3.713,2.915
-						c-0.536,0.214-1.062,0.626-1.414,1.085c-0.399,0.521-0.505,0.318-0.74-0.072c-2.793-4.646-4.728-9.607-5.453-14.997
-						C1.339,35.214,1.243,33.35,1.077,31.493z"/>
-				</g>
-				</svg>
-			</div>
-			<div class="box-content-title"><span>Follow & Like Us</span></div>
-			<div class="box-content-text"><span>Earn $5 AperaCash just for following Apera Bags on Social Media!</span></div>
-			<div id="follow-for-modal" data-title="Follow & Like Us">
-				<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0&appId=487253148485930&autoLogAppEvents=1&redirect_uri=<?php echo home_url( 'my-account/aperacash', null ); ?>"></script>
-				<div class="fb-like" data-href="https://www.facebook.com/aperabags/" data-callback="receive" data-layout="standard" data-action="like" data-show-faces="true" data-size="large" data-share="true"></div>
-			</div>
-		</div>
-	</div>
-	</a>
 	<a id="review-button" href="#" class="aperacash-boxes-achor" data-toggle="modal" data-target="#earn-aperacash-modal">
 	<div class="aperacash-boxes aperacash-boxes-review one-time">
 		<div class="box-content-wrap">
