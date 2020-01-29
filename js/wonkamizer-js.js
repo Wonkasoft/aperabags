@@ -3404,10 +3404,9 @@ var componentForm;
 			
 			var datepicker_triggers = document.querySelectorAll( '.ui-datepicker-trigger' );
 			var datepicker_div = document.querySelector( '#ui-datepicker-div' );
-			console.log( datepicker_triggers.length );
+
 			datepicker_triggers.forEach( function( picker, i ) 
 				{
-					console.log( picker );
 					var parent_el = picker.parentElement;
 					var close_span = parent_el.querySelector( 'span.input-group-text' );
 					close_span.appendChild( picker );

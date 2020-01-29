@@ -2244,6 +2244,9 @@ function wonkasoft_pre_submission( $form ) {
 
 	foreach ( $form['fields'] as $field ) {
 		if ( $field ) {
+			echo "<pre>\n";
+			print_r( $field );
+			echo "</pre>\n";
 
 		}
 	}
