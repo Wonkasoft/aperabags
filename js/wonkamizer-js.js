@@ -3404,7 +3404,7 @@ var componentForm;
 			
 			var datepicker_triggers = document.querySelectorAll( '.ui-datepicker-trigger' );
 			var datepicker_div = document.querySelector( '#ui-datepicker-div' );
-
+			console.log( datepicker_triggers.length );
 			datepicker_triggers.forEach( function( picker, i ) 
 				{
 					console.log( picker );
