@@ -2237,6 +2237,20 @@ function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, 
 
 
 
+function wonkasoft_pre_submission( $form ) {
+	if ( 'Join MSE+' !== $form['title'] ) {
+		return;
+	}
+
+	foreach ( $form['fields'] as $field ) {
+		if ( $field ) {
+
+		}
+	}
+}
+add_action( 'gform_pre_submission', 'wonkasoft_pre_submission' );
+
+
 /**
  * Cron executed function.
  */
