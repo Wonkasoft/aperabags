@@ -3500,10 +3500,6 @@ var componentForm;
 					title: document.querySelector( '#refer-for-modal' ).getAttribute( 'data-title' ),
 					content: document.querySelector( '#refer-for-modal' )
 				},
-				follow: {
-					title: document.querySelector( '#follow-for-modal' ).getAttribute( 'data-title' ),
-					content: document.querySelector( '#follow-for-modal' )
-				},
 				review: {
 					title: document.querySelector( '#review-for-modal' ).getAttribute( 'data-title' ),
 					content: document.querySelector( '#review-for-modal' )
