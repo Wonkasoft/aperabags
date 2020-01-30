@@ -1959,7 +1959,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 		$refersion_error = ( ! empty( get_user_meta( $user_id, 'refersion_error', true ) ) ) ? get_user_meta( $user_id, 'refersion_error', true ) : '';
 		$getresponse     = ( ! empty( get_user_meta( $user_id, 'getResponse_data', true ) ) ) ? get_user_meta( $user_id, 'getResponse_data', true ) : '';
 		$company_logo    = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : '';
-		$user_birthday   = ( ! empty( get_user_meta( $user_id, 'user_birthday', true ) ) ) ? get_user_meta( $user_id, 'user_birthday', true ) : '';
+		$user_birthday   = ( ! empty( get_user_meta( $user_id, 'users_birthday', true ) ) ) ? get_user_meta( $user_id, 'users_birthday', true ) : '';
 		echo "<pre>\n";
 		print_r( $user_birthday );
 		echo "</pre>\n";
