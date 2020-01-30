@@ -1959,6 +1959,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 		$refersion_error = ( ! empty( get_user_meta( $user_id, 'refersion_error', true ) ) ) ? get_user_meta( $user_id, 'refersion_error', true ) : '';
 		$getresponse     = ( ! empty( get_user_meta( $user_id, 'getResponse_data', true ) ) ) ? get_user_meta( $user_id, 'getResponse_data', true ) : '';
 		$company_logo    = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : '';
+		$user_birthday   = ( ! empty( get_user_meta( $user_id, 'user_birthday', true ) ) ) ? get_user_meta( $user_id, 'user_birthday', true ) : '';
 		if ( ! empty( $company_logo ) ) {
 			$company_logo = json_decode( $company_logo );
 		}
@@ -1970,6 +1971,18 @@ function wonkasoft_api_responses_user_data( $user ) {
 
 		<table class="form-table affiliates-table">
 			<tbody>
+					<?php
+					if ( ! empty( $user_birthday ) ) :
+						?>
+					<tr>
+						<th>
+							<label for="user-birthday">Your Birthday</label>
+						</th>
+						<td>
+							<span><?php echo esc_html( $user_birthday ); ?></span>
+						</td>
+					</tr>
+					<?php endif; ?>
 					<?php
 					if ( ! empty( $company_logo ) ) :
 						?>
