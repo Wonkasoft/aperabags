@@ -325,9 +325,6 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	endif;
 	foreach ( $form['fields'] as &$field ) :
 		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
-			echo "<pre>\n";
-			print_r( $field );
-			echo "</pre>\n";
 
 			if ( ! empty( $field['cssClass'] ) ) :
 				$field['cssClass'] .= ' form-group wonka-form-group';
@@ -2259,15 +2256,31 @@ function wonkasoft_pre_submission( $form ) {
 	if ( 'Join MSE+' !== $form['title'] ) {
 		return;
 	}
-
+	$user_email = '';
+	$inputs     = array();
 	foreach ( $form['fields'] as $field ) {
-			echo "<pre>\n";
-			print_r( $field );
-			echo "</pre>\n";
-		if ( $field ) {
-
+		if ( 'Name' === $field['label'] ) {
+			$inputs = $field['inputs'];
+		}
+		if ( 'Email' === $field['label'] ) {
+			$input_val  = 'input_' . $field['id'];
+			$user_email = esc_html( $_POST[ $input_val ] );
 		}
 	}
+	$user = get_user_by( 'email', $user_email );
+
+	foreach ( $inputs as $cur_input ) {
+		if ( 'First' === $cur_input['label'] ) {
+			$input_val           = 'input_' . $cur_input['id'];
+			$_POST[ $input_val ] = $user->first_name;
+		}
+
+		if ( 'Last' === $cur_input['label'] ) {
+			$input_val           = 'input_' . $cur_input['id'];
+			$_POST[ $input_val ] = $user->last_name;
+		}
+	}
+
 }
 add_action( 'gform_pre_submission', 'wonkasoft_pre_submission' );
 
