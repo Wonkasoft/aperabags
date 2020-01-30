@@ -325,6 +325,10 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	endif;
 	foreach ( $form['fields'] as &$field ) :
 		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
+			echo "<pre>\n";
+			print_r( $field );
+			echo "</pre>\n";
+
 			if ( ! empty( $field['cssClass'] ) ) :
 				$field['cssClass'] .= ' form-group wonka-form-group';
 			else :
@@ -2257,10 +2261,10 @@ function wonkasoft_pre_submission( $form ) {
 	}
 
 	foreach ( $form['fields'] as $field ) {
-		if ( $field ) {
 			echo "<pre>\n";
 			print_r( $field );
 			echo "</pre>\n";
+		if ( $field ) {
 
 		}
 	}
