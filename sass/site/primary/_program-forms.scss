@@ -968,6 +968,13 @@ form.wonka-design-fees-form {
 	}
 }
 
-form.wonka-gform li.gfield_visibility_hidden {
-	display: none;
+form.wonka-gform {
+
+	input[aria-invalid=true] {
+		border-color: red;
+	}
+
+	li.gfield_visibility_hidden {
+		display: none;
+	}
 } 
