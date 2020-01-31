@@ -2256,31 +2256,34 @@ function wonkasoft_pre_submission( $form ) {
 	if ( 'Join MSE+' !== $form['title'] ) {
 		return;
 	}
+
 	$user_email = '';
 	$inputs     = array();
-	foreach ( $form['fields'] as $field ) {
+	$input_val  = '';
+	foreach ( $form['fields'] as &$field ) {
 		if ( 'Name' === $field['label'] ) {
 			$inputs = $field['inputs'];
 		}
 		if ( 'Email' === $field['label'] ) {
 			$input_val  = 'input_' . $field['id'];
-			$user_email = esc_html( $_POST[ $input_val ] );
+			$user_email = rgpost( $input_val );
 		}
 	}
-	$user = get_user_by( 'email', $user_email );
 
+	$user       = get_user_by( 'email', $user_email );
+	$first_name = preg_split( '/[\s]/', $user->data->display_name )[0];
+	$last_name  = preg_split( '/[\s]/', $user->data->display_name )[1];
 	foreach ( $inputs as $cur_input ) {
 		if ( 'First' === $cur_input['label'] ) {
-			$input_val           = 'input_' . $cur_input['id'];
-			$_POST[ $input_val ] = $user->first_name;
+			$input_val           = 'input_' . str_replace( '.', '_', $cur_input['id'] );
+			$_POST[ $input_val ] = $first_name;
 		}
 
 		if ( 'Last' === $cur_input['label'] ) {
-			$input_val           = 'input_' . $cur_input['id'];
-			$_POST[ $input_val ] = $user->last_name;
+			$input_val           = 'input_' . str_replace( '.', '_', $cur_input['id'] );
+			$_POST[ $input_val ] = $last_name;
 		}
 	}
-
 }
 add_action( 'gform_pre_submission', 'wonkasoft_pre_submission' );
 
