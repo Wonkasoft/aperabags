@@ -235,8 +235,12 @@ $customer_id = get_current_user_id();
 		</div>
 	</div>
 	</a>
+	<?php
+		$check_review_reward = ( true == get_option( 'rs_reward_product_review' ) ) ? ' already-done' : ' one-time';
+	?>
+		
 	<a id="review-button" href="#" class="aperacash-boxes-achor" data-toggle="modal" data-target="#earn-aperacash-modal">
-	<div class="aperacash-boxes aperacash-boxes-review one-time">
+	<div class="aperacash-boxes aperacash-boxes-review<?php echo esc_attr( $check_review_reward ); ?>">
 		<div class="box-content-wrap">
 			<div class="box-content-icon">
 				<svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="75px" height="75px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
@@ -276,11 +280,47 @@ $customer_id = get_current_user_id();
 				</g>
 				</svg>
 			</div>
-			<div class="box-content-title"><span>Leave a Review</span></div>
-			<div class="box-content-text"><span>Earn $5 AperaCash when you leave a review for AperaBags.com!</span></div>
-			<div id="review-for-modal" data-title="Leave a Review">
-				<span><?php esc_html_e( 'This award option will be available soon.', 'apera-bags' ); ?></span>
-			</div>
+					<div class="box-content-title"><span>Leave a Review</span></div>
+					<div class="box-content-text"><span>Earn $5 AperaCash when you leave a review for AperaBags.com!</span></div>
+			<?php
+			if ( true == get_option( 'rs_reward_product_review' ) ) :
+				?>
+					<div id="review-for-modal" data-title="Leave a Review">
+						<span><?php esc_html_e( 'This award has already been earned for your account.', 'apera-bags' ); ?></span>
+					</div>
+			<?php else : ?>
+					<div id="review-for-modal" data-title="Leave a Review">
+						<?php
+
+							$query = new WC_Product_Query(
+								array(
+									'status'     => array( 'publish' ),
+									'visibility' => 'visible',
+									'limit'      => 0,
+									'orderby'    => 'date',
+									'order'      => 'DESC',
+									'return'     => 'ids',
+								)
+							);
+
+							$products = $query->get_products();
+
+						if ( null !== $products ) :
+							?>
+							<div class="">
+								<select id="product-select-box" class="review-product-select">
+								<?php
+								foreach ( $products as $cur_product ) :
+									$product = wc_get_product( $cur_product );
+									?>
+									<option value="<?php echo esc_url( get_permalink( $product->get_id() ) ); ?>"><?php echo esc_html( $product->get_name() ); ?></option>
+								<?php endforeach; ?>
+								</select>
+								<button id="review-product-btn" type="button" class="wonka-btn">Go</button>
+							</div>
+							<?php endif; ?>
+					</div>
+			<?php endif; ?>
 		</div>
 	</div>
 	</a>
@@ -325,7 +365,7 @@ $customer_id = get_current_user_id();
 			</div>
 			<div class="box-content-title"><span>Sign Up</span></div>
 			<div class="box-content-text"><span>You earned $10 AperaCash just for signing up with the Apera Perks Program!</span></div>
-			<div id="signup-for-modal" data-title="Sign Up"><?php esc_html_e( 'You have already received your reward', 'apera-bags' ); ?></div>
+			<div id="signup-for-modal" data-title="Sign Up"><?php esc_html_e( 'You have already received this reward', 'apera-bags' ); ?></div>
 		</div>
 	</div>
 	</a>

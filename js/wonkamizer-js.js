@@ -3522,6 +3522,16 @@ var componentForm;
 							the_modal_title.innerText = target_header;
 							the_modal_content.innerHTML = '';
 							the_modal_content.appendChild( target_content );
+							if ( 'review' === target_id ) {
+								var go_btn = document.querySelector( '#review-product-btn' );
+								var product_select = document.querySelector( '#product-select-box' );
+								go_btn.addEventListener( 'click', function( e ) {
+									e.preventDefault();
+									var url = document.querySelector( '#product-select-box' ).value;
+									window.location.href = url;
+								});
+							}
+
 						});
 				});
 		}

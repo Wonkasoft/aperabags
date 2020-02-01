@@ -2250,8 +2250,11 @@ function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, 
 	<?php
 }
 
-
-
+/**
+ * This is for setting the name fields for Join MSE+ Form.
+ *
+ * @param  array $form contains an array of the form.
+ */
 function wonkasoft_pre_submission( $form ) {
 	if ( 'Join MSE+' !== $form['title'] ) {
 		return;
