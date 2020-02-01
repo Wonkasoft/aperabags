@@ -3528,6 +3528,7 @@ var componentForm;
 								go_btn.addEventListener( 'click', function( e ) {
 									e.preventDefault();
 									var url = document.querySelector( '#product-select-box' ).value;
+									
 									window.location.href = url;
 								});
 							}
