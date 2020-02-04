@@ -1893,6 +1893,20 @@ var componentForm;
 					});
 			});
 	}
+
+	function get_product_imgs() 
+	{
+		var page_offset = window.pageYOffset;
+		var product_imgs = document.querySelectorAll( 'li.product img' );
+		if ( 166 < page_offset ) 
+		{
+			product_imgs.forEach( function( img, i ) 
+				{
+					img.src = img.getAttribute( 'data-src' );
+					img.srcset = img.getAttribute( 'data-srcset' );
+				} );
+		}
+	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -2030,6 +2044,7 @@ var componentForm;
 			{
 				shifting_parallax();
 				add_transparent( screen_height );
+				get_product_imgs();
 			};
 			
 		}
