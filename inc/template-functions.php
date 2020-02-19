@@ -1018,6 +1018,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 		'Company',
 		'Logo Upload',
 		'Email',
+		'Paypal Email',
 		'Password',
 		'Street Address',
 		'Address Line 2',
