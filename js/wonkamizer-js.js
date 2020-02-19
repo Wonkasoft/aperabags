@@ -1893,6 +1893,20 @@ var componentForm;
 					});
 			});
 	}
+
+	function get_product_imgs() 
+	{
+		var page_offset = window.pageYOffset;
+		var product_imgs = document.querySelectorAll( 'li.product img' );
+		if ( 166 < page_offset ) 
+		{
+			product_imgs.forEach( function( img, i ) 
+				{
+					img.src = img.getAttribute( 'data-src' );
+					img.srcset = img.getAttribute( 'data-srcset' );
+				} );
+		}
+	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -2030,6 +2044,7 @@ var componentForm;
 			{
 				shifting_parallax();
 				add_transparent( screen_height );
+				get_product_imgs();
 			};
 			
 		}
@@ -3500,10 +3515,6 @@ var componentForm;
 					title: document.querySelector( '#refer-for-modal' ).getAttribute( 'data-title' ),
 					content: document.querySelector( '#refer-for-modal' )
 				},
-				follow: {
-					title: document.querySelector( '#follow-for-modal' ).getAttribute( 'data-title' ),
-					content: document.querySelector( '#follow-for-modal' )
-				},
 				review: {
 					title: document.querySelector( '#review-for-modal' ).getAttribute( 'data-title' ),
 					content: document.querySelector( '#review-for-modal' )
@@ -3526,6 +3537,16 @@ var componentForm;
 							the_modal_title.innerText = target_header;
 							the_modal_content.innerHTML = '';
 							the_modal_content.appendChild( target_content );
+							if ( 'review' === target_id ) {
+								var go_btn = document.querySelector( '#review-product-btn' );
+								var product_select = document.querySelector( '#product-select-box' );
+								go_btn.addEventListener( 'click', function( e ) {
+									e.preventDefault();
+									var url = document.querySelector( '#product-select-box' ).value;
+									window.location.href = url;
+								});
+							}
+
 						});
 				});
 		}

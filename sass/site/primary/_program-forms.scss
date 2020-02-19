@@ -731,7 +731,7 @@ div#ui-datepicker-div {
 	width: 250px;
 	padding: 8px;
 	background: #fff;
-	z-index: 2000;
+	z-index: 2000 !important;
 	@include prefix( box-shadow, 0 1px 2px .5px rgba( #000, .5 ), o moz webkit );
 
 	.ui-datepicker-header {
@@ -967,3 +967,14 @@ form.wonka-design-fees-form {
 		border-top: none;
 	}
 }
+
+form.wonka-gform {
+
+	input[aria-invalid=true] {
+		border-color: red;
+	}
+
+	li.gfield_visibility_hidden {
+		display: none;
+	}
+} 

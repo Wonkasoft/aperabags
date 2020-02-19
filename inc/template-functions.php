@@ -325,6 +325,7 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	endif;
 	foreach ( $form['fields'] as &$field ) :
 		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
+
 			if ( ! empty( $field['cssClass'] ) ) :
 				$field['cssClass'] .= ' form-group wonka-form-group';
 			else :
@@ -1959,6 +1960,8 @@ function wonkasoft_api_responses_user_data( $user ) {
 		$refersion_error = ( ! empty( get_user_meta( $user_id, 'refersion_error', true ) ) ) ? get_user_meta( $user_id, 'refersion_error', true ) : '';
 		$getresponse     = ( ! empty( get_user_meta( $user_id, 'getResponse_data', true ) ) ) ? get_user_meta( $user_id, 'getResponse_data', true ) : '';
 		$company_logo    = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : '';
+		$user_birthday   = ( ! empty( get_user_meta( $user_id, 'users_birthday', true ) ) ) ? get_user_meta( $user_id, 'users_birthday', true ) : '';
+
 		if ( ! empty( $company_logo ) ) {
 			$company_logo = json_decode( $company_logo );
 		}
@@ -1970,6 +1973,18 @@ function wonkasoft_api_responses_user_data( $user ) {
 
 		<table class="form-table affiliates-table">
 			<tbody>
+					<?php
+					if ( ! empty( $user_birthday ) ) :
+						?>
+					<tr>
+						<th>
+							<label for="user-birthday">Your Birthday</label>
+						</th>
+						<td>
+							<span><?php echo esc_html( $user_birthday ); ?></span>
+						</td>
+					</tr>
+					<?php endif; ?>
 					<?php
 					if ( ! empty( $company_logo ) ) :
 						?>
@@ -2235,6 +2250,45 @@ function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, 
 	<?php
 }
 
+/**
+ * This is for setting the name fields for Join MSE+ Form.
+ *
+ * @param  array $form contains an array of the form.
+ */
+function wonkasoft_pre_submission( $form ) {
+	if ( 'Join MSE+' !== $form['title'] ) {
+		return;
+	}
+
+	$user_email = '';
+	$inputs     = array();
+	$input_val  = '';
+	foreach ( $form['fields'] as &$field ) {
+		if ( 'Name' === $field['label'] ) {
+			$inputs = $field['inputs'];
+		}
+		if ( 'Email' === $field['label'] ) {
+			$input_val  = 'input_' . $field['id'];
+			$user_email = rgpost( $input_val );
+		}
+	}
+
+	$user       = get_user_by( 'email', $user_email );
+	$first_name = preg_split( '/[\s]/', $user->data->display_name )[0];
+	$last_name  = preg_split( '/[\s]/', $user->data->display_name )[1];
+	foreach ( $inputs as $cur_input ) {
+		if ( 'First' === $cur_input['label'] ) {
+			$input_val           = 'input_' . str_replace( '.', '_', $cur_input['id'] );
+			$_POST[ $input_val ] = $first_name;
+		}
+
+		if ( 'Last' === $cur_input['label'] ) {
+			$input_val           = 'input_' . str_replace( '.', '_', $cur_input['id'] );
+			$_POST[ $input_val ] = $last_name;
+		}
+	}
+}
+add_action( 'gform_pre_submission', 'wonkasoft_pre_submission' );
 
 
 /**

@@ -38,7 +38,7 @@
 section.header-slider-section {
 	position: relative;
 	height: 650px;
-	max-height: 2880px;
+	max-height: 1080px;
 	@include prefix( transition, $trans_1, o moz webkit );
 
 	.top-page-slider-wrap {
