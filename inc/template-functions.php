@@ -1018,6 +1018,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 		'Company',
 		'Logo Upload',
 		'Email',
+		'Paypal Email',
 		'Password',
 		'Street Address',
 		'Address Line 2',
@@ -1109,6 +1110,7 @@ function wonkasoft_after_form_submission( $entry, $form ) {
 							wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
 							return;
 						endif;
+
 						else :
 							wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
 							return;
@@ -1980,7 +1982,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 						<th>
 							<label for="user-birthday">Your Birthday</label>
 						</th>
-						<td>
+						<td colspan="2">
 							<span><?php echo esc_html( $user_birthday ); ?></span>
 						</td>
 					</tr>
@@ -1992,7 +1994,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 						<th>
 							<label for="club-gym-logo">Club/Gym Logo</label>
 						</th>
-						<td>
+						<td colspan="2">
 							<img src="<?php echo esc_url( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false )[0] ); ?>" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ); ?>" id="club-gym-logo" class="company-logo" />
 						</td>
 					</tr>
@@ -2004,7 +2006,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 						<th>
 							<label for="affiliate-error">Refersion Error</label>
 						</th>
-						<td>
+						<td colspan="2">
 							<p id="affiliate-error"><?php echo wp_kses_post( $refersion_error ); ?></p>
 						</td>
 					</tr>
@@ -2016,7 +2018,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 								<th>
 									<label for="affiliate-id">Affiliate Code</label>
 								</th>
-								<td>
+								<td colspan="2">
 									<p id="affiliate-id"><?php echo wp_kses_post( $refersion->id ); ?></p>
 								</td>
 							</tr>
@@ -2024,7 +2026,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 								<th>
 									<label for="affiliate-link">Affiliate Link</label>
 								</th>
-								<td>
+								<td colspan="2">
 									<p id="affiliate-link"><?php echo wp_kses_post( $refersion->link ); ?></p>
 								</td>
 							</tr>

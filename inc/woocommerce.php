@@ -49,8 +49,6 @@ function apera_bags_woocommerce_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_woocommerce_scripts' );
 
-
-
 /**
  * Disable the default WooCommerce stylesheet.
  *
