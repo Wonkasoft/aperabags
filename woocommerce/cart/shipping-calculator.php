@@ -17,9 +17,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
+global $wp;
+$current_url = home_url( add_query_arg( array(), $wp->request ) );
+
 do_action( 'woocommerce_before_shipping_calculator' ); ?>
 
-<form class="woocommerce-shipping-calculator" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
+<form class="woocommerce-shipping-calculator" action="<?php echo esc_url( $current_url ); ?>" method="post">
 
 	<?php printf( '<a href="#" class="shipping-calculator-button">%s</a>', esc_html( ! empty( $button_text ) ? $button_text : __( 'Calculate shipping', 'woocommerce' ) ) ); ?>
 
