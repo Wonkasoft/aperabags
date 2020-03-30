@@ -1266,7 +1266,7 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
 		return $post_post_excerpt;
 	else :
 		if ( is_shop() ) :
-			$post_post_excerpt = $post_post_excerpt;
+			return $post_post_excerpt;
 		else :
 			ob_start();
 
@@ -1278,6 +1278,7 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
 			$add_links = '<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>' . $compare_link_set;
 
 			$post_post_excerpt = $post_post_excerpt . $add_links . ob_get_clean();
+			return $post_post_excerpt;
 		endif;
 
 		return $post_post_excerpt;
