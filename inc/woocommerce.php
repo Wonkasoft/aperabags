@@ -1308,9 +1308,6 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
 };
 add_filter( 'woocommerce_short_description', 'wonka_filter_woocommerce_short_description', 10, 1 );
 
-
-
-
 /**
  * This adds a custom express checkout button to the product page
  */
