@@ -1273,10 +1273,10 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
 		endif;
 		$add_links = '<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>' . $compare_link_set;
 
-		if ( ! is_page( 'archive' ) ) :
-			$post_post_excerpt = $post_post_excerpt . $add_links . ob_get_clean();
-		else :
+		if ( is_shop() ) :
 			$post_post_excerpt = $post_post_excerpt . ob_get_clean();
+		else :
+			$post_post_excerpt = $post_post_excerpt . $add_links . ob_get_clean();
 		endif;
 
 		return $post_post_excerpt;
