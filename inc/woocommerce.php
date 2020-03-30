@@ -1287,7 +1287,7 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
 };
 
 
-add_filter( 'woocommerce_short_description', 'wonka_filter_woocommerce_short_description', 10, 1 );
+// add_filter( 'woocommerce_short_description', 'wonka_filter_woocommerce_short_description', 10, 1 );
 
 
 /**
