@@ -1262,9 +1262,6 @@ add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
  * @since 1.0.0
  */
 function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
-		echo "<pre>\n";
-		print_r( is_shop() );
-		echo "</pre>\n";
 	if ( $post_post_excerpt == ' ' || $post_post_excerpt == null ) :
 		return $post_post_excerpt;
 	else :
@@ -1274,11 +1271,9 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
 			$YITH_Woocompare_Frontend_compare_link = new YITH_Woocompare_Frontend();
 			$compare_link_set                      = ' | ' . $YITH_Woocompare_Frontend_compare_link->add_compare_link();
 		endif;
-		$add_links = '<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>' . $compare_link_set;
+		if ( ! is_shop() ) :
+			$add_links = '<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>' . $compare_link_set;
 
-		if ( is_shop() ) :
-			$post_post_excerpt = $post_post_excerpt . ob_get_clean();
-		else :
 			$post_post_excerpt = $post_post_excerpt . $add_links . ob_get_clean();
 		endif;
 
