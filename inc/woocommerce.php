@@ -1269,6 +1269,7 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
 			$post_post_excerpt = $post_post_excerpt;
 		else :
 			ob_start();
+
 			$compare_link_set = '';
 			if ( class_exists( 'YITH_Woocompare_Frontend' ) ) :
 				$YITH_Woocompare_Frontend_compare_link = new YITH_Woocompare_Frontend();
