@@ -383,6 +383,28 @@ add_filter( 'woocommerce_before_shop_loop_item_title', 'wonka_customized_shop_lo
 remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 
 /**
+ * Exclude products from a particular category on the shop page
+ *
+ * @author Louis <llister@wonkasoft.com>
+ * @since 1.0.1
+ */
+function custom_pre_get_posts_query( $q ) {
+
+	$tax_query = (array) $q->get( 'tax_query' );
+
+	$tax_query[] = array(
+		'taxonomy' => 'product_cat',
+		'field'    => 'slug',
+		'terms'    => array( 'clearance & outlet' ), // Don't display products in the clearance & outlet category on the shop page.
+		'operator' => 'NOT IN',
+	);
+
+	$q->set( 'tax_query', $tax_query );
+
+}
+add_action( 'woocommerce_product_query', 'custom_pre_get_posts_query' );
+
+/**
  * Changes the description tab title
  *
  * @param  array $tabs setting up the changed titles.
