@@ -263,6 +263,7 @@ footer#colophon {
 		text-decoration: underline;
 
 		i {
+			margin-right: 8px;
 			color: #52abf6;
 			text-decoration: none;
 			@include font-size( 2 );
