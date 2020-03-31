@@ -412,7 +412,7 @@ div#get-10-sidebar:hover {
 }
 
 #launcher.zEWidget-launcher {
-	left: auto;
+	left: unset !important;
 	right: -50px;
 	bottom: 50% !important;
     @include prefix( transform, rotate(-90deg), o moz webkit );
