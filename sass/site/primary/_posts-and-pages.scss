@@ -411,6 +411,30 @@ div#get-10-sidebar:hover {
     left: -32px;
 }
 
+div#give-feedback {
+    position: fixed;
+    z-index: 500;
+    display: block;
+    bottom: 50%;
+    right: -39px;
+    background: #52abf6;
+    border-radius: 0 0 4px 4px;
+    @include prefix( transform, rotate(-90deg), o moz webkit );
+    @include prefix( transition, $trans_25, o moz webkit );
+    @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .3 ), o moz webkit );
+}
+
+div#give-feedback a {
+	display: inline-block;
+    color: #fff;
+    padding: 12px 20px 8px;
+    font-weight: 700;
+}
+
+div#give-feedback:hover {
+    right: -32px;
+}
+
 /*=====================================
 =            Search styles            =
 =====================================*/
@@ -792,7 +816,7 @@ body.elementor-page-12687 {
    display: flex;
    align-items: center;
    justify-content: center;
-   bottom: 20px;
+   bottom: 75px;
    right: 20px;
    background: rgb(0, 0, 0);
    background: rgba(0, 0, 0, 0.7);
@@ -805,11 +829,7 @@ body.elementor-page-12687 {
    border-radius: 2px;
    display: none;
  	z-index:999;
-   -webkit-transition: all 0.3s linear;
-   -moz-transition: all 0.3s ease;
-   -ms-transition: all 0.3s ease;
-   -o-transition: all 0.3s ease;
-   transition: all 0.3s ease;
+ 	@include prefix( transition, all 0.3s ease, o moz webkit );
 }
 #return-to-top i {
    color: #fff;
@@ -820,12 +840,8 @@ body.elementor-page-12687 {
    align-items: center;
    justify-content: center;
    @include font-size( 2 );
- 	z-index:9999;
-   -webkit-transition: all 0.3s ease;
-   -moz-transition: all 0.3s ease;
-   -ms-transition: all 0.3s ease;
-   -o-transition: all 0.3s ease;
-   transition: all 0.3s ease;
+	z-index:9999;
+	@include prefix( transition, all 0.3s ease, o moz webkit );
 }
 #return-to-top:hover {
    background: rgba(0, 0, 0, 0.9);
