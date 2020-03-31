@@ -392,7 +392,7 @@ div#get-10-sidebar {
     z-index: 500;
     display: block;
     top: 50%;
-    left: -35px;
+    left: -39px;
     background: #52abf6;
     transform: rotate(-90deg);
     border-radius: 0 0 4px 4px;
@@ -403,7 +403,11 @@ div#get-10-sidebar {
 div#get-10-sidebar a {
 	display: inline-block;
 	color: #fff;
-	padding: 8px 20px;
+	padding: 12px 20px 8px;
+}
+
+div#get-10-sidebar:hover {
+    left: -32px;
 }
 
 /*=====================================
