@@ -262,8 +262,9 @@ footer#colophon {
 		margin: auto;
 		max-width: 350px;
 	}
-	
+
 	.question-link-text {
+		margin-top: 8px;
 		@include font-size( 1.5 );
 		text-decoration: underline;
 
