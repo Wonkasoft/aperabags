@@ -20,7 +20,7 @@ do_action( 'get_mods_before_section', 'footer_area', $footer_section );
 	</div><!-- #content .container-fluid -->
 
 	<div id="get-10-sidebar"><a href="<?php _e( get_permalink( get_page_by_path( 'perks' ) ) ); ?>">Get $10</a></div>
-	<div id="give-feedback"><a href="#" onclick="(zE('webWidget', 'open'))">Feedback</a></div>
+	<div id="give-feedback"><a href="javascript:void(zE('webWidget', 'open'))">Feedback</a></div>
 	<div id="footer-spacer"></div>
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
@@ -53,7 +53,7 @@ do_action( 'get_mods_before_section', 'footer_area', $footer_section );
 								Click the link below to find answers for frequently asked questions, contact Customer Care, and more!
 							</div> <!-- .question-body -->
 							<div class="question-link-text">
-								<a href="#" onclick="zE('webWidget:on', 'open')"><i class="fas fa-comment-dots"></i> Ask Us Anything</a>
+								<a href="javascript:void(zE('webWidget', 'open'))"><i class="fas fa-comment-dots"></i> Ask Us Anything</a>
 							</div> <!-- .question-link-text -->
 						</div> <!-- .col -->
 					</div> <!-- /.row -->
