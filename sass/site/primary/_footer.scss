@@ -258,11 +258,18 @@ footer#colophon {
 		}
 	}
 
+	.question-body {
+		margin: auto;
+		max-width: 350px;
+	}
+
 	.question-link-text {
+		margin-top: 8px;
 		@include font-size( 1.5 );
 		text-decoration: underline;
 
 		i {
+			margin-right: 8px;
 			color: #52abf6;
 			text-decoration: none;
 			@include font-size( 2 );
