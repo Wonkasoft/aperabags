@@ -387,6 +387,25 @@ form.search-form {
 	}
 }
 
+div#get-10-sidebar {
+    position: fixed;
+    z-index: 500;
+    display: block;
+    top: 50%;
+    left: -35px;
+    background: #52abf6;
+    transform: rotate(-90deg);
+    border-radius: 0 0 4px 4px;
+    @include prefix( transition, $trans_25, o moz webkit );
+    @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .2 ), o moz webkit );
+}
+
+div#get-10-sidebar a {
+	display: inline-block;
+	color: #fff;
+	padding: 8px 20px;
+}
+
 /*=====================================
 =            Search styles            =
 =====================================*/
