@@ -391,19 +391,34 @@ div#get-10-sidebar {
     position: fixed;
     z-index: 500;
     display: block;
-    top: 50%;
-    left: -35px;
+    bottom: 50%;
+    left: -39px;
     background: #52abf6;
-    transform: rotate(-90deg);
     border-radius: 0 0 4px 4px;
+    @include prefix( transform, rotate(-90deg), o moz webkit );
     @include prefix( transition, $trans_25, o moz webkit );
-    @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .2 ), o moz webkit );
+    @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .3 ), o moz webkit );
 }
 
 div#get-10-sidebar a {
 	display: inline-block;
-	color: #fff;
-	padding: 8px 20px;
+    color: #fff;
+    padding: 12px 20px 8px;
+    font-weight: 700;
+}
+
+div#get-10-sidebar:hover {
+    left: -32px;
+}
+
+#launcher.zEWidget-launcher {
+	right: -55px !important;
+	bottom: 50% !important;
+    @include prefix( transform, rotate(-90deg) !important, o moz webkit );
+}
+
+#launcher.zEWidget-launcher .wrapper-AtBcr {
+	border-radius: 4px 4px 0 0;
 }
 
 /*=====================================

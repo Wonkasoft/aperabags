@@ -3576,6 +3576,13 @@ var componentForm;
 						});
 				});
 		}
+
+		document.querySelector( '#launcher.zEWidget-launcher' ).addEventListener( 'load', function() {
+			if ( document.querySelector( '#launcher.zEWidget-launcher .wrapper-AtBcr' ) ) {
+				var help_btn = document.querySelector( '#launcher.zEWidget-launcher .wrapper-AtBcr' );
+				help_btn.style = help_btn.style + 'border-radius: 4px 4px 0 0;';
+			}
+		});
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 
