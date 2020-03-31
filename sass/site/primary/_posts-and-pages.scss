@@ -397,7 +397,7 @@ div#get-10-sidebar {
     border-radius: 0 0 4px 4px;
     @include prefix( transform, rotate(-90deg), o moz webkit );
     @include prefix( transition, $trans_25, o moz webkit );
-    @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .2 ), o moz webkit );
+    @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .3 ), o moz webkit );
 }
 
 div#get-10-sidebar a {
