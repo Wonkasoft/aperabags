@@ -47,7 +47,7 @@ do_action( 'get_mods_before_section', 'footer_area', $footer_section );
 					<div class="row align-items-end text-center justify-content-center have-a-question">
 						<div class="col-12 col-lg">
 							<div class="footer-question footer-title">
-								Have Questions?
+								<h4 class="footer-title menu-title-shop pb-2">Have Questions?</h4>
 							</div> <!-- .footer-title -->
 							<div class="question-body">
 								Click the link below to find answers for frequently asked questions, contact Customer Care, and more!
