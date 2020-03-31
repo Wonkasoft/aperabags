@@ -411,16 +411,6 @@ div#get-10-sidebar:hover {
     left: -32px;
 }
 
-#launcher.zEWidget-launcher {
-	right: -55px !important;
-	bottom: 50% !important;
-    @include prefix( transform, rotate(-90deg) !important, o moz webkit );
-}
-
-#launcher.zEWidget-launcher .wrapper-AtBcr {
-	border-radius: 4px 4px 0 0;
-}
-
 /*=====================================
 =            Search styles            =
 =====================================*/
