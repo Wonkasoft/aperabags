@@ -1288,9 +1288,10 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
 		return $post_post_excerpt;
 	else :
 		if ( is_shop() ) :
-			$post_post_excerpt = $post_post_excerpt;
+			return $post_post_excerpt;
 		else :
 			ob_start();
+
 			$compare_link_set = '';
 			if ( class_exists( 'YITH_Woocompare_Frontend' ) ) :
 				$YITH_Woocompare_Frontend_compare_link = new YITH_Woocompare_Frontend();
@@ -1299,15 +1300,13 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
 			$add_links = '<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>' . $compare_link_set;
 
 			$post_post_excerpt = $post_post_excerpt . $add_links . ob_get_clean();
+			return $post_post_excerpt;
 		endif;
 
 		return $post_post_excerpt;
 	endif;
 };
 add_filter( 'woocommerce_short_description', 'wonka_filter_woocommerce_short_description', 10, 1 );
-
-
-
 
 /**
  * This adds a custom express checkout button to the product page
