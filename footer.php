@@ -53,7 +53,7 @@ do_action( 'get_mods_before_section', 'footer_area', $footer_section );
 								Click the link below to find answers for frequently asked questions, contact Customer Care, and more!
 							</div> <!-- .question-body -->
 							<div class="question-link-text">
-								<i class="fas fa-comment-dots"></i> Ask Us Anything
+								<a href="#" onclick="zE('webWidget:on', 'open')"><i class="fas fa-comment-dots"></i> Ask Us Anything</a>
 							</div> <!-- .question-link-text -->
 						</div> <!-- .col -->
 					</div> <!-- /.row -->
