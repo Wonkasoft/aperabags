@@ -19,7 +19,7 @@ do_action( 'get_mods_before_section', 'footer_area', $footer_section );
 
 	</div><!-- #content .container-fluid -->
 
-	<div id="get-10-sidebar"><a href="<?php get_the_permalink( get_page_by_path( 'perks' ) ); ?>">Get $10</div>
+	<div id="get-10-sidebar"><a href="<?php echo get_permalink( get_page_by_path( 'perks' ) ); ?>">Get $10</div>
 	<div id="footer-spacer"></div>
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
