@@ -3577,7 +3577,7 @@ var componentForm;
 				});
 		}
 
-		document.querySelector( '#launcher.zEWidget-launcher' ).addEventListener( 'DOMContentLoaded', function() {
+		window.addEventListener( 'DOMContentLoaded', function() {
 			if ( document.querySelector( '#launcher.zEWidget-launcher .wrapper-AtBcr' ) ) {
 				console.log( document.querySelector( '#launcher.zEWidget-launcher' ) );
 				var help_btn = document.querySelector( '#launcher.zEWidget-launcher .wrapper-AtBcr' );
