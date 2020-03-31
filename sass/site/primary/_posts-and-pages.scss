@@ -402,7 +402,7 @@ div#get-10-sidebar {
 
 div#get-10-sidebar a {
 	display: inline-block;
-    color: #000;
+    color: #fff;
     padding: 12px 20px 8px;
     font-weight: 700;
 }
@@ -412,8 +412,7 @@ div#get-10-sidebar:hover {
 }
 
 #launcher.zEWidget-launcher {
-	left: unset !important;
-	right: -50px;
+	right: -55px !important;
 	bottom: 50% !important;
     @include prefix( transform, rotate(-90deg) !important, o moz webkit );
 }
