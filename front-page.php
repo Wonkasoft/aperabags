@@ -72,12 +72,12 @@ get_header();
 											echo wp_kses_data( $set_text_align );
 											?>
 														">
-														<h2 class="img-header-text text-center"><?php echo wp_kses_data( $slide->slide_header_message ); ?></h2>
+														<h1 class="img-header-text text-center"><?php echo wp_kses_data( $slide->slide_header_message ); ?></h1>
 														<?php
 														/* Checks for an subheader set in the slide object */
 														if ( ! empty( $slide->slide_subheader ) ) :
 															?>
-															<h4 class="img-subheader-text text-center"><?php echo wp_kses_data( $slide->slide_subheader ); ?></h4>
+															<h2 class="img-subheader-text text-center"><?php echo wp_kses_data( $slide->slide_subheader ); ?></h2>
 															<?php
 															if ( ! empty( $slide->slide_link_btn ) ) :
 																?>
