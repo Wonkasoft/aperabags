@@ -416,9 +416,9 @@ div#give-feedback {
     z-index: 500;
     display: block;
     bottom: 50%;
-    right: -39px;
+    right: -46px;
     background: #52abf6;
-    border-radius: 0 0 4px 4px;
+    border-radius: 4px 4px 0 0;
     @include prefix( transform, rotate(-90deg), o moz webkit );
     @include prefix( transition, $trans_25, o moz webkit );
     @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .3 ), o moz webkit );
@@ -427,12 +427,12 @@ div#give-feedback {
 div#give-feedback a {
 	display: inline-block;
     color: #fff;
-    padding: 12px 20px 8px;
+    padding: 8px 20px 12px;
     font-weight: 700;
 }
 
 div#give-feedback:hover {
-    right: -32px;
+    right: -41px;
 }
 
 /*=====================================
