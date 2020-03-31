@@ -257,4 +257,16 @@ footer#colophon {
 			}
 		}
 	}
+
+	.question-link-text {
+		@include font-size( 1.5 );
+		text-decoration: underline;
+
+		i {
+			color: #52abf6;
+			text-decoration: none;
+			@include font-size( 2 );
+			@include prefix( transform, rotateY( 180deg ), o moz webkit );
+		}
+	}
 }
