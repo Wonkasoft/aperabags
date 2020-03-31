@@ -91,7 +91,7 @@ section.header-slider-section {
 							max-width: 1200px;
 							@include prefix( text-shadow, 1px 1px 2px rgba( #000, .8 ), o moz webkit );
 
-							h2 {
+							h1 {
 								margin: 0 auto;
 								font-weight: 800;
 								line-height: 1;
@@ -99,7 +99,8 @@ section.header-slider-section {
 								margin-bottom: 8px;
 								@include font-size( 1.5 );
 							}
-							h4 {
+
+							h2 {
 								font-weight: normal;
 								font-style: normal;
 								line-height: 1;
@@ -124,12 +125,12 @@ section.header-slider-section {
 							
 							.text-box {
 
-								h2 {
+								h1 {
 									line-height: 1.1;
 									@include font-size( 1.2 );
 								}
 
-								h4 {
+								h2 {
 									line-height: 1.1;
 									@include font-size( 1.1 );
 								}
@@ -146,12 +147,12 @@ section.header-slider-section {
 							
 							.text-box {
 
-								h2 {
+								h1 {
 									line-height: 1.1;
 									@include font-size( 1.2 );
 								}
 
-								h4 {
+								h2 {
 									line-height: 1.1;
 									@include font-size( 1.1 );
 								}
@@ -168,12 +169,12 @@ section.header-slider-section {
 							
 							.text-box {
 
-								h2 {
+								h1 {
 									line-height: 1.1;
 									@include font-size( 1.7 );
 								}
 
-								h4 {
+								h2 {
 									line-height: 1.1;
 									@include font-size( 1.1 );
 								}
@@ -190,12 +191,12 @@ section.header-slider-section {
 
 							.text-box {
 
-								h2 {
+								h1 {
 									line-height: 1.1;
 									@include font-size( 2.5 );
 								}
 
-								h4 {
+								h2 {
 									line-height: 1.1;
 									@include font-size( 1.5 );
 								}
@@ -212,12 +213,12 @@ section.header-slider-section {
 							
 							.text-box {
 
-								h2 {
+								h1 {
 									line-height: 1.1;
 									@include font-size( 2.8 );
 								}
 
-								h4 {
+								h2 {
 									line-height: 1.1;
 									@include font-size( 1.8 );
 								}
@@ -234,12 +235,12 @@ section.header-slider-section {
 							
 							.text-box {
 
-								h2 {
+								h1 {
 									line-height: 1.1;
 									@include font-size( 3.2 );
 								}
 
-								h4 {
+								h2 {
 									line-height: 1.1;
 									@include font-size( 2.2 );
 								}
