@@ -760,3 +760,21 @@ body.woocommerce-cart {
 .products .star-rating {
     display: none;
 }
+
+.woocommerce-pagination {
+
+  ul {
+    display: inline-flex;
+    align-items: center;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      border: 1px solid #52abf6;
+      border-radius: 4px;
+      padding: 0 8px;
+    }
+  }
+}
