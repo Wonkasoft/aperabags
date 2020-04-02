@@ -778,7 +778,13 @@ nav.woocommerce-pagination {
       border: 1px solid #52abf6;
       border-radius: 4px;
       padding: 0 8px;
-      line-height: 1;
+
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+      }
     }
   }
 }
