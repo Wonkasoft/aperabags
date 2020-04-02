@@ -776,7 +776,6 @@ nav.woocommerce-pagination {
       justify-content: center;
       height: 40px;
       border: 1px solid #52abf6;
-      border-radius: 4px;
       padding: 0 8px;
 
       a {
@@ -784,6 +783,14 @@ nav.woocommerce-pagination {
         align-items: center;
         justify-content: center;
         line-height: 1;
+      }
+
+      &:first-child {
+        border-radius: 2px 0 0 2px;
+      }
+
+      &:last-child {
+        border-radius: 0 2px 2px 0;
       }
     }
   }
