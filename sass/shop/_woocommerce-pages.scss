@@ -762,10 +762,13 @@ body.woocommerce-cart {
 }
 
 nav.woocommerce-pagination {
+  padding: 0 15px;
 
   ul {
     display: inline-flex;
     align-items: center;
+    margin: 0;
+    padding: 0;
 
     li {
       display: flex;
@@ -775,6 +778,7 @@ nav.woocommerce-pagination {
       border: 1px solid #52abf6;
       border-radius: 4px;
       padding: 0 8px;
+      line-height: 1;
     }
   }
 }
