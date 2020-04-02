@@ -335,7 +335,7 @@ function apera_bags_scripts() {
 	wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh', 'anonymous' ) );
 
 	wp_enqueue_style( 'jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css', array(), '1.0.7' );
-	
+
 	if ( $slick_css_load ) :
 		wp_enqueue_style( 'slick-js-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick.css' ), array(), '1.8.0', 'all' );
 	endif;
@@ -344,7 +344,7 @@ function apera_bags_scripts() {
 		wp_enqueue_style( 'slick-js-theme-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick-theme.css' ), array(), '1.8.0', 'all' );
 	endif;
 
-	wp_enqueue_style( 'apera-bags-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_uri() ), array(), time(), 'all' );
+	wp_enqueue_style( 'apera-bags-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_uri() ), array(), wp_get_theme()->get( 'Version' ), 'all' );
 
 	/**
 	 * For enqueues of scripts
@@ -377,9 +377,9 @@ function apera_bags_scripts() {
 	endif;
 
 	if ( $slick_js_load ) :
-		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'slick-js' ), time(), true );
+		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'slick-js' ), wp_get_theme()->get( 'Version' ), true );
 	else :
-		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', $slick_script ), time(), true );
+		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', $slick_script ), wp_get_theme()->get( 'Version' ), true );
 	endif;
 
 	$ga_id = ( ! empty( get_option( 'google_analytics_id' ) ) ) ? get_option( 'google_analytics_id' ) : '';
@@ -404,7 +404,7 @@ add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 100 );
  * This loads the theme styles on the admin side.
  */
 function admin_styles() {
-	wp_enqueue_style( 'apera-bags-admin-styles', get_stylesheet_directory_uri() . '/assets/css/admin-styles.css', array(), '1.0.0', 'all' );
+	wp_enqueue_style( 'apera-bags-admin-styles', get_stylesheet_directory_uri() . '/assets/css/admin-styles.css', array(), wp_get_theme()->get( 'Version' ), 'all' );
 }
 add_action( 'admin_enqueue_scripts', 'admin_styles', 100 );
 

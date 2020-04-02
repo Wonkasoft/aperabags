@@ -25,11 +25,9 @@ add_action( 'after_setup_theme', 'apera_bags_woocommerce_setup' );
 
 /**
  * WooCommerce specific scripts & stylesheets.
- *
- * @return void
  */
 function apera_bags_woocommerce_scripts() {
-	wp_enqueue_style( 'apera-bags-woocommerce-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/woocommerce.css' ), array(), time() );
+	wp_enqueue_style( 'apera-bags-woocommerce-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/woocommerce.css' ), array(), wp_get_theme()->get( 'Version' ), 'all' );
 
 	$font_path = str_replace( array( 'http:', 'https:' ), '', WC()->plugin_url() . '/assets/fonts/' );
 
@@ -47,7 +45,7 @@ function apera_bags_woocommerce_scripts() {
 	wp_add_inline_style( 'apera-bags-woocommerce-style', $inline_font );
 
 }
-add_action( 'wp_enqueue_scripts', 'apera_bags_woocommerce_scripts' );
+add_action( 'wp_enqueue_scripts', 'apera_bags_woocommerce_scripts', 9 );
 
 /**
  * Disable the default WooCommerce stylesheet.
