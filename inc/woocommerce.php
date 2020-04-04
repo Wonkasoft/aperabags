@@ -560,9 +560,10 @@ add_filter( 'woocommerce_checkout_fields', 'wonka_override_checkout_fields' );
  */
 function ws_restrict_free_shipping( $is_available ) {
 	$restricted = array( 'AK', 'AS', 'GU', 'HI', 'MP', 'PR', 'UM', 'VI' );
+	$user       = wp_get_current_user();
 
 	foreach ( WC()->cart->get_shipping_packages() as $package ) {
-		if ( in_array( $package['destination']['state'], $restricted ) ) {
+		if ( in_array( $package['destination']['state'], $restricted ) && ! in_array( 'apera_perks_partner', (array) $user->roles ) ) {
 			return false;
 		}
 	}

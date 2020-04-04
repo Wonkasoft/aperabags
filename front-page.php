@@ -47,7 +47,8 @@ get_header();
 								<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_mobile_img_id ) ); ?>" style="background-image:url('<?php echo esc_url( wp_get_attachment_url( $slide->slide_mobile_img_id ) ); ?>');">
 									<?php
 								else :
-									if ( strpos( $slide->slide_img_id, '.mp4' ) !== false ) {
+
+									if ( strpos( wp_get_attachment_url( $slide->slide_img_id ), '.mp4' ) !== false ) {
 										?>
 										<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img_id ) ); ?>">
 											<video autoplay="true" loop muted class="cta-slide">
