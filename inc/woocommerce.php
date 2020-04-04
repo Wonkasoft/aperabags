@@ -560,7 +560,11 @@ function ws_restrict_free_shipping( $is_available ) {
 	$user       = wp_get_current_user();
 
 	foreach ( WC()->cart->get_shipping_packages() as $package ) {
-		if ( in_array( $package['destination']['state'], $restricted ) && ! in_array( 'apera_perks_partner', (array) $user->roles ) ) {
+		if ( in_array( $package['destination']['state'], $restricted ) ) {
+			return false;
+		}
+
+		if ( ! in_array( 'apera_perks_partner', (array) $user->roles ) ) {
 			return false;
 		}
 	}
