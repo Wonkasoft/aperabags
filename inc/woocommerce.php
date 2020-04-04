@@ -27,7 +27,7 @@ add_action( 'after_setup_theme', 'apera_bags_woocommerce_setup' );
  * WooCommerce specific scripts & stylesheets.
  */
 function apera_bags_woocommerce_scripts() {
-	wp_enqueue_style( 'apera-bags-woocommerce-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/woocommerce.css' ), array(), wp_get_theme()->get( 'Version' ), 'all' );
+	 wp_enqueue_style( 'apera-bags-woocommerce-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/woocommerce.css' ), array(), wp_get_theme()->get( 'Version' ), 'all' );
 
 	$font_path = str_replace( array( 'http:', 'https:' ), '', WC()->plugin_url() . '/assets/fonts/' );
 
@@ -43,7 +43,6 @@ function apera_bags_woocommerce_scripts() {
 	}';
 
 	wp_add_inline_style( 'apera-bags-woocommerce-style', $inline_font );
-
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_woocommerce_scripts', 9 );
 
@@ -311,7 +310,7 @@ add_filter( 'post_class', 'setting_up_image_flipper_class', 8 );
  * This function is to override the parsing of the images during a shop loop
  */
 function wonka_customized_shop_loop() {
-		/*
+		 /*
 	========================================================
 	=            For setting up the image flipper            =
 	========================================================*/
@@ -348,7 +347,6 @@ function wonka_customized_shop_loop() {
 			if ( $attachment_ids ) :
 				$output .= '<img title="' . $secondary_image_title . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" src="' . str_replace( array( 'http:', 'https:' ), '', esc_attr( wp_get_attachment_image_src( $secondary_image_id, 'custom_products_size', false )[0] ) ) . '" srcset="' . str_replace( array( 'http:', 'https:' ), '', esc_attr( wp_get_attachment_image_srcset( $secondary_image_id, 'custom_products_size', null ) ) ) . '" />';
 			endif;
-
 	endif;
 		$output .= '</div><!-- .wonka-shop-img-wrap -->';
 
@@ -393,12 +391,11 @@ function custom_pre_get_posts_query( $q ) {
 	$tax_query[] = array(
 		'taxonomy' => 'product_cat',
 		'field'    => 'slug',
-		'terms'    => array( 'clearance & outlet' ), // Don't display products in the clearance & outlet category on the shop page.
+		'terms'    => array( 'outlet' ), // Don't display products in the outlet category on the shop page.
 		'operator' => 'NOT IN',
 	);
 
 	$q->set( 'tax_query', $tax_query );
-
 }
 add_action( 'woocommerce_product_query', 'custom_pre_get_posts_query' );
 
@@ -448,7 +445,7 @@ add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
  * This places a continue shopping notice in the cart.
  */
 function wonka_add_continue_shopping_notice_to_cart() {
-		$shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ), esc_html__( 'Continue shopping', 'woocommerce' ) );
+		 $shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ), esc_html__( 'Continue shopping', 'woocommerce' ) );
 
 	echo $shopping;
 }
@@ -1139,7 +1136,7 @@ add_action( 'wonka_checkout_login_form', 'wonka_checkout_after_login_form', 20 )
 
 
 function wonka_checkout_before_customer_details() {
-		$output = '';
+		 $output = '';
 
 	$output .= '<div class="tab-content" id="wonka-checkout-steps">';
 	$output .= '<div class="tab-pane fade show active" id="wonka_customer_information" role="tabpanel">';
@@ -1160,7 +1157,7 @@ function wonka_checkout_after_customer_details() {
 add_action( 'woocommerce_checkout_after_customer_details', 'wonka_checkout_after_customer_details' );
 
 function wonka_woocommerce_checkout_before_order_review() {
-		$output = '';
+		 $output = '';
 
 	$output .= '<div class="tab-pane fade" id="wonka_shipping_method" role="tabpanel">';
 
@@ -1179,7 +1176,7 @@ function wonka_woocommerce_review_order_before_payment() {
 add_action( 'woocommerce_review_order_before_payment', 'wonka_woocommerce_review_order_before_payment' );
 
 function wonka_woocommerce_review_order_before_payment2() {
-		do_action( 'woocommerce_checkout_billing' );
+		 do_action( 'woocommerce_checkout_billing' );
 }
 add_action( 'wonka_custom_billing_addition', 'wonka_woocommerce_review_order_before_payment2' );
 
@@ -1311,7 +1308,7 @@ add_filter( 'woocommerce_short_description', 'wonka_filter_woocommerce_short_des
  * This adds a custom express checkout button to the product page
  */
 function wonka_express_checkout_add() {
-	global $post;
+	 global $post;
 	global $product;
 	$variation_id = $product->get_variation_id();
 	$post_id      = get_the_ID();
@@ -1426,7 +1423,7 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
 add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
 
 function ws_shipping_to_billing() {
-		// This is a security check, it validates a random number that is generated on the request.
+		 // This is a security check, it validates a random number that is generated on the request.
 	if ( ! check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
 		return wp_send_json_error( 'Invalid Nonce' );
 	}
@@ -1464,13 +1461,13 @@ function wonka_custom_excerpt_length( $text ) {
 		_e( $output, 'aperabags' );
 		else :
 			return $text;
-		endif;
+	endif;
 }
 add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );
 
 
 function ws_ajax_search() {
-		// This is a security check, it validates a random number that is generated on the request.
+		 // This is a security check, it validates a random number that is generated on the request.
 	if ( ! check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
 		return wp_send_json_error( 'Invalid Nonce' );
 	}
@@ -1749,7 +1746,7 @@ add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_
   * @return    [return description]
   */
 function add_theme_style_to_compare() {
-		wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
+		 wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
 }
 
 if ( class_exists( 'YITH_Woocompare_Frontend' ) ) {
@@ -1814,12 +1811,10 @@ function add_customer_order_notes( $order_id ) {
 	);
 
 	foreach ( $user_query->results as $user ) {
-
 		$company_logo = get_user_meta( $user->ID, 'company_logo', true );
 		$company_logo = json_decode( $company_logo );
 
 		if ( ! empty( $company_logo->coupon_code ) ) {
-
 			foreach ( $coupon_codes as $coupon_code ) {
 				$coupon_code = str_replace( ' ', '', strtolower( $coupon_code ) );
 
@@ -1840,7 +1835,6 @@ function add_customer_order_notes( $order_id ) {
 			}
 		}
 	}
-
 }
 
 add_action( 'woocommerce_payment_complete', 'add_customer_order_notes', 15, 1 );
@@ -2043,7 +2037,6 @@ function wonkasoft_woocommerce_register_form_start() {
 			),
 		)
 	);
-
 }
 add_action( 'woocommerce_register_form_start', 'wonkasoft_woocommerce_register_form_start', 10 );
 
@@ -2110,7 +2103,6 @@ function wonkasoft_woocommerce_created_customer( $customer_id ) {
 					$getresponse->campaign_id = $campaign->campaignId;
 				endif;
 			endforeach;
-
 		endif;
 
 		if ( empty( $getresponse->contact_id ) ) :
@@ -2145,11 +2137,9 @@ add_action( 'woocommerce_before_checkout_form', array( 'RSFrontendAssets', 'comp
  * This is for the adding of the endpoints to WordPress.x
  */
 function wonkasoft_add_all_endpoints() {
-
 	add_rewrite_endpoint( 'earn-aperacash', EP_PAGES );
 	add_rewrite_endpoint( 'zip-program', EP_PAGES );
 	add_rewrite_endpoint( 'ambassador-program', EP_PAGES );
-
 }
 add_action( 'init', 'wonkasoft_add_all_endpoints' );
 
@@ -2215,7 +2205,6 @@ function wonkasoft_my_account_nav_menu_items( $menu_links ) {
 	endif;
 
 	return $menu_links;
-
 }
 add_filter( 'woocommerce_account_menu_items', 'wonkasoft_my_account_nav_menu_items', 50 );
 
@@ -2290,6 +2279,5 @@ function wonkasoft_registration_save( $user_id ) {
 	if ( ! in_array( $role2, $user->roles ) ) :
 		$user->add_role( $role2, $role_display2 );
 	endif;
-
 }
 add_action( 'user_register', 'wonkasoft_registration_save', 10, 1 );
