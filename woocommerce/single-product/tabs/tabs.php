@@ -35,29 +35,32 @@ if ( ! empty( $product_tabs ) ) : ?>
 			<?php if ( ! empty( $product_tab['section'] ) ) : ?>
 				<?php
 				$serialize_section_title = str_replace( ' ', '-', strtolower( $product_tab['section'] ) );
-				if ( 'reviews' === $serialize_section_title && wc_review_ratings_enabled() || 'reviews' !== $serialize_section_title ) :
-					?>
+				?>
 				<section id="section-<?php echo esc_attr( $serialize_section_title ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $serialize_section_title ); ?>">
 					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $serialize_section_title ); ?> panel entry-content" id="tab-<?php echo esc_attr( $serialize_section_title ); ?>" aria-data="tab-title-<?php echo esc_attr( $serialize_section_title ); ?>">
 						<?php
 						if ( isset( $product_tab['callback'] ) ) {
-							call_user_func( $product_tab['callback'], $key, $product_tab ); }
+							call_user_func( $product_tab['callback'], $key, $product_tab );
+						}
 						?>
 					</div>
 				</section>
 					<?php
-				endif;
 				else :
-					?>
-				<section id="section-<?php echo esc_attr( $key ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
-					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key ); ?>" aria-data="tab-title-<?php echo esc_attr( $key ); ?>">
-						<?php
-						if ( isset( $product_tab['callback'] ) ) {
-							call_user_func( $product_tab['callback'], $key, $product_tab ); }
+					if ( 'reviews' === $key && wc_review_ratings_enabled() || 'reviews' !== $key ) :
 						?>
-					</div>
-				</section>
-				<?php endif; ?>
+					<section id="section-<?php echo esc_attr( $key ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
+						<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key ); ?>" aria-data="tab-title-<?php echo esc_attr( $key ); ?>">
+							<?php
+							if ( isset( $product_tab['callback'] ) ) {
+								call_user_func( $product_tab['callback'], $key, $product_tab ); }
+							?>
+						</div>
+					</section>
+						<?php
+					endif;
+				endif;
+				?>
 		<?php endforeach; ?>
 	</div>
 	</section>
