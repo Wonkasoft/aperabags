@@ -136,7 +136,7 @@ if ( ! empty( $product_specs_data ) ) :
 					<?php endif; ?>
 
 					<?php if ( is_object( $spec ) ) : ?>
-						<?php if ( ! empty( $spec ) && ! $spec->disclosure ) : ?>
+						<?php if ( ! empty( $spec ) && ! empty( $spec->disclosure ) ) : ?>
 							<tr>
 								<th>	
 
@@ -226,7 +226,7 @@ if ( ! empty( $product_specs_data ) ) :
 				<?php
 					$fit_pockets = [ 'fit pocket x3 - assorted', 'fit pocket x2 - large', 'fit pocket x2 - medium', 'fit pocket x2 - small' ];
 				if ( ! in_array( strtolower( $post->post_title ), $fit_pockets ) ) {
-					$some_features = '';
+					$some_features  = '';
 					$some_features .= '<tr>';
 					$some_features .= '<td>';
 					$some_features .= 'Laser-Cut Venting (allows your gear to breathe)';
