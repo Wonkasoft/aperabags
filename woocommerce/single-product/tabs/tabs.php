@@ -33,7 +33,10 @@ if ( ! empty( $product_tabs ) ) : ?>
 	<div class="wonka-tabs wonka-tabs-wrapper">
 		<?php foreach ( $product_tabs as $key => $product_tab ) : ?>
 			<?php if ( ! empty( $product_tab['section'] ) ) : ?>
-				<?php $serialize_section_title = str_replace( ' ', '-', strtolower( $product_tab['section'] ) ); ?>
+				<?php
+				$serialize_section_title = str_replace( ' ', '-', strtolower( $product_tab['section'] ) );
+				if ( 'reviews' === $serialize_section_title && wc_review_ratings_enabled() || 'reviews' !== $serialize_section_title ) :
+					?>
 				<section id="section-<?php echo esc_attr( $serialize_section_title ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $serialize_section_title ); ?>">
 					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $serialize_section_title ); ?> panel entry-content" id="tab-<?php echo esc_attr( $serialize_section_title ); ?>" aria-data="tab-title-<?php echo esc_attr( $serialize_section_title ); ?>">
 						<?php
@@ -42,7 +45,10 @@ if ( ! empty( $product_tabs ) ) : ?>
 						?>
 					</div>
 				</section>
-			<?php else : ?>
+					<?php
+				endif;
+				else :
+					?>
 				<section id="section-<?php echo esc_attr( $key ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
 					<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key ); ?>" aria-data="tab-title-<?php echo esc_attr( $key ); ?>">
 						<?php
@@ -51,7 +57,7 @@ if ( ! empty( $product_tabs ) ) : ?>
 						?>
 					</div>
 				</section>
-			<?php endif; ?>
+				<?php endif; ?>
 		<?php endforeach; ?>
 	</div>
 	</section>
