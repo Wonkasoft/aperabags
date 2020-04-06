@@ -47,7 +47,8 @@ if ( ! empty( $product_tabs ) ) : ?>
 				</section>
 					<?php
 				else :
-					if ( 'reviews' === $key && wc_review_ratings_enabled() || 'reviews' !== $key ) :
+
+					if ( 'reviews' === $key && comments_open() || 'reviews' !== $key ) :
 						?>
 					<section id="section-<?php echo esc_attr( $key ); ?>" class="wonka-section wonka-section-<?php echo esc_attr( $key ); ?>">
 						<div class="wonka-Tabs-panel wonka-Tabs-panel--<?php echo esc_attr( $key ); ?> panel entry-content" id="tab-<?php echo esc_attr( $key ); ?>" aria-data="tab-title-<?php echo esc_attr( $key ); ?>">
