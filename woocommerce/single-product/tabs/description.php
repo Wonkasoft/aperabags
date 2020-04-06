@@ -136,7 +136,10 @@ if ( ! empty( $product_specs_data ) ) :
 					<?php endif; ?>
 
 					<?php if ( is_object( $spec ) ) : ?>
-						<?php if ( ! empty( $spec ) && ! empty( $spec->disclosure ) ) : ?>
+						<?php
+						if ( ! empty( $spec ) && 'disclosures' !== $spec ) :
+							);
+							?>
 							<tr>
 								<th>	
 
