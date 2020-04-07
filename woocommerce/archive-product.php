@@ -33,13 +33,14 @@ do_action( 'woocommerce_before_main_content' );
 
 ?>
 <header class="woocommerce-products-header">
+	<div class="breadcrumb-title-wrap">
 	<?php
 		do_action( 'wonkasoft_moved_breadcrumb' );
 	if ( apply_filters( 'woocommerce_show_page_title', true ) ) :
 		?>
 		<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
 	<?php endif; ?>
-
+	</div>
 	<?php
 	/**
 	 * Hook: woocommerce_archive_description.
