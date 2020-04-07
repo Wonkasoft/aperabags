@@ -416,9 +416,15 @@ function custom_pre_get_posts_query($q)
 }
 add_action('woocommerce_product_query', 'custom_pre_get_posts_query');
 
+/**
+ * Add all outlet items after the main shop items
+ * @author Louis L <llister@wonkasoft.com>
+ * @since 1.0.1 Updates
+ *
+ */
 function add_outlet_items()
 {
-    echo "<h2>Outlet</h2>";
+    echo "<h2 class='text-center'>Outlet</h2>";
     echo do_shortcode('[products columns="2" category="outlet"]');
 }
 
