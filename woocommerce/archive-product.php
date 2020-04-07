@@ -27,14 +27,14 @@ get_header( 'shop' );
  * @hooked WC_Structured_Data::generate_website_data() - 30
  */
 remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
-add_action( 'wwonkasoft_moved_breadcrumb', 'woocommerce_breadcrumb', 10 );
+add_action( 'wonkasoft_moved_breadcrumb', 'woocommerce_breadcrumb', 10 );
 
 do_action( 'woocommerce_before_main_content' );
 
 ?>
 <header class="woocommerce-products-header">
 	<?php
-		do_action( 'wwonkasoft_moved_breadcrumb' );
+		do_action( 'wonkasoft_moved_breadcrumb' );
 	if ( apply_filters( 'woocommerce_show_page_title', true ) ) :
 		?>
 		<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
