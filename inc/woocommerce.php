@@ -425,7 +425,7 @@ add_action('woocommerce_product_query', 'custom_pre_get_posts_query');
 function add_outlet_items()
 {
     
-    echo "<div class='text-center'><h2>Outlet Section</h2></div>";
+    echo "<div class='text-center outlet-title'><h2>Outlet Section</h2></div>";
     echo do_shortcode('[products columns="2" category="outlet"]');
 }
 
