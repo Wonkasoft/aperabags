@@ -41,6 +41,8 @@ do_action( 'woocommerce_before_main_content' );
 		<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
 	<?php endif; ?>
 	</div>
+</header>
+<div class="shop-content-container">
 	<?php
 	/**
 	 * Hook: woocommerce_archive_description.
@@ -50,8 +52,6 @@ do_action( 'woocommerce_before_main_content' );
 	 */
 	do_action( 'woocommerce_archive_description' );
 	?>
-</header>
-<div class="shop-content-container">
 <?php
 if ( woocommerce_product_loop() ) {
 
