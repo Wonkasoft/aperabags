@@ -26,11 +26,12 @@
 					align-items: flex-start;
 					justify-content: flex-start;
 					flex-wrap: wrap;
-					margin: auto -15px;
+					margin: 0 -15px 15px;
 					min-height: 350px;
 					background: url("https://wonkasoft.dev/aperabags.com/wp-content/uploads/2019/08/AperaBags-Ambassador-img.jpeg");
 					background-size: cover;
 					background-position: center;
+					@include prefix( box-shadow, 0 1px 4px 0 rgba(0,0,0,0.5), o moz webkit );
 
 					nav.woocommerce-breadcrumb {
 						flex: 1 0 100%;
