@@ -58,7 +58,12 @@ gulp.task('sass', function () {
 
 	.pipe(gulp.dest('./'))
 
-	.pipe(browserSync.stream());
+	.pipe(browserSync.stream())
+
+	.pipe(notify({
+		message: "✔︎ STYLES-CSS task complete",
+		onLast: true
+	}));
 
 });
 
@@ -83,7 +88,7 @@ gulp.task('woo-sass', function () {
 	.pipe(browserSync.stream())
 
 	.pipe(notify({
-		message: "✔︎ CSS task complete",
+		message: "✔︎ WOOCOMMERCE-CSS task complete",
 		onLast: true
 	}));
 
