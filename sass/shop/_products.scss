@@ -70,6 +70,11 @@
 	}
 }
 
+.final-sale-disclosure {
+	font-style: italic;
+	@include font-size( .9 );
+}
+
 ul.products {
 	margin: 15px auto;
 	padding: 0;
