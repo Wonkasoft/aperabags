@@ -583,7 +583,7 @@ add_filter('woocommerce_checkout_fields', 'wonka_override_checkout_fields');
 
 /**
  * Limit the availability of this shipping method based
- * on the destination state.
+ * on the destination state. - Restriction
  *
  * Restricted locations include Alaska, American Samoa,
  * Guam, Hawaii, North Mariana Islands, Puerto Rico,
