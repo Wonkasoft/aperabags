@@ -3494,7 +3494,7 @@ var componentForm;
 		
 		if ( $('#shipping_phone').length ) {
 
-			$('#shipping_phone').inputmask('(999) 999-9999');
+			$('#shipping_phone').inputmask('1 (999) 999-9999');
 		}
 
 		$('#loader-wrapper').fadeOut();

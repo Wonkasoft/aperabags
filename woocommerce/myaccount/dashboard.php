@@ -39,11 +39,21 @@ foreach ( $attachments->posts as $img_post ) {
 }
 
 if ( ! in_array( 'apera_perks_partner', $user->roles ) ) { ?>
-	<div id="upgrade-btn-wrapper">
+	<div id="upgrade-btn-wrapper" style="text-align: center; padding: 15px 15px 0;">
 	<?php
-	echo sprintf(
-		__( '<a href="#" data-user="%s" id="perks-upgrade-btn" class="wonka-btn">Join Perks and Earn</a>.', 'woocommerce' ),
-		esc_attr( $user->ID )
+	echo wp_kses(
+		sprintf(
+			__( '<a href="#" data-user="%s" id="perks-upgrade-btn" class="wonka-btn">Join Perks and Earn</a>', 'woocommerce' ),
+			esc_attr( $user->ID )
+		),
+		array(
+			'a' => array(
+				'href'      => array(),
+				'data-user' => array(),
+				'id'        => array(),
+				'class'     => array(),
+			),
+		)
 	);
 	?>
 	</div>

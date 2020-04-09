@@ -259,7 +259,15 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 				$shipping_eta = '1-3 business days';
 			endif;
 
+			if ( 'USPS Priority Mail Non-Perks Members' === $rate->label ) :
+				$shipping_eta = '1-3 business days';
+			endif;
+
 			if ( 'USPS Priority Mail Express' === $rate->label ) :
+				$shipping_eta = '1 business day (weekends excluded)';
+			endif;
+
+			if ( 'USPS Priority Mail Express Non-Perks Members' === $rate->label ) :
 				$shipping_eta = '1 business day (weekends excluded)';
 			endif;
 		endif;
@@ -460,7 +468,21 @@ add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
 function wonka_add_continue_shopping_notice_to_cart() {
 		   $shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ), esc_html__( 'Continue shopping', 'woocommerce' ) );
 
-	echo $shopping;
+	echo wp_kses(
+		$shopping,
+		array(
+			'div' => array(
+				'class' => array(),
+			),
+			'i'   => array(
+				'class' => array(),
+			),
+			'a'   => array(
+				'href'  => array(),
+				'class' => array(),
+			),
+		)
+	);
 }
 add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart', 1 );
 
@@ -906,7 +928,15 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 									$shipping_eta = '1-3 business days';
 								endif;
 
+								if ( $rate->label === 'USPS Priority Mail Non-Perks Members' ) :
+									$shipping_eta = '1-3 business days';
+								endif;
+
 								if ( $rate->label === 'USPS Priority Mail Express' ) :
+									$shipping_eta = '1 business day (weekends excluded)';
+								endif;
+
+								if ( $rate->label === 'USPS Priority Mail Express Non-Perks Members' ) :
 									$shipping_eta = '1 business day (weekends excluded)';
 								endif;
 								?>
@@ -1905,17 +1935,68 @@ function ws_restrict_free_shipping( $is_available ) {
 	$user       = wp_get_current_user();
 
 	foreach ( WC()->cart->get_shipping_packages() as $package ) {
-		if ( in_array( $package['destination']['state'], $restricted ) ) {
+		if ( in_array( $package['destination']['state'], $restricted, true ) ) {
 			return false;
 		}
 
-		if ( ! in_array( 'apera_perks_partner', (array) $user->roles ) ) {
+		if ( ! in_array( 'apera_perks_partner', (array) $user->roles, true ) ) {
 			return false;
 		}
 	}
 	return $is_available;
 }
 add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free_shipping' );
+
+function ws_restrict_USPS_Priority_Mail_NP( $is_available, $package ) {
+	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
+	$user       = wp_get_current_user();
+
+	foreach ( WC()->cart->get_shipping_packages() as $package ) {
+		if ( in_array( $package['destination']['state'], $restricted, true ) ) {
+			return false;
+		}
+
+		if ( in_array( 'apera_perks_partner', (array) $user->roles, true ) ) {
+			return false;
+		}
+	}
+	return $is_available;
+}
+add_filter( 'woocommerce_shipping_USPS_Priority_Mail_NP_is_available', 'ws_restrict_USPS_Priority_Mail_NP', 10, 2 );
+
+function ws_restrict_USPS_Priority_Mail_Express( $is_available, $package ) {
+	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
+	$user       = wp_get_current_user();
+
+	foreach ( WC()->cart->get_shipping_packages() as $package ) {
+		if ( in_array( $package['destination']['state'], $restricted, true ) ) {
+			return false;
+		}
+
+		if ( ! in_array( 'apera_perks_partner', (array) $user->roles, true ) ) {
+			return false;
+		}
+	}
+	return $is_available;
+}
+add_filter( 'woocommerce_shipping_USPS_Priority_Mail_Express_is_available', 'ws_restrict_USPS_Priority_Mail_Express', 10, 2 );
+
+function ws_restrict_USPS_Priority_Mail_Express_NP( $is_available, $package ) {
+	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
+	$user       = wp_get_current_user();
+
+	foreach ( WC()->cart->get_shipping_packages() as $package ) {
+		if ( in_array( $package['destination']['state'], $restricted, true ) ) {
+			return false;
+		}
+
+		if ( in_array( 'apera_perks_partner', (array) $user->roles, true ) ) {
+			return false;
+		}
+	}
+	return $is_available;
+}
+add_filter( 'woocommerce_shipping_USPS_Priority_Mail_Express_NP_is_available', 'ws_restrict_USPS_Priority_Mail_Express_NP', 10, 2 );
 
 /**
  * Add new custom shipping methods
@@ -1927,7 +2008,61 @@ add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free
  * Check if WooCommerce is active
  */
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+
+	/**
+	 * This initiates added shipping options.
+	 */
 	function ws_shipping_method_init() {
+
+		if ( ! class_exists( 'WC_Priority_Mail_Shipping_NP_Method' ) ) {
+			class WC_Priority_Mail_Shipping_NP_Method extends WC_Shipping_Method {
+
+				/**
+				 * Constructor for your shipping class
+				 *
+				 * @access public
+				 * @return void
+				 */
+				public function __construct() {
+					$this->id                 = 'USPS_Priority_Mail_NP'; // Id for your shipping method. Should be uunique.
+					$this->method_title       = __( 'USPS Priority Mail Non-Perks Members' );  // Title shown in admin
+					$this->method_description = __( 'USPS Priority Mail Flat Rate for Non-perks Members' ); // Description shown in admin
+					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
+					$this->title              = 'USPS Priority Mail Non-Perks Members'; // This can be added as an setting but for this example its forced.
+					$this->init();
+				}
+				/**
+				 * Init your settings
+				 *
+				 * @access public
+				 * @return void
+				 */
+				public function init() {
+					// Load the settings API.
+					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
+					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings.
+					// Save settings in admin if you have any defined.
+					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+				}
+				/**
+				 * Calculate_shipping function.
+				 *
+				 * @access public
+				 * @param mixed $package contains the packages.
+				 * @return void
+				 */
+				public function calculate_shipping( $package = array() ) {
+					$rate = array(
+						'id'       => $this->id,
+						'label'    => $this->title,
+						'cost'     => '10.00',
+						'calc_tax' => 'per_item',
+					);
+					// Register the rate.
+					$this->add_rate( $rate );
+				}
+			}
+		}
 
 		if ( ! class_exists( 'WC_Priority_Mail_Express_Shipping_Method' ) ) {
 			class WC_Priority_Mail_Express_Shipping_Method extends WC_Shipping_Method {
@@ -1952,7 +2087,57 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				 * @access public
 				 * @return void
 				 */
-				function init() {
+				public function init() {
+					// Load the settings API.
+					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
+					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings.
+					// Save settings in admin if you have any defined.
+					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+				}
+				/**
+				 * Calculate_shipping function.
+				 *
+				 * @access public
+				 * @param mixed $package contains the packages.
+				 * @return void
+				 */
+				public function calculate_shipping( $package = array() ) {
+					$rate = array(
+						'id'       => $this->id,
+						'label'    => $this->title,
+						'cost'     => '30.00',
+						'calc_tax' => 'per_item',
+					);
+					// Register the rate.
+					$this->add_rate( $rate );
+				}
+			}
+		}
+
+		if ( ! class_exists( 'WC_Priority_Mail_Express_Shipping_NP_Method' ) ) {
+			class WC_Priority_Mail_Express_Shipping_NP_Method extends WC_Shipping_Method {
+
+				/**
+				 * Constructor for your shipping class
+				 *
+				 * @access public
+				 * @return void
+				 */
+				public function __construct() {
+					$this->id                 = 'USPS_Priority_Mail_Express_NP'; // Id for your shipping method. Should be uunique.
+					$this->method_title       = __( 'USPS Priority Mail Express Non-Perks Members' );  // Title shown in admin.
+					$this->method_description = __( 'USPS Priority Mail Express Flat Rate for Non-Perks Members' ); // Description shown in admin.
+					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
+					$this->title              = 'USPS Priority Mail Express Non-Perks Members'; // This can be added as an setting but for this example its forced.
+					$this->init();
+				}
+				/**
+				 * Init your settings
+				 *
+				 * @access public
+				 * @return void
+				 */
+				public function init() {
 					// Load the settings API.
 					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
 					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings.
@@ -1967,23 +2152,12 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				 * @return void
 				 */
 				public function calculate_shipping( $package = array() ) {
-					$user = wp_get_current_user();
-					if ( ! in_array( 'apera_perks_partner', (array) $user->roles ) ) :
-						$this->id = 'USPS_Priority_Mail_Express_np';
-						$rate     = array(
-							'id'       => $this->id,
-							'label'    => $this->title,
-							'cost'     => '50.00',
-							'calc_tax' => 'per_item',
-						);
-					else :
-						$rate = array(
-							'id'       => $this->id,
-							'label'    => $this->title,
-							'cost'     => '30.00',
-							'calc_tax' => 'per_item',
-						);
-					endif;
+					$rate = array(
+						'id'       => $this->id,
+						'label'    => $this->title,
+						'cost'     => '50.00',
+						'calc_tax' => 'per_item',
+					);
 					// Register the rate.
 					$this->add_rate( $rate );
 				}
@@ -2000,7 +2174,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	function add_ws_shipping_methods( $methods ) {
 
-		$methods['USPS_Priority_Mail_Express'] = 'WC_Priority_Mail_Express_Shipping_Method';
+		$methods['USPS_Priority_Mail_NP']         = 'WC_Priority_Mail_Shipping_NP_Method';
+		$methods['USPS_Priority_Mail_Express']    = 'WC_Priority_Mail_Express_Shipping_Method';
+		$methods['USPS_Priority_Mail_Express_NP'] = 'WC_Priority_Mail_Express_Shipping_NP_Method';
 		return $methods;
 	}
 	add_filter( 'woocommerce_shipping_methods', 'add_ws_shipping_methods' );

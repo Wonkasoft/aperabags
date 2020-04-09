@@ -34,7 +34,15 @@ $available_methods = WC()->session->get( 'shipping_for_package_0' )['rates'];
 						$shipping_eta = '1-3 business days';
 					endif;
 
+					if ( $method->label === 'USPS Priority Mail Non-Perks Members' ) :
+						$shipping_eta = '1-3 business days';
+					endif;
+
 					if ( $method->label === 'USPS Priority Mail Express' ) :
+						$shipping_eta = '1 business day (weekends excluded)';
+					endif;
+
+					if ( $method->label === 'USPS Priority Mail Express Non-Perks Members' ) :
 						$shipping_eta = '1 business day (weekends excluded)';
 					endif;
 
