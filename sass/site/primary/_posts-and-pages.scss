@@ -416,7 +416,7 @@ div#give-feedback {
     z-index: 500;
     display: block;
     bottom: 50%;
-    right: -49px;
+    right: -50px;
     background: #52abf6;
     border-radius: 4px 4px 0 0;
     @include prefix( transform, rotate(-90deg), o moz webkit );
@@ -432,7 +432,7 @@ div#give-feedback a {
 }
 
 div#give-feedback:hover {
-    right: -42px;
+    right: -43px;
 }
 
 #launcher.zEWidget-launcher {
