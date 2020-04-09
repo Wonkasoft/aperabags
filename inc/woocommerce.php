@@ -1306,7 +1306,7 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
 			global $product;
 			$disclosure = '';
 
-			foreach ( $product->category_ids as $value ) :
+			foreach ( $product->get_category_ids() as $value ) :
 				if ( 'Outlet' === get_the_category_by_ID( $value ) ) :
 					$disclosure = '<p class="final-sale-disclosure">*All Outlet purchases are FINAL SALE and can not be combined with any other sales or coupons at purchase. No returns or refunds.</p>';
 				endif;
