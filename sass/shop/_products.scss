@@ -79,12 +79,14 @@ ul.products {
 	margin: 15px auto;
 	padding: 0;
 	max-width: 1180px;
+	justify-content: space-between;
 
 	li {
 		margin-bottom: 25px;
 		position: relative;
 		padding: 0;
 		overflow: hidden;
+		flex: 0 1 32%;
 
 		a {
 			display: flex;
@@ -92,7 +94,6 @@ ul.products {
 			justify-content: center;
 			flex-wrap: wrap;
 			text-align: center;
-			padding: 8px;
 			color: #333333;
 
 			span.onsale {
