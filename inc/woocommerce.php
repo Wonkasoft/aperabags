@@ -833,12 +833,11 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 								<?php
 								$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
 
-								$product_permalink = get_the_permalink( $_product->get_parent_id() );
-
 								if ( ! $product_permalink ) {
 										echo $thumbnail; // PHPCS: XSS ok.
 										echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity badge wonka-badge">' . sprintf( '%s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key );
 								} else {
+									$product_permalink = get_the_permalink( $_product->get_parent_id() );
 									printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail ); // PHPCS: XSS ok.
 								}
 								?>
