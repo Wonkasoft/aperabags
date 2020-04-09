@@ -996,7 +996,7 @@ add_action( 'wonka_checkout_after_checkout_form_custom', 'wonka_checkout_after_c
 function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output = '';
 	ob_start();
-	$output .= '<div class="row wonka-row">';
+	$output .= '<div class="row wonka-row checkout-breadcrumb">';
 	$output .= '<div class="col-12">';
 	$output .= '<ul class="nav nav-fill" id="wonka-checkout-nav-steps" role="tablist">';
 	$output .= '<li class="nav-item">';
