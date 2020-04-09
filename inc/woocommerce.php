@@ -558,35 +558,6 @@ function wonka_override_checkout_fields( $fields ) {
 add_filter( 'woocommerce_checkout_fields', 'wonka_override_checkout_fields' );
 
 /**
- * Limit the availability of this shipping method based
- * on the destination state. - Restriction
- *
- * Restricted locations include American Samoa,
- * Guam, North Mariana Islands, Puerto Rico,
- * US Minor Outlying Islands, and the US Virgin Islands.
- *
- * @param bool $is_available Is this shipping method available?
- * @return bool
- */
-function ws_restrict_free_shipping( $is_available ) {
-	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
-	$user       = wp_get_current_user();
-
-	foreach ( WC()->cart->get_shipping_packages() as $package ) {
-		if ( in_array( $package['destination']['state'], $restricted ) ) {
-			return false;
-		}
-
-		if ( ! in_array( 'apera_perks_partner', (array) $user->roles ) ) {
-			return false;
-		}
-	}
-	return $is_available;
-}
-
-add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free_shipping' );
-
-/**
  * This modifies the woocommerce form field.
  *
  * @param  [type] $field [description]
@@ -1919,6 +1890,34 @@ add_filter( 'woocommerce_order_item_name', 'ws_edit_order_item_name' );
 
 
 /**
+ * Limit the availability of this shipping method based
+ * on the destination state. - Restriction
+ *
+ * Restricted locations include American Samoa,
+ * Guam, North Mariana Islands, Puerto Rico,
+ * US Minor Outlying Islands, and the US Virgin Islands.
+ *
+ * @param bool $is_available Is this shipping method available?
+ * @return bool
+ */
+function ws_restrict_free_shipping( $is_available ) {
+	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
+	$user       = wp_get_current_user();
+
+	foreach ( WC()->cart->get_shipping_packages() as $package ) {
+		if ( in_array( $package['destination']['state'], $restricted ) ) {
+			return false;
+		}
+
+		if ( ! in_array( 'apera_perks_partner', (array) $user->roles ) ) {
+			return false;
+		}
+	}
+	return $is_available;
+}
+add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free_shipping' );
+
+/**
  * Add new custom shipping methods
  *
  * @since 1.0.1 New Requests
@@ -1968,12 +1967,23 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				 * @return void
 				 */
 				public function calculate_shipping( $package = array() ) {
-					$rate = array(
-						'id'       => $this->id,
-						'label'    => $this->title,
-						'cost'     => '30.00',
-						'calc_tax' => 'per_item',
-					);
+					$user = wp_get_current_user();
+					if ( ! in_array( 'apera_perks_partner', (array) $user->roles ) ) :
+						$this->id = 'USPS_Priority_Mail_Express_np';
+						$rate     = array(
+							'id'       => $this->id,
+							'label'    => $this->title,
+							'cost'     => '50.00',
+							'calc_tax' => 'per_item',
+						);
+					else :
+						$rate = array(
+							'id'       => $this->id,
+							'label'    => $this->title,
+							'cost'     => '30.00',
+							'calc_tax' => 'per_item',
+						);
+					endif;
 					// Register the rate.
 					$this->add_rate( $rate );
 				}
