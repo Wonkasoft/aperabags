@@ -825,10 +825,10 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 			<tbody>
 				<?php
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-					$_product   = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-					$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+					$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+					$product_id = apply_filters('woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key);
 					if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
-						$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
+						$product_permalink = apply_filters('woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink($cart_item) : '', $cart_item, $cart_item_key);
 						?>
 						<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 							<td class="product-thumbnail">
@@ -839,11 +839,22 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 										echo $thumbnail; // PHPCS: XSS ok.
 										echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity badge wonka-badge">' . sprintf( '%s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key );
 								} else {
-									$product_permalink = get_the_permalink( $_product->get_parent_id() );
 									printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail ); // PHPCS: XSS ok.
 								}
 								?>
 								</td>
+								<td class="product-remove">
+		                            <?php
+										// @codingStandardsIgnoreLine
+										echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf(
+		                                    '<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">&times;</a>',
+		                                    esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+		                                    esc_html__( 'Remove this item', 'woocommerce' ),
+		                                    esc_attr( $product_id ),
+		                                    esc_attr( $_product->get_sku() )
+		                                ), $cart_item_key );
+		                            ?>
+		                        </td>
 								<td class="product-name">
 									<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;'; ?>
 
