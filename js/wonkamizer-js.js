@@ -3577,6 +3577,14 @@ var componentForm;
 				});
 		}
 
+		if ( document.querySelector( 'form.post-password-form' ) ) {
+			if ( getUrlVars().canregister ) 
+			{
+				var canregister = decodeURIComponent( getUrlVars().canregister ).replace( /\+/gi, ' ' );
+				document.querySelector( 'form.post-password-form input[name="post_password"]' ).value = canregister;
+				document.querySelector( 'form.post-password-form input[type="submit"]' ).click();
+			}
+		}
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 
