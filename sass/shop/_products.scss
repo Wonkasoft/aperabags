@@ -129,7 +129,7 @@ ul.products {
 				font-family: $font__main_jose;
 				text-align: center;
 				margin-bottom: 4px;
-				height: 25px;
+				height: 40px;
 				letter-spacing: -1px;
 				@include font-size( .8 );
 				
@@ -163,6 +163,7 @@ ul.products {
 				}
 
 				.woocommerce-loop-product__title {
+					height: 25px;
 					@include font-size( 1 );
 				}
 
