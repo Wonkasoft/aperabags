@@ -118,8 +118,14 @@
 					}
 
 					@include media-breakpoint( md ) {
-						display: block;
+						flex-flow: column;
 						margin: 0;
+						flex: 0 1 80%;
+
+						div.woocommerce-product-gallery__image {
+							width: unset;
+							flex: 0 1 50%;
+						}
 					}
 				}
 
@@ -179,7 +185,7 @@
 			}
 
 			@include media-breakpoint( md ) {
-				margin: 0;
+				margin: auto;
 			}
 		}
 	}
@@ -276,6 +282,10 @@
 							margin: 0;
 						}
 					}
+				}
+				
+				@include media-breakpoint( md ) {
+					flex: 0 1 50%;
 				}
 			}
 
@@ -505,6 +515,19 @@
 					.woocommerce-product-details__short-description {
 
 						@include font-size( 1.1 );
+					}
+				}
+			}
+
+			@include media-breakpoint( md ) {
+
+				div.summary {
+					flex: 0 1 50%;
+
+					&.sticky-on {
+						position: -webkit-sticky;    
+						position: sticky;
+						top: 25px;
 					}
 				}
 			}
