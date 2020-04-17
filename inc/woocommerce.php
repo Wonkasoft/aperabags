@@ -1536,10 +1536,10 @@ add_action( 'wp_ajax_nopriv_search_site', 'ws_ajax_search' );
 function filter_woocommerce_product_review_list_args( $comment ) {
 	// make filter magic happen here...
 
-	$length             = 43;
 	$str_array          = explode( ' ', $comment->comment_content );
 	$comment_word_count = count( (array) $str_array );
-	$output             = '';
+	$length             = ( 43 > $comment_word_count ) ? $comment_word_count: 43;
+	$output             = ''; 
 
 	for ( $i = 0; $i < $length; $i++ ) :
 		if ( $i == ( $length - 1 ) && $comment_word_count > $length ) :
