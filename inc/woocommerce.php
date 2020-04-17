@@ -825,10 +825,12 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 			<tbody>
 				<?php
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-					$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-					$product_id = apply_filters('woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key);
+					$_product   = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+					$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+
 					if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
-						$product_permalink = apply_filters('woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink($cart_item) : '', $cart_item, $cart_item_key);
+
+						$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
 						?>
 						<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 							<td class="product-thumbnail">
@@ -837,24 +839,29 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 
 								if ( ! $product_permalink ) {
 										echo $thumbnail; // PHPCS: XSS ok.
-										echo apply_filters( 'woocommerce_checkout_cart_item_quantity', ' <strong class="product-quantity badge wonka-badge">' . sprintf( '%s', $cart_item['quantity'] ) . '</strong>', $cart_item, $cart_item_key );
+										echo apply_filters( 'woocommerce_checkout_cart_item_quantity', sprintf( '<strong class="product-quantity wonka-badge" title="Quantity: %s">%s</strong>', $cart_item['quantity'], $cart_item['quantity'] ), $cart_item, $cart_item_key );
 								} else {
-									printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail ); // PHPCS: XSS ok.
+									printf(
+										'<a href="%s">%s</a>%s%s',
+										esc_url( $product_permalink ),
+										$thumbnail,
+										apply_filters( 'woocommerce_checkout_cart_item_quantity', sprintf( '<strong class="product-quantity wonka-badge" title="Quantity: %s">%s</strong>', esc_html( $cart_item['quantity'] ), esc_html( $cart_item['quantity'] ) ), $cart_item, $cart_item_key ),
+										apply_filters(
+											'woocommerce_cart_item_remove_link',
+											sprintf(
+												'<a href="%s" class="remove wonka-badge" aria-label="%s" data-product_id="%s" data-product_sku="%s" title="%s">&times;</a>',
+												esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+												esc_html__( 'Remove this item', 'woocommerce' ),
+												esc_attr( $product_id ),
+												esc_attr( $_product->get_sku() ),
+												( 1 < $cart_item['quantity'] ) ? 'Remove items' : 'Remove item'
+											),
+											$cart_item_key
+										)
+									); // PHPCS: XSS ok.
 								}
 								?>
 								</td>
-								<td class="product-remove">
-		                            <?php
-										// @codingStandardsIgnoreLine
-										echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf(
-		                                    '<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">&times;</a>',
-		                                    esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
-		                                    esc_html__( 'Remove this item', 'woocommerce' ),
-		                                    esc_attr( $product_id ),
-		                                    esc_attr( $_product->get_sku() )
-		                                ), $cart_item_key );
-		                            ?>
-		                        </td>
 								<td class="product-name">
 									<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;'; ?>
 
@@ -1321,14 +1328,14 @@ function wonka_filter_woocommerce_short_description( $post_post_excerpt ) {
 			global $product;
 			$disclosure = '';
 
-            if ( ! empty( $product ) ) :
-			foreach ( $product->get_category_ids() as $value ) :
-                    
-				if ( 'Outlet' === get_the_category_by_ID( $value ) ) :
-					$disclosure = '<p class="final-sale-disclosure">*All Outlet purchases are FINAL SALE and can not be combined with any other sales or coupons at purchase. No returns or refunds.</p>';
-				endif;
+			if ( ! empty( $product ) ) :
+				foreach ( $product->get_category_ids() as $value ) :
+
+					if ( 'Outlet' === get_the_category_by_ID( $value ) ) :
+						$disclosure = '<p class="final-sale-disclosure">*All Outlet purchases are FINAL SALE and can not be combined with any other sales or coupons at purchase. No returns or refunds.</p>';
+					endif;
 			endforeach;
-            endif;  
+			endif;
 
 			ob_start();
 
@@ -1541,8 +1548,8 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 
 	$str_array          = explode( ' ', $comment->comment_content );
 	$comment_word_count = count( (array) $str_array );
-	$length             = ( 43 > $comment_word_count ) ? $comment_word_count: 43;
-	$output             = ''; 
+	$length             = ( 43 > $comment_word_count ) ? $comment_word_count : 43;
+	$output             = '';
 
 	for ( $i = 0; $i < $length; $i++ ) :
 		if ( $i == ( $length - 1 ) && $comment_word_count > $length ) :

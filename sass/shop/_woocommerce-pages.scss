@@ -501,8 +501,8 @@ div.cart-collaterals {
           div#collapseOne {
 
             input {
-              flex: 0 1 54%;
-              width: unset;
+              flex: 0 1 40%;
+              width: 0;
               line-height: 1.1;
               padding: 8px;
               border-radius: 100px 0 0 100px;
@@ -514,6 +514,7 @@ div.cart-collaterals {
             }
 
             button.wonka-btn {
+              flex: 0 1 52%;
               margin-left: -3px;
               padding: 8px;
               border-radius: 0 100px 100px 0;
