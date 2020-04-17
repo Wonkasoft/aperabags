@@ -1549,14 +1549,12 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 		endif;
 	endfor;
 
-	// $output = explode(' ', $comment->comment_content, 21);
-
 	ob_start();
 	echo "<div class='wonka-comment-wrapper'>";
 	echo "<p class='comment-text' ws-data-comment='" . esc_html( $comment->comment_content ) . "'>";
 	echo $output;
 	echo '</p>';
-	if ( $comment_word_count >= $length ) {
+	if ( $comment_word_count > $length ) {
 		echo "<a href='#' class='ws-data-comment-btn'> <i class='fa fa-angle-down'></i> read more</a>";
 	}
 	echo '</div>';
