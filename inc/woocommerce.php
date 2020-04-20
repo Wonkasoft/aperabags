@@ -259,6 +259,10 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 				$shipping_eta = '1-3 business days';
 			endif;
 
+			if ( 'USPS Priority Mail' === $rate->label ) :
+				$shipping_eta = '1-3 business days <br> <sub>*Free Shipping: Must be Perks Members and order over $25</sub>';
+			endif;
+
 			if ( 'USPS Priority Mail Non-Perks Members' === $rate->label ) :
 				$shipping_eta = '1-3 business days';
 			endif;
@@ -318,10 +322,8 @@ add_filter( 'post_class', 'setting_up_image_flipper_class', 8 );
  * This function is to override the parsing of the images during a shop loop
  */
 function wonka_customized_shop_loop() {
-		   /*
-	========================================================
-	=            For setting up the image flipper            =
-	========================================================*/
+
+	// For setting up the image flipper.
 	global $product;
 
 	if ( ! is_a( $product, 'WC_Product' ) ) {
@@ -391,6 +393,7 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
  *
  * @author Louis <llister@wonkasoft.com>
  * @since 1.0.1
+ * @param array $q contains the current query.
  */
 function custom_pre_get_posts_query( $q ) {
 
@@ -421,6 +424,18 @@ function add_outlet_items() {
 add_action( 'woocommerce_after_shop_loop', 'add_outlet_items' );
 
 /**
+ * This hooks into woocommerce templates to find the added key features and specs template.
+ */
+if ( ! function_exists( 'woocommerce_product_key_features_and_specs_tab' ) ) {
+
+	/**
+	 * Output the description tab content.
+	 */
+	function woocommerce_product_key_features_and_specs_tab() {
+		wc_get_template( 'single-product/tabs/key-features-and-specs.php' );
+	}
+}
+/**
  * Changes the description tab title
  *
  * @param  array $tabs setting up the changed titles.
@@ -430,15 +445,18 @@ add_action( 'woocommerce_after_shop_loop', 'add_outlet_items' );
 function wonka_product_tabs_retitle( $tabs ) {
 
 	$new_title                       = get_post_meta( get_the_ID(), 'product_statement', true );
-	$tabs['reviews']['priority']     = 10;          // Reviews first.
+	$tabs['reviews']['priority']     = 30;          // Reviews first.
 	$tabs['description']['priority'] = 20;          // Description second.
 	unset( $tabs['additional_information'] );   // Additional information third.
-	$tabs['description']['title']   = __( $new_title );
-	$tabs['description']['section'] = __( 'Product Statement' );
+	$tabs['description']['title']               = esc_html( $new_title );
+	$tabs['description']['section']             = __( 'Product Statement' );
+	$tabs['key_features_and_specs']['title']    = __( 'Key Featrues and Specs' );
+	$tabs['key_features_and_specs']['priority'] = 10;
+	$tabs['key_features_and_specs']['callback'] = 'woocommerce_product_key_features_and_specs_tab';
+	$tabs['key_features_and_specs']['section']  = __( 'Key Featrues and Specs' );
 
 	return $tabs;
 }
-
 add_filter( 'woocommerce_product_tabs', 'wonka_product_tabs_retitle', 98 );
 
 /**
@@ -943,7 +961,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 							if ( WC()->session->get( 'chosen_shipping_methods' )[0] === $method_id ) :
 								$rate_label = $rate->label;
 								$rate_cost  = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
-								if ( $rate->label === 'USPS Priority Mail: FREE' ) :
+								if ( $rate->label === 'USPS Priority Mail: FREE' || $rate->label === 'USPS Priority Mail' ) :
 									$shipping_eta = '1-3 business days';
 								endif;
 
@@ -1962,10 +1980,42 @@ function ws_restrict_free_shipping( $is_available ) {
 		if ( ! in_array( 'apera_perks_partner', (array) $user->roles, true ) ) {
 			return false;
 		}
+
+		if ( 25 < WC()->cart->get_cart_subtotal() ) {
+			return false;
+		}
 	}
 	return $is_available;
 }
 add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free_shipping' );
+
+/**
+ * [ws_restrict_USPS_Priority_Mail_NP description]
+ *
+ * @param  [type] $is_available [description]
+ * @param  [type] $package      [description]
+ * @return [type]               [description]
+ */
+function ws_restrict_USPS_Priority_Mail_under_25( $is_available, $package ) {
+	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
+	$user       = wp_get_current_user();
+
+	foreach ( WC()->cart->get_shipping_packages() as $package ) {
+		if ( in_array( $package['destination']['state'], $restricted, true ) ) {
+			return false;
+		}
+
+		if ( in_array( 'apera_perks_partner', (array) $user->roles, true ) && 25 < WC()->cart->get_cart_subtotal() ) {
+			return false;
+		}
+
+		if ( ! in_array( 'apera_perks_partner', (array) $user->roles, true ) ) {
+			return false;
+		}
+	}
+	return $is_available;
+}
+add_filter( 'woocommerce_shipping_USPS_Priority_Mail_under_25_is_available', 'ws_restrict_USPS_Priority_Mail_under_25', 10, 2 );
 
 function ws_restrict_USPS_Priority_Mail_NP( $is_available, $package ) {
 	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
@@ -2183,6 +2233,56 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				}
 			}
 		}
+
+		if ( ! class_exists( 'WC_Priority_Mail_under_25_Method' ) ) {
+			class WC_Priority_Mail_under_25_Method extends WC_Shipping_Method {
+
+				/**
+				 * Constructor for your shipping class
+				 *
+				 * @access public
+				 * @return void
+				 */
+				public function __construct() {
+					$this->id                 = 'USPS_Priority_Mail_under_25'; // Id for your shipping method. Should be uunique.
+					$this->method_title       = __( 'USPS Priority Mail' );  // Title shown in admin.
+					$this->method_description = __( 'USPS Priority Mail Flate Rate for orders under $25' ); // Description shown in admin.
+					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
+					$this->title              = 'USPS Priority Mail'; // This can be added as an setting but for this example its forced.
+					$this->init();
+				}
+				/**
+				 * Init your settings
+				 *
+				 * @access public
+				 * @return void
+				 */
+				public function init() {
+					// Load the settings API.
+					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
+					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings.
+					// Save settings in admin if you have any defined.
+					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+				}
+				/**
+				 * calculate_shipping function.
+				 *
+				 * @access public
+				 * @param mixed $package
+				 * @return void
+				 */
+				public function calculate_shipping( $package = array() ) {
+					$rate = array(
+						'id'       => $this->id,
+						'label'    => $this->title,
+						'cost'     => '10.00',
+						'calc_tax' => 'per_item',
+					);
+					// Register the rate.
+					$this->add_rate( $rate );
+				}
+			}
+		}
 	}
 
 	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
@@ -2194,6 +2294,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	function add_ws_shipping_methods( $methods ) {
 
+		$methods['USPS_Priority_Mail']            = 'WC_Priority_Mail_under_25_Method';
 		$methods['USPS_Priority_Mail_NP']         = 'WC_Priority_Mail_Shipping_NP_Method';
 		$methods['USPS_Priority_Mail_Express']    = 'WC_Priority_Mail_Express_Shipping_Method';
 		$methods['USPS_Priority_Mail_Express_NP'] = 'WC_Priority_Mail_Express_Shipping_NP_Method';

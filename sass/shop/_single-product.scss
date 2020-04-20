@@ -724,7 +724,8 @@ section.product-tabs-section {
 			}
 		}
 
-		section.wonka-section-product-statement {
+		section#section-key-featrues-and-specs,
+		section#section-product-statement {
 			padding: 8px;
 			border: 1px solid rgba( #000, .2 );
 			background: #fafafa;
@@ -855,6 +856,10 @@ section.product-tabs-section {
 					}
 				}
 			}
+		}
+
+		section#section-product-statement {
+			padding: 15px 8px;
 		}
 	}
 }
