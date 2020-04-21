@@ -1141,9 +1141,6 @@ class Wonkasoft_WC_Coupon extends WC_Coupon {
 	 * @param array  $coupon Array of coupon properties.
 	 */
 	public function read_manual_coupon( $code, $coupon ) {
-		echo "<pre>\n";
-		print_r( $coupon );
-		echo "</pre>\n";
 
 		foreach ( $coupon as $key => $value ) {
 			switch ( $key ) {
