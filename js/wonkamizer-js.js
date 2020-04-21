@@ -2139,7 +2139,7 @@ var componentForm;
 			if ( window.location.href.indexOf( '?add-to-cart' ) != false ) 
 			{
 				window.history.replaceState({}, document.title, window.location.href.split( '?' )[0] );
-				window.location.reload();
+				window.location = window.location.href.split( '?' )[0];
 				if ( document.querySelector( 'div.woocommerce-message' ) ) 
 				{
 					setTimeout( function() 
