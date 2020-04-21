@@ -448,3 +448,27 @@ function wonkasoft_add_defer_attribute( $tag, $handle ) {
 	return str_replace( ' src', ' defer src', $tag );
 }
 add_filter( 'script_loader_tag', 'wonkasoft_add_defer_attribute', 10, 2 );
+
+
+add_action( 'gform_user_registered', 'ws_gravity_registration_autologin', 10, 4 );
+/**
+ * Auto login after registration.
+ *
+ * @author Louis L <llister@wonkasoft.com>
+ * @since 1.0.2 Adding auto login after check account creation
+ */
+function ws_gravity_registration_autologin( $user_id, $user_config, $entry, $password ) {
+	$user = get_userdata( $user_id );
+	$user_login = $user->user_login;
+	$user_password = $password;
+	   $user->set_role( get_option( 'default_role', 'apera-perks-partner' ) );
+
+	wp_signon(
+		array(
+			'user_login' => $user_login,
+			'user_password' => $user_password,
+			'remember' => false,
+
+		)
+	);
+}
