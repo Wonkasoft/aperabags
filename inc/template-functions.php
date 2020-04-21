@@ -305,7 +305,7 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	if ( in_array( $form['title'], array( 'Ambassador Program' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-ambassador-form';
 	endif;
-	if ( in_array( $form['title'], array( 'Apera Perks Registration' ) ) ) :
+	if ( in_array( $form['title'], array( 'Apera Perks Registration', 'Apera Perks Registration Checkout' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-perks-form';
 	endif;
 	if ( in_array( $form['title'], array( 'Join MSE+' ) ) ) :
