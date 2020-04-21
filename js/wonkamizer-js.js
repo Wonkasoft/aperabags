@@ -2136,7 +2136,7 @@ var componentForm;
 		===============================================================================*/
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 		{
-			if ( window.location.href.indexOf( '?add-to-cart' ) != false ) 
+			if ( window.location.href.contains( '?add-to-cart' ) != false ) 
 			{
 				window.history.replaceState({}, document.title, window.location.href.split( '?' )[0] );
 				window.location = window.location.href.split( '?' )[0];
