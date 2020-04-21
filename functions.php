@@ -246,7 +246,26 @@ require_once get_stylesheet_directory() . '/inc/customizer.php';
  */
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once get_stylesheet_directory() . '/inc/woocommerce.php';
+
+	add_action( 'do_meta_boxes', 'customize_coupon_data_meta_box' );
 }
+
+/**
+ * This removes the original meta box in order to load the custom meta box.
+ */
+function customize_coupon_data_meta_box() {
+	// Coupons.
+	remove_meta_box( 'woocommerce-coupon-data', 'shop_coupon', 'normal' );
+
+	// Coupons.
+	add_meta_box( 'woocommerce-coupon-data', __( 'Coupon data', 'woocommerce' ), 'Wonkasoft_WC_Meta_Box_Coupon_Data::output', 'shop_coupon', 'normal', 'high' );
+}
+
+// Save Coupon Meta Boxes.
+remove_action( 'woocommerce_process_shop_coupon_meta', 'WC_Meta_Box_Coupon_Data::save', 10, 2 );
+
+// Save Coupon Meta Boxes.
+add_action( 'woocommerce_process_shop_coupon_meta', 'Wonkasoft_WC_Meta_Box_Coupon_Data::save', 10, 2 );
 
 /**
  * Load WC_Gateway_CyberSource compatibility file.
