@@ -374,7 +374,7 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 			return $new_content;
 		endif;
 	endif;
-	if ( 'Apera Perks Registration' === $form['title'] ) :
+	if ( 'Apera Perks Registration' === $form['title'] || 'Apera Perks Registration Checkout' === $form['title'] ) :
 		if ( 'Password' === $field['label'] ) :
 			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
 			foreach ( $split_content as $key => $value ) {
