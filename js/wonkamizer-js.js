@@ -2136,8 +2136,9 @@ var componentForm;
 		===============================================================================*/
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 		{
-			if ( window.location.href.indexOf( '?add-to-cart' ) != false ) 
+			if ( window.location.href.indexOf( '?add-to-cart' ) ) 
 			{
+				console.log( window.location.href.indexOf( '?add-to-cart' ) );
 				window.history.replaceState({}, document.title, window.location.href.split( '?' )[0] );
 				if ( document.querySelector( 'div.woocommerce-message' ) ) 
 				{
