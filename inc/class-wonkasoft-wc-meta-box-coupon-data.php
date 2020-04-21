@@ -514,6 +514,9 @@ class Wonkasoft_WC_Coupon extends WC_Coupon {
 	 */
 	protected function read_object_from_database() {
 		$this->data_store = WC_Data_Store::load( 'coupon' );
+		echo "<pre>\n";
+		print_r( $this->data_store );
+		echo "</pre>\n";
 
 		if ( $this->get_id() > 0 ) {
 			$this->data_store->read( $this );

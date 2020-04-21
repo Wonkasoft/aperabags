@@ -2139,6 +2139,7 @@ var componentForm;
 			if ( window.location.href.indexOf( '?add-to-cart' ) ) 
 			{
 				window.history.replaceState({}, document.title, window.location.href.split( '?' )[0] );
+				window.location.reload();
 				if ( document.querySelector( 'div.woocommerce-message' ) ) 
 				{
 					setTimeout( function() 
