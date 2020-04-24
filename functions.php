@@ -259,14 +259,16 @@ function customize_coupon_data_meta_box() {
 
 	// Coupons.
 	add_meta_box( 'woocommerce-coupon-data', __( 'Coupon data', 'woocommerce' ), 'Wonkasoft_WC_Meta_Box_Coupon_Data::output', 'shop_coupon', 'normal', 'high' );
+
 }
 
 // Save Coupon Meta Boxes.
-remove_action( 'woocommerce_process_shop_coupon_meta', 'WC_Meta_Box_Coupon_Data::save', 10, 2 );
+add_action( 'woocommerce_coupon_options_save', array( 'Wonkasoft_WC_Meta_Box_Coupon_Data', 'save' ), 15, 2 );
 
-// Save Coupon Meta Boxes.
-add_action( 'woocommerce_process_shop_coupon_meta', 'Wonkasoft_WC_Meta_Box_Coupon_Data::save', 10, 2 );
-
+function wonkasoft_woocommerce_data_stores( $stores ) {
+	return $stores;
+}
+add_filter( 'woocommerce_data_stores', 'wonkasoft_woocommerce_data_stores' );
 /**
  * Load WC_Gateway_CyberSource compatibility file.
  */
@@ -458,16 +460,16 @@ add_action( 'gform_user_registered', 'ws_gravity_registration_autologin', 10, 4 
  * @since 1.0.2 Adding auto login after check account creation
  */
 function ws_gravity_registration_autologin( $user_id, $user_config, $entry, $password ) {
-	$user = get_userdata( $user_id );
-	$user_login = $user->user_login;
+	$user          = get_userdata( $user_id );
+	$user_login    = $user->user_login;
 	$user_password = $password;
 	   $user->set_role( get_option( 'default_role', 'apera-perks-partner' ) );
 
 	wp_signon(
 		array(
-			'user_login' => $user_login,
+			'user_login'    => $user_login,
 			'user_password' => $user_password,
-			'remember' => false,
+			'remember'      => false,
 
 		)
 	);

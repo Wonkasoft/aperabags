@@ -179,13 +179,14 @@ class Wonkasoft_WC_Meta_Box_Coupon_Data {
 					)
 				);
 
+				$exclude_sale_prices = get_post_meta( $post->ID, 'exclude_sale_prices', true );
 				// Exclude Sale Prices.
 				woocommerce_wp_checkbox(
 					array(
 						'id'          => 'exclude_sale_prices',
 						'label'       => __( 'Exclude sale prices', 'woocommerce' ),
 						'description' => __( 'Check this box if the coupon should not apply to items sale price.', 'woocommerce' ),
-						'value'       => wc_bool_to_string( $coupon->get_exclude_sale_prices( 'edit' ) ),
+						'value'       => wc_bool_to_string( $exclude_sale_prices ),
 					)
 				);
 
@@ -365,39 +366,10 @@ class Wonkasoft_WC_Meta_Box_Coupon_Data {
 		// Check for dupe coupons.
 		$coupon_code  = wc_format_coupon_code( $post->post_title );
 		$id_from_code = wc_get_coupon_id_by_code( $coupon_code, $post_id );
-
-		if ( $id_from_code ) {
-			WC_Admin_Meta_Boxes::add_error( __( 'Coupon code already exists - customers will use the latest coupon with this code.', 'woocommerce' ) );
-		}
-
-		$product_categories         = isset( $_POST['product_categories'] ) ? (array) $_POST['product_categories'] : array();
-		$exclude_product_categories = isset( $_POST['exclude_product_categories'] ) ? (array) $_POST['exclude_product_categories'] : array();
-
-		$coupon = new Wonkasoft_WC_Coupon( $post_id );
-		$coupon->set_props(
-			array(
-				'code'                        => $post->post_title,
-				'discount_type'               => wc_clean( $_POST['discount_type'] ),
-				'amount'                      => wc_format_decimal( $_POST['coupon_amount'] ),
-				'date_expires'                => wc_clean( $_POST['expiry_date'] ),
-				'individual_use'              => isset( $_POST['individual_use'] ),
-				'product_ids'                 => isset( $_POST['product_ids'] ) ? array_filter( array_map( 'intval', (array) $_POST['product_ids'] ) ) : array(),
-				'excluded_product_ids'        => isset( $_POST['exclude_product_ids'] ) ? array_filter( array_map( 'intval', (array) $_POST['exclude_product_ids'] ) ) : array(),
-				'usage_limit'                 => absint( $_POST['usage_limit'] ),
-				'usage_limit_per_user'        => absint( $_POST['usage_limit_per_user'] ),
-				'limit_usage_to_x_items'      => absint( $_POST['limit_usage_to_x_items'] ),
-				'free_shipping'               => isset( $_POST['free_shipping'] ),
-				'product_categories'          => array_filter( array_map( 'intval', $product_categories ) ),
-				'excluded_product_categories' => array_filter( array_map( 'intval', $exclude_product_categories ) ),
-				'exclude_sale_items'          => isset( $_POST['exclude_sale_items'] ),
-				'exclude_sale_prices'         => isset( $_POST['exclude_sale_prices'] ),
-				'minimum_amount'              => wc_format_decimal( $_POST['minimum_amount'] ),
-				'maximum_amount'              => wc_format_decimal( $_POST['maximum_amount'] ),
-				'email_restrictions'          => array_filter( array_map( 'trim', explode( ',', wc_clean( $_POST['customer_email'] ) ) ) ),
-			)
-		);
-		$coupon->save();
-		do_action( 'woocommerce_coupon_options_save', $post_id, $coupon );
+		if ( isset( $_POST['exclude_sale_prices'] ) ) :
+			$exclude_sale_prices = isset( $_POST['exclude_sale_prices'] );
+			update_post_meta( $post_id, 'exclude_sale_prices', $exclude_sale_prices );
+		endif;
 	}
 }
 
@@ -514,9 +486,6 @@ class Wonkasoft_WC_Coupon extends WC_Coupon {
 	 */
 	protected function read_object_from_database() {
 		$this->data_store = WC_Data_Store::load( 'coupon' );
-		echo "<pre>\n";
-		print_r( $this->data_store );
-		echo "</pre>\n";
 
 		if ( $this->get_id() > 0 ) {
 			$this->data_store->read( $this );
