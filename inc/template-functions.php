@@ -2437,6 +2437,11 @@ function create_custom_database_tables() {
 }
 add_action( 'after_setup_theme', 'create_custom_database_tables' );
 
+/**
+ * This is supposed to set basic roles for users.
+ *
+ * @param  [type] $user_id [description]
+ */
 function wonkasoft_apera_basic_roles( $user_id ) {
 	$role          = 'apera_perks_partner';
 	$role_display  = 'Apera Perks Partner';
@@ -2453,6 +2458,33 @@ function wonkasoft_apera_basic_roles( $user_id ) {
 	endif;
 }
 add_action( 'user_register', 'wonkasoft_apera_basic_roles' );
+
+/**
+ * This fixes the login screen logo url.
+ */
+function wonkasoft_logo_url() {
+	return 'https://wonkasoft.com';
+}
+add_filter( 'login_headerurl', 'wonkasoft_logo_url' );
+
+/**
+ * This will place Wonkasoft Logo over the login form.
+ */
+function wonkasoft_login_logo() {
+	?>
+	<style type="text/css">
+		#login h1 a, .login h1 a {
+			background-image: url('https://wonkasoft.com/wp-content/uploads/2018/03/wonkasoft-teal-dark-logo-192.png');
+			height:65px;
+			width:320px;
+			background-size: 320px 65px;
+			background-repeat: no-repeat;
+			padding-bottom: 30px;
+		}
+	</style>
+	<?php
+}
+add_action( 'login_enqueue_scripts', 'wonkasoft_login_logo' );
 
 /**
  * This is for debugging.
