@@ -2437,6 +2437,23 @@ function create_custom_database_tables() {
 }
 add_action( 'after_setup_theme', 'create_custom_database_tables' );
 
+function wonkasoft_apera_basic_roles( $user_id ) {
+	$role          = 'apera_perks_partner';
+	$role_display  = 'Apera Perks Partner';
+	$role2         = 'customer';
+	$role2_display = 'Customer';
+
+	$user = new WP_User( $user_id );
+	if ( ! in_array( $role, $user->roles ) ) :
+		$user->add_role( $role, $role_display );
+	endif;
+
+	if ( ! in_array( $role2, $user->roles ) ) :
+		$user->add_role( $role2, $role2_display );
+	endif;
+}
+add_action( 'user_register', 'wonkasoft_apera_basic_roles' );
+
 /**
  * This is for debugging.
  *
