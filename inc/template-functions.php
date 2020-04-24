@@ -2461,11 +2461,24 @@ add_action( 'user_register', 'wonkasoft_apera_basic_roles' );
 
 /**
  * This fixes the login screen logo url.
+ *
+ * @return  string returns the logo url.
  */
 function wonkasoft_logo_url() {
 	return 'https://wonkasoft.com';
 }
 add_filter( 'login_headerurl', 'wonkasoft_logo_url' );
+
+/**
+ * Title to identify the current site.
+ *
+ * @return string returns title info.
+ */
+function wonkasoft_logo_url_title( $login_header_text ) {
+	$output = '<img src="https://wonkasoft.com/wp-content/uploads/2018/03/wonkasoft-teal-dark-logo-192.png" class="login-logo" /><p>Aperabags.com built by Wonkasoft</p>';
+	return $output;
+}
+add_filter( 'login_headertext', 'wonkasoft_logo_url_title' );
 
 /**
  * This will place Wonkasoft Logo over the login form.
@@ -2474,12 +2487,11 @@ function wonkasoft_login_logo() {
 	?>
 	<style type="text/css">
 		#login h1 a, .login h1 a {
-			background-image: url('https://wonkasoft.com/wp-content/uploads/2018/03/wonkasoft-teal-dark-logo-192.png');
-			height:65px;
-			width:320px;
-			background-size: 320px 65px;
-			background-repeat: no-repeat;
-			padding-bottom: 30px;
+			background-image: unset;
+			height: 94px;
+			width: 100%;
+			text-indent: 0;
+			margin: 0 auto;
 		}
 	</style>
 	<?php
