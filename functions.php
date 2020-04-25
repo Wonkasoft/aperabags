@@ -464,6 +464,19 @@ function ws_gravity_registration_autologin( $user_id, $user_config, $entry, $pas
 	$user_login    = $user->user_login;
 	$user_password = $password;
 
+	$role          = 'apera_perks_partner';
+	$role_display  = 'Apera Perks Partner';
+	$role2         = 'customer';
+	$role2_display = 'Customer';
+
+	if ( ! in_array( $role, $user->roles ) ) :
+		$user->add_role( $role, $role_display );
+	endif;
+
+	if ( ! in_array( $role2, $user->roles ) ) :
+		$user->add_role( $role2, $role2_display );
+	endif;
+
 	wp_signon(
 		array(
 			'user_login'    => $user_login,
