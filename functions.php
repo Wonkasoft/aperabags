@@ -463,7 +463,6 @@ function ws_gravity_registration_autologin( $user_id, $user_config, $entry, $pas
 	$user          = get_userdata( $user_id );
 	$user_login    = $user->user_login;
 	$user_password = $password;
-	   $user->set_role( get_option( 'default_role', 'apera-perks-partner' ) );
 
 	wp_signon(
 		array(
