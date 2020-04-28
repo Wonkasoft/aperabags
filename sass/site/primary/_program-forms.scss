@@ -98,6 +98,37 @@ form.wonka-join-mse-form {
 
 		li.engage-address {
 			grid-area: 5 / 1 / 6 / 3;
+			position: relative;
+
+			> div:first-of-type {
+				display: grid;
+				grid-auto-columns: auto;
+				grid-auto-rows: auto;
+				grid-gap: 15px;
+
+				span.address_line_1, span.address_line_2 {
+					grid-area: auto / 1 / auto / 4;
+				}
+
+				span.address_state {
+					grid-area: auto;	
+
+					select {
+						padding: 7px;
+						width: 100%;
+						border: 1px solid #ccc;
+						background: #ffffff;
+					}
+				}
+
+				span.address_city {
+					grid-area: auto / 1 / auto / 2;
+				}
+
+				span.address_zip {
+					grid-area: auto / 3 / auto / 4;
+				}
+			}
 		}
 
 		li.zip-email, 
