@@ -2209,9 +2209,9 @@ var componentForm;
 			write_review.addEventListener( 'click', function( e ) 
 				{
 					e.preventDefault();
-					if ( comment_form_wrapper.offsetHeight <= 25 ) 
+					if ( comment_form_wrapper.offsetHeight <= 55 ) 
 					{
-						comment_form_wrapper.style.height = 100 + '%';
+						comment_form_wrapper.style.height = 653 + 'px';
 						write_review.innerText = 'Cancel';
 					}
 					else

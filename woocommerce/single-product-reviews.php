@@ -52,7 +52,7 @@ if ( ! comments_open() ) {
 						'title_reply'         => have_comments() ? __( 'Write your review', 'woocommerce' ) : sprintf( __( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
 						'title_reply_to'      => __( 'Leave a Reply to %s', 'woocommerce' ),
 						'title_reply_before'  => '<span id="reply-title" class="comment-reply-title">',
-						'title_reply_after'   => '</span>',
+						'title_reply_after'   => '</span><br><span>Apera Perks members receive $5 AperaCash for each review written.</span>',
 						'comment_notes_after' => '',
 						'fields'              => array(
 							'author' => '<p class="comment-form-author form-group wonka-form-group">' . '<label for="author" class="sr-only">' . esc_html__( 'Name', 'woocommerce' ) . '&nbsp;<span class="required">*</span></label> ' .
