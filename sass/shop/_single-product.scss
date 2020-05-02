@@ -670,7 +670,7 @@ section.product-tabs-section {
 			}
 
 			div#review_form_wrapper {
-				height: 25px;
+				height: 35px;
 				overflow: hidden;
 				@include prefix( transition, $trans_35, o moz webkit );
 
@@ -689,7 +689,7 @@ section.product-tabs-section {
 				}
 
 				@include media-breakpoint( md ) {
-					height: 45px;
+					height: 25px;
 				}
 			}
 
