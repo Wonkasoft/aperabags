@@ -16,12 +16,12 @@ table.subscription-settings td.subscription-settings-cell {
 	max-width: 150px;
 }
 
-#the-comment-list li.comment-item {
+#activity-widget #the-comment-list li.comment-item {
 	display: flex;
 	align-items: flex-start;
 }
 
-#the-comment-list li.comment-item img {
+#activity-widget #the-comment-list li.comment-item img.avatar {
 	position: relative;
 	width: 85px;
 }
