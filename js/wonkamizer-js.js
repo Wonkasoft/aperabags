@@ -2206,12 +2206,13 @@ var componentForm;
 
 			var write_review_initial_text = write_review.innerText;
 			var comment_wrapper_height = comment_form_wrapper.offsetHeight;
+			var review_form = document.querySelector( '#review_form' );
 			write_review.addEventListener( 'click', function( e ) 
 				{
 					e.preventDefault();
 					if ( comment_form_wrapper.offsetHeight <= 25 ) 
 					{
-						comment_form_wrapper.style.height = 653 + 'px';
+						comment_form_wrapper.style.height = review_form.offsetHeight + 'px';
 						write_review.innerText = 'Cancel';
 					}
 					else
