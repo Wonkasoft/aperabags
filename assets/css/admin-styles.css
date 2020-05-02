@@ -23,5 +23,6 @@ table.subscription-settings td.subscription-settings-cell {
 
 #activity-widget #the-comment-list li.comment-item img.avatar {
 	position: relative;
-	width: 85px;
+	top: unset;
+	margin-right: 8px;
 }
