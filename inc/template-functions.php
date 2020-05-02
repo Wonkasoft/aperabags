@@ -361,6 +361,7 @@ add_filter( 'gform_enable_password_field', '__return_true' );
 function wonka_gform_field_modifications( $field_content, $field ) {
 	$form        = GFAPI::get_form( $field['formId'] );
 	$new_content = '';
+
 	if ( 'Refersion Registration Ambassador' === $form['title'] ) :
 		if ( 'Company' === $field['label'] ) :
 			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
@@ -374,6 +375,7 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 			return $new_content;
 		endif;
 	endif;
+
 	if ( 'Apera Perks Registration' === $form['title'] || 'Apera Perks Registration Checkout' === $form['title'] ) :
 		if ( 'Password' === $field['label'] ) :
 			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
@@ -408,6 +410,7 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 			return $new_content;
 		endif;
 	endif;
+
 	if ( 'Join MSE+' === $form['title'] || 'User Birthday' === $form['title'] ) :
 		if ( 'Military Date' === $field['label'] || 'Student Grad Date' === $field['label'] || 'Birthday Date' === $field['label'] ) :
 			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
@@ -423,6 +426,7 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 			return $new_content;
 		endif;
 	endif;
+
 	if ( 'fileupload' === $field['type'] ) :
 		$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
 		$element       = '';
@@ -454,6 +458,7 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 		}
 		return $new_content;
 	endif;
+
 	return $field_content;
 }
   add_filter( 'gform_field_content', 'wonka_gform_field_modifications', 10, 2 );
@@ -1607,9 +1612,15 @@ add_action( 'gform_after_submission', 'wonkasoft_after_code_entry', 10, 2 );
  * @param  bool  $ajax contains ajax.
  */
 function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry, $ajax ) {
-	if ( 'Apera Perks Registration' !== $form['title'] && 'User Birthday' !== $form['title'] ) {
+	$forms_to_process = array(
+		'Apera Perks Registration',
+		'Apera Perks Registration Checkout',
+		'User Birthday',
+	);
+	if ( ! in_array( $form['title'], $forms_to_process ) ) {
 		return $confirmation;
 	}
+
 	$entry_fields                  = array();
 	$entry_fields['custom_fields'] = array();
 	$set_labels                    = array(
@@ -1641,6 +1652,11 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		'Educator Subject',
 		'Educator Years',
 		'Educator Note',
+		'Employer Website',
+		'Occupational Email',
+		'Occupation',
+		'Occupational Years',
+		'Occupational Note',
 	);
 	$custom_fields                 = array();
 	$pattern                       = '/([ \/]{1,5})/';
@@ -1668,11 +1684,13 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 			endif;
 		endif;
 	}
+
 	if ( 'User Birthday' === $form['title'] ) {
 		$user = get_user_by( 'email', $entry_fields['birthday_email'] );
 		update_user_meta( $user->ID, 'users_birthday', $entry_fields['birthday_date'], '' );
 		return $confirmation;
 	}
+
 	if ( email_exists( $entry_fields['email'] ) ) {
 		$output       = '';
 		$output      .= '<p>' . $entry_fields['email'] . ' is already being used. You can login at the link below</p>';
@@ -1748,6 +1766,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 			update_user_meta( $user_id, 'mse_data', $entry_fields );
 		}
 	}
+
 	return $confirmation;
 }
 add_filter( 'gform_confirmation', 'wonkasoft_after_perks_registration_entry', 10, 4 );
@@ -2275,7 +2294,12 @@ function wonkasoft_pre_submission( $form ) {
 		}
 	}
 
-	$user       = get_user_by( 'email', $user_email );
+	$user = get_user_by( 'email', $user_email );
+
+	if ( 0 == $user ) :
+		return;
+	endif;
+
 	$first_name = preg_split( '/[\s]/', $user->data->display_name )[0];
 	$last_name  = preg_split( '/[\s]/', $user->data->display_name )[1];
 	foreach ( $inputs as $cur_input ) {

@@ -328,22 +328,26 @@ form.wonka-join-mse-form {
 			}
 
 			li.student-school-web,
-			li.educator-school-web {
+			li.educator-school-web,
+			li.occupation-web {
 				grid-area: 5 / 2 / 6 / 3;
 			}
 
 			li.student-email,
-			li.educator-email {
+			li.educator-email,
+			li.occupational-email {
 				grid-area: 7 / 1 / 8 / 2;
 			}
 
 			li.student-grad-date,
-			li.educator-subject {
+			li.educator-subject,
+			li.occupation {
 				grid-area: 6 / 2 / 7 / 3;
 			}
 
 			li.student-sports,
-			li.educator-years {
+			li.educator-years,
+			li.occupational-years {
 				grid-area: 7 / 2 / 8 / 3;
 			}
 		}
@@ -408,22 +412,26 @@ form.wonka-join-mse-form {
 			}
 
 			li.student-school-web,
-			li.educator-school-web {
+			li.educator-school-web,
+			li.occupation-web {
 				grid-area: 3 / 2 / 4 / 3;
 			}
 
 			li.student-email,
-			li.educator-email {
+			li.educator-email,
+			li.occupational-email {
 				grid-area: 5 / 1 / 6 / 2;
 			}
 
 			li.student-grad-date,
-			li.educator-subject {
+			li.educator-subject,
+			li.occupation {
 				grid-area: 4 / 2 / 5 / 3;
 			}
 
 			li.student-sports,
-			li.educator-years {
+			li.educator-years,
+			li.occupational-years {
 				grid-area: 5 / 2 / 6 / 3;
 			}
 		}
