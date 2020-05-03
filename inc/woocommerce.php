@@ -2142,7 +2142,7 @@ function ws_restrict_free_shipping( $is_available ) {
 			return false;
 		}
 
-		if ( 25 < WC()->cart->get_cart_subtotal() ) {
+		if ( 25.00 > WC()->cart->subtotal ) {
 			return false;
 		}
 	}
@@ -2166,7 +2166,7 @@ function ws_restrict_usps_priority_mail_under_25( $is_available, $package ) {
 			return false;
 		}
 
-		if ( in_array( 'apera_perks_partner', (array) $user->roles, true ) && 25 < WC()->cart->get_cart_subtotal() ) {
+		if ( in_array( 'apera_perks_partner', (array) $user->roles, true ) && 25 < WC()->cart->subtotal ) {
 			return false;
 		}
 

@@ -65,11 +65,14 @@
       li {
         display: flex;
         align-items: center;
-        padding: 8px 0;
       }
 
       label {
-        margin: 0 auto 0 8px;
+        margin: 8px;
+      }
+
+      .shipping-eta {
+        margin: 8px;
       }
     }
 
