@@ -13,7 +13,7 @@ function ws_wc_login_register() {
 
 	<div class="form-wrap container" id="customer_login">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-6 right-divider">
 				<h3><?php esc_html_e( 'Sign In and Earn Rewards', 'woocommerce' ); ?></h3>
 
 				<form class="woocommerce-form woocommerce-form-login login" method="post">
