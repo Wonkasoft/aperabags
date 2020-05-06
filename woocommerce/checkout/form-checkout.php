@@ -17,45 +17,53 @@
 
 defined( 'ABSPATH' ) || exit;
 
-do_action( 'woocommerce_before_checkout_form', $checkout );
+$guest = ( isset( $_GET['guestcheckout'] ) ) ? wp_kses_post( wp_unslash( $_GET['guestcheckout'] ) ) : 'false';
 
-// If checkout registration is disabled and not logged in, the user cannot checkout.
-if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_required() && ! is_user_logged_in() ) {
-	echo esc_html( apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'woocommerce' ) ) );
-	return;
-}
-	do_action( 'wonka_checkout_before_checkout_form_custom', $checkout );
-?>
+if ( ! is_user_logged_in() && 'false' === $guest ) :
+	echo do_shortcode( '[wc_login_register]' );
+else :
+	do_action( 'woocommerce_before_checkout_form', $checkout );
 
-<form name="checkout" autocomplete="off" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
-	
+	// If checkout registration is disabled and not logged in, the user cannot checkout.
+	if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_required() && ! is_user_logged_in() ) {
+		echo esc_html( apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'woocommerce' ) ) );
+		return;
+	}
+		do_action( 'wonka_checkout_before_checkout_form_custom', $checkout );
+	?>
 
-	<?php if ( $checkout->get_checkout_fields() ) : ?>
-
-		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
-
-		<div class="row wonka-checkout-row">
-		<div class="col-12" id="customer_details">
-			<div class="row">
-			<div class="col-12">
-				<?php do_action( 'woocommerce_checkout_shipping' ); ?>
-			</div><!-- .col-12 -->
-			</div>
-		</div><!-- #customer_details -->
-		</div><!-- .row -->
+	<form name="checkout" autocomplete="off" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 		
-		<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
 
-	<?php endif; ?>
+		<?php if ( $checkout->get_checkout_fields() ) : ?>
 
-			<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
+			<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
+
+			<div class="row wonka-checkout-row">
+			<div class="col-12" id="customer_details">
+				<div class="row">
+				<div class="col-12">
+					<?php do_action( 'woocommerce_checkout_shipping' ); ?>
+				</div><!-- .col-12 -->
+				</div>
+			</div><!-- #customer_details -->
+			</div><!-- .row -->
 			
+			<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
 
-				<?php do_action( 'woocommerce_checkout_order_review' ); ?>
+		<?php endif; ?>
 
-			
-			<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
-</form>
-<?php do_action( 'wonka_checkout_after_checkout_form_custom', $checkout ); ?>
+				<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
+				
 
-<?php do_action( 'woocommerce_after_checkout_form', $checkout ); ?>
+					<?php do_action( 'woocommerce_checkout_order_review' ); ?>
+
+				
+				<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
+	</form>
+	<?php do_action( 'wonka_checkout_after_checkout_form_custom', $checkout ); ?>
+
+	<?php
+	do_action( 'woocommerce_after_checkout_form', $checkout );
+
+endif;

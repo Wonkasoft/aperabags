@@ -534,7 +534,6 @@ function wonka_checkout_wrap_before( $checkout ) {
 		)
 	);
 }
-
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25, 1 );
 
 /**
@@ -2803,3 +2802,95 @@ function wonkasoft_woocommerce_cart_item_product( $current, $cart_item, $cart_it
 	return $cart_item['data'];
 }
 add_filter( 'woocommerce_cart_item_product', 'wonkasoft_woocommerce_cart_item_product', 10, 3 );
+
+/**
+ * Setting new discount conditions.
+ *
+ * @param  array $conditions Contains current discount conditions.
+ * @return array             returns filtered conditions.
+ */
+function wonkasoft_wad_get_discounts_conditions( $conditions ) {
+	$conditions['is-coupon-set'] = __( 'If coupon is', 'aperabags' );
+
+	return $conditions;
+}
+add_filter( 'wad_get_discounts_conditions', 'wonkasoft_wad_get_discounts_conditions', 10 );
+
+/**
+ * This function sets the evaluable condition.
+ *
+ * @param  [type] $set        [description]
+ * @param  [type] $rule       [description]
+ * @param  int    $product_id contains the product id.
+ * @return array             returns the array to be for options.
+ */
+function wonkasoft_wad_get_evaluable_condition( $rule, $product_id ) {
+
+	if ( 'is-coupon-set' === $rule['condition'] ) :
+		$couponargs = array(
+			'post_type'      => 'shop_coupon',
+			'orderby'        => 'title',
+			'order'          => 'ASC',
+			'posts_per_page' => '-1',
+		);
+
+		$couponquery = new WP_Query( $couponargs );
+
+		return $couponquery;
+	endif;
+	return;
+}
+add_filter( 'wad_get_evaluable_condition', 'wonkasoft_wad_get_evaluable_condition', 10, 2 );
+
+/**
+ * [wonkasoft_wad_fields_values_match description]
+ *
+ * @param  [type] $condition      [description]
+ * @param  [type] $selected_value [description]
+ * @return [type]                 [description]
+ */
+function wonkasoft_wad_fields_values_match( $condition, $selected_value ) {
+	$selected_value_arr = array();
+	$selected_value_str = '';
+	if ( is_array( $selected_value ) ) {
+		$selected_value_arr = $selected_value;
+	} else {
+		$selected_value_str = $selected_value;
+	}
+
+	$couponargs    = array(
+		'post_type'      => 'shop_coupon',
+		'orderby'        => 'title',
+		'order'          => 'ASC',
+		'posts_per_page' => '-1',
+	);
+	$field_name    = 'o-discount[rules][{rule-group}][{rule-index}][value]';
+	$coupon        = new WP_Query( $couponargs );
+	$coupon_select = get_wad_html_select( $field_name . '[]', false, '', $coupon, $selected_value_arr, true, true );
+
+	$condition['is-coupon-set'] = $coupon_select;
+
+	return $condition;
+}
+add_filter( 'wad_fields_values_match', 'wonkasoft_wad_fields_values_match', 10, 2 );
+
+/**
+ * [wonkasoft_wad_operators_fields_match description]
+ *
+ * @param  [type] $condition      [description]
+ * @param  [type] $selected_value [description]
+ * @return [type]                 [description]
+ */
+function wonkasoft_wad_operators_fields_match( $condition, $selected_value ) {
+	$field_name              = 'o-discount[rules][{rule-group}][{rule-index}][operator]';
+	$arrays_operators        = array(
+		'IN'     => __( 'IN', 'woo-advanced-discounts' ),
+		'NOT IN' => __( 'NOT IN', 'woo-advanced-discounts' ),
+	);
+	$arrays_operators_select = get_wad_html_select( $field_name, false, '', $arrays_operators, $selected_value );
+
+	$condition['is-coupon-set'] = $arrays_operators_select;
+
+	return $condition;
+}
+add_filter( 'wad_operators_fields_match', 'wonkasoft_wad_operators_fields_match', 10, 2 );

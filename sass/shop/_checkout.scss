@@ -23,6 +23,23 @@
 		}
  	}
 
+ 	.lost_password {
+ 		margin: 15px 0;
+ 	}
+
+	.form-button-row {
+		margin: 15px 0;
+	}
+
+	.checkout-login.login {
+		border-right: 2px solid rgba( 0,0,0, 0 );
+		@include transition( all .25s ease-in-out );
+
+		@include media-breakpoint( lg ) {
+			border-right: 2px solid rgba( 0,0,0, 0.2 );
+	 	}
+	}
+
  	.fp_apply_reward {
 
  		.input-group {

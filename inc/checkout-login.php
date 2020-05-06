@@ -15,7 +15,7 @@ function ws_wc_login_register() {
 	do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 	<div class="row justify-content-center" id="customer_login">
-		<div class="col-12 col-lg-6 login">
+		<div class="col-12 col-lg-6 checkout-login login">
 
 			<h2><?php esc_html_e( 'Sign In and Earn Rewards', 'woocommerce' ); ?></h2>
 
@@ -49,7 +49,7 @@ function ws_wc_login_register() {
 				do_action( 'woocommerce_login_form' );
 
 				?>
-				<div class="form-row">
+				<div class="form-row form-button-row">
 				<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
 				<button type="submit" class="woocommerce-Button button wonka-btn" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Log in', 'woocommerce' ); ?></button>
 			</div>
@@ -67,7 +67,7 @@ function ws_wc_login_register() {
 			<div class="col-12 col-lg-6">
 				<h2><?php echo esc_html( sprintf( __( 'Or Checkout as a Guest', 'woocommerce' ) ) ); ?></h2>
 
-				<a href="<?php site_url(); ?>/checkout/?guestcheckout=true" class="btn wonka-btn">Guest Checkout</a>
+				<a href="<?php echo esc_url( get_site_url() ) . '/checkout/?guestcheckout=true'; ?>" class="btn wonka-btn">Guest Checkout</a>
 			</div>
 		</div>
 	<?php
@@ -75,29 +75,3 @@ function ws_wc_login_register() {
 	return ob_get_clean();
 }
 add_shortcode( 'wc_login_register', 'ws_wc_login_register' );
-
-
-/**
- * Redirect to login/register pre-checkout.
- *
- * Redirect guest users to login/register before completing a order.
- *
- * @author Louis <Support@wonkasoft.com>
- * @since 1.0.3 This is to force the login page before checkout
- */
-function ws_redirect_pre_checkout() {
-	if ( ! function_exists( 'wc' ) ) {
-		return;
-	}
-
-	$redirect_page_id = 16367; // Update this to the page you would like to load before checkout.
-
-	if ( ! is_user_logged_in() && is_checkout() ) {
-		wp_safe_redirect( get_permalink( $redirect_page_id ) );
-		die;
-	} elseif ( is_user_logged_in() || is_page( $redirect_page_id ) ) {
-		wp_safe_redirect( get_permalink( wc_get_page_id( 'checkout' ) ) );
-		die;
-	}
-}
-add_action( 'template_redirect', 'ws_redirect_pre_checkout' );
