@@ -13,7 +13,7 @@ function ws_wc_login_register() {
 
 	<div class="u-columns col2-set container" id="customer_login">
 		<div class="u-column1 row">
-			<div class="col-lg-6">
+			<div class="col-md-6">
 				<h3><?php esc_html_e( 'Sign In and Earn Rewards', 'woocommerce' ); ?></h3>
 
 				<form class="woocommerce-form woocommerce-form-login login" method="post">
@@ -61,7 +61,7 @@ function ws_wc_login_register() {
 		</div>
 
 		<div class="row">
-			<div class="col-lg-6">
+			<div class="col-md-6">
 				<h3><?php echo sprintf( __( 'Or Checkout as a Guest', 'woocommerce' ) ); ?></h3>
 				<a href="/checkout?guestcheckout" class="btn wonka-btn">Guest Checkout</a>
 			</div>
