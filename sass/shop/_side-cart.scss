@@ -6,7 +6,17 @@
 	.xoo-wsc-header,
 	.xoo-wsc-body,
 	.xoo-wsc-footer {
+		padding: 8px 15px;
 		@include prefix( transition, $trans_3, o moz webkit );
+	}
+
+	.xoo-wsc-header {
+
+		.xoo-wsc-ctxt {
+			display: block;
+			margin: auto;
+			text-align: center;
+		}
 	}
 
 	.xoo-wsc-footer {
@@ -14,13 +24,29 @@
 		.xoo-wsc-tools {
 
 			> div.xoo-wsc-tool {
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				margin: auto;
+				
+				&.xoo-wsc-subtotal {
+
+				}
+
+				.xoo-wsc-tools-label {
+					padding: 0 4px;
+				}
+
+				.xoo-wsc-tools-value {
+					padding: 0 4px;
+				}
+
+				&.xoo-wsc-total {
+					display: none;
+				}
 			}
 		}
 
-		.xoo-wsc-total {
-			display: none;
-		}
 
 		#xoo-wsc-coupon-code {
 			border-radius: 100px 0 0 100px;

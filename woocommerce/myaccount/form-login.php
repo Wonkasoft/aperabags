@@ -12,7 +12,7 @@
  *
  * @see     https://docs.woocommerce.com/document/template-structure/
  * @package WooCommerce/Templates
- * @version 3.6.0
+ * @version 4.1.0
  */
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
@@ -84,7 +84,9 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 		<!-- </p> -->
 
 		<div class="apera-registration-form-container">
-			<?php echo gravity_form( 'Apera Perks Registration', false, false, false, null, true, 0, false ); ?>
+			<?php
+			gravity_form( 'Apera Perks Registration', false, false, false, null, true, 0, true );
+			?>
 
 			<?php do_action( 'woocommerce_register_form' ); ?>
 
