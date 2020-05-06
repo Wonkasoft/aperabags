@@ -917,30 +917,6 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 						<td colspan="2"><?php wc_cart_totals_subtotal_html(); ?></td>
 					</tr>
 
-					<?php if ( wc_coupons_enabled() ) : ?>
-						<tr class="cart-promo">
-							<td colspan="3">
-								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-									<div class="panel panel-default activate-panel" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-										<div class="panel-heading" role="tab" id="headingOne">
-											<span class="panel-title">
-												Add Promo Code (Optional)
-											</span>
-										</div>
-									</div>
-								</div>
-								<div id="collapseOne" class="panel-collapse collapse in collapse show" role="tabpanel" aria-labelledby="headingOne">
-									<div class="panel-body">
-										<form method="post" class="coupon form-group form-inline">
-											<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
-											<?php do_action( 'woocommerce_cart_coupon' ); ?>
-										</form>
-									</div>
-								</div>
-							</td>
-						</tr>
-					<?php endif; ?>
-
 					<?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
 					<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
 						<th><?php wc_cart_totals_coupon_label( $coupon ); ?></th>
