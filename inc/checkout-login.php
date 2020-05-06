@@ -61,7 +61,7 @@ function ws_wc_login_register() {
 
 			<div class="col-md-6">
 				<h3><?php echo sprintf( __( 'Or Checkout as a Guest', 'woocommerce' ) ); ?></h3>
-				<a href="/checkout?guestcheckout" class="btn wonka-btn">Guest Checkout</a>
+				<a href="/checkout?guestcheckout=true" class="btn wonka-btn">Guest Checkout</a>
 			</div>
 		</div>
 	</div>
@@ -85,11 +85,12 @@ function ws_redirect_pre_checkout() {
 		return;
 	}
 
+	$guest = $GET['guestcheckout'];
 	$redirect_page_id = 16367; // Update this to the page you would like to load before checkout
 	if ( ! is_user_logged_in() && is_checkout() ) {
 		wp_safe_redirect( get_permalink( $redirect_page_id ) );
 		die;
-	} elseif ( is_user_logged_in() && is_page( $redirect_page_id ) ) {
+	} elseif ( is_user_logged_in() && is_page( $redirect_page_id ) || 'true' == $guest ) {
 		wp_safe_redirect( get_permalink( wc_get_page_id( 'checkout' ) ) );
 		die;
 	}
