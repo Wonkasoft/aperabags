@@ -247,6 +247,8 @@ require_once get_stylesheet_directory() . '/inc/customizer.php';
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once get_stylesheet_directory() . '/inc/woocommerce.php';
 
+	require_once get_stylesheet_directory() . '/inc/checkout-login.php';
+
 	add_action( 'do_meta_boxes', 'customize_coupon_data_meta_box' );
 }
 
