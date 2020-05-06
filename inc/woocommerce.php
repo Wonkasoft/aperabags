@@ -2777,3 +2777,29 @@ function wonkasoft_registration_save( $user_id ) {
 	endif;
 }
 add_action( 'user_register', 'wonkasoft_registration_save', 10, 1 );
+
+/**
+ * This function fixes the side-cart product name which was an anchor loading in an anchor.
+ *
+ * @param  array  $cart_item     contains the array of the cart item.
+ * @param  string $cart_item_key contains the cart item key.
+ * @return string                returns the cart items product name after filtering.
+ */
+function wonkasoft_woocommerce_cart_item_name( $current, $cart_item, $cart_item_key ) {
+	$current = $cart_item['data']->get_parent_data()['title'];
+	return $current;
+
+}
+add_filter( 'woocommerce_cart_item_name', 'wonkasoft_woocommerce_cart_item_name', 10, 3 );
+
+/**
+ * This function is to get rid of the product name on top of item in cart.
+ *
+ * @param  array  $cart_item     contains the array of the cart item.
+ * @param  string $cart_item_key contains the cart item key.
+ * @return empty returns empty to eleminate the parsing of this.
+ */
+function wonkasoft_woocommerce_cart_item_product( $current, $cart_item, $cart_item_key ) {
+	return $cart_item['data'];
+}
+add_filter( 'woocommerce_cart_item_product', 'wonkasoft_woocommerce_cart_item_product', 10, 3 );

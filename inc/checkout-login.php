@@ -11,10 +11,10 @@ function ws_wc_login_register() {
 	ob_start();
 	do_action( 'woocommerce_before_customer_login_form' ); ?>
 
-	<div class="u-columns col2-set" id="customer_login">
-		<div class="u-column1 col-1">
+	<div class="row justify-content-center" id="customer_login">
+		<div class="col-12 col-lg-6 login">
 
-			<h3><?php esc_html_e( 'Existing customer', 'woocommerce' ); ?></h3>
+			<h2><?php esc_html_e( 'Existing customer', 'woocommerce' ); ?></h2>
 
 			<form class="woocommerce-form woocommerce-form-login login" method="post">
 			<?php
@@ -57,13 +57,10 @@ function ws_wc_login_register() {
 
 		<div class="u-column2 col-2">
 
-			<h3><?php echo sprintf( __( 'New at %s?', 'woocommerce' ), get_option( 'blogname' ) ); ?></h3>
+			<h2><?php echo sprintf( __( 'New at %s?', 'woocommerce' ), get_option( 'blogname' ) ); ?></h2>
 
 			<form method="post" class="woocommerce-form woocommerce-form-register register" <?php do_action( 'woocommerce_register_form_tag' ); ?> >
-																											 <?php
-																												do_action( 'woocommerce_register_form_start' );
-
-																												?>
+				<?php do_action( 'woocommerce_register_form_start' ); ?>
 				<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
 					<label for="reg_email"><?php esc_html_e( 'Email address', 'woocommerce' ); ?>
 					<input type="email" class="woocommerce-Input woocommerce-Input--text input-text" name="email" id="reg_email" autocomplete="email" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( wp_unslash( $_POST['email'] ) ) : ''; ?>" /><?php // @codingStandardsIgnoreLine ?>

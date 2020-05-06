@@ -19,9 +19,30 @@
 		}
 	}
 
+	.xoo-wsc-body {
+
+		.xoo-wsc-product {
+
+			.xoo-wsc-img-col {
+
+				img {
+					height: 110px;
+				    max-width: 100%;
+				    object-fit: cover;
+				}
+			}
+
+			.xoo-wsc-pname {
+				@include font-size( .9 );
+			}
+		}
+	}
+
 	.xoo-wsc-footer {
+		padding: 0 0 8px;
 
 		.xoo-wsc-tools {
+			padding: 0;
 
 			> div.xoo-wsc-tool {
 				display: flex;
@@ -30,7 +51,9 @@
 				margin: auto;
 				
 				&.xoo-wsc-subtotal {
-
+					color: #444444;
+					padding: 8px;
+					background: #fafafa;
 				}
 
 				.xoo-wsc-tools-label {
