@@ -90,14 +90,18 @@ function ws_redirect_pre_checkout() {
 		return;
 	}
 
-	$guest            = ( isset( $_GET['guestcheckout'] ) ) ? wp_kses_data( wp_unslash( $_GET['guestcheckout'] ) ) : false;
+	$guest = ( isset( $_GET['guestcheckout'] ) ) ? wp_kses_data( wp_unslash( $_GET['guestcheckout'] ) ) : false;
+	echo "<pre>\n";
+	print_r( this );
+	echo "</pre>\n";
+
 	$redirect_page_id = 16367; // Update this to the page you would like to load before checkout.
 
 	if ( is_checkout() ) :
 		if ( is_user_logged_in() && is_page( $redirect_page_id ) || 'true' === $guest ) {
 			wp_safe_redirect( get_permalink( wc_get_page_id( 'checkout' ) ) );
 			die;
-		} elseif ( ! is_user_logged_in() ) {
+		} elseif ( ! is_user_logged_in() && false === $guest ) {
 			wp_safe_redirect( get_permalink( $redirect_page_id ) );
 			die;
 		}
