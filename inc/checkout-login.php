@@ -11,10 +11,10 @@ function ws_wc_login_register() {
 	ob_start();
 	do_action( 'woocommerce_before_customer_login_form' ); ?>
 
-	<div class="u-columns col2-set" id="customer_login">
-		<div class="u-column1 col-1">
+	<div class="u-columns col2-set col" id="customer_login">
+		<div class="u-column1 col">
 
-			<h3><?php esc_html_e( 'Existing customer', 'woocommerce' ); ?></h3>
+			<h3><?php esc_html_e( 'Sign In and Earn Rewards', 'woocommerce' ); ?></h3>
 
 			<form class="woocommerce-form woocommerce-form-login login" method="post">
 			<?php
@@ -44,6 +44,9 @@ function ws_wc_login_register() {
 						<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span><?php esc_html_e( 'Remember me', 'woocommerce' ); ?></span>
 					</label>
 				</p>
+				<p>
+					Don't have an account? <a href="#" class="create-account-checkout">Create Account</a>
+				</p>
 				<p class="woocommerce-LostPassword lost_password">
 					<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Lost your password?', 'woocommerce' ); ?></a>
 				</p>
@@ -55,41 +58,15 @@ function ws_wc_login_register() {
 
 		</div>
 
-		<div class="u-column2 col-2">
+		<div class="u-column2 col">
 
-			<h3><?php echo sprintf( __( 'New at %s?', 'woocommerce' ), get_option( 'blogname' ) ); ?></h3>
+			<h3><?php echo sprintf( __( 'Or Checkout as a Guest', 'woocommerce' ) ); ?></h3>
 
-			<form method="post" class="woocommerce-form woocommerce-form-register register" <?php do_action( 'woocommerce_register_form_tag' ); ?> >
-																											 <?php
-																												do_action( 'woocommerce_register_form_start' );
-
-																												?>
-				<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-					<label for="reg_email"><?php esc_html_e( 'Email address', 'woocommerce' ); ?>
-					<input type="email" class="woocommerce-Input woocommerce-Input--text input-text" name="email" id="reg_email" autocomplete="email" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( wp_unslash( $_POST['email'] ) ) : ''; ?>" /><?php // @codingStandardsIgnoreLine ?>
-				</p>
-				<?php
-
-				do_action( 'woocommerce_register_form' );
-
-				?>
-				<p class="woocommerce-FormRow form-row">
-				<?php
-					wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' );
-				?>
-					<button type="submit" class="woocommerce-Button button" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>"><?php esc_html_e( 'Continue ordering', 'woocommerce' ); ?></button>
-				</p>
-				<?php
-
-				do_action( 'woocommerce_register_form_end' );
-				?>
-			</form>
+			<a href="/checkout" class="btn wonka-btn">Guest Checkout</a>
 
 		</div>
 	</div>
 	<?php
-
-	do_action( 'woocommerce_after_customer_login_form' );
 
 	return ob_get_clean();
 }
