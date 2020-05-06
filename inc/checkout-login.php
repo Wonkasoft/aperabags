@@ -104,7 +104,7 @@ add_shortcode( 'wc_login_register', 'ws_wc_login_register' );
  * @author Louis <Support@wonkasoft.com>
  * @since 1.0.3 This is to force the login page before checkout
  */
-function ace_redirect_pre_checkout() {
+function ws_redirect_pre_checkout() {
 	if ( ! function_exists( 'wc' ) ) {
 		return;
 	}
@@ -118,4 +118,4 @@ function ace_redirect_pre_checkout() {
 		die;
 	}
 }
-add_action( 'template_redirect', 'ace_redirect_pre_checkout' );
+add_action( 'template_redirect', 'ws_redirect_pre_checkout' );
