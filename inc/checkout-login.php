@@ -91,6 +91,7 @@ function ws_redirect_pre_checkout() {
 	}
 
 	$guest = ( isset( $_GET['guestcheckout'] ) ) ? wp_kses_data( wp_unslash( $_GET['guestcheckout'] ) ) : false;
+
 	echo "<pre>\n";
 	print_r( $guest );
 	echo "</pre>\n";
