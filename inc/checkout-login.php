@@ -1,12 +1,15 @@
 <?php
-
 /**
  * Custom login/register form(s) shortcode.
  *
  * @author Louis <Support@wonkasoft.com>
+ * @package aperabags
  * @since 1.0.3 Custom login/register page before checkout
  */
 
+/**
+ * This is the sign in form on checkout.
+ */
 function ws_wc_login_register() {
 	ob_start();
 	do_action( 'woocommerce_before_customer_login_form' ); ?>
@@ -14,7 +17,7 @@ function ws_wc_login_register() {
 	<div class="row justify-content-center" id="customer_login">
 		<div class="col-12 col-lg-6 login">
 
-			<h2><?php esc_html_e( 'Existing customer', 'woocommerce' ); ?></h2>
+			<h2><?php esc_html_e( 'Sign In and Earn Rewards', 'woocommerce' ); ?></h2>
 
 			<form class="woocommerce-form woocommerce-form-login login" method="post">
 			<?php
@@ -62,12 +65,11 @@ function ws_wc_login_register() {
 		</div>
 
 			<div class="col-12 col-lg-6">
-				<h2><?php echo sprintf( __( 'Or Checkout as a Guest', 'woocommerce' ) ); ?></h2>
+				<h2><?php echo esc_html( sprintf( __( 'Or Checkout as a Guest', 'woocommerce' ) ) ); ?></h2>
 
-				<a href="/checkout?guestcheckout=true" class="btn wonka-btn">Guest Checkout</a>
+				<a href="<?php site_url(); ?>/checkout/?guestcheckout=true" class="btn wonka-btn">Guest Checkout</a>
 			</div>
 		</div>
-	</div>
 	<?php
 
 	return ob_get_clean();
@@ -88,8 +90,8 @@ function ws_redirect_pre_checkout() {
 		return;
 	}
 
-	$guest            = ( isset( $_GET['guestcheckout'] ) ) ? esc_html( wp_unslash( $_GET['guestcheckout'] ) ) : false;
-	$redirect_page_id = 16367; // Update this to the page you would like to load before checkout
+	$guest            = ( isset( $_GET['guestcheckout'] ) ) ? wp_kses_data( wp_unslash( $_GET['guestcheckout'] ) ) : false;
+	$redirect_page_id = 16367; // Update this to the page you would like to load before checkout.
 	if ( ! is_user_logged_in() && is_checkout() ) {
 		wp_safe_redirect( get_permalink( $redirect_page_id ) );
 		die;
