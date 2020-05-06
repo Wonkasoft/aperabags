@@ -40,10 +40,12 @@ function ws_wc_login_register() {
 
 					?>
 						<button type="submit" class="woocommerce-Button button" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Log in', 'woocommerce' ); ?></button>
-						<label class="woocommerce-form__label woocommerce-form__label-for-checkbox inline">
-							<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span><?php esc_html_e( 'Remember me', 'woocommerce' ); ?></span>
-						</label>
-					</p>
+						</p>
+						<p>
+							<label class="woocommerce-form__label woocommerce-form__label-for-checkbox">
+								<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span><?php esc_html_e( 'Remember me', 'woocommerce' ); ?></span>
+							</label>
+						</p>
 					<p>
 						Don't have an account? <a href="#" class="create-account-checkout">Create Account</a>
 					</p>
@@ -58,7 +60,7 @@ function ws_wc_login_register() {
 			</div>
 		</div>
 
-		<div class="u-column2 row">
+		<div class="row">
 			<div class="col">
 				<h3><?php echo sprintf( __( 'Or Checkout as a Guest', 'woocommerce' ) ); ?></h3>
 				<a href="/checkout?guestcheckout" class="btn wonka-btn">Guest Checkout</a>
