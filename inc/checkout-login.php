@@ -92,11 +92,12 @@ function ws_redirect_pre_checkout() {
 
 	$guest            = ( isset( $_GET['guestcheckout'] ) ) ? wp_kses_data( wp_unslash( $_GET['guestcheckout'] ) ) : false;
 	$redirect_page_id = 16367; // Update this to the page you would like to load before checkout.
+
 	if ( is_checkout() ) :
 		if ( is_user_logged_in() && is_page( $redirect_page_id ) || 'true' === $guest ) {
 			wp_safe_redirect( get_permalink( wc_get_page_id( 'checkout' ) ) );
 			die;
-		} else {
+		} elseif ( ! is_user_logged_in() ) {
 			wp_safe_redirect( get_permalink( $redirect_page_id ) );
 			die;
 		}
