@@ -85,7 +85,7 @@ function ws_redirect_pre_checkout() {
 		return;
 	}
 
-	$guest = $GET['guestcheckout'];
+	$guest = $_GET['guestcheckout'];
 	$redirect_page_id = 16367; // Update this to the page you would like to load before checkout
 	if ( ! is_user_logged_in() && is_checkout() ) {
 		wp_safe_redirect( get_permalink( $redirect_page_id ) );
