@@ -109,7 +109,7 @@ function ace_redirect_pre_checkout() {
 		return;
 	}
 
-	$redirect_page_id = 2555; // Update this to the page you would like to load before checkout
+	$redirect_page_id = 16367; // Update this to the page you would like to load before checkout
 	if ( ! is_user_logged_in() && is_checkout() ) {
 		wp_safe_redirect( get_permalink( $redirect_page_id ) );
 		die;
