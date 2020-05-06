@@ -11,8 +11,8 @@ function ws_wc_login_register() {
 	ob_start();
 	do_action( 'woocommerce_before_customer_login_form' ); ?>
 
-	<div class="u-columns col2-set container" id="customer_login">
-		<div class="u-column1 row">
+	<div class="form-wrap container" id="customer_login">
+		<div class="row">
 			<div class="col-md-6">
 				<h3><?php esc_html_e( 'Sign In and Earn Rewards', 'woocommerce' ); ?></h3>
 
