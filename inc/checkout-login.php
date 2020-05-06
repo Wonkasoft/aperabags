@@ -55,7 +55,6 @@ function ws_wc_login_register() {
 					do_action( 'woocommerce_login_form_end' );
 					?>
 				</form>
-				</div>
 			</div>
 		</div>
 
