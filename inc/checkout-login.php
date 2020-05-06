@@ -58,9 +58,7 @@ function ws_wc_login_register() {
 					?>
 				</form>
 			</div>
-		</div>
 
-		<div class="row">
 			<div class="col-md-6">
 				<h3><?php echo sprintf( __( 'Or Checkout as a Guest', 'woocommerce' ) ); ?></h3>
 				<a href="/checkout?guestcheckout" class="btn wonka-btn">Guest Checkout</a>
