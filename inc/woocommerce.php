@@ -909,7 +909,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 					do_action( 'woocommerce_review_order_after_cart_contents' );
 				?>
 				</tbody>
-				<tfoot>
+				<tfoot>                                                                                                                                                                                               
 
 					<tr class="cart-subtotal">
 						<th><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
@@ -2777,6 +2777,8 @@ function wonkasoft_registration_save( $user_id ) {
 }
 add_action( 'user_register', 'wonkasoft_registration_save', 10, 1 );
 
+remove_filter( 'woocommerce_cart_item_name', array( $_GLOBALS['ced_click_n_go'], 'ced_ocor_cart_item_data' ), 10, 3 );
+
 /**
  * This function fixes the side-cart product name which was an anchor loading in an anchor.
  *
@@ -2785,15 +2787,14 @@ add_action( 'user_register', 'wonkasoft_registration_save', 10, 1 );
  * @return string                returns the cart items product name after filtering.
  */
 function wonkasoft_woocommerce_cart_item_name( $current, $cart_item, $cart_item_key ) {
-	// $current = $cart_item['data']->get_parent_data()['title'];
+	$current = $cart_item['data']->get_parent_data()['title'];
 	echo "<pre>\n";
-	 print_r( $current );
-	 echo "</pre>\n";
+	print_r( $cart_item['data'] );
+	echo "</pre>\n";
 
 	return $current;
-
 }
-add_filter( 'woocommerce_cart_item_name', 'wonkasoft_woocommerce_cart_item_name', 10, 3 );
+// add_filter( 'cart_woocommerce_cart_item_name', 'wonkasoft_woocommerce_cart_item_name', 10, 3 );
 
 /**
  * This function is to get rid of the product name on top of item in cart.
