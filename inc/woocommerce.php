@@ -849,7 +849,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 			<tbody>
 				<?php
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-					$_product   = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+					$_product   = apply_filters( 'checkout_review_woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
 					$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
 
 					if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
@@ -2785,7 +2785,11 @@ add_action( 'user_register', 'wonkasoft_registration_save', 10, 1 );
  * @return string                returns the cart items product name after filtering.
  */
 function wonkasoft_woocommerce_cart_item_name( $current, $cart_item, $cart_item_key ) {
-	$current = $cart_item['data']->get_parent_data()['title'];
+	// $current = $cart_item['data']->get_parent_data()['title'];
+	echo "<pre>\n";
+	 print_r( $current );
+	 echo "</pre>\n";
+
 	return $current;
 
 }
@@ -2819,26 +2823,19 @@ add_filter( 'wad_get_discounts_conditions', 'wonkasoft_wad_get_discounts_conditi
 /**
  * This function sets the evaluable condition.
  *
- * @param  [type] $set        [description]
  * @param  [type] $rule       [description]
  * @param  int    $product_id contains the product id.
  * @return array             returns the array to be for options.
  */
 function wonkasoft_wad_get_evaluable_condition( $rule, $product_id ) {
 
+	$evaluable_condition = false;
+
 	if ( 'is-coupon-set' === $rule['condition'] ) :
-		$couponargs = array(
-			'post_type'      => 'shop_coupon',
-			'orderby'        => 'title',
-			'order'          => 'ASC',
-			'posts_per_page' => '-1',
-		);
-
-		$couponquery = new WP_Query( $couponargs );
-
-		return $couponquery;
+		$evaluable_condition = true;
 	endif;
-	return;
+
+	return $evaluable_condition;
 }
 add_filter( 'wad_get_evaluable_condition', 'wonkasoft_wad_get_evaluable_condition', 10, 2 );
 
@@ -2849,7 +2846,7 @@ add_filter( 'wad_get_evaluable_condition', 'wonkasoft_wad_get_evaluable_conditio
  * @param  [type] $selected_value [description]
  * @return [type]                 [description]
  */
-function wonkasoft_wad_fields_values_match( $condition, $selected_value ) {
+function wonkasoft_wad_fields_values_match( $current_rules, $condition, $selected_value ) {
 	$selected_value_arr = array();
 	$selected_value_str = '';
 	if ( is_array( $selected_value ) ) {
@@ -2858,30 +2855,41 @@ function wonkasoft_wad_fields_values_match( $condition, $selected_value ) {
 		$selected_value_str = $selected_value;
 	}
 
-	$couponargs    = array(
+	$field_name   = 'o-discount[rules][{rule-group}][{rule-index}][value]';
+	$couponargs   = array(
 		'post_type'      => 'shop_coupon',
 		'orderby'        => 'title',
 		'order'          => 'ASC',
 		'posts_per_page' => '-1',
 	);
-	$field_name    = 'o-discount[rules][{rule-group}][{rule-index}][value]';
-	$coupon        = new WP_Query( $couponargs );
-	$coupon_select = get_wad_html_select( $field_name . '[]', false, '', $coupon, $selected_value_arr, true, true );
+	$coupon       = new WP_Query( $couponargs );
+	$coupon_array = array();
+	foreach ( $coupon->posts as $cur_coupon ) {
+		$coupon_array[ $cur_coupon->ID ] = $cur_coupon->post_title;
+	}
 
-	$condition['is-coupon-set'] = $coupon_select;
+	$coupon_select = get_wad_html_select( $field_name . '[]', false, '', $coupon_array, $selected_value_arr, true, true );
 
-	return $condition;
+	$current_rules['is-coupon-set'] = $coupon_select;
+	$values_match                   = $current_rules;
+
+	if ( isset( $values_match[ $condition ] ) ) {
+		return $values_match[ $condition ];
+	} else {
+		return $values_match;
+	}
 }
-add_filter( 'wad_fields_values_match', 'wonkasoft_wad_fields_values_match', 10, 2 );
+add_filter( 'wad_fields_values_match', 'wonkasoft_wad_fields_values_match', 10, 3 );
 
 /**
  * [wonkasoft_wad_operators_fields_match description]
  *
+ * @param  array  $current      contains an array of conditions.
  * @param  [type] $condition      [description]
  * @param  [type] $selected_value [description]
  * @return [type]                 [description]
  */
-function wonkasoft_wad_operators_fields_match( $condition, $selected_value ) {
+function wonkasoft_wad_operators_fields_match( $current_rules, $condition, $selected_value = '' ) {
 	$field_name              = 'o-discount[rules][{rule-group}][{rule-index}][operator]';
 	$arrays_operators        = array(
 		'IN'     => __( 'IN', 'woo-advanced-discounts' ),
@@ -2889,8 +2897,13 @@ function wonkasoft_wad_operators_fields_match( $condition, $selected_value ) {
 	);
 	$arrays_operators_select = get_wad_html_select( $field_name, false, '', $arrays_operators, $selected_value );
 
-	$condition['is-coupon-set'] = $arrays_operators_select;
+	$current_rules['is-coupon-set'] = $arrays_operators_select;
+	$operators_match                = $current_rules;
 
-	return $condition;
+	if ( isset( $operators_match[ $condition ] ) ) {
+		return $operators_match[ $condition ];
+	} else {
+		return $operators_match;
+	}
 }
-add_filter( 'wad_operators_fields_match', 'wonkasoft_wad_operators_fields_match', 10, 2 );
+add_filter( 'wad_operators_fields_match', 'wonkasoft_wad_operators_fields_match', 10, 3 );
