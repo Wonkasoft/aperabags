@@ -12,7 +12,10 @@
     }
 
     .woocommerce-notices-wrapper {
-      padding: 15px;
+
+      > span {
+        padding: 15px;
+      }
     }
 
     .woocommerce-notice,
