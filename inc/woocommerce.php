@@ -895,7 +895,17 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 								?>
 								</td>
 								<td class="product-name">
-									<?php echo apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;'; ?>
+									<?php
+									echo wp_kses(
+										sprintf( '<a href="%s" class="product-link">%s</a>', esc_url( $product_permalink ), apply_filters( 'cart_and_review_woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ),
+										array(
+											'a' => array(
+												'class' => array(),
+												'href'  => array(),
+											),
+										)
+									);
+									?>
 
 									<?php echo wc_get_formatted_cart_item_data( $cart_item ); ?>
 								</td>
@@ -1078,13 +1088,53 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= do_action( 'wonka_checkout_login_form' );
 
 	$output .= ob_get_clean();
-	echo $output;
+	echo wp_kses(
+		$output,
+		array(
+			'div'   => array(
+				'class' => array(),
+				'id'    => array(),
+				'role'  => array(),
+			),
+			'ul'    => array(
+				'class' => array(),
+				'id'    => array(),
+				'role'  => array(),
+			),
+			'li'    => array(
+				'class' => array(),
+			),
+			'table' => array(
+				'class' => array(),
+			),
+			'tbody' => array(
+				'class' => array(),
+			),
+			'tr'    => array(
+				'class' => array(),
+			),
+			'td'    => array(
+				'class'   => array(),
+				'colspan' => array(),
+			),
+			'span'  => array(
+				'class' => array(),
+			),
+			'a'     => array(
+				'class'          => array(),
+				'href'           => array(),
+				'id'             => array(),
+				'role'           => array(),
+				'data-toggle'    => array(),
+				'data-target'    => array(),
+				'data-secondary' => array(),
+				'data-btns'      => array(),
+			),
+			'hr'    => array(),
+		)
+	);
 }
-
 add_action( 'wonka_checkout_before_checkout_form_custom', 'wonka_woocommerce_before_custom_checkout', 10, 1 );
-
-
-add_action( 'wonka_checkout_login_form', 'woocommerce_checkout_login_form', 15 );
 
 /**
  * This adds custom html markup after the login form.
@@ -2780,25 +2830,39 @@ add_action( 'user_register', 'wonkasoft_registration_save', 10, 1 );
 remove_filter( 'woocommerce_cart_item_name', array( $_GLOBALS['ced_click_n_go'], 'ced_ocor_cart_item_data' ), 10, 3 );
 
 /**
- * This function fixes the side-cart product name which was an anchor loading in an anchor.
+ * This function filters product name.
  *
+ * @param  string $current     contains current items if any.
  * @param  array  $cart_item     contains the array of the cart item.
  * @param  string $cart_item_key contains the cart item key.
  * @return string                returns the cart items product name after filtering.
  */
 function wonkasoft_woocommerce_cart_item_name( $current, $cart_item, $cart_item_key ) {
-	$current = $cart_item['data']->get_parent_data()['title'];
-	echo "<pre>\n";
-	print_r( $cart_item['data'] );
-	echo "</pre>\n";
+	$current = $cart_item['data']->get_title();
 
 	return $current;
 }
-// add_filter( 'cart_woocommerce_cart_item_name', 'wonkasoft_woocommerce_cart_item_name', 10, 3 );
+add_filter( 'woocommerce_cart_item_name', 'wonkasoft_woocommerce_cart_item_name', 10, 3 );
+
+/**
+ * This function filters product name on checkout review.
+ *
+ * @param  string $current     contains current items if any.
+ * @param  array  $cart_item     contains the array of the cart item.
+ * @param  string $cart_item_key contains the cart item key.
+ * @return string                returns the cart items product name after filtering.
+ */
+function wonkasoft_cart_and_review_woocommerce_cart_item_name( $current, $cart_item, $cart_item_key ) {
+	$current = $cart_item['data']->get_name();
+
+	return $current;
+}
+add_filter( 'cart_and_review_woocommerce_cart_item_name', 'wonkasoft_cart_and_review_woocommerce_cart_item_name', 10, 3 );
 
 /**
  * This function is to get rid of the product name on top of item in cart.
  *
+ * @param  string $current     contains the array of the cart item.
  * @param  array  $cart_item     contains the array of the cart item.
  * @param  string $cart_item_key contains the cart item key.
  * @return empty returns empty to eleminate the parsing of this.

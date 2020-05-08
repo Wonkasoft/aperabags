@@ -23,6 +23,10 @@
 
 		.xoo-wsc-product {
 
+			&:first-of-type {
+				border-top: none;
+			}
+
 			.xoo-wsc-img-col {
 
 				img {
@@ -33,7 +37,14 @@
 			}
 
 			.xoo-wsc-pname {
+				font-weight: 600;
 				@include font-size( .9 );
+			}
+
+			span.xoo-wsc-chng {
+			    font-family: "Open Sans";
+			    font-size: 1.5rem;
+			    font-weight: 400;
 			}
 		}
 	}

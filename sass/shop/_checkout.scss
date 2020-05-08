@@ -7,10 +7,18 @@
 
  	.wonka-row.checkout-breadcrumb {
  		margin: 15px auto 0;
+
+ 		> div.col-12 {
+ 			padding: 0;
+ 		}
  	}
 
  	.wonka-btn {
  		padding: 2px 8px;
+ 	}
+
+ 	h5 {
+ 		text-transform: unset;
  	}
 
  	form.checkout_redeeming {
@@ -111,7 +119,8 @@
  }
 
  #customer_details {
- 	margin-top: 0;
+ 	margin-top: 15px;
+ 	padding: 0;
  }
 
  .payment_box.payment_method_cybersource {
@@ -192,12 +201,24 @@
  }
 
  div#shipping_email_field {
- 	margin-bottom: 4px;
+ 	margin-bottom: 8px;
  }
 
  div.wonka-newletter-form-check {
- 	margin-bottom: 15px;
+ 	margin-bottom: 8px;
  	@include font-size( .8 );
+
+ 	label {
+ 		display: flex;
+ 		align-items: center;
+ 		margin-bottom: 0;
+
+ 		input {
+ 			margin-right: 8px;
+ 			margin-left: 2px;
+ 			transform: scale( 1.4 );
+ 		}
+ 	}
  }
 
  div#billing_email_field {
@@ -214,7 +235,7 @@
  }
 
  div.checkout-order-details {
- 	padding: 0px 15px;
+ 	padding: 0;
  	background: $color__background_alt;
 
  	tr.cart_item:first-child {
@@ -224,8 +245,13 @@
  		}
  	}
 
+ 	td {
+ 		padding: .5rem;
+ 	}
+
  	td.product-thumbnail {
  		position: relative;
+ 		width: 200px;
 
  		.wonka-badge {
  			position: absolute;
@@ -233,7 +259,7 @@
  			align-items: center;
  			justify-content: center;
  			top: 5px;
- 			right: 5px;
+ 			right: 2px;
  			width: 22px;
  			height: 22px;
  			background: #fff;
@@ -242,11 +268,11 @@
  			font-weight: 500;
  			border: 1px solid rgba( #000, .4 );
  			font-family: 'Open Sans';
- 			@include box-shadow( 0 1px 3px 0 rgba( 0,0,0,.7) );
+ 			@include box-shadow( 0 1px 2px 0 rgba( 0,0,0,.5) );
  		}
 
  		.remove.wonka-badge {
- 			left: 5px;
+ 			left: 2px;
  			color: #fb4949;
  			@include font-size( 1.2 );
  			font-weight: 800;
@@ -269,7 +295,7 @@
  	}
 
  	@include media-breakpoint( lg ) {
- 		padding: 30px;
+ 		padding: 15px;
  	}
  }
 
@@ -284,6 +310,10 @@
  		}
  	}
 
+ }
+
+ #shipping_country_field {
+ 	display: none;
  }
 
  .woocommerce-Price-amount {

@@ -30,19 +30,19 @@ $available_methods = WC()->session->get( 'shipping_for_package_0' )['rates'];
 			<?php foreach ( $available_methods as $index => $method ) : ?>
 				<li class="list-group-item">
 					<?php
-					if ( $method->label === 'USPS Priority Mail: FREE' ) :
+					if ( 'USPS Priority Mail: FREE' === $method->label ) :
 						$shipping_eta = '1-3 business days';
 					endif;
 
-					if ( $method->label === 'USPS Priority Mail Non-Perks Members' ) :
+					if ( 'USPS Priority Mail Non-Perks Members' === $method->label ) :
 						$shipping_eta = '1-3 business days';
 					endif;
 
-					if ( $method->label === 'USPS Priority Mail Express' ) :
+					if ( 'USPS Priority Mail Express' === $method->label ) :
 						$shipping_eta = '1 business day (weekends excluded)';
 					endif;
 
-					if ( $method->label === 'USPS Priority Mail Express Non-Perks Members' ) :
+					if ( 'USPS Priority Mail Express Non-Perks Members' === $method->label ) :
 						$shipping_eta = '1 business day (weekends excluded)';
 					endif;
 
@@ -51,7 +51,7 @@ $available_methods = WC()->session->get( 'shipping_for_package_0' )['rates'];
 					} else {
 						printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
 					}
-					printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label> | <span class="shipping-eta">%4$s</span>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ), $shipping_eta ); // WPCS: XSS ok.
+					printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label><span class="shipping-eta">%4$s</span>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ), $shipping_eta ); // WPCS: XSS ok.
 					do_action( 'woocommerce_after_shipping_rate', $method, $index );
 					?>
 				</li>

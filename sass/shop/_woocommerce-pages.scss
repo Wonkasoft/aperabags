@@ -11,6 +11,10 @@
       font-family: $font__main_jose;
     }
 
+    .woocommerce-notices-wrapper {
+      padding: 15px;
+    }
+
     .woocommerce-notice,
     .woocommerce-info,
     .woocommerce-error,
@@ -68,12 +72,16 @@
       }
 
       label {
-        margin: 8px;
-        width: 205px;
+        margin: auto;
+        padding: 8px;
+        width: 300px;
       }
 
       .shipping-eta {
-        margin: 8px;
+        display: inline-block;
+        padding: 8px;
+        width: 300px;
+        border-left: 1px solid rgba(0,0,0,0.4);
       }
     }
 

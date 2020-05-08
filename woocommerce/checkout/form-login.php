@@ -22,8 +22,6 @@ if ( is_user_logged_in() || 'no' === get_option( 'woocommerce_enable_checkout_lo
 }
 
 ?>
-<div class="free-shipping-disclosure">FREE Priority Mail shipping with FREE <a href="#" class="checkout-signup-pop">Perks membership.</a></div>
-<div class="perks-incentives-disclosure">Earn AperaCash for Product Purchase, Product Review and Signup, etc <a href="#" class="checkout-signup-pop">Perks Program Registration</a></div>
 <div class="woocommerce-form-login-toggle">
 	<?php wc_print_notice( apply_filters( 'woocommerce_checkout_login_message', esc_html__( 'Already a perks member?', 'woocommerce' ) ) . ' <a href="#" class="showlogin">' . esc_html__( 'Click here to login', 'woocommerce' ) . '</a>', 'notice' ); ?>
 </div>
