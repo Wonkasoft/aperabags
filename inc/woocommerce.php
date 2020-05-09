@@ -23,6 +23,8 @@ function apera_bags_woocommerce_setup() {
 }
 add_action( 'after_setup_theme', 'apera_bags_woocommerce_setup' );
 
+add_filter( 'woocommerce_shipping_chosen_method', '__return_false', 99 );
+
 /**
  * WooCommerce specific scripts & stylesheets.
  */
@@ -252,30 +254,11 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
  */
 function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 	$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
-	ob_start();
+
 	foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
 		if ( $current_method === $method_id ) :
 			$rate_label = $rate->label;
 			$rate_cost  = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
-			if ( 'USPS Priority Mail: FREE' === $rate->label ) :
-				$shipping_eta = '1-3 business days';
-			endif;
-
-			if ( 'USPS Priority Mail' === $rate->label ) :
-				$shipping_eta = '1-3 business days <br> <sub>*Free Shipping: Must be Perks Members and order over $25</sub>';
-			endif;
-
-			if ( 'USPS Priority Mail Non-Perks Members' === $rate->label ) :
-				$shipping_eta = '1-3 business days';
-			endif;
-
-			if ( 'USPS Priority Mail Express' === $rate->label ) :
-				$shipping_eta = '1 business day (weekends excluded)';
-			endif;
-
-			if ( 'USPS Priority Mail Express Non-Perks Members' === $rate->label ) :
-				$shipping_eta = '1 business day (weekends excluded)';
-			endif;
 		endif;
 	endforeach;
 
@@ -289,12 +272,8 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 
 	$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
 
-	$fragments['td.shipping-eta-disclosure'] = '<td colspan="3" class="shipping-eta-disclosure text-center">' . $shipping_eta . '</td>';
-	ob_get_clean();
-
 	return $fragments;
 }
-
 add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10, 1 );
 
 
@@ -317,7 +296,6 @@ function setting_up_image_flipper_class( $classes ) {
 	}
 	return $classes;
 }
-
 add_filter( 'post_class', 'setting_up_image_flipper_class', 8 );
 
 /**
@@ -398,7 +376,6 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
  * @param array $q contains the current query.
  */
 function custom_pre_get_posts_query( $q ) {
-
 	$tax_query = (array) $q->get( 'tax_query' );
 
 	$tax_query[] = array(
@@ -422,7 +399,6 @@ function add_outlet_items() {
 	echo "<div class='text-center outlet-title'><h2>Outlet Section</h2></div>";
 	echo do_shortcode( '[products columns="2" category="outlet"]' );
 }
-
 add_action( 'woocommerce_after_shop_loop', 'add_outlet_items' );
 
 /**
@@ -437,6 +413,7 @@ if ( ! function_exists( 'woocommerce_product_key_features_and_specs_tab' ) ) {
 		wc_get_template( 'single-product/tabs/key-features-and-specs.php' );
 	}
 }
+
 /**
  * Changes the description tab title
  *
@@ -445,7 +422,6 @@ if ( ! function_exists( 'woocommerce_product_key_features_and_specs_tab' ) ) {
  * @return array returns the product tabs.
  */
 function wonka_product_tabs_retitle( $tabs ) {
-
 	$new_title                       = get_post_meta( get_the_ID(), 'product_statement', true );
 	$tabs['reviews']['priority']     = 30;          // Reviews first.
 	$tabs['description']['priority'] = 20;          // Description second.
@@ -486,7 +462,7 @@ add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
  * This places a continue shopping notice in the cart.
  */
 function wonka_add_continue_shopping_notice_to_cart() {
-		   $shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ), esc_html__( 'Continue shopping', 'woocommerce' ) );
+	$shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ), esc_html__( 'Continue shopping', 'woocommerce' ) );
 
 	echo wp_kses(
 		$shopping,
@@ -830,20 +806,21 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	?>
 	<div id="wonka-checkout-step-buttons" class="wonka-step-buttons tab-content">
 		<div class="tab-pane fade show active" id="wonka_customer_information_buttons" role="tabpanel">
-			<a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'cart' ) ) ); ?>" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-back-to-cart', eventAction: 'click', eventLabel: 'Return to Cart' } );" data-target="#cart" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to cart</a>
-			<a href="#" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to shipping method</a>
+			<a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'cart' ) ) ); ?>" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-back-to-cart', eventAction: 'click', eventLabel: 'Return to Cart' } );" data-target="#cart" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-cart-btn"><i class="fa fa-angle-left"></i> Return to cart</a>
+			<a href="#" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-delivery-options-btn">Next Step</a>
 		</div>
 		<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
-			<a href="#wonka_customer_information_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Customer Information' } );" data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Customer information</a>
-			<a href="#wonka_payment_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Payment Method' } );" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn">Continue to payment method</a>
+			<a href="#wonka_customer_information_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Customer Information' } );" data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-shipping-address-btn"><i class="fa fa-angle-left"></i> Back</a>
+			<a href="#wonka_payment_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Payment Method' } );" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-payment-methods-btn">Next Step</a>
 		</div>
 		<div class="tab-pane fade" id="wonka_payment_method_buttons" role="tabpanel">
-			<a href="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Shipping Method' } );" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn"><i class="fa fa-angle-left"></i> Return to Shipping Method</a>
-			<a href="#place_order" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-place-order', eventAction: 'click', eventLabel: 'Place Order' } );" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn">Place Order</a>
+			<a href="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Shipping Method' } );" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-delivery-options-btn"><i class="fa fa-angle-left"></i> Back</a>
+			<a href="#place_order" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-place-order', eventAction: 'click', eventLabel: 'Place Order' } );" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-place-order-btn" id="place_order">Place Order</a>
 		</div>
 	</div><!-- #wonka-checkout-step-buttons -->
 </div><!-- .checkout-form-left-side -->
 <div class="col-12 col-md-5 checkout-order-details">
+	<h5 class="order-summary-title">Order Summary</h5>
 	<div class="table-responsive">
 		<table class="table table-hover">
 			<tbody>
@@ -920,7 +897,6 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 				?>
 				</tbody>
 				<tfoot>                                                                                                                                                                                               
-
 					<tr class="cart-subtotal">
 						<th><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
 						<td colspan="2"><?php wc_cart_totals_subtotal_html(); ?></td>
@@ -947,8 +923,11 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 					<th colspan="3"><?php esc_html_e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php esc_html_e( '(US only)', 'woocommerce' ); ?></span></th>
 				</tr>
 				<tr class="shipping-methods">
-					<td colspan="3" class="ship-method-cell">
+					<td colspan="2" class="ship-method-cell">
 						This will be calculated on the next step.
+					</td>
+					<td colspan="1" class="ship-method-cost-cell">
+								
 					</td>
 				</tr>
 			<?php else : ?>
@@ -961,21 +940,6 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 							if ( WC()->session->get( 'chosen_shipping_methods' )[0] === $method_id ) :
 								$rate_label = $rate->label;
 								$rate_cost  = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
-								if ( 'USPS Priority Mail: FREE' === $rate->label || 'USPS Priority Mail' === $rate->label ) :
-									$shipping_eta = '1-3 business days';
-								endif;
-
-								if ( 'USPS Priority Mail Non-Perks Members' === $rate->label ) :
-									$shipping_eta = '1-3 business days';
-								endif;
-
-								if ( 'USPS Priority Mail Express' === $rate->label ) :
-									$shipping_eta = '1 business day (weekends excluded)';
-								endif;
-
-								if ( 'USPS Priority Mail Express Non-Perks Members' === $rate->label ) :
-									$shipping_eta = '1 business day (weekends excluded)';
-								endif;
 								?>
 						<td colspan="2" class="ship-method-cell">
 								<?php echo esc_html( $rate_label ); ?>
@@ -992,12 +956,9 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 								);
 								?>
 						</td>
-					</tr>
-					<tr>
-						<td colspan="3" class="shipping-eta-disclosure text-center"><?php echo esc_html( $shipping_eta ); ?></td>
 							<?php endif; ?>
 						<?php endforeach; ?>
-								</tr>
+					</tr>
 			<?php endif; ?>
 		<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
 			<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
@@ -1044,18 +1005,18 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	ob_start();
 	$output .= '<div class="row wonka-row checkout-breadcrumb">';
 	$output .= '<div class="col-12">';
-	$output .= '<ul class="nav nav-fill" id="wonka-checkout-nav-steps" role="tablist">';
+	$output .= '<ul class="nav nav-fill shipping-address" id="wonka-checkout-nav-steps" role="tablist">';
 	$output .= '<li class="nav-item">';
 	$output .= '<a class="nav-link active" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top" data-btns="#wonka_customer_information_buttons">';
-	$output .= _x( 'Customer Information', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">1</span>';
+	$output .= _x( 'Shipping Address', 'aperabags' );
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
 	$output .= '<a class="nav-link disabled" id="wonka_shipping_method_tab" data-toggle="tab" data-target="#wonka_shipping_method" role="tab" data-secondary="#wonka_shipping_method_top" data-btns="#wonka_shipping_method_buttons">';
-	$output .= _x( 'Shipping Method', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">2</span>';
+	$output .= _x( 'Delivery Options', 'aperabags' );
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
 	$output .= '<a class="nav-link disabled" id="wonka_payment_method_tab" data-toggle="tab" data-target="#wonka_payment_method" role="tab" data-secondary="#wonka_payment_method_top" data-btns="#wonka_payment_method_buttons">';
-	$output .= _x( 'Payment Method', 'aperabags' ) . '<span class="badge badge-light badge-pill wonka-badge">3</span>';
+	$output .= _x( '3. Payment Method', 'aperabags' );
 	$output .= '</a></li>';
 	$output .= '</ul><!-- #wonka-checkout-nav-steps -->';
 	$output .= '</div>';
@@ -1166,7 +1127,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '</tr>';
 	$output .= '<tr class="ship-to-row">';
 	$output .= '<td class="ship-to-text">';
-	$output .= 'Ship to';
+	$output .= 'Shipping To';
 	$output .= '</td>';
 	$output .= '<td colspan="3" class="ship-to-address-cell">';
 	$output .= '</td>';
@@ -2142,7 +2103,6 @@ function ws_edit_order_item_name( $name ) {
 }
 add_filter( 'woocommerce_order_item_name', 'ws_edit_order_item_name' );
 
-
 /**
  * Limit the availability of this shipping method based
  * on the destination state. - Restriction
@@ -2305,7 +2265,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					$this->method_title       = __( 'USPS Priority Mail Non-Perks Members' );  // Title shown in admin
 					$this->method_description = __( 'USPS Priority Mail Flat Rate for Non-perks Members' ); // Description shown in admin
 					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
-					$this->title              = 'USPS Priority Mail Non-Perks Members'; // This can be added as an setting but for this example its forced.
+					$this->title              = 'Priority 1-3 business days....................'; // This can be added as an setting but for this example its forced.
 					$this->init();
 				}
 				/**
@@ -2355,7 +2315,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					$this->method_title       = __( 'USPS Priority Mail Express' );  // Title shown in admin.
 					$this->method_description = __( 'USPS Priority Mail Express Flat Rate' ); // Description shown in admin.
 					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-					$this->title              = 'USPS Priority Mail Express'; // This can be added as an setting but for this example its forced.
+					$this->title              = 'Overnight 1 business day.....................'; // This can be added as an setting but for this example its forced.
 					$this->init();
 				}
 				/**
@@ -2405,7 +2365,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					$this->method_title       = __( 'USPS Priority Mail Express Non-Perks Members' );  // Title shown in admin.
 					$this->method_description = __( 'USPS Priority Mail Express Flat Rate for Non-Perks Members' ); // Description shown in admin.
 					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-					$this->title              = 'USPS Priority Mail Express Non-Perks Members'; // This can be added as an setting but for this example its forced.
+					$this->title              = 'Overnight 1 business day.....................'; // This can be added as an setting but for this example its forced.
 					$this->init();
 				}
 				/**
@@ -2455,7 +2415,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					$this->method_title       = __( 'USPS Priority Mail' );  // Title shown in admin.
 					$this->method_description = __( 'USPS Priority Mail Flate Rate for orders under $25' ); // Description shown in admin.
 					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-					$this->title              = 'USPS Priority Mail'; // This can be added as an setting but for this example its forced.
+					$this->title              = 'Priority 1-3 business days....................'; // This can be added as an setting but for this example its forced.
 					$this->init();
 				}
 				/**
@@ -2505,6 +2465,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		$methods['USPS_Priority_Mail_NP']         = 'WC_Priority_Mail_Shipping_NP_Method';
 		$methods['USPS_Priority_Mail_Express']    = 'WC_Priority_Mail_Express_Shipping_Method';
 		$methods['USPS_Priority_Mail_Express_NP'] = 'WC_Priority_Mail_Express_Shipping_NP_Method';
+
 		return $methods;
 	}
 	add_filter( 'woocommerce_shipping_methods', 'add_ws_shipping_methods' );
@@ -2907,6 +2868,7 @@ add_filter( 'wad_get_evaluable_condition', 'wonkasoft_wad_get_evaluable_conditio
 /**
  * [wonkasoft_wad_fields_values_match description]
  *
+ * @param  [type] $current_rules      [description]
  * @param  [type] $condition      [description]
  * @param  [type] $selected_value [description]
  * @return [type]                 [description]
@@ -2949,7 +2911,7 @@ add_filter( 'wad_fields_values_match', 'wonkasoft_wad_fields_values_match', 10, 
 /**
  * [wonkasoft_wad_operators_fields_match description]
  *
- * @param  array  $current      contains an array of conditions.
+ * @param  array  $current_rules      contains an array of conditions.
  * @param  [type] $condition      [description]
  * @param  [type] $selected_value [description]
  * @return [type]                 [description]

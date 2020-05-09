@@ -53,7 +53,7 @@ defined( 'ABSPATH' ) || exit;
 					$fields = $checkout->get_checkout_fields( 'shipping' );
 					?>
 
-					<h5><?php _e( 'Shipping Address', 'woocommerce' ); ?></h5>
+					<h5><?php _e( '1. Shipping', 'woocommerce' ); ?></h5>
 					<?php
 					foreach ( $fields as $key => $field ) {
 						if ( isset( $field['country_field'], $fields[ $field['country_field'] ] ) ) {

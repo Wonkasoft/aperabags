@@ -401,6 +401,7 @@ var componentForm;
 	{
 		var ship_ul = document.querySelector( 'ul#shipping_method' );
 		var ship_method = document.querySelectorAll('input[name="shipping_method[0]"]');
+		var multistep_link_list = document.querySelector( '#wonka-checkout-nav-steps' );
 		var multistep_links = document.querySelectorAll( '#wonka-checkout-nav-steps li a.nav-link' );
 		var info_table_contact_cells = document.querySelectorAll( '.contact-email-cell' );
 		var info_table_ship_cells = document.querySelectorAll( '.ship-to-address-cell' );
@@ -411,8 +412,8 @@ var componentForm;
 
 		/**
 		 * Add Shipping method to current status table
-		 * @author Carlos
 		 *
+		 * @author Carlos
 		 * @since 1.0.0
 		 */
 		if( document.querySelector( '#wonka_payment_method_tab' ) )
@@ -497,12 +498,35 @@ var componentForm;
 						{
 							target = target.parentElement;
 						}
+
 						var completed_check = false;
 
 						if ( target.id === 'wonka_shipping_method_tab' ) 
 						{
 							var get_shipping_set = document.querySelector( '#shipping_method' );
+						}
+						
+						switch( target.id ) {
 							
+							case 'wonka_customer_information_tab':
+								multistep_link_list.classList = 'nav nav-fill shipping-address';
+								break;
+
+							case 'wonka_shipping_method_tab':
+								multistep_link_list.classList = 'nav nav-fill shipping-address delivery-options';
+								break;
+
+							case 'wonka_payment_method_tab':
+								multistep_link_list.classList = 'nav nav-fill shipping-address delivery-options payment-methods';
+								break;
+
+							case 'place_order':
+								multistep_link_list.classList = 'nav nav-fill shipping-address delivery-options payment-methods completed';
+								break;
+							
+							default:
+								multistep_link_list.classList = 'nav nav-fill shipping-address';
+								break;
 						}
 
 						if ( !target.classList.contains( 'active' ) ) 
