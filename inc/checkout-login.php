@@ -17,7 +17,11 @@ function ws_wc_login_register() {
 	<div class="row justify-content-center" id="customer_login">
 		<div class="col-12 col-lg-6 checkout-login login">
 
-			<h2><?php esc_html_e( 'Sign In and Earn Rewards', 'woocommerce' ); ?></h2>
+			<h2><?php esc_html_e( 'Sign In Perks Members', 'woocommerce' ); ?></h2>
+			<ul class="disclosure-list">
+				<li class="disclosure-list-item"><sup><i class="fas fa-check"></i> Free Priority Shipping</sup></li>
+				<li class="disclosure-list-item"><sup><i class="fas fa-check"></i> Earn AperaCash</sup></li>
+			</ul>
 
 			<form class="woocommerce-form woocommerce-form-login login" method="post">
 			<?php
@@ -56,6 +60,10 @@ function ws_wc_login_register() {
 				<div class="woocommerce-LostPassword lost_password">
 				<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Forgot your password?', 'woocommerce' ); ?></a>
 			</div>
+
+				<div class="woocommerce-needAccount needAcount">
+					<a href="#" class="checkout-signup-pop">Create an account.</a>
+			</div>
 				<?php
 
 				do_action( 'woocommerce_login_form_end' );
@@ -64,7 +72,7 @@ function ws_wc_login_register() {
 
 		</div>
 
-			<div class="col-12 col-lg-6">
+			<div class="col-12 col-lg-6 guest-checkout-side">
 				<h2><?php echo esc_html( sprintf( __( 'Or Checkout as a Guest', 'woocommerce' ) ) ); ?></h2>
 
 				<a href="<?php echo esc_url( get_site_url() ) . '/checkout/?guestcheckout=true'; ?>" class="btn wonka-btn">Guest Checkout</a>
