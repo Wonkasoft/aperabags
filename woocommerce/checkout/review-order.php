@@ -93,7 +93,15 @@ $shipping_methods  = WC()->shipping->get_shipping_methods();
 
 <?php if ( $available_methods ) : ?>
 		<ul id="shipping_method" class="woocommerce-shipping-methods list-group list-group-flush">
-			<li class="list-group-item card-title"><h6>Guests</h6></li>
+			<?php
+			if ( ! is_user_logged_in() ) :
+				?>
+				<li class="list-group-item card-title"><h6>Guests</h6></li>
+				<?php
+			else :
+				?>
+				<li class="list-group-item card-title"><h6>Perks Members</h6></li>
+			<?php endif; ?>
 			<?php foreach ( $available_methods as $index => $method ) : ?>
 				<li class="list-group-item">
 					<?php
