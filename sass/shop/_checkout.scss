@@ -52,6 +52,7 @@
 	 	}
 	}
 
+	ul#shipping_ad,
 	ul#shipping_method {
 
       li {
@@ -262,6 +263,20 @@
  		}
  	}
 
+ 	#wonka_shipping_method {
+
+ 		.card-title {
+ 			background: #fafafa;
+
+	 		h6 {
+	 			margin: 0;
+	 			padding: 0;
+	 			text-transform: unset;
+	 			@include font-size( 1.1 );
+	 		}
+ 		}
+ 	}
+
  	div.woocommerce-billing-fields {
 
  		div.billing_address {
@@ -424,6 +439,10 @@
  		flex-wrap: wrap;
  		padding: 8px;
 
+ 		#wonka_customer_information_buttons {
+ 			justify-content: flex-end;
+ 		}
+
  		div.tab-pane {
  			flex: 1 100%;
 
@@ -480,6 +499,10 @@
  .perks-incentives-disclosure {
      text-align: center;
      padding: 0 15px 15px;
+ }
+ 
+ .wonka-card-shipping-ads {
+ 	margin-bottom: 15px;
  }
 
  .woocommerce-form-login-toggle {

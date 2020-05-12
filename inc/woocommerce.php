@@ -806,7 +806,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	?>
 	<div id="wonka-checkout-step-buttons" class="wonka-step-buttons tab-content">
 		<div class="tab-pane fade show active" id="wonka_customer_information_buttons" role="tabpanel">
-			<a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'cart' ) ) ); ?>" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-back-to-cart', eventAction: 'click', eventLabel: 'Return to Cart' } );" data-target="#cart" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-cart-btn"><i class="fa fa-angle-left"></i> Return to cart</a>
+			<!-- <a href="<?php // echo esc_url( get_permalink( wc_get_page_id( 'cart' ) ) ); ?>" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-back-to-cart', eventAction: 'click', eventLabel: 'Return to Cart' } );" data-target="#cart" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-cart-btn"><i class="fa fa-angle-left"></i> Return to cart</a> -->
 			<a href="#" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-delivery-options-btn">Next Step</a>
 		</div>
 		<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
@@ -2127,7 +2127,7 @@ function ws_restrict_free_shipping( $is_available ) {
 			return false;
 		}
 
-		if ( 25.00 > WC()->cart->subtotal ) {
+		if ( 25 > WC()->cart->subtotal ) {
 			return false;
 		}
 	}
@@ -2501,6 +2501,36 @@ function wonka_woocommerce_product_get_image( $image, $obj, $size, $attr, $place
 	return $image;
 }
 add_filter( 'woocommerce_product_get_image', 'wonka_woocommerce_product_get_image', 10, 5 );
+
+/**
+ * [wonkasoft_woocommerce_cart_shipping_method_full_label description]
+ *
+ * @param  [type] $method [description]
+ * @return [type]         [description]
+ */
+function wonkasoft_woocommerce_cart_shipping_method_full_label( $label, $method ) {
+	$label     = $method->get_label();
+	$has_cost  = 0 < $method->cost;
+	$hide_cost = ! $has_cost && in_array( $method->get_method_id(), array( 'free_shipping', 'local_pickup' ), true );
+
+	if ( $has_cost && ! $hide_cost ) {
+		if ( WC()->cart->display_prices_including_tax() ) {
+			$label .= ' ' . wc_price( $method->cost + $method->get_shipping_tax() );
+			if ( $method->get_shipping_tax() > 0 && ! wc_prices_include_tax() ) {
+				$label .= ' <small class="tax_label">' . WC()->countries->inc_tax_or_vat() . '</small>';
+			}
+		} else {
+			$label .= ' ' . wc_price( $method->cost );
+			if ( $method->get_shipping_tax() > 0 && wc_prices_include_tax() ) {
+				$label .= ' <small class="tax_label">' . WC()->countries->ex_tax_or_vat() . '</small>';
+			}
+		}
+	}
+
+	return $label;
+}
+add_filter( 'woocommerce_cart_shipping_method_full_label', 'wonkasoft_woocommerce_cart_shipping_method_full_label', 50, 2 );
+
 
 function wonkasoft_woocommerce_register_form_start() {
 	$output = '';

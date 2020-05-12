@@ -454,7 +454,6 @@ function wonkasoft_add_defer_attribute( $tag, $handle ) {
 add_filter( 'script_loader_tag', 'wonkasoft_add_defer_attribute', 10, 2 );
 
 
-add_action( 'gform_user_registered', 'ws_gravity_registration_autologin', 10, 4 );
 /**
  * Auto login after registration.
  *
@@ -488,3 +487,4 @@ function ws_gravity_registration_autologin( $user_id, $user_config, $entry, $pas
 		)
 	);
 }
+add_action( 'gform_user_registered', 'ws_gravity_registration_autologin', 10, 4 );
