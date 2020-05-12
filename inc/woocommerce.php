@@ -806,7 +806,12 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	?>
 	<div id="wonka-checkout-step-buttons" class="wonka-step-buttons tab-content">
 		<div class="tab-pane fade show active" id="wonka_customer_information_buttons" role="tabpanel">
-			<a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'checkout' ) ) ); ?>" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-back-to-login', eventAction: 'click', eventLabel: 'Return to login' } );" data-target="#checkout" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-login-btn"><i class="fa fa-angle-left"></i> Return to login</a>
+			<a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'checkout' ) ) ); ?>" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-back-to-login', eventAction: 'click', eventLabel: 'Return to login' } );" data-target="#checkout" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-login-btn" 
+								<?php
+								$style = ( is_user_logged_in() ) ? 'style=visibility:hidden;' : '';
+								echo esc_attr( $style );
+								?>
+			><i class="fa fa-angle-left"></i> Return to login</a>
 			<a href="#" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-delivery-options-btn">Next Step</a>
 		</div>
 		<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
