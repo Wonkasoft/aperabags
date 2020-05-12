@@ -806,7 +806,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	?>
 	<div id="wonka-checkout-step-buttons" class="wonka-step-buttons tab-content">
 		<div class="tab-pane fade show active" id="wonka_customer_information_buttons" role="tabpanel">
-			<!-- <a href="<?php // echo esc_url( get_permalink( wc_get_page_id( 'cart' ) ) ); ?>" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-back-to-cart', eventAction: 'click', eventLabel: 'Return to Cart' } );" data-target="#cart" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-cart-btn"><i class="fa fa-angle-left"></i> Return to cart</a> -->
+			<a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'checkout' ) ) ); ?>" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-back-to-login', eventAction: 'click', eventLabel: 'Return to login' } );" data-target="#checkout" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-login-btn"><i class="fa fa-angle-left"></i> Return to login</a>
 			<a href="#" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-delivery-options-btn">Next Step</a>
 		</div>
 		<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
@@ -2265,7 +2265,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					$this->method_title       = __( 'USPS Priority Mail Non-Perks Members' );  // Title shown in admin
 					$this->method_description = __( 'USPS Priority Mail Flat Rate for Non-perks Members' ); // Description shown in admin
 					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
-					$this->title              = 'Priority 1-3 business days....................'; // This can be added as an setting but for this example its forced.
+					$this->title              = 'Priority 1-3 business days'; // This can be added as an setting but for this example its forced.
 					$this->init();
 				}
 				/**
@@ -2315,7 +2315,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					$this->method_title       = __( 'USPS Priority Mail Express' );  // Title shown in admin.
 					$this->method_description = __( 'USPS Priority Mail Express Flat Rate' ); // Description shown in admin.
 					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-					$this->title              = 'Overnight 1 business day.....................'; // This can be added as an setting but for this example its forced.
+					$this->title              = 'Overnight 1 business day'; // This can be added as an setting but for this example its forced.
 					$this->init();
 				}
 				/**
@@ -2365,7 +2365,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					$this->method_title       = __( 'USPS Priority Mail Express Non-Perks Members' );  // Title shown in admin.
 					$this->method_description = __( 'USPS Priority Mail Express Flat Rate for Non-Perks Members' ); // Description shown in admin.
 					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-					$this->title              = 'Overnight 1 business day.....................'; // This can be added as an setting but for this example its forced.
+					$this->title              = 'Overnight 1 business day'; // This can be added as an setting but for this example its forced.
 					$this->init();
 				}
 				/**
@@ -2415,7 +2415,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					$this->method_title       = __( 'USPS Priority Mail' );  // Title shown in admin.
 					$this->method_description = __( 'USPS Priority Mail Flate Rate for orders under $25' ); // Description shown in admin.
 					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-					$this->title              = 'Priority 1-3 business days....................'; // This can be added as an setting but for this example its forced.
+					$this->title              = 'Priority 1-3 business days'; // This can be added as an setting but for this example its forced.
 					$this->init();
 				}
 				/**

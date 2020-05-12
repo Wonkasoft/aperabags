@@ -69,7 +69,7 @@ $shipping_methods  = WC()->shipping->get_shipping_methods();
 					<?php
 				endif;
 
-				if ( 'USPS_Priority_Mail_Express' === $index && 25 < WC()->cart->subtotal ) :
+				if ( 'USPS_Priority_Mail_Express' === $index ) :
 					?>
 					<li class="list-group-item">
 					<?php

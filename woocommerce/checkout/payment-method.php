@@ -18,8 +18,16 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+if ( 'wonkasoft_stripe' === $gateway->id ) : ?>
+	<li style="display: none;" class="list-group-item wc_payment_method payment_method_<?php echo esc_attr( $gateway->id ); ?>">
+	<?php
+else :
+	?>
+	<li class="list-group-item wc_payment_method payment_method_<?php echo esc_attr( $gateway->id ); ?>">
+	<?php
+endif;
 ?>
-<li class="list-group-item wc_payment_method payment_method_<?php echo esc_attr( $gateway->id ); ?>">
 	<div class="custom-control custom-radio">
 	<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio custom-control-input" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?>" />
 
