@@ -628,6 +628,28 @@
 
  	.order-summary-title {
 		text-align: center;
+		background: #52abf6;
+		padding: 15px;
+		color: #ffffff;
+	}
+
+	tfoot {
+		border-top: 1px solid #dee2e6;
+
+		th, td {
+			border-top: none;
+		}
+
+		.cart-discount {
+
+			td {
+				text-align: right;
+			}
+		}
+
+		.order-total {
+			border-bottom: 1px solid #dee2e6;
+		}
 	}
 
  	tr.cart_item:first-child {

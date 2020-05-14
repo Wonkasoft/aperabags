@@ -79,12 +79,12 @@ ul.products {
 	margin: 15px auto;
 	padding: 0;
 	max-width: 1180px;
-	justify-content: space-between;
+	justify-content: flex-start;
 
 	li {
 		margin-bottom: 25px;
 		position: relative;
-		padding: 0;
+		padding: 0 15px;
 		overflow: hidden;
 		flex: 0 1 32%;
 

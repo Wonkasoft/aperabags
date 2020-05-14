@@ -812,15 +812,15 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 								echo esc_attr( $style );
 								?>
 			><i class="fa fa-angle-left"></i> Return to login</a>
-			<a href="#" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-delivery-options-btn">Next Step</a>
+			<a href="#" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-delivery-options-btn">Next Step <i class="fa fa-angle-right"></i></a>
 		</div>
 		<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
 			<a href="#wonka_customer_information_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Customer Information' } );" data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-shipping-address-btn"><i class="fa fa-angle-left"></i> Back</a>
-			<a href="#wonka_payment_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Payment Method' } );" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-payment-methods-btn">Next Step</a>
+			<a href="#wonka_payment_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Payment Method' } );" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-payment-methods-btn">Next Step <i class="fa fa-angle-right"></i></a>
 		</div>
 		<div class="tab-pane fade" id="wonka_payment_method_buttons" role="tabpanel">
 			<a href="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Shipping Method' } );" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-delivery-options-btn"><i class="fa fa-angle-left"></i> Back</a>
-			<a href="#place_order" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-place-order', eventAction: 'click', eventLabel: 'Place Order' } );" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-place-order-btn" id="place_order">Place Order</a>
+			<a href="#place_order" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-place-order', eventAction: 'click', eventLabel: 'Place Order' } );" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-place-order-btn" id="place_order">Place Order <i class="fa fa-angle-right"></i></a>
 		</div>
 	</div><!-- #wonka-checkout-step-buttons -->
 </div><!-- .checkout-form-left-side -->
@@ -924,21 +924,16 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 			$current_method = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : '';
 			if ( ! $current_method ) :
 				?>
-				<tr class="woocommerce-shipping-totals shipping">
-					<th colspan="3"><?php esc_html_e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php esc_html_e( '(US only)', 'woocommerce' ); ?></span></th>
-				</tr>
+				
 				<tr class="shipping-methods">
 					<td colspan="2" class="ship-method-cell">
-						This will be calculated on the next step.
+						
 					</td>
 					<td colspan="1" class="ship-method-cost-cell">
 								
 					</td>
 				</tr>
 			<?php else : ?>
-					<tr class="woocommerce-shipping-totals shipping">
-						<th colspan="3"><?php esc_html_e( 'Shipping', 'woocommerce' ); ?><span class="shipping-disclosure"> <?php esc_html_e( '(US only)', 'woocommerce' ); ?></span></th>
-					</tr>
 					<tr class="shipping-methods">
 						<?php foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) : ?>
 							<?php
@@ -1000,6 +995,61 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 add_action( 'wonka_checkout_after_checkout_form_custom', 'wonka_checkout_after_checkout_form_custom', 50 );
 
 
+function wonka_woocommerce_review_order_after_order_total() {
+	if ( wc_coupons_enabled() ) :
+		?>
+		<tr class="cart-promo">
+			<th colspan="3">
+				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default activate-panel" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						<div class="panel-heading" role="tab" id="headingOne">
+							<span class="panel-title">
+									Add Promo Code (Optional)
+							</span>
+						</div>
+					</div>
+				</div>
+				<div id="collapseOne" class="panel-collapse collapse in show" role="tabpanel" aria-labelledby="headingOne">
+					<div class="panel-body">
+						<form method="post" class="coupon form-group form-inline">
+							<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
+							<?php do_action( 'woocommerce_cart_coupon' ); ?>
+						</form>
+					</div>
+				</div>
+			</th>
+		</tr>
+		<?php
+	endif;
+}
+add_action( 'woocommerce_review_order_after_order_total', 'wonka_woocommerce_review_order_after_order_total', 50 );
+
+/**
+ * This function filters the coupon display area on the order review of checkout page.
+ *
+ * @param  string  $captured contains the caputed string from the filter.
+ * @param  object  $coupon   contains the current coupon.
+ * @param  boolean $echo     contains echo option.
+ * @return string            contains filtered label if not echo.
+ */
+function wonkasoft_woocommerce_cart_totals_coupon_label( $captured, $coupon, $echo = true ) {
+	if ( is_string( $coupon ) ) {
+		$coupon = new WC_Coupon( $coupon );
+	}
+
+	/* translators: %s: coupon code */
+	$label = $captured;
+
+	if ( $echo ) {
+		echo $label; // WPCS: XSS ok.
+	} else {
+		return $label;
+	}
+}
+remove_filter( 'woocommerce_cart_totals_coupon_label', array( 'RSRedeemingFrontend', 'change_coupon_label' ), 1, 2 );
+remove_filter( 'woocommerce_cart_totals_coupon_label', array( $GLOBALS['wjecf_extended_coupon_features']->get_plugins()['autocoupon'], 'woocommerce_cart_totals_coupon_label' ), 10, 2 );
+add_filter( 'woocommerce_cart_totals_coupon_label', 'wonkasoft_woocommerce_cart_totals_coupon_label', 10, 3 );
+
 /**
  * This adds custom html markup to the checkout page.
  *
@@ -1013,7 +1063,7 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '<ul class="nav nav-fill shipping-address" id="wonka-checkout-nav-steps" role="tablist">';
 	$output .= '<li class="nav-item">';
 	$output .= '<a class="nav-link active" id="wonka_customer_information_tab" data-toggle="tab" data-target="#wonka_customer_information" role="tab" data-secondary="#wonka_customer_information_top" data-btns="#wonka_customer_information_buttons">';
-	$output .= _x( 'Shipping Address', 'aperabags' );
+	$output .= _x( 'Shipping', 'aperabags' );
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
 	$output .= '<a class="nav-link disabled" id="wonka_shipping_method_tab" data-toggle="tab" data-target="#wonka_shipping_method" role="tab" data-secondary="#wonka_shipping_method_top" data-btns="#wonka_shipping_method_buttons">';
@@ -1021,7 +1071,7 @@ function wonka_woocommerce_before_custom_checkout( $checkout ) {
 	$output .= '</a></li>';
 	$output .= '<li class="nav-item">';
 	$output .= '<a class="nav-link disabled" id="wonka_payment_method_tab" data-toggle="tab" data-target="#wonka_payment_method" role="tab" data-secondary="#wonka_payment_method_top" data-btns="#wonka_payment_method_buttons">';
-	$output .= _x( '3. Payment Method', 'aperabags' );
+	$output .= _x( 'Payment Method', 'aperabags' );
 	$output .= '</a></li>';
 	$output .= '</ul><!-- #wonka-checkout-nav-steps -->';
 	$output .= '</div>';

@@ -1614,7 +1614,6 @@ add_action( 'gform_after_submission', 'wonkasoft_after_code_entry', 10, 2 );
 function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry, $ajax ) {
 	$forms_to_process = array(
 		'Apera Perks Registration',
-		'Apera Perks Registration Checkout',
 		'User Birthday',
 	);
 	if ( ! in_array( $form['title'], $forms_to_process ) ) {
