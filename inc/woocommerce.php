@@ -911,14 +911,14 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 										$input_id    = uniqid( 'quantity_' );
 										$input_name  = 'quantity';
 										$input_value = $cart_item['quantity'];
-										// $max_value   = apply_filters( 'woocommerce_quantity_input_max', $_product->get_max_purchase_quantity(), $_product );
-										// $min_value   = apply_filters( 'woocommerce_quantity_input_min', $_product->get_min_purchase_quantity(), $_product );
-										$step    = apply_filters( 'woocommerce_quantity_input_step', 1, $_product );
-										$pattern = apply_filters( 'woocommerce_quantity_input_pattern', has_filter( 'woocommerce_stock_amount', 'intval' ) ? '[0-9]*' : '' );
+										$max_value   = $_product->get_max_purchase_quantity();
+										$min_value   = $_product->get_min_purchase_quantity();
+										$step        = apply_filters( 'woocommerce_quantity_input_step', 1, $_product );
+										$pattern     = apply_filters( 'woocommerce_quantity_input_pattern', has_filter( 'woocommerce_stock_amount', 'intval' ) ? '[0-9]*' : '' );
 
 										$input_value = ! isset( $input_value ) ? $min_value : $input_value;
 
-										$input_html = '<input type="number" class="wonkasoft-wsc-qty" max="' . /*esc_attr( 0 < $max_value ? $max_value : '' ) .*/ '" min="' . /*esc_attr( $min_value ) .*/ '" step="' . esc_attr( $step ) . '" value="' . $input_value . '" pattern="' . esc_attr( $pattern ) . '" name="' . esc_attr( $input_name ) . '" id="' . esc_attr( $input_id ) . '" >';
+										$input_html = '<input type="number" class="wonkasoft-wsc-qty" max="' . esc_attr( 0 < $max_value ? $max_value : '' ) . '" min="' . esc_attr( $min_value ) . '" step="' . esc_attr( $step ) . '" value="' . $input_value . '" pattern="' . esc_attr( $pattern ) . '" name="' . esc_attr( $input_name ) . '" id="' . esc_attr( $input_id ) . '" >';
 
 										if ( $_product->is_sold_individually() ) {
 											$product_quantity = sprintf( '1 <input type="hidden" name="cart[%s][qty]" value="1" class="form-control" />', $cart_item_key );
