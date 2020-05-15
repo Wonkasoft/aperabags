@@ -911,8 +911,8 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 										$input_id    = uniqid( 'quantity_' );
 										$input_name  = 'quantity';
 										$input_value = $cart_item['quantity'];
-										$max_value   = apply_filters( 'woocommerce_quantity_input_max', $_product->get_max_purchase_quantity(), $product );
-										$min_value   = apply_filters( 'woocommerce_quantity_input_min', $_product->get_min_purchase_quantity(), $product );
+										$max_value   = apply_filters( 'woocommerce_quantity_input_max', $_product->get_max_purchase_quantity(), $_product );
+										$min_value   = apply_filters( 'woocommerce_quantity_input_min', $_product->get_min_purchase_quantity(), $_product );
 										$step        = apply_filters( 'woocommerce_quantity_input_step', 1, $_product );
 										$pattern     = apply_filters( 'woocommerce_quantity_input_pattern', has_filter( 'woocommerce_stock_amount', 'intval' ) ? '[0-9]*' : '' );
 
