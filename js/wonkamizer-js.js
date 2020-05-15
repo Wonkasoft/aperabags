@@ -3610,6 +3610,98 @@ var componentForm;
 				document.querySelector( 'form.post-password-form input[type="submit"]' ).click();
 			}
 		}
+
+		if ( document.querySelector( '.wonkasoft-wsc-chng' ) ) {
+			var qty_changers = document.querySelectorAll( '.wonkasoft-wsc-chng' );
+
+			qty_changers.forEach( function( qty_changer, i ) {
+				if ( qty_changer.classList.contains( 'wonkasoft-wsc-plus' ) ) {
+					var evt;
+					var qty_input_for_event = qty_changer.parentElement.querySelector( 'input' );
+					qty_input_for_event.addEventListener( 'input', function( e ) {
+						
+						var endpoint = 'xoo_wsc_update_cart';
+						endpoint += e.target.value > 0 ? '&xoo_wsc_qty_update' : '';
+
+						$.ajax({
+							url: xoo_wsc_localize.wc_ajax_url.toString().replace( '%%endpoint%%', endpoint ),
+							type: 'POST',
+							data: {
+								cart_key: e.target.parentElement.parentElement.getAttribute( 'data-product' ),
+								new_qty: e.target.value
+							},
+							success: function(response){
+								if(response.fragments){
+									var fragments = response.fragments,
+										cart_hash =  response.cart_hash;
+										console.log( response );
+									//Set fragments
+							   		$.each( response.fragments, function( key, value ) {
+										$( key ).replaceWith( value );
+										$( key ).stop( true ).css( 'opacity', '1' ).unblock();
+									});
+
+							   		if(wc_cart_fragments_params){
+								   		var cart_hash_key = wc_cart_fragments_params.ajax_url.toString() + '-wc_cart_hash';
+										//Set cart hash
+										sessionStorage.setItem( wc_cart_fragments_params.fragment_name, JSON.stringify( fragments ) );
+										localStorage.setItem( cart_hash_key, cart_hash );
+										sessionStorage.setItem( cart_hash_key, cart_hash );
+									}
+
+									$(document.body).trigger('wc_fragments_loaded');
+									$(document.body).trigger('xoo_wsc_cart_updated');
+
+									var single_price = e.target.parentElement.parentElement.querySelector( '.product-name .woocommerce-Price-amount' ).innerHTML.replace( '<span class="woocommerce-Price-currencySymbol">$</span>', '' );
+									console.log(single_price * e.target.value );
+									var new_subtotal = single_price * e.target.value;
+									var product_subtotal_html = '<span class="woocommerce-Price-currencySymbol">$</span>' + new_subtotal.toFixed( 2 );
+									var product_subtotal = e.target.parentElement.parentElement.parentElement.querySelector( '.product-total .woocommerce-Price-amount' ).innerHTML = product_subtotal_html;
+								}
+								else{
+									//Print error
+									show_notice('error',response.error);
+								}
+							}
+
+						});
+					});
+				}
+
+				qty_changer.addEventListener( 'click', function( e ) {
+					var qty_input = qty_changer.parentElement.querySelector( 'input' );
+					var qty_input_value = qty_changer.parentElement.querySelector( 'input' ).value;
+					var evt;
+					if ( this.classList.contains( 'wonkasoft-wsc-minus' ) && 1 < qty_input_value ) {
+						qty_input.value = parseFloat( qty_input_value ) - 1;
+						if ( qty_input_value != qty_input.value ) {
+							if ("createEvent" in document) {
+							    evt = document.createEvent("HTMLEvents");
+							    evt.initEvent("input", false, true);
+							    qty_input.dispatchEvent(evt);
+							}
+							else {
+							    qty_input.fireEvent("input");
+							}
+						}
+					}
+
+					if ( this.classList.contains( 'wonkasoft-wsc-plus' ) ) {
+						qty_input.value = parseFloat( qty_input_value ) + 1;
+						if ( qty_input_value != qty_input.value ) {
+							if ("createEvent" in document) {
+							    evt = document.createEvent("HTMLEvents");
+							    evt.initEvent("input", false, true);
+							    qty_input.dispatchEvent(evt);
+							}
+							else {
+							    qty_input.fireEvent("input");
+							}
+						}
+					}
+				});
+			});
+		}
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 

@@ -62,7 +62,7 @@ function ws_wc_login_register() {
 			</div>
 
 				<div class="woocommerce-needAccount needAcount">
-					<a href="#" class="checkout-signup-pop">Create an account.</a>
+					<a href="#" class="checkout-signup-pop">Create a free account</a>
 			</div>
 				<?php
 

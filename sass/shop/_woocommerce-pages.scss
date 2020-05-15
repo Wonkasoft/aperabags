@@ -11,19 +11,11 @@
       font-family: $font__main_jose;
     }
 
-    .woocommerce-notices-wrapper {
-
-      > span {
-        display: inline-block;
-        padding: 15px;
-      }
-    }
-
     .woocommerce-notice,
     .woocommerce-info,
     .woocommerce-error,
     .woocommerce-message {
-      margin: 15px 0;
+      margin: 15px auto;
       padding: 15px;
       color: #333333;
       height: auto;
@@ -34,6 +26,18 @@
     .woocommerce-info {
       margin: 0;
       padding: 8px 15px;
+    }
+
+    .woocommerce-notices-wrapper {
+      
+      > .woocommerce-info {
+        margin: auto;
+      }
+
+      > span {
+        display: inline-block;
+        padding: 15px;
+      }
     }
 
     .woocommerce-error {
