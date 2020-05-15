@@ -3618,6 +3618,9 @@ var componentForm;
 				if ( qty_changer.classList.contains( 'wonkasoft-wsc-plus' ) ) {
 					var evt;
 					var qty_input_for_event = qty_changer.parentElement.querySelector( 'input' );
+					qty_input_for_event.addEventListener( 'added_to_cart', function( data ) {
+						console.log( data );
+					});
 					qty_input_for_event.addEventListener( 'input', function( e ) {
 						
 						var endpoint = 'xoo_wsc_update_cart';
