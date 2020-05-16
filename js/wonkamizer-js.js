@@ -3651,13 +3651,18 @@ var componentForm;
 										sessionStorage.setItem( cart_hash_key, cart_hash );
 									}
 
+									$( document.body ).on( 'wc_fragments_loaded', function() {
+										setTimeout( function( target ) {
+											var single_price = target.parentElement.parentElement.querySelector( '.product-name .woocommerce-Price-amount' ).innerHTML.replace( '<span class="woocommerce-Price-currencySymbol">$</span>', '' );
+											var new_subtotal = single_price * target.value;
+											var product_subtotal_html = '<span class="woocommerce-Price-currencySymbol">$</span>' + new_subtotal.toFixed( 2 );
+											target.parentElement.parentElement.parentElement.querySelector( '.product-total .woocommerce-Price-amount' ).innerHTML = product_subtotal_html;
+										}, 600, e.target );
+									});
+
 									$(document.body).trigger('wc_fragments_loaded');
 									$(document.body).trigger('xoo_wsc_cart_updated');
 
-									var single_price = e.target.parentElement.parentElement.querySelector( '.product-name .woocommerce-Price-amount' ).innerHTML.replace( '<span class="woocommerce-Price-currencySymbol">$</span>', '' );
-									var new_subtotal = single_price * e.target.value;
-									var product_subtotal_html = '<span class="woocommerce-Price-currencySymbol">$</span>' + new_subtotal.toFixed( 2 );
-									var product_subtotal = e.target.parentElement.parentElement.parentElement.querySelector( '.product-total .woocommerce-Price-amount' ).innerHTML = product_subtotal_html;
 								}
 								else{
 									//Print error

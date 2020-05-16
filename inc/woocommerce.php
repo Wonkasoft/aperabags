@@ -172,7 +172,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_wrapper_before' ) ) {
 				<?php
 	}
 }
-		add_action( 'woocommerce_before_main_content', 'apera_bags_woocommerce_wrapper_before' );
+add_action( 'woocommerce_before_main_content', 'apera_bags_woocommerce_wrapper_before' );
 
 if ( ! function_exists( 'apera_bags_woocommerce_wrapper_after' ) ) {
 	/**
@@ -270,9 +270,21 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 		$fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1\$1s%2\$2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
 	endif;
 
-	$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
+	$fragments['tr.cart-subtotal'] = '<tr class="cart-subtotal"><th>Subtotal</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . wc_price( WC()->cart->get_subtotal() ) . '</span></strong></td></tr>';
 
-	return $fragments;
+	if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) :
+		foreach ( WC()->cart->get_tax_totals() as $code => $tax ) :
+			$current_tax_class               = 'tax-rate-' . esc_attr( $code );
+			$current_tax_index               = 'tr.tax-rate.tax-rate-' . esc_attr( $code );
+			$fragments[ $current_tax_index ] = '<tr class="tax-rate ' . $current_tax_class . '"><th>' . esc_html( $tax->label ) . '</th><td colspan="2">' . wp_kses_post( $tax->formatted_amount ) . '</td></tr>';
+		endforeach;
+		else :
+			$fragments['tr.tax-total'] = '<tr class="tax-total"><th>' . esc_html( WC()->countries->tax_or_vat() ) . '</th><td colspan="2">' . wc_cart_totals_taxes_total_html() . '</td></tr>';
+	endif;
+
+		$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
+
+		return $fragments;
 }
 add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10, 1 );
 
