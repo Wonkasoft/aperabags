@@ -2993,17 +2993,27 @@ add_filter( 'wad_get_discounts_conditions', 'wonkasoft_wad_get_discounts_conditi
  * @param  int    $product_id contains the product id.
  * @return array             returns the array to be for options.
  */
-function wonkasoft_wad_get_evaluable_condition( $rule, $product_id ) {
+function wonkasoft_wad_get_evaluable_condition( $rule, $product_id = false ) {
 
-	$evaluable_condition = false;
+	if ( 'is-coupon-set' == $rule['condition'] ) :
 
-	if ( 'is-coupon-set' === $rule['condition'] ) :
-		$evaluable_condition = true;
+		$couponargs   = array(
+			'post_type'      => 'shop_coupon',
+			'orderby'        => 'title',
+			'order'          => 'ASC',
+			'posts_per_page' => '-1',
+		);
+		$coupon       = new WP_Query( $couponargs );
+		$coupon_array = array();
+		foreach ( $coupon->posts as $cur_coupon ) {
+			$coupon_array[] = $cur_coupon->ID;
+		}
+		$evaluable_condition = $coupon_array;
+
 	endif;
 
 	return $evaluable_condition;
 }
-add_filter( 'wad_get_evaluable_condition', 'wonkasoft_wad_get_evaluable_condition', 10, 2 );
 
 /**
  * [wonkasoft_wad_fields_values_match description]
@@ -3059,8 +3069,8 @@ add_filter( 'wad_fields_values_match', 'wonkasoft_wad_fields_values_match', 10, 
 function wonkasoft_wad_operators_fields_match( $current_rules, $condition, $selected_value = '' ) {
 	$field_name              = 'o-discount[rules][{rule-group}][{rule-index}][operator]';
 	$arrays_operators        = array(
-		'IN'     => __( 'IN', 'woo-advanced-discounts' ),
-		'NOT IN' => __( 'NOT IN', 'woo-advanced-discounts' ),
+		'SET'     => __( 'SET', 'woo-advanced-discounts' ),
+		'NOT SET' => __( 'NOT SET', 'woo-advanced-discounts' ),
 	);
 	$arrays_operators_select = get_wad_html_select( $field_name, false, '', $arrays_operators, $selected_value );
 
@@ -3074,3 +3084,49 @@ function wonkasoft_wad_operators_fields_match( $current_rules, $condition, $sele
 	}
 }
 add_filter( 'wad_operators_fields_match', 'wonkasoft_wad_operators_fields_match', 10, 3 );
+
+/**
+ * [wonkasoft_wad_is_rule_valid description]
+ *
+ * @param  [type] $is_valid       [description]
+ * @param  [type] $rule           [description]
+ * @param  [type] $class_instance [description]
+ * @return [type]                 [description]
+ */
+function wonkasoft_wad_is_rule_valid( $is_valid, $rule, $class_instance ) {
+
+	$condition = wonkasoft_wad_get_evaluable_condition( $rule, $product_id );
+	$value     = get_proper_value( $rule, 'value' );
+
+	// We check if the condition is SET or NOT SET the value.
+	if ( 'is-coupon-set' == $rule['condition'] ) {
+		if ( ! is_array( $value ) ) {
+			$error_msg = __( 'Discount', 'woo-advanced-discounts' ) . " #$class_instance->id: " . __( 'Rule ', 'woo-advanced-discounts' ) . $rule['condition'] . __( ' requires at least one parameter selected in the values', 'woo-advanced-discounts' );
+			echo $error_msg . '<br>';
+			$is_valid = false;
+		} else {
+			$is_valid = ( array_intersect( $condition, $value ) ) ? true : false;
+
+			if ( 'NOT SET' == $rule['operator'] ) {
+				$is_valid = ( ! $is_valid );
+			}
+		}
+	}
+
+	return $is_valid;
+}
+add_filter( 'wad_is_rule_valid', 'wonkasoft_wad_is_rule_valid', 10, 3 );
+
+/**
+ * [wonkasoft_wad_is_applicable description]
+ *
+ * @param  [type] $is_valid       [description]
+ * @param  [type] $class_instance [description]
+ * @param  [type] $product_id     [description]
+ * @return [type]                 [description]
+ */
+function wonkasoft_wad_is_applicable( $is_valid, $class_instance, $product_id ) {
+
+	return $is_valid;
+}
+add_filter( 'wad_is_applicable', 'wonkasoft_wad_is_applicable', 10, 3 );
