@@ -242,6 +242,11 @@ require_once get_stylesheet_directory() . '/inc/theme-ajax-functions.php';
 require_once get_stylesheet_directory() . '/inc/customizer.php';
 
 /**
+ * Gravity forms additions.
+ */
+require_once get_stylesheet_directory() . '/inc/gravity-forms.php';
+
+/**
  * Load WooCommerce compatibility file.
  */
 if ( class_exists( 'WooCommerce' ) ) {
