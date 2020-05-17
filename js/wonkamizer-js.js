@@ -3708,6 +3708,24 @@ var componentForm;
 				});
 			});
 		}
+
+		if ( document.querySelector( '.woocommerce-remove-coupon' ) ) {
+			var coupon_remove_btn = document.querySelector( '.woocommerce-remove-coupon' );
+
+			coupon_remove_btn.addEventListener( 'click', function( e ) {
+				if ("createEvent" in document) {
+				    evt = document.createEvent("HTMLEvents");
+				    evt.initEvent("wc_fragment_refresh", false, true);
+					console.log( this );
+					console.log( evt );
+				    this.dispatchEvent(evt);
+					console.log( this.dispatchEvent(evt) );
+				}
+				else {
+				    this.fireEvent("wc_fragment_refresh");
+				}
+			});
+		}
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 

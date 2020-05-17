@@ -270,7 +270,17 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 		$fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1\$1s%2\$2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
 	endif;
 
-	$fragments['tr.cart-subtotal'] = '<tr class="cart-subtotal"><th>Subtotal</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . wc_price( WC()->cart->get_subtotal() ) . '</span></strong></td></tr>';
+	$fragments['tr.cart-subtotal'] = '<tr class="cart-subtotal"><th>Subtotal</th><td colspan="2"><span class="woocommerce-Price-amount amount">' . wc_price( WC()->cart->get_subtotal() ) . '</span></td></tr>';
+
+	if ( empty( WC()->cart->get_coupons() ) ) :
+		$fragments['tr.discount'] = '<tr class="cart-discount"><th></th><td colspan="2"></td></tr>';
+	else :
+		foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
+			$current_coupon_class               = 'coupon-' . esc_attr( sanitize_title( $code ) );
+			$current_coupon_index               = 'tr.cart-discount.coupon-' . esc_attr( sanitize_title( $code ) );
+			$fragments[ $current_coupon_index ] = '<tr class="cart-discount ' . $current_coupon_class . '"><th>' . wc_cart_totals_coupon_label( $coupon ) . '</th><td colspan="2" data-title="' . esc_attr( wc_cart_totals_coupon_label( $coupon, false ) ) . '">' . wc_cart_totals_coupon_html( $coupon, false ) . '</td></tr>';
+		endforeach;
+	endif;
 
 	if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) :
 		foreach ( WC()->cart->get_tax_totals() as $code => $tax ) :
@@ -2996,6 +3006,12 @@ add_filter( 'wad_get_discounts_conditions', 'wonkasoft_wad_get_discounts_conditi
 function wonkasoft_wad_get_evaluable_condition( $rule, $product_id = false ) {
 
 	if ( 'is-coupon-set' == $rule['condition'] ) :
+		ob_start();
+		echo "<pre>\n";
+		print_r( WC()->cart->applied_coupons );
+		echo "</pre>\n";
+		ob_end_clean();
+		$applied_coupons = WC()->cart->applied_coupons;
 
 		$couponargs   = array(
 			'post_type'      => 'shop_coupon',
@@ -3006,7 +3022,9 @@ function wonkasoft_wad_get_evaluable_condition( $rule, $product_id = false ) {
 		$coupon       = new WP_Query( $couponargs );
 		$coupon_array = array();
 		foreach ( $coupon->posts as $cur_coupon ) {
-			$coupon_array[] = $cur_coupon->ID;
+			if ( in_array( $cur_coupon->post_name, $applied_coupons ) ) :
+				$coupon_array[] = $cur_coupon->ID;
+			endif;
 		}
 		$evaluable_condition = $coupon_array;
 
