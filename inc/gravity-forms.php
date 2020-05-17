@@ -18,9 +18,19 @@ function pre_submission_handler( $form ) {
 	if ( 'Apera Perks Registration Checkout' == $form['title'] ) {
 		?>
 	<script>
-		jQuery(document).on('gform_confirmation_loaded', function(event, formId){
 			alert('Hey');
-		});
+			console.log($('#shipping_first_name').val());
+			console.log($('#shipping_last_name').val());
+			console.log($('#shipping_company').val());
+			console.log($('#shipping_address_1').val());
+			console.log($('#shipping_address_2').val());
+			console.log($('#shipping_city').val());
+			console.log($('#select2').val());-shipping_state-container
+			console.log($('#shipping_postcode').val());
+			console.log($('#shipping_phone').val());
+			console.log($('#shipping_email').val());
+			console.log($("input['name']['mc4wp-subscribe']").val());
+			console.log($('#order_comments').val());
 	</script>
 		<?php
 	}
