@@ -24,7 +24,7 @@ function pre_submission_handler( $form ) {
 			console.log("shipping_address_1: " + jQuery('#shipping_address_1').val());
 			console.log("shipping_address_2: " + jQuery('#shipping_address_2').val());
 			console.log("shipping_city: " + jQuery('#shipping_city').val());
-			console.log("select2-shipping_state-container: " + jQuery('#select2-shipping_state-container').val());
+			console.log("shipping_state: " + jQuery('#shipping_state').val());
 			console.log("shipping_postcode: " + jQuery('#shipping_postcode').val());
 			console.log("shipping_phone: " + jQuery('#shipping_phone').val());
 			console.log("shipping_email: " + jQuery('#shipping_email').val());
