@@ -34,6 +34,7 @@ function pre_submission_handler( $form ) {
 
 			var url = window.location.href;
 			var shipping_first_name = jQuery('#shipping_first_name').val();
+			<?php $first_name =; ?>jQuery('#shipping_first_name').val(); <?php ; ?>
 			var shipping_last_name =  jQuery('#shipping_last_name').val();
 			var shipping_company =  jQuery('#shipping_company').val();
 			var shipping_address_1 =  jQuery('#shipping_address_1').val();
@@ -52,7 +53,7 @@ function pre_submission_handler( $form ) {
 	 </script>
 		<?php
 		echo '<pre>';
-		print_r( $_GET['shipping_address_1'] );
+		print_r( $first_name );
 		echo '</pre>';
 	}
 }
