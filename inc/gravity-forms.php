@@ -46,8 +46,9 @@ function pre_submission_handler( $form ) {
 			var mc4wp_subscribe =  jQuery("input[name='mc4wp-subscribe']").val();
 			var order_comments =  jQuery('#order_comments').val();
 			console.log(url);
-			window.location.href = url + "&shipping_first_name=" + shipping_first_name + "&shipping_last_name=" + shipping_last_name + "&shipping_company=" + shipping_company + "&shipping_address_1=" + "&shipping_address_2=" + shipping_address_2 + "&shipping_city=" + shipping_city + "&shipping_state=" + shipping_state + "&shipping_postcode=" + shipping_postcode + "&shipping_phone=" + shipping_phone + "&shipping_email=" + shipping_email + "&mc4wp_subscribe=" + mc4wp_subscribe + "&order_comments" + order_comments;
-			console.log(url + "&shipping_first_name=" + shipping_first_name + "&shipping_last_name=" + shipping_last_name + "&shipping_company=" + shipping_company + "&shipping_address_1=" + "&shipping_address_2=" + shipping_address_2 + "&shipping_city=" + shipping_city + "&shipping_state=" + shipping_state + "&shipping_postcode=" + shipping_postcode + "&shipping_phone=" + shipping_phone + "&shipping_email=" + shipping_email + "&mc4wp_subscribe=" + mc4wp_subscribe + "&order_comments" + order_comments);
+			url = encodeURI(url + "&shipping_first_name=" + shipping_first_name + "&shipping_last_name=" + shipping_last_name + "&shipping_company=" + shipping_company + "&shipping_address_1=" + "&shipping_address_2=" + shipping_address_2 + "&shipping_city=" + shipping_city + "&shipping_state=" + shipping_state + "&shipping_postcode=" + shipping_postcode + "&shipping_phone=" + shipping_phone + "&shipping_email=" + shipping_email + "&mc4wp_subscribe=" + mc4wp_subscribe + "&order_comments=" + order_comments);
+			window.location.href = url;
+			console.log(url);
 	 </script>
 		<?php
 	}
