@@ -18,7 +18,7 @@ function pre_submission_handler( $form ) {
 	if ( 'Apera Perks Registration Checkout' == $form['title'] ) {
 		?>
 	<script>
-			console.log("shipping_first_name: "+jQuery('#shipping_first_name').val());
+			console.log("shipping_first_name: "+ jQuery('#shipping_first_name').val());
 			console.log("shipping_last_name: " + jQuery('#shipping_last_name').val());
 			console.log("shipping_company: " + jQuery('#shipping_company').val());
 			console.log("shipping_address_1: " + jQuery('#shipping_address_1').val());
@@ -47,6 +47,7 @@ function pre_submission_handler( $form ) {
 			var order_comments =  jQuery('#order_comments').val();
 			console.log(url);
 			window.location.href = url + "&shipping_first_name=" + shipping_first_name + "&shipping_last_name=" + shipping_last_name + "&shipping_company=" + shipping_company + "&shipping_address_1=" + "&shipping_address_2=" + shipping_address_2 + "&shipping_city=" + shipping_city + "&shipping_state=" + shipping_state + "&shipping_postcode=" + shipping_postcode + "&shipping_phone=" + shipping_phone + "&shipping_email=" + shipping_email + "&mc4wp_subscribe=" + mc4wp_subscribe + "&order_comments" + order_comments;
+			console.log(url + "&shipping_first_name=" + shipping_first_name + "&shipping_last_name=" + shipping_last_name + "&shipping_company=" + shipping_company + "&shipping_address_1=" + "&shipping_address_2=" + shipping_address_2 + "&shipping_city=" + shipping_city + "&shipping_state=" + shipping_state + "&shipping_postcode=" + shipping_postcode + "&shipping_phone=" + shipping_phone + "&shipping_email=" + shipping_email + "&mc4wp_subscribe=" + mc4wp_subscribe + "&order_comments" + order_comments);
 	 </script>
 		<?php
 	}
