@@ -51,6 +51,9 @@ function pre_submission_handler( $form ) {
 			console.log(url);
 	 </script>
 		<?php
+		echo '<pre>';
+		print_r( $_GET['shipping_address_1'] );
+		echo '</pre>';
 	}
 }
 
