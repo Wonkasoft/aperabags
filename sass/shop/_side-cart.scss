@@ -117,6 +117,15 @@
 			border-radius: 100px;
 		}
 
+		.xoo-wsc-remove-coupon {
+			border-radius: 100px;
+
+			&:after {
+				content: "\e909";
+				@include font-size( 1 );
+			}
+		}
+
 		.xoo-wsc-footer-b {
 			padding: 0 15px;
 		}

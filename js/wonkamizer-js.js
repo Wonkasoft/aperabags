@@ -40,6 +40,7 @@ var componentForm;
 	header_el,
 	header_height,
 	config = { attributes: true, childList: true },
+	qty_changers_array = [],
 	xhr;
 	if ( document.querySelector( '.fp_apply_reward' ) ) 
 	{
@@ -3611,83 +3612,38 @@ var componentForm;
 			}
 		}
 
-		if ( document.querySelector( '.wonkasoft-wsc-chng' ) ) {
-			var qty_changers = document.querySelectorAll( '.wonkasoft-wsc-chng' );
-
-			qty_changers.forEach( function( qty_changer, i ) {
-				if ( qty_changer.classList.contains( 'wonkasoft-wsc-plus' ) ) {
-					var evt;
-					var qty_input_for_event = qty_changer.parentElement.querySelector( 'input' );
-					qty_input_for_event.addEventListener( 'added_to_cart', function( data ) {
-						console.log( data );
-					});
-					qty_input_for_event.addEventListener( 'input', function( e ) {
-						
-						var endpoint = 'xoo_wsc_update_cart';
-						endpoint += e.target.value > 0 ? '&xoo_wsc_qty_update' : '';
-
-						$.ajax({
-							url: xoo_wsc_localize.wc_ajax_url.toString().replace( '%%endpoint%%', endpoint ),
-							type: 'POST',
-							data: {
-								cart_key: e.target.parentElement.parentElement.getAttribute( 'data-product' ),
-								new_qty: e.target.value
-							},
-							success: function(response){
-								if(response.fragments){
-									var fragments = response.fragments,
-										cart_hash =  response.cart_hash;
-									//Set fragments
-							   		$.each( response.fragments, function( key, value ) {
-										$( key ).replaceWith( value );
-										$( key ).stop( true ).css( 'opacity', '1' ).unblock();
-									});
-
-							   		if(wc_cart_fragments_params){
-								   		var cart_hash_key = wc_cart_fragments_params.ajax_url.toString() + '-wc_cart_hash';
-										//Set cart hash
-										sessionStorage.setItem( wc_cart_fragments_params.fragment_name, JSON.stringify( fragments ) );
-										localStorage.setItem( cart_hash_key, cart_hash );
-										sessionStorage.setItem( cart_hash_key, cart_hash );
-									}
-
-									$( document.body ).on( 'wc_fragments_loaded', function() {
-										setTimeout( function( target ) {
-											var single_price = target.parentElement.parentElement.querySelector( '.product-name .woocommerce-Price-amount' ).innerHTML.replace( '<span class="woocommerce-Price-currencySymbol">$</span>', '' );
-											var new_subtotal = single_price * target.value;
-											var product_subtotal_html = '<span class="woocommerce-Price-currencySymbol">$</span>' + new_subtotal.toFixed( 2 );
-											target.parentElement.parentElement.parentElement.querySelector( '.product-total .woocommerce-Price-amount' ).innerHTML = product_subtotal_html;
-										}, 600, e.target );
-									});
-
-									$(document.body).trigger('wc_fragments_loaded');
-									$(document.body).trigger('xoo_wsc_cart_updated');
-
-								}
-								else{
-									//Print error
-									show_notice('error',response.error);
-								}
-							}
-
-						});
-					});
-				}
-
-				qty_changer.addEventListener( 'click', function( e ) {
-					var qty_input = qty_changer.parentElement.querySelector( 'input' );
-					var qty_input_value = qty_changer.parentElement.querySelector( 'input' ).value;
-					var evt;
+		if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
+			var checkout_init = {
+				evt: {},
+				get_qty_changers: [],
+				qty_changers_init: function() {
+					this.get_qty_changers = document.querySelectorAll( '.wonkasoft-wsc-chng' );
+					var qty_changers = this.get_qty_changers;
+					this.qty_changers_foreach();
+				},
+				qty_changers_foreach: function() {
+					checkout_init.get_qty_changers.forEach( checkout_init.qty_changers_foreach_loop );
+				},
+				qty_changers_foreach_loop: function( qty_changer, i ) {
+					qty_changer.removeEventListener( 'click', checkout_init.qty_changers_set_actions );
+					qty_changer.addEventListener( 'click', checkout_init.qty_changers_set_actions );
+					console.log( 'click should be set' );
+					checkout_init.get_input_to_set( qty_changer );
+				},
+				qty_changers_set_actions: function( e ) {
+					e.stopImmediatePropagation();
+					var qty_input = this.parentElement.querySelector( 'input' );
+					var qty_input_value = qty_input.value;
 					if ( this.classList.contains( 'wonkasoft-wsc-minus' ) && 1 < qty_input_value ) {
 						qty_input.value = parseFloat( qty_input_value ) - 1;
 						if ( qty_input_value != qty_input.value ) {
-							if ("createEvent" in document) {
-							    evt = document.createEvent("HTMLEvents");
-							    evt.initEvent("input", false, true);
-							    qty_input.dispatchEvent(evt);
+							if ( "createEvent" in document ) {
+							    checkout_init.evt = document.createEvent( "HTMLEvents" );
+							    checkout_init.evt.initEvent( "input", false, true );
+							    qty_input.dispatchEvent( checkout_init.evt );
 							}
 							else {
-							    qty_input.fireEvent("input");
+							    qty_input.fireEvent( "input" );
 							}
 						}
 					}
@@ -3695,17 +3651,87 @@ var componentForm;
 					if ( this.classList.contains( 'wonkasoft-wsc-plus' ) ) {
 						qty_input.value = parseFloat( qty_input_value ) + 1;
 						if ( qty_input_value != qty_input.value ) {
-							if ("createEvent" in document) {
-							    evt = document.createEvent("HTMLEvents");
-							    evt.initEvent("input", false, true);
-							    qty_input.dispatchEvent(evt);
+							if ( "createEvent" in document ) {
+							    checkout_init.evt = document.createEvent( "HTMLEvents" );
+							    checkout_init.evt.initEvent( "input", false, true );
+							    qty_input.dispatchEvent( checkout_init.evt );
 							}
 							else {
-							    qty_input.fireEvent("input");
+							    qty_input.fireEvent( "input" );
 							}
 						}
 					}
-				});
+				},
+				get_input_to_set: function( qty_changer ) {
+					var qty_input_for_event = qty_changer.parentElement.querySelector( 'input' );
+
+					qty_input_for_event.removeEventListener( "input", checkout_init.set_input_listener );
+					qty_input_for_event.addEventListener( "input", checkout_init.set_input_listener );
+				},
+				set_input_listener: function( e ) {
+					
+					var endpoint = 'xoo_wsc_update_cart';
+					endpoint += e.target.value > 0 ? '&xoo_wsc_qty_update' : '';
+
+					$.ajax({
+						url: xoo_wsc_localize.wc_ajax_url.toString().replace( '%%endpoint%%', endpoint ),
+						type: 'POST',
+						data: {
+							cart_key: e.target.parentElement.parentElement.getAttribute( 'data-product-key' ),
+							new_qty: e.target.value
+						},
+						success: function(response){
+							if(response.fragments){
+								var fragments = response.fragments,
+									cart_hash =  response.cart_hash;
+								//Set fragments
+						   		$.each( response.fragments, function( key, value ) {
+									$( key ).replaceWith( value );
+									$( key ).stop( true ).css( 'opacity', '1' ).unblock();
+								});
+
+						   		if(wc_cart_fragments_params){
+							   		var cart_hash_key = wc_cart_fragments_params.ajax_url.toString() + '-wc_cart_hash';
+									//Set cart hash
+									sessionStorage.setItem( wc_cart_fragments_params.fragment_name, JSON.stringify( fragments ) );
+									localStorage.setItem( cart_hash_key, cart_hash );
+									sessionStorage.setItem( cart_hash_key, cart_hash );
+								}
+
+								$(document.body).trigger('wc_fragments_loaded');
+								$(document.body).trigger('wc_fragments_refreshed');
+								$(document.body).trigger('xoo_wsc_cart_updated');
+							}
+							else{
+								//Print error
+								show_notice('error',response.error);
+							}
+						}
+
+					});
+				}
+			};
+			$( document.body ).on( 'wc_fragment_refresh', function( e ) { 
+				checkout_init.qty_changers_init(); 
+			});
+
+			$( document.body ).on( 'update_checkout', function( e ) { 
+				$( document.body ).trigger( 'wc_fragment_refresh' );
+			});
+		}
+
+		if ( document.querySelector( 'form.coupon.form-group' ) ) {
+			var coupon_form = document.querySelector( 'form.coupon.form-group' );
+
+			coupon_form.addEventListener( 'submit', function() {
+				if ("createEvent" in document) {
+				    evt = document.createEvent("HTMLEvents");
+				    evt.initEvent("wc_fragment_refresh", false, true);
+				    this.dispatchEvent(evt);
+				}
+				else {
+				    this.fireEvent("wc_fragment_refresh");
+				}
 			});
 		}
 
@@ -3713,19 +3739,55 @@ var componentForm;
 			var coupon_remove_btn = document.querySelector( '.woocommerce-remove-coupon' );
 
 			coupon_remove_btn.addEventListener( 'click', function( e ) {
+				e.stopImmediatePropagation();
 				if ("createEvent" in document) {
 				    evt = document.createEvent("HTMLEvents");
 				    evt.initEvent("wc_fragment_refresh", false, true);
-					console.log( this );
-					console.log( evt );
 				    this.dispatchEvent(evt);
-					console.log( this.dispatchEvent(evt) );
 				}
 				else {
 				    this.fireEvent("wc_fragment_refresh");
 				}
 			});
 		}
+
+		$( document.body ).on( 'xoo_wsc_cart_updated', function( e ) {
+		    $( document.body ).trigger( "wc_fragment_refresh" );
+		});
+
+		$(document).on('click','.xoo-wsc-coupon-submit',function(e) {
+			setTimeout( function() {
+				var fix_url;
+				if ( getUrlVars().remove_coupon && getUrlVars().guestcheckout ) {
+					fix_url = window.location.href.split( '?' )[0];
+					window.location.href = fix_url + '?guestcheckout=true';
+				}
+
+				if ( getUrlVars().guestcheckout ) {
+					fix_url = window.location.href.split( '?' )[0];
+					window.location.href = fix_url + '?guestcheckout=true';
+				} else {
+					window.location.reload();
+				}
+			}, 800 );
+		});
+
+		$(document).on('click','.xoo-wsc-remove-coupon',function(e) {
+			setTimeout( function() {
+				var fix_url;
+				if ( getUrlVars().remove_coupon && getUrlVars().guestcheckout ) {
+					fix_url = window.location.href.split( '?' )[0];
+					window.location.href = fix_url + '?guestcheckout=true';
+				}
+
+				if ( getUrlVars().guestcheckout ) {
+					fix_url = window.location.href.split( '?' )[0];
+					window.location.href = fix_url + '?guestcheckout=true';
+				} else {
+					window.location.reload();
+				}
+			}, 800 );
+		});
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 
