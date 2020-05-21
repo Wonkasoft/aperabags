@@ -3819,12 +3819,11 @@ var componentForm;
 			$( document.body ).trigger( 'wc_fragment_refresh' );
 			setTimeout( function() {
 				checkout_init.qty_changers_init();
-			}, 800 );
+			}, 1000 );
 		});
 
 		$( document.body ).on( 'wc_fragment_refresh', function( e ) { 
 			setTimeout( function() {
-				console.log( 'qty_changers_init' );
 				checkout_init.qty_changers_init();
 			}, 1000 );
 		});
