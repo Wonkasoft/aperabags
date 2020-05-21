@@ -3636,6 +3636,7 @@ var componentForm;
 						document.querySelector( '.checkout-shipping-city input' ).value = document.querySelector( '#shipping_city' ).value;
 						document.querySelector( '.checkout-shipping-state input' ).value = document.querySelector( '#shipping_state' ).value;
 						document.querySelector( '.checkout-shipping-postcode input' ).value = document.querySelector( '#shipping_postcode' ).value;
+						document.querySelector( '.checkout-shipping-country input' ).value = document.querySelector( '#shipping_country' ).value;
 						document.querySelector( '.checkout-shipping-phone input' ).value = document.querySelector( '#shipping_phone' ).value;
 						document.querySelector( '.checkout-mc4wp_subscribe input' ).checked = document.querySelector( 'input[name="mc4wp-subscribe"]' ).checked;
 						document.querySelector( '.checkout-mc4wp_subscribe input' ).value = document.querySelector( 'input[name="mc4wp-subscribe"]' ).value;
@@ -3818,12 +3819,14 @@ var componentForm;
 		$( document.body ).on( 'update_checkout', function( e ) { 
 			$( document.body ).trigger( 'wc_fragment_refresh' );
 			setTimeout( function() {
+				console.log( { update_checkout: e } );
 				checkout_init.qty_changers_init();
 			}, 1000 );
 		});
 
 		$( document.body ).on( 'wc_fragment_refresh', function( e ) { 
 			setTimeout( function() {
+				console.log( { wc_fragment_refresh: e } );
 				checkout_init.qty_changers_init();
 			}, 1000 );
 		});
