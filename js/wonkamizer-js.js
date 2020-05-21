@@ -3611,6 +3611,40 @@ var componentForm;
 				document.querySelector( 'form.post-password-form input[type="submit"]' ).click();
 			}
 		}
+		if ( document.querySelector( '#wonka_shipping_method' ) ) {
+			var wonka_shipping_method_init = {
+				get_all_labels: document.querySelectorAll( '#wonka_shipping_method ul li label' ),
+				shipping_links_init: function() {
+					this.get_all_labels.forEach( this.shipping_links_foreach );
+
+					if ( document.querySelector( '.checkout-signup-pop' ) ) {
+						document.querySelector( '.checkout-signup-pop' ).addEventListener( 'click', this.checkout_signup_pop );
+					}
+				},
+				shipping_links_foreach: function( label, i ) {
+					label.addEventListener( 'click', wonka_shipping_method_init.label_click );
+				},
+				label_click: function( e ) {
+					this.previousElementSibling.click();
+				},
+				checkout_signup_pop: function( e ) {
+					console.log( this );
+					setTimeout( function() {
+						document.querySelector( '.checkout-shipping-company input' ).value = document.querySelector( '#shipping_company' ).value;
+						document.querySelector( '.checkout-shipping-address1 input' ).value = document.querySelector( '#shipping_address_1' ).value;
+						document.querySelector( '.checkout-shipping-address2 input' ).value = document.querySelector( '#shipping_address_2' ).value;
+						document.querySelector( '.checkout-shipping-city input' ).value = document.querySelector( '#shipping_city' ).value;
+						document.querySelector( '.checkout-shipping-state input' ).value = document.querySelector( '#shipping_state' ).value;
+						document.querySelector( '.checkout-shipping-postcode input' ).value = document.querySelector( '#shipping_postcode' ).value;
+						document.querySelector( '.checkout-shipping-phone input' ).value = document.querySelector( '#shipping_phone' ).value;
+						document.querySelector( '.checkout-mc4wp_subscribe input' ).checked = document.querySelector( 'input[name="mc4wp-subscribe"]' ).checked;
+						document.querySelector( '.checkout-mc4wp_subscribe input' ).value = document.querySelector( 'input[name="mc4wp-subscribe"]' ).value;
+						document.querySelector( '.checkout-order-comments input' ).value = document.querySelector( '#order_comments' ).value;
+					}, 800 );
+				}
+			};
+			wonka_shipping_method_init.shipping_links_init();
+		}
 
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
 			var checkout_init = {
@@ -3627,7 +3661,6 @@ var componentForm;
 				qty_changers_foreach_loop: function( qty_changer, i ) {
 					qty_changer.removeEventListener( 'click', checkout_init.qty_changers_set_actions );
 					qty_changer.addEventListener( 'click', checkout_init.qty_changers_set_actions );
-					console.log( 'click should be set' );
 					checkout_init.get_input_to_set( qty_changer );
 				},
 				qty_changers_set_actions: function( e ) {
@@ -3711,13 +3744,6 @@ var componentForm;
 					});
 				}
 			};
-			$( document.body ).on( 'wc_fragment_refresh', function( e ) { 
-				checkout_init.qty_changers_init(); 
-			});
-
-			$( document.body ).on( 'update_checkout', function( e ) { 
-				$( document.body ).trigger( 'wc_fragment_refresh' );
-			});
 		}
 
 		if ( document.querySelector( 'form.coupon.form-group' ) ) {
@@ -3787,6 +3813,20 @@ var componentForm;
 					window.location.reload();
 				}
 			}, 800 );
+		});
+
+		$( document.body ).on( 'update_checkout', function( e ) { 
+			$( document.body ).trigger( 'wc_fragment_refresh' );
+			setTimeout( function() {
+				checkout_init.qty_changers_init();
+			}, 800 );
+		});
+
+		$( document.body ).on( 'wc_fragment_refresh', function( e ) { 
+			setTimeout( function() {
+				console.log( 'qty_changers_init' );
+				checkout_init.qty_changers_init();
+			}, 1000 );
 		});
 	};
 		/*=====  End of This is for running after document is ready  ======*/
