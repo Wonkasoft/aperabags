@@ -3628,7 +3628,6 @@ var componentForm;
 					this.previousElementSibling.click();
 				},
 				checkout_signup_pop: function( e ) {
-					console.log( this );
 					setTimeout( function() {
 						document.querySelector( '.checkout-shipping-company input' ).value = document.querySelector( '#shipping_company' ).value;
 						document.querySelector( '.checkout-shipping-address1 input' ).value = document.querySelector( '#shipping_address_1' ).value;
@@ -3641,13 +3640,22 @@ var componentForm;
 						document.querySelector( '.checkout-mc4wp_subscribe input' ).checked = document.querySelector( 'input[name="mc4wp-subscribe"]' ).checked;
 						document.querySelector( '.checkout-mc4wp_subscribe input' ).value = document.querySelector( 'input[name="mc4wp-subscribe"]' ).value;
 						document.querySelector( '.checkout-order-comments input' ).value = document.querySelector( '#order_comments' ).value;
-					}, 800 );
+					}, 1000 );
 				}
 			};
 			wonka_shipping_method_init.shipping_links_init();
 		}
 
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
+			document.body.addEventListener( 'keydown', function( e ) {
+				if ( 13 === e.keyCode ) {
+					e.stopImmediatePropagation();
+					console.log( e );
+					if ( document.querySelector( '#wonka_payment_method_tab' ).classList.contains( 'active' ) ) {
+						document.querySelector( '#place_order').click();
+					}
+				}
+			});
 			var checkout_init = {
 				evt: {},
 				get_qty_changers: [],
