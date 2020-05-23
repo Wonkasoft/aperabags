@@ -48,6 +48,10 @@
 				@include font-size( .9 );
 			}
 
+			input.xoo-wsc-qty {
+				-webkit-appearance: textfield;
+			}
+
 			span.xoo-wsc-chng {
 			    font-family: "Open Sans";
 			    font-size: 1.5rem;
