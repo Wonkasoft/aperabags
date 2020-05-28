@@ -842,6 +842,130 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 }
 add_filter( 'gform_confirmation', 'wonkasoft_after_perks_registration_entry', 10, 4 );
 
+function wonkasoft_after_cep_update_entry( $entry, $form ) {
+	$forms_to_process = array(
+		'Apera Customer Engagement Program New Member',
+		'Apera Customer Engagement Program Update Member',
+	);
+	if ( ! in_array( $form['title'], $forms_to_process ) ) {
+		return;
+	}
+
+	$entry_fields                  = array();
+	$entry_fields['custom_fields'] = array();
+	$set_labels                    = array(
+		'First',
+		'Last',
+		'Engage Email',
+		'Street Address',
+		'Address Line 2',
+		'City',
+		'State / Province',
+		'ZIP / Postal Code',
+	);
+	$custom_fields                 = array();
+	$pattern                       = '/([ \/]{1,5})/';
+	foreach ( $form['fields'] as $field ) {
+		if ( 'honeypot' !== $field['type'] ) :
+			if ( in_array( $field['label'], $set_labels ) ) :
+				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
+			endif;
+			if ( in_array( $field['label'], $custom_fields ) ) :
+				$current_label = strtolower( preg_replace( $pattern, $field['label'] ) );
+					array_push(
+						$entry_fields['custom_fields'],
+						array(
+							'label' => esc_html( $current_label ),
+							'value' => esc_html( $entry[ $field['id'] ] ),
+						)
+					);
+			endif;
+			if ( ! empty( $field->inputs ) ) :
+				foreach ( $field->inputs as $input ) {
+					if ( in_array( $input['label'], $set_labels ) ) :
+						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
+					endif;
+				}
+			endif;
+		endif;
+	}
+
+	if ( '' !== $entry_fields['address'] && '' !== $entry_fields['city'] && '' !== $entry_fields['state_province'] && '' !== $entry_fields['zip_postal_code'] ) :
+		$set_tag = 'cep_updated';
+		// Setting getResponse api args.
+		$api_args = array(
+			'email'         => $entry_fields['engage_email'],
+			'tags'          => array(
+				$set_tag,
+			),
+			'campaign_name' => 'apera_195932',
+		);
+
+		$user    = get_user_by( 'email', $entry_fields['engage_email'] );
+		$user_id = $user->ID;
+
+		$getresponse = new Wonkasoft_GetResponse_Api( $api_args );
+
+		if ( empty( $getresponse->campaign_id ) ) :
+			foreach ( $getresponse->campaign_list as $campaign ) :
+				if ( $api_args['campaign_name'] === $campaign->name ) :
+					$getresponse->campaign_id = $campaign->campaignId;
+				endif;
+			endforeach;
+		endif;
+
+		if ( empty( $getresponse->contact_id ) ) :
+			foreach ( $getresponse->contact_list as $contact ) :
+				if ( empty( $getresponse->campaign_id ) ) {
+					$getresponse->contact_id = $contact->contactId;
+				} else {
+					if ( $getresponse->campaign_id === $contact->campaign->campaignId ) :
+						$getresponse->contact_id = $contact->contactId;
+					endif;
+				}
+			endforeach;
+		endif;
+
+		if ( ! empty( $getresponse->custom_fields ) ) :
+			$getresponse->custom_fields_list      = $getresponse->get_a_list_of_custom_fields();
+			$getresponse->custom_fields_to_update = array();
+			foreach ( $getresponse->custom_fields_list as $field ) {
+				if ( in_array( $field->name, $getresponse->custom_fields ) ) :
+					$add_field = array(
+						'customFieldId' => $field->customFieldId,
+						'value'         => array(
+							$getresponse->custom_fields_values[ $field->name ],
+						),
+					);
+					array_push( $getresponse->custom_fields_to_update, $add_field );
+				endif;
+			}
+			$this_response = $getresponse->upsert_the_custom_fields_of_a_contact();
+			array_push( $response, $this_response );
+		endif;
+
+		if ( ! empty( $getresponse->tags ) ) :
+			$getresponse->tags_to_update = array();
+			foreach ( $getresponse->tag_list as $tag ) {
+				if ( in_array( $tag->name, $getresponse->tags ) ) :
+					$tag_id = array(
+						'tagId' => $tag->tagId,
+					);
+					array_push( $getresponse->tags_to_update, $tag_id );
+				endif;
+			}
+			$this_response = $getresponse->upsert_the_tags_of_contact();
+			array_push( $response, $this_response );
+		endif;
+
+		if ( 0 !== $user_id ) :
+			update_user_meta( $user_id, 'getResponse_data', $response );
+		endif;
+
+	endif;
+}
+add_action( 'gform_after_submission', 'wonkasoft_after_cep_update_entry', 10, 2 );
+
 /**
  * Adds the javascript required to view your password.
  *  Turn the the input type into text and back to password.

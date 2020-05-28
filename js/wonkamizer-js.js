@@ -3650,7 +3650,6 @@ var componentForm;
 			document.body.addEventListener( 'keydown', function( e ) {
 				if ( 13 === e.keyCode ) {
 					e.stopImmediatePropagation();
-					console.log( e );
 					if ( document.querySelector( '#wonka_payment_method_tab' ).classList.contains( 'active' ) ) {
 						document.querySelector( '#place_order').click();
 					}
@@ -3827,14 +3826,12 @@ var componentForm;
 		$( document.body ).on( 'update_checkout', function( e ) { 
 			$( document.body ).trigger( 'wc_fragment_refresh' );
 			setTimeout( function() {
-				console.log( { update_checkout: e } );
 				checkout_init.qty_changers_init();
 			}, 1000 );
 		});
 
 		$( document.body ).on( 'wc_fragment_refresh', function( e ) { 
 			setTimeout( function() {
-				console.log( { wc_fragment_refresh: e } );
 				checkout_init.qty_changers_init();
 			}, 1000 );
 		});

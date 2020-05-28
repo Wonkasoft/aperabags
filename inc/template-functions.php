@@ -959,6 +959,7 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 function get_response_api_call( $api_args ) {
 	$response    = array();
 	$getresponse = new Wonkasoft_GetResponse_Api( $api_args );
+
 	if ( empty( $getresponse->campaign_id ) ) :
 		foreach ( $getresponse->campaign_list as $campaign ) :
 			if ( $api_args['campaign_name'] === $campaign->name ) :
@@ -966,6 +967,7 @@ function get_response_api_call( $api_args ) {
 			endif;
 		endforeach;
 	endif;
+
 	if ( empty( $getresponse->contact_id ) ) :
 		foreach ( $getresponse->contact_list as $contact ) :
 			if ( empty( $getresponse->campaign_id ) ) {
@@ -977,6 +979,7 @@ function get_response_api_call( $api_args ) {
 			}
 		endforeach;
 	endif;
+
 	if ( ! empty( $getresponse->custom_fields ) ) :
 		$getresponse->custom_fields_list      = $getresponse->get_a_list_of_custom_fields();
 		$getresponse->custom_fields_to_update = array();
@@ -994,6 +997,7 @@ function get_response_api_call( $api_args ) {
 		$this_response = $getresponse->upsert_the_custom_fields_of_a_contact();
 		array_push( $response, $this_response );
 	endif;
+
 	if ( ! empty( $getresponse->tags ) ) :
 		$getresponse->tags_to_update = array();
 		foreach ( $getresponse->tag_list as $tag ) {
@@ -1007,6 +1011,7 @@ function get_response_api_call( $api_args ) {
 		$this_response = $getresponse->upsert_the_tags_of_contact();
 		array_push( $response, $this_response );
 	endif;
+
 	return $response;
 }
 /**
@@ -1475,7 +1480,7 @@ function refersion_cron_exec() {
 		}
 	}
 }
-add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
+// add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
 
 	/**
 	 * Schedule Cron Job Event
@@ -1487,7 +1492,7 @@ function REFERSION_CronJob() {
 	}
 
 }
-add_action( 'after_setup_theme', 'REFERSION_CronJob' );
+// add_action( 'after_setup_theme', 'REFERSION_CronJob' );
 
 /**
  * This creates the table for Refersion Data to be stored.
