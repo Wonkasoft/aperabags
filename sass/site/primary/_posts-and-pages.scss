@@ -57,6 +57,23 @@ a.perks-btn {
 	min-height: 100%;
 }
 
+body.page-template-complete-registration {
+
+	#content {
+
+		main#main {
+
+			header.entry-header {
+				display: none;
+
+				.entry-tile {
+
+				}
+			}
+		}
+	}
+}
+
 #content {
 	margin: 0;
 	padding: 0;
