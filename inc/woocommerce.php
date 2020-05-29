@@ -3296,18 +3296,46 @@ function wonkasoft_wad_is_rule_valid( $is_valid, $rule, $class_instance ) {
 
 	return $is_valid;
 }
-		add_filter( 'wad_is_rule_valid', 'wonkasoft_wad_is_rule_valid', 10, 3 );
+add_filter( 'wad_is_rule_valid', 'wonkasoft_wad_is_rule_valid', 10, 3 );
 
-		/**
-		 * [wonkasoft_wad_is_applicable description]
-		 *
-		 * @param  [type] $is_valid       [description]
-		 * @param  [type] $class_instance [description]
-		 * @param  [type] $product_id     [description]
-		 * @return [type]                 [description]
-		 */
+/**
+ * [wonkasoft_wad_is_applicable description]
+ *
+ * @param  [type] $is_valid       [description]
+ * @param  [type] $class_instance [description]
+ * @param  [type] $product_id     [description]
+ * @return [type]                 [description]
+ */
 function wonkasoft_wad_is_applicable( $is_valid, $class_instance, $product_id ) {
 
 	return $is_valid;
 }
-		add_filter( 'wad_is_applicable', 'wonkasoft_wad_is_applicable', 10, 3 );
+add_filter( 'wad_is_applicable', 'wonkasoft_wad_is_applicable', 10, 3 );
+
+/**
+ * This removes the unsupported Credit Card icons from Strip Gateway.
+ *
+ * @param  [type] $icons [description]
+ * @return [type]        [description]
+ */
+function wonkasoft_wc_stripe_payment_icons( $icons ) {
+	$new_icons = array(
+		'visa'       => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/visa.svg" class="stripe-visa-icon stripe-icon" alt="Visa" />',
+		'amex'       => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/amex.svg" class="stripe-amex-icon stripe-icon" alt="American Express" />',
+		'mastercard' => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/mastercard.svg" class="stripe-mastercard-icon stripe-icon" alt="Mastercard" />',
+		'discover'   => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/discover.svg" class="stripe-discover-icon stripe-icon" alt="Discover" />',
+		'alipay'     => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/alipay.svg" class="stripe-alipay-icon stripe-icon" alt="Alipay" />',
+		'wechat'     => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/wechat.svg" class="stripe-wechat-icon stripe-icon" alt="Wechat Pay" />',
+		'bancontact' => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/bancontact.svg" class="stripe-bancontact-icon stripe-icon" alt="Bancontact" />',
+		'ideal'      => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/ideal.svg" class="stripe-ideal-icon stripe-icon" alt="iDeal" />',
+		'p24'        => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/p24.svg" class="stripe-p24-icon stripe-icon" alt="P24" />',
+		'giropay'    => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/giropay.svg" class="stripe-giropay-icon stripe-icon" alt="Giropay" />',
+		'eps'        => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/eps.svg" class="stripe-eps-icon stripe-icon" alt="EPS" />',
+		'multibanco' => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/multibanco.svg" class="stripe-multibanco-icon stripe-icon" alt="Multibanco" />',
+		'sofort'     => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/sofort.svg" class="stripe-sofort-icon stripe-icon" alt="SOFORT" />',
+		'sepa'       => '<img src="' . WC_STRIPE_PLUGIN_URL . '/assets/images/sepa.svg" class="stripe-sepa-icon stripe-icon" alt="SEPA" />',
+	);
+
+	return $new_icons;
+}
+add_filter( 'wc_stripe_payment_icons', 'wonkasoft_wc_stripe_payment_icons', 10 );

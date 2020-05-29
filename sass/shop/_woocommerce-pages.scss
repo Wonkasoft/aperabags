@@ -486,3 +486,14 @@ nav.woocommerce-pagination {
     }
   }
 }
+
+#wc-stripe-payment-request-button {
+
+  > button {
+    background-color: #52abf6; 
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    border-radius: 100px;
+  }
+}
