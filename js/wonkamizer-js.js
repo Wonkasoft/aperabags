@@ -2000,61 +2000,6 @@ var componentForm;
 				create_toggle_btn.click();
 			}
 		}
-
-		// if ( document.querySelector( 'div.xoo-wsc-modal' ) ) 
-		// {
-		// 	var side_cart_btn = document.querySelector( '.wonka-cart-open' );
-		// 	var side_cart_modal = document.querySelector( 'div.xoo-wsc-modal' );
-		// 	var side_cart_container = document.querySelector( 'div.xoo-wsc-container' );
-		// 	var side_cart_header = document.querySelector( 'div.xoo-wsc-header' );
-		// 	var side_cart_body = document.querySelector( 'div.xoo-wsc-body' );
-		// 	var side_cart_body_content = document.querySelector( 'div.xoo-wsc-content' );
-		// 	var side_cart_footer = document.querySelector( 'div.xoo-wsc-footer' );
-		// 	var side_cart_footer_content = document.querySelector( 'div.xoo-wsc-footer-content' );
-		// 	var footer_btn_container = document.createElement( 'DIV' );
-		// 	var footer_btn = document.createElement( 'A' );
-		// 	var footer_btn_text = 'Checkout <i class="fa fa-angle-down"></i>';
-		// 	footer_btn_container.classList.add( 'wonka-btn-container' );
-		// 	footer_btn.classList.add( 'wonka-btn' );
-		// 	footer_btn.setAttribute( 'href', '#' );
-		// 	footer_btn.innerHTML = footer_btn_text;
-		// 	footer_btn_container.appendChild( footer_btn );
-
-		// 	console.log( side_cart_footer );
-		// 	side_cart_btn.
-		// 	document.addEventListener( 'scroll', function(e)  
-		// 		{
-		// 			console.log(e);
-		// 		});
-			
-		// 	side_cart_body_content.onload = function( e ) 
-		// 		{
-		// 			console.log( e );
-		// 			if ( side_cart_body.scrollTop > 0 ) 
-		// 			{
-		// 				side_cart_footer.insertBefore( footer_btn_container, side_cart_footer_content );
-		// 				side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + footer_btn_container.offsetHeight + 15 + 'px';
-
-		// 				setTimeout( function() 
-		// 					{
-		// 						footer_btn_container.style.opacity = 1;
-		// 						side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - footer_btn_container.offsetHeight - 15 + 'px';
-		// 					}, 350 );
-		// 			}
-					
-		// 		};
-
-		// 	footer_btn.addEventListener( 'click', function( e ) 
-		// 		{
-		// 			footer_btn_container.style.opacity = 0;
-		// 			side_cart_footer.style.bottom = 0;
-		// 			setTimeout( function( side_cart_body ) 
-		// 				{
-		// 					side_cart_footer.removeChild( footer_btn_container );
-		// 					side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
-		// 				}, 350, side_cart_body );
-		// 		});
-		// }
 		
 		/*==========================================================
 		=            For parallax on front page sliders            =
@@ -2601,31 +2546,7 @@ var componentForm;
 		{
 			document.querySelector( '.summary.entry-summary' ).classList.add( 'loaded' );
 		}
-		/*=====  End of This is for reordering the placement of elements in add to cart area  ======*/
-
-		/*========================================================================================
-		=            This will move paypal checkout buttons into express checkout box            =
-		========================================================================================*/
-		if ( document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' ) ) 
-		{
-			// var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
-		
-			// if ( document.querySelector( '#checkout_paypal_message' ) ) 
-			// {
-			// 	var iframe_btns = document.querySelector( '.angelleye_smart_button_checkout_top' );
-
-			// 	express_box.appendChild( iframe_btns );	
-			// }
-
-			// if ( document.querySelector( '#pay_with_amazon' ) ) 
-			// {
-			// 	var amazon_quick = document.querySelector( '#pay_with_amazon' );
-
-			// 	express_box.appendChild( amazon_quick );
-			// }
-		}
-		/*=====  End of This will move paypal checkout buttons into express checkout box  ======*/
-		
+		/*=====  End of This is for reordering the placement of elements in add to cart area  ======*/		
 		
 		/*===================================================================
 		=            This is to kill the about us video on close            =
@@ -3785,8 +3706,11 @@ var componentForm;
 			});
 		}
 
+	    load_sidecart_engagement();
 		$( document.body ).on( 'xoo_wsc_cart_updated', function( e ) {
 		    $( document.body ).trigger( "wc_fragment_refresh" );
+
+		    load_sidecart_engagement();
 		});
 
 		$(document).on('click','.xoo-wsc-coupon-submit',function(e) {
@@ -3825,9 +3749,6 @@ var componentForm;
 
 		$( document.body ).on( 'update_checkout', function( e ) { 
 			$( document.body ).trigger( 'wc_fragment_refresh' );
-			setTimeout( function() {
-				checkout_init.qty_changers_init();
-			}, 1000 );
 		});
 
 		$( document.body ).on( 'wc_fragment_refresh', function( e ) { 
@@ -3839,6 +3760,62 @@ var componentForm;
 		/*=====  End of This is for running after document is ready  ======*/
 
 })( jQuery );
+
+function load_sidecart_engagement() {
+	console.log( 'load_sidecart_engage' );
+	if ( document.querySelector( 'div.xoo-wsc-modal' ) ) 
+	{
+		var side_cart_btn = document.querySelector( '.wonka-cart-open' );
+		var side_cart_modal = document.querySelector( 'div.xoo-wsc-modal' );
+		var side_cart_container = document.querySelector( 'div.xoo-wsc-container' );
+		var side_cart_header = document.querySelector( 'div.xoo-wsc-header' );
+		var side_cart_body = document.querySelector( 'div.xoo-wsc-body' );
+		var side_cart_body_content = document.querySelector( 'div.xoo-wsc-content' );
+		var side_cart_footer = document.querySelector( 'div.xoo-wsc-footer' );
+		var side_cart_footer_content = document.querySelector( 'div.xoo-wsc-footer-content' );
+		var footer_btn_container = document.createElement( 'DIV' );
+		var footer_btn = document.createElement( 'A' );
+		var footer_btn_text = 'Checkout <i class="fa fa-angle-down"></i>';
+		footer_btn_container.classList.add( 'wonka-btn-container' );
+		footer_btn.classList.add( 'wonka-btn' );
+		footer_btn.setAttribute( 'href', '#' );
+		footer_btn.innerHTML = footer_btn_text;
+		footer_btn_container.appendChild( footer_btn );
+
+		document.addEventListener( 'scroll', function(e)  
+			{
+				console.log(e);
+			});
+		
+		side_cart_body_content.onload = function( e ) 
+			{
+				console.log( e );
+				if ( side_cart_body.scrollTop > 0 ) 
+				{
+					side_cart_footer.insertBefore( footer_btn_container, side_cart_footer_content );
+					side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + footer_btn_container.offsetHeight + 15 + 'px';
+
+					setTimeout( function() 
+						{
+							footer_btn_container.style.opacity = 1;
+							side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - footer_btn_container.offsetHeight - 15 + 'px';
+						}, 350 );
+				}
+				
+			};
+
+		footer_btn.addEventListener( 'click', function( e ) 
+			{
+				footer_btn_container.style.opacity = 0;
+				side_cart_footer.style.bottom = 0;
+				setTimeout( function( side_cart_body ) 
+					{
+						side_cart_footer.removeChild( footer_btn_container );
+						side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
+					}, 350, side_cart_body );
+			});
+	}
+}
 
 function initAutocomplete() 
 {
