@@ -16,7 +16,7 @@ global $post;
 $ws_post_type = ( ! empty( $post->post_type ) ) ? ' main-' . $post->post_type : '';
 $ws_post_slug = ( ! empty( $post->post_name ) ) ? ' main-' . $post->post_name : '';
 
-$check_user  = ( isset( $_GET['is_shipped'] ) ) ? wp_kses_post( wp_unslash( $_GET['is_shipped'] ) ) : '';
+$check_user  = ( isset( $_GET['have_tracking'] ) ) ? wp_kses_post( wp_unslash( $_GET['have_tracking'] ) ) : '';
 $check_admin = current_user_can( 'manage_options' );
 if ( $check_user || $check_admin ) {
 	get_header();
