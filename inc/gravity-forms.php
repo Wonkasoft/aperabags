@@ -1130,7 +1130,16 @@ function wonkasoft_pre_submission( $form ) {
 			}
 		}
 
-		$order = wc_get_order( rgpost( $input_val ) );
+		$order = wc_get_order( rgpost( $order_input ) );
+
+		if ( empty( $order ) ) :
+			$order_id = wc_seq_order_number_pro()->find_order_by_order_number( rgpost( $order_input ) );
+			$order    = wc_get_order( $order_id );
+		endif;
+
+		if ( empty( $order ) ) :
+			return;
+		endif;
 
 		$customer_email = $order->get_billing_email();
 
