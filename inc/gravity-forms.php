@@ -760,18 +760,22 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 	}
 
 	if ( 'Tracking Post' === $form['title'] ) :
-		$order           = wc_get_order( $entry_fields['order_id'] );
-		$order_id        = $order->get_id();
+		$order        = wc_get_order( $entry_fields['order_id'] );
+		$order_number = null;
+		if ( ! empty( $order ) ) :
+			$order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+		endif;
 		$tracking_number = $entry_fields['tracking_number'];
 
 		if ( ! $order_id ) :
-			$order_id = wc_seq_order_number_pro()->find_order_by_order_number( $entry_fields['order_id'] );
+			$order_id     = wc_seq_order_number_pro()->find_order_by_order_number( $entry_fields['order_id'] );
+			$order_number = $entry_fields['order_id'];
 		endif;
 
 		if ( ! empty( $order_id ) && ! empty( $tracking_number ) ) :
-			$confirmation = tracking_post_processing( $order_id, $tracking_number, true );
+			$confirmation = tracking_post_processing( $order_id, $order_number, $tracking_number, true );
 		else :
-			$confirmation = tracking_post_processing( null, null, false );
+			$confirmation = tracking_post_processing( $entry_fields['order_id'], $order_number, null, false );
 		endif;
 
 		return $confirmation;
@@ -863,7 +867,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 }
 add_filter( 'gform_confirmation', 'wonkasoft_after_perks_registration_entry', 10, 4 );
 
-function tracking_post_processing( $order_id, $tracking_number, $process = false ) {
+function tracking_post_processing( $order_id, $order_number, $tracking_number, $process = false ) {
 	if ( ! $process ) :
 		$output       = '';
 		$output      .= '<p>Order# ' . $order_id . ' does not seem to be a valid order number. Please recheck the order number and try again by clicking the link below.</p>';
@@ -885,8 +889,12 @@ function tracking_post_processing( $order_id, $tracking_number, $process = false
 
 		$order->update_status( 'completed' );
 
-		$output  = '';
-		$output .= '<p>Order# ' . $order_id . ' has been updated with tracking# ' . $tracking_number . '</p>';
+		$output = '';
+		if ( ! empty( $order_number ) ) :
+			$output .= '<p>Order# ' . $order_number . ' has been updated with tracking# ' . $tracking_number . '</p>';
+		else :
+			$output .= '<p>Order# ' . $order_id . ' has been updated with tracking# ' . $tracking_number . '</p>';
+		endif;
 		$output .= '<p><a class="wonka-btn" href="' . get_site_url() . '/tracking-portal/?have_tracking=true">Reload form</a></p>';
 
 		$confirmation = $output;
@@ -894,6 +902,17 @@ function tracking_post_processing( $order_id, $tracking_number, $process = false
 
 	return $confirmation;
 }
+
+/**
+ * This makes the added tracking number visible on the order edit page.
+ *
+ * @param  object $order Contains the order object.
+ */
+function wonkasoft_woocommerce_admin_order_data_after_billing_address( $order ) {
+	$order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+	echo '<p><strong>' . __( 'Tracking Number' ) . ':</strong> ' . get_post_meta( $order_id, '_added_tracking_number', true ) . '</p>';
+}
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'wonkasoft_woocommerce_admin_order_data_after_billing_address', 10, 1 );
 
 /**
  * This either creates new Perks Member or updates current member.
