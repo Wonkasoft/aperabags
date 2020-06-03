@@ -687,6 +687,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 	$forms_to_process = array(
 		'Apera Perks Registration',
 		'User Birthday',
+		'Tracking Post',
 	);
 	if ( ! in_array( $form['title'], $forms_to_process ) ) {
 		return $confirmation;
@@ -728,6 +729,8 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		'Occupation',
 		'Occupational Years',
 		'Occupational Note',
+		'Tracking Number',
+		'Order Id',
 	);
 	$custom_fields                 = array();
 	$pattern                       = '/([ \/]{1,5})/';
@@ -755,6 +758,24 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 			endif;
 		endif;
 	}
+
+	if ( 'Tracking Post' === $form['title'] ) :
+		$order           = wc_get_order( $entry_fields['order_id'] );
+		$order_id        = $order->get_id();
+		$tracking_number = $entry_fields['tracking_number'];
+
+		if ( ! $order_id ) :
+			$order_id = wc_seq_order_number_pro()->find_order_by_order_number( $entry_fields['order_id'] );
+		endif;
+
+		if ( ! empty( $order_id ) && ! empty( $tracking_number ) ) :
+			$confirmation = tracking_post_processing( $order_id, $tracking_number, true );
+		else :
+			$confirmation = tracking_post_processing( null, null, false );
+		endif;
+
+		return $confirmation;
+	endif;
 
 	if ( 'User Birthday' === $form['title'] ) {
 		$user = get_user_by( 'email', $entry_fields['birthday_email'] );
@@ -842,6 +863,45 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 }
 add_filter( 'gform_confirmation', 'wonkasoft_after_perks_registration_entry', 10, 4 );
 
+function tracking_post_processing( $order_id, $tracking_number, $process = false ) {
+	if ( ! $process ) :
+		$output       = '';
+		$output      .= '<p>Order# ' . $order_id . ' does not seem to be a valid order number. Please recheck the order number and try again by clicking the link below.</p>';
+		$output      .= '<p><a class="wonka-btn" href="' . get_site_url() . '/tracking-portal/?have_tracking=true">Reload form</a></p>';
+		$confirmation = $output;
+	endif;
+
+	if ( $process ) :
+		$order = wc_get_order( $order_id );
+
+		// The text for the note
+		$note  = "Tracking number added to order:\n";
+		$note .= $tracking_number . "\n";
+
+		// Add the note
+		$order->add_order_note( $note );
+
+		update_post_meta( $order_id, '_added_tracking_number', $tracking_number, '' );
+
+		$order->update_status( 'completed' );
+
+		$output  = '';
+		$output .= '<p>Order# ' . $order_id . ' has been updated with tracking# ' . $tracking_number . '</p>';
+		$output .= '<p><a class="wonka-btn" href="' . get_site_url() . '/tracking-portal/?have_tracking=true">Reload form</a></p>';
+
+		$confirmation = $output;
+	endif;
+
+	return $confirmation;
+}
+
+/**
+ * This either creates new Perks Member or updates current member.
+ *
+ * @param  object $entry Contains an object of the form entries.
+ * @param  object $form  Contains an object of the form.
+ * @return         returns success or blank.
+ */
 function wonkasoft_after_cep_update_entry( $entry, $form ) {
 	$forms_to_process = array(
 		'Apera Customer Engagement Program New Member',
