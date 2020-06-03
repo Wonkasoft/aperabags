@@ -689,6 +689,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		'User Birthday',
 		'Tracking Post',
 	);
+
 	if ( ! in_array( $form['title'], $forms_to_process ) ) {
 		return $confirmation;
 	}
@@ -867,6 +868,15 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 }
 add_filter( 'gform_confirmation', 'wonkasoft_after_perks_registration_entry', 10, 4 );
 
+/**
+ * This processes the form from the tracking portal
+ *
+ * @param  int     $order_id        Contains the order id.
+ * @param  string  $order_number    Contains the order number.
+ * @param  string  $tracking_number Contains the tracking number.
+ * @param  boolean $process         true to process or false to update user.
+ * @return string                   returns html confirmation for the form.
+ */
 function tracking_post_processing( $order_id, $order_number, $tracking_number, $process = false ) {
 	if ( ! $process ) :
 		$output       = '';
@@ -878,11 +888,13 @@ function tracking_post_processing( $order_id, $order_number, $tracking_number, $
 	if ( $process ) :
 		$order = wc_get_order( $order_id );
 
-		// The text for the note
-		$note  = "Tracking number added to order:\n";
+		// The text for the note.
+		$note  = "Shipping method:\n";
+		$note .= $order->get_shipping_method() . "\n";
+		$note .= "Tracking number:\n";
 		$note .= $tracking_number . "\n";
 
-		// Add the note
+		// Add the note.
 		$order->add_order_note( $note );
 
 		update_post_meta( $order_id, '_added_tracking_number', $tracking_number, '' );
@@ -908,11 +920,11 @@ function tracking_post_processing( $order_id, $order_number, $tracking_number, $
  *
  * @param  object $order Contains the order object.
  */
-function wonkasoft_woocommerce_admin_order_data_after_billing_address( $order ) {
+function wonkasoft_woocommerce_admin_order_data_after_shipping_address( $order ) {
 	$order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
 	echo '<p><strong>' . __( 'Tracking Number' ) . ':</strong> ' . get_post_meta( $order_id, '_added_tracking_number', true ) . '</p>';
 }
-add_action( 'woocommerce_admin_order_data_after_billing_address', 'wonkasoft_woocommerce_admin_order_data_after_billing_address', 10, 1 );
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'wonkasoft_woocommerce_admin_order_data_after_shipping_address', 10, 1 );
 
 /**
  * This either creates new Perks Member or updates current member.
@@ -1103,6 +1115,30 @@ add_action( 'gform_register_init_scripts', 'wonka_gform_validation' );
  * @param  array $form contains an array of the form.
  */
 function wonkasoft_pre_submission( $form ) {
+	if ( 'Tracking Post' === $form['title'] ) {
+		$customer_email = '';
+		$order_input    = '';
+		$email_input    = '';
+
+		foreach ( $form['fields'] as &$field ) {
+			if ( 'Order Id' === $field['label'] ) {
+				$order_input = 'input_' . $field['id'];
+			}
+
+			if ( 'Email' === $field['label'] ) {
+				$email_input = 'input_' . $field['id'];
+			}
+		}
+
+		$order = wc_get_order( rgpost( $input_val ) );
+
+		$customer_email = $order->get_billing_email();
+
+		$_POST[ $email_input ] = $customer_email;
+
+		return;
+	}
+
 	if ( 'Join MSE+' !== $form['title'] ) {
 		return;
 	}
