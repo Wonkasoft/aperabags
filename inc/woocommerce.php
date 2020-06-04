@@ -250,9 +250,9 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
  * This updates the order review fragments.
  *
  endim,msms,llksjkj;:t
- 
- 
- 
+
+
+
 	endforeach;
 
 	ob_start();
@@ -330,7 +330,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 					?>
 
 						<div class="wonkasoft-wsc-price" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-							<span class="price-label"><?php _e( 'Price:', 'side-cart-woocommerce' ); ?></span> 
+							<span class="price-label"><?php _e( 'Price:', 'side-cart-woocommerce' ); ?></span>
 							<span class="price-amount"><?php echo WC()->cart->get_product_subtotal( $_product, 1 ); ?></span>
 						</div>
 
@@ -3141,28 +3141,28 @@ function wonkasoft_cart_and_review_woocommerce_cart_item_name( $current, $cart_i
 function wonkasoft_woocommerce_cart_item_product( $current, $cart_item, $cart_item_key ) {
 	return $cart_item['data'];
 }
-		add_filter( 'woocommerce_cart_item_product', 'wonkasoft_woocommerce_cart_item_product', 10, 3 );
+add_filter( 'woocommerce_cart_item_product', 'wonkasoft_woocommerce_cart_item_product', 10, 3 );
 
-		/**
-		 * Setting new discount conditions.
-		 *
-		 * @param  array $conditions Contains current discount conditions.
-		 * @return array             returns filtered conditions.
-		 */
+/**
+ * Setting new discount conditions.
+ *
+ * @param  array $conditions Contains current discount conditions.
+ * @return array             returns filtered conditions.
+ */
 function wonkasoft_wad_get_discounts_conditions( $conditions ) {
 	$conditions['is-coupon-set'] = __( 'If coupon is', 'aperabags' );
 
 	return $conditions;
 }
-		add_filter( 'wad_get_discounts_conditions', 'wonkasoft_wad_get_discounts_conditions', 10 );
+add_filter( 'wad_get_discounts_conditions', 'wonkasoft_wad_get_discounts_conditions', 10 );
 
-		/**
-		 * This function sets the evaluable condition.
-		 *
-		 * @param  [type] $rule       [description]
-		 * @param  int    $product_id contains the product id.
-		 * @return array             returns the array to be for options.
-		 */
+/**
+ * This function sets the evaluable condition.
+ *
+ * @param  [type] $rule       [description]
+ * @param  int    $product_id contains the product id.
+ * @return array             returns the array to be for options.
+ */
 function wonkasoft_wad_get_evaluable_condition( $rule, $product_id = false ) {
 
 	if ( 'is-coupon-set' == $rule['condition'] ) :
@@ -3216,7 +3216,7 @@ function wonkasoft_wad_fields_values_match( $current_rules, $condition, $selecte
 	$coupon       = new WP_Query( $couponargs );
 	$coupon_array = array();
 	foreach ( $coupon->posts as $cur_coupon ) {
-		$coupon_array[ $cur_coupon->ID ] = $cur_coupon->post_title;
+		$coupon_array[ $cur_coupon->ID ] = strtolower( $cur_coupon->post_title );
 	}
 
 	$coupon_select = get_wad_html_select( $field_name . '[]', false, '', $coupon_array, $selected_value_arr, true, true );
