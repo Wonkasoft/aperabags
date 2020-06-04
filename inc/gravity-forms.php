@@ -937,7 +937,13 @@ function wonkasoft_woocommerce_admin_order_data_after_shipping_address( $order )
 	$order_id        = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
 	$tracking_number = get_post_meta( $order_id, '_added_tracking_number', true );
 	if ( ! empty( $tracking_number ) ) :
-		echo wp_kses_allowed_html( '<p><strong>' . __( 'Tracking Number' ) . ': </strong> ' . $tracking_number . '</p>' );
+		echo wp_kses(
+			'<p><strong>' . __( 'Tracking Number' ) . ': </strong> ' . $tracking_number . '</p>',
+			array(
+				'p'      => array(),
+				'strong' => array(),
+			)
+		);
 	endif;
 }
 add_action( 'woocommerce_admin_order_data_after_shipping_address', 'wonkasoft_woocommerce_admin_order_data_after_shipping_address', 10, 1 );
@@ -954,6 +960,7 @@ function wonkasoft_after_cep_update_entry( $entry, $form ) {
 		'Apera Customer Engagement Program New Member',
 		'Apera Customer Engagement Program Update Member',
 	);
+
 	if ( ! in_array( $form['title'], $forms_to_process ) ) {
 		return;
 	}
