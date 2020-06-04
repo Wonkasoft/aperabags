@@ -3216,7 +3216,9 @@ function wonkasoft_wad_fields_values_match( $current_rules, $condition, $selecte
 	$coupon       = new WP_Query( $couponargs );
 	$coupon_array = array();
 	foreach ( $coupon->posts as $cur_coupon ) {
-		$coupon_array[ $cur_coupon->ID ] = strtolower( $cur_coupon->post_title );
+		if ( strpos( strtolower( $cur_coupon->post_title ), 'sumo_' ) === false ) :
+			$coupon_array[ $cur_coupon->ID ] = strtolower( $cur_coupon->post_title );
+		endif;
 	}
 
 	$coupon_select = get_wad_html_select( $field_name . '[]', false, '', $coupon_array, $selected_value_arr, true, true );
