@@ -938,10 +938,13 @@ function wonkasoft_woocommerce_admin_order_data_after_shipping_address( $order )
 	$tracking_number = get_post_meta( $order_id, '_added_tracking_number', true );
 	if ( ! empty( $tracking_number ) ) :
 		echo wp_kses(
-			'<p><strong>' . __( 'Tracking Number' ) . ': </strong> ' . $tracking_number . '</p>',
+			'<p><strong>' . __( 'Tracking Number' ) . ': </strong> <a href="https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=' . $tracking_number . '">' . $tracking_number . '</a></p>',
 			array(
 				'p'      => array(),
 				'strong' => array(),
+				'a'      => array(
+					'href' => array(),
+				),
 			)
 		);
 	endif;
