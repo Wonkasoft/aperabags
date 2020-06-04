@@ -903,9 +903,9 @@ function tracking_post_processing( $order_id, $order_number, $tracking_number, $
 
 		$output = '';
 		if ( ! empty( $order_number ) ) :
-			$output .= '<p>Order# ' . $order_number . ' has been updated with tracking# ' . $tracking_number . '</p>';
+			$output .= '<p>Order# ' . $order_number . ' has been updated. <br />tracking# ' . $tracking_number . '</p>';
 		else :
-			$output .= '<p>Order# ' . $order_id . ' has been updated with tracking# ' . $tracking_number . '</p>';
+			$output .= '<p>Order# ' . $order_id . ' has been updated. <br />tracking# ' . $tracking_number . '</p>';
 		endif;
 		$output .= '<p><a class="wonka-btn" href="' . get_site_url() . '/tracking-portal/?have_tracking=true">Reload form</a></p>';
 
@@ -921,8 +921,11 @@ function tracking_post_processing( $order_id, $order_number, $tracking_number, $
  * @param  object $order Contains the order object.
  */
 function wonkasoft_woocommerce_admin_order_data_after_shipping_address( $order ) {
-	$order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
-	echo '<p><strong>' . __( 'Tracking Number' ) . ':</strong> ' . get_post_meta( $order_id, '_added_tracking_number', true ) . '</p>';
+	$order_id        = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+	$tracking_number = get_post_meta( $order_id, '_added_tracking_number', true );
+	if ( ! empty( $tracking_number ) ) :
+		echo wp_kses_allowed_html( '<p><strong>' . __( 'Tracking Number' ) . ': </strong> ' . $tracking_number . '</p>' );
+	endif;
 }
 add_action( 'woocommerce_admin_order_data_after_shipping_address', 'wonkasoft_woocommerce_admin_order_data_after_shipping_address', 10, 1 );
 
