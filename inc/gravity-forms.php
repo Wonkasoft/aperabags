@@ -886,30 +886,43 @@ function tracking_post_processing( $order_id, $order_number, $tracking_number, $
 	endif;
 
 	if ( $process ) :
-		$order = wc_get_order( $order_id );
+		$check_tracking = get_post_meta( $order_id, '_added_tracking_number', true );
+		if ( ! empty( $check_tracking ) ) :
+			$output = '';
+			if ( ! empty( $order_number ) ) :
+				$output .= '<p>Order# ' . $order_number . ' already has the following tracking number. <br />tracking# ' . $check_tracking . '</p>';
+			else :
+				$output .= '<p>Order# ' . $order_id . ' already has the following tracking number. <br />tracking# ' . $check_tracking . '</p>';
+			endif;
+			$output .= '<p><a class="wonka-btn" href="' . get_site_url() . '/tracking-portal/?have_tracking=true">Reload form</a></p>';
 
-		// The text for the note.
-		$note  = "Shipping method:\n";
-		$note .= $order->get_shipping_method() . "\n";
-		$note .= "Tracking number:\n";
-		$note .= $tracking_number . "\n";
+			$confirmation = $output;
+			else :
+				$order = wc_get_order( $order_id );
 
-		// Add the note.
-		$order->add_order_note( $note );
+				// The text for the note.
+				$note  = "Shipping method:\n";
+				$note .= $order->get_shipping_method() . "\n";
+				$note .= "Tracking number:\n";
+				$note .= $tracking_number . "\n";
 
-		update_post_meta( $order_id, '_added_tracking_number', $tracking_number, '' );
+				// Add the note.
+				$order->add_order_note( $note );
 
-		$order->update_status( 'completed' );
+				update_post_meta( $order_id, '_added_tracking_number', $tracking_number, '' );
 
-		$output = '';
-		if ( ! empty( $order_number ) ) :
-			$output .= '<p>Order# ' . $order_number . ' has been updated. <br />tracking# ' . $tracking_number . '</p>';
-		else :
-			$output .= '<p>Order# ' . $order_id . ' has been updated. <br />tracking# ' . $tracking_number . '</p>';
+				$order->update_status( 'completed' );
+
+				$output = '';
+				if ( ! empty( $order_number ) ) :
+					$output .= '<p>Order# ' . $order_number . ' has been updated. <br />tracking# ' . $tracking_number . '</p>';
+				else :
+					$output .= '<p>Order# ' . $order_id . ' has been updated. <br />tracking# ' . $tracking_number . '</p>';
+				endif;
+				$output .= '<p><a class="wonka-btn" href="' . get_site_url() . '/tracking-portal/?have_tracking=true">Reload form</a></p>';
+
+				$confirmation = $output;
 		endif;
-		$output .= '<p><a class="wonka-btn" href="' . get_site_url() . '/tracking-portal/?have_tracking=true">Reload form</a></p>';
-
-		$confirmation = $output;
 	endif;
 
 	return $confirmation;
