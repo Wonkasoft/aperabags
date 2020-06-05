@@ -17,8 +17,9 @@ function ws_wc_login_register() {
 	<div class="row justify-content-center" id="customer_login">
 		<div class="col-12 col-lg-6 checkout-login login">
 
-			<h2><?php esc_html_e( 'Sign In Perks Members', 'woocommerce' ); ?></h2>
+			<h2><?php esc_html_e( 'Get $10 off this order', 'woocommerce' ); ?></h2>
 			<ul class="disclosure-list">
+				<li class="disclosure-list-item"><sup>Plus</sup></li>
 				<li class="disclosure-list-item"><sup><i class="fas fa-check"></i> Free Priority Shipping</sup></li>
 				<li class="disclosure-list-item"><sup><i class="fas fa-check"></i> Earn AperaCash</sup></li>
 			</ul>
@@ -62,7 +63,7 @@ function ws_wc_login_register() {
 			</div>
 
 				<div class="woocommerce-needAccount needAcount">
-					<a href="#" class="checkout-signup-pop">Create a free account</a>
+					Already have an account, <a href="#" class="checkout-signup-pop">sign in</a>
 			</div>
 				<?php
 
