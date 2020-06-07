@@ -25,45 +25,7 @@ function ws_wc_login_register() {
 			</ul>
 
 			<?php echo do_shortcode( '[gravityform id="23" title="true" description="true" ajax="true"]' ); ?>
-			<form class="woocommerce-form woocommerce-form-login login" method="post">
-			<?php
-				do_action( 'woocommerce_login_form_start' );
-
-			?>
-				<div class="form-group">
-				<label for="username" class="sr-only"><?php esc_html_e( 'Username or email address', 'woocommerce' ); ?>&nbsp;<span class="required sr-only">*</span></label>			
-				<div class="input-group">
-					<input type="text" class="form-control input-text" name="username" id="username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" placeholder="<?php esc_html_e( 'Username or email address *', 'woocommerce' ); ?>" /><?php // @codingStandardsIgnoreLine ?>
-					<div class="invalid-feedback username"></div>
-				</div>
-		
-			</div>
-				<div class="form-group">
-				<label for="password" class="sr-only"><?php esc_html_e( 'Password', 'woocommerce' ); ?>&nbsp;<span class="required sr-only">*</span></label>
-				<div class="input-group">
-					<input class="form-control input-text" type="password" name="password" id="password" autocomplete="current-password" placeholder="<?php esc_html_e( 'Password *', 'woocommerce' ); ?>" />
-					<div class="input-group-append">
-						<div class="input-group-text">
-							<i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i>
-						</div>
-					</div>
-					<div class="invalid-feedback password"></div>
-				</div>
-			</div>
-				<?php
-
-				do_action( 'woocommerce_login_form' );
-
-				?>
-				<div class="form-row form-button-row">
-				<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
-				<button type="submit" class="woocommerce-Button button wonka-btn" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Log in', 'woocommerce' ); ?></button>
-			</div>
-				<?php
-
-				do_action( 'woocommerce_login_form_end' );
-				?>
-			</form>
+			
 			<div class="woocommerce-LostPassword lost_password">
 				<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Forgot your password?', 'woocommerce' ); ?></a>
 			</div>
@@ -85,3 +47,51 @@ function ws_wc_login_register() {
 	return ob_get_clean();
 }
 add_shortcode( 'wc_login_register', 'ws_wc_login_register' );
+
+/**
+ * This is for the new login popup.
+ */
+function ws_login_pop() {
+	?>
+	<form class="woocommerce-form woocommerce-form-login login" method="post">
+	<?php
+		do_action( 'woocommerce_login_form_start' );
+
+	?>
+		<div class="form-group">
+		<label for="username" class="sr-only"><?php esc_html_e( 'Username or email address', 'woocommerce' ); ?>&nbsp;<span class="required sr-only">*</span></label>			
+		<div class="input-group">
+			<input type="text" class="form-control input-text" name="username" id="username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" placeholder="<?php esc_html_e( 'Username or email address *', 'woocommerce' ); ?>" /><?php // @codingStandardsIgnoreLine ?>
+			<div class="invalid-feedback username"></div>
+		</div>
+	
+	</div>
+		<div class="form-group">
+		<label for="password" class="sr-only"><?php esc_html_e( 'Password', 'woocommerce' ); ?>&nbsp;<span class="required sr-only">*</span></label>
+		<div class="input-group">
+			<input class="form-control input-text" type="password" name="password" id="password" autocomplete="current-password" placeholder="<?php esc_html_e( 'Password *', 'woocommerce' ); ?>" />
+			<div class="input-group-append">
+				<div class="input-group-text">
+					<i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i>
+				</div>
+			</div>
+			<div class="invalid-feedback password"></div>
+		</div>
+	</div>
+		<?php
+
+		do_action( 'woocommerce_login_form' );
+
+		?>
+		<div class="form-row form-button-row">
+		<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
+		<button type="submit" class="woocommerce-Button button wonka-btn" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Log in', 'woocommerce' ); ?></button>
+	</div>
+		<?php
+
+		do_action( 'woocommerce_login_form_end' );
+		?>
+	</form>
+	<?php
+}
+add_shortcode( 'ws_wc_login_form', 'ws_login_pop' );
