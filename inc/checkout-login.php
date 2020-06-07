@@ -24,6 +24,7 @@ function ws_wc_login_register() {
 				<li class="disclosure-list-item"><sup><i class="fas fa-check"></i> Earn AperaCash</sup></li>
 			</ul>
 
+			<?php echo do_shortcode( '[gravityform id="23" title="true" description="true" ajax="true"]' ); ?>
 			<form class="woocommerce-form woocommerce-form-login login" method="post">
 			<?php
 				do_action( 'woocommerce_login_form_start' );
@@ -58,18 +59,18 @@ function ws_wc_login_register() {
 				<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
 				<button type="submit" class="woocommerce-Button button wonka-btn" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Log in', 'woocommerce' ); ?></button>
 			</div>
-				<div class="woocommerce-LostPassword lost_password">
-				<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Forgot your password?', 'woocommerce' ); ?></a>
-			</div>
-
-				<div class="woocommerce-needAccount needAcount">
-					Already have an account, <a href="#" class="checkout-signup-pop">sign in</a>
-			</div>
 				<?php
 
 				do_action( 'woocommerce_login_form_end' );
 				?>
 			</form>
+			<div class="woocommerce-LostPassword lost_password">
+				<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Forgot your password?', 'woocommerce' ); ?></a>
+			</div>
+
+			<div class="woocommerce-needAccount needAcount">
+				Already have an account, <a href="#" class="checkout-login-pop">sign in</a>
+			</div>
 
 		</div>
 
