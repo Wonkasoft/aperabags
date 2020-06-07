@@ -54,6 +54,7 @@ add_shortcode( 'wc_login_register', 'ws_wc_login_register' );
 function ws_login_pop() {
 	ob_start();
 	?>
+	<h2><?php esc_html_e( 'Login to your account', 'woocommerce' ); ?></h2>
 	<form class="woocommerce-form woocommerce-form-login login" method="post">
 	<?php
 		do_action( 'woocommerce_login_form_start' );
