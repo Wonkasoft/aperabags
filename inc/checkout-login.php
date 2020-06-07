@@ -85,7 +85,7 @@ function ws_login_pop() {
 		do_action( 'woocommerce_login_form' );
 
 		?>
-		<div class="form-row form-button-row">
+		<div class="form-button-row">
 		<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
 		<button type="submit" class="woocommerce-Button button wonka-btn" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Log in', 'woocommerce' ); ?></button>
 	</div>
