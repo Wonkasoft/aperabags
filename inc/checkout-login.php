@@ -24,7 +24,7 @@ function ws_wc_login_register() {
 				<li class="disclosure-list-item"><sup><i class="fas fa-check"></i> Earn AperaCash</sup></li>
 			</ul>
 
-			<?php echo do_shortcode( '[gravityform id="23" title="true" description="true" ajax="true"]' ); ?>
+			<?php echo do_shortcode( '[gravityform id="23" title="false" description="true" ajax="true"]' ); ?>
 			
 			<div class="woocommerce-LostPassword lost_password">
 				<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Forgot your password?', 'woocommerce' ); ?></a>
