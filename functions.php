@@ -160,9 +160,10 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		 */
 		add_image_size( 'custom_products_size', 370, 550, false );
 		add_image_size( 'cart_products_size', 75, 115, false );
+
 	}
+	add_action( 'after_setup_theme', 'apera_bags_setup' );
 endif;
-add_action( 'after_setup_theme', 'apera_bags_setup' );
 
 /**
  * Adding SVG support.
