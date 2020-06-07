@@ -52,6 +52,7 @@ add_shortcode( 'wc_login_register', 'ws_wc_login_register' );
  * This is for the new login popup.
  */
 function ws_login_pop() {
+	ob_start();
 	?>
 	<form class="woocommerce-form woocommerce-form-login login" method="post">
 	<?php
@@ -93,5 +94,6 @@ function ws_login_pop() {
 		?>
 	</form>
 	<?php
+	return ob_get_clean();
 }
 add_shortcode( 'ws_wc_login_form', 'ws_login_pop' );
