@@ -901,7 +901,8 @@ function tracking_post_processing( $order_id, $order_number, $tracking_number, $
 				$order = wc_get_order( $order_id );
 
 				// The text for the note.
-				$note  = "Shipping method:\n";
+				$note  = "Tracking added to this order.\n";
+				$note .= "Shipping method:\n";
 				$note .= $order->get_shipping_method() . "\n";
 				$note .= "Tracking number:\n";
 				$note .= $tracking_number . "\n";

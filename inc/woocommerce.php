@@ -29,7 +29,7 @@ add_filter( 'woocommerce_shipping_chosen_method', '__return_false', 99 );
  * WooCommerce specific scripts & stylesheets.
  */
 function apera_bags_woocommerce_scripts() {
-	   wp_enqueue_style( 'apera-bags-woocommerce-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/woocommerce.css' ), array(), wp_get_theme()->get( 'Version' ), 'all' );
+	wp_enqueue_style( 'apera-bags-woocommerce-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/woocommerce.css' ), array(), wp_get_theme()->get( 'Version' ), 'all' );
 
 	$font_path = str_replace( array( 'http:', 'https:' ), '', WC()->plugin_url() . '/assets/fonts/' );
 
@@ -51,13 +51,13 @@ add_action( 'wp_enqueue_scripts', 'apera_bags_woocommerce_scripts', 9 );
 require_once get_stylesheet_directory() . '/inc/class-wonkasoft-wc-meta-box-coupon-data.php';
 
 /**
- * Disable the default WooCommerce stylesheet.
- *
- * Removing the default WooCommerce stylesheet and enqueing your own will
- * protect you during WooCommerce core updates.
- *
- * @link https://docs.woocommerce.com/document/disable-the-default-stylesheet/
- */
+* Disable the default WooCommerce stylesheet.
+*
+* Removing the default WooCommerce stylesheet and enqueing your own will
+* protect you during WooCommerce core updates.
+*
+* @link https://docs.woocommerce.com/document/disable-the-default-stylesheet/
+*/
 add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
 
 /**
@@ -124,9 +124,9 @@ add_filter( 'woocommerce_output_related_products_args', 'apera_bags_woocommerce_
 
 if ( ! function_exists( 'apera_bags_woocommerce_product_columns_wrapper' ) ) {
 	/**
-	 * Product columns wrapper.
-	 *
-	 * @return  void
+	 Product columns wrapper.
+
+	 @return  void
 	 */
 	function apera_bags_woocommerce_product_columns_wrapper() {
 		$columns = apera_bags_woocommerce_loop_columns();
@@ -137,9 +137,9 @@ add_action( 'woocommerce_before_shop_loop', 'apera_bags_woocommerce_product_colu
 
 if ( ! function_exists( 'apera_bags_woocommerce_product_columns_wrapper_close' ) ) {
 	/**
-	 * Product columns wrapper close.
-	 *
-	 * @return  void
+	 Product columns wrapper close.
+
+	 @return  void
 	 */
 	function apera_bags_woocommerce_product_columns_wrapper_close() {
 		echo '</div><!-- close for product columns -->';
@@ -148,18 +148,18 @@ if ( ! function_exists( 'apera_bags_woocommerce_product_columns_wrapper_close' )
 add_action( 'woocommerce_after_shop_loop', 'apera_bags_woocommerce_product_columns_wrapper_close', 40 );
 
 /**
- * Remove default WooCommerce wrapper.
- */
+* Remove default WooCommerce wrapper.
+*/
 remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10 );
 remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
 
 if ( ! function_exists( 'apera_bags_woocommerce_wrapper_before' ) ) {
 	/**
-	 * Before Content.
-	 *
-	 * Wraps all WooCommerce content in wrappers which match the theme markup.
-	 *
-	 * @return void
+	 Before Content.
+
+	 Wraps all WooCommerce content in wrappers which match the theme markup.
+
+	 @return void
 	 */
 	function apera_bags_woocommerce_wrapper_before() {
 		global $post;
@@ -167,24 +167,24 @@ if ( ! function_exists( 'apera_bags_woocommerce_wrapper_before' ) ) {
 		$ws_post_type = ( ! empty( $post->post_type ) ) ? ' main-' . $post->post_type : '';
 		$ws_post_slug = ( ! empty( $post->post_name ) ) ? ' main-' . $post->post_name : '';
 		?>
-		<div id="primary" class="content-area">
-			<main id="main" class="site-main<?php echo esc_attr( $ws_post_slug . $ws_post_type ); ?>" role="main">
-				<?php
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main<?php echo esc_attr( $ws_post_slug . $ws_post_type ); ?>" role="main">
+			<?php
 	}
 }
-add_action( 'woocommerce_before_main_content', 'apera_bags_woocommerce_wrapper_before' );
+	add_action( 'woocommerce_before_main_content', 'apera_bags_woocommerce_wrapper_before' );
 
 if ( ! function_exists( 'apera_bags_woocommerce_wrapper_after' ) ) {
 	/**
-	 * After Content.
-	 *
-	 * Closes the wrapping divs.
-	 *
-	 * @return void
+	 After Content.
+
+	 Closes the wrapping divs.
+
+	 @return void
 	 */
 	function apera_bags_woocommerce_wrapper_after() {
 		?>
-	</main><!-- #main -->
+</main><!-- #main -->
 </div><!-- #primary -->
 		<?php
 	}
@@ -192,25 +192,25 @@ if ( ! function_exists( 'apera_bags_woocommerce_wrapper_after' ) ) {
 add_action( 'woocommerce_after_main_content', 'apera_bags_woocommerce_wrapper_after' );
 
 /**
- * Sample implementation of the WooCommerce Mini Cart.
- *
- * You can add the WooCommerce Mini Cart to header.php like so ...
- *
-	<?php
-		if ( function_exists( 'apera_bags_woocommerce_header_cart' ) ) {
-			apera_bags_woocommerce_header_cart();
-		}
-	?>
- */
+* Sample implementation of the WooCommerce Mini Cart.
+*
+* You can add the WooCommerce Mini Cart to header.php like so ...
+*
+<?php
+if ( function_exists( 'apera_bags_woocommerce_header_cart' ) ) {
+apera_bags_woocommerce_header_cart();
+}
+?>
+*/
 
 if ( ! function_exists( 'apera_bags_woocommerce_cart_link_fragment' ) ) {
 	/**
-	 * Cart Fragments.
-	 *
-	 * Ensure cart contents update when products are added to the cart via AJAX.
-	 *
-	 * @param array $fragments Fragments to refresh via AJAX.
-	 * @return array Fragments to refresh via AJAX.
+	 Cart Fragments.
+
+	 Ensure cart contents update when products are added to the cart via AJAX.
+
+	 @param array $fragments Fragments to refresh via AJAX.
+	 @return array Fragments to refresh via AJAX.
 	 */
 	function apera_bags_woocommerce_cart_link_fragment( $fragments ) {
 		ob_start();
@@ -224,24 +224,24 @@ add_filter( 'woocommerce_add_to_cart_fragments', 'apera_bags_woocommerce_cart_li
 
 if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 	/**
-	 * Cart Link.
-	 *
-	 * Displayed a link to the cart including the number of items present and the cart total.
-	 *
-	 * @return void
+	 Cart Link.
+
+	 Displayed a link to the cart including the number of items present and the cart total.
+
+	 @return void
 	 */
 	function apera_bags_woocommerce_cart_link() {
 		?>
-		<a class="cart-contents" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'View your shopping cart', 'apera-bags' ); ?>">
-			<?php
-			$item_count_text = sprintf(
-				/* translators: number of items in the mini cart. */
-				_n( '%d item', '%d items', WC()->cart->get_cart_contents_count(), 'apera-bags' ),
-				WC_Cart()->get_total()
-			);
-			?>
-			<span class="amount"><?php echo wp_kses_data( WC()->cart->get_cart_subtotal() ); ?></span> <span class="count"><?php echo esc_html( $item_count_text ); ?></span>
-		</a>
+	<a class="cart-contents" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'View your shopping cart', 'apera-bags' ); ?>">
+		<?php
+		$item_count_text = sprintf(
+			/* translators: number of items in the mini cart. */
+			_n( '%d item', '%d items', WC()->cart->get_cart_contents_count(), 'apera-bags' ),
+			WC_Cart()->get_total()
+		);
+		?>
+		<span class="amount"><?php echo wp_kses_data( WC()->cart->get_cart_subtotal() ); ?></span> <span class="count"><?php echo esc_html( $item_count_text ); ?></span>
+	</a>
 		<?php
 	}
 }
@@ -264,18 +264,18 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 
 	ob_start();
 	foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) :
-			$_product   = apply_filters( 'checkout_review_woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-			$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+		$_product   = apply_filters( 'checkout_review_woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+		$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
 
 		if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
 
-				$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
+			$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
 
-				$attributes = '';
+			$attributes = '';
 
-				// Variation.
-				$attributes .= $_product->is_type( 'variable' ) || $_product->is_type( 'variation' ) ? wc_get_formatted_variation( $_product ) : '';
-				// Meta data.
+			// Variation.
+			$attributes .= $_product->is_type( 'variable' ) || $_product->is_type( 'variation' ) ? wc_get_formatted_variation( $_product ) : '';
+			// Meta data.
 			if ( version_compare( WC()->version, '3.3.0', '<' ) ) {
 				$attributes .= WC()->cart->get_item_data( $cart_item );
 			} else {
@@ -288,143 +288,143 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 				$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
 
 				if ( ! $product_permalink ) {
-						echo $thumbnail; // PHPCS: XSS ok.
-						echo wp_kses(
-							apply_filters( 'woocommerce_checkout_cart_item_quantity', sprintf( '<strong class="product-quantity wonka-badge" title="Quantity: %s">%s</strong>', $cart_item['quantity'], $cart_item['quantity'] ), $cart_item, $cart_item_key ),
-							array(
-								'strong' => array(
-									'class' => array(),
-									'title' => array(),
-								),
-							)
-						);
+					echo $thumbnail; // PHPCS: XSS ok.
+					echo wp_kses(
+						apply_filters( 'woocommerce_checkout_cart_item_quantity', sprintf( '<strong class="product-quantity wonka-badge" title="Quantity: %s">%s</strong>', $cart_item['quantity'], $cart_item['quantity'] ), $cart_item, $cart_item_key ),
+						array(
+							'strong' => array(
+								'class' => array(),
+								'title' => array(),
+							),
+						)
+					);
 				} else {
-					printf(
-						'<a href="%s">%s</a>',
-						esc_url( $product_permalink ),
-						$thumbnail
-					); // PHPCS: XSS ok.
+							printf(
+								'<a href="%s">%s</a>',
+								esc_url( $product_permalink ),
+								$thumbnail
+							); // PHPCS: XSS ok.
 				}
 				?>
-			</td>
-			<td colspan="2" class="product-name" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-				<?php
-				echo wp_kses(
-					sprintf( '<a href="%s" class="product-link">%s</a>', esc_url( $product_permalink ), apply_filters( 'cart_and_review_woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ),
-					array(
-						'a' => array(
-							'class' => array(),
-							'href'  => array(),
-						),
-					)
-				);
-				?>
-			</td>
-		</tr>
-			<tr class="second-row <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-				<td class="product-name" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-					<?php
-						echo $attributes ? wp_kses(
-							$attributes,
-							array(
-								'dl' => array(
-									'class' => array(),
-								),
-								'dt' => array(),
-								'dd' => array(),
-							)
-						) : '';
-					?>
+</td>
+<td colspan="2" class="product-name" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+			<?php
+			echo wp_kses(
+				sprintf( '<a href="%s" class="product-link">%s</a>', esc_url( $product_permalink ), apply_filters( 'cart_and_review_woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ),
+				array(
+					'a' => array(
+						'class' => array(),
+						'href'  => array(),
+					),
+				)
+			);
+			?>
+</td>
+</tr>
+<tr class="second-row <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+	<td class="product-name" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+			<?php
+			echo $attributes ? wp_kses(
+				$attributes,
+				array(
+					'dl' => array(
+						'class' => array(),
+					),
+					'dt' => array(),
+					'dd' => array(),
+				)
+			) : '';
+			?>
 
-						<div class="wonkasoft-wsc-price" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-							<span class="price-label"><?php _e( 'Price:', 'side-cart-woocommerce' ); ?></span>
-							<span class="price-amount"><?php echo WC()->cart->get_product_subtotal( $_product, 1 ); ?></span>
-						</div>
+		<div class="wonkasoft-wsc-price" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+			<span class="price-label"><?php _e( 'Price:', 'side-cart-woocommerce' ); ?></span>
+			<span class="price-amount"><?php echo WC()->cart->get_product_subtotal( $_product, 1 ); ?></span>
+		</div>
 
-						<?php
-						$input_id    = uniqid( 'quantity_' );
-						$input_name  = 'quantity';
-						$input_value = $cart_item['quantity'];
-						$max_value   = $_product->get_max_purchase_quantity();
-						$min_value   = $_product->get_min_purchase_quantity();
-						$step        = apply_filters( 'woocommerce_quantity_input_step', 1, $_product );
-						$pattern     = apply_filters( 'woocommerce_quantity_input_pattern', has_filter( 'woocommerce_stock_amount', 'intval' ) ? '[0-9]*' : '' );
+			<?php
+			$input_id    = uniqid( 'quantity_' );
+			$input_name  = 'quantity';
+			$input_value = $cart_item['quantity'];
+			$max_value   = $_product->get_max_purchase_quantity();
+			$min_value   = $_product->get_min_purchase_quantity();
+			$step        = apply_filters( 'woocommerce_quantity_input_step', 1, $_product );
+			$pattern     = apply_filters( 'woocommerce_quantity_input_pattern', has_filter( 'woocommerce_stock_amount', 'intval' ) ? '[0-9]*' : '' );
 
-						$input_value = ! isset( $input_value ) ? $min_value : $input_value;
+			$input_value = ! isset( $input_value ) ? $min_value : $input_value;
 
-						$input_html = '<input type="number" data-product-key="' . esc_attr( $cart_item_key ) . '" class="wonkasoft-wsc-qty" max="' . esc_attr( 0 < $max_value ? $max_value : '' ) . '" min="' . esc_attr( $min_value ) . '" step="' . esc_attr( $step ) . '" value="' . $input_value . '" pattern="' . esc_attr( $pattern ) . '" name="' . esc_attr( $input_name ) . '" id="' . esc_attr( $input_id ) . '" >';
+			$input_html = '<input type="number" data-product-key="' . esc_attr( $cart_item_key ) . '" class="wonkasoft-wsc-qty" max="' . esc_attr( 0 < $max_value ? $max_value : '' ) . '" min="' . esc_attr( $min_value ) . '" step="' . esc_attr( $step ) . '" value="' . $input_value . '" pattern="' . esc_attr( $pattern ) . '" name="' . esc_attr( $input_name ) . '" id="' . esc_attr( $input_id ) . '" >';
 
-						if ( $_product->is_sold_individually() ) {
-							$product_quantity = sprintf( '1 <input type="hidden" name="cart[%s][qty]" value="1" class="form-control" />', $cart_item_key );
-						} else {
-							$product_quantity  = '<div class="wonkasoft-wsc-qtybox" data-product-key="' . esc_attr( $cart_item_key ) . '" style="margin-right: 10px;">';
-							$product_quantity .= '<span class="wonkasoft-wsc-minus wonkasoft-wsc-chng">-</span>';
-							$product_quantity .= $input_html;
-							$product_quantity .= '<span class="wonkasoft-wsc-plus wonkasoft-wsc-chng">+</span>';
-						}
+			if ( $_product->is_sold_individually() ) {
+				$product_quantity = sprintf( '1 <input type="hidden" name="cart[%s][qty]" value="1" class="form-control" />', $cart_item_key );
+			} else {
+				$product_quantity  = '<div class="wonkasoft-wsc-qtybox" data-product-key="' . esc_attr( $cart_item_key ) . '" style="margin-right: 10px;">';
+				$product_quantity .= '<span class="wonkasoft-wsc-minus wonkasoft-wsc-chng">-</span>';
+				$product_quantity .= $input_html;
+				$product_quantity .= '<span class="wonkasoft-wsc-plus wonkasoft-wsc-chng">+</span>';
+			}
 
-						echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
-						?>
-				</td>
-				<td class="product-total">
-					<?php
-						sprintf(
-							apply_filters(
-								'woocommerce_cart_item_remove_link',
-								printf(
-									'<a href="%s" class="remove wonka-badge wonkasoft-wsc-icon-trash" aria-label="%s" data-product_id="%s" data-product_sku="%s" title="%s"></a>',
-									esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
-									esc_html__( 'Remove this item', 'woocommerce' ),
-									esc_attr( $product_id ),
-									esc_attr( $_product->get_sku() ),
-									( 1 < $cart_item['quantity'] ) ? 'Remove items' : 'Remove item'
-								),
-								$cart_item_key
-							)
-						);
-						echo '<span class="wonkasoft-wsc-subtotal" data-product-key="' . esc_attr( $cart_item_key ) . '">' . apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ) . '</span>';
-					?>
-				</td>
-			</tr>
+			echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
+			?>
+</td>
+<td class="product-total">
+			<?php
+			sprintf(
+				apply_filters(
+					'woocommerce_cart_item_remove_link',
+					printf(
+						'<a href="%s" class="remove wonka-badge wonkasoft-wsc-icon-trash" aria-label="%s" data-product_id="%s" data-product_sku="%s" title="%s"></a>',
+						esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+						esc_html__( 'Remove this item', 'woocommerce' ),
+						esc_attr( $product_id ),
+						esc_attr( $_product->get_sku() ),
+						( 1 < $cart_item['quantity'] ) ? 'Remove items' : 'Remove item'
+					),
+					$cart_item_key
+				)
+			);
+			echo '<span class="wonkasoft-wsc-subtotal" data-product-key="' . esc_attr( $cart_item_key ) . '">' . apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ) . '</span>';
+			?>
+</td>
+</tr>
 			<?php
 		}
-	endforeach;
+endforeach;
 	$fragments['tbody.products-area'] = '<tbody class="products-area">' . ob_get_contents() . ob_end_clean() . '</tbody>';
 
 	if ( ! empty( $rate_label ) ) :
 		$fragments['td.ship-method-cell'] = '<td colspan="2" class="ship-method-cell">' . $rate_label . '</td>';
-	endif;
+endif;
 
 	if ( ! empty( $rate_cost ) ) :
 		$fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1\$1s%2\$2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
-	endif;
+endif;
 
 	$fragments['tr.cart-subtotal'] = '<tr class="cart-subtotal"><th>Subtotal</th><td colspan="2"><span class="woocommerce-Price-amount amount">' . wc_price( WC()->cart->get_subtotal() ) . '</span></td></tr>';
 
 	if ( empty( WC()->cart->get_coupons() ) ) :
 		$fragments['tr.cart-discount'] = '<tr class="cart-discount"><th colspan="2"></th><td></td></tr>';
-	else :
-		foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
-			ob_start();
-			$current_coupon_class               = 'coupon-' . esc_attr( sanitize_title( $code ) );
-			$current_coupon_index               = 'tr.cart-discount.coupon-' . esc_attr( sanitize_title( $code ) );
-			$fragments[ $current_coupon_index ] = '<tr class="cart-discount ' . $current_coupon_class . '"><th colspan="2">' . sprintf( 'Coupon: %s', $coupon->code ) . '</th><td>' . wc_cart_totals_coupon_html( $coupon ) . ob_get_contents() . '</td></tr>' . ob_end_clean();
-		endforeach;
-	endif;
+else :
+	foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
+		ob_start();
+		$current_coupon_class               = 'coupon-' . esc_attr( sanitize_title( $code ) );
+		$current_coupon_index               = 'tr.cart-discount.coupon-' . esc_attr( sanitize_title( $code ) );
+		$fragments[ $current_coupon_index ] = '<tr class="cart-discount ' . $current_coupon_class . '"><th colspan="2">' . sprintf( 'Coupon: %s', $coupon->code ) . '</th><td>' . wc_cart_totals_coupon_html( $coupon ) . ob_get_contents() . '</td></tr>' . ob_end_clean();
+endforeach;
+endif;
 
-	if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) :
-		foreach ( WC()->cart->get_tax_totals() as $code => $tax ) :
-			$current_tax_class               = 'tax-rate-' . esc_attr( $code );
-			$current_tax_index               = 'tr.tax-rate.tax-rate-' . esc_attr( $code );
-			$fragments[ $current_tax_index ] = '<tr class="tax-rate ' . $current_tax_class . '"><th>' . esc_html( $tax->label ) . '</th><td colspan="2">' . wp_kses_post( $tax->formatted_amount ) . '</td></tr>';
-		endforeach;
-		else :
-			$fragments['tr.tax-total'] = '<tr class="tax-total"><th>' . esc_html( WC()->countries->tax_or_vat() ) . '</th><td colspan="2">' . wc_cart_totals_taxes_total_html() . '</td></tr>';
-	endif;
+if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) :
+	foreach ( WC()->cart->get_tax_totals() as $code => $tax ) :
+		$current_tax_class               = 'tax-rate-' . esc_attr( $code );
+		$current_tax_index               = 'tr.tax-rate.tax-rate-' . esc_attr( $code );
+		$fragments[ $current_tax_index ] = '<tr class="tax-rate ' . $current_tax_class . '"><th>' . esc_html( $tax->label ) . '</th><td colspan="2">' . wp_kses_post( $tax->formatted_amount ) . '</td></tr>';
+endforeach;
+else :
+	$fragments['tr.tax-total'] = '<tr class="tax-total"><th>' . esc_html( WC()->countries->tax_or_vat() ) . '</th><td colspan="2">' . wc_cart_totals_taxes_total_html() . '</td></tr>';
+endif;
 
-		$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
+$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
 
-		return $fragments;
+return $fragments;
 }
 add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10, 1 );
 
@@ -447,11 +447,11 @@ function setting_up_image_flipper_class( $classes ) {
 	}
 	return $classes;
 }
-		add_filter( 'post_class', 'setting_up_image_flipper_class', 8 );
+add_filter( 'post_class', 'setting_up_image_flipper_class', 8 );
 
-		/**
-		 * This function is to override the parsing of the images during a shop loop
-		 */
+/**
+ * This function is to override the parsing of the images during a shop loop
+ */
 function wonka_customized_shop_loop() {
 
 	// For setting up the image flipper.
@@ -482,13 +482,13 @@ function wonka_customized_shop_loop() {
 		$output .= '<img class="img wonka-img" data-src="' . str_replace( array( 'http:', 'https:' ), '', esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'custom_products_size', false )[0] ) ) . '" data-srcset="' . str_replace( array( 'http:', 'https:' ), '', esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'custom_products_size', null ) ) ) . '" />';
 		if ( $attachment_ids ) :
 			$output .= '<img title="' . $secondary_image_title . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" data-src="' . str_replace( array( 'http:', 'https:' ), '', esc_attr( wp_get_attachment_image_src( $secondary_image_id, 'custom_products_size', false )[0] ) ) . '" data-srcset="' . str_replace( array( 'http:', 'https:' ), '', esc_attr( wp_get_attachment_image_srcset( $secondary_image_id, 'custom_products_size', null ) ) ) . '" />';
-		endif;
+	endif;
 		else :
 			$output .= '<img class="img wonka-img" src="' . str_replace( array( 'http:', 'https:' ), '', esc_attr( wp_get_attachment_image_src( $post_thumbnail_id, 'custom_products_size', false )[0] ) ) . '" srcset="' . str_replace( array( 'http:', 'https:' ), '', esc_attr( wp_get_attachment_image_srcset( $post_thumbnail_id, 'custom_products_size', null ) ) ) . '" />';
 			if ( $attachment_ids ) :
 				$output .= '<img title="' . $secondary_image_title . '" class="secondary-image attachment-shop-catalog wp-post-image wp-post-image--secondary" src="' . str_replace( array( 'http:', 'https:' ), '', esc_attr( wp_get_attachment_image_src( $secondary_image_id, 'custom_products_size', false )[0] ) ) . '" srcset="' . str_replace( array( 'http:', 'https:' ), '', esc_attr( wp_get_attachment_image_srcset( $secondary_image_id, 'custom_products_size', null ) ) ) . '" />';
 			endif;
-			endif;
+endif;
 		$output .= '</div><!-- .wonka-shop-img-wrap -->';
 
 		echo wp_kses(
@@ -513,19 +513,19 @@ function wonka_customized_shop_loop() {
 if ( ! get_theme_mod( 'enable_sale_banner' ) ) :
 	remove_filter( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
 endif;
-		remove_filter( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
-		add_filter( 'woocommerce_before_shop_loop_item_title', 'wonka_customized_shop_loop', 11 );
+remove_filter( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
+add_filter( 'woocommerce_before_shop_loop_item_title', 'wonka_customized_shop_loop', 11 );
 
-		/* removing the side bar */
-		remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+/* removing the side bar */
+remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 
-		/**
-		 * Exclude products from a particular category on the shop page
-		 *
-		 * @author Louis <llister@wonkasoft.com>
-		 * @since 1.0.1
-		 * @param array $q contains the current query.
-		 */
+/**
+ * Exclude products from a particular category on the shop page
+ *
+ * @author Louis <llister@wonkasoft.com>
+ * @since 1.0.1
+ * @param array $q contains the current query.
+ */
 function custom_pre_get_posts_query( $q ) {
 	$tax_query = (array) $q->get( 'tax_query' );
 
@@ -538,40 +538,40 @@ function custom_pre_get_posts_query( $q ) {
 
 	$q->set( 'tax_query', $tax_query );
 }
-		add_action( 'woocommerce_product_query', 'custom_pre_get_posts_query' );
+add_action( 'woocommerce_product_query', 'custom_pre_get_posts_query' );
 
-		/**
-		 * Add all outlet items after the main shop items
-		 *
-		 * @author Louis L <llister@wonkasoft.com>
-		 * @since 1.0.1 Updates
-		 */
+/**
+ * Add all outlet items after the main shop items
+ *
+ * @author Louis L <llister@wonkasoft.com>
+ * @since 1.0.1 Updates
+ */
 function add_outlet_items() {
 	echo "<div class='text-center outlet-title'><h2>Outlet Section</h2></div>";
 	echo do_shortcode( '[products columns="2" category="outlet"]' );
 }
-		add_action( 'woocommerce_after_shop_loop', 'add_outlet_items' );
+add_action( 'woocommerce_after_shop_loop', 'add_outlet_items' );
 
-		/**
-		 * This hooks into woocommerce templates to find the added key features and specs template.
-		 */
+/**
+* This hooks into woocommerce templates to find the added key features and specs template.
+*/
 if ( ! function_exists( 'woocommerce_product_key_features_and_specs_tab' ) ) {
 
 	/**
-	 * Output the description tab content.
+	 Output the description tab content.
 	 */
 	function woocommerce_product_key_features_and_specs_tab() {
 		wc_get_template( 'single-product/tabs/key-features-and-specs.php' );
 	}
 }
 
-		/**
-		 * Changes the description tab title
-		 *
-		 * @param  array $tabs setting up the changed titles.
-		 *
-		 * @return array returns the product tabs.
-		 */
+/**
+ * Changes the description tab title
+ *
+ * @param  array $tabs setting up the changed titles.
+ *
+ * @return array returns the product tabs.
+ */
 function wonka_product_tabs_retitle( $tabs ) {
 	$new_title                       = get_post_meta( get_the_ID(), 'product_statement', true );
 	$tabs['reviews']['priority']     = 30;          // Reviews first.
@@ -586,11 +586,11 @@ function wonka_product_tabs_retitle( $tabs ) {
 
 	return $tabs;
 }
-		add_filter( 'woocommerce_product_tabs', 'wonka_product_tabs_retitle', 98 );
+add_filter( 'woocommerce_product_tabs', 'wonka_product_tabs_retitle', 98 );
 
-		/**
-		 * This is for moving the cross sells items on the cart page setting the display of how many items and columns to show.
-		 */
+/**
+ * This is for moving the cross sells items on the cart page setting the display of how many items and columns to show.
+ */
 function wonka_cart_cross_sells() {
 	add_filter(
 		'woocommerce_cross_sells_columns',
@@ -606,12 +606,12 @@ function wonka_cart_cross_sells() {
 	);
 }
 
-		add_action( 'woocommerce_after_cart', 'wonka_cart_cross_sells', 10 );
-		add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
+add_action( 'woocommerce_after_cart', 'wonka_cart_cross_sells', 10 );
+add_action( 'woocommerce_after_cart', 'woocommerce_cross_sell_display' );
 
-		/**
-		 * This places a continue shopping notice in the cart.
-		 */
+/**
+ * This places a continue shopping notice in the cart.
+ */
 function wonka_add_continue_shopping_notice_to_cart() {
 	$shopping = sprintf( '<div class="return-shopping-wrap"><i class="fa fa-long-arrow-left"></i> <a href="%s" class="continue-shopping">%s</a></div>', esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ), esc_html__( 'Continue shopping', 'woocommerce' ) );
 
@@ -631,11 +631,11 @@ function wonka_add_continue_shopping_notice_to_cart() {
 		)
 	);
 }
-		add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart', 1 );
+add_action( 'woocommerce_before_cart', 'wonka_add_continue_shopping_notice_to_cart', 1 );
 
-		/**
-		 * This removes checkout login form and coupon form from unwanted places.
-		 */
+/**
+ * This removes checkout login form and coupon form from unwanted places.
+ */
 function wonka_checkout_remove_actions() {
 	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
 	remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
@@ -729,17 +729,17 @@ function wonka_override_checkout_fields( $fields ) {
 
 	return $fields;
 }
-		add_filter( 'woocommerce_checkout_fields', 'wonka_override_checkout_fields' );
+add_filter( 'woocommerce_checkout_fields', 'wonka_override_checkout_fields' );
 
-		/**
-		 * This modifies the woocommerce form field.
-		 *
-		 * @param  array  $field array of the current field.
-		 * @param  string $key   key for the current field.
-		 * @param  array  $args  args that are passed in for the field.
-		 * @param  string $value value of the current field.
-		 * @return array        contains the modified field.
-		 */
+/**
+ * This modifies the woocommerce form field.
+ *
+ * @param  array  $field array of the current field.
+ * @param  string $key   key for the current field.
+ * @param  array  $args  args that are passed in for the field.
+ * @param  string $value value of the current field.
+ * @return array        contains the modified field.
+ */
 function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 	$defaults = array(
 		'type'              => 'text',
@@ -780,7 +780,7 @@ function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 		$value = $args['default'];
 	}
 
-		// Custom attribute handling.
+	// Custom attribute handling.
 	$custom_attributes         = array();
 	$args['custom_attributes'] = array_filter( (array) $args['custom_attributes'], 'strlen' );
 
@@ -892,7 +892,7 @@ function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 			if ( ! empty( $args['options'] ) ) {
 				foreach ( $args['options'] as $option_key => $option_text ) {
 					if ( '' === $option_key ) {
-							// If we have a blank option, select2 needs a placeholder.
+						// If we have a blank option, select2 needs a placeholder.
 						if ( empty( $args['placeholder'] ) ) {
 							$args['placeholder'] = $option_text ? $option_text : __( 'Choose an option', 'woocommerce' );
 						}
@@ -946,66 +946,66 @@ function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 
 	return $field;
 }
-		add_filter( 'woocommerce_form_field', 'wonka_woocommerce_form_field', 99, 4 );
+add_filter( 'woocommerce_form_field', 'wonka_woocommerce_form_field', 99, 4 );
 
-		/**
-		 * This builds a custom table of order details on the checkout page.
-		 *
-		 * @param  array $checkout contains the checkout items.
-		 */
+/**
+ * This builds a custom table of order details on the checkout page.
+ *
+ * @param  array $checkout contains the checkout items.
+ */
 function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	?>
 	<div id="wonka-checkout-step-buttons" class="wonka-step-buttons tab-content">
 		<div class="tab-pane fade show active" id="wonka_customer_information_buttons" role="tabpanel">
 			<a href="<?php echo esc_url( get_permalink( wc_get_page_id( 'checkout' ) ) ); ?>" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-back-to-login', eventAction: 'click', eventLabel: 'Return to login' } );" data-target="#checkout" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-login-btn" 
-						<?php
-						$style = ( is_user_logged_in() ) ? 'style=visibility:hidden;' : '';
-						echo esc_attr( $style );
-						?>
-			><i class="fa fa-angle-left"></i> Return to login</a>
-			<a href="#" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-delivery-options-btn">Next Step <i class="fa fa-angle-right"></i></a>
-		</div>
-		<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
-			<a href="#wonka_customer_information_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Customer Information' } );" data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-shipping-address-btn"><i class="fa fa-angle-left"></i> Back</a>
-			<a href="#wonka_payment_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Payment Method' } );" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-payment-methods-btn">Next Step <i class="fa fa-angle-right"></i></a>
-		</div>
-		<div class="tab-pane fade" id="wonka_payment_method_buttons" role="tabpanel">
-			<a href="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Shipping Method' } );" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-delivery-options-btn"><i class="fa fa-angle-left"></i> Back</a>
-			<a href="#place_order" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-place-order', eventAction: 'click', eventLabel: 'Place Order' } );" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-place-order-btn" id="place_order">Place Order <i class="fa fa-angle-right"></i></a>
-		</div>
-	</div><!-- #wonka-checkout-step-buttons -->
-</div><!-- .checkout-form-left-side -->
-<div class="col-12 col-md-5 checkout-order-details">
-	<h5 class="order-summary-title">Order Summary</h5>
-	<div class="table-responsive">
-		<table class="table">
-			<tbody class="products-area">
-						<?php
-						foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-							$_product   = apply_filters( 'checkout_review_woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-							$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+				<?php
+				$style = ( is_user_logged_in() ) ? 'style=visibility:hidden;' : '';
+				echo esc_attr( $style );
+				?>
+				><i class="fa fa-angle-left"></i> Return to login</a>
+				<a href="#" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-delivery-options-btn">Next Step <i class="fa fa-angle-right"></i></a>
+			</div>
+			<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
+				<a href="#wonka_customer_information_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Customer Information' } );" data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-shipping-address-btn"><i class="fa fa-angle-left"></i> Back</a>
+				<a href="#wonka_payment_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Payment Method' } );" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-payment-methods-btn">Next Step <i class="fa fa-angle-right"></i></a>
+			</div>
+			<div class="tab-pane fade" id="wonka_payment_method_buttons" role="tabpanel">
+				<a href="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Shipping Method' } );" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-delivery-options-btn"><i class="fa fa-angle-left"></i> Back</a>
+				<a href="#place_order" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-place-order', eventAction: 'click', eventLabel: 'Place Order' } );" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-place-order-btn" id="place_order">Place Order <i class="fa fa-angle-right"></i></a>
+			</div>
+		</div><!-- #wonka-checkout-step-buttons -->
+	</div><!-- .checkout-form-left-side -->
+	<div class="col-12 col-md-5 checkout-order-details">
+		<h5 class="order-summary-title">Order Summary</h5>
+		<div class="table-responsive">
+			<table class="table">
+				<tbody class="products-area">
+					<?php
+					foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+						$_product   = apply_filters( 'checkout_review_woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+						$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
 
-							if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
+						if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
 
-								$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
+							$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
 
-								$attributes = '';
+							$attributes = '';
 
-								// Variation.
-								$attributes .= $_product->is_type( 'variable' ) || $_product->is_type( 'variation' ) ? wc_get_formatted_variation( $_product ) : '';
-								// Meta data.
-								if ( version_compare( WC()->version, '3.3.0', '<' ) ) {
-									$attributes .= WC()->cart->get_item_data( $cart_item );
-								} else {
-									$attributes .= wc_get_formatted_cart_item_data( $cart_item );
-								}
-								?>
-						<tr class="product-start <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-							<td rowspan="2" class="product-thumbnail">
-								<?php
-								$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
+							// Variation.
+							$attributes .= $_product->is_type( 'variable' ) || $_product->is_type( 'variation' ) ? wc_get_formatted_variation( $_product ) : '';
+							// Meta data.
+							if ( version_compare( WC()->version, '3.3.0', '<' ) ) {
+								$attributes .= WC()->cart->get_item_data( $cart_item );
+							} else {
+								$attributes .= wc_get_formatted_cart_item_data( $cart_item );
+							}
+							?>
+							<tr class="product-start <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+								<td rowspan="2" class="product-thumbnail">
+									<?php
+									$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
 
-								if ( ! $product_permalink ) {
+									if ( ! $product_permalink ) {
 										echo $thumbnail; // PHPCS: XSS ok.
 										echo wp_kses(
 											apply_filters( 'woocommerce_checkout_cart_item_quantity', sprintf( '<strong class="product-quantity wonka-badge" title="Quantity: %s">%s</strong>', $cart_item['quantity'], $cart_item['quantity'] ), $cart_item, $cart_item_key ),
@@ -1016,202 +1016,202 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 												),
 											)
 										);
-								} else {
-									printf(
-										'<a href="%s">%s</a>',
-										esc_url( $product_permalink ),
-										$thumbnail
-									); // PHPCS: XSS ok.
-								}
-								?>
-								</td>
-								<td colspan="2" class="product-name" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-									<?php
-									echo wp_kses(
-										sprintf( '<a href="%s" class="product-link">%s</a>', esc_url( $product_permalink ), apply_filters( 'cart_and_review_woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ),
-										array(
-											'a' => array(
-												'class' => array(),
-												'href'  => array(),
-											),
-										)
-									);
+									} else {
+										printf(
+											'<a href="%s">%s</a>',
+											esc_url( $product_permalink ),
+											$thumbnail
+										); // PHPCS: XSS ok.
+									}
 									?>
-								</td>
-							</tr>
-							<tr class="second-row <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-								<td class="product-name" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-									<?php
-										echo $attributes ? wp_kses(
-											$attributes,
-											array(
-												'dl' => array(
-													'class' => array(),
-												),
-												'dt' => array(),
-												'dd' => array(),
-											)
-										) : '';
-									?>
-
-										<div class="wonkasoft-wsc-price" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-											<span class="price-label"><?php _e( 'Price:', 'side-cart-woocommerce' ); ?></span> 
-											<span class="price-amount"><?php echo WC()->cart->get_product_subtotal( $_product, 1 ); ?></span>
-										</div>
-
-										<?php
-										$input_id    = uniqid( 'quantity_' );
-										$input_name  = 'quantity';
-										$input_value = $cart_item['quantity'];
-										$max_value   = $_product->get_max_purchase_quantity();
-										$min_value   = $_product->get_min_purchase_quantity();
-										$step        = apply_filters( 'woocommerce_quantity_input_step', 1, $_product );
-										$pattern     = apply_filters( 'woocommerce_quantity_input_pattern', has_filter( 'woocommerce_stock_amount', 'intval' ) ? '[0-9]*' : '' );
-
-										$input_value = ! isset( $input_value ) ? $min_value : $input_value;
-
-										$input_html = '<input type="number" data-product-key="' . esc_attr( $cart_item_key ) . '" class="wonkasoft-wsc-qty" max="' . esc_attr( 0 < $max_value ? $max_value : '' ) . '" min="' . esc_attr( $min_value ) . '" step="' . esc_attr( $step ) . '" value="' . $input_value . '" pattern="' . esc_attr( $pattern ) . '" name="' . esc_attr( $input_name ) . '" id="' . esc_attr( $input_id ) . '" >';
-
-										if ( $_product->is_sold_individually() ) {
-											$product_quantity = sprintf( '1 <input type="hidden" name="cart[%s][qty]" value="1" class="form-control" />', $cart_item_key );
-										} else {
-											$product_quantity  = '<div class="wonkasoft-wsc-qtybox" data-product-key="' . esc_attr( $cart_item_key ) . '" style="margin-right: 10px;">';
-											$product_quantity .= '<span class="wonkasoft-wsc-minus wonkasoft-wsc-chng">-</span>';
-											$product_quantity .= $input_html;
-											$product_quantity .= '<span class="wonkasoft-wsc-plus wonkasoft-wsc-chng">+</span>';
-										}
-
-										echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
-										?>
-								</td>
-								<td class="product-total">
-									<?php
-										sprintf(
-											apply_filters(
-												'woocommerce_cart_item_remove_link',
-												printf(
-													'<a href="%s" class="remove wonka-badge wonkasoft-wsc-icon-trash" aria-label="%s" data-product_id="%s" data-product_sku="%s" title="%s"></a>',
-													esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
-													esc_html__( 'Remove this item', 'woocommerce' ),
-													esc_attr( $product_id ),
-													esc_attr( $_product->get_sku() ),
-													( 1 < $cart_item['quantity'] ) ? 'Remove items' : 'Remove item'
-												),
-												$cart_item_key
-											)
-										);
-										echo '<span class="wonkasoft-wsc-subtotal" data-product-key="' . esc_attr( $cart_item_key ) . '">' . apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ) . '</span>';
-									?>
-								</td>
-							</tr>
-									<?php
-							}
-						}
-						do_action( 'woocommerce_review_order_after_cart_contents' );
-						?>
-				</tbody>
-				<tfoot>                                                                           
-					<tr class="cart-subtotal">
-						<th><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
-						<td colspan="2"><?php wc_cart_totals_subtotal_html(); ?></td>
-					</tr>
-					<?php
-					if ( empty( WC()->cart->get_coupons() ) ) :
-						?>
-						<tr class="cart-discount">
-							<th colspan="2"></th>
-							<td></td>
-						</tr>
-						<?php
-					else :
-						foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
+</td>
+<td colspan="2" class="product-name" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+							<?php
+							echo wp_kses(
+								sprintf( '<a href="%s" class="product-link">%s</a>', esc_url( $product_permalink ), apply_filters( 'cart_and_review_woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ),
+								array(
+									'a' => array(
+										'class' => array(),
+										'href'  => array(),
+									),
+								)
+							);
 							?>
-						<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
-							<th colspan="2"><?php wc_cart_totals_coupon_label( $coupon ); ?></th>
-							<td><?php wc_cart_totals_coupon_html( $coupon ); ?></td>
-						</tr>
+</td>
+</tr>
+<tr class="second-row <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+	<td class="product-name" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
 							<?php
-					endforeach;
-					endif;
+							echo $attributes ? wp_kses(
+								$attributes,
+								array(
+									'dl' => array(
+										'class' => array(),
+									),
+									'dt' => array(),
+									'dd' => array(),
+								)
+							) : '';
+							?>
+
+		<div class="wonkasoft-wsc-price" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+			<span class="price-label"><?php _e( 'Price:', 'side-cart-woocommerce' ); ?></span> 
+			<span class="price-amount"><?php echo WC()->cart->get_product_subtotal( $_product, 1 ); ?></span>
+		</div>
+
+							<?php
+							$input_id    = uniqid( 'quantity_' );
+							$input_name  = 'quantity';
+							$input_value = $cart_item['quantity'];
+							$max_value   = $_product->get_max_purchase_quantity();
+							$min_value   = $_product->get_min_purchase_quantity();
+							$step        = apply_filters( 'woocommerce_quantity_input_step', 1, $_product );
+							$pattern     = apply_filters( 'woocommerce_quantity_input_pattern', has_filter( 'woocommerce_stock_amount', 'intval' ) ? '[0-9]*' : '' );
+
+							$input_value = ! isset( $input_value ) ? $min_value : $input_value;
+
+							$input_html = '<input type="number" data-product-key="' . esc_attr( $cart_item_key ) . '" class="wonkasoft-wsc-qty" max="' . esc_attr( 0 < $max_value ? $max_value : '' ) . '" min="' . esc_attr( $min_value ) . '" step="' . esc_attr( $step ) . '" value="' . $input_value . '" pattern="' . esc_attr( $pattern ) . '" name="' . esc_attr( $input_name ) . '" id="' . esc_attr( $input_id ) . '" >';
+
+							if ( $_product->is_sold_individually() ) {
+								$product_quantity = sprintf( '1 <input type="hidden" name="cart[%s][qty]" value="1" class="form-control" />', $cart_item_key );
+							} else {
+								$product_quantity  = '<div class="wonkasoft-wsc-qtybox" data-product-key="' . esc_attr( $cart_item_key ) . '" style="margin-right: 10px;">';
+								$product_quantity .= '<span class="wonkasoft-wsc-minus wonkasoft-wsc-chng">-</span>';
+								$product_quantity .= $input_html;
+								$product_quantity .= '<span class="wonkasoft-wsc-plus wonkasoft-wsc-chng">+</span>';
+							}
+
+							echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
+							?>
+</td>
+<td class="product-total">
+							<?php
+							sprintf(
+								apply_filters(
+									'woocommerce_cart_item_remove_link',
+									printf(
+										'<a href="%s" class="remove wonka-badge wonkasoft-wsc-icon-trash" aria-label="%s" data-product_id="%s" data-product_sku="%s" title="%s"></a>',
+										esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+										esc_html__( 'Remove this item', 'woocommerce' ),
+										esc_attr( $product_id ),
+										esc_attr( $_product->get_sku() ),
+										( 1 < $cart_item['quantity'] ) ? 'Remove items' : 'Remove item'
+									),
+									$cart_item_key
+								)
+							);
+							echo '<span class="wonkasoft-wsc-subtotal" data-product-key="' . esc_attr( $cart_item_key ) . '">' . apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ) . '</span>';
+							?>
+</td>
+</tr>
+							<?php
+						}
+					}
+					do_action( 'woocommerce_review_order_after_cart_contents' );
 					?>
-
-				<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
-				<tr class="fee">
-					<th><?php echo esc_html( $fee->name ); ?></th>
-					<td colspan="2"><?php wc_cart_totals_fee_html( $fee ); ?></td>
-				</tr>
-				<?php endforeach; ?>
-					<?php
-					$current_method = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : '';
-					if ( ! $current_method ) :
-						?>
-				
-				<tr class="shipping-methods">
-					<td colspan="2" class="ship-method-cell">
-						
-					</td>
-					<td colspan="1" class="ship-method-cost-cell">
-								
-					</td>
-				</tr>
-					<?php else : ?>
-					<tr class="shipping-methods">
-						<?php foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) : ?>
-							<?php
-							if ( WC()->session->get( 'chosen_shipping_methods' )[0] === $method_id ) :
-								$rate_label = $rate->label;
-								$rate_cost  = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
-								?>
-						<td colspan="2" class="ship-method-cell">
-								<?php echo esc_html( $rate_label ); ?>
-						</td>
-						<td colspan="1" class="ship-method-cost-cell">
-								<?php
-								echo wp_kses(
-									sprintf( "<span class='woocommerce-Price-amount amount'>%1\$1s%2\$2s</span>", get_woocommerce_currency_symbol(), $rate_cost ),
-									array(
-										'span' => array(
-											'class' => array(),
-										),
-									)
-								);
-								?>
-						</td>
-							<?php endif; ?>
-						<?php endforeach; ?>
-					</tr>
-			<?php endif; ?>
-				<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
-					<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
-						<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
-			<tr class="tax-rate tax-rate-<?php echo esc_attr( $code ); ?>">
-				<th><?php echo esc_html( $tax->label ); ?></th>
-				<td colspan="2"><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
-			</tr>
-				<?php endforeach; ?>
-			<?php else : ?>
-			<tr class="tax-total">
-				<th><?php echo esc_html( WC()->countries->tax_or_vat() ); ?></th>
-				<td colspan="2"><?php wc_cart_totals_taxes_total_html(); ?></td>
-			</tr>
-			<?php endif; ?>
-		<?php endif; ?>
-
-			<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
-
-	<tr class="order-total">
-		<th><?php _e( 'Total', 'woocommerce' ); ?></th>
-		<td colspan="2"><?php wc_cart_totals_order_total_html(); ?></td>
+</tbody>
+<tfoot>                                                                           
+	<tr class="cart-subtotal">
+		<th><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
+		<td colspan="2"><?php wc_cart_totals_subtotal_html(); ?></td>
 	</tr>
+	<?php
+	if ( empty( WC()->cart->get_coupons() ) ) :
+		?>
+	<tr class="cart-discount">
+		<th colspan="2"></th>
+		<td></td>
+	</tr>
+		<?php
+else :
+	foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
+		?>
+	<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
+		<th colspan="2"><?php wc_cart_totals_coupon_label( $coupon ); ?></th>
+		<td><?php wc_cart_totals_coupon_html( $coupon ); ?></td>
+	</tr>
+		<?php
+endforeach;
+endif;
+?>
 
-			<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
+	<?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
+<tr class="fee">
+	<th><?php echo esc_html( $fee->name ); ?></th>
+	<td colspan="2"><?php wc_cart_totals_fee_html( $fee ); ?></td>
+</tr>
+<?php endforeach; ?>
+	<?php
+	$current_method = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : '';
+	if ( ! $current_method ) :
+		?>
+
+	<tr class="shipping-methods">
+		<td colspan="2" class="ship-method-cell">
+
+		</td>
+		<td colspan="1" class="ship-method-cost-cell">
+
+		</td>
+	</tr>
+		<?php else : ?>
+		<tr class="shipping-methods">
+			<?php foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) : ?>
+				<?php
+				if ( WC()->session->get( 'chosen_shipping_methods' )[0] === $method_id ) :
+					$rate_label = $rate->label;
+					$rate_cost  = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+					?>
+			<td colspan="2" class="ship-method-cell">
+					<?php echo esc_html( $rate_label ); ?>
+			</td>
+			<td colspan="1" class="ship-method-cost-cell">
+					<?php
+					echo wp_kses(
+						sprintf( "<span class='woocommerce-Price-amount amount'>%1\$1s%2\$2s</span>", get_woocommerce_currency_symbol(), $rate_cost ),
+						array(
+							'span' => array(
+								'class' => array(),
+							),
+						)
+					);
+					?>
+			</td>
+			<?php endif; ?>
+	<?php endforeach; ?>
+</tr>
+<?php endif; ?>
+	<?php if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) : ?>
+		<?php if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
+			<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
+	<tr class="tax-rate tax-rate-<?php echo esc_attr( $code ); ?>">
+		<th><?php echo esc_html( $tax->label ); ?></th>
+		<td colspan="2"><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
+	</tr>
+<?php endforeach; ?>
+	<?php else : ?>
+	<tr class="tax-total">
+		<th><?php echo esc_html( WC()->countries->tax_or_vat() ); ?></th>
+		<td colspan="2"><?php wc_cart_totals_taxes_total_html(); ?></td>
+	</tr>
+	<?php endif; ?>
+	<?php endif; ?>
+
+	<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
+
+<tr class="order-total">
+	<th><?php _e( 'Total', 'woocommerce' ); ?></th>
+	<td colspan="2"><?php wc_cart_totals_order_total_html(); ?></td>
+</tr>
+
+	<?php do_action( 'woocommerce_review_order_after_order_total' ); ?>
 
 </tfoot>
 </table>
 </div><!-- .table-responsive -->
 </div><!-- .checkout-order-details -->
 </div><!-- .row -->
-			<?php
+	<?php
 }
 add_action( 'wonka_checkout_after_checkout_form_custom', 'wonka_checkout_after_checkout_form_custom', 50 );
 
@@ -1254,7 +1254,7 @@ function wonka_woocommerce_review_order_after_order_total() {
 					<div class="panel panel-default activate-panel" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 						<div class="panel-heading" role="tab" id="headingOne">
 							<span class="panel-title">
-									Add Promo Code (Optional)
+								Add Promo Code (Optional)
 							</span>
 						</div>
 					</div>
@@ -1263,14 +1263,14 @@ function wonka_woocommerce_review_order_after_order_total() {
 					<div class="panel-body">
 						<form method="post" class="coupon form-group form-inline" action="<?php echo esc_url( add_query_arg( $query_params, wc_get_checkout_url() ) ); ?>">
 							<label for="coupon_code" class="sr-only"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text form-control" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button wonka-btn" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
-					<?php do_action( 'woocommerce_cart_coupon' ); ?>
+							<?php do_action( 'woocommerce_cart_coupon' ); ?>
 						</form>
 					</div>
 				</div>
 			</th>
 		</tr>
-				<?php
-			endif;
+		<?php
+	endif;
 }
 add_action( 'woocommerce_review_order_after_order_total', 'wonka_woocommerce_review_order_after_order_total', 50 );
 remove_action( 'wp_head', array( 'RSPointPriceFrontend', 'redirect_if_coupon_removed' ) );
@@ -1541,7 +1541,7 @@ add_action( 'wonka_checkout_login_form', 'wonka_checkout_after_login_form', 20 )
  * This adds custom html markup before the customer details.
  */
 function wonka_checkout_before_customer_details() {
-		   $output = '';
+	$output = '';
 
 	$output .= '<div class="tab-content" id="wonka-checkout-steps">';
 	$output .= '<div class="tab-pane fade show active" id="wonka_customer_information" role="tabpanel">';
@@ -1585,7 +1585,7 @@ add_action( 'woocommerce_checkout_after_customer_details', 'wonka_checkout_after
  * This add custom html markup before order review.
  */
 function wonka_woocommerce_checkout_before_order_review() {
-		   $output = '';
+	$output = '';
 
 	$output .= '<div class="tab-pane fade" id="wonka_shipping_method" role="tabpanel">';
 
@@ -1630,11 +1630,11 @@ add_action( 'woocommerce_review_order_before_payment', 'wonka_woocommerce_review
 function wonka_woocommerce_review_order_before_payment2() {
 	do_action( 'woocommerce_checkout_billing' );
 }
-		add_action( 'wonka_custom_billing_addition', 'wonka_woocommerce_review_order_before_payment2' );
+add_action( 'wonka_custom_billing_addition', 'wonka_woocommerce_review_order_before_payment2' );
 
-		/**
-		 * This add custom html markup to review order after payment.
-		 */
+/**
+ * This add custom html markup to review order after payment.
+ */
 function wonka_woocommerce_review_order_after_payment() {
 	$output = '';
 
@@ -1652,16 +1652,16 @@ function wonka_woocommerce_review_order_after_payment() {
 		)
 	);
 }
-		add_action( 'woocommerce_review_order_after_payment', 'wonka_woocommerce_review_order_after_payment' );
+add_action( 'woocommerce_review_order_after_payment', 'wonka_woocommerce_review_order_after_payment' );
 
-		/**
-		 * Remove Sku info only for users. Sku will still show for admins
-		 *
-		 * @since  1.0.0
-		 *
-		 * @param bool $enabled  Contains true.
-		 * @return bool  returns true less set to false.
-		 */
+/**
+ * Remove Sku info only for users. Sku will still show for admins
+ *
+ * @since  1.0.0
+ *
+ * @param bool $enabled  Contains true.
+ * @return bool  returns true less set to false.
+ */
 function ws_remove_product_page_skus( $enabled ) {
 	if ( ! is_admin() && is_product() ) {
 		return false;
@@ -1669,21 +1669,21 @@ function ws_remove_product_page_skus( $enabled ) {
 
 	return $enabled;
 }
-		add_filter( 'wc_product_sku_enabled', 'ws_remove_product_page_skus' );
+add_filter( 'wc_product_sku_enabled', 'ws_remove_product_page_skus' );
 
-		/**
-		 * Remove Meta information on single product page
-		 *
-		 * @since  1.0.0
-		 */
-		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
+/**
+* Remove Meta information on single product page
+*
+* @since  1.0.0
+*/
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
 
-		/**
-		 * This is for making the flexslider of woocommerce to slide vertical instead of horizontal
-		 *
-		 * @param  array $options Contains options that are being passed to the slider.
-		 * @return [type]          [description]
-		 */
+/**
+ * This is for making the flexslider of woocommerce to slide vertical instead of horizontal
+ *
+ * @param  array $options Contains options that are being passed to the slider.
+ * @return [type]          [description]
+ */
 function wonka_product_carousel_options( $options ) {
 	$options['animation']      = 'slide';
 	$options['animationSpeed'] = 1500;
@@ -1692,14 +1692,13 @@ function wonka_product_carousel_options( $options ) {
 	$options['direction']      = 'vertical';
 	return $options;
 }
+add_filter( 'woocommerce_single_product_carousel_options', 'wonka_product_carousel_options', 10 );
 
-		add_filter( 'woocommerce_single_product_carousel_options', 'wonka_product_carousel_options', 10 );
-
-		/**
-		 * This adds custom meta fields to the product edit interface
-		 *
-		 * @param  int $post_id contains the post id for current product.
-		 */
+/**
+ * This adds custom meta fields to the product edit interface
+ *
+ * @param  int $post_id contains the post id for current product.
+ */
 function wonka_product_meta_add( $post_id ) {
 
 	$product_statement = ( get_metadata( 'product', $post_id, 'product_statement' ) ) ? get_metadata( 'product', $post_id, 'product_statement', true ) : '';
@@ -1723,8 +1722,14 @@ function wonka_product_meta_add( $post_id ) {
 		update_metadata( 'product', $post_id, 'key_features', $key_features );
 	}
 }
-		add_action( 'woocommerce_process_product_meta', 'wonka_product_meta_add', 11, 1 );
+add_action( 'woocommerce_process_product_meta', 'wonka_product_meta_add', 11, 1 );
 
+/**
+ * This adds a custom field to enable an express checkout btn.
+ *
+ * @param  obj $product_type Contains the product type.
+ * @return obj               Returns the Product type object.
+ */
 function wonka_woo_add_custom_general_fields( $product_type ) {
 	if ( isset( $product_type ) && ! empty( $product_type ) ) {
 		$product_type['enable_wonka_express_button'] = array(
@@ -1739,15 +1744,15 @@ function wonka_woo_add_custom_general_fields( $product_type ) {
 		return $product_type;
 	}
 }
-		add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
+add_action( 'product_type_options', 'wonka_woo_add_custom_general_fields' );
 
-		/**
-		 * This adds the key features | product specs | reviews
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param  string $post_excerpt [<description>]
-		 */
+/**
+ * This adds the key features | product specs | reviews
+ *
+ * @since 1.0.0
+ *
+ * @param  string $post_excerpt [<description>]
+ */
 function wonka_filter_woocommerce_short_description( $post_excerpt ) {
 	if ( ' ' == $post_excerpt || null == $post_excerpt ) :
 		return $post_excerpt;
@@ -1764,7 +1769,7 @@ function wonka_filter_woocommerce_short_description( $post_excerpt ) {
 					if ( 'Outlet' === get_the_category_by_ID( $value ) ) :
 						$disclosure = '<p class="final-sale-disclosure">*All Outlet purchases are FINAL SALE and can not be combined with any other sales or coupons at purchase. No returns or refunds.</p>';
 					endif;
-					endforeach;
+				endforeach;
 			endif;
 
 			ob_start();
@@ -1783,13 +1788,13 @@ function wonka_filter_woocommerce_short_description( $post_excerpt ) {
 		return $post_excerpt;
 	endif;
 };
-		add_filter( 'woocommerce_short_description', 'wonka_filter_woocommerce_short_description', 10, 1 );
+add_filter( 'woocommerce_short_description', 'wonka_filter_woocommerce_short_description', 10, 1 );
 
-		/**
-		 * This adds a custom express checkout button to the product page
-		 */
+/**
+ * This adds a custom express checkout button to the product page
+ */
 function wonka_express_checkout_add() {
-	   global $post;
+	global $post;
 	global $product;
 	$variation_id = $product->get_variation_id();
 	$post_id      = get_the_ID();
@@ -1798,60 +1803,60 @@ function wonka_express_checkout_add() {
 		<div class="wonka-express-checkout-wrap">
 			<a href="<?php _e( get_site_url() . '/checkout/?add-to-cart=' ); ?>" id="express_checkout_btn" class="wonka-btn">Express Checkout</a>
 		</div>
-				<?php
-			endif;
+		<?php
+	endif;
 }
 
-		add_action( 'woocommerce_after_add_to_cart_button', 'wonka_express_checkout_add', 10 );
+add_action( 'woocommerce_after_add_to_cart_button', 'wonka_express_checkout_add', 10 );
 
-		/**
-		 * This is for adding the opening tags for a wrap around the reviews meta data
-		 *
-		 * @param  object $comment contains review data.
-		 */
+/**
+ * This is for adding the opening tags for a wrap around the reviews meta data
+ *
+ * @param  object $comment contains review data.
+ */
 function wonka_before_comment_meta_add( $comment ) {
 	?>
 	<div class="wonka-rating-and-meta-wrap col-12 col-md-4">
 		<?php
 }
 
-		add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta_add', 5 );
+	add_action( 'woocommerce_review_before_comment_meta', 'wonka_before_comment_meta_add', 5 );
 
-		/**
-		 * This adds custom html markup before the comment text.
-		 *
-		 * @param  array $comment contains the comment data.
-		 */
+/**
+ * This adds custom html markup before the comment text.
+ *
+ * @param  array $comment contains the comment data.
+ */
 function wonka_before_comment_text_add( $comment ) {
 	?>
-	</div><!-- .wonka-rating-and-meta-wrap -->
-	<div class="wonka-review-text-wrap col-12 col-md-7">
+</div><!-- .wonka-rating-and-meta-wrap -->
+<div class="wonka-review-text-wrap col-12 col-md-7">
 	<?php
 }
-		add_action( 'woocommerce_review_before_comment_text', 'wonka_before_comment_text_add', 5 );
+add_action( 'woocommerce_review_before_comment_text', 'wonka_before_comment_text_add', 5 );
 
-		/**
-		 * This adds custom html markup before the comment text.
-		 *
-		 * @param  array $comment contains the comment data.
-		 */
+/**
+ * This adds custom html markup before the comment text.
+ *
+ * @param  array $comment contains the comment data.
+ */
 function wonka_after_comment_text_add( $comment ) {
 	?>
-	</div><!-- .wonka-review-text-wrap -->
+</div><!-- .wonka-review-text-wrap -->
 	<?php
 }
-		add_action( 'woocommerce_review_after_comment_text', 'wonka_after_comment_text_add', 5 );
+add_action( 'woocommerce_review_after_comment_text', 'wonka_after_comment_text_add', 5 );
 
-		/*
-		====================================================================================
-		=            This is filtering the first thumbnail on single product page            =
-		====================================================================================*/
-		/**
-		 * Adding the active class to the first thumbnail
-		 *
-		 * @param  html $data html of the first thumbnail on the single product page
-		 * @return [type]       [description]
-		 */
+/*
+====================================================================================
+=            This is filtering the first thumbnail on single product page            =
+====================================================================================*/
+/**
+ * Adding the active class to the first thumbnail
+ *
+ * @param  html $data html of the first thumbnail on the single product page
+ * @return [type]       [description]
+ */
 function wonka_single_product_image_thumbnail_html_custom( $data, $attachment_id ) {
 	global $product, $post;
 	$post_thumbnail_id = $attachment_id;
@@ -1871,15 +1876,15 @@ function wonka_single_product_image_thumbnail_html_custom( $data, $attachment_id
 	$output .= ob_get_clean();
 	return $output;
 }
-		add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_image_thumbnail_html_custom', 10, 2 );
+add_filter( 'wonka_single_product_image_thumbnail_html', 'wonka_single_product_image_thumbnail_html_custom', 10, 2 );
 
-		/**
-		 * This is the single product image parse.
-		 *
-		 * @param  html   $data          current html passed in.
-		 * @param  number $attachment_id the attachment ID
-		 * @return html                [description]
-		 */
+/**
+ * This is the single product image parse.
+ *
+ * @param  html   $data          current html passed in.
+ * @param  number $attachment_id the attachment ID
+ * @return html                [description]
+ */
 function wonka_single_product_image_scroll_html_custom( $data, $attachment_id ) {
 	global $product, $post;
 	$post_thumbnail_id = $attachment_id;
@@ -1895,8 +1900,8 @@ function wonka_single_product_image_scroll_html_custom( $data, $attachment_id ) 
 
 	return $output;
 }
-		add_filter( 'wonka_single_product_scroll_image_html', 'wonka_single_product_image_scroll_html_custom', 10, 2 );
-		/*=====  End of This is filtering the first thumbnail on single product page  ======*/
+add_filter( 'wonka_single_product_scroll_image_html', 'wonka_single_product_image_scroll_html_custom', 10, 2 );
+/*=====  End of This is filtering the first thumbnail on single product page  ======*/
 
 function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
 	if ( strpos( $field, '</label>' ) !== false && $args['required'] ) {
@@ -1909,10 +1914,10 @@ function wonka_checkout_fields_in_label_error( $field, $key, $args, $value ) {
 	return $field;
 }
 
-		add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
+add_filter( 'woocommerce_form_field', 'wonka_checkout_fields_in_label_error', 10, 4 );
 
 function ws_shipping_to_billing() {
-		   // This is a security check, it validates a random number that is generated on the request.
+	// This is a security check, it validates a random number that is generated on the request.
 	if ( ! check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
 		return wp_send_json_error( 'Invalid Nonce' );
 	}
@@ -1925,15 +1930,15 @@ function ws_shipping_to_billing() {
 
 	return false;
 }
-		add_action( 'wp_ajax_shipping_to_billing', 'ws_shipping_to_billing' );
-		add_action( 'wp_ajax_nopriv_shipping_to_billing', 'ws_shipping_to_billing' );
+add_action( 'wp_ajax_shipping_to_billing', 'ws_shipping_to_billing' );
+add_action( 'wp_ajax_nopriv_shipping_to_billing', 'ws_shipping_to_billing' );
 
-		/**
-		 * Filter the except length to 20 words.
-		 *
-		 * @param int $length Excerpt length.
-		 * @return int (Maybe) modified excerpt length.
-		 */
+/**
+ * Filter the except length to 20 words.
+ *
+ * @param int $length Excerpt length.
+ * @return int (Maybe) modified excerpt length.
+ */
 function wonka_custom_excerpt_length( $text ) {
 	$length    = 20;
 	$str_array = explode( ' ', $text );
@@ -1950,15 +1955,15 @@ function wonka_custom_excerpt_length( $text ) {
 		_e( $output, 'aperabags' );
 		else :
 			return $text;
-			endif;
+	endif;
 }
-		add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );
+add_filter( 'get_the_excerpt', 'wonka_custom_excerpt_length', 999 );
 
-		/**
-		 * This sets up a way to search via ajax.
-		 */
+/**
+ * This sets up a way to search via ajax.
+ */
 function ws_ajax_search() {
-		   // This is a security check, it validates a random number that is generated on the request.
+	// This is a security check, it validates a random number that is generated on the request.
 	if ( ! check_ajax_referer( 'ws-request-nonce', 'security' ) ) {
 		return wp_send_json_error( 'Invalid Nonce' );
 	}
@@ -1979,14 +1984,14 @@ function ws_ajax_search() {
 	wp_send_json_success( $items );
 }
 
-		add_action( 'wp_ajax_search_site', 'ws_ajax_search' );
-		add_action( 'wp_ajax_nopriv_search_site', 'ws_ajax_search' );
+add_action( 'wp_ajax_search_site', 'ws_ajax_search' );
+add_action( 'wp_ajax_nopriv_search_site', 'ws_ajax_search' );
 
-		/**
-		 * Define the woocommerce_product_review_list_args callback
-		 *
-		 * @param  object $comment contains current comment.
-		 */
+/**
+ * Define the woocommerce_product_review_list_args callback
+ *
+ * @param  object $comment contains current comment.
+ */
 function filter_woocommerce_product_review_list_args( $comment ) {
 	// make filter magic happen here...
 
@@ -2015,13 +2020,13 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 	echo ob_get_clean();
 
 }
-		// add the filter
-		remove_action( 'woocommerce_review_comment_text', 'woocommerce_review_display_comment_text', 10, 1 );
-		add_action( 'woocommerce_review_comment_text', 'filter_woocommerce_product_review_list_args', 10, 1 );
+// add the filter
+remove_action( 'woocommerce_review_comment_text', 'woocommerce_review_display_comment_text', 10, 1 );
+add_action( 'woocommerce_review_comment_text', 'filter_woocommerce_product_review_list_args', 10, 1 );
 
-		/**
-		 * This is for modifications before an order is submitted on checkout page.
-		 */
+/**
+ * This is for modifications before an order is submitted on checkout page.
+ */
 function wonka_woocommerce_review_order_before_submit() {
 	?>
 	<script>
@@ -2068,13 +2073,13 @@ function wonka_woocommerce_review_order_before_submit() {
 				field_group.remove();
 			}
 		});
-		
+
 		var cybersource_labels = document.querySelectorAll( '.payment_box.payment_method_cybersource label' );
 		cybersource_labels.forEach( function( label, i ) 
 		{
 			label.classList.add( 'sr-only' );
 		});
-		
+
 		var cybersource_inputs = document.querySelectorAll( '.payment_box.payment_method_cybersource input' );
 		cybersource_inputs.forEach( function( input, i ) 
 		{
@@ -2115,7 +2120,7 @@ function wonka_woocommerce_review_order_before_submit() {
 				copy_to_billing();
 			}
 		}
-		
+
 		billing_to_radios.forEach( function( item, i ) 
 		{
 
@@ -2232,51 +2237,51 @@ function wonka_woocommerce_review_order_before_submit() {
 	<?php
 }
 
-		add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_order_before_submit', 999 );
+add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_order_before_submit', 999 );
 
-		/**
-		 * Styles and Code for compare plugin
-		 *
-		 * @author Carlos
-		 * @return    [return description]
-		 */
+/**
+ * Styles and Code for compare plugin
+ *
+ * @author Carlos
+ * @return    [return description]
+ */
 function add_theme_style_to_compare() {
-		   wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
+	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
 }
 
 if ( class_exists( 'YITH_Woocompare_Frontend' ) ) {
 	add_action( 'wp_print_styles', 'add_theme_style_to_compare', 101 );
 }
 
-		/**
-		 * This filters the label for products in the compare modal.
-		 *
-		 * @param  string $var contains html string.
-		 * @return string      returns the desired label.
-		 */
+/**
+ * This filters the label for products in the compare modal.
+ *
+ * @param  string $var contains html string.
+ * @return string      returns the desired label.
+ */
 function filter_yith_woocompare_compare_added_label( $var ) {
 	$var = 'Compare Bags';
 	return $var;
 };
-		add_filter( 'yith_woocompare_compare_added_label', 'filter_yith_woocompare_compare_added_label', 10, 1 );
+add_filter( 'yith_woocompare_compare_added_label', 'filter_yith_woocompare_compare_added_label', 10, 1 );
 
-		/**
-		 * This filters the products description for products in the compare modal.
-		 *
-		 * @param  string $var contains html string.
-		 * @return string      returns the desired label.
-		 */
+/**
+ * This filters the products description for products in the compare modal.
+ *
+ * @param  string $var contains html string.
+ * @return string      returns the desired label.
+ */
 function wonkasoft_yith_woocompare_products_description( $var ) {
 	$pieces = explode( '<a', html_entity_decode( $var ) );
 	return $pieces[0];
 };
-		add_filter( 'yith_woocompare_products_description', 'wonkasoft_yith_woocompare_products_description', 10, 1 );
+add_filter( 'yith_woocompare_products_description', 'wonkasoft_yith_woocompare_products_description', 10, 1 );
 
-		/**
-		 * This is for making special note added for club greenwoood coupons
-		 *
-		 * @since 1.0.0
-		 */
+/**
+ * This is for making special note added for club greenwoood coupons
+ *
+ * @since 1.0.0
+ */
 function add_customer_order_notes( $order_id ) {
 
 	// note this line is different
@@ -2337,42 +2342,42 @@ function add_customer_order_notes( $order_id ) {
 		}
 	}
 }
-		add_action( 'woocommerce_payment_complete', 'add_customer_order_notes', 15, 1 );
+add_action( 'woocommerce_payment_complete', 'add_customer_order_notes', 15, 1 );
 
-		/**
-		 * This is filtering the single product archive thumbnail size.
-		 *
-		 * @param  string $size contains the thumbnail size.
-		 * @return string       returns the thumbnail size.
-		 */
+/**
+ * This is filtering the single product archive thumbnail size.
+ *
+ * @param  string $size contains the thumbnail size.
+ * @return string       returns the thumbnail size.
+ */
 function wonkasoft_single_product_archive_thumbnail_size( $size ) {
 	$size = 'cart_products_size';
 	return $size;
 }
-		add_filter( 'single_product_archive_thumbnail_size', 'wonkasoft_single_product_archive_thumbnail_size', 50 );
+add_filter( 'single_product_archive_thumbnail_size', 'wonkasoft_single_product_archive_thumbnail_size', 50 );
 
-		/**
-		 * This filters the table fields for the woocompare modal.
-		 *
-		 * @param  array $fields   contains the fields of the table.
-		 * @param  array $products contains the products in the compare modal.
-		 * @return array           returns the fields of the the table.
-		 */
+/**
+ * This filters the table fields for the woocompare modal.
+ *
+ * @param  array $fields   contains the fields of the table.
+ * @param  array $products contains the products in the compare modal.
+ * @return array           returns the fields of the the table.
+ */
 function wonkasoft_filter_yith_woocompare_filter_table_fields( $fields, $products ) {
 	$fields['title'] = 'Product';
 	return $fields;
 };
 
-		add_filter( 'yith_woocompare_filter_table_fields', 'wonkasoft_filter_yith_woocompare_filter_table_fields', 10, 2 );
+add_filter( 'yith_woocompare_filter_table_fields', 'wonkasoft_filter_yith_woocompare_filter_table_fields', 10, 2 );
 
-		/**
-		 * This is to add images to the new order email template
-		 *
-		 * @param  string $output filtered out.
-		 * @param  object $order  Order information.
-		 * @return filter         filtered content
-		 * @since 1.0.1 New requests
-		 */
+/**
+ * This is to add images to the new order email template
+ *
+ * @param  string $output filtered out.
+ * @param  object $order  Order information.
+ * @return filter         filtered content
+ * @since 1.0.1 New requests
+ */
 function ws_add_wc_order_email_images( $table, $order ) {
 
 	ob_start();
@@ -2393,30 +2398,30 @@ function ws_add_wc_order_email_images( $table, $order ) {
 
 	return ob_get_clean();
 }
-		add_filter( 'woocommerce_email_order_items_table', 'ws_add_wc_order_email_images', 10, 2 );
+add_filter( 'woocommerce_email_order_items_table', 'ws_add_wc_order_email_images', 10, 2 );
 
-		/**
-		 * This filters the edit order item name.
-		 *
-		 * @param  string $name contains the order item name.
-		 * @return string       returns the modified string.
-		 */
+/**
+ * This filters the edit order item name.
+ *
+ * @param  string $name contains the order item name.
+ * @return string       returns the modified string.
+ */
 function ws_edit_order_item_name( $name ) {
 	return '<div>' . $name . '</div>';
 }
-		add_filter( 'woocommerce_order_item_name', 'ws_edit_order_item_name' );
+add_filter( 'woocommerce_order_item_name', 'ws_edit_order_item_name' );
 
-		/**
-		 * Limit the availability of this shipping method based
-		 * on the destination state. - Restriction
-		 *
-		 * Restricted locations include American Samoa,
-		 * Guam, North Mariana Islands, Puerto Rico,
-		 * US Minor Outlying Islands, and the US Virgin Islands.
-		 *
-		 * @param bool $is_available Is this shipping method available?.
-		 * @return bool
-		 */
+/**
+ * Limit the availability of this shipping method based
+ * on the destination state. - Restriction
+ *
+ * Restricted locations include American Samoa,
+ * Guam, North Mariana Islands, Puerto Rico,
+ * US Minor Outlying Islands, and the US Virgin Islands.
+ *
+ * @param bool $is_available Is this shipping method available?.
+ * @return bool
+ */
 function ws_restrict_free_shipping( $is_available ) {
 	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
 
@@ -2431,15 +2436,15 @@ function ws_restrict_free_shipping( $is_available ) {
 	}
 	return $is_available;
 }
-		add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free_shipping' );
+add_filter( 'woocommerce_shipping_free_shipping_is_available', 'ws_restrict_free_shipping' );
 
-		/**
-		 * This sets the availability of this shipping message.
-		 *
-		 * @param  bool  $is_available contains true or false.
-		 * @param  array $package      contains array of current package.
-		 * @return bool               returns if shipping package is available.
-		 */
+/**
+ * This sets the availability of this shipping message.
+ *
+ * @param  bool  $is_available contains true or false.
+ * @param  array $package      contains array of current package.
+ * @return bool               returns if shipping package is available.
+ */
 function ws_restrict_usps_priority_mail_under_25( $is_available, $package ) {
 	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
 	$user       = wp_get_current_user();
@@ -2451,15 +2456,15 @@ function ws_restrict_usps_priority_mail_under_25( $is_available, $package ) {
 	}
 	return $is_available;
 }
-		add_filter( 'woocommerce_shipping_USPS_Priority_Mail_under_25_is_available', 'ws_restrict_usps_priority_mail_under_25', 10, 2 );
+add_filter( 'woocommerce_shipping_USPS_Priority_Mail_under_25_is_available', 'ws_restrict_usps_priority_mail_under_25', 10, 2 );
 
-		/**
-		 * This sets the availability of this shipping message.
-		 *
-		 * @param  bool  $is_available contains true or false.
-		 * @param  array $package      contains array of current package.
-		 * @return bool               returns if shipping package is available.
-		 */
+/**
+ * This sets the availability of this shipping message.
+ *
+ * @param  bool  $is_available contains true or false.
+ * @param  array $package      contains array of current package.
+ * @return bool               returns if shipping package is available.
+ */
 function ws_restrict_USPS_Priority_Mail_NP( $is_available, $package ) {
 	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
 	$user       = wp_get_current_user();
@@ -2475,15 +2480,15 @@ function ws_restrict_USPS_Priority_Mail_NP( $is_available, $package ) {
 	}
 	return $is_available;
 }
-		add_filter( 'woocommerce_shipping_USPS_Priority_Mail_NP_is_available', 'ws_restrict_USPS_Priority_Mail_NP', 10, 2 );
+add_filter( 'woocommerce_shipping_USPS_Priority_Mail_NP_is_available', 'ws_restrict_USPS_Priority_Mail_NP', 10, 2 );
 
-		/**
-		 * This sets the availability of this shipping message.
-		 *
-		 * @param  bool  $is_available contains true or false.
-		 * @param  array $package      contains array of current package.
-		 * @return bool               returns if shipping package is available.
-		 */
+/**
+ * This sets the availability of this shipping message.
+ *
+ * @param  bool  $is_available contains true or false.
+ * @param  array $package      contains array of current package.
+ * @return bool               returns if shipping package is available.
+ */
 function ws_restrict_USPS_Priority_Mail_Express( $is_available, $package ) {
 	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
 	$user       = wp_get_current_user();
@@ -2495,15 +2500,15 @@ function ws_restrict_USPS_Priority_Mail_Express( $is_available, $package ) {
 	}
 	return $is_available;
 }
-		add_filter( 'woocommerce_shipping_USPS_Priority_Mail_Express_is_available', 'ws_restrict_USPS_Priority_Mail_Express', 10, 2 );
+add_filter( 'woocommerce_shipping_USPS_Priority_Mail_Express_is_available', 'ws_restrict_USPS_Priority_Mail_Express', 10, 2 );
 
-		/**
-		 * This sets the availability of this shipping message.
-		 *
-		 * @param  bool  $is_available contains true or false.
-		 * @param  array $package      contains array of current package.
-		 * @return bool               returns if shipping package is available.
-		 */
+/**
+ * This sets the availability of this shipping message.
+ *
+ * @param  bool  $is_available contains true or false.
+ * @param  array $package      contains array of current package.
+ * @return bool               returns if shipping package is available.
+ */
 function ws_restrict_USPS_Priority_Mail_Express_NP( $is_available, $package ) {
 	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
 	$user       = wp_get_current_user();
@@ -2519,21 +2524,21 @@ function ws_restrict_USPS_Priority_Mail_Express_NP( $is_available, $package ) {
 	}
 	return $is_available;
 }
-		add_filter( 'woocommerce_shipping_USPS_Priority_Mail_Express_NP_is_available', 'ws_restrict_USPS_Priority_Mail_Express_NP', 10, 2 );
+add_filter( 'woocommerce_shipping_USPS_Priority_Mail_Express_NP_is_available', 'ws_restrict_USPS_Priority_Mail_Express_NP', 10, 2 );
 
-		/**
-		 * Add new custom shipping methods
-		 *
-		 * @since 1.0.1 New Requests
-		 */
+/**
+* Add new custom shipping methods
+*
+* @since 1.0.1 New Requests
+*/
 
-		/*
-		* Check if WooCommerce is active
-		*/
+/*
+* Check if WooCommerce is active
+*/
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 
 	/**
-	 * This initiates added shipping options.
+	 This initiates added shipping options.
 	 */
 	function ws_shipping_method_init() {
 
@@ -2541,24 +2546,24 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			class WC_Priority_Mail_Shipping_NP_Method extends WC_Shipping_Method {
 
 				/**
-				 * Constructor for your shipping class
-				 *
-				 * @access public
-				 * @return void
+				 Constructor for your shipping class
+
+				 @access public
+				 @return void
 				 */
 				public function __construct() {
-					$this->id                 = 'USPS_Priority_Mail_NP'; // Id for your shipping method. Should be uunique.
-					$this->method_title       = __( 'USPS Priority Mail Non-Perks Members' );  // Title shown in admin
-					$this->method_description = __( 'USPS Priority Mail Flat Rate for Non-perks Members' ); // Description shown in admin
-					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
-					$this->title              = 'Priority 1-3 business days'; // This can be added as an setting but for this example its forced.
-					$this->init();
+						$this->id                 = 'USPS_Priority_Mail_NP'; // Id for your shipping method. Should be uunique.
+						$this->method_title       = __( 'USPS Priority Mail Non-Perks Members' );  // Title shown in admin
+						$this->method_description = __( 'USPS Priority Mail Flat Rate for Non-perks Members' ); // Description shown in admin
+						$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
+						$this->title              = 'Priority 1-3 business days'; // This can be added as an setting but for this example its forced.
+						$this->init();
 				}
 				/**
-				 * Init your settings
-				 *
-				 * @access public
-				 * @return void
+				 Init your settings
+
+				 @access public
+				 @return void
 				 */
 				public function init() {
 					// Load the settings API.
@@ -2568,11 +2573,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 				}
 				/**
-				 * Calculate_shipping function.
-				 *
-				 * @access public
-				 * @param mixed $package contains the packages.
-				 * @return void
+				 Calculate_shipping function.
+
+				 @access public
+				 @param mixed $package contains the packages.
+				 @return void
 				 */
 				public function calculate_shipping( $package = array() ) {
 					$rate = array(
@@ -2591,10 +2596,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			class WC_Priority_Mail_Express_Shipping_Method extends WC_Shipping_Method {
 
 				/**
-				 * Constructor for your shipping class
-				 *
-				 * @access public
-				 * @return void
+				 Constructor for your shipping class
+
+				 @access public
+				 @return void
 				 */
 				public function __construct() {
 					$this->id                 = 'USPS_Priority_Mail_Express'; // Id for your shipping method. Should be uunique.
@@ -2605,10 +2610,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					$this->init();
 				}
 				/**
-				 * Init your settings
-				 *
-				 * @access public
-				 * @return void
+				 Init your settings
+
+				 @access public
+				 @return void
 				 */
 				public function init() {
 					// Load the settings API.
@@ -2618,11 +2623,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 				}
 				/**
-				 * Calculate_shipping function.
-				 *
-				 * @access public
-				 * @param mixed $package contains the packages.
-				 * @return void
+				 Calculate_shipping function.
+
+				 @access public
+				 @param mixed $package contains the packages.
+				 @return void
 				 */
 				public function calculate_shipping( $package = array() ) {
 					$rate = array(
@@ -2641,24 +2646,24 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			class WC_Priority_Mail_Express_Shipping_NP_Method extends WC_Shipping_Method {
 
 				/**
-				 * Constructor for your shipping class
-				 *
-				 * @access public
-				 * @return void
+				 Constructor for your shipping class
+
+				 @access public
+				 @return void
 				 */
 				public function __construct() {
-					$this->id                 = 'USPS_Priority_Mail_Express_NP'; // Id for your shipping method. Should be uunique.
-					$this->method_title       = __( 'USPS Priority Mail Express Non-Perks Members' );  // Title shown in admin.
-					$this->method_description = __( 'USPS Priority Mail Express Flat Rate for Non-Perks Members' ); // Description shown in admin.
-					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-					$this->title              = 'Overnight 1 business day'; // This can be added as an setting but for this example its forced.
-					$this->init();
+						$this->id                 = 'USPS_Priority_Mail_Express_NP'; // Id for your shipping method. Should be uunique.
+						$this->method_title       = __( 'USPS Priority Mail Express Non-Perks Members' );  // Title shown in admin.
+						$this->method_description = __( 'USPS Priority Mail Express Flat Rate for Non-Perks Members' ); // Description shown in admin.
+						$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
+						$this->title              = 'Overnight 1 business day'; // This can be added as an setting but for this example its forced.
+						$this->init();
 				}
 				/**
-				 * Init your settings
-				 *
-				 * @access public
-				 * @return void
+				 Init your settings
+
+				 @access public
+				 @return void
 				 */
 				public function init() {
 					// Load the settings API.
@@ -2668,11 +2673,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 				}
 				/**
-				 * calculate_shipping function.
-				 *
-				 * @access public
-				 * @param mixed $package
-				 * @return void
+				 calculate_shipping function.
+
+				 @access public
+				 @param mixed $package
+				 @return void
 				 */
 				public function calculate_shipping( $package = array() ) {
 					$rate = array(
@@ -2691,24 +2696,24 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			class WC_Priority_Mail_under_25_Method extends WC_Shipping_Method {
 
 				/**
-				 * Constructor for your shipping class
-				 *
-				 * @access public
-				 * @return void
+				 Constructor for your shipping class
+
+				 @access public
+				 @return void
 				 */
 				public function __construct() {
-					$this->id                 = 'USPS_Priority_Mail_under_25'; // Id for your shipping method. Should be uunique.
-					$this->method_title       = __( 'USPS Priority Mail' );  // Title shown in admin.
-					$this->method_description = __( 'USPS Priority Mail Flate Rate for orders under $25' ); // Description shown in admin.
-					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-					$this->title              = 'Priority 1-3 business days'; // This can be added as an setting but for this example its forced.
-					$this->init();
+						$this->id                 = 'USPS_Priority_Mail_under_25'; // Id for your shipping method. Should be uunique.
+						$this->method_title       = __( 'USPS Priority Mail' );  // Title shown in admin.
+						$this->method_description = __( 'USPS Priority Mail Flate Rate for orders under $25' ); // Description shown in admin.
+						$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
+						$this->title              = 'Priority 1-3 business days'; // This can be added as an setting but for this example its forced.
+						$this->init();
 				}
 				/**
-				 * Init your settings
-				 *
-				 * @access public
-				 * @return void
+				 Init your settings
+
+				 @access public
+				 @return void
 				 */
 				public function init() {
 					// Load the settings API.
@@ -2718,11 +2723,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 				}
 				/**
-				 * calculate_shipping function.
-				 *
-				 * @access public
-				 * @param mixed $package
-				 * @return void
+				 calculate_shipping function.
+
+				 @access public
+				 @param mixed $package
+				 @return void
 				 */
 				public function calculate_shipping( $package = array() ) {
 					$rate = array(
@@ -2741,9 +2746,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
 
 	/**
-	 * This adds new shipping methods.
-	 *
-	 * @param object $methods contains the current methods.
+	 This adds new shipping methods.
+
+	 @param object $methods contains the current methods.
 	 */
 	function add_ws_shipping_methods( $methods ) {
 
@@ -2757,16 +2762,16 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	add_filter( 'woocommerce_shipping_methods', 'add_ws_shipping_methods' );
 }
 
-		/**
-		 * This function is used to call product images
-		 *
-		 * @param  [type] $image       [description]
-		 * @param  [type] $obj         [description]
-		 * @param  [type] $size        [description]
-		 * @param  [type] $attr        [description]
-		 * @param  [type] $placeholder [description]
-		 * @return [type]              [description]
-		 */
+/**
+ * This function is used to call product images
+ *
+ * @param  [type] $image       [description]
+ * @param  [type] $obj         [description]
+ * @param  [type] $size        [description]
+ * @param  [type] $attr        [description]
+ * @param  [type] $placeholder [description]
+ * @return [type]              [description]
+ */
 function wonka_woocommerce_product_get_image( $image, $obj, $size, $attr, $placeholder ) {
 
 	$size = array( '220', '264' );
@@ -2786,14 +2791,14 @@ function wonka_woocommerce_product_get_image( $image, $obj, $size, $attr, $place
 
 	return $image;
 }
-		add_filter( 'woocommerce_product_get_image', 'wonka_woocommerce_product_get_image', 10, 5 );
+add_filter( 'woocommerce_product_get_image', 'wonka_woocommerce_product_get_image', 10, 5 );
 
-		/**
-		 * [wonkasoft_woocommerce_cart_shipping_method_full_label description]
-		 *
-		 * @param  [type] $method [description]
-		 * @return [type]         [description]
-		 */
+/**
+ * [wonkasoft_woocommerce_cart_shipping_method_full_label description]
+ *
+ * @param  [type] $method [description]
+ * @return [type]         [description]
+ */
 function wonkasoft_woocommerce_cart_shipping_method_full_label( $label, $method ) {
 	$label     = $method->get_label();
 	$has_cost  = 0 < $method->cost;
@@ -2818,7 +2823,7 @@ function wonkasoft_woocommerce_cart_shipping_method_full_label( $label, $method 
 
 	return $label;
 }
-		add_filter( 'woocommerce_cart_shipping_method_full_label', 'wonkasoft_woocommerce_cart_shipping_method_full_label', 50, 2 );
+add_filter( 'woocommerce_cart_shipping_method_full_label', 'wonkasoft_woocommerce_cart_shipping_method_full_label', 50, 2 );
 
 function wonkasoft_woocommerce_register_form_start() {
 	$output = '';
@@ -2859,27 +2864,27 @@ function wonkasoft_woocommerce_register_form_start() {
 		)
 	);
 }
-		add_action( 'woocommerce_register_form_start', 'wonkasoft_woocommerce_register_form_start', 10 );
+add_action( 'woocommerce_register_form_start', 'wonkasoft_woocommerce_register_form_start', 10 );
 
-		/**
-		 * This sets the role for woocommerce registration form
-		 *
-		 * @param  [type] $new_customer_data [description]
-		 * @return [type]                    [description]
-		 */
+/**
+ * This sets the role for woocommerce registration form
+ *
+ * @param  [type] $new_customer_data [description]
+ * @return [type]                    [description]
+ */
 function wonkasoft_woocommerce_new_customer_data( $new_customer_data ) {
 
 	$new_customer_data['role'] = get_option( 'default_role' );
 
 	return $new_customer_data;
 }
-		add_filter( 'woocommerce_new_customer_data', 'wonkasoft_woocommerce_new_customer_data', 10 );
+add_filter( 'woocommerce_new_customer_data', 'wonkasoft_woocommerce_new_customer_data', 10 );
 
-		/**
-		 * This sets the user first name last name and billing fields.
-		 *
-		 * @param  number $customer_id customer ID.
-		 */
+/**
+ * This sets the user first name last name and billing fields.
+ *
+ * @param  number $customer_id customer ID.
+ */
 function wonkasoft_woocommerce_created_customer( $customer_id ) {
 
 	$nonce = ( isset( $_REQUEST['_wpnonce'] ) ) ? wp_kses_data( wp_unslash( $_REQUEST['_wpnonce'] ) ) : '';
@@ -2945,30 +2950,30 @@ function wonkasoft_woocommerce_created_customer( $customer_id ) {
 		}
 	}
 }
-		add_action( 'woocommerce_created_customer', 'wonkasoft_woocommerce_created_customer', 1 );
+add_action( 'woocommerce_created_customer', 'wonkasoft_woocommerce_created_customer', 1 );
 
-		remove_action( 'woocommerce_after_cart_table', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ) );
-		add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ), 11 );
+remove_action( 'woocommerce_after_cart_table', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ) );
+add_action( 'woocommerce_before_cart', array( 'RSRedeemingFrontend', 'default_redeem_field_in_cart_and_checkout' ), 11 );
 
-		remove_action( 'woocommerce_before_checkout_form', array( 'RSFrontendAssets', 'complete_message_for_purchase' ), 999 );
-		add_action( 'woocommerce_before_checkout_form', array( 'RSFrontendAssets', 'complete_message_for_purchase' ), 15 );
+remove_action( 'woocommerce_before_checkout_form', array( 'RSFrontendAssets', 'complete_message_for_purchase' ), 999 );
+add_action( 'woocommerce_before_checkout_form', array( 'RSFrontendAssets', 'complete_message_for_purchase' ), 15 );
 
-		/**
-		 * This is for the adding of the endpoints to WordPress.x
-		 */
+/**
+ * This is for the adding of the endpoints to WordPress.x
+ */
 function wonkasoft_add_all_endpoints() {
 	add_rewrite_endpoint( 'earn-aperacash', EP_PAGES );
 	add_rewrite_endpoint( 'zip-program', EP_PAGES );
 	add_rewrite_endpoint( 'ambassador-program', EP_PAGES );
 }
-		add_action( 'init', 'wonkasoft_add_all_endpoints' );
+add_action( 'init', 'wonkasoft_add_all_endpoints' );
 
-		/**
-		 * This is for adding the endpoints to the woocommerce query vars.
-		 *
-		 * @param  array $vars contains the current query vars to be filtered.
-		 * @return array       returns the modified query vars.
-		 */
+/**
+ * This is for adding the endpoints to the woocommerce query vars.
+ *
+ * @param  array $vars contains the current query vars to be filtered.
+ * @return array       returns the modified query vars.
+ */
 function wonkasoft_add_endpoint_query_vars( $vars ) {
 	$added_endpoints = array(
 		'earn-aperacash',
@@ -2982,26 +2987,26 @@ function wonkasoft_add_endpoint_query_vars( $vars ) {
 
 	return $vars;
 }
-		add_filter( 'woocommerce_get_query_vars', 'wonkasoft_add_endpoint_query_vars' );
+add_filter( 'woocommerce_get_query_vars', 'wonkasoft_add_endpoint_query_vars' );
 
-		/**
-		 * This is for the redirect after save address in the myaccount area.
-		 *
-		 * @param  number $user_id      contains user ID.
-		 * @param  string $load_address contains the load address.
-		 */
+/**
+ * This is for the redirect after save address in the myaccount area.
+ *
+ * @param  number $user_id      contains user ID.
+ * @param  string $load_address contains the load address.
+ */
 function wonkasoft_action_woocommerce_save_account_details( $user_id ) {
-	   wp_safe_redirect( wc_get_endpoint_url( 'edit-account' ) );
-	   exit;
+	wp_safe_redirect( wc_get_endpoint_url( 'edit-account' ) );
+	exit;
 };
-		add_action( 'woocommerce_save_account_details', 'wonkasoft_action_woocommerce_save_account_details', 10, 1 );
+add_action( 'woocommerce_save_account_details', 'wonkasoft_action_woocommerce_save_account_details', 10, 1 );
 
-		/**
-		 * This adds the my account menu link for the logo.
-		 *
-		 * @param  array $menu_links contains the current my account links.
-		 * @return [type]             [description]
-		 */
+/**
+ * This adds the my account menu link for the logo.
+ *
+ * @param  array $menu_links contains the current my account links.
+ * @return [type]             [description]
+ */
 function wonkasoft_my_account_nav_menu_items( $menu_links ) {
 
 	$user = wp_get_current_user();
@@ -3018,56 +3023,56 @@ function wonkasoft_my_account_nav_menu_items( $menu_links ) {
 
 	if ( ! in_array( 'apera_zip_affiliate', $user->roles ) && ! in_array( 'administrator', $user->roles ) ) :
 		unset( $menu_links['zip-program'] );
-	endif;
+endif;
 
 	if ( ! in_array( 'apera_ambassador_affiliate', $user->roles ) && ! in_array( 'administrator', $user->roles ) ) :
 		unset( $menu_links['ambassador-program'] );
-	endif;
+endif;
 
 	return $menu_links;
 }
-		add_filter( 'woocommerce_account_menu_items', 'wonkasoft_my_account_nav_menu_items', 50 );
+add_filter( 'woocommerce_account_menu_items', 'wonkasoft_my_account_nav_menu_items', 50 );
 
-		/**
-		 * This adds my account dashboard extention.
-		 */
+/**
+ * This adds my account dashboard extention.
+ */
 function wonkasoft_add_dashboard_extention() {
 	include get_stylesheet_directory() . '/woocommerce/myaccount/dashboard-extention.php';
 }
-		add_action( 'woocommerce_account_dashboard', 'wonkasoft_add_dashboard_extention' );
+add_action( 'woocommerce_account_dashboard', 'wonkasoft_add_dashboard_extention' );
 
-		/**
-		 * This is the earn AperaCash endpoint page
-		 */
+/**
+ * This is the earn AperaCash endpoint page
+ */
 function wonkasoft_my_account_earn_aperacash_endpoint_content() {
 	include get_stylesheet_directory() . '/woocommerce/myaccount/earn-aperacash.php';
 }
-		add_action( 'woocommerce_account_earn-aperacash_endpoint', 'wonkasoft_my_account_earn_aperacash_endpoint_content' );
+add_action( 'woocommerce_account_earn-aperacash_endpoint', 'wonkasoft_my_account_earn_aperacash_endpoint_content' );
 
-		/**
-		 * This is the earn ZIP Program endpoint page
-		 *
-		 * @return echo parse the earn ZIP Program end-point content.
-		 */
+/**
+ * This is the earn ZIP Program endpoint page
+ *
+ * @return echo parse the earn ZIP Program end-point content.
+ */
 function wonkasoft_my_account_zip_program_endpoint_content() {
 	include get_stylesheet_directory() . '/woocommerce/myaccount/zip-program.php';
 }
-		add_action( 'woocommerce_account_zip-program_endpoint', 'wonkasoft_my_account_zip_program_endpoint_content' );
+add_action( 'woocommerce_account_zip-program_endpoint', 'wonkasoft_my_account_zip_program_endpoint_content' );
 
-		/**
-		 * This is the earn Ambassador Program endpoint page
-		 */
+/**
+ * This is the earn Ambassador Program endpoint page
+ */
 function wonkasoft_my_account_ambassador_program_endpoint_content() {
 	include get_stylesheet_directory() . '/woocommerce/myaccount/ambassador-program.php';
 }
-		add_action( 'woocommerce_account_ambassador-program_endpoint', 'wonkasoft_my_account_ambassador_program_endpoint_content' );
+add_action( 'woocommerce_account_ambassador-program_endpoint', 'wonkasoft_my_account_ambassador_program_endpoint_content' );
 
-		/**
-		 * This filters the columns on the my orders dashboard.
-		 *
-		 * @param  array $columns contains an array of the columns.
-		 * @return array          returns columns.
-		 */
+/**
+ * This filters the columns on the my orders dashboard.
+ *
+ * @param  array $columns contains an array of the columns.
+ * @return array          returns columns.
+ */
 function wonkasoft_woocommerce_my_account_my_orders_columns( $columns ) {
 
 	$columns = array(
@@ -3080,13 +3085,13 @@ function wonkasoft_woocommerce_my_account_my_orders_columns( $columns ) {
 
 	return $columns;
 }
-		add_filter( 'woocommerce_my_account_my_orders_columns', 'wonkasoft_woocommerce_my_account_my_orders_columns', 10 );
+add_filter( 'woocommerce_my_account_my_orders_columns', 'wonkasoft_woocommerce_my_account_my_orders_columns', 10 );
 
-		/**
-		 * This makes sure that new users have proper roles.
-		 *
-		 * @param  number $user_id contains the user ID.
-		 */
+/**
+ * This makes sure that new users have proper roles.
+ *
+ * @param  number $user_id contains the user ID.
+ */
 function wonkasoft_registration_save( $user_id ) {
 	$role         = 'apera_perks_partner';
 	$role_display = 'Apera Perks Partner';
@@ -3103,48 +3108,48 @@ function wonkasoft_registration_save( $user_id ) {
 		$user->add_role( $role2, $role_display2 );
 	endif;
 }
-		add_action( 'user_register', 'wonkasoft_registration_save', 10, 1 );
+add_action( 'user_register', 'wonkasoft_registration_save', 10, 1 );
 
-		remove_filter( 'woocommerce_cart_item_name', array( $_GLOBALS['ced_click_n_go'], 'ced_ocor_cart_item_data' ), 10, 3 );
+remove_filter( 'woocommerce_cart_item_name', array( $_GLOBALS['ced_click_n_go'], 'ced_ocor_cart_item_data' ), 10, 3 );
 
-		/**
-		 * This function filters product name.
-		 *
-		 * @param  string $current     contains current items if any.
-		 * @param  array  $cart_item     contains the array of the cart item.
-		 * @param  string $cart_item_key contains the cart item key.
-		 * @return string                returns the cart items product name after filtering.
-		 */
+/**
+ * This function filters product name.
+ *
+ * @param  string $current     contains current items if any.
+ * @param  array  $cart_item     contains the array of the cart item.
+ * @param  string $cart_item_key contains the cart item key.
+ * @return string                returns the cart items product name after filtering.
+ */
 function wonkasoft_woocommerce_cart_item_name( $current, $cart_item, $cart_item_key ) {
 	$current = $cart_item['data']->get_title();
 
 	return $current;
 }
-		add_filter( 'woocommerce_cart_item_name', 'wonkasoft_woocommerce_cart_item_name', 10, 3 );
+add_filter( 'woocommerce_cart_item_name', 'wonkasoft_woocommerce_cart_item_name', 10, 3 );
 
-		/**
-		 * This function filters product name on checkout review.
-		 *
-		 * @param  string $current     contains current items if any.
-		 * @param  array  $cart_item     contains the array of the cart item.
-		 * @param  string $cart_item_key contains the cart item key.
-		 * @return string                returns the cart items product name after filtering.
-		 */
+/**
+ * This function filters product name on checkout review.
+ *
+ * @param  string $current     contains current items if any.
+ * @param  array  $cart_item     contains the array of the cart item.
+ * @param  string $cart_item_key contains the cart item key.
+ * @return string                returns the cart items product name after filtering.
+ */
 function wonkasoft_cart_and_review_woocommerce_cart_item_name( $current, $cart_item, $cart_item_key ) {
 	$current = $cart_item['data']->get_name();
 
 	return $current;
 }
-		add_filter( 'cart_and_review_woocommerce_cart_item_name', 'wonkasoft_cart_and_review_woocommerce_cart_item_name', 10, 3 );
+add_filter( 'cart_and_review_woocommerce_cart_item_name', 'wonkasoft_cart_and_review_woocommerce_cart_item_name', 10, 3 );
 
-		/**
-		 * This function is to get rid of the product name on top of item in cart.
-		 *
-		 * @param  string $current     contains the array of the cart item.
-		 * @param  array  $cart_item     contains the array of the cart item.
-		 * @param  string $cart_item_key contains the cart item key.
-		 * @return empty returns empty to eleminate the parsing of this.
-		 */
+/**
+ * This function is to get rid of the product name on top of item in cart.
+ *
+ * @param  string $current     contains the array of the cart item.
+ * @param  array  $cart_item     contains the array of the cart item.
+ * @param  string $cart_item_key contains the cart item key.
+ * @return empty returns empty to eleminate the parsing of this.
+ */
 function wonkasoft_woocommerce_cart_item_product( $current, $cart_item, $cart_item_key ) {
 	return $cart_item['data'];
 }
@@ -3196,14 +3201,14 @@ function wonkasoft_wad_get_evaluable_condition( $rule, $product_id = false ) {
 	return $evaluable_condition;
 }
 
-		/**
-		 * [wonkasoft_wad_fields_values_match description]
-		 *
-		 * @param  [type] $current_rules      [description]
-		 * @param  [type] $condition      [description]
-		 * @param  [type] $selected_value [description]
-		 * @return [type]                 [description]
-		 */
+/**
+ * [wonkasoft_wad_fields_values_match description]
+ *
+ * @param  [type] $current_rules      [description]
+ * @param  [type] $condition      [description]
+ * @param  [type] $selected_value [description]
+ * @return [type]                 [description]
+ */
 function wonkasoft_wad_fields_values_match( $current_rules, $condition, $selected_value ) {
 	$selected_value_arr = array();
 	$selected_value_str = '';
@@ -3239,16 +3244,16 @@ function wonkasoft_wad_fields_values_match( $current_rules, $condition, $selecte
 		return $values_match;
 	}
 }
-		add_filter( 'wad_fields_values_match', 'wonkasoft_wad_fields_values_match', 10, 3 );
+add_filter( 'wad_fields_values_match', 'wonkasoft_wad_fields_values_match', 10, 3 );
 
-		/**
-		 * [wonkasoft_wad_operators_fields_match description]
-		 *
-		 * @param  array  $current_rules      contains an array of conditions.
-		 * @param  [type] $condition      [description]
-		 * @param  [type] $selected_value [description]
-		 * @return [type]                 [description]
-		 */
+/**
+ * [wonkasoft_wad_operators_fields_match description]
+ *
+ * @param  array  $current_rules      contains an array of conditions.
+ * @param  [type] $condition      [description]
+ * @param  [type] $selected_value [description]
+ * @return [type]                 [description]
+ */
 function wonkasoft_wad_operators_fields_match( $current_rules, $condition, $selected_value = '' ) {
 	$field_name              = 'o-discount[rules][{rule-group}][{rule-index}][operator]';
 	$arrays_operators        = array(
@@ -3266,16 +3271,16 @@ function wonkasoft_wad_operators_fields_match( $current_rules, $condition, $sele
 		return $operators_match;
 	}
 }
-		add_filter( 'wad_operators_fields_match', 'wonkasoft_wad_operators_fields_match', 10, 3 );
+add_filter( 'wad_operators_fields_match', 'wonkasoft_wad_operators_fields_match', 10, 3 );
 
-		/**
-		 * [wonkasoft_wad_is_rule_valid description]
-		 *
-		 * @param  [type] $is_valid       [description]
-		 * @param  [type] $rule           [description]
-		 * @param  [type] $class_instance [description]
-		 * @return [type]                 [description]
-		 */
+/**
+ * [wonkasoft_wad_is_rule_valid description]
+ *
+ * @param  [type] $is_valid       [description]
+ * @param  [type] $rule           [description]
+ * @param  [type] $class_instance [description]
+ * @return [type]                 [description]
+ */
 function wonkasoft_wad_is_rule_valid( $is_valid, $rule, $class_instance ) {
 
 	$condition = wonkasoft_wad_get_evaluable_condition( $rule, $product_id );
@@ -3317,8 +3322,8 @@ add_filter( 'wad_is_applicable', 'wonkasoft_wad_is_applicable', 10, 3 );
 /**
  * This removes the unsupported Credit Card icons from Strip Gateway.
  *
- * @param  [type] $icons [description]
- * @return [type]        [description]
+ * @param  array $icons Contains an array of the img elements.
+ * @return array        Returns an array of the  img elements.
  */
 function wonkasoft_wc_stripe_payment_icons( $icons ) {
 	$new_icons = array(
@@ -3347,7 +3352,7 @@ add_filter( 'wc_stripe_payment_icons', 'wonkasoft_wc_stripe_payment_icons', 10 )
  */
 function wonkasoft_total_points_in_checkout() {
 	if ( ! is_user_logged_in() ) {
-				return;
+		return;
 	}
 
 	if ( get_option( 'rs_product_purchase_activated' ) != 'yes' && get_option( 'rs_buyingpoints_activated' ) != 'yes' ) {
@@ -3385,9 +3390,9 @@ function wonkasoft_total_points_in_checkout() {
 		return;
 	}
 
-		$ConvertedValue = redeem_point_conversion( $Points, get_current_user_id(), 'price' );
-		$CurrencyValue  = srp_formatted_price( round_off_type_for_currency( $ConvertedValue ) );
-		$BoolVal        = empty( WC()->cart->discount_cart ) ? true : ( get_option( 'rs_enable_redeem_for_order' ) == 'no' && get_option( 'rs_disable_point_if_coupon' ) == 'no' );
+	$ConvertedValue = redeem_point_conversion( $Points, get_current_user_id(), 'price' );
+	$CurrencyValue  = srp_formatted_price( round_off_type_for_currency( $ConvertedValue ) );
+	$BoolVal        = empty( WC()->cart->discount_cart ) ? true : ( get_option( 'rs_enable_redeem_for_order' ) == 'no' && get_option( 'rs_disable_point_if_coupon' ) == 'no' );
 	if ( ! $BoolVal ) {
 		return;
 	}

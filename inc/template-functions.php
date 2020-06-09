@@ -1177,11 +1177,11 @@ function wonkasoft_api_responses_user_data( $user ) {
 
 		</div>
 
-		<table class="form-table affiliates-table">
-			<tbody>
-					<?php
-					if ( ! empty( $user_birthday ) ) :
-						?>
+		<?php
+		if ( ! empty( $user_birthday ) ) :
+			?>
+			<table class="form-table birthday-table">
+				<tbody>
 					<tr>
 						<th>
 							<label for="user-birthday">Your Birthday</label>
@@ -1190,22 +1190,33 @@ function wonkasoft_api_responses_user_data( $user ) {
 							<span><?php echo esc_html( $user_birthday ); ?></span>
 						</td>
 					</tr>
-					<?php endif; ?>
-					<?php
-					if ( ! empty( $company_logo ) ) :
-						?>
+				</tbody>
+			</table>
+		<?php endif; ?>
+		<?php
+		if ( ! empty( $company_logo ) ) :
+			?>
+			<table class="form-table logo-table">
+				<tbody>
 					<tr>
 						<th>
 							<label for="club-gym-logo">Club/Gym Logo</label>
 						</th>
 						<td colspan="2">
-							<img src="<?php echo esc_url( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false )[0] ); ?>" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ); ?>" id="club-gym-logo" class="company-logo" />
+							<img image-id="<?php echo esc_attr( $company_logo->id ); ?>" src="<?php echo esc_url( $company_logo->url ); ?>" id="club-gym-logo" class="company-logo" />
 						</td>
 					</tr>
-					<?php endif; ?>
-					<?php
-					if ( ! empty( $refersion_error ) ) :
-						?>
+				</tbody>
+			</table>
+		<?php endif; ?>
+		<?php
+		if ( ! empty( $refersion_error ) || ! empty( $refersion ) ) :
+			?>
+			<table class="form-table refersion-table">
+				<tbody>
+			<?php
+			if ( ! empty( $refersion_error ) ) :
+				?>
 					<tr>
 						<th>
 							<label for="affiliate-error">Refersion Error</label>
@@ -1214,45 +1225,91 @@ function wonkasoft_api_responses_user_data( $user ) {
 							<p id="affiliate-error"><?php echo wp_kses_post( $refersion_error ); ?></p>
 						</td>
 					</tr>
-					<?php endif; ?>
-					<?php
-					if ( ! empty( $refersion ) ) :
-						?>
-							<tr>
-								<th>
-									<label for="affiliate-id">Affiliate Code</label>
-								</th>
-								<td colspan="2">
-									<p id="affiliate-id"><?php echo wp_kses_post( $refersion->id ); ?></p>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<label for="affiliate-link">Affiliate Link</label>
-								</th>
-								<td colspan="2">
-									<p id="affiliate-link"><?php echo wp_kses_post( $refersion->link ); ?></p>
-								</td>
-							</tr>
-					<?php endif; ?>
-					<?php
-					if ( ! empty( $getresponse ) ) :
-						?>
+				<?php endif; ?>
+			<?php
+			if ( ! empty( $refersion ) && empty( $refersion_error ) ) :
+				?>
+					<tr>
+						<th>
+							<label for="affiliate-id">Affiliate Code</label>
+						</th>
+						<td colspan="2">
+							<p id="affiliate-id"><?php echo wp_kses_post( $refersion->id ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							<label for="affiliate-link">Affiliate Link</label>
+						</th>
+						<td colspan="2">
+							<p id="affiliate-link"><?php echo wp_kses_post( $refersion->link ); ?></p>
+						</td>
+					</tr>
+			<?php endif; ?>
+				</tbody>
+			</table>
+		<?php endif; ?>
+		<?php
+		if ( ! empty( $getresponse ) ) :
+			?>
+			<table class="form-table getresponse-table">
+				<tbody>
 				<tr>
-					<th>
+					<th colspan="2">
 						<label for="getresponse-data">GetResponse Data</label>
 					</th>
-						<?php
-						foreach ( $getresponse as $value ) :
-							echo "<td style='background: #333; color: #fff;'>";
-							echo "<pre>\n";
-							print_r( json_encode( $value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
-							echo "</pre>\n";
-							echo '</td>';
-						endforeach;
-						?>
 				</tr>
-					<?php endif; ?>
+				<tr>
+					<th style="text-align: center;" colspan="2">
+						<label>Custom Fields</label>
+					</th>
+				</tr>
+				<tr>
+					<th><label>Field ID</label></th>
+					<th><label>Value</label></th>
+				</tr>
+			<?php
+			foreach ( $getresponse[0]->customFieldValues as $field ) :
+				?>
+				<tr>
+					<td>
+						<span><?php print_r( $field->customFieldId ); ?></span>
+					</td>
+					<td>
+					<?php
+					foreach ( $field->values as $value ) :
+						?>
+						<span><?php print_r( $value ); ?></span>
+						<?php
+						endforeach;
+					?>
+					</td>
+				</tr>
+				<?php
+		endforeach;
+			?>
+				<tr>
+					<th style="text-align: center;" colspan="2"><label>Tags</label></th>
+				</tr>
+				<tr>
+					<th><label>Tag ID</label></th>
+					<th><label>Tag Name</label></th>
+				</tr>
+			<?php
+			foreach ( $getresponse[1]->tags as $tag ) :
+				?>
+				<tr>
+					<td>
+						<span><?php print_r( $tag->tagId ); ?></span>
+					</td>
+					<td>
+						<span><?php print_r( $tag->name ); ?></span>
+					</td>
+				</tr>
+				<?php
+		endforeach;
+			?>
+		<?php endif; ?>
 			</tbody>
 		</table>
 		<hr />

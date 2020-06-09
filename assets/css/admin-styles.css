@@ -26,3 +26,12 @@ table.subscription-settings td.subscription-settings-cell {
 	top: unset;
 	margin-right: 8px;
 }
+
+.getresponse-table th {
+	padding: 15px 10px;
+}
+
+.getresponse-table th, 
+.getresponse-table td {
+	border: 1px solid rgba(0,0,0,0.1);
+}
