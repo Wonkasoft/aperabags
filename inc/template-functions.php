@@ -1222,7 +1222,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 							<label for="affiliate-error">Refersion Error</label>
 						</th>
 						<td colspan="2">
-							<p id="affiliate-error"><?php echo wp_kses_post( $refersion_error ); ?></p>
+							<p id="affiliate-error"><?php echo wp_kses_post( $refersion_error[0] ); ?></p>
 						</td>
 					</tr>
 				<?php endif; ?>
