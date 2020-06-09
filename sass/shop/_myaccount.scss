@@ -335,10 +335,13 @@ div#content {
                 a.wonka-account-btn {
                   color: #19191a;
                   font-weight: 700;
-                  text-decoration: none;
 
                   &::after {
                     left: 0;
+                  }
+
+                  &:hover {
+                    text-decoration: none;
                   }
 
                   .myaccount-svg {
@@ -372,7 +375,10 @@ div#content {
                   background: #52abf6;
                   color: #ffffff;
                   font-weight: 700;
-                  text-decoration: none;
+
+                  &:hover {
+                    text-decoration: none;
+                  }
 
                   .myaccount-svg {
                     background-color: transparent;
