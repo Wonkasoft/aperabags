@@ -3673,6 +3673,16 @@ var componentForm;
 					});
 				}
 			};
+
+			$( document.body ).on( 'update_checkout', function( e ) { 
+				$( document.body ).trigger( 'wc_fragment_refresh' );
+			});
+
+			$( document.body ).on( 'wc_fragment_refresh', function( e ) { 
+				setTimeout( function() {
+					checkout_init.qty_changers_init();
+				}, 1000 );
+			});
 		}
 
 		if ( document.querySelector( 'form.coupon.form-group' ) ) {
@@ -3742,16 +3752,6 @@ var componentForm;
 					window.location.reload();
 				}
 			}, 800 );
-		});
-
-		$( document.body ).on( 'update_checkout', function( e ) { 
-			$( document.body ).trigger( 'wc_fragment_refresh' );
-		});
-
-		$( document.body ).on( 'wc_fragment_refresh', function( e ) { 
-			setTimeout( function() {
-				checkout_init.qty_changers_init();
-			}, 1000 );
 		});
 	};
 		/*=====  End of This is for running after document is ready  ======*/
