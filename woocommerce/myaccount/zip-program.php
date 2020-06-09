@@ -58,7 +58,7 @@ if ( ! empty( $company_logo->company_name ) ) {
 if ( ! empty( $company_logo->url ) ) {
 	?>
 	<div class="current-logo-wrap">
-		<img src="<?php echo esc_url( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) ); ?>" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ); ?>" class="current-logo" />
+		<img src="<?php echo esc_url( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false )[0] ); ?>" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ); ?>" class="current-logo" />
 	</div>
 	<p>To update/change your logo, simply upload a new one below.</p>
 	<div class="form-wrap">
