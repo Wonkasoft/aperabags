@@ -430,13 +430,13 @@
 						}
 
 						div.single_variation_wrap {
-							display: flex;
-							flex-direction: column;
-						    align-items: flex-start;
+							display: grid;
+							grid-auto-flow: column;
+						    align-items: start;
 						    width: 100%;
 
 						    div.woocommerce-variation-availability {
-						    	flex: 0 0 100%;
+						    	width: 100%;
 						    }
 
 						    div.woocommerce-variation.single_variation {

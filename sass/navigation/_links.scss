@@ -10,13 +10,6 @@ a {
 	&:active {
 		color: $color__link-hover;
 		text-decoration: none;
-	}
-	&:focus {
 		outline: none;
-	}
-	&:hover,
-	&:active {
-		outline: none;
-
 	}
 }
