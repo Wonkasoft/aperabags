@@ -1,4 +1,4 @@
-a {
+body a {
 	color: $color__link;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
