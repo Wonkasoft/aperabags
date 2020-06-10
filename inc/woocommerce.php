@@ -3336,6 +3336,12 @@ function wonkasoft_wc_stripe_payment_icons( $icons ) {
 }
 add_filter( 'wc_stripe_payment_icons', 'wonkasoft_wc_stripe_payment_icons', 10 );
 
+function wonkasoft_woocommerce_stripe_request_headers( $headers ) {
+	$headers['Stripe-Version'] = '2020-03-02';
+	return $headers;
+}
+add_filter( 'woocommerce_stripe_request_headers', 'wonkasoft_woocommerce_stripe_request_headers', 10 );
+
 /**
  * This overrides the points in checkout
  */

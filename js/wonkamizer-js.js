@@ -4441,15 +4441,15 @@ var componentForm;
 		});
 
 		$( document.body ).on( 'update_checkout', function( e ) { 
-			$( document.body ).trigger( "wc_fragments_refresh" );
 			wonkasoft_wc_stripe_payment_request.init();
+			$( document.body ).trigger( "wc_fragments_refresh" );
 		});
 
 		$( document.body ).on( 'wc_fragments_refresh', function( e ) { 
 			if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
 				setTimeout( function() {
 					checkout_init.qty_changers_init();
-				}, 1000 );
+				}, 1200 );
 			}
 		});
 	};
