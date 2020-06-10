@@ -1200,11 +1200,12 @@ var componentForm;
 		if ( document.querySelector( 'footer#colophon' ) ) 
 		{
 			var footer_height = document.querySelector( 'footer#colophon' ).offsetHeight,
+			footer_el = document.querySelector( 'footer#colophon' ),
 			new_space;
 
 			new_space = document.getElementById( 'footer-spacer' );
 			new_space.style.width = '100%';
-			new_space.style.height = footer_height + 'px';
+			new_space.style.height = ( footer_height + parseFloat( window.getComputedStyle( footer_el, null ).getPropertyValue( 'padding-top' ) ) ) + 'px';
 		}
 	}
 
