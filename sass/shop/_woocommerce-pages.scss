@@ -16,7 +16,7 @@
     .woocommerce-error,
     .woocommerce-message {
       margin: 15px auto;
-      padding: 15px;
+      padding: 8px 15px;
       color: #333333;
       height: auto;
       background-color: transparent;
@@ -42,6 +42,10 @@
 
     .woocommerce-error {
       background-color: #e8fcff;
+    }
+
+    .sumo_reward_points_auto_redeem_message {
+      margin: 0;
     }
 
     .select2-selection--single, 
@@ -487,9 +491,12 @@ nav.woocommerce-pagination {
   }
 }
 
+div.express-checkout-btns,
 #wc-stripe-payment-request-button {
 
+  > button.gpay-button,
   > button {
+    width: 150px;
     padding: 4px 8px;
     background-color: #52abf6; 
     background-position: center;

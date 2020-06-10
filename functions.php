@@ -411,6 +411,10 @@ function apera_bags_scripts() {
 		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', $slick_script ), wp_get_theme()->get( 'Version' ), true );
 	endif;
 
+	if ( is_plugin_active( 'woocommerce-gateway-stripe' ) ) :
+		wp_localize_script( 'apera-bags-wonkamizer-js', 'wc_stripe_payment_request_params', apply_filters( 'wc_stripe_payment_request_params', $stripe_params ) );
+	endif;
+
 	$ga_id = ( ! empty( get_option( 'google_analytics_id' ) ) ) ? get_option( 'google_analytics_id' ) : '';
 	wp_localize_script(
 		'apera-bags-wonkamizer-js',
@@ -428,6 +432,18 @@ function apera_bags_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 100 );
 
+/**
+ * This filters the localized script for woocommerce gateway stripe plugin.
+ *
+ * @param  array $stripe_params Contains array of stripe params.
+ * @return array                Returns the array of the stripe params.
+ */
+function wonkasoft_wc_stripe_payment_request_params( $stripe_params ) {
+	$stripe_params['is_checkout_page'] = is_checkout();
+
+	return $stripe_params;
+}
+add_filter( 'wc_stripe_payment_request_params', 'wonkasoft_wc_stripe_payment_request_params', 10 );
 
 /**
  * This loads the theme styles on the admin side.

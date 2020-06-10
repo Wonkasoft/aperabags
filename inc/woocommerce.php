@@ -275,12 +275,7 @@ function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 
 			// Variation.
 			$attributes .= $_product->is_type( 'variable' ) || $_product->is_type( 'variation' ) ? wc_get_formatted_variation( $_product ) : '';
-			// Meta data.
-			if ( version_compare( WC()->version, '3.3.0', '<' ) ) {
-				$attributes .= WC()->cart->get_item_data( $cart_item );
-			} else {
-				$attributes .= wc_get_formatted_cart_item_data( $cart_item );
-			}
+
 			?>
 		<tr class="product-start <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
 			<td rowspan="2" class="product-thumbnail">
@@ -993,12 +988,6 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 
 							// Variation.
 							$attributes .= $_product->is_type( 'variable' ) || $_product->is_type( 'variation' ) ? wc_get_formatted_variation( $_product ) : '';
-							// Meta data.
-							if ( version_compare( WC()->version, '3.3.0', '<' ) ) {
-								$attributes .= WC()->cart->get_item_data( $cart_item );
-							} else {
-								$attributes .= wc_get_formatted_cart_item_data( $cart_item );
-							}
 							?>
 							<tr class="product-start <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
 								<td rowspan="2" class="product-thumbnail">
