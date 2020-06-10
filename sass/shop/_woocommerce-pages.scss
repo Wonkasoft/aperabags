@@ -496,12 +496,20 @@ div.express-checkout-btns,
 
   > button.gpay-button,
   > button {
-    width: 150px;
+    width: 100%;
     padding: 4px 8px;
     background-color: #52abf6; 
     background-position: center;
     background-repeat: no-repeat;
     color: #ffffff;
     border-radius: 100px;
+  }
+}
+
+div.express-checkout-btns {
+
+  > button.gpay-button,
+  > button {
+    width: 150px;
   }
 }
