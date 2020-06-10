@@ -23,11 +23,6 @@ WC()->session->set( 'chosen_shipping_methods', array() );
 if ( ! is_user_logged_in() && 'false' === $guest ) :
 	echo do_shortcode( '[wc_login_register]' );
 else :
-	$user    = wp_get_current_user();
-	$capture = new RS_Add_Existing_Points_For_User( $user->ID );
-	echo "<pre>\n";
-	print_r( $capture->add_existing_points_for_user( $user->ID ) );
-	echo "</pre>\n";
 
 	do_action( 'woocommerce_before_checkout_form', $checkout );
 
