@@ -3695,8 +3695,8 @@ var componentForm;
 									sessionStorage.setItem( cart_hash_key, cart_hash );
 								}
 
-								$(document.body).trigger('xoo_wsc_cart_updated');
 								$(document.body).trigger('wc_fragments_refreshed');
+								$(document.body).trigger('xoo_wsc_cart_updated');
 							}
 							else{
 								//Print error
@@ -4413,11 +4413,11 @@ var componentForm;
 			coupon_form.addEventListener( 'submit', function() {
 				if ("createEvent" in document) {
 				    evt = document.createEvent("HTMLEvents");
-				    evt.initEvent("wc_fragment_refresh", false, true);
+				    evt.initEvent("wc_fragments_refreshed", false, true);
 				    this.dispatchEvent(evt);
 				}
 				else {
-				    this.fireEvent("wc_fragment_refresh");
+				    this.fireEvent("wc_fragments_refreshed");
 				}
 			});
 		}
