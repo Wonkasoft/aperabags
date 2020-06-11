@@ -28,6 +28,7 @@ else :
 		$user = wp_get_current_user();
 
 		if ( 0 !== $user ) :
+
 			$redeem_msg = get_option( 'rs_message_user_points_redeemed_in_cart' );
 			WC()->session->set( 'auto_redeemcoupon', 'yes' );
 			update_option( 'rs_enable_disable_auto_redeem_points', 'yes' );
@@ -36,19 +37,24 @@ else :
 			$capture = RSRedeemingFrontend::redeem_points_for_user_automatically();
 			update_option( 'rs_enable_disable_auto_redeem_points', 'no' );
 			update_option( 'rs_enable_disable_auto_redeem_checkout', 'no' );
+
+			do_action( 'woocommerce_before_checkout_form', $checkout );
+
 			update_option( 'rs_message_user_points_redeemed_in_cart', $redeem_msg );
+
 		endif;
+		else :
+			do_action( 'woocommerce_before_checkout_form', $checkout );
 	endif;
 
-	do_action( 'woocommerce_before_checkout_form', $checkout );
 
-	// If checkout registration is disabled and not logged in, the user cannot checkout.
-	if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_required() && ! is_user_logged_in() ) {
-		echo esc_html( apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'woocommerce' ) ) );
-		return;
-	}
+		// If checkout registration is disabled and not logged in, the user cannot checkout.
+		if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_required() && ! is_user_logged_in() ) {
+			echo esc_html( apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'woocommerce' ) ) );
+			return;
+		}
 		do_action( 'wonka_checkout_before_checkout_form_custom', $checkout );
-	?>
+		?>
 
 	<form name="checkout" autocomplete="off" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 		
