@@ -3709,8 +3709,10 @@ var componentForm;
 				}
 			};
 
-			var stripe = Stripe( wc_stripe_payment_request_params.stripe.key ),
+			if ( wc_stripe_payment_request_params ) {
+				var stripe = Stripe( wc_stripe_payment_request_params.stripe.key ),
 				paymentRequestType;
+			}
 
 			/**
 			 * Object to handle Stripe payment forms.
@@ -4401,8 +4403,9 @@ var componentForm;
 
 				},
 			};
-
-			wonkasoft_wc_stripe_payment_request.init();
+			if ( wc_stripe_payment_request_params ) {
+				wonkasoft_wc_stripe_payment_request.init();
+			}
 		}
 
 		if ( document.querySelector( 'form.coupon.form-group' ) ) {
@@ -4475,7 +4478,9 @@ var componentForm;
 		});
 
 		$( document.body ).on( 'update_checkout', function( e ) { 
-			wonkasoft_wc_stripe_payment_request.init();
+			if ( wc_stripe_payment_request_params ) {
+				wonkasoft_wc_stripe_payment_request.init();
+			}
 			$( document.body ).trigger( "wc_fragments_refreshed" );
 		});
 
