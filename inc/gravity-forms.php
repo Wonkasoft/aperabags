@@ -1085,31 +1085,6 @@ function wonkasoft_after_cep_update_entry( $entry, $form ) {
 }
 add_action( 'gform_after_submission', 'wonkasoft_after_cep_update_entry', 10, 2 );
 
-function wonkasoft_after_checkout_registration( $entry, $form ) {
-	$forms_to_process = array(
-		'Apera Perks Registration Checkout',
-	);
-
-	if ( ! in_array( $form['title'], $forms_to_process ) ) {
-		return;
-	}
-
-	$user = wp_get_current_user();
-
-	if ( 0 !== $user ) :
-		$redeem_msg = get_option( 'rs_message_user_points_redeemed_in_cart' );
-		WC()->session->set( 'auto_redeemcoupon', 'yes' );
-		update_option( 'rs_enable_disable_auto_redeem_points', 'yes' );
-		update_option( 'rs_enable_disable_auto_redeem_checkout', 'yes' );
-		update_option( 'rs_message_user_points_redeemed_in_cart', "Congrats! You've just earned an extra $10 in free shipping on this order." );
-		$capture = RSRedeemingFrontend::redeem_points_for_user_automatically();
-		update_option( 'rs_enable_disable_auto_redeem_points', 'no' );
-		update_option( 'rs_enable_disable_auto_redeem_checkout', 'no' );
-		update_option( 'rs_message_user_points_redeemed_in_cart', $redeem_msg );
-	endif;
-}
-add_action( 'gform_after_submission', 'wonkasoft_after_checkout_registration', 10, 2 );
-
 /**
  * Adds the javascript required to view your password.
  *  Turn the the input type into text and back to password.

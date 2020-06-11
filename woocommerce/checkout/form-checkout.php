@@ -23,6 +23,22 @@ WC()->session->set( 'chosen_shipping_methods', array() );
 if ( ! is_user_logged_in() && 'false' === $guest ) :
 	echo do_shortcode( '[wc_login_register]' );
 else :
+	$newly_registered = ( isset( $_GET['new_member'] ) ) ? wp_kses_post( wp_unslash( $_GET['new_member'] ) ) : false;
+	if ( $newly_registered ) :
+		$user = wp_get_current_user();
+
+		if ( 0 !== $user ) :
+			$redeem_msg = get_option( 'rs_message_user_points_redeemed_in_cart' );
+			WC()->session->set( 'auto_redeemcoupon', 'yes' );
+			update_option( 'rs_enable_disable_auto_redeem_points', 'yes' );
+			update_option( 'rs_enable_disable_auto_redeem_checkout', 'yes' );
+			update_option( 'rs_message_user_points_redeemed_in_cart', "Congrats! You've just earned an extra $10 in free shipping on this order." );
+			$capture = RSRedeemingFrontend::redeem_points_for_user_automatically();
+			update_option( 'rs_enable_disable_auto_redeem_points', 'no' );
+			update_option( 'rs_enable_disable_auto_redeem_checkout', 'no' );
+			update_option( 'rs_message_user_points_redeemed_in_cart', $redeem_msg );
+		endif;
+	endif;
 
 	do_action( 'woocommerce_before_checkout_form', $checkout );
 

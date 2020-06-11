@@ -3568,6 +3568,40 @@ var componentForm;
 			wonka_shipping_method_init.shipping_links_init();
 		}
 
+		if ( document.querySelector( '.engage-member' ) ) {
+			var cep_radios = document.querySelectorAll( '.engage-member input[type="radio"]');
+			var input_yes, input_no;
+
+			cep_radios.forEach( function( radio, i ) {
+				if ( 'yes' === radio.value.toLowerCase() ) {
+					input_yes = radio;
+				}
+
+				if ( 'no' === radio.value.toLowerCase() ) {
+					input_no = radio;
+				}
+
+				radio.addEventListener( 'click', function( e ) {
+					if ( 'yes' === this.value.toLowerCase() && input_no.checked ) {
+						input_no.checked = false;
+						input_no.value = '';
+						input_no.click();
+						input_no.checked = false;
+						input_no.value = 'No';
+					}
+
+					if ( 'no' === this.value.toLowerCase() && input_yes.checked ) {
+						input_yes.checked = false;
+						input_yes.value = '';
+						input_yes.click();
+						input_yes.checked = false;
+						input_yes.value = 'Yes';
+					}
+				});
+			});
+		}
+
+
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
 			document.body.addEventListener( 'keydown', function( e ) {
 				if ( 13 === e.keyCode ) {
@@ -4442,12 +4476,13 @@ var componentForm;
 
 		$( document.body ).on( 'update_checkout', function( e ) { 
 			wonkasoft_wc_stripe_payment_request.init();
-			$( document.body ).trigger( "wc_fragments_refresh" );
+			$( document.body ).trigger( "wc_fragments_refreshed" );
 		});
 
-		$( document.body ).on( 'wc_fragments_refresh', function( e ) { 
+		$( document.body ).on( 'wc_fragments_refreshed', function( e ) { 
 			if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
 				setTimeout( function() {
+					console.log( 'qty_changers_init' );
 					checkout_init.qty_changers_init();
 				}, 1200 );
 			}
