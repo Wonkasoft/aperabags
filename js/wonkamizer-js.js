@@ -4481,10 +4481,10 @@ var componentForm;
 			if ( null !== wc_stripe_payment_request_params ) {
 				wonkasoft_wc_stripe_payment_request.init();
 			}
-			$( document.body ).trigger( "wc_fragments_refreshed" );
+			$( document.body ).trigger( "wc_fragments_loaded" );
 		});
 
-		$( document.body ).on( 'wc_fragments_refreshed', function( e ) { 
+		$( document.body ).on( 'wc_fragments_loaded', function( e ) { 
 			if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
 				setTimeout( function() {
 					checkout_init.qty_changers_init();
