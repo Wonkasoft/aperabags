@@ -3696,7 +3696,7 @@ var componentForm;
 								}
 
 								$(document.body).trigger('xoo_wsc_cart_updated');
-								$(document.body).trigger('wc_fragments_loaded');
+								$(document.body).trigger('wc_fragments_refreshed');
 							}
 							else{
 								//Print error
@@ -4429,17 +4429,17 @@ var componentForm;
 				e.stopImmediatePropagation();
 				if ("createEvent" in document) {
 				    evt = document.createEvent("HTMLEvents");
-				    evt.initEvent("wc_fragment_refresh", false, true);
+				    evt.initEvent("wc_fragments_refreshed", false, true);
 				    this.dispatchEvent(evt);
 				}
 				else {
-				    this.fireEvent("wc_fragment_refresh");
+				    this.fireEvent("wc_fragments_refreshed");
 				}
 			});
 		}
 
 		$( document.body ).on( 'xoo_wsc_cart_updated', function( e ) {
-		    $( document.body ).trigger( "wc_fragments_loaded" );
+		    $( document.body ).trigger( "wc_fragments_refreshed" );
 		});
 
 		$(document).on('click','.xoo-wsc-coupon-submit',function(e) {
@@ -4480,10 +4480,10 @@ var componentForm;
 			if ( null !== wc_stripe_payment_request_params ) {
 				wonkasoft_wc_stripe_payment_request.init();
 			}
-			$( document.body ).trigger( "wc_fragments_loaded" );
+			$( document.body ).trigger( "wc_fragments_refreshed" );
 		});
 
-		$( document.body ).on( 'wc_fragments_loaded', function( e ) { 
+		$( document.body ).on( 'wc_fragments_refreshed', function( e ) { 
 			if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
 				setTimeout( function() {
 					checkout_init.qty_changers_init();
