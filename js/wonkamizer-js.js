@@ -3709,7 +3709,7 @@ var componentForm;
 				}
 			};
 
-			if ( wc_stripe_payment_request_params ) {
+			if ( null !== wc_stripe_payment_request_params ) {
 				var stripe = Stripe( wc_stripe_payment_request_params.stripe.key ),
 				paymentRequestType;
 			}
@@ -4403,7 +4403,7 @@ var componentForm;
 
 				},
 			};
-			if ( wc_stripe_payment_request_params ) {
+			if ( null !== wc_stripe_payment_request_params ) {
 				wonkasoft_wc_stripe_payment_request.init();
 			}
 		}
@@ -4478,7 +4478,7 @@ var componentForm;
 		});
 
 		$( document.body ).on( 'update_checkout', function( e ) { 
-			if ( wc_stripe_payment_request_params ) {
+			if ( null !== wc_stripe_payment_request_params ) {
 				wonkasoft_wc_stripe_payment_request.init();
 			}
 			$( document.body ).trigger( "wc_fragments_refreshed" );
@@ -4487,9 +4487,8 @@ var componentForm;
 		$( document.body ).on( 'wc_fragments_refreshed', function( e ) { 
 			if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
 				setTimeout( function() {
-					console.log( 'qty_changers_init' );
 					checkout_init.qty_changers_init();
-				}, 1200 );
+				}, 1000 );
 			}
 		});
 	};
