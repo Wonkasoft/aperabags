@@ -4439,7 +4439,7 @@ var componentForm;
 		}
 
 		$( document.body ).on( 'xoo_wsc_cart_updated', function( e ) {
-		    $( document.body ).trigger( "wc_fragment_refresh" );
+		    $( document.body ).trigger( "wc_fragments_loaded" );
 		});
 
 		$(document).on('click','.xoo-wsc-coupon-submit',function(e) {
