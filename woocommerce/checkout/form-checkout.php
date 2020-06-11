@@ -29,18 +29,18 @@ else :
 
 		if ( 0 !== $user ) :
 
-			$redeem_msg = get_option( 'rs_message_user_points_redeemed_in_cart' );
+			$redeem_msg = get_option( 'rs_message_user_points_redeemed_in_checkout' );
 			WC()->session->set( 'auto_redeemcoupon', 'yes' );
 			update_option( 'rs_enable_disable_auto_redeem_points', 'yes' );
 			update_option( 'rs_enable_disable_auto_redeem_checkout', 'yes' );
-			update_option( 'rs_message_user_points_redeemed_in_cart', "Congrats! You've just earned an extra $10 in free shipping on this order." );
+			update_option( 'rs_message_user_points_redeemed_in_checkout', "Congrats! You've just earned an extra $10 in free shipping on this order." );
 			$capture = RSRedeemingFrontend::redeem_points_for_user_automatically();
 			update_option( 'rs_enable_disable_auto_redeem_points', 'no' );
 			update_option( 'rs_enable_disable_auto_redeem_checkout', 'no' );
 
 			do_action( 'woocommerce_before_checkout_form', $checkout );
 
-			update_option( 'rs_message_user_points_redeemed_in_cart', $redeem_msg );
+			update_option( 'rs_message_user_points_redeemed_in_checkout', $redeem_msg );
 
 		endif;
 		else :
