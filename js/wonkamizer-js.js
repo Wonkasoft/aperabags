@@ -3695,9 +3695,8 @@ var componentForm;
 									sessionStorage.setItem( cart_hash_key, cart_hash );
 								}
 
-								$(document.body).trigger('wc_fragments_loaded');
-								$(document.body).trigger('wc_fragments_refreshed');
 								$(document.body).trigger('xoo_wsc_cart_updated');
+								$(document.body).trigger('wc_fragments_loaded');
 							}
 							else{
 								//Print error
