@@ -4438,10 +4438,6 @@ var componentForm;
 			});
 		}
 
-		$( document.body ).on( 'xoo_wsc_cart_updated', function( e ) {
-		    $( document.body ).trigger( "wc_fragments_refreshed" );
-		});
-
 		$(document).on('click','.xoo-wsc-coupon-submit',function(e) {
 			setTimeout( function() {
 				var fix_url;
@@ -4476,14 +4472,14 @@ var componentForm;
 			}, 800 );
 		});
 
-		$( document.body ).on( 'update_checkout', function( e ) { 
+		$( document.body ).on( 'updated_checkout', function( e ) { 
 			if ( null !== wc_stripe_payment_request_params ) {
 				wonkasoft_wc_stripe_payment_request.init();
 			}
-			$( document.body ).trigger( "wc_fragments_refreshed" );
+			$(document.body).trigger('wc_fragments_refreshed');
 		});
 
-		$( document.body ).on( 'wc_fragments_refreshed', function( e ) { 
+		$( document.body ).on( 'wc_fragments_refreshed updated_wc_div', function( e ) { 
 			if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
 				setTimeout( function() {
 					checkout_init.qty_changers_init();
