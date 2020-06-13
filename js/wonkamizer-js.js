@@ -4478,10 +4478,14 @@ var componentForm;
 			}
 			$(document.body).trigger('wc_fragments_refreshed');
 		});
-
+		var qty_reset_timer;
 		$( document.body ).on( 'wc_fragments_refreshed updated_wc_div', function( e ) { 
 			if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
-				setTimeout( function() {
+				if ( '' != qty_reset_timer ) {
+					clearTimeout( qty_reset_timer );
+				}
+				
+				qty_reset_timer = setTimeout( function() {
 					checkout_init.qty_changers_init();
 				}, 1000 );
 			}
