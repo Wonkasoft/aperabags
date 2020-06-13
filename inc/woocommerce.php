@@ -958,7 +958,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 				echo esc_attr( $style );
 				?>
 				><i class="fa fa-angle-left"></i> Return to login</a>
-				<a href="#" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-delivery-options-btn">Next Step <i class="fa fa-angle-right"></i></a>
+				<a href="javascript:void(0);" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-delivery-options-btn">Next Step <i class="fa fa-angle-right"></i></a>
 			</div>
 			<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
 				<a href="#wonka_customer_information_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Customer Information' } );" data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-shipping-address-btn"><i class="fa fa-angle-left"></i> Back</a>
@@ -1412,7 +1412,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td colspan="3" class="contact-email-cell">';
 	$output .= '</td>';
 	$output .= '<td class="contact-email-change">';
-	$output .= '<a href="#" class="contact-email-change-link">Change</a>';
+	$output .= '<a href="javascript:void(0);" class="contact-email-change-link">Change</a>';
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
@@ -1427,7 +1427,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td colspan="3" class="ship-to-address-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-to-address-change">';
-	$output .= '<a href="#" class="ship-to-address-change-link">Change</a>';
+	$output .= '<a href="javascript:void(0);" class="ship-to-address-change-link">Change</a>';
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '</tbody><!-- tbody -->';
@@ -1450,7 +1450,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td colspan="3" class="contact-email-cell">';
 	$output .= '</td>';
 	$output .= '<td class="contact-email-change">';
-	$output .= '<a href="#" class="contact-email-change-link">Change</a>';
+	$output .= '<a href="javascript:void(0);" class="contact-email-change-link">Change</a>';
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
@@ -1465,7 +1465,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td colspan="3" class="ship-to-address-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-to-address-change">';
-	$output .= '<a href="#" class="ship-to-address-change-link">Change</a>';
+	$output .= '<a href="javascript:void(0);" class="ship-to-address-change-link">Change</a>';
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '<tr>';
@@ -1482,7 +1482,7 @@ function wonka_checkout_after_login_form() {
 	$output .= '<td colspan="1" class="ship-method-cost-cell">';
 	$output .= '</td>';
 	$output .= '<td class="ship-method-change">';
-	$output .= '<a href="" class="ship-method-change-link">Change</a>';
+	$output .= '<a href="javascript:void(0);" class="ship-method-change-link">Change</a>';
 	$output .= '</td>';
 	$output .= '</tr>';
 	$output .= '</tbody><!-- tbody -->';
@@ -1768,7 +1768,7 @@ function wonka_filter_woocommerce_short_description( $post_excerpt ) {
 				$YITH_Woocompare_Frontend_compare_link = new YITH_Woocompare_Frontend();
 				$compare_link_set                      = ' | ' . $YITH_Woocompare_Frontend_compare_link->add_compare_link();
 			endif;
-			$add_links = '<a id="key-features-link" href="#">Key Features</a> | <a id="product-specs-link" href="#">Product Specs</a> | <a id="review-link" href="#">Reviews</a>' . $compare_link_set;
+			$add_links = '<a id="key-features-link" href="javascript:void(0);">Key Features</a> | <a id="product-specs-link" href="javascript:void(0);">Product Specs</a> | <a id="review-link" href="javascript:void(0);">Reviews</a>' . $compare_link_set;
 
 			$post_excerpt = $post_excerpt . $disclosure . $add_links . ob_get_clean();
 			return $post_excerpt;
@@ -2003,7 +2003,7 @@ function filter_woocommerce_product_review_list_args( $comment ) {
 	echo $output;
 	echo '</p>';
 	if ( $comment_word_count > $length ) {
-		echo "<a href='#' class='ws-data-comment-btn'> <i class='fa fa-angle-down'></i> read more</a>";
+		echo "<a href='javascript:void(0);' class='ws-data-comment-btn'> <i class='fa fa-angle-down'></i> read more</a>";
 	}
 	echo '</div>';
 	echo ob_get_clean();
@@ -3396,41 +3396,13 @@ function wonkasoft_total_points_in_checkout() {
 		<th colspan="2"><?php echo get_option( 'rs_total_earned_point_caption_checkout' ); ?></th>
 		<td align="right">
 			<?php
-			echo wonkasoft_custom_message_in_thankyou_page( $Points, $CurrencyValue, 'rs_show_hide_equivalent_price_for_points', 'rs_show_hide_custom_msg_for_points_checkout', 'rs_custom_message_for_points_checkout', 0 );
+			echo custom_message_in_thankyou_page( $Points, $CurrencyValue, 'rs_show_hide_equivalent_price_for_points', 'rs_show_hide_custom_msg_for_points_checkout', 'rs_custom_message_for_points_checkout', 0 );
 			?>
 		</td>
 	</tr>
 	<?php
 }
 
-/**
- * This is an override for the perks program custom message in cart, checkout, and thank you page.
- *
- * @param  str $Points            Contains the users points.
- * @param  str $CurrencyValue     Contains the users currency value of points.
- * @param  str $ShowCurrencyValue Contains option of show or hide currency value.
- * @param  str $ShowCustomMsg     Contains option of show or hide custom msg.
- * @param  str $CustomMsg         Contains custom message.
- * @param  str $PaymentPlanPoints Contains the users payment plan points.
- */
-function wonkasoft_custom_message_in_thankyou_page( $Points, $CurrencyValue, $ShowCurrencyValue, $ShowCustomMsg, $CustomMsg, $PaymentPlanPoints ) {
-
-	$Msg = '';
-
-	$PointsToDisplay = (float) $Points - (float) $PaymentPlanPoints;
-	$PointsToDisplay = round_off_type( $PointsToDisplay );
-
-	if ( get_option( "$ShowCustomMsg" ) == '1' ) {
-		$Msg .= ' ' . get_option( "$CustomMsg" );
-	}
-
-	if ( get_option( "$ShowCurrencyValue" ) == '1' ) {
-		$Msg .= '&nbsp;' . $CurrencyValue;
-	}
-
-	// echo $PointsToDisplay . $Msg;
-	echo $Msg;
-}
 if ( get_option( 'rs_select_type_for_checkout', '2' ) == '2' ) {
 	remove_action( 'woocommerce_review_order_after_order_total', array( 'RSFrontendAssets', 'total_points_in_checkout' ) );
 	add_action( 'woocommerce_review_order_after_order_total', 'wonkasoft_total_points_in_checkout' );
