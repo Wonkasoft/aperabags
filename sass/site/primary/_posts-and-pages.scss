@@ -409,7 +409,7 @@ form.search-form {
 div#get-10-sidebar {
     position: fixed;
     z-index: 500;
-    display: block;
+    display: none;
     bottom: 50%;
     left: -39px;
     background: #52abf6;
@@ -417,6 +417,10 @@ div#get-10-sidebar {
     @include prefix( transform, rotate(-90deg), o moz webkit );
     @include prefix( transition, $trans_25, o moz webkit );
     @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .3 ), o moz webkit );
+
+    @include media-breakpoint( md ) {
+    	display: block;
+    }
 }
 
 div#get-10-sidebar a {
@@ -433,7 +437,7 @@ div#get-10-sidebar:hover {
 div#give-feedback {
     position: fixed;
     z-index: 500;
-    display: block;
+    display: none;
     bottom: 50%;
     right: -50px;
     background: #52abf6;
@@ -441,6 +445,10 @@ div#give-feedback {
     @include prefix( transform, rotate(-90deg), o moz webkit );
     @include prefix( transition, $trans_25, o moz webkit );
     @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .3 ), o moz webkit );
+
+    @include media-breakpoint( md ) {
+    	display: block;
+    }
 }
 
 div#give-feedback a {

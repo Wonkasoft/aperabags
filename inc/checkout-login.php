@@ -31,7 +31,8 @@ function ws_wc_login_register() {
 			</div>
 
 			<div class="woocommerce-needAccount needAcount">
-				Already have an account, <a href="#" class="checkout-login-pop">sign in</a>
+				<span>Already have an account,</span> <a href="javascript:void(0);" class="checkout-login-pop">sign in here</a> <span> or </span>
+				<?php echo do_shortcode( '[TheChamp-Login style="float: none; display: inline-block;"]' ); ?></span>
 			</div>
 
 		</div>

@@ -655,6 +655,7 @@ function wonka_checkout_wrap_before( $checkout ) {
 			),
 		)
 	);
+	wc_print_notice( "Congrats! You've just earned an extra $10 in free shipping on this order.", 'notice' );
 }
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25, 1 );
 
@@ -958,14 +959,14 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 				echo esc_attr( $style );
 				?>
 				><i class="fa fa-angle-left"></i> Return to login</a>
-				<a href="javascript:void(0);" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Shipping Method' } );" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-delivery-options-btn">Next Step <i class="fa fa-angle-right"></i></a>
+				<a href="javascript:void(0);" data-target="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-delivery-options-step', eventAction: 'click', eventLabel: 'Delivery Option Page' } );" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-delivery-options-btn">Delivery Options <i class="fa fa-angle-right"></i></a>
 			</div>
 			<div class="tab-pane fade" id="wonka_shipping_method_buttons" role="tabpanel">
-				<a href="#wonka_customer_information_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Customer Information' } );" data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-shipping-address-btn"><i class="fa fa-angle-left"></i> Back</a>
-				<a href="#wonka_payment_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step', eventAction: 'click', eventLabel: 'Payment Method' } );" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-payment-methods-btn">Next Step <i class="fa fa-angle-right"></i></a>
+				<a href="#wonka_customer_information_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back-to-shipping', eventAction: 'click', eventLabel: 'Shipping' } );" data-target="#wonka_customer_information_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-shipping-address-btn"><i class="fa fa-angle-left"></i> Back</a>
+				<a href="#wonka_payment_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-payment-method-step', eventAction: 'click', eventLabel: 'Payment Method' } );" data-target="#wonka_payment_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-to-payment-methods-btn">Payment Method <i class="fa fa-angle-right"></i></a>
 			</div>
 			<div class="tab-pane fade" id="wonka_payment_method_buttons" role="tabpanel">
-				<a href="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back', eventAction: 'click', eventLabel: 'Shipping Method' } );" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-delivery-options-btn"><i class="fa fa-angle-left"></i> Back</a>
+				<a href="#wonka_shipping_method_tab" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-step-back-to-delivery-options', eventAction: 'click', eventLabel: 'Back to Delivery Options' } );" data-target="#wonka_shipping_method_tab" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-back-to-delivery-options-btn"><i class="fa fa-angle-left"></i> Back</a>
 				<a href="#place_order" onclick="if ( typeof ga === 'function' )ga( 'send', { hitType: 'event', eventCategory: 'checkout-place-order', eventAction: 'click', eventLabel: 'Place Order' } );" data-target="#place_order" class="btn wonka-btn wonka-multistep-checkout-btn wonka-multistep-place-order-btn" id="place_order">Place Order <i class="fa fa-angle-right"></i></a>
 			</div>
 		</div><!-- #wonka-checkout-step-buttons -->

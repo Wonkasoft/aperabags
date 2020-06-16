@@ -4518,7 +4518,7 @@ function initAutocomplete()
   autocomplete.addListener('place_changed', fillInAddress);
 }
 
-function fillInAddress() 
+function fillInAddress()
 {
 	// Get the place details from the autocomplete object.
 	var place = autocomplete.getPlace();

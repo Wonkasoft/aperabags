@@ -260,6 +260,9 @@ if ( class_exists( 'WooCommerce' ) ) {
 
 
 function wonkasoft_on_init() {
+	echo "<pre>\n";
+	print_r( function_exists( 'custom_message_in_thankyou_page' ) . 'testing' );
+	echo "</pre>\n";
 
 	/**
 	 * This is an override for the perks program custom message in cart, checkout, and thank you page.
