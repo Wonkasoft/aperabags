@@ -60,7 +60,7 @@
 		}
 	}
 
-	.xoo-wsc-footer {
+	div.xoo-wsc-footer {
 		padding: 0 0 8px;
 
 		.xoo-wsc-tools {
@@ -117,8 +117,9 @@
 			@include prefix( transition, $trans_25, webkit moz o);
 		}
 
-		.xoo-wsc-ft-btn {
+		a.xoo-wsc-ft-btn {
 			border-radius: 100px;
+			background: rgba( #52abf6, 1 );
 		}
 
 		.xoo-wsc-remove-coupon {

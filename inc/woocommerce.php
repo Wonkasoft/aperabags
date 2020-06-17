@@ -655,7 +655,9 @@ function wonka_checkout_wrap_before( $checkout ) {
 			),
 		)
 	);
-	wc_print_notice( "Congrats! You've just earned an extra $10 in free shipping on this order.", 'notice' );
+	if ( is_user_logged_in() ) :
+		wc_print_notice( "Congrats! You've just earned an extra $10 & free shipping on this order.", 'notice' );
+	endif; 
 }
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25, 1 );
 
