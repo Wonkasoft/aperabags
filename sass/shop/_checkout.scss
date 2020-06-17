@@ -500,6 +500,13 @@
  	}
  }
 
+ #wc-stripe-cc-form {
+
+ 	label[for="card-element"] {
+ 		display: none;
+ 	}
+}
+
  .woocommerce-needAccount.needAcount {
  	display: grid;
  	grid-template-columns: auto auto auto auto;
