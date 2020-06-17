@@ -3603,6 +3603,7 @@ var componentForm;
 
 
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
+			document.querySelector( '#wc-stripe-cc-form label[for="card-element"]' ).style = 'display: none;';
 			document.body.addEventListener( 'keydown', function( e ) {
 				if ( 13 === e.keyCode ) {
 					e.stopImmediatePropagation();

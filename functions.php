@@ -258,42 +258,12 @@ if ( class_exists( 'WooCommerce' ) ) {
 	add_action( 'do_meta_boxes', 'customize_coupon_data_meta_box' );
 }
 
-
-function wonkasoft_on_init() {
-	echo "<pre>\n";
-	print_r( function_exists( 'custom_message_in_thankyou_page' ) . 'testing' );
-	echo "</pre>\n";
-
-	/**
-	 * This is an override for the perks program custom message in cart, checkout, and thank you page.
-	 *
-	 * @param  str $Points            Contains the users points.
-	 * @param  str $CurrencyValue     Contains the users currency value of points.
-	 * @param  str $ShowCurrencyValue Contains option of show or hide currency value.
-	 * @param  str $ShowCustomMsg     Contains option of show or hide custom msg.
-	 * @param  str $CustomMsg         Contains custom message.
-	 * @param  str $PaymentPlanPoints Contains the users payment plan points.
-	 */
-	function custom_message_in_thankyou_page( $Points, $CurrencyValue, $ShowCurrencyValue, $ShowCustomMsg, $CustomMsg, $PaymentPlanPoints ) {
-
-		$Msg = '';
-
-		$PointsToDisplay = (float) $Points - (float) $PaymentPlanPoints;
-		$PointsToDisplay = round_off_type( $PointsToDisplay );
-
-		if ( get_option( "$ShowCustomMsg" ) == '1' ) {
-			$Msg .= ' ' . get_option( "$CustomMsg" );
-		}
-
-		if ( get_option( "$ShowCurrencyValue" ) == '1' ) {
-			$Msg .= '&nbsp;' . $CurrencyValue;
-		}
-
-		// echo $PointsToDisplay . $Msg;
-		echo $Msg;
-	}
+/**
+ * Load RewardSystem compatibility file.
+ */
+if ( class_exists( 'FPRewardSystem' ) ) {
+	require_once get_stylesheet_directory() . '/inc/custom-rewardsystems-plugin.php';
 }
-add_action( 'plugins_loaded', 'wonkasoft_on_init' );
 
 /**
  * This removes the original meta box in order to load the custom meta box.
@@ -310,10 +280,17 @@ function customize_coupon_data_meta_box() {
 // Save Coupon Meta Boxes.
 add_action( 'woocommerce_coupon_options_save', array( 'Wonkasoft_WC_Meta_Box_Coupon_Data', 'save' ), 15, 2 );
 
+/**
+ * This filters the woocommerce data stores.
+ *
+ * @param  array $stores Contains data stores.
+ * @return array         returns data stores.
+ */
 function wonkasoft_woocommerce_data_stores( $stores ) {
 	return $stores;
 }
 add_filter( 'woocommerce_data_stores', 'wonkasoft_woocommerce_data_stores' );
+
 /**
  * Load WC_Gateway_CyberSource compatibility file.
  */
@@ -443,7 +420,7 @@ function apera_bags_scripts() {
 	endif;
 
 	if ( is_page( 'checkout' ) && ! empty( get_option( 'google_api_key' ) ) ) :
-			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'google_api_key' ) . '&libraries=places&callback=initAutocomplete', array( 'apera-bags-wonkamizer-js' ), null, true );
+			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'google_api_key' ) . '&libraries=places&callback=initAutocomplete', array( 'apera-bags-wonkamizer-js' ), 'all', true );
 
 			wp_enqueue_script( 'jquery-inputmask', get_stylesheet_directory_uri() . '/assets/js/jquery.inputmask.min.js', array( 'jquery' ), 'all', true );
 	endif;
