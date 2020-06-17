@@ -667,6 +667,7 @@ var componentForm;
 						if ( e.target.getAttribute( 'data-target' ) === '#wonka_shipping_method_tab' ) 
 						{
 							e.preventDefault();
+							$( document.body ).trigger( 'select_default_shipping' );
 							var shipping_form_fields = document.querySelectorAll( '.woocommerce-shipping-fields input' );
 							var validation_checker = true;
 							var field_count = shipping_form_fields.length;
@@ -4470,6 +4471,10 @@ var componentForm;
 					window.location.reload();
 				}
 			}, 800 );
+		});
+
+		$( document.body ).on( 'select_default_shipping', function( e ) {
+			document.querySelector( '#shipping_method input' ).click();
 		});
 
 		$( document.body ).on( 'updated_checkout', function( e ) { 
