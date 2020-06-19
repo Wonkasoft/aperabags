@@ -1312,7 +1312,9 @@ function apply_all_aperacash() {
 	$nonce = ( isset( $_REQUEST['security'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['security'] ) ) : false;
 	wp_verify_nonce( $nonce, 'ws-request-nonce' ) || die( 'nonce failed' );
 
-	$add_discount = ( isset( $_REQUEST['checkbox'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['checkbox'] ) ) : null;
+	$data                 = array();
+	$add_discount         = ( isset( $_REQUEST['checkbox'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['checkbox'] ) ) : null;
+	$data['add_discount'] = $add_discount;
 
 	if ( $add_discount ) :
 		WC()->session->set( 'auto_redeemcoupon', 'yes' );
@@ -1370,14 +1372,18 @@ function apply_all_aperacash() {
 
 	if ( 'false' === $add_discount ) :
 		foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
-			if ( false !== strpos( $coupon->code, 'aperacash_' ) && 'checked' === get_option( 'apply_all_aperacash', false ) ) :
-				update_option( 'apply_all_aperacash', false );
+			preg_match( '/aperacash_|sumo_|auto_redeem_|auto_aperacash_/', strtolower( $code ), $matches, PREG_UNMATCHED_AS_NULL );
+			if ( ! empty( $matches ) ) :
+				if ( 'checked' === get_option( 'apply_all_aperacash', false ) ) :
+					update_option( 'apply_all_aperacash', false );
+				endif;
 				WC()->cart->remove_coupon( $code );
+				$data['coupon_removed'] = $code;
 			endif;
 		endforeach;
 	endif;
 
-	wp_send_json_success( $add_discount, null );
+	wp_send_json_success( $data, null );
 }
 add_action( 'wp_ajax_apply_all_aperacash', 'apply_all_aperacash' );
 

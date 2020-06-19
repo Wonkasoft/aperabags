@@ -4506,21 +4506,20 @@ var componentForm;
 			document.querySelector( '#shipping_method input' ).click();
 		});
 
-		// $( document.body ).on( 'updated_checkout', function( e ) { 
-		// 	$( document.body ).trigger('wc_fragments_refreshed');
-		// });
-
 		var qty_reset_timer;
 		
-		$( document.body ).on( 'wc_fragments_refreshed wc_fragment_refresh updated_wc_div update_checkout', function( e ) { 
+		$( document.body ).on( 'added_to_cart removed_from_cart wc_fragments_refreshed wc_fragments_loaded wc_fragment_refresh updated_wc_div update_checkout updated_checkout updated_cart_totals', function( e ) { 
 			if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
 				if ( '' != qty_reset_timer ) {
 					clearTimeout( qty_reset_timer );
 				}
 				
-				qty_reset_timer = setTimeout( function() {
+
+				// qty_reset_timer = setTimeout( function() {
 					checkout_init.qty_changers_init();
-				}, 800 );
+					console.log( e );
+					console.log( document.readyState );
+				// }, 800 );
 			}
 		});
 	};
