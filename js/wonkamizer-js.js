@@ -87,10 +87,6 @@ var componentForm;
 
 		if ( document.querySelector( '#shipping_address_1' ) ) 
 		{
-			$( 'docmuent body' ).on( 'update_checkout', function( e ) 
-				{
-					e.stopImmediatePropagation();
-				});
 
 			$( '#shipping_address_1' ).on( 'keydown', function( e ) 
 				{
@@ -3714,7 +3710,7 @@ var componentForm;
 							if(response.fragments){
 								var fragments = response.fragments,
 									cart_hash =  response.cart_hash;
-								//Set fragments
+								// Set fragments.
 						   		$.each( response.fragments, function( key, value ) {
 									$( key ).replaceWith( value );
 									$( key ).stop( true ).css( 'opacity', '1' ).unblock();
@@ -3722,7 +3718,7 @@ var componentForm;
 
 						   		if(wc_cart_fragments_params){
 							   		var cart_hash_key = wc_cart_fragments_params.ajax_url.toString() + '-wc_cart_hash';
-									//Set cart hash
+									// Set cart hash.
 									sessionStorage.setItem( wc_cart_fragments_params.fragment_name, JSON.stringify( fragments ) );
 									localStorage.setItem( cart_hash_key, cart_hash );
 									sessionStorage.setItem( cart_hash_key, cart_hash );
@@ -3732,7 +3728,7 @@ var componentForm;
 								$(document.body).trigger('xoo_wsc_cart_updated');
 							}
 							else{
-								//Print error
+								// Print error.
 								show_notice('error',response.error);
 							}
 						}
@@ -4435,6 +4431,7 @@ var componentForm;
 
 				},
 			};
+
 			if ( null !== wc_stripe_payment_request_params ) {
 				wonkasoft_wc_stripe_payment_request.init();
 			}
@@ -4471,7 +4468,7 @@ var componentForm;
 			});
 		}
 
-		$(document).on('click','.xoo-wsc-coupon-submit',function(e) {
+		$( document ).on('click','.xoo-wsc-coupon-submit',function(e) {
 			setTimeout( function() {
 				var fix_url;
 				if ( getUrlVars().remove_coupon && getUrlVars().guestcheckout ) {
@@ -4510,7 +4507,7 @@ var componentForm;
 		});
 
 		$( document.body ).on( 'updated_checkout', function( e ) { 
-			$(document.body).trigger('wc_fragments_refreshed');
+			$( document.body ).trigger('wc_fragments_refreshed');
 		});
 
 		var qty_reset_timer;
