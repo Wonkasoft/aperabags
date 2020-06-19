@@ -4514,12 +4514,7 @@ var componentForm;
 					clearTimeout( qty_reset_timer );
 				}
 				
-
-				// qty_reset_timer = setTimeout( function() {
-					checkout_init.qty_changers_init();
-					console.log( e );
-					console.log( document.readyState );
-				// }, 800 );
+				checkout_init.qty_changers_init();
 			}
 		});
 	};

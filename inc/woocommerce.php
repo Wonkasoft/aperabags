@@ -1250,16 +1250,16 @@ function wonka_woocommerce_review_order_after_order_total() {
 							else :
 								$apply_checked = get_option( 'apply_all_aperacash', false );
 							endif;
-							$apply_checked = get_option( 'apply_all_aperacash', false );
 							else :
 								foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
-									if ( false !== strpos( $coupon->code, 'aperacash_' ) && 'checked' !== get_option( 'apply_all_aperacash', false ) ) :
-										update_option( 'apply_all_aperacash', 'checked' );
-										$apply_checked = get_option( 'apply_all_aperacash', false );
-									else :
+									preg_match( '/aperacash_|sumo_|auto_redeem_|auto_aperacash_/', strtolower( $code ), $matches, PREG_UNMATCHED_AS_NULL );
+									if ( ! empty( $matches ) ) :
+										if ( 'checked' !== get_option( 'apply_all_aperacash', false ) ) :
+											update_option( 'apply_all_aperacash', 'checked' );
+										endif;
 										$apply_checked = get_option( 'apply_all_aperacash', false );
 									endif;
-								endforeach;
+									endforeach;
 						endif;
 							echo wp_kses_post( $apply_checked );
 							?>
