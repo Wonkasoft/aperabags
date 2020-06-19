@@ -3612,6 +3612,38 @@ var componentForm;
 					}
 				}
 			});
+
+			var aperacash_class = {
+				apply_aperacash : function( e ) {
+					var data = {
+						'url': wonkasoft_request.ajax,
+						'action': 'apply_all_aperacash',
+						'checkbox': this.checked,
+						'security': wonkasoft_request.security
+					};
+
+					var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+
+					xhr = new XMLHttpRequest();
+					xhr.open('POST', data.url + '?' + query_string, true );
+					xhr.onreadystatechange = function() {
+
+						if ( this.readyState == 4 && this.status == 200 ) 
+						{
+							$(document.body).trigger('wc_fragments_refreshed');
+							$(document.body).trigger('xoo_wsc_cart_updated');
+						}
+					};
+
+					xhr.setRequestHeader( "Content-type", "application/json; charset= UTF-8" );
+					xhr.send();
+				}
+			};
+
+			if ( document.querySelector( '#aperacash-apply' ) ) {
+				document.querySelector( '#aperacash-apply' ).addEventListener( 'click', aperacash_class.apply_aperacash );
+			}
+
 			var checkout_init = {
 				evt: {},
 				get_qty_changers: [],

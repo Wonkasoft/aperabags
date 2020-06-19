@@ -35,6 +35,7 @@ else :
 			$capture = RSRedeemingFrontend::redeem_points_for_user_automatically();
 			update_option( 'rs_enable_disable_auto_redeem_points', 'no' );
 			update_option( 'rs_enable_disable_auto_redeem_checkout', 'no' );
+			WC()->session->set( 'auto_redeemcoupon', 'no' );
 
 			do_action( 'woocommerce_before_checkout_form', $checkout );
 

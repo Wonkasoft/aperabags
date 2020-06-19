@@ -247,183 +247,6 @@ if ( ! function_exists( 'apera_bags_woocommerce_cart_link' ) ) {
 }
 
 /**
- * This updates the order review fragments.
- *
- * @param  array $fragments contains the fragments.
- * @return array            returns the fragments after being modified.
- */
-function wonka_woocommerce_update_order_review_fragments( $fragments ) {
-	$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
-
-	foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
-		if ( $current_method === $method_id ) :
-			$rate_label = $rate->label;
-			$rate_cost  = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
-		endif;
-	endforeach;
-
-	ob_start();
-	foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) :
-		$_product   = apply_filters( 'checkout_review_woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-		$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
-
-		if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
-
-			$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
-
-			$attributes = '';
-
-			// Variation.
-			$attributes .= $_product->is_type( 'variable' ) || $_product->is_type( 'variation' ) ? wc_get_formatted_variation( $_product ) : '';
-
-			?>
-		<tr class="product-start <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-			<td rowspan="2" class="product-thumbnail">
-				<?php
-				$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
-
-				if ( ! $product_permalink ) {
-					echo $thumbnail; // PHPCS: XSS ok.
-					echo wp_kses(
-						apply_filters( 'woocommerce_checkout_cart_item_quantity', sprintf( '<strong class="product-quantity wonka-badge" title="Quantity: %s">%s</strong>', $cart_item['quantity'], $cart_item['quantity'] ), $cart_item, $cart_item_key ),
-						array(
-							'strong' => array(
-								'class' => array(),
-								'title' => array(),
-							),
-						)
-					);
-				} else {
-							printf(
-								'<a href="%s">%s</a>',
-								esc_url( $product_permalink ),
-								$thumbnail
-							); // PHPCS: XSS ok.
-				}
-				?>
-</td>
-<td colspan="2" class="product-name" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-			<?php
-			echo wp_kses(
-				sprintf( '<a href="%s" class="product-link">%s</a>', esc_url( $product_permalink ), apply_filters( 'cart_and_review_woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ),
-				array(
-					'a' => array(
-						'class' => array(),
-						'href'  => array(),
-					),
-				)
-			);
-			?>
-</td>
-</tr>
-<tr class="second-row <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-	<td class="product-name" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-			<?php
-			echo $attributes ? wp_kses(
-				$attributes,
-				array(
-					'dl' => array(
-						'class' => array(),
-					),
-					'dt' => array(),
-					'dd' => array(),
-				)
-			) : '';
-			?>
-
-		<div class="wonkasoft-wsc-price" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
-			<span class="price-label"><?php _e( 'Price:', 'side-cart-woocommerce' ); ?></span>
-			<span class="price-amount"><?php echo WC()->cart->get_product_subtotal( $_product, 1 ); ?></span>
-		</div>
-
-			<?php
-			$input_id    = uniqid( 'quantity_' );
-			$input_name  = 'quantity';
-			$input_value = $cart_item['quantity'];
-			$max_value   = $_product->get_max_purchase_quantity();
-			$min_value   = $_product->get_min_purchase_quantity();
-			$step        = apply_filters( 'woocommerce_quantity_input_step', 1, $_product );
-			$pattern     = apply_filters( 'woocommerce_quantity_input_pattern', has_filter( 'woocommerce_stock_amount', 'intval' ) ? '[0-9]*' : '' );
-
-			$input_value = ! isset( $input_value ) ? $min_value : $input_value;
-
-			$input_html = '<input type="number" data-product-key="' . esc_attr( $cart_item_key ) . '" class="wonkasoft-wsc-qty" max="' . esc_attr( 0 < $max_value ? $max_value : '' ) . '" min="' . esc_attr( $min_value ) . '" step="' . esc_attr( $step ) . '" value="' . $input_value . '" pattern="' . esc_attr( $pattern ) . '" name="' . esc_attr( $input_name ) . '" id="' . esc_attr( $input_id ) . '" >';
-
-			if ( $_product->is_sold_individually() ) {
-				$product_quantity = sprintf( '1 <input type="hidden" name="cart[%s][qty]" value="1" class="form-control" />', $cart_item_key );
-			} else {
-				$product_quantity  = '<div class="wonkasoft-wsc-qtybox" data-product-key="' . esc_attr( $cart_item_key ) . '" style="margin-right: 10px;">';
-				$product_quantity .= '<span class="wonkasoft-wsc-minus wonkasoft-wsc-chng">-</span>';
-				$product_quantity .= $input_html;
-				$product_quantity .= '<span class="wonkasoft-wsc-plus wonkasoft-wsc-chng">+</span>';
-			}
-
-			echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
-			?>
-</td>
-<td class="product-total">
-			<?php
-			sprintf(
-				apply_filters(
-					'woocommerce_cart_item_remove_link',
-					printf(
-						'<a href="%s" class="remove wonka-badge wonkasoft-wsc-icon-trash" aria-label="%s" data-product_id="%s" data-product_sku="%s" title="%s"></a>',
-						esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
-						esc_html__( 'Remove this item', 'woocommerce' ),
-						esc_attr( $product_id ),
-						esc_attr( $_product->get_sku() ),
-						( 1 < $cart_item['quantity'] ) ? 'Remove items' : 'Remove item'
-					),
-					$cart_item_key
-				)
-			);
-			echo '<span class="wonkasoft-wsc-subtotal" data-product-key="' . esc_attr( $cart_item_key ) . '">' . apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ) . '</span>';
-			?>
-</td>
-</tr>
-			<?php
-		}
-endforeach;
-	$fragments['tbody.products-area'] = '<tbody class="products-area">' . ob_get_contents() . ob_end_clean() . '</tbody>';
-
-	if ( ! empty( $rate_label ) ) :
-		$fragments['td.ship-method-cell'] = '<td colspan="2" class="ship-method-cell">' . $rate_label . '</td>';
-endif;
-
-	if ( ! empty( $rate_cost ) ) :
-		$fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1\$1s%2\$2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
-endif;
-
-	$fragments['tr.cart-subtotal'] = '<tr class="cart-subtotal"><th>Subtotal</th><td colspan="2"><span class="woocommerce-Price-amount amount">' . wc_price( WC()->cart->get_subtotal() ) . '</span></td></tr>';
-
-	if ( empty( WC()->cart->get_coupons() ) ) :
-		$fragments['tr.cart-discount'] = '<tr class="cart-discount"><th colspan="2"></th><td></td></tr>';
-else :
-	foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
-		ob_start();
-		$current_coupon_class               = 'coupon-' . esc_attr( sanitize_title( $code ) );
-		$current_coupon_index               = 'tr.cart-discount.coupon-' . esc_attr( sanitize_title( $code ) );
-		$fragments[ $current_coupon_index ] = '<tr class="cart-discount ' . $current_coupon_class . '"><th colspan="2">' . sprintf( 'Coupon: %s', $coupon->code ) . '</th><td>' . wc_cart_totals_coupon_html( $coupon ) . ob_get_contents() . '</td></tr>' . ob_end_clean();
-endforeach;
-endif;
-
-if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) :
-	foreach ( WC()->cart->get_tax_totals() as $code => $tax ) :
-		$current_tax_class               = 'tax-rate-' . esc_attr( $code );
-		$current_tax_index               = 'tr.tax-rate.tax-rate-' . esc_attr( $code );
-		$fragments[ $current_tax_index ] = '<tr class="tax-rate ' . $current_tax_class . '"><th>' . esc_html( $tax->label ) . '</th><td colspan="2">' . wp_kses_post( $tax->formatted_amount ) . '</td></tr>';
-endforeach;
-else :
-	$fragments['tr.tax-total'] = '<tr class="tax-total"><th>' . esc_html( WC()->countries->tax_or_vat() ) . '</th><td colspan="2">' . wc_cart_totals_taxes_total_html() . '</td></tr>';
-endif;
-
-$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
-
-return $fragments;
-}
-add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10, 1 );
-
-/**
  * This sets up the image flipper class
  *
  * @param  array $classes contains all the classes for the current product.
@@ -657,7 +480,7 @@ function wonka_checkout_wrap_before( $checkout ) {
 	);
 	if ( is_user_logged_in() ) :
 		wc_print_notice( "Congrats! You've just earned an extra $10 & free shipping on this order.", 'notice' );
-	endif; 
+	endif;
 }
 add_action( 'woocommerce_before_checkout_form', 'wonka_checkout_wrap_before', 25, 1 );
 
@@ -1232,9 +1055,221 @@ function wonkasoft_woocommerce_cart_totals_coupon_html( $coupon_html, $coupon, $
 add_filter( 'woocommerce_cart_totals_coupon_html', 'wonkasoft_woocommerce_cart_totals_coupon_html', 10, 3 );
 
 /**
+ * This updates the order review fragments.
+ *
+ * @param  array $fragments contains the fragments.
+ * @return array            returns the fragments after being modified.
+ */
+function wonka_woocommerce_update_order_review_fragments( $fragments ) {
+	$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
+
+	foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
+		if ( $current_method === $method_id ) :
+			$rate_label = $rate->label;
+			$rate_cost  = wc_format_decimal( $rate->cost, wc_get_price_decimals() );
+		endif;
+	endforeach;
+
+	ob_start();
+	foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) :
+		$_product   = apply_filters( 'checkout_review_woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+		$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+
+		if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
+
+			$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
+
+			$attributes = '';
+
+			// Variation.
+			$attributes .= $_product->is_type( 'variable' ) || $_product->is_type( 'variation' ) ? wc_get_formatted_variation( $_product ) : '';
+
+			?>
+		<tr class="product-start <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+			<td rowspan="2" class="product-thumbnail">
+				<?php
+				$thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
+
+				if ( ! $product_permalink ) {
+					echo $thumbnail; // PHPCS: XSS ok.
+					echo wp_kses(
+						apply_filters( 'woocommerce_checkout_cart_item_quantity', sprintf( '<strong class="product-quantity wonka-badge" title="Quantity: %s">%s</strong>', $cart_item['quantity'], $cart_item['quantity'] ), $cart_item, $cart_item_key ),
+						array(
+							'strong' => array(
+								'class' => array(),
+								'title' => array(),
+							),
+						)
+					);
+				} else {
+							printf(
+								'<a href="%s">%s</a>',
+								esc_url( $product_permalink ),
+								$thumbnail
+							); // PHPCS: XSS ok.
+				}
+				?>
+</td>
+<td colspan="2" class="product-name" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+			<?php
+			echo wp_kses(
+				sprintf( '<a href="%s" class="product-link">%s</a>', esc_url( $product_permalink ), apply_filters( 'cart_and_review_woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) ),
+				array(
+					'a' => array(
+						'class' => array(),
+						'href'  => array(),
+					),
+				)
+			);
+			?>
+</td>
+</tr>
+<tr class="second-row <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+	<td class="product-name" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+			<?php
+			echo $attributes ? wp_kses(
+				$attributes,
+				array(
+					'dl' => array(
+						'class' => array(),
+					),
+					'dt' => array(),
+					'dd' => array(),
+				)
+			) : '';
+			?>
+
+		<div class="wonkasoft-wsc-price" data-product-key="<?php echo esc_attr( $cart_item_key ); ?>">
+			<span class="price-label"><?php _e( 'Price:', 'side-cart-woocommerce' ); ?></span>
+			<span class="price-amount"><?php echo WC()->cart->get_product_subtotal( $_product, 1 ); ?></span>
+		</div>
+
+			<?php
+			$input_id    = uniqid( 'quantity_' );
+			$input_name  = 'quantity';
+			$input_value = $cart_item['quantity'];
+			$max_value   = $_product->get_max_purchase_quantity();
+			$min_value   = $_product->get_min_purchase_quantity();
+			$step        = apply_filters( 'woocommerce_quantity_input_step', 1, $_product );
+			$pattern     = apply_filters( 'woocommerce_quantity_input_pattern', has_filter( 'woocommerce_stock_amount', 'intval' ) ? '[0-9]*' : '' );
+
+			$input_value = ! isset( $input_value ) ? $min_value : $input_value;
+
+			$input_html = '<input type="number" data-product-key="' . esc_attr( $cart_item_key ) . '" class="wonkasoft-wsc-qty" max="' . esc_attr( 0 < $max_value ? $max_value : '' ) . '" min="' . esc_attr( $min_value ) . '" step="' . esc_attr( $step ) . '" value="' . $input_value . '" pattern="' . esc_attr( $pattern ) . '" name="' . esc_attr( $input_name ) . '" id="' . esc_attr( $input_id ) . '" >';
+
+			if ( $_product->is_sold_individually() ) {
+				$product_quantity = sprintf( '1 <input type="hidden" name="cart[%s][qty]" value="1" class="form-control" />', $cart_item_key );
+			} else {
+				$product_quantity  = '<div class="wonkasoft-wsc-qtybox" data-product-key="' . esc_attr( $cart_item_key ) . '" style="margin-right: 10px;">';
+				$product_quantity .= '<span class="wonkasoft-wsc-minus wonkasoft-wsc-chng">-</span>';
+				$product_quantity .= $input_html;
+				$product_quantity .= '<span class="wonkasoft-wsc-plus wonkasoft-wsc-chng">+</span>';
+			}
+
+			echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
+			?>
+</td>
+<td class="product-total">
+			<?php
+			sprintf(
+				apply_filters(
+					'woocommerce_cart_item_remove_link',
+					printf(
+						'<a href="%s" class="remove wonka-badge wonkasoft-wsc-icon-trash" aria-label="%s" data-product_id="%s" data-product_sku="%s" title="%s"></a>',
+						esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+						esc_html__( 'Remove this item', 'woocommerce' ),
+						esc_attr( $product_id ),
+						esc_attr( $_product->get_sku() ),
+						( 1 < $cart_item['quantity'] ) ? 'Remove items' : 'Remove item'
+					),
+					$cart_item_key
+				)
+			);
+			echo '<span class="wonkasoft-wsc-subtotal" data-product-key="' . esc_attr( $cart_item_key ) . '">' . apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ) . '</span>';
+			?>
+</td>
+</tr>
+			<?php
+		}
+endforeach;
+	$fragments['tbody.products-area'] = '<tbody class="products-area">' . ob_get_contents() . ob_end_clean() . '</tbody>';
+
+	if ( ! empty( $rate_label ) ) :
+		$fragments['td.ship-method-cell'] = '<td colspan="2" class="ship-method-cell">' . $rate_label . '</td>';
+endif;
+
+	if ( ! empty( $rate_cost ) ) :
+		$fragments['td.ship-method-cost-cell'] = '<td colspan="1" class="ship-method-cost-cell">' . sprintf( __( "<span class='woocommerce-Price-amount amount'>%1\$1s%2\$2s</span>", 'aperabags' ), get_woocommerce_currency_symbol(), $rate_cost ) . '</td>';
+endif;
+
+	$fragments['tr.cart-subtotal'] = '<tr class="cart-subtotal"><th>Subtotal</th><td colspan="2"><span class="woocommerce-Price-amount amount">' . wc_price( WC()->cart->get_subtotal() ) . '</span></td></tr>';
+
+	if ( empty( WC()->cart->get_coupons() ) ) :
+		$fragments['tr.cart-discount'] = '<tr class="cart-discount"><th colspan="2"></th><td></td></tr>';
+else :
+	foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
+		ob_start();
+		$current_coupon_class          = 'coupon-' . esc_attr( sanitize_title( $code ) );
+		$fragments['tr.cart-discount'] = '<tr class="cart-discount ' . $current_coupon_class . '"><th colspan="2">' . sprintf( 'Coupon: %s', $coupon->code ) . '</th><td>' . wc_cart_totals_coupon_html( $coupon ) . ob_get_contents() . '</td></tr>' . ob_end_clean();
+endforeach;
+endif;
+
+if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) :
+	foreach ( WC()->cart->get_tax_totals() as $code => $tax ) :
+		$current_tax_class        = 'tax-rate-' . esc_attr( $code );
+		$fragments['tr.tax-rate'] = '<tr class="tax-rate ' . $current_tax_class . '"><th>' . esc_html( $tax->label ) . '</th><td colspan="2">' . wp_kses_post( $tax->formatted_amount ) . '</td></tr>';
+	endforeach;
+	else :
+		$fragments['tr.tax-total'] = '<tr class="tax-total"><th>' . esc_html( WC()->countries->tax_or_vat() ) . '</th><td colspan="2">' . wc_cart_totals_taxes_total_html() . '</td></tr>';
+endif;
+
+	$fragments['tr.order-total'] = '<tr class="order-total"><th>Total</th><td colspan="2"><strong><span class="woocommerce-Price-amount amount">' . WC()->cart->get_total() . '</span></strong></td></tr>';
+
+	$fragments['span.aperacash-balance'] = '<span class="aperacash-balance">' . do_shortcode( '[balanceprice]' ) . '</span>';
+
+	return $fragments;
+}
+add_filter( 'woocommerce_update_order_review_fragments', 'wonka_woocommerce_update_order_review_fragments', 10 );
+
+/**
  * This function adds the coupon form to the checkout review section.
  */
 function wonka_woocommerce_review_order_after_order_total() {
+	if ( is_user_logged_in() ) :
+		?>
+		<tr class="aperacash-display">
+			<td colspan="3">
+				<div class="aperacash-input-group input-checkbox">
+					<label for="aperacash-apply"> 
+						<input type="checkbox" class="wonka-checkbox form-checkbox" name="aperacash-apply" id="aperacash-apply" 
+						<?php
+						if ( empty( WC()->cart->get_coupons() ) ) :
+							if ( 'checked' === get_option( 'apply_all_aperacash', false ) ) :
+								update_option( 'apply_all_aperacash', false );
+								$apply_checked = get_option( 'apply_all_aperacash', false );
+							else :
+								$apply_checked = get_option( 'apply_all_aperacash', false );
+							endif;
+							$apply_checked = get_option( 'apply_all_aperacash', false );
+							else :
+								foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
+									if ( false !== strpos( $coupon->code, 'aperacash_' ) && 'checked' !== get_option( 'apply_all_aperacash', false ) ) :
+										update_option( 'apply_all_aperacash', 'checked' );
+										$apply_checked = get_option( 'apply_all_aperacash', false );
+									else :
+										$apply_checked = get_option( 'apply_all_aperacash', false );
+									endif;
+								endforeach;
+						endif;
+							echo wp_kses_post( $apply_checked );
+							?>
+						/>
+						You have <span class="aperacash-balance"><?php echo do_shortcode( '[balanceprice]' ); ?></span> AperaCash, would you like to apply to this order.</label>
+				</div>
+			</td>
+		</tr>
+		<?php
+	endif;
 	if ( wc_coupons_enabled() ) :
 		$query_params = ( ! is_user_logged_in() ) ? array(
 			'guestcheckout' => 'true',
@@ -1265,6 +1300,86 @@ function wonka_woocommerce_review_order_after_order_total() {
 	endif;
 }
 add_action( 'woocommerce_review_order_after_order_total', 'wonka_woocommerce_review_order_after_order_total', 50 );
+
+/**
+ * Ajax request for AperaCash apply on checkout.
+ *
+ * @param  [type] $params [description]
+ * @return [type]         [description]
+ */
+function apply_all_aperacash() {
+
+	$nonce = ( isset( $_REQUEST['security'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['security'] ) ) : false;
+	wp_verify_nonce( $nonce, 'ws-request-nonce' ) || die( 'nonce failed' );
+
+	$add_discount = ( isset( $_REQUEST['checkbox'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['checkbox'] ) ) : null;
+
+	if ( $add_discount ) :
+		WC()->session->set( 'auto_redeemcoupon', 'yes' );
+		update_option( 'rs_enable_disable_auto_redeem_points', 'yes' );
+		update_option( 'rs_enable_disable_auto_redeem_checkout', 'yes' );
+
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
+
+		if ( empty( WC()->cart->get_cart_contents_count() ) ) {
+			WC()->session->set( 'auto_redeemcoupon', 'yes' );
+			foreach ( WC()->cart->applied_coupons as $code => $coupon ) {
+				WC()->cart->remove_coupon( $code );
+			}
+
+			return;
+		}
+
+		$UserId     = get_current_user_id();
+		$PointsData = new RS_Points_Data( $UserId );
+		$Points     = $PointsData->total_available_points();
+
+		if ( empty( $Points ) ) {
+			return;
+		}
+
+		if ( $Points < get_option( 'rs_first_time_minimum_user_points' ) ) {
+			return;
+		}
+
+		if ( $Points < get_option( 'rs_minimum_user_points_to_redeem' ) ) {
+			return;
+		}
+
+		if ( check_if_pointprice_product_exist_in_cart() ) {
+			return;
+		}
+
+		if ( get_option( 'rs_enable_disable_auto_redeem_points' ) != 'yes' ) {
+			return;
+		}
+
+		$CartSubtotal = srp_cart_subtotal();
+
+		$MinCartTotal = get_option( 'rs_minimum_cart_total_points' );
+		$MaxCartTotal = get_option( 'rs_maximum_cart_total_points' );
+
+		$capture = RSRedeemingFrontend::auto_redeeming_in_checkout( $UserId, $Points, $CartSubtotal, $MaxCartTotal, $MinCartTotal );
+
+		update_option( 'rs_enable_disable_auto_redeem_points', 'no' );
+		update_option( 'rs_enable_disable_auto_redeem_checkout', 'no' );
+		WC()->session->set( 'auto_redeemcoupon', 'no' );
+	endif;
+
+	if ( 'false' === $add_discount ) :
+		foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
+			if ( false !== strpos( $coupon->code, 'aperacash_' ) && 'checked' === get_option( 'apply_all_aperacash', false ) ) :
+				update_option( 'apply_all_aperacash', false );
+				WC()->cart->remove_coupon( $code );
+			endif;
+		endforeach;
+	endif;
+
+	wp_send_json_success( $add_discount, null );
+}
+add_action( 'wp_ajax_apply_all_aperacash', 'apply_all_aperacash' );
 
 /**
  * This function filters the coupon display area on the order review of checkout page.
@@ -3219,7 +3334,8 @@ function wonkasoft_wad_fields_values_match( $current_rules, $condition, $selecte
 	$coupon       = new WP_Query( $couponargs );
 	$coupon_array = array();
 	foreach ( $coupon->posts as $cur_coupon ) {
-		if ( strpos( strtolower( $cur_coupon->post_title ), 'sumo_' ) === false ) :
+		preg_match( '/sumo_|aperacash_|auto_redeem_/', strtolower( $cur_coupon->post_title ), $matches, PREG_UNMATCHED_AS_NULL );
+		if ( empty( $matches ) ) :
 			$coupon_array[ $cur_coupon->ID ] = strtolower( $cur_coupon->post_title );
 		endif;
 	}
