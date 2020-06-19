@@ -4506,13 +4506,13 @@ var componentForm;
 			document.querySelector( '#shipping_method input' ).click();
 		});
 
-		$( document.body ).on( 'updated_checkout', function( e ) { 
-			$( document.body ).trigger('wc_fragments_refreshed');
-		});
+		// $( document.body ).on( 'updated_checkout', function( e ) { 
+		// 	$( document.body ).trigger('wc_fragments_refreshed');
+		// });
 
 		var qty_reset_timer;
 		
-		$( document.body ).on( 'wc_fragments_refreshed updated_wc_div', function( e ) { 
+		$( document.body ).on( 'wc_fragments_refreshed wc_fragment_refresh updated_wc_div update_checkout', function( e ) { 
 			if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
 				if ( '' != qty_reset_timer ) {
 					clearTimeout( qty_reset_timer );
@@ -4520,7 +4520,7 @@ var componentForm;
 				
 				qty_reset_timer = setTimeout( function() {
 					checkout_init.qty_changers_init();
-				}, 1000 );
+				}, 800 );
 			}
 		});
 	};
