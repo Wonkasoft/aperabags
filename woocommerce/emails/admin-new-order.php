@@ -20,6 +20,7 @@ defined( 'ABSPATH' ) || exit;
 /*
  * @hooked WC_Emails::email_header() Output the email header
  */
+
 do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php /* translators: %s: Customer billing full name */ ?>
