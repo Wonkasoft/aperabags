@@ -1203,12 +1203,12 @@ function wonkasoft_pre_submission( $form ) {
 	$last_name  = preg_split( '/[\s]/', $user->data->display_name )[1];
 	foreach ( $inputs as $cur_input ) {
 		if ( 'First' === $cur_input['label'] ) {
-			$input_val           = 'input_' . str_replace( '.', '_', $cur_input['id'] );
+			$input_val           = 'input_' . $cur_input['id'];
 			$_POST[ $input_val ] = $first_name;
 		}
 
 		if ( 'Last' === $cur_input['label'] ) {
-			$input_val           = 'input_' . str_replace( '.', '_', $cur_input['id'] );
+			$input_val           = 'input_' . $cur_input['id'];
 			$_POST[ $input_val ] = $last_name;
 		}
 	}
