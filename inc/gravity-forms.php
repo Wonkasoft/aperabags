@@ -88,6 +88,59 @@ add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );
 add_filter( 'gform_enable_password_field', '__return_true' );
 
 /**
+ * This filter is to allow the update user for to show on apera-engagement page.
+ *
+ * @param  array $form Contains the form array.
+ * @return array       Returns the form array.
+ */
+function wonkasoft_gform_pre_render( $form ) {
+	if ( 'Apera Customer Engagement Program Update Member' !== $form['title'] ) :
+		return $form;
+	endif;
+
+	remove_action( 'gform_get_form_filter_' . $form['id'], array( gf_user_registration(), 'hide_form' ) );
+
+	return $form;
+}
+add_filter( 'gform_pre_render', 'wonkasoft_gform_pre_render', 100 );
+
+/**
+ * Set the update feed for email fetched user id.
+ *
+ * @param  int   $user_id Contains the current user id.
+ * @param  array $entry   Contains array of the current form entries.
+ * @param  array $form    Contains array of the current form.
+ * @param  array $feed    Contains array of the user registration addon feed.
+ * @return int          Returns the user id that is set.
+ */
+function wonkasoft_gform_user_registration_update_user_id( $user_id, $entry, $form, $feed ) {
+	$entry_fields  = array();
+	$set_labels    = array(
+		'Email',
+	);
+	$custom_fields = array();
+	$pattern       = '/([ \/]{1,5})/';
+	foreach ( $form['fields'] as $field ) {
+		if ( 'honeypot' !== $field['type'] ) :
+			if ( in_array( $field['label'], $set_labels ) ) :
+				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
+			endif;
+			if ( ! empty( $field->inputs ) ) :
+				foreach ( $field->inputs as $input ) {
+					if ( in_array( $input['label'], $set_labels ) ) :
+						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
+					endif;
+				}
+			endif;
+		endif;
+	}
+
+	$user_id = get_user_by( 'email', $entry_fields['email'] )->ID;
+	return $user_id;
+}
+add_filter( 'gform_user_registration_update_user_id', 'wonkasoft_gform_user_registration_update_user_id', 10, 4 );
+
+/**
  * This is to add a prepend element to a specific field.
  *
  * @param  html  $field_content contains the field content in html.
