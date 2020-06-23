@@ -524,3 +524,71 @@ function ws_gravity_registration_autologin( $user_id, $user_config, $entry, $pas
 	);
 }
 add_action( 'gform_user_registered', 'ws_gravity_registration_autologin', 10, 4 );
+
+
+
+// Register Custom Post Type Testimonials
+function testimonial_post_type() {
+
+	$labels = array(
+		'name'                  => _x( 'Testimonials', 'Post Type General Name', 'aperabags' ),
+		'singular_name'         => _x( 'testimonial', 'Post Type Singular Name', 'aperabags' ),
+		'menu_name'             => __( 'Testimonials', 'aperabags' ),
+		'name_admin_bar'        => __( 'Testimonials', 'aperabags' ),
+		'archives'              => __( 'Item Archives', 'aperabags' ),
+		'attributes'            => __( 'Item Attributes', 'aperabags' ),
+		'parent_item_colon'     => __( 'Parent Item:', 'aperabags' ),
+		'all_items'             => __( 'All Items', 'aperabags' ),
+		'add_new_item'          => __( 'Add New Item', 'aperabags' ),
+		'add_new'               => __( 'Add New', 'aperabags' ),
+		'new_item'              => __( 'New Item', 'aperabags' ),
+		'edit_item'             => __( 'Edit Item', 'aperabags' ),
+		'update_item'           => __( 'Update Item', 'aperabags' ),
+		'view_item'             => __( 'View Item', 'aperabags' ),
+		'view_items'            => __( 'View Items', 'aperabags' ),
+		'search_items'          => __( 'Search Item', 'aperabags' ),
+		'not_found'             => __( 'Not found', 'aperabags' ),
+		'not_found_in_trash'    => __( 'Not found in Trash', 'aperabags' ),
+		'featured_image'        => __( 'Featured Image', 'aperabags' ),
+		'set_featured_image'    => __( 'Set featured image', 'aperabags' ),
+		'remove_featured_image' => __( 'Remove featured image', 'aperabags' ),
+		'use_featured_image'    => __( 'Use as featured image', 'aperabags' ),
+		'insert_into_item'      => __( 'Insert into item', 'aperabags' ),
+		'uploaded_to_this_item' => __( 'Uploaded to this item', 'aperabags' ),
+		'items_list'            => __( 'testimonials list', 'aperabags' ),
+		'items_list_navigation' => __( 'Items list navigation', 'aperabags' ),
+		'filter_items_list'     => __( 'Filter items list', 'aperabags' ),
+	);
+	$rewrite = array(
+		'slug'                  => 'testimonials',
+		'with_front'            => true,
+		'pages'                 => false,
+		'feeds'                 => true,
+	);
+	$args = array(
+		'label'                 => __( 'testimonial', 'aperabags' ),
+		'description'           => __( 'Customer Testimonials', 'aperabags' ),
+		'labels'                => $labels,
+		'supports'              => array( 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields', 'post-formats' ),
+		'taxonomies'            => array( 'testimonials' ),
+		'hierarchical'          => false,
+		'public'                => true,
+		'show_ui'               => true,
+		'show_in_menu'          => true,
+		'menu_position'         => 5,
+		'menu_icon'             => 'dashicons-format-quote',
+		'show_in_admin_bar'     => true,
+		'show_in_nav_menus'     => true,
+		'can_export'            => true,
+		'has_archive'           => true,
+		'exclude_from_search'   => true,
+		'publicly_queryable'    => true,
+		'rewrite'               => $rewrite,
+		'capability_type'       => 'page',
+		'show_in_rest'          => true,
+		'rest_base'             => 'testimonials',
+	);
+	register_post_type( 'testimonials', $args );
+
+}
+add_action( 'init', 'testimonial_post_type', 0 );
