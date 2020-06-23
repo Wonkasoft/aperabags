@@ -161,6 +161,13 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		add_image_size( 'custom_products_size', 370, 550, false );
 		add_image_size( 'cart_products_size', 75, 115, false );
 
+		if ( class_exists( 'Wonkasoft_Custom_Post_Types' ) ) :
+			$add_post_types = array(
+				'testimonial',
+			);
+			new Wonkasoft_Custom_Post_Types( $add_post_types );
+		endif;
+
 	}
 	add_action( 'after_setup_theme', 'apera_bags_setup' );
 endif;
@@ -310,6 +317,13 @@ if ( ! class_exists( 'Wonkasoft_Refersion_Api' ) ) {
  */
 if ( ! class_exists( 'Wonkasoft_GetResponse_Api' ) ) {
 	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-getresponse-api.php';
+}
+
+/**
+ * Load Wonkasoft_Custom_Post_Types class file.
+ */
+if ( ! class_exists( 'Wonkasoft_Custom_Post_Types' ) ) {
+	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-custom-post-types.php';
 }
 
 /**
@@ -524,71 +538,3 @@ function ws_gravity_registration_autologin( $user_id, $user_config, $entry, $pas
 	);
 }
 add_action( 'gform_user_registered', 'ws_gravity_registration_autologin', 10, 4 );
-
-
-
-// Register Custom Post Type Testimonials
-function testimonial_post_type() {
-
-	$labels = array(
-		'name'                  => _x( 'Testimonials', 'Post Type General Name', 'aperabags' ),
-		'singular_name'         => _x( 'testimonial', 'Post Type Singular Name', 'aperabags' ),
-		'menu_name'             => __( 'Testimonials', 'aperabags' ),
-		'name_admin_bar'        => __( 'Testimonials', 'aperabags' ),
-		'archives'              => __( 'Testimonial Archives', 'aperabags' ),
-		'attributes'            => __( 'Testimonial Attributes', 'aperabags' ),
-		'parent_item_colon'     => __( 'Parent Testimonial:', 'aperabags' ),
-		'all_items'             => __( 'All Testimonials', 'aperabags' ),
-		'add_new_item'          => __( 'Add New Testimonial', 'aperabags' ),
-		'add_new'               => __( 'Add Testimonial', 'aperabags' ),
-		'new_item'              => __( 'New Testimonial', 'aperabags' ),
-		'edit_item'             => __( 'Edit Testimonial', 'aperabags' ),
-		'update_item'           => __( 'Update Testimonial', 'aperabags' ),
-		'view_item'             => __( 'View Testimonial', 'aperabags' ),
-		'view_items'            => __( 'View Testimonial', 'aperabags' ),
-		'search_items'          => __( 'Search Testimonial', 'aperabags' ),
-		'not_found'             => __( 'Not found', 'aperabags' ),
-		'not_found_in_trash'    => __( 'Not found in Trash', 'aperabags' ),
-		'featured_image'        => __( 'Featured Image', 'aperabags' ),
-		'set_featured_image'    => __( 'Set featured image', 'aperabags' ),
-		'remove_featured_image' => __( 'Remove featured image', 'aperabags' ),
-		'use_featured_image'    => __( 'Use as featured image', 'aperabags' ),
-		'insert_into_item'      => __( 'Insert into item', 'aperabags' ),
-		'uploaded_to_this_item' => __( 'Uploaded to this item', 'aperabags' ),
-		'items_list'            => __( 'testimonials list', 'aperabags' ),
-		'items_list_navigation' => __( 'Items list navigation', 'aperabags' ),
-		'filter_items_list'     => __( 'Filter items list', 'aperabags' ),
-	);
-	$rewrite = array(
-		'slug'                  => 'testimonials',
-		'with_front'            => true,
-		'pages'                 => false,
-		'feeds'                 => true,
-	);
-	$args = array(
-		'label'                 => __( 'testimonial', 'aperabags' ),
-		'description'           => __( 'Customer Testimonials', 'aperabags' ),
-		'labels'                => $labels,
-		'supports'              => array( 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields', 'post-formats' ),
-		'taxonomies'            => array( 'testimonials' ),
-		'hierarchical'          => false,
-		'public'                => true,
-		'show_ui'               => true,
-		'show_in_menu'          => true,
-		'menu_position'         => 5,
-		'menu_icon'             => 'dashicons-format-quote',
-		'show_in_admin_bar'     => true,
-		'show_in_nav_menus'     => true,
-		'can_export'            => true,
-		'has_archive'           => true,
-		'exclude_from_search'   => true,
-		'publicly_queryable'    => true,
-		'rewrite'               => $rewrite,
-		'capability_type'       => 'page',
-		'show_in_rest'          => true,
-		'rest_base'             => 'testimonials',
-	);
-	register_post_type( 'testimonials', $args );
-
-}
-add_action( 'init', 'testimonial_post_type', 0 );
