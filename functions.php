@@ -161,13 +161,15 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		add_image_size( 'custom_products_size', 370, 550, false );
 		add_image_size( 'cart_products_size', 75, 115, false );
 
+		/**
+		 * This class can be used to load custom post types.
+		 */
 		if ( class_exists( 'Wonkasoft_Custom_Post_Types' ) ) :
 			$add_post_types = array(
 				'testimonial',
 			);
 			new Wonkasoft_Custom_Post_Types( $add_post_types );
 		endif;
-
 	}
 	add_action( 'after_setup_theme', 'apera_bags_setup' );
 endif;

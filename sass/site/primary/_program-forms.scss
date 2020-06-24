@@ -17,6 +17,14 @@ form.wonka-gform.wonka-perks-form {
 	}
 }
 
+form {
+
+	label.gfield_label,
+	div.gfield_description {
+		font-family: $font__main_jose;
+	}
+}
+
 form.wonka-gform.wonka-zip-form, 
 form.wonka-gform.wonka-ambassador-form, 
 form.wonka-gform.wonka-perks-form,

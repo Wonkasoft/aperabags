@@ -1267,4 +1267,30 @@ function wonkasoft_pre_submission( $form ) {
 	}
 }
 add_action( 'gform_pre_submission', 'wonkasoft_pre_submission' );
+
+/**
+ * This is for the custom date to footer of notification emails.
+ *
+ * @param [type] $text
+ * @param [type] $form
+ * @param [type] $entry
+ * @param [type] $url_encode
+ * @param [type] $esc_html
+ * @param [type] $nl2br
+ * @param [type] $format
+ * @return void
+ */
+function wonkasoft_gform_replace_merge_tags( $text, $form, $entry, $url_encode, $esc_html, $nl2br, $format ) {
+    $merge_tag = '{custom_date}';
+ 
+    if ( strpos( $text, $merge_tag ) === false ) {
+        return $text;
+    }
+ 
+    $local_timestamp = GFCommon::get_local_timestamp( time() );
+    $local_date      = date_i18n( 'Y', $local_timestamp, true );
+ 
+    return str_replace( $merge_tag, $url_encode ? urlencode( $local_date ) : $local_date, $text );
+}
+add_filter( 'gform_replace_merge_tags', 'wonkasoft_gform_replace_merge_tags', 10, 7 );
 /*=====  End of Customizing of Gravity forms  ======*/
