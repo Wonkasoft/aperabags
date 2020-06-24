@@ -1293,4 +1293,10 @@ function wonkasoft_gform_replace_merge_tags( $text, $form, $entry, $url_encode, 
     return str_replace( $merge_tag, $url_encode ? urlencode( $local_date ) : $local_date, $text );
 }
 add_filter( 'gform_replace_merge_tags', 'wonkasoft_gform_replace_merge_tags', 10, 7 );
+
+function wonkasoft_custom_merge_tags( $merge_tags, $form_id, $fields, $element_id ) {
+	$merge_tags[] = array('label' => 'Footer Date', 'tag' => '{custom_date}');
+    return $merge_tags;
+}
+add_filter('gform_custom_merge_tags', 'wonkasoft_custom_merge_tags', 10, 4);
 /*=====  End of Customizing of Gravity forms  ======*/
