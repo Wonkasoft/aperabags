@@ -1075,9 +1075,9 @@ function wonkasoft_after_cep_update_entry( $entry, $form ) {
 		endif;
 	}
 
-	$user    = get_user_by( 'email', $entry_fields['engage_email'] );
+	$user = get_user_by( 'email', $entry_fields['engage_email'] );
 
-	if ( 0 === $user ) :
+	if ( false === $user ) :
 		return;
 	endif;
 
@@ -1095,6 +1095,7 @@ function wonkasoft_after_cep_update_entry( $entry, $form ) {
 		);
 
 		$getresponse = new Wonkasoft_GetResponse_Api( $api_args );
+		$response    = array();
 
 		if ( empty( $getresponse->campaign_id ) ) :
 			foreach ( $getresponse->campaign_list as $campaign ) :
