@@ -841,6 +841,16 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		return $confirmation;
 	}
 
+	if ( 'Apera Customer Engagement Program Update Member' === $form['title'] ) :
+		$user = get_user_by( 'email', $entry_fields['email'] );
+		if ( 0 === $user ) :
+			$confirmation  = '<p>We are sorry, but it looks like ' . $entry_fields['email'] . ' is not yet registered as a Perks Partner.</p>';
+			$confirmation .= '<p><a href="https://aperabags.com/apera-engagement/" class="wonka-btn">Please try again</a></p>';
+			return $confirmation;
+		endif;
+		return $confirmation;
+	endif;
+
 	if ( email_exists( $entry_fields['email'] ) ) {
 		$output       = '';
 		$output      .= '<p>' . $entry_fields['email'] . ' is already being used. You can login at the link below</p>';
@@ -857,10 +867,10 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		$role_display2 = 'Customer';
 		$user_id       = wonkasoft_make_user_account( $entry_fields, $role );
 		$user          = new WP_User( $user_id );
-		if ( ! in_array( $role, $user->roles ) ) :
+		if ( ! in_array( $role, $user->roles, true ) ) :
 			$user->add_role( $role, $role_display );
 		endif;
-		if ( ! in_array( $role2, $user->roles ) ) :
+		if ( ! in_array( $role2, $user->roles, true ) ) :
 			$user->add_role( $role2, $role_display2 );
 		endif;
 		// Setting Apera Perks affiliate link to send to getResponse.
@@ -879,7 +889,8 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		if ( empty( $getresponse_init->campaign_id ) ) :
 			foreach ( $getresponse_init->campaign_list as $campaign ) :
 				if ( 'perks_program_signups' === $campaign->name ) :
-					$getresponse_init->campaign_id = $campaign->campaignId;
+					// @codingStandardsIgnoreLine.
+					$getresponse_init->campaign_id = $campaign->campaignId; 
 				endif;
 			endforeach;
 		endif;
@@ -887,7 +898,8 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 			foreach ( $getresponse_init->custom_fields_list as $field ) {
 				if ( in_array( $field->name, $getresponse_init->custom_fields ) ) :
 					$add_field = array(
-						'customFieldId' => $field->customFieldId,
+						// @codingStandardsIgnoreLine.
+						'customFieldId' => $field->customFieldId, 
 						'value'         => array(
 							$getresponse_init->custom_fields_values[ $field->name ],
 						),
@@ -900,6 +912,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		if ( ! empty( $entry_fields['mse_occupation'] ) ) :
 			foreach ( $getresponse_init->campaign_list as $campaign ) :
 				if ( 'perks_mse_program_signups' === $campaign->name ) :
+					// @codingStandardsIgnoreLine.
 					$getresponse_init->campaign_id = $campaign->campaignId;
 				endif;
 			endforeach;
@@ -1142,7 +1155,7 @@ add_action( 'gform_after_submission', 'wonkasoft_after_cep_update_entry', 10, 2 
  * Adds the javascript required to view your password.
  *  Turn the the input type into text and back to password.
  *
- * @param   object $form  form object
+ * @param   object $form  form object.
  *
  * @author Carlos
  */
@@ -1271,32 +1284,44 @@ add_action( 'gform_pre_submission', 'wonkasoft_pre_submission' );
 /**
  * This is for the custom date to footer of notification emails.
  *
- * @param [type] $text
- * @param [type] $form
- * @param [type] $entry
- * @param [type] $url_encode
- * @param [type] $esc_html
- * @param [type] $nl2br
- * @param [type] $format
- * @return void
+ * @param string $text Contains a merge tag text.
+ * @param array  $form Contains an array of the form.
+ * @param array  $entry Contains an array of the form entries.
+ * @param string $url_encode Contains a string of the url encode.
+ * @param string $esc_html Contains a string escaped from html.
+ * @param string $nl2br Contains unknown.
+ * @param string $format Contains unknown.
+ * @return string   returns the copyright year.
  */
 function wonkasoft_gform_replace_merge_tags( $text, $form, $entry, $url_encode, $esc_html, $nl2br, $format ) {
-    $merge_tag = '{custom_date}';
- 
-    if ( strpos( $text, $merge_tag ) === false ) {
-        return $text;
-    }
- 
-    $local_timestamp = GFCommon::get_local_timestamp( time() );
-    $local_date      = date_i18n( 'Y', $local_timestamp, true );
- 
-    return str_replace( $merge_tag, $url_encode ? urlencode( $local_date ) : $local_date, $text );
+	$merge_tag = '{custom_date}';
+
+	if ( strpos( $text, $merge_tag ) === false ) {
+		return $text;
+	}
+
+	$local_timestamp = GFCommon::get_local_timestamp( time() );
+	$local_date      = date_i18n( 'Y', $local_timestamp, true );
+
+	return str_replace( $merge_tag, $url_encode ? rawurlencode( $local_date ) : $local_date, $text );
 }
 add_filter( 'gform_replace_merge_tags', 'wonkasoft_gform_replace_merge_tags', 10, 7 );
 
+/**
+ * This function sets custom merge tags for gravity forms.
+ *
+ * @param array $merge_tags Contains an array of the current merge tags.
+ * @param int   $form_id Contains the form ID.
+ * @param array $fields Contains an array of the form fields.
+ * @param int   $element_id Contains the current element ID.
+ * @return array returns the merge tags that are set.
+ */
 function wonkasoft_custom_merge_tags( $merge_tags, $form_id, $fields, $element_id ) {
-	$merge_tags[] = array('label' => 'Copyright Year', 'tag' => '{custom_date}');
-    return $merge_tags;
+	$merge_tags[] = array(
+		'label' => 'Copyright Year',
+		'tag'   => '{custom_date}',
+	);
+	return $merge_tags;
 }
-add_filter('gform_custom_merge_tags', 'wonkasoft_custom_merge_tags', 10, 4);
+add_filter( 'gform_custom_merge_tags', 'wonkasoft_custom_merge_tags', 10, 4 );
 /*=====  End of Customizing of Gravity forms  ======*/

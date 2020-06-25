@@ -347,7 +347,6 @@ get_header();
 												<div class="modal-body">
 													<!-- 16:9 aspect ratio -->
 													<div class="embed-responsive embed-responsive-16by9" id="cause-youtube-source">
-														
 													</div>
 													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 														<span aria-hidden="true">X</span>
@@ -399,7 +398,6 @@ get_header();
 															<div class="modal-body">
 																<!-- 16:9 aspect ratio -->
 																<div id="about-youtube-source" class="embed-responsive embed-responsive-16by9">
-																	
 																</div>
 																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 																	<span aria-hidden="true">X</span>
