@@ -116,18 +116,18 @@ add_filter( 'gform_pre_render', 'wonkasoft_gform_pre_render', 100 );
 function wonkasoft_gform_user_registration_update_user_id( $user_id, $entry, $form, $feed ) {
 	$entry_fields  = array();
 	$set_labels    = array(
-		'Email',
+		'Engage Email',
 	);
 	$custom_fields = array();
 	$pattern       = '/([ \/]{1,5})/';
 	foreach ( $form['fields'] as $field ) {
 		if ( 'honeypot' !== $field['type'] ) :
-			if ( in_array( $field['label'], $set_labels ) ) :
+			if ( in_array( $field['label'], $set_labels, true ) ) :
 				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
 			endif;
 			if ( ! empty( $field->inputs ) ) :
 				foreach ( $field->inputs as $input ) {
-					if ( in_array( $input['label'], $set_labels ) ) :
+					if ( in_array( $input['label'], $set_labels, true ) ) :
 						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
 					endif;
 				}
@@ -135,10 +135,52 @@ function wonkasoft_gform_user_registration_update_user_id( $user_id, $entry, $fo
 		endif;
 	}
 
-	$user_id = get_user_by( 'email', $entry_fields['email'] )->ID;
+	$user_id = get_user_by( 'email', $entry_fields['engage_email'] )->ID;
 	return $user_id;
 }
 add_filter( 'gform_user_registration_update_user_id', 'wonkasoft_gform_user_registration_update_user_id', 10, 4 );
+
+/**
+ * This aborcancels email if email is not a perks member. 
+ *
+ * @param [type] $email
+ * @param [type] $message_format
+ * @param [type] $notification
+ * @param [type] $entry
+ * @return void
+ */
+function wonkasoft_gform_pre_send_email( $email, $message_format, $notification, $entry ) {
+	$entry_fields  = array();
+	$set_labels    = array(
+		'Engage Email',
+	);
+	$custom_fields = array();
+	$pattern       = '/([ \/]{1,5})/';
+	foreach ( $form['fields'] as $field ) {
+		if ( 'honeypot' !== $field['type'] ) :
+			if ( in_array( $field['label'], $set_labels, true ) ) :
+				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
+			endif;
+			if ( ! empty( $field->inputs ) ) :
+				foreach ( $field->inputs as $input ) {
+					if ( in_array( $input['label'], $set_labels, true ) ) :
+						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
+					endif;
+				}
+			endif;
+		endif;
+	}
+
+	$user_id = get_user_by( 'email', $entry_fields['engage_email'] );
+
+	if ( false === $user ) :
+		// cancel sending emails.
+		$email['abort_email'] = true;
+		return $email;
+	endif;
+	return $email;
+}
+add_filter( 'gform_pre_send_email', 'wonkasoft_gform_pre_send_email', 10, 4 );
 
 /**
  * This is to add a prepend element to a specific field.
@@ -672,10 +714,10 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 	$pattern                       = '/([ \/]{1,5})/';
 	foreach ( $form['fields'] as $field ) {
 		if ( 'honeypot' !== $field['type'] ) :
-			if ( in_array( $field['label'], $set_labels ) ) :
+			if ( in_array( $field['label'], $set_labels, true ) ) :
 				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
 			endif;
-			if ( in_array( $field['label'], $custom_fields ) ) :
+			if ( in_array( $field['label'], $custom_fields, true ) ) :
 				$current_label = strtolower( preg_replace( $pattern, $field['label'] ) );
 					array_push(
 						$entry_fields['custom_fields'],
@@ -687,7 +729,7 @@ function wonkasoft_after_code_entry( $entry, $form ) {
 			endif;
 			if ( ! empty( $field->inputs ) ) :
 				foreach ( $field->inputs as $input ) {
-					if ( in_array( $input['label'], $set_labels ) ) :
+					if ( in_array( $input['label'], $set_labels, true ) ) :
 						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
 					endif;
 				}
@@ -935,6 +977,8 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 	return $confirmation;
 }
 add_filter( 'gform_confirmation', 'wonkasoft_after_perks_registration_entry', 10, 4 );
+
+
 
 /**
  * This processes the form from the tracking portal
@@ -1217,6 +1261,10 @@ add_action( 'gform_register_init_scripts', 'wonka_gform_validation' );
  * @param  array $form contains an array of the form.
  */
 function wonkasoft_pre_submission( $form ) {
+	if ( 'Apera Customer Engagement Program Update Member' === $form['title'] ) {
+
+	}
+
 	if ( 'Tracking Post' === $form['title'] ) {
 		$customer_email = '';
 		$order_input    = '';
@@ -1269,7 +1317,7 @@ function wonkasoft_pre_submission( $form ) {
 
 	$user = get_user_by( 'email', $user_email );
 
-	if ( 0 == $user ) :
+	if ( false === $user ) :
 		return;
 	endif;
 
