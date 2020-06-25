@@ -755,6 +755,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		'Last',
 		'Email',
 		'Birthday Email',
+		'Engage Email',
 		'Birthday Date',
 		'Password',
 		'MSE Request',
@@ -791,10 +792,10 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 	$pattern                       = '/([ \/]{1,5})/';
 	foreach ( $form['fields'] as $field ) {
 		if ( 'honeypot' !== $field['type'] ) :
-			if ( in_array( $field['label'], $set_labels ) ) :
+			if ( in_array( $field['label'], $set_labels, true ) ) :
 				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
 			endif;
-			if ( in_array( $field['label'], $custom_fields ) ) :
+			if ( in_array( $field['label'], $custom_fields, true ) ) :
 				$current_label = strtolower( preg_replace( $pattern, $field['label'] ) );
 					array_push(
 						$entry_fields['custom_fields'],
@@ -806,7 +807,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 			endif;
 			if ( ! empty( $field->inputs ) ) :
 				foreach ( $field->inputs as $input ) {
-					if ( in_array( $input['label'], $set_labels ) ) :
+					if ( in_array( $input['label'], $set_labels, true ) ) :
 						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
 					endif;
 				}
@@ -843,7 +844,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 	}
 
 	if ( 'Apera Customer Engagement Program Update Member' === $form['title'] ) :
-		$user = get_user_by( 'email', $entry_fields['email'] );
+		$user = get_user_by( 'email', $entry_fields['engage_email'] );
 		if ( false === $user ) :
 			$confirmation  = '<p>We are sorry, but it looks like ' . $entry_fields['email'] . ' is not yet registered as a Perks Partner.</p>';
 			$confirmation .= '<p><a href="https://aperabags.com/apera-engagement/" class="wonka-btn">Please try again</a></p>';
