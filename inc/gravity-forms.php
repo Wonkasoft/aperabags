@@ -1032,7 +1032,7 @@ function wonkasoft_after_cep_update_entry( $entry, $form ) {
 		'Apera Customer Engagement Program Update Member',
 	);
 
-	if ( ! in_array( $form['title'], $forms_to_process ) ) {
+	if ( ! in_array( $form['title'], $forms_to_process, true ) ) {
 		return;
 	}
 
@@ -1052,10 +1052,10 @@ function wonkasoft_after_cep_update_entry( $entry, $form ) {
 	$pattern                       = '/([ \/]{1,5})/';
 	foreach ( $form['fields'] as $field ) {
 		if ( 'honeypot' !== $field['type'] ) :
-			if ( in_array( $field['label'], $set_labels ) ) :
+			if ( in_array( $field['label'], $set_labels, true ) ) :
 				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
 			endif;
-			if ( in_array( $field['label'], $custom_fields ) ) :
+			if ( in_array( $field['label'], $custom_fields, true ) ) :
 				$current_label = strtolower( preg_replace( $pattern, $field['label'] ) );
 					array_push(
 						$entry_fields['custom_fields'],
@@ -1067,7 +1067,7 @@ function wonkasoft_after_cep_update_entry( $entry, $form ) {
 			endif;
 			if ( ! empty( $field->inputs ) ) :
 				foreach ( $field->inputs as $input ) {
-					if ( in_array( $input['label'], $set_labels ) ) :
+					if ( in_array( $input['label'], $set_labels, true ) ) :
 						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
 					endif;
 				}
@@ -1075,7 +1075,15 @@ function wonkasoft_after_cep_update_entry( $entry, $form ) {
 		endif;
 	}
 
-	if ( '' !== $entry_fields['address'] && '' !== $entry_fields['city'] && '' !== $entry_fields['state_province'] && '' !== $entry_fields['zip_postal_code'] ) :
+	$user    = get_user_by( 'email', $entry_fields['engage_email'] );
+
+	if ( 0 === $user ) :
+		return;
+	endif;
+
+	$user_id = $user->ID;
+
+	if ( '' !== $entry_fields['street_address'] && '' !== $entry_fields['city'] && '' !== $entry_fields['state_province'] && '' !== $entry_fields['zip_postal_code'] ) :
 		$set_tag = 'cep_updated';
 		// Setting getResponse api args.
 		$api_args = array(
@@ -1085,9 +1093,6 @@ function wonkasoft_after_cep_update_entry( $entry, $form ) {
 			),
 			'campaign_name' => 'apera_195932',
 		);
-
-		$user    = get_user_by( 'email', $entry_fields['engage_email'] );
-		$user_id = $user->ID;
 
 		$getresponse = new Wonkasoft_GetResponse_Api( $api_args );
 
@@ -1115,7 +1120,7 @@ function wonkasoft_after_cep_update_entry( $entry, $form ) {
 			$getresponse->custom_fields_list      = $getresponse->get_a_list_of_custom_fields();
 			$getresponse->custom_fields_to_update = array();
 			foreach ( $getresponse->custom_fields_list as $field ) {
-				if ( in_array( $field->name, $getresponse->custom_fields ) ) :
+				if ( in_array( $field->name, $getresponse->custom_fields, true ) ) :
 					$add_field = array(
 						'customFieldId' => $field->customFieldId,
 						'value'         => array(
