@@ -141,7 +141,7 @@ function wonkasoft_gform_user_registration_update_user_id( $user_id, $entry, $fo
 add_filter( 'gform_user_registration_update_user_id', 'wonkasoft_gform_user_registration_update_user_id', 10, 4 );
 
 /**
- * This aborcancels email if email is not a perks member. 
+ * This aborcancels email if email is not a perks member.
  *
  * @param [type] $email
  * @param [type] $message_format
@@ -172,16 +172,16 @@ function wonkasoft_gform_pre_send_email( $email, $message_format, $notification,
 				endif;
 			endif;
 		}
-	
-		$user_id = get_user_by( 'email', $entry_fields['engage_email'] );
-	
+
+		$user = get_user_by( 'email', $entry_fields['engage_email'] );
+
 		if ( false === $user ) :
 			// cancel sending emails.
 			$email['abort_email'] = true;
 			return $email;
 		endif;
 	endif;
-	
+
 	return $email;
 }
 add_filter( 'gform_pre_send_email', 'wonkasoft_gform_pre_send_email', 10, 4 );
