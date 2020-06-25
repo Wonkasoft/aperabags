@@ -174,7 +174,6 @@ function wonkasoft_gform_pre_send_email( $email, $message_format, $notification,
 		}
 
 		$user = get_user_by( 'email', $entry_fields['engage_email'] );
-
 		if ( false === $user ) :
 			// cancel sending emails.
 			$email['abort_email'] = true;
