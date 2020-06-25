@@ -741,9 +741,10 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		'Apera Perks Registration',
 		'User Birthday',
 		'Tracking Post',
+		'Apera Customer Engagement Program Update Member',
 	);
 
-	if ( ! in_array( $form['title'], $forms_to_process ) ) {
+	if ( ! in_array( $form['title'], $forms_to_process, true ) ) {
 		return $confirmation;
 	}
 
@@ -843,7 +844,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 
 	if ( 'Apera Customer Engagement Program Update Member' === $form['title'] ) :
 		$user = get_user_by( 'email', $entry_fields['email'] );
-		if ( 0 === $user ) :
+		if ( false === $user ) :
 			$confirmation  = '<p>We are sorry, but it looks like ' . $entry_fields['email'] . ' is not yet registered as a Perks Partner.</p>';
 			$confirmation .= '<p><a href="https://aperabags.com/apera-engagement/" class="wonka-btn">Please try again</a></p>';
 			return $confirmation;
