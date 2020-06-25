@@ -150,34 +150,38 @@ add_filter( 'gform_user_registration_update_user_id', 'wonkasoft_gform_user_regi
  * @return void
  */
 function wonkasoft_gform_pre_send_email( $email, $message_format, $notification, $entry ) {
-	$entry_fields  = array();
-	$set_labels    = array(
-		'Engage Email',
-	);
-	$custom_fields = array();
-	$pattern       = '/([ \/]{1,5})/';
-	foreach ( $form['fields'] as $field ) {
-		if ( 'honeypot' !== $field['type'] ) :
-			if ( in_array( $field['label'], $set_labels, true ) ) :
-				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
+	$form = GFAPI::get_form( $entry['form_id'] );
+	if ( 'Apera Customer Engagement Program Update Member' === $form['title'] ) :
+		$entry_fields  = array();
+		$set_labels    = array(
+			'Engage Email',
+		);
+		$custom_fields = array();
+		$pattern       = '/([ \/]{1,5})/';
+		foreach ( $form['fields'] as $field ) {
+			if ( 'honeypot' !== $field['type'] ) :
+				if ( in_array( $field['label'], $set_labels, true ) ) :
+					$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
+				endif;
+				if ( ! empty( $field->inputs ) ) :
+					foreach ( $field->inputs as $input ) {
+						if ( in_array( $input['label'], $set_labels, true ) ) :
+							$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
+						endif;
+					}
+				endif;
 			endif;
-			if ( ! empty( $field->inputs ) ) :
-				foreach ( $field->inputs as $input ) {
-					if ( in_array( $input['label'], $set_labels, true ) ) :
-						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
-					endif;
-				}
-			endif;
+		}
+	
+		$user_id = get_user_by( 'email', $entry_fields['engage_email'] );
+	
+		if ( false === $user ) :
+			// cancel sending emails.
+			$email['abort_email'] = true;
+			return $email;
 		endif;
-	}
-
-	$user_id = get_user_by( 'email', $entry_fields['engage_email'] );
-
-	if ( false === $user ) :
-		// cancel sending emails.
-		$email['abort_email'] = true;
-		return $email;
 	endif;
+	
 	return $email;
 }
 add_filter( 'gform_pre_send_email', 'wonkasoft_gform_pre_send_email', 10, 4 );
