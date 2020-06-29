@@ -7,5 +7,9 @@
 			"path": "../../../../../../../app.kratoscrm.com"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"phpcbf.executablePath": "/home/lister/.config/composer/vendor/bin/phpcbf",
+		"phpcbf.onsave": true
+	},
+	"phpcbf.standard": "WordPress"
 }
