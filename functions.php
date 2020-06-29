@@ -44,19 +44,18 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		// This theme uses wp_nav_menu() in one location.
-		register_nav_menus(
-			array(
-				'menu-primary'  => esc_html__( 'Primary', 'apera-bags' ),
-				'menu-cart'     => esc_html__( 'Cart', 'apera-bags' ),
-				'menu-shop'     => esc_html__( 'Footer Shop', 'apera-bags' ),
-				'menu-contact'  => esc_html__( 'Footer Contact', 'apera-bags' ),
-				'menu-account'  => esc_html__( 'Footer My Account', 'apera-bags' ),
-				'menu-company'  => esc_html__( 'Footer Company', 'apera-bags' ),
-				'menu-programs' => esc_html__( 'Footer Programs', 'apera-bags' ),
-				'menu-footer'   => esc_html__( 'Footer', 'apera-bags' ),
-			)
+		$footer_section = get_section_mods( 'footer_area' );
+		$menus_array    = array(
+			'menu-primary' => esc_html__( 'Primary', 'aperabags' ),
+			'menu-cart'    => esc_html__( 'Cart', 'aperabags' ),
 		);
+
+		foreach ( $footer_section->footer_titles as $title ) {
+			$new_menu                 = 'menu-' . preg_replace( '/ /', '-', strtolower( $title ) );
+			$menus_array[ $new_menu ] = esc_html( 'Footer ' . ucfirst( strtolower( $title ) ), 'aperabags' );
+		}
+		// This theme uses wp_nav_menu() in one location.
+		register_nav_menus( $menus_array );
 
 		/*
 		 * Switch default core markup for search form, comment form, and comments
@@ -265,6 +264,13 @@ if ( class_exists( 'WooCommerce' ) ) {
 	require_once get_stylesheet_directory() . '/inc/checkout-login.php';
 
 	add_action( 'do_meta_boxes', 'customize_coupon_data_meta_box' );
+}
+
+/**
+ * Load Wonkasoft Testimonial compatibility file.
+ */
+if ( class_exists( 'Wonkasoft_Testimonial_Query' ) ) {
+	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-testimonial-query.php';
 }
 
 /**

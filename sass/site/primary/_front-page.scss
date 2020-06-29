@@ -112,8 +112,10 @@ section.header-slider-section {
 								@include font-size( 1.1 );
 							}
 
-							.img-head-slider-link {
+							.img-header-slide-link {
 								text-shadow: none;
+								padding: 20px 45px;
+								@include font-size( 1.5 );
 							}
 						}
 					}	

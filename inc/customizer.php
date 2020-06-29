@@ -1837,14 +1837,14 @@ function apera_bags_customize_register( $wp_customize ) {
 
 	// Footer form shortcode Setting Control.
 	$wp_customize->add_control(
-		new WP_Customize_Image_Control(
+		new WP_Customize_Media_Control(
 			$wp_customize,
 			'footer_logo_control',
 			array(
 				'label'       => __( 'Footer Logo', 'apera-bags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_logo',
-				'type'        => 'image',
+				'type'        => 'media',
 				'description' => 'Footer Logo',
 			)
 		)

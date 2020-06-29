@@ -1174,7 +1174,6 @@ var componentForm;
 		var header_slider_section = document.querySelector( '.header-slider-section' ),
 		top_slide = document.querySelector( '.top-page-slide' ),
 		top_slide_img_holder = top_slide.querySelectorAll( '.top-slide-img-holder' )[0],
-		cta_slider_section = document.querySelector( '.desirable-slider-section' ),
 		img_for_sizing = new Image(),
 		adjustment = window.innerHeight,
 		height_set;
@@ -1187,7 +1186,6 @@ var componentForm;
 		}
 
 		header_slider_section.style.height = adjustment + 'px';
-		cta_slider_section.style.height = adjustment + 'px';
 		top_slide.style.height = header_slider_section.offsetHeight;
 		top_slide.style.width = header_slider_section.offsetWidth;
 	}
@@ -1276,29 +1274,6 @@ var componentForm;
 		if ( window.pageYOffset <= top_slider_section.offsetTop ) 
 		{
 			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
-			slide_imgs.forEach( function( el, i ) 
-				{
-					el.style.backgroundPositionY = '';
-				});
-		}
-		/*=====  End of This is for the top slider section for parallax  ======*/
-
-		/*=======================================================================
-		=            This is for the cta slider section for parallax            =
-		=======================================================================*/
-		if ( window.pageYOffset > cta_section.offsetTop && window.pageYOffset < cta_section.offsetTop + cta_section.offsetHeight ) 
-		{
-			parallax_adjust = parseFloat( (window.pageYOffset - cta_section.offsetTop ) / ( cta_section.offsetHeight / 50 ) ).toFixed( 5 );
-			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
-			slide_imgs.forEach( function( el, i ) 
-				{
-					el.style.backgroundPositionY = parallax_adjust + 'vh';
-				});
-		}
-
-		if ( window.pageYOffset <= cta_section.offsetTop ) 
-		{
-			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
 				{
 					el.style.backgroundPositionY = '';
