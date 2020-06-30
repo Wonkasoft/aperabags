@@ -8,6 +8,7 @@ jsmin = require('gulp-js-minify'),
 cleanCSS = require('gulp-clean-css'),
 plumber = require('gulp-plumber'),
 notify = require('gulp-notify'),
+replace = require('gulp-replace'),
 browserSync = require('browser-sync').create(),
 json = require('json-file'),
 themeName = json.read('./package.json').get('name'),
@@ -54,17 +55,19 @@ gulp.task('sass', function () {
 
 	.pipe(concat('style.css'))
 
+	.pipe( replace( /@charset.*?;/, '' ) )
+	
 	.pipe(sourcemaps.write('./maps'))
 
 	.pipe(gulp.dest('./'))
-
+	
 	.pipe(browserSync.stream())
-
+	
 	.pipe(notify({
 		message: "✔︎ STYLES-CSS task complete",
 		onLast: true
 	}));
-
+	
 });
 
 gulp.task('woo-sass', function () {
@@ -125,10 +128,10 @@ gulp.task('js', function () {
 
 gulp.task('watch', function() {
 
-	gulp.watch('**/sass/**/*.scss', gulp.series(gulp.parallel('sass', 'woo-sass'))).on('change', browserSync.reload);
+	gulp.watch('**/sass/**/*.scss', gulp.series( gulp.parallel( 'sass', 'woo-sass' ) ) ).on( 'change', browserSync.reload );
 	gulp.watch('**/*.php').on('change', browserSync.reload);
-	gulp.watch('./js/*.js', gulp.series(gulp.parallel('js'))).on('change', browserSync.reload);
+	gulp.watch('./js/*.js', gulp.series( gulp.parallel('js') ) ).on( 'change', browserSync.reload );
 
 });
 
-gulp.task('default', gulp.series(gulp.parallel('sass', 'woo-sass', 'js', 'watch', 'browser-sync')));
+gulp.task( 'default', gulp.series( gulp.parallel( 'sass', 'woo-sass', 'js', 'watch', 'browser-sync' ) ) );
