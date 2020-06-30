@@ -507,7 +507,7 @@ div.express-checkout-btns,
 .__PrivateStripeElement{
 
   iframe {
-    border-radius: 100px;
+    border-radius: 100px !important;
   }
 }
 
@@ -519,7 +519,7 @@ div.express-checkout-btns {
       width: 150px;
 
       iframe {
-        border-radius: 100px;
+        border-radius: 100px !important;
       }
     }
   }
