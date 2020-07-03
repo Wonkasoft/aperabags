@@ -39,7 +39,7 @@ if ( ! comments_open() ) {
 			}
 			?>
 		</h2>
-		<a id="write-review" href="#" class="btn wonka-btn">Write a review</a>
+		<a id="write-review" href="javascript:void(0);" class="btn wonka-btn">Write a review</a>
 	</div>
 	<?php if ( get_option( 'woocommerce_review_rating_verification_required' ) === 'no' || wc_customer_bought_product( '', get_current_user_id(), $product->get_id() ) ) : ?>
 

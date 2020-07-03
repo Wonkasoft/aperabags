@@ -1,44 +1,4 @@
-/**
+/*!
  * This contains styles for admin side.
- */
-form#custom-options-form input:not( #submit ) {
-	margin-top: 0;
-  	width: 85%;
-}
-
-.woocommerce #entry_list_form .subsubsub {
-	margin: 8px 0 0;
-}
-
-table.subscription-settings td.subscription-settings-cell {
-	width: 100%;
-}
-
-.logo-table #club-gym-logo {
-	width: 100%;
-	max-width: 250px;
-}
-
-#activity-widget #the-comment-list li.comment-item {
-	display: flex;
-	align-items: flex-start;
-}
-
-#activity-widget #the-comment-list li.comment-item img.avatar {
-	position: relative;
-	top: unset;
-	margin-right: 8px;
-}
-
-.getresponse-table th {
-	padding: 15px 10px;
-}
-
-.getresponse-table th, 
-.getresponse-table td {
-	border: 1px solid rgba(0,0,0,0.1);
-}
-
-#wad-datasource-container select {
-	max-width: 15rem;
-}
+ */form#custom-options-form input:not(#submit){margin-top:0;width:85%}.woocommerce #entry_list_form .subsubsub{margin:8px 0 0}table.subscription-settings td.subscription-settings-cell{width:100%}.logo-table #club-gym-logo{width:100%;max-width:250px}#activity-widget #the-comment-list li.comment-item{display:flex;align-items:flex-start}#activity-widget #the-comment-list li.comment-item img.avatar{position:relative;top:unset;margin-right:8px}.getresponse-table th{padding:15px 10px}.getresponse-table td,.getresponse-table th{border:1px solid rgba(0,0,0,.1)}#wad-datasource-container select{max-width:15rem}.manage-column.column-featured{font-size:19.2px;font-size:1.2rem}.manage-column.column-featured label{display:none}.column-featured .btn{position:relative;display:inline-block;font-size:19.2px;font-size:1.2rem}.processing{position:relative}.processing .custom-spinner{position:absolute;align-items:center;top:0;right:0;bottom:0;left:0;z-index:9999}.processing:after{content:'';position:absolute;display:inline-block;top:0;right:0;bottom:0;left:0;background:#fff}th#featured{width:150px}.editor-product-featured-image__container{margin-bottom:1em;position:relative}.editor-product-featured-image__container .editor-product-featured-image__toggle{border:1px dashed #a2aab2;background-color:#edeff0;min-height:90px;line-height:20px;padding:8px 0;text-align:center;display:block;width:100%;padding:0;transition:all .1s ease-out;box-shadow:0 0 0 0 #00a0d2}.editor-product-featured-image__container .components-drop-zone{position:absolute;top:0;right:0;bottom:0;left:0;z-index:40;visibility:hidden;opacity:0;transition:opacity .3s,background-color .3s,visibility 0s .3s;border:2px solid #0071a1;border-radius:2px}.arrow{margin-left:0}.bs-tooltip-bottom:after{display:none}
+/*# sourceMappingURL=maps/admin-styles.css.map */

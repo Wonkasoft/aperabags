@@ -2810,10 +2810,10 @@ var componentForm;
 			});
 		}
 
-		if ( document.querySelector( '.desirable-slider-section' ) ) 
+		if ( document.querySelector( '.testimonial-section' ) ) 
 		{
 			
-			$( '.cta-section-slider-wrap' ).slick({
+			$( '.testimonial-wrap' ).slick({
 			  // adaptiveHeight: true,
 			  slidesToShow: 1,
 			  slidesToScroll: 1,
@@ -2821,8 +2821,9 @@ var componentForm;
 			  autoplaySpeed: 4000,
 			  pauseOnFocus: true,
 			  pauseOnHover: true,
-			  fade: true,
+			  fade: false,
 			  dots: false,
+			  swipe: true,
 			  prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
 			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
 			});

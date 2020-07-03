@@ -10,16 +10,15 @@
  */
 
 if ( ! empty( $page_mods ) ) {
-	$footer_section = $page_mods->footer_area;
+	$footer_section->footer_area = $page_mods->footer_area;
 } else {
-	$footer_section = get_section_mods( 'footer_area' );
+	$footer_section->footer_area = get_section_mods( 'footer_area' );
 }
-global $allowedtags;
 ?>
 
 </div><!-- #content .container-fluid -->
 
-	<?php do_action( 'get_mods_before_section', 'footer_area', $footer_section ); ?>
+	<?php do_action( 'get_mods_before_section', 'footer_area', $footer_section->footer_area ); ?>
 	<div id="get-10-sidebar"><a href="<?php _e( get_permalink( get_page_by_path( 'perks' ) ) ); ?>">Get $10</a></div>
 	<div id="give-feedback"><a href="javascript:void(zE('webWidget', 'open'))">Questions</a></div>
 	<div id="footer-spacer"></div>
@@ -29,12 +28,12 @@ global $allowedtags;
 				<div class="col col-sm-3 col-lg-3">
 					<div class="row wonka-menu-footer">
 							<div class="col">
-							<h3 class="footer-menu-1-title"><?php echo esc_html( $footer_section->footer_titles->footer_title_1 ); ?></h3>
+							<h3 class="footer-menu-1-title"><?php echo esc_html( $footer_section->footer_area->footer_area->footer_titles->footer_title_1 ); ?></h3>
 								<?php
 									wp_nav_menu(
 										array(
 											'theme_location' => 'menu-footer',
-											'menu_class' => 'wonka-footer-menu wonka-footer-menu-' . preg_replace( "/ /", '-', strtolower( $footer_section->footer_titles->footer_title_1 ) ),
+											'menu_class' => 'wonka-footer-menu wonka-footer-menu-' . preg_replace( "/ /", '-', strtolower( $footer_section->footer_area->footer_area->footer_titles->footer_title_1 ) ),
 										)
 									);
 								?>
@@ -45,12 +44,12 @@ global $allowedtags;
 				<div class="col col-sm-3 col-lg-3">
 					<div class="row wonka-menu-footer">
 							<div class="col">
-							<h3 class="footer-menu-2-title"><?php echo esc_html( $footer_section->footer_titles->footer_title_2 ); ?></h3>
+							<h3 class="footer-menu-2-title"><?php echo esc_html( $footer_section->footer_area->footer_area->footer_titles->footer_title_2 ); ?></h3>
 								<?php
 									wp_nav_menu(
 										array(
 											'theme_location' => 'menu-footer',
-											'menu_class' => 'wonka-footer-menu wonka-footer-menu-' . preg_replace( "/ /", '-', strtolower( $footer_section->footer_titles->footer_title_2 ) ),
+											'menu_class' => 'wonka-footer-menu wonka-footer-menu-' . preg_replace( "/ /", '-', strtolower( $footer_section->footer_area->footer_area->footer_titles->footer_title_2 ) ),
 										)
 									);
 								?>
@@ -61,12 +60,12 @@ global $allowedtags;
 				<div class="col col-sm-3 col-lg-3">
 					<div class="row wonka-menu-footer">
 							<div class="col">
-							<h3 class="footer-menu-3-title"><?php echo esc_html( $footer_section->footer_titles->footer_title_3 ); ?></h3>
+							<h3 class="footer-menu-3-title"><?php echo esc_html( $footer_section->footer_area->footer_area->footer_titles->footer_title_3 ); ?></h3>
 								<?php
 									wp_nav_menu(
 										array(
 											'theme_location' => 'menu-footer',
-											'menu_class' => 'wonka-footer-menu wonka-footer-menu-' . preg_replace( "/ /", '-', strtolower( $footer_section->footer_titles->footer_title_3 ) ),
+											'menu_class' => 'wonka-footer-menu wonka-footer-menu-' . preg_replace( "/ /", '-', strtolower( $footer_section->footer_area->footer_area->footer_titles->footer_title_3 ) ),
 										)
 									);
 								?>
@@ -74,7 +73,7 @@ global $allowedtags;
 
 					</div><!-- .row -->
 				</div><!-- .col-3 -->
-				<?php if ( ! empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
+				<?php if ( ! empty( $footer_section->footer_area->footer_area->footer_mods->footer_form_shortcode ) ) : ?>
 				<div class="col-12 col-lg-3">
 					<div class="row align-items-center text-center justify-content-center">
 						<div class="col-11 wonka-email-form">
@@ -90,7 +89,7 @@ global $allowedtags;
 								?>
 
 								<?php
-									_e( do_shortcode( $footer_section->footer_mods->footer_form_shortcode ) );
+									_e( do_shortcode( $footer_section->footer_area->footer_area->footer_mods->footer_form_shortcode ) );
 								?>
 							</div> <!-- .col -->
 						</div> <!-- .row -->
@@ -113,31 +112,31 @@ global $allowedtags;
 				</div><!-- .col -->
 				<div class="col-6">
 					<div class="footer-insta footer-title">
-						<?php echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_username_link ) . '" target="_blank">' . esc_html( $footer_section->footer_mods->footer_insta_username ) . '</a>'; ?>
-						<?php echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_hashtag_link ) . '" target="_blank">' . esc_html( $footer_section->footer_mods->footer_insta_hashtag ) . '</a>'; ?>
+						<?php echo '<a href="' . esc_url( $footer_section->footer_area->footer_mods->footer_insta_username_link ) . '" target="_blank">' . esc_html( $footer_section->footer_area->footer_mods->footer_insta_username ) . '</a>'; ?>
+						<?php echo '<a href="' . esc_url( $footer_section->footer_area->footer_mods->footer_insta_hashtag_link ) . '" target="_blank">' . esc_html( $footer_section->footer_area->footer_mods->footer_insta_hashtag ) . '</a>'; ?>
 					</div> <!-- .col -->
 					<div class="social-icons-btns">
 
 						<?php
-						if ( ! empty( $footer_section->footer_mods->footer_social_instagram ) ) {
-							echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_instagram ) . '" target="_blank"><i class="fa fa-instagram"></i></a>';
+						if ( ! empty( $footer_section->footer_area->footer_mods->footer_social_instagram ) ) {
+							echo '<a href="' . esc_url( $footer_section->footer_area->footer_mods->footer_social_instagram ) . '" target="_blank"><i class="fa fa-instagram"></i></a>';
 						}
 
-						if ( ! empty( $footer_section->footer_mods->footer_social_facebook ) ) {
-							echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_facebook ) . '" target="_blank"><i class="fa fa-facebook"></i></a>';
+						if ( ! empty( $footer_section->footer_area->footer_mods->footer_social_facebook ) ) {
+							echo '<a href="' . esc_url( $footer_section->footer_area->footer_mods->footer_social_facebook ) . '" target="_blank"><i class="fa fa-facebook"></i></a>';
 						}
 
-						if ( ! empty( $footer_section->footer_mods->footer_social_pinterest ) ) {
-							echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_pinterest ) . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
+						if ( ! empty( $footer_section->footer_area->footer_mods->footer_social_pinterest ) ) {
+							echo '<a href="' . esc_url( $footer_section->footer_area->footer_mods->footer_social_pinterest ) . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
 						}
 
-						if ( ! empty( $footer_section->footer_mods->footer_social_twitter ) ) {
-							echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_twitter ) . '" target="_blank"><i class="fa fa-twitter"></i></a>';
+						if ( ! empty( $footer_section->footer_area->footer_mods->footer_social_twitter ) ) {
+							echo '<a href="' . esc_url( $footer_section->footer_area->footer_mods->footer_social_twitter ) . '" target="_blank"><i class="fa fa-twitter"></i></a>';
 						}
 
 						?>
 					</div><!-- .social-icons-btns -->
-					<?php if ( ! empty( $footer_section->footer_mods->footer_insta_username ) ) : ?>
+					<?php if ( ! empty( $footer_section->footer_area->footer_mods->footer_insta_username ) ) : ?>
 
 					<?php endif; ?>
 				</div>
@@ -146,8 +145,8 @@ global $allowedtags;
 		<div class="site-info row align-items-center">
 			<!-- This column is still parsed in order to hold spacing for formating -->
 			<div class="col col-5 footer-logo">
-				<?php if ( ! empty( $footer_section->footer_mods->footer_logo ) ) : ?>
-					<?php echo wp_kses( sprintf( __( '<img src="%1$s" srcset="%2$s" alt="Apera logo" />', 'aperabags' ), wp_get_attachment_image_src( $footer_section->footer_mods->footer_logo, 'small', false )[0], wp_get_attachment_image_srcset( $footer_section->footer_mods->footer_logo, 'small' ) ), array(
+				<?php if ( ! empty( $footer_section->footer_area->footer_mods->footer_logo ) ) : ?>
+					<?php echo wp_kses( sprintf( __( '<img src="%1$s" srcset="%2$s" alt="Apera logo" />', 'aperabags' ), wp_get_attachment_image_src( $footer_section->footer_area->footer_mods->footer_logo, 'small', false )[0], wp_get_attachment_image_srcset( $footer_section->footer_area->footer_mods->footer_logo, 'small' ) ), array(
 						'img' => array(
 							'class' => array(),
 							'src' => array(),

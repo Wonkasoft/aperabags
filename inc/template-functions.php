@@ -70,7 +70,8 @@ function the_mods_for_section( $section ) {
 		}
 		$top_slider['slides']['count'] = $top_slider_count;
 		if ( 'top_slider' === $section ) {
-			return json_decode( json_encode( $top_slider ) );
+			$section_mods['top_slider'] = $top_slider;
+			return json_decode( json_encode( $section_mods ) );
 		} else {
 			$section_mods['top_slider'] = $top_slider;
 		}
@@ -91,7 +92,8 @@ function the_mods_for_section( $section ) {
 			$shop_area['shop_mods']['count'] = $shop_area_count;
 		endif;
 		if ( 'shop_area' === $section ) {
-			return json_decode( json_encode( $shop_area ) );
+			$section_mods['shop_area'] = $shop_area;
+			return json_decode( json_encode( $section_mods ) );
 		} else {
 			$section_mods['shop_area'] = $shop_area;
 		}
@@ -122,7 +124,8 @@ function the_mods_for_section( $section ) {
 		}
 		$cta_slider['slides']['count'] = $cta_slider_count;
 		if ( 'cta_slider' === $section ) {
-			return json_decode( json_encode( $cta_slider ) );
+			$section_mods['cta_slider'] = $cta_slider;
+			return json_decode( json_encode( $section_mods ) );
 		} else {
 			$section_mods['cta_slider'] = $cta_slider;
 		}
@@ -157,7 +160,8 @@ function the_mods_for_section( $section ) {
 		}
 		$cause_area['causes']['count'] = $cause_area_count2;
 		if ( 'cta_slider' === $section ) {
-			return json_decode( json_encode( $cause_area ) );
+			$section_mods['cause_area'] = $cause_area;
+			return json_decode( json_encode( $section_mods ) );
 		} else {
 			$section_mods['cause_area'] = $cause_area;
 		}
@@ -181,7 +185,8 @@ function the_mods_for_section( $section ) {
 			$about_area->{'about_the_brand'}->count = $about_area_count;
 		endif;
 		if ( 'about_area' === $section ) {
-			return json_decode( json_encode( $about_area ) );
+			$section_mods['about_area'] = $about_area;
+			return json_decode( json_encode( $section_mods ) );
 		} else {
 			$section_mods['about_area'] = $about_area;
 		}
@@ -202,7 +207,8 @@ function the_mods_for_section( $section ) {
 		endif;
 		$social_area['count'] = $social_area_count;
 		if ( 'social_area' === $section ) {
-			return json_decode( json_encode( $social_area ) );
+			$section_mods['social_area'] = $social_area;
+			return json_decode( json_encode( $section_mods ) );
 		} else {
 			$section_mods['social_area'] = $social_area;
 		}
@@ -240,7 +246,8 @@ function the_mods_for_section( $section ) {
 		}
 		$footer_area['footer_titles']['count'] = $footer_area_count2;
 		if ( 'footer_area' === $section ) {
-			return json_decode( json_encode( $footer_area ) );
+			$section_mods['footer_area'] = $footer_area;
+			return json_decode( json_encode( $section_mods ) );
 		} else {
 			$section_mods['footer_area'] = $footer_area;
 		}
@@ -266,7 +273,8 @@ function the_mods_for_section( $section ) {
 		endif;
 		$newsletter_area['count'] = $newsletter_area_count;
 		if ( 'newsletter_area' === $section ) {
-			return json_decode( json_encode( $newsletter_area ) );
+			$section_mods['newsletter_area'] = $newsletter_area;
+			return json_decode( json_encode( $section_mods ) );
 		} else {
 			$section_mods['newsletter_area'] = $newsletter_area;
 		}

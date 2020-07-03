@@ -2126,6 +2126,6 @@ function apera_bags_customize_partial_blogdescription() {
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function apera_bags_customize_preview_js() {
-	wp_enqueue_script( 'apera-bags-customizer', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/inc/js/customizer.js' ), array( 'customize-preview' ), '20190819', true );
+	wp_enqueue_script( 'apera-bags-customizer', esc_url( get_stylesheet_directory_uri() . '/inc/js/customizer.js' ), array( 'customize-preview' ), '20190819', true );
 }
 add_action( 'customize_preview_init', 'apera_bags_customize_preview_js' );

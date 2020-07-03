@@ -267,13 +267,6 @@ if ( class_exists( 'WooCommerce' ) ) {
 }
 
 /**
- * Load Wonkasoft Testimonial compatibility file.
- */
-if ( class_exists( 'Wonkasoft_Testimonial_Query' ) ) {
-	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-testimonial-query.php';
-}
-
-/**
  * Load RewardSystem compatibility file.
  */
 if ( class_exists( 'FPRewardSystem' ) ) {
@@ -332,6 +325,13 @@ if ( ! class_exists( 'Wonkasoft_GetResponse_Api' ) ) {
  */
 if ( ! class_exists( 'Wonkasoft_Custom_Post_Types' ) ) {
 	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-custom-post-types.php';
+}
+
+/**
+ * Load Wonkasoft Testimonial compatibility file.
+ */
+if ( ! class_exists( 'Wonkasoft_Testimonial_Query' ) ) {
+	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-testimonial-query.php';
 }
 
 /**
@@ -395,9 +395,8 @@ function apera_bags_scripts() {
 			$slick_themecss_load = false;
 		endif;
 	}
-	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css', array(), '4.4.1', 'all' );
-
-	wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh', 'anonymous' ) );
+	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css', array(), '4.5.0', 'all' );
+	wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk', 'anonymous' ) );
 
 	wp_enqueue_style( 'jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css', array(), '1.0.7' );
 
@@ -428,8 +427,8 @@ function apera_bags_scripts() {
 	wp_enqueue_script( 'popperjs', 'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', array( 'jquery' ), '1.16.0', true );
 	wp_script_add_data( 'popperjs', array( 'integrity', 'crossorigin' ), array( 'sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', 'anonymous' ) );
 
-	wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', array( 'jquery', 'popperjs' ), '4.4.1', true );
-	wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', 'anonymous' ) );
+	wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js', array( 'jquery', 'popperjs' ), '4.5.0', true );
+	wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI', 'anonymous' ) );
 
 	if ( $slick_js_load ) :
 		wp_enqueue_script( 'slick-js', get_stylesheet_directory_uri() . '/assets/slick/slick.min.js', array( 'jquery' ), '1.8.0', true );
@@ -484,8 +483,20 @@ add_filter( 'wc_stripe_payment_request_params', 'wonkasoft_wc_stripe_payment_req
 /**
  * This loads the theme styles on the admin side.
  */
-function admin_styles() {
+function admin_styles( $hook ) {
+	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css', array(), '4.5.0', 'all' );
+	wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk', 'anonymous' ) );
+
 	wp_enqueue_style( 'apera-bags-admin-styles', get_stylesheet_directory_uri() . '/assets/css/admin-styles.css', array(), wp_get_theme()->get( 'Version' ), 'all' );
+
+	wp_enqueue_script( 'popperjs', 'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', array( 'jquery' ), '1.16.0', true );
+	wp_script_add_data( 'popperjs', array( 'integrity', 'crossorigin' ), array( 'sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', 'anonymous' ) );
+
+	wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js', array( 'jquery', 'popperjs' ), '4.5.0', true );
+	wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI', 'anonymous' ) );
+	if ( 'edit.php' === $hook && isset( $_GET['post_type'] ) && 'testimonial' === $_GET['post_type'] ) {
+		wp_enqueue_script( 'aperabags-admin-js', get_stylesheet_directory_uri() . '/assets/js/admin-aperabags.min.js', array( 'jquery' ), wp_get_theme()->get( 'Version' ), true );
+	}
 }
 add_action( 'admin_enqueue_scripts', 'admin_styles', 100 );
 

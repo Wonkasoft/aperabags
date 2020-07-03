@@ -8,6 +8,7 @@ jsmin = require('gulp-js-minify'),
 cleanCSS = require('gulp-clean-css'),
 plumber = require('gulp-plumber'),
 notify = require('gulp-notify'),
+replace = require('gulp-replace'),
 browserSync = require('browser-sync').create(),
 json = require('json-file'),
 themeName = json.read('./package.json').get('name'),
@@ -54,17 +55,48 @@ gulp.task('sass', function () {
 
 	.pipe(concat('style.css'))
 
+	.pipe( replace( /@charset.*?;/, '' ) )
+	
 	.pipe(sourcemaps.write('./maps'))
 
 	.pipe(gulp.dest('./'))
-
+	
 	.pipe(browserSync.stream())
-
+	
 	.pipe(notify({
 		message: "✔︎ STYLES-CSS task complete",
 		onLast: true
 	}));
+	
+});
 
+gulp.task('admin-sass', function () {
+
+	return gulp.src('./sass/admin-styles.scss')
+
+	.pipe(sourcemaps.init())
+
+	.pipe(plumber(plumberErrorHandler))
+
+	.pipe(sass())
+
+	.pipe(cleanCSS())
+
+	.pipe(concat('admin-styles.css'))
+
+	.pipe( replace( /@charset.*?;/, '' ) )
+	
+	.pipe(sourcemaps.write('./maps'))
+
+	.pipe(gulp.dest('./assets/css'))
+	
+	.pipe(browserSync.stream())
+	
+	.pipe(notify({
+		message: "✔︎ ADMIN-STYLES-CSS task complete",
+		onLast: true
+	}));
+	
 });
 
 gulp.task('woo-sass', function () {
@@ -123,12 +155,41 @@ gulp.task('js', function () {
 
 });
 
-gulp.task('watch', function() {
+gulp.task('admin-js', function () {
 
-	gulp.watch('**/sass/**/*.scss', gulp.series(gulp.parallel('sass', 'woo-sass'))).on('change', browserSync.reload);
-	gulp.watch('**/*.php').on('change', browserSync.reload);
-	gulp.watch('./js/*.js', gulp.series(gulp.parallel('js'))).on('change', browserSync.reload);
+	return gulp.src( ['./inc/js/admin-edit.js'] )
+
+	.pipe(concat( 'admin-' + themeName + '.min.js' ))
+
+	.pipe(plumber(plumberErrorHandler))
+
+	.pipe(jshint())
+
+	.pipe(jshint.reporter('default'))
+
+	.pipe(jshint.reporter('fail'))
+
+	.pipe(jsmin())
+	
+	.pipe(sourcemaps.write('./maps'))
+
+	.pipe(gulp.dest('./assets/js'))
+
+	.pipe(browserSync.stream())
+
+	.pipe(notify({ 
+		message: "✔︎ ADMIN-JS task complete",
+		onLast: true
+	}));
 
 });
 
-gulp.task('default', gulp.series(gulp.parallel('sass', 'woo-sass', 'js', 'watch', 'browser-sync')));
+gulp.task('watch', function() {
+
+	gulp.watch('**/sass/**/*.scss', gulp.series( gulp.parallel( 'sass', 'woo-sass', 'admin-sass' ) ) ).on( 'change', browserSync.reload );
+	gulp.watch('**/*.php').on('change', browserSync.reload);
+	gulp.watch(['./js/*.js', './inc/js/*.js'], gulp.series( gulp.parallel( 'js', 'admin-js' ) ) ).on( 'change', browserSync.reload );
+
+});
+
+gulp.task( 'default', gulp.series( gulp.parallel( 'sass', 'woo-sass', 'admin-sass', 'js', 'admin-js', 'watch', 'browser-sync' ) ) );

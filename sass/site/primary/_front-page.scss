@@ -14,7 +14,7 @@
 	section {
 		position: relative;
 
-		&:nth-child(5) {
+		&:nth-child(5):not( :last-child ) {
 			margin: 0;
 			background: #f0f0f0;
 			@include prefix( box-shadow, 0 0 4px 0 rgba( #000, .6 ), o moz webkit );
@@ -31,7 +31,7 @@
 	}
 
 	section:not(:first-of-type):not(:nth-of-type(3)) {
-		padding: 70px 0;
+		padding: 50px 0;
 	}
 }
 /*----------  Header Slider  ----------*/
@@ -276,13 +276,35 @@ section.header-slider-section {
 /*----------  End Header Slider  ----------*/
 
 /*----------  Shop Section  ----------*/
-section.shop-section {
-	background: rgba( 255, 255, 255, .9 );
-	background-blend-mode: screen;
-	background-repeat: no-repeat;
-	-webkit-background-size: cover;
-	background-size: cover;
-	background-position: center;
+section.featured-bags-section {
+
+	.featured-product-image {
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+		background-repeat: no-repeat;
+		background-position: center center;
+		-webkit-background-size: cover;
+		background-size: cover;
+		height: 275px;
+
+		a {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 25px;
+			background: rgba( #e6e6e6, .7 );
+			color: #333333;
+
+			.featured-product-title {
+				position: relative;
+				display: inline-block;
+				padding: 0;
+				margin: 0;
+				top: 2px;
+			}
+		}
+	}
 
 	.wonka-row {
 		margin: 15px auto;
@@ -296,543 +318,62 @@ section.shop-section {
 }
 /*----------  End Shop Section  ----------*/
 
-/*----------  CTA Section  ----------*/
-section.desirable-slider-section {
-	position: relative;
-	height: 650px;
-	max-height: 2880px;
-	@include prefix( transition, $trans_1, o moz webkit );
-
-	.cta-section-slider-wrap {
-		position: relative;
-    height: 100%;
-    width: 100%;
-
-		.cta-section-slide {
-			position: relative;
-			display: none;
-			width: 100%;
-			height: 100%;
-			@include prefix( transition, $trans_1, o moz webkit );
-
-			video.cta-slide {
-				position: absolute;
-				object-fit: cover;
-				height: 100%;
-			 	width: 100%; 
-				min-height: 100%;
-			}
-
-			div.cta-slide-img-holder {
-				background-position: center .5vh;
-				background-repeat: no-repeat;
-				@include prefix( background-size, cover, o moz webkit );
-				width: 100%;
-				height: 100%;
-
-				.img-header-html-wrap {
-					position: relative;
-					width: 100%;
-					height: 100%;
-				}
-
-				.img-header-text-wrap {
-					background: radial-gradient(rgba(0, 0, 0, .55),rgba(0, 0, 0, 0.0));
-					position: relative;
-					margin: auto;
-					width: 100%;
-					height: 100%;
-
-					.img-header-text-container {
-						margin: auto;
-						display: flex;
-						flex-direction: column;
-
-						.set-align-left {
-							align-self: flex-start;
-						}
-
-						.set-align-center {
-							align-self: center;
-						}
-
-						.set-align-right {
-							align-self: flex-end;
-						}
-
-						.text-box {
-							color: #ffffff;
-							max-width: 100%;
-							display: grid;
-
-							h2 {
-								color: #ffffff;
-								font-weight: 800;
-								@include prefix( text-shadow, 1px 1px 2px rgba( #000, .8 ), o moz webkit );
-								padding-bottom: 20px;
-								font-size: 2rem;
-							}
-
-							h3 {
-								margin: auto;
-								max-width: 300px;
-								text-transform: unset;
-								padding-bottom: 30px;
-								font-size: 1.1rem;
-								font-weight: 400;
-							}
-
-							ul {
-								margin: auto;
-								text-align: left;
-								padding: 20px 0;
-								list-style-position: inside;
-				
-								li.perks-description {
-									@include font-size( 1.1 );
-									font-family: $font__main_jose;
-									margin-bottom: .5em;
-									font-weight: 400;
-								}
-							}
-
-							.wonka-btn.img-cta-link {
-								font-size: 1rem;
-								padding: 6px 10px;
-							}
-
-							@include media-breakpoint( md ) {
-								max-width: 1200px;
-							}
-						}
-					}	
-				}
-
-				@include media-breakpoint( ipx ) {
-
-					.img-header-text-wrap {
-
-						.img-header-text-container {
-							
-							.text-box {
-
-								h2 {
-									line-height: 1.1;
-									@include font-size( 1.2 );
-								}
-							}
-						}
-					}
-				}
-
-				@include media-breakpoint( ip8 ) {
-
-					.img-header-text-wrap {
-
-						.img-header-text-container {
-							
-							.text-box {
-
-								h2 {
-									line-height: 1.1;
-									@include font-size( 1.2 );
-								}
-							}
-						}
-					}		
-				}
-
-				@include media-breakpoint( ip8p ) {
-
-					.img-header-text-wrap {
-
-						.img-header-text-container {
-							
-							.text-box {
-
-								h2 {
-									line-height: 1.1;
-									@include font-size( 1.2 );
-								}
-							}
-						}
-					}		
-				}
-
-				@include media-breakpoint( md ) {
-
-					.img-header-text-wrap {
-
-						.img-header-text-container {
-							
-							.text-box {
-
-								h2 {
-									line-height: 1.1;
-									@include font-size( 2.8 );
-								}
-
-								h3 {
-									max-width: 500px;
-									line-height: 1.7;
-									font-size: 1.5rem;
-								}
-
-								ul {
-									li.perks-description {
-										line-height: 1.4;
-										@include font-size( 1.5 );
-									}
-								}
-
-								.wonka-btn.img-cta-link {
-									font-size: 1.6rem;
-									padding: 10px 20px;
-								}
-							}
-						}
-					}
-
-				}
-
-				@include media-breakpoint( lg ) {
-
-					.img-header-text-wrap {
-
-						.img-header-text-container {
-
-							.text-box {
-
-								h2 {
-									line-height: 1.1;
-									@include font-size( 2.8 );
-								}
-								
-
-								h3 {
-									font-size: 1.5rem;
-								}
-
-								ul {
-									li.perks-description {
-										line-height: 1.4;
-										@include font-size( 1.5 );
-									}
-								}
-
-								.wonka-btn.img-cta-link {
-									font-size: 1.6rem;
-									padding: 10px 20px;
-								}
-							}
-						}
-					}	
-				}
-
-				@include media-breakpoint( xl ) {
-
-					.img-header-text-wrap {
-
-						.img-header-text-container {
-							
-							.text-box {
-
-								h2 {
-									line-height: 1.1;
-									@include font-size( 3.2 );
-								}
-
-								h3 {
-									line-height: 1.8;
-									font-size: 1.5rem;
-								}
-
-								ul {
-									li.perks-description {
-										line-height: 1.4;
-										@include font-size( 1.5 );
-									}
-								}
-
-								.wonka-btn.img-cta-link {
-									font-size: 1.6rem;
-									padding: 10px 20px;
-								}
-							}
-						}
-					}		
-				}
-			}
-
-			&:first-child {
-				display: block;
-			}
-		}
-
-		.slick-list {
-			position: relative;
-			height: 100%;
-
-			.slick-track {
-				height: 100%;
-				
-				.cta-section-slide {
-					display: block;
-				}
-			}
-		}
-	}
-}
-/*----------  End CTA Section  ----------*/
-
-/*----------  Our Cause Section  ----------*/
-section.our-cause-section {
-	margin: 0;
-
-	.wonka-row {
-		margin: 15px auto;
-		width: 1200px;
-		max-width: 100%;
-	}
-
-	.cause-section-module {
-		max-width: 380px;
-		margin: 15px auto;
-		padding: 0 0 8px;
-
-		.module-component-wrap {
-
-			.img-container {
-				margin: 0 auto 15px;
-				display: flex;
-				align-items: center;
-				max-width: 300px;
-				height: auto;
-				@include prefix( box-shadow, 0 0 4px .5px rgba, o moz webkit );
-
-				img {
-					height: auto;
-					width: 370px;
-				}
-			}
-
-			.cause-title {
-				padding: 0 15px;
-				color: #000;
-			}
-
-			.cause-message {
-				margin-bottom: 8px;
-				padding: 0 15px;
-			}
-
-			@include media-breakpoint( md ) {
-
-				.img-container {
-					max-width: 380px;
-				}
-			}	
-		}
-	}
-}
-/*----------  End Our Cause Section  ----------*/
-
-/*===============================================
-=            About the Brand section            =
-===============================================*/
-/* The animation code */
-@keyframes wiggle {
-  0%   {transform: rotate(-15deg);}
-  25%  {transform: rotate(15deg);}
-  50%  {transform: rotate(-15deg);}
-  100% {transform: rotate(0deg);}
-}
-
-div.modal-backdrop {
-	background-color: rgba( #fff, 1 );
-
-	&.show {
-		opacity: .7;
-	}
-}
-
-section.about-brand-section {
-
-	.wonka-row {
-		margin: 15px auto;
-		width: 1200px;
-		max-width: 100%;
-	}
-
-	.about-components-wrap {
-		margin: 15px auto;
-		max-width: 450px;
-	}
-
-	div.img-container {
-		margin: 15px auto;
-		display: flex;
-		align-items: center;
-		width: 450px;
-		max-width: 100%;
-		max-height: 520px;
-		height: auto;
-		overflow: hidden;
-		@include prefix( box-shadow, $box_shadow_4, o moz webkit );
-
-		.about-second-image {
-			width: auto;
-			height: auto;
+/*----------  Testimonial Section  ----------*/
+section.testimonial-section {
+
+	.testimonial-box {
+		
+		&:focus {
+			outline: none;
 		}
 	}
 
-	.about-brand-video {
-		max-height: 250px;
+	p {
+		display: inline-block;
+		font-family: $font__main_jose;
+		line-height: 1.5;
+		@include font-size( 1.5 );
+		margin: 0;
+		padding: 0 15px;
+
+		&:focus {
+			outline: none;
+		}
+		
+		.testimonial-quotes {
+			display: inline-block;
+			@include font-size( 1.5 );
+		}
+	}
+}
+/*----------  END Testimonial Section  ----------*/
+
+/*----------  Category Section  ----------*/
+.category-section {
+	
+	.cat-section-title {
+		margin: 20px auto;
+		text-align: center;
+	}
+	
+	.cat-container {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-
-		a.video-img-link {
-			position: relative;
-			max-width: 100%;
-			height: 250px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-
-			img {
-				max-height: 100%;
-			}
-
-			span.video-img-symbol-link {
-				position: absolute;
-				color: #52abf6;
-				@include font-size( 5 );
-				@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
-				@include prefix( transition, $trans_25, o moz webkit );
-
-				&:hover {
-					color: #78bdf7 !important;
-					animation-name: wiggle;
-				  	animation-duration: .4s;
-				}
-			}
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		text-align: center;
+		height: 300px;
+		margin-bottom: 15px;
+		font-weight: 800;
+		
+		a {
+			width: 200px;
+			padding: 15px 45px;
+			font-weight: 800;
 		}
 	}
 }
-
-section.our-cause-section,
-section.about-brand-section {
-
-	div#videoModal, div#videoModalpop {
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		max-width: 100%;
-		margin: 0 auto;
-		padding-right: 0 !important;
-		z-index: 99999;
-		overflow-y: scroll;
-		@include prefix( transition, $trans_25, o moz webkit );
-
-		&.show {
-			display: flex !important;
-		}
-
-		div.modal-dialog {
-			height: 100%;
-			width: 100%;
-			max-width: 1200px;
-			margin: auto;
-			padding: 25px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-
-			div.modal-content {
-				position: relative;
-				margin: auto;
-				width: 100%;
-				max-width: 1200px;
-				padding: 0;
-				background-color: transparent;
-				@include prefix( transition, $trans_25, o moz webkit );
-				
-				div.modal-body {
-					padding: 0;
-					width: 100%;
-					overflow: visible;
-					@include prefix( box-shadow, $box_shadow_4, o moz webkit );
-
-
-					button.close {
-						position: absolute;
-						top: -25px;
-						right: -15px;
-						z-index: 9999;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						background: transparent;
-						border-radius: 50%;
-						height: 25px;
-						width: 25px;
-						color: #222222;
-						border: 2px solid rgba( #222222, 1);
-						box-sizing: border-box;
-						@include prefix( transition, $trans_25, o moz webkit );
-						@include prefix( box-shadow, $box_shadow_4, o moz webkit );
-
-						span {
-							line-height: 1;
-							@include prefix( text-shadow, 1px 1px 3px rgba(#000, .9 ), o moz webkit );
-							@include font-size( 1.3 );
-						}
-
-						&:hover {
-							animation-name: wiggle;
-								animation-duration: .4s;						}
-					}
-				}
-			}
-		}
-	}
-}
-/*=====  End of About the Brand section  ======*/
-
-/*======================================
-=            Social section            =
-======================================*/
-section.social-section {
-	margin: 0;
-
-	.wonka-row {
-		margin: 15px auto;
-		width: 1500px;
-		max-width: 100%;
-	}
-}
-/*=====  End of Social section  ======*/
-
-body.home {
-
-	a.wonka-btn {
-		margin: 15px auto;
-	}
-
-	.slick-slider {
-		overflow: hidden;
-
-		&:hover {
-
-			.slick-prev {
-				left: 0;
-			}
-
-			.slick-next {
-				right: 0;
-			}
-		}
-	}
-}
+/*----------  END Category Section  ----------*/
 /*=====  End of front page styles  ======*/

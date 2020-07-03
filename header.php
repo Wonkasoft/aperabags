@@ -101,6 +101,5 @@
 				</nav><!-- #site-navigation -->
 			</div> <!-- .col-8 -->
 		</div> <!-- .row -->
-	</header><!-- #masthead -->
-																																					 
+	</header><!-- #masthead -->																																	 
 	<div id="content" class="site-content">

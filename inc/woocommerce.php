@@ -3460,8 +3460,49 @@ function wonkasoft_wc_stripe_payment_icons( $icons ) {
 }
 add_filter( 'wc_stripe_payment_icons', 'wonkasoft_wc_stripe_payment_icons', 10 );
 
+/**
+ * [wonkasoft_woocommerce_stripe_request_headers description]
+ *
+ * @param  [type] $headers [description]
+ * @return [type]          [description]
+ */
 function wonkasoft_woocommerce_stripe_request_headers( $headers ) {
 	$headers['Stripe-Version'] = '2020-03-02';
 	return $headers;
 }
 add_filter( 'woocommerce_stripe_request_headers', 'wonkasoft_woocommerce_stripe_request_headers', 10 );
+
+/**
+ * [wonkasoft_product_meta_box_add description]
+ *
+ * @return [type] [description]
+ */
+function wonkasoft_product_meta_box_add() {
+	add_meta_box( 'featured-product-image', __( 'Featured Product Image', 'aperabags' ), 'wonkasoft_product_meta_box', 'product', 'side', 'low' );
+}
+add_action( 'add_meta_boxes', 'wonkasoft_product_meta_box_add' );
+
+function wonkasoft_product_meta_box() {
+	?>
+	<div class="editor-product-featured-image">
+		<div class="editor-product-featured-image__container">
+			<button type="button" class="components-button editor-product-featured-image__toggle">Set featured product image</button>
+			<div class="components-drop-zone"></div>
+		</div>
+		<?php
+		if ( this ) :
+			?>
+			<button type="button" class="components-button is-secondary">Replace Image</button>
+			<button type="button" class="components-button is-link is-destructive">Remove testimonial image</button>
+		<?php endif; ?>
+	</div>
+	<?php
+}
+
+function get_featured_product_img_id( $post = null ) {
+	$post = get_post( $post );
+	if ( ! $post ) {
+		return '';
+	}
+	return (int) get_post_meta( $post->ID, '_featured_product_img_id', true );
+}

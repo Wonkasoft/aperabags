@@ -504,7 +504,25 @@ div.express-checkout-btns,
   }
 }
 
+.__PrivateStripeElement{
+
+  iframe {
+    border-radius: 100px !important;
+  }
+}
+
 div.express-checkout-btns {
+
+  &.StripeElement {
+
+    .__PrivateStripeElement{
+      width: 150px;
+
+      iframe {
+        border-radius: 100px !important;
+      }
+    }
+  }
 
   > button.gpay-button,
   > button {
