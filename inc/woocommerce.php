@@ -1409,8 +1409,13 @@ function wonkasoft_woocommerce_cart_totals_coupon_label( $captured, $coupon, $ec
 		return $label;
 	}
 }
-remove_filter( 'woocommerce_cart_totals_coupon_label', array( 'RSRedeemingFrontend', 'change_coupon_label' ), 1, 2 );
-remove_filter( 'woocommerce_cart_totals_coupon_label', array( $GLOBALS['wjecf_extended_coupon_features']->get_plugins()['autocoupon'], 'woocommerce_cart_totals_coupon_label' ), 10, 2 );
+if ( class_exists( 'RSRedeemingFrontend' ) ) :
+	remove_filter( 'woocommerce_cart_totals_coupon_label', array( 'RSRedeemingFrontend', 'change_coupon_label' ), 1, 2 );
+endif;
+
+if ( class_exists( $GLOBALS['wjecf_extended_coupon_features']->get_plugins()['autocoupon'] ) ) :
+	remove_filter( 'woocommerce_cart_totals_coupon_label', array( $GLOBALS['wjecf_extended_coupon_features']->get_plugins()['autocoupon'], 'woocommerce_cart_totals_coupon_label' ), 10, 2 );
+endif;
 add_filter( 'woocommerce_cart_totals_coupon_label', 'wonkasoft_woocommerce_cart_totals_coupon_label', 10, 3 );
 
 /**
@@ -3461,7 +3466,7 @@ function wonkasoft_wc_stripe_payment_icons( $icons ) {
 add_filter( 'wc_stripe_payment_icons', 'wonkasoft_wc_stripe_payment_icons', 10 );
 
 /**
- * [wonkasoft_woocommerce_stripe_request_headers description]
+ * This is to update the stripe api version.
  *
  * @param  [type] $headers [description]
  * @return [type]          [description]
@@ -3473,15 +3478,18 @@ function wonkasoft_woocommerce_stripe_request_headers( $headers ) {
 add_filter( 'woocommerce_stripe_request_headers', 'wonkasoft_woocommerce_stripe_request_headers', 10 );
 
 /**
- * [wonkasoft_product_meta_box_add description]
- *
- * @return [type] [description]
+ * Add new featured product image meta box.
  */
 function wonkasoft_product_meta_box_add() {
 	add_meta_box( 'featured-product-image', __( 'Featured Product Image', 'aperabags' ), 'wonkasoft_product_meta_box', 'product', 'side', 'low' );
 }
 add_action( 'add_meta_boxes', 'wonkasoft_product_meta_box_add' );
 
+/**
+ * Featured Product image meta box callback.
+ *
+ * @author Rudy <rlister@wonkasoft.com>
+ */
 function wonkasoft_product_meta_box() {
 	?>
 	<div class="editor-product-featured-image">
