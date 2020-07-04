@@ -3227,7 +3227,9 @@ function wonkasoft_registration_save( $user_id ) {
 }
 add_action( 'user_register', 'wonkasoft_registration_save', 10, 1 );
 
-remove_filter( 'woocommerce_cart_item_name', array( $_GLOBALS['ced_click_n_go'], 'ced_ocor_cart_item_data' ), 10, 3 );
+if ( ! empty( $GLOBALS['wjecf_extended_coupon_features'] ) ) :
+	remove_filter( 'woocommerce_cart_item_name', array( $_GLOBALS['ced_click_n_go'], 'ced_ocor_cart_item_data' ), 10, 3 );
+endif;
 
 /**
  * This function filters product name.
