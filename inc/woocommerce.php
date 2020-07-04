@@ -1413,7 +1413,7 @@ if ( class_exists( 'RSRedeemingFrontend' ) ) :
 	remove_filter( 'woocommerce_cart_totals_coupon_label', array( 'RSRedeemingFrontend', 'change_coupon_label' ), 1, 2 );
 endif;
 
-if ( class_exists( $GLOBALS['wjecf_extended_coupon_features']->get_plugins()['autocoupon'] ) ) :
+if ( class_exists( $GLOBALS['wjecf_extended_coupon_features'] ) ) :
 	remove_filter( 'woocommerce_cart_totals_coupon_label', array( $GLOBALS['wjecf_extended_coupon_features']->get_plugins()['autocoupon'], 'woocommerce_cart_totals_coupon_label' ), 10, 2 );
 endif;
 add_filter( 'woocommerce_cart_totals_coupon_label', 'wonkasoft_woocommerce_cart_totals_coupon_label', 10, 3 );
