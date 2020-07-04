@@ -19,7 +19,7 @@ if ( is_home() ) :
 	do_action( 'get_mods_before_section', 'top_slider' );
 
 	$page_mods = get_section_mods( 'top_slider' );
-	
+
 	do_action( 'get_mods_after_section', 'top_slider', $page_mods );
 
 	/* This gets the slides as an object */
@@ -147,24 +147,29 @@ if ( is_home() ) :
 							'tax_query'           => $tax_query,
 						)
 					);
-					
+
 				if ( $pro_query->have_posts() ) :
-					while ( $pro_query->have_posts() ) : $pro_query->the_post();
-						$post_id = get_the_ID(); 
+					while ( $pro_query->have_posts() ) :
+						$pro_query->the_post();
+
+						$post_id                   = get_the_ID();
+						$featured_product_image_id = get_featured_product_img_id( $post );
+
 						?>
 						<div class="col-12 col-md-4 featured-product-wrap">
-							<div class="featured-product-image" style="background-image: url('<?php the_post_thumbnail_url( 'medium' ); ?>');">
-								<a href="<?php esc_url( the_permalink( $post_id ) ); ?>" class="btn wonka-btn">
-									<h6 class="featured-product-title"><?php the_title(); ?></h6>
-								</a>
-							</div>
+							<a href="<?php esc_url( the_permalink( $post_id ) ); ?>" class="shop-link">
+								<div class="featured-product-image" style="background-image: url('<?php echo esc_url( wp_get_attachment_image_src( $featured_product_image_id, 'full', false )[0] ); ?>');">
+										<button class="btn wonka-btn"><h6 class="featured-product-title"><?php the_title(); ?></h6></button>
+								</div>
+							</a>
 						</div>
 						<?php
 					endwhile;
 					wp_reset_postdata();
-				else: ?>
+					else :
+						?>
 					<p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
-				<?php endif; ?>
+					<?php endif; ?>
 				</div><!-- justify-content-space-around -->
 			</div>
 		</section>
@@ -200,13 +205,14 @@ if ( is_home() ) :
 		$testimonials->get_testimonials();
 
 		if ( $testimonials->results->have_posts() ) :
-		?>
+			?>
 		<section class="testimonial-section">
 			<div class="container-fluid">
 				<div class="row justify-content-center testimonial-row">
 					<div class="col-10 testimonial-wrap text-center">
 					<?php
-					while( $testimonials->results->have_posts() ) : $testimonials->results->the_post();
+					while ( $testimonials->results->have_posts() ) :
+						$testimonials->results->the_post();
 						$post_id = get_the_ID();
 						?>
 						<div class="text-center testimonial-box">
@@ -248,9 +254,11 @@ if ( is_home() ) :
 							$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
 						?>
 							<div class="col-6 cat-col">
-								<div class="cat-container" style="background-image: url('<?php echo esc_url( $src[0] ); ?>');">
-									<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></a>
-								</div>
+								<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
+									<div class="cat-container" style="background-image: url('<?php echo esc_url( $src[0] ); ?>');">
+										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
+									</div>
+								</a>
 							</div>
 						<?php
 					endif;

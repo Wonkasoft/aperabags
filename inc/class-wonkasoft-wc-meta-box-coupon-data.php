@@ -23,7 +23,6 @@ class Wonkasoft_WC_Meta_Box_Coupon_Data {
 	 * @param WP_Post $post
 	 */
 	public static function output( $post ) {
-		wp_nonce_field( 'woocommerce_save_data', 'woocommerce_meta_nonce' );
 
 		$coupon_id = absint( $post->ID );
 		$coupon    = new Wonkasoft_WC_Coupon( $coupon_id );

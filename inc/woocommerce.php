@@ -767,7 +767,7 @@ function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 
 	return $field;
 }
-add_filter( 'woocommerce_form_field', 'wonka_woocommerce_form_field', 99, 4 );
+add_filter( 'woocommerce_form_field', 'wonka_woocommerce_form_field', 10, 4 );
 
 /**
  * This builds a custom table of order details on the checkout page.
@@ -3238,6 +3238,7 @@ endif;
  * @param  array  $cart_item     contains the array of the cart item.
  * @param  string $cart_item_key contains the cart item key.
  * @return string                returns the cart items product name after filtering.
+ * @author MrLister <rlister@wonkasoft.com>
  */
 function wonkasoft_woocommerce_cart_item_name( $current, $cart_item, $cart_item_key ) {
 	$current = $cart_item['data']->get_title();
@@ -3253,6 +3254,7 @@ add_filter( 'woocommerce_cart_item_name', 'wonkasoft_woocommerce_cart_item_name'
  * @param  array  $cart_item     contains the array of the cart item.
  * @param  string $cart_item_key contains the cart item key.
  * @return string                returns the cart items product name after filtering.
+ * @author MrLister <rlister@wonkasoft.com>
  */
 function wonkasoft_cart_and_review_woocommerce_cart_item_name( $current, $cart_item, $cart_item_key ) {
 	$current = $cart_item['data']->get_name();
@@ -3493,18 +3495,32 @@ add_action( 'add_meta_boxes', 'wonkasoft_product_meta_box_add' );
  * @author Rudy <rlister@wonkasoft.com>
  */
 function wonkasoft_product_meta_box() {
+	global $post;
 	?>
 	<div class="editor-product-featured-image">
-		<div class="editor-product-featured-image__container">
-			<button type="button" class="components-button editor-product-featured-image__toggle">Set featured product image</button>
-			<div class="components-drop-zone"></div>
-		</div>
 		<?php
-		if ( this ) :
+
+		$featured_product_img_id = get_featured_product_img_id( $post );
+
+		if ( ! empty( $featured_product_img_id ) ) :
 			?>
-			<button type="button" class="components-button is-secondary">Replace Image</button>
+			<div class="editor-product-featured-image__container">
+				<button type="button" class="components-button editor-product-featured-image__toggle d-none">Set featured product image</button>
+				<div class="components-drop-zone"></div>
+				<img src="<?php echo esc_url( wp_get_attachment_image_src( $featured_product_img_id, 'woocommerce_thumbnail', false )[0] ); ?>" alt="<?php echo esc_attr( get_the_title( $featured_product_img_id ) ); ?>" style="max-width:100%;" />
+			</div>
+			<button type="button" class="btn btn-secondary components-button is-secondary">Replace Image</button>
 			<button type="button" class="components-button is-link is-destructive">Remove testimonial image</button>
+		<?php else : ?>
+			<div class="editor-product-featured-image__container">
+				<button type="button" class="components-button editor-product-featured-image__toggle">Set featured product image</button>
+				<div class="components-drop-zone">
+				</div>
+			</div>
+			<button type="button" class="btn btn-secondary components-button is-secondary d-none">Replace Image</button>
+			<button type="button" class="components-button is-link is-destructive d-none">Remove testimonial image</button>
 		<?php endif; ?>
+		<input type="hidden" class="featured-product-img-id" name="_featured_product_img_id" id="_featured_product_img_id" value="<?php echo esc_attr( $featured_product_img_id ); ?>" />
 	</div>
 	<?php
 }
@@ -3516,3 +3532,18 @@ function get_featured_product_img_id( $post = null ) {
 	}
 	return (int) get_post_meta( $post->ID, '_featured_product_img_id', true );
 }
+
+function wonkasoft_featured_product_img_save_post() {
+	$nonce = ( isset( $_REQUEST['woocommerce_meta_nonce'] ) ) ? esc_html( wp_unslash( $_REQUEST['woocommerce_meta_nonce'] ) ) : '';
+
+	wp_verify_nonce( $nonce, 'woocommerce_save_data' ) || die( 'Your nonce has failed.' );
+
+	global $post;
+	$post_id    = $post->ID;
+	$meta_key   = '_featured_product_img_id';
+	$meta_value = ( isset( $_REQUEST['_featured_product_img_id'] ) ) ? esc_html( wp_unslash( $_REQUEST['_featured_product_img_id'] ) ) : '';
+
+	update_post_meta( $post_id, $meta_key, $meta_value, '' );
+
+}
+add_action( 'save_post', 'wonkasoft_featured_product_img_save_post', 10 );
