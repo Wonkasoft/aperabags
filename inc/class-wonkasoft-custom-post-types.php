@@ -100,7 +100,7 @@ if ( ! class_exists( 'Wonkasoft_Custom_Post_Types' ) ) :
 		public function get_post_type_args_testimonial() {
 			$labels  = array(
 				'name'                  => _x( 'Testimonials', 'Post Type General Name', 'aperabags' ),
-				'singular_name'         => _x( 'testimonial', 'Post Type Singular Name', 'aperabags' ),
+				'singular_name'         => _x( 'Testimonial', 'Post Type Singular Name', 'aperabags' ),
 				'menu_name'             => __( 'Testimonials', 'aperabags' ),
 				'name_admin_bar'        => __( 'Testimonials', 'aperabags' ),
 				'archives'              => __( 'Testimonial Archives', 'aperabags' ),
