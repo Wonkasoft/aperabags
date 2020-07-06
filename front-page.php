@@ -270,14 +270,58 @@ if ( is_home() ) :
 						<h3 class="cat-section-title">Crush Your Next Workout<br /> & Look Good Doing It</h3>
 					</div>
 				<?php
-				list( $accessories, $all_bags, $backpacks, $duffles, $onemore, $logo, $organiztion, $over_shoulder, $totes ) = $cats->terms;
-				$ordered_cats   = array();
-				$ordered_cats[] = $duffles;
-				$ordered_cats[] = $backpacks;
-				$ordered_cats[] = $totes;
-				$ordered_cats[] = $accessories;
-				foreach ( $ordered_cats as $cur_cat ) :
-					if ( 'Backpacks' === $cur_cat->name || 'Duffels' === $cur_cat->name || 'Accessories' === $cur_cat->name || 'Totes' === $cur_cat->name ) :
+
+				foreach ( $cats->get_terms() as $cur_cat ) :
+
+					if ( 'Backpacks' === $cur_cat->name ) :
+						?>
+						<?php
+							$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
+							$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
+						?>
+							<div class="col-6 cat-col">
+								<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
+									<div class="cat-container" style="background-image: url('<?php echo esc_url( $src[0] ); ?>');">
+										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
+									</div>
+								</a>
+							</div>
+						<?php
+					endif;
+
+					if ( 'Duffels' === $cur_cat->name ) :
+						?>
+						<?php
+							$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
+							$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
+						?>
+							<div class="col-6 cat-col">
+								<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
+									<div class="cat-container" style="background-image: url('<?php echo esc_url( $src[0] ); ?>');">
+										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
+									</div>
+								</a>
+							</div>
+						<?php
+					endif;
+
+					if ( 'Accessories' === $cur_cat->name ) :
+						?>
+						<?php
+							$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
+							$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
+						?>
+							<div class="col-6 cat-col">
+								<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
+									<div class="cat-container" style="background-image: url('<?php echo esc_url( $src[0] ); ?>');">
+										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
+									</div>
+								</a>
+							</div>
+						<?php
+					endif;
+
+					if ( 'Totes' === $cur_cat->name ) :
 						?>
 						<?php
 							$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
