@@ -126,7 +126,9 @@ if ( is_home() ) :
 						</div>
 					</div>
 					<div class="col-12 col-md-8">
-						<img src="<?php echo esc_url( wp_get_attachment_image_src( $discovery_section->image, 'full', false )[0] ); ?>" class="img-responsive" />
+						<a href="<?php echo esc_url( $discovery_section->cta_link ); ?>">
+							<img src="<?php echo esc_url( wp_get_attachment_image_src( $discovery_section->image, 'full', false )[0] ); ?>" class="img-responsive" />
+						</a>
 					</div>
 				</div>
 			</div>
@@ -203,7 +205,9 @@ if ( is_home() ) :
 		<div class="container">
 				<div class="row">
 					<div class="col-12 col-md-7">
-						<img src="<?php echo esc_url( wp_get_attachment_image_src( $our_brand_section->image, 'full', false )[0] ); ?>" class="img-responsive" />
+						<a href="<?php echo esc_url( $our_brand_section->cta_link ); ?>">
+							<img src="<?php echo esc_url( wp_get_attachment_image_src( $our_brand_section->image, 'full', false )[0] ); ?>" class="img-responsive" />
+						</a>
 					</div>
 					<div class="col-12 col-md-5">
 						<h3><?php echo esc_html( $our_brand_section->title ); ?></h3>

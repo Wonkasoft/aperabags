@@ -272,23 +272,25 @@ if ( ! class_exists( 'Wonkasoft_Custom_Post_Types' ) ) :
 			$post          = get_post( $post_id );
 			$cur_post_type = $post->post_type;
 			$post_nonce    = "{$cur_post_type}_edit_nonce";
-			if ( ! in_array( $_POST['post_type'], $this->custom_post_types ) ) {
-				return;
-			}
+			if ( isset( $_POST['post_type'] ) ) :
+				if ( ! in_array( $_POST['post_type'], $this->custom_post_types ) ) {
+					return;
+				}
 
-			if ( ! current_user_can( 'edit_post', $post_id ) ) {
-				return;
-			}
+				if ( ! current_user_can( 'edit_post', $post_id ) ) {
+					return;
+				}
 
-			if ( ! wp_verify_nonce( $_POST[ $post_nonce ], "{$cur_post_type}_save_action_nonce" ) ) {
-				return;
-			}
+				if ( ! wp_verify_nonce( $_POST[ $post_nonce ], "{$cur_post_type}_save_action_nonce" ) ) {
+					return;
+				}
 
-			if ( isset( $_REQUEST['testimonial_featured'] ) ) {
-				update_post_meta( $post_id, 'featured', $_REQUEST['testimonial_featured'] );
-			} else {
-				update_post_meta( $post_id, 'featured', '' );
-			}
+				if ( isset( $_REQUEST['testimonial_featured'] ) ) {
+					update_post_meta( $post_id, 'featured', $_REQUEST['testimonial_featured'] );
+				} else {
+					update_post_meta( $post_id, 'featured', '' );
+				}
+			endif;
 		}
 	}
 endif;
