@@ -102,7 +102,7 @@ if ( is_home() ) :
 		</section><!-- .header-slider-section -->
 	<?php endif; ?>
 	<?php
-	$discovery_section = $page_mods->discovery_section;
+	$discovery_section = ! empty( $page_mods->discovery_section ) ? $page_mods->discovery_section : '';
 
 	if ( empty( $dicovery_section ) ) :
 		$discovery_section = apply_filters( 'wonkasoft_filter_before_discovery_section', get_section_mods( 'discovery_section' ), 'discovery_section' );
@@ -189,7 +189,7 @@ if ( is_home() ) :
 		</section>
 	<?php endif; ?>
 	<?php
-	$our_brand_section = $page_mods->our_brand_section;
+	$our_brand_section = ! empty( $page_mods->our_brand_section ) ? $page_mods->our_brand_section : '';
 
 	if ( empty( $our_brand_section ) ) :
 		$our_brand_section = apply_filters( 'wonkasoft_filter_before_our_brand_section', get_section_mods( 'our_brand_section' ), 'our_brand_section' );
