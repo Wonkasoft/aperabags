@@ -153,7 +153,7 @@ if ( ! class_exists( 'Wonkasoft_Custom_Post_Types' ) ) :
 				'has_archive'         => true,
 				'exclude_from_search' => true,
 				'publicly_queryable'  => true,
-				'capability_type'     => array( 'testimonial', 'testimonials' ),
+				'capability_type'     => array( 'post', 'testimonial', 'testimonials' ),
 				'capabilities'        => array(
 					'edit_post'          => 'edit_testimonial',
 					'read_post'          => 'read_testimonial',
