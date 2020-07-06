@@ -2,7 +2,7 @@
 /**
  * Apera Bags Theme Customizer
  *
- * @package apera-bags
+ * @package aperabags
  */
 
 /**
@@ -43,8 +43,8 @@ function apera_bags_customize_register( $wp_customize ) {
 			'priority'       => 5,
 			'capability'     => 'edit_theme_options',
 			'theme_supports' => '',
-			'title'          => __( 'Apera Homepage Options', 'apera-bags' ),
-			'description'    => __( 'Theme Settings', 'apera-bags' ),
+			'title'          => __( 'Apera Homepage Options', 'aperabags' ),
+			'description'    => __( 'Theme Settings', 'aperabags' ),
 		)
 	);
 
@@ -59,8 +59,8 @@ function apera_bags_customize_register( $wp_customize ) {
 			'capability'     => 'edit_theme_options',
 			'theme_supports' => '',
 			'priority'       => 10,
-			'title'          => __( 'Topbar Message Section', 'apera-bags' ),
-			'description'    => __( 'Topbar Options version 1.0.0', 'apera-bags' ),
+			'title'          => __( 'Topbar Message Section', 'aperabags' ),
+			'description'    => __( 'Topbar Options version 1.0.0', 'aperabags' ),
 			'panel'          => 'wonkasoft_theme_options',
 		)
 	);
@@ -84,7 +84,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'enable_topbar_control',
 			array(
-				'label'       => __( 'Topbar Message Option', 'apera-bags' ),
+				'label'       => __( 'Topbar Message Option', 'aperabags' ),
 				'section'     => 'topbar_message_section',
 				'settings'    => 'enable_topbar',
 				'type'        => 'checkbox',
@@ -112,7 +112,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'topbar_color_control',
 			array(
-				'label'       => __( 'Topbar Color Option', 'apera-bags' ),
+				'label'       => __( 'Topbar Color Option', 'aperabags' ),
 				'section'     => 'topbar_message_section',
 				'settings'    => 'topbar_color',
 				'type'        => 'color',
@@ -140,7 +140,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'topbar_message_control',
 			array(
-				'label'       => __( 'Topbar Message Option', 'apera-bags' ),
+				'label'       => __( 'Topbar Message Option', 'aperabags' ),
 				'section'     => 'topbar_message_section',
 				'settings'    => 'topbar_message',
 				'type'        => 'text',
@@ -160,8 +160,8 @@ function apera_bags_customize_register( $wp_customize ) {
 			'capability'     => 'edit_theme_options',
 			'theme_supports' => '',
 			'priority'       => 10,
-			'title'          => __( 'Introduction Section Section', 'apera-bags' ),
-			'description'    => __( 'Introduction Section Options version 1.0.1', 'apera-bags' ),
+			'title'          => __( 'Introduction Section Section', 'aperabags' ),
+			'description'    => __( 'Introduction Section Options version 1.0.1', 'aperabags' ),
 			'panel'          => 'wonkasoft_theme_options',
 		)
 	);
@@ -234,7 +234,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				$wp_customize,
 				'slider_text_position_' . $i . '_control',
 				array(
-					'label'       => __( 'Slider message position', 'apera-bags' ),
+					'label'       => __( 'Slider message position', 'aperabags' ),
 					'section'     => 'introduction_section',
 					'settings'    => 'slider_text_position_' . $i,
 					'description' => 'Text alignment ' . $i,
@@ -267,7 +267,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				$wp_customize,
 				'slider_header_' . $i . '_control',
 				array(
-					'label'       => __( 'Slider header message', 'apera-bags' ),
+					'label'       => __( 'Slider header message', 'aperabags' ),
 					'section'     => 'introduction_section',
 					'settings'    => 'slider_header_' . $i,
 					'type'        => 'text',
@@ -295,7 +295,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				$wp_customize,
 				'slider_subheader_' . $i . '_control',
 				array(
-					'label'       => __( 'Slider subheader', 'apera-bags' ),
+					'label'       => __( 'Slider subheader', 'aperabags' ),
 					'section'     => 'introduction_section',
 					'settings'    => 'slider_subheader_' . $i,
 					'type'        => 'text',
@@ -323,7 +323,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				$wp_customize,
 				'slider_btn_text_' . $i . '_control',
 				array(
-					'label'       => __( 'Slider button text', 'apera-bags' ),
+					'label'       => __( 'Slider button text', 'aperabags' ),
 					'section'     => 'introduction_section',
 					'settings'    => 'slider_btn_text_' . $i,
 					'type'        => 'text',
@@ -351,7 +351,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				$wp_customize,
 				'slider_btn_link_' . $i . '_control',
 				array(
-					'label'       => __( 'Slider Button Link', 'apera-bags' ),
+					'label'       => __( 'Slider Button Link', 'aperabags' ),
 					'section'     => 'introduction_section',
 					'settings'    => 'slider_btn_link_' . $i,
 					'type'        => 'dropdown-pages',
@@ -361,8 +361,6 @@ function apera_bags_customize_register( $wp_customize ) {
 		);
 
 	endfor;
-
-
 
 	 /**
 	  * Discovery settings Section
@@ -375,9 +373,33 @@ function apera_bags_customize_register( $wp_customize ) {
 			'capability'     => 'edit_theme_options',
 			'theme_supports' => '',
 			'priority'       => 10,
-			'title'          => __( 'Discovery Section', 'apera-bags' ),
-			'description'    => __( 'Discovery Options version 1.0.1', 'apera-bags' ),
+			'title'          => __( 'Discovery Section', 'aperabags' ),
+			'description'    => __( 'Discovery Options version 1.0.1', 'aperabags' ),
 			'panel'          => 'wonkasoft_theme_options',
+		)
+	);
+
+	// Discovery featured image Setting.
+	$wp_customize->add_setting(
+		'discovery_featured_image',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Disvovery featured image Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Media_Control(
+			$wp_customize,
+			'discovery_featured_image_control',
+			array(
+				'label'       => __( 'Discovery Featured image', 'aperabags' ),
+				'section'     => 'discovery_section',
+				'settings'    => 'discovery_featured_image',
+				'type'        => 'media',
+				'description' => 'Add image for featured image ',
+			)
 		)
 	);
 
@@ -396,7 +418,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'discovery_title_control',
 			array(
-				'label'       => __( 'Discovery Title', 'apera-bags' ),
+				'label'       => __( 'Discovery Title', 'aperabags' ),
 				'section'     => 'discovery_section',
 				'settings'    => 'discovery_title',
 				'type'        => 'text',
@@ -420,7 +442,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'discovery_body_control',
 			array(
-				'label'       => __( 'Discovery Body', 'apera-bags' ),
+				'label'       => __( 'Discovery Body', 'aperabags' ),
 				'section'     => 'discovery_section',
 				'settings'    => 'discovery_body',
 				'type'        => 'textarea',
@@ -444,7 +466,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'discovery_cta_text_control',
 			array(
-				'label'       => __( 'Discovery CTA Text', 'apera-bags' ),
+				'label'       => __( 'Discovery CTA Text', 'aperabags' ),
 				'section'     => 'discovery_section',
 				'settings'    => 'discovery_cta_text',
 				'type'        => 'text',
@@ -468,35 +490,11 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'discovery_cta_link_control',
 			array(
-				'label'       => __( 'Discovery CTA link', 'apera-bags' ),
+				'label'       => __( 'Discovery CTA link', 'aperabags' ),
 				'section'     => 'discovery_section',
 				'settings'    => 'discovery_cta_link',
 				'type'        => 'dropdown-pages',
 				'description' => 'Discovery CTA Link for Section',
-			)
-		)
-	);
-
-	// Discovery featured image Setting.
-	$wp_customize->add_setting(
-		'discovery_featured_image',
-		array(
-			'default'   => '',
-			'transport' => 'refresh',
-		)
-	);
-
-	// Disvovery featured image Setting Control.
-	$wp_customize->add_control(
-		new WP_Customize_Media_Control(
-			$wp_customize,
-			'discovery_featured_image_control',
-			array(
-				'label'       => __( 'Discovery Featured image', 'apera-bags' ),
-				'section'     => 'discovery_section',
-				'settings'    => 'discovery_featured_image',
-				'type'        => 'media',
-				'description' => 'Add image for featured image ',
 			)
 		)
 	);
@@ -512,8 +510,8 @@ function apera_bags_customize_register( $wp_customize ) {
 			'capability'     => 'edit_theme_options',
 			'theme_supports' => '',
 			'priority'       => 10,
-			'title'          => __( 'Shop Section', 'apera-bags' ),
-			'description'    => __( 'Shop Options version 1.0.1 - featured items are selected from the product options', 'apera-bags' ),
+			'title'          => __( 'Shop Section', 'aperabags' ),
+			'description'    => __( 'Shop Options version 1.0.1 - featured items are selected from the product options', 'aperabags' ),
 			'panel'          => 'wonkasoft_theme_options',
 		)
 	);
@@ -533,7 +531,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'shop_title_control',
 			array(
-				'label'       => __( 'Shop Title', 'apera-bags' ),
+				'label'       => __( 'Shop Title', 'aperabags' ),
 				'section'     => 'shop_section',
 				'settings'    => 'shop_title',
 				'type'        => 'text',
@@ -557,7 +555,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'shop_subtitle_control',
 			array(
-				'label'       => __( 'Shop Subtitle', 'apera-bags' ),
+				'label'       => __( 'Shop Subtitle', 'aperabags' ),
 				'section'     => 'shop_section',
 				'settings'    => 'shop_subtitle',
 				'type'        => 'text',
@@ -577,15 +575,15 @@ function apera_bags_customize_register( $wp_customize ) {
 			'capability'     => 'edit_theme_options',
 			'theme_supports' => '',
 			'priority'       => 10,
-			'title'          => __( 'Our Brand Section', 'apera-bags' ),
-			'description'    => __( 'Our brand Section Options version 1.0.1', 'apera-bags' ),
+			'title'          => __( 'Our Brand Section', 'aperabags' ),
+			'description'    => __( 'Our brand Section Options version 1.0.1', 'aperabags' ),
 			'panel'          => 'wonkasoft_theme_options',
 		)
 	);
 
-	/** 
+	/**
 	* Our Brand featured image Setting.
-	* 
+	*
 	* @since  1.0.1
 	*/
 	$wp_customize->add_setting(
@@ -602,7 +600,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'our_brand_featured_image_control',
 			array(
-				'label'       => __( 'Our Brand Featured image', 'apera-bags' ),
+				'label'       => __( 'Our Brand Featured image', 'aperabags' ),
 				'section'     => 'our_brand_section',
 				'settings'    => 'our_brand_featured_image',
 				'type'        => 'media',
@@ -616,12 +614,10 @@ function apera_bags_customize_register( $wp_customize ) {
 	  *
 	  * @since  1.0.1
 	  */
-	 
-	 for ($i=1; $i <= 2; $i++) :
 
-	 	// Our brand header
+		// Our brand header
 		$wp_customize->add_setting(
-			'our_brand_header_' . $i,
+			'our_brand_title',
 			array(
 				'default'   => '',
 				'transport' => 'refresh',
@@ -632,40 +628,39 @@ function apera_bags_customize_register( $wp_customize ) {
 		$wp_customize->add_control(
 			new WP_Customize_Control(
 				$wp_customize,
-				'our_brand_header_control_' . $i,
+				'our_brand_title_control',
 				array(
-					'label'       => __( 'Our brand header ' . $i, 'apera-bags' ),
+					'label'       => __( 'Our brand Title', 'aperabags' ),
 					'section'     => 'our_brand_section',
-					'settings'    => 'our_brand_header_' . $i,
+					'settings'    => 'our_brand_title',
 					'type'        => 'text',
-					'description' => 'Our brand header' . $i,
+					'description' => 'Our brand title.',
 				)
 			)
 		);
-		 	// Our brand header
-			$wp_customize->add_setting(
-				'our_brand_body_' . $i,
-				array(
-					'default'   => '',
-					'transport' => 'refresh',
-				)
-			);
+		   // Our brand header
+		$wp_customize->add_setting(
+			'our_brand_body',
+			array(
+				'default'   => '',
+				'transport' => 'refresh',
+			)
+		);
 
-			// Our brand header Setting Control.
-			$wp_customize->add_control(
-				new WP_Customize_Control(
-					$wp_customize,
-					'our_brand_body_control_' . $i,
-					array(
-						'label'       => __( 'Our brand body ' . $i, 'apera-bags' ),
-						'section'     => 'our_brand_section',
-						'settings'    => 'our_brand_body_' . $i,
-						'type'        => 'textarea',
-						'description' => 'Our brand body' . $i,
-					)
+		   // Our brand header Setting Control.
+		$wp_customize->add_control(
+			new WP_Customize_Control(
+				$wp_customize,
+				'our_brand_body_control',
+				array(
+					'label'       => __( 'Our brand body', 'aperabags' ),
+					'section'     => 'our_brand_section',
+					'settings'    => 'our_brand_body',
+					'type'        => 'textarea',
+					'description' => 'Our brand body',
 				)
-			);
-	endfor;
+			)
+		);
 
 	// Our brand cta text for Section Setting.
 	$wp_customize->add_setting(
@@ -682,7 +677,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'our_brand_cta_text_control',
 			array(
-				'label'       => __( 'Our Brand CTA Text', 'apera-bags' ),
+				'label'       => __( 'Our Brand CTA Text', 'aperabags' ),
 				'section'     => 'our_brand_section',
 				'settings'    => 'our_brand_cta_text',
 				'type'        => 'text',
@@ -706,7 +701,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'our_brand_cta_link_control',
 			array(
-				'label'       => __( 'Our Brand CTA link', 'apera-bags' ),
+				'label'       => __( 'Our Brand CTA link', 'aperabags' ),
 				'section'     => 'our_brand_section',
 				'settings'    => 'our_brand_cta_link',
 				'type'        => 'dropdown-pages',
@@ -734,7 +729,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'about_the_brand_subheader_control',
 			array(
-				'label'       => __( 'About the brand subheader', 'apera-bags' ),
+				'label'       => __( 'About the brand subheader', 'aperabags' ),
 				'section'     => 'about_section',
 				'settings'    => 'about_the_brand_subheader',
 				'type'        => 'text',
@@ -762,7 +757,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'about_the_brand_message_control',
 			array(
-				'label'       => __( 'About the brand message', 'apera-bags' ),
+				'label'       => __( 'About the brand message', 'aperabags' ),
 				'section'     => 'about_section',
 				'settings'    => 'about_the_brand_message',
 				'type'        => 'textarea',
@@ -790,7 +785,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'about_the_brand_video_placeholder_contol',
 			array(
-				'label'       => __( 'About the brand video placeholder', 'apera-bags' ),
+				'label'       => __( 'About the brand video placeholder', 'aperabags' ),
 				'section'     => 'about_section',
 				'settings'    => 'about_the_brand_video_placeholder',
 				'type'        => 'media',
@@ -818,7 +813,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'about_the_brand_video_control',
 			array(
-				'label'       => __( 'About the brand video', 'apera-bags' ),
+				'label'       => __( 'About the brand video', 'aperabags' ),
 				'section'     => 'about_section',
 				'settings'    => 'about_the_brand_video',
 				'type'        => 'text',
@@ -846,7 +841,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'about_the_brand_btn_text_control',
 			array(
-				'label'       => __( 'About the brand message', 'apera-bags' ),
+				'label'       => __( 'About the brand message', 'aperabags' ),
 				'section'     => 'about_section',
 				'settings'    => 'about_the_brand_btn_text',
 				'type'        => 'text',
@@ -874,7 +869,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'about_the_brand_button_link_control',
 			array(
-				'label'       => __( 'About the brand button', 'apera-bags' ),
+				'label'       => __( 'About the brand button', 'aperabags' ),
 				'section'     => 'about_section',
 				'settings'    => 'about_the_brand_button_link',
 				'type'        => 'dropdown-pages',
@@ -902,7 +897,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'about_the_brand_second_image_control',
 			array(
-				'label'       => __( 'About the brand second image', 'apera-bags' ),
+				'label'       => __( 'About the brand second image', 'aperabags' ),
 				'section'     => 'about_section',
 				'settings'    => 'about_the_brand_second_image',
 				'type'        => 'media',
@@ -931,7 +926,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'about_the_brand_second_image_link_control',
 			array(
-				'label'       => __( 'About the brand image link', 'apera-bags' ),
+				'label'       => __( 'About the brand image link', 'aperabags' ),
 				'section'     => 'about_section',
 				'settings'    => 'about_the_brand_second_image_link',
 				'type'        => 'select',
@@ -952,8 +947,8 @@ function apera_bags_customize_register( $wp_customize ) {
 			'capability'     => 'edit_theme_options',
 			'theme_supports' => '',
 			'priority'       => 10,
-			'title'          => __( 'Footer Section', 'apera-bags' ),
-			'description'    => __( 'Footer Section Options version 1.0.0', 'apera-bags' ),
+			'title'          => __( 'Footer Section', 'aperabags' ),
+			'description'    => __( 'Footer Section Options version 1.0.0', 'aperabags' ),
 			'panel'          => 'wonkasoft_theme_options',
 		)
 	);
@@ -977,7 +972,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'footer_social_title_control',
 			array(
-				'label'       => __( 'Footer Social Title', 'apera-bags' ),
+				'label'       => __( 'Footer Social Title', 'aperabags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_social_title',
 				'type'        => 'text',
@@ -1005,7 +1000,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'footer_social_instagram_control',
 			array(
-				'label'       => __( 'Instagram Icon Link', 'apera-bags' ),
+				'label'       => __( 'Instagram Icon Link', 'aperabags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_social_instagram',
 				'type'        => 'text',
@@ -1029,7 +1024,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'footer_social_twitter_control',
 			array(
-				'label'       => __( 'Twitter Icon Link', 'apera-bags' ),
+				'label'       => __( 'Twitter Icon Link', 'aperabags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_social_twitter',
 				'type'        => 'text',
@@ -1053,7 +1048,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'footer_social_facebook_control',
 			array(
-				'label'       => __( 'Facebook Icon Link', 'apera-bags' ),
+				'label'       => __( 'Facebook Icon Link', 'aperabags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_social_facebook',
 				'type'        => 'text',
@@ -1077,7 +1072,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'footer_social_pinterest_control',
 			array(
-				'label'       => __( 'Pinterest Icon Link', 'apera-bags' ),
+				'label'       => __( 'Pinterest Icon Link', 'aperabags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_social_pinterest',
 				'type'        => 'text',
@@ -1101,7 +1096,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'footer_insta_username_control',
 			array(
-				'label'       => __( 'Instagram Username', 'apera-bags' ),
+				'label'       => __( 'Instagram Username', 'aperabags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_insta_username',
 				'type'        => 'text',
@@ -1125,7 +1120,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'footer_insta_username_link_control',
 			array(
-				'label'       => __( 'Instagram link', 'apera-bags' ),
+				'label'       => __( 'Instagram link', 'aperabags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_insta_username_link',
 				'type'        => 'text',
@@ -1149,7 +1144,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				$wp_customize,
 				'footer_insta_hashtags_control',
 				array(
-					'label'       => __( 'Instgram Hashtag Page', 'apera-bags' ),
+					'label'       => __( 'Instgram Hashtag Page', 'aperabags' ),
 					'section'     => 'footer_section',
 					'settings'    => 'footer_insta_hashtags',
 					'type'        => 'text',
@@ -1173,7 +1168,7 @@ function apera_bags_customize_register( $wp_customize ) {
 				$wp_customize,
 				'footer_insta_hashtags_link_control',
 				array(
-					'label'       => __( 'Instagram Hashtag link', 'apera-bags' ),
+					'label'       => __( 'Instagram Hashtag link', 'aperabags' ),
 					'section'     => 'footer_section',
 					'settings'    => 'footer_insta_hashtags_link',
 					'type'        => 'text',
@@ -1226,7 +1221,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'footer_logo_control',
 			array(
-				'label'       => __( 'Footer Logo', 'apera-bags' ),
+				'label'       => __( 'Footer Logo', 'aperabags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_logo',
 				'type'        => 'media',
@@ -1254,7 +1249,7 @@ function apera_bags_customize_register( $wp_customize ) {
 			$wp_customize,
 			'footer_form_shortcode_control',
 			array(
-				'label'       => __( 'Footer Form Shortcode', 'apera-bags' ),
+				'label'       => __( 'Footer Form Shortcode', 'aperabags' ),
 				'section'     => 'footer_section',
 				'settings'    => 'footer_form_shortcode',
 				'type'        => 'text',
@@ -1263,30 +1258,30 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 }
-add_action( 'customize_register', 'apera_bags_customize_register' );
+	add_action( 'customize_register', 'apera_bags_customize_register' );
 
-/**
- * Render the site title for the selective refresh partial.
- *
- * @return void
- */
+	/**
+	 * Render the site title for the selective refresh partial.
+	 *
+	 * @return void
+	 */
 function apera_bags_customize_partial_blogname() {
 	bloginfo( 'name' );
 }
 
-/**
- * Render the site tagline for the selective refresh partial.
- *
- * @return void
- */
+	/**
+	 * Render the site tagline for the selective refresh partial.
+	 *
+	 * @return void
+	 */
 function apera_bags_customize_partial_blogdescription() {
 	bloginfo( 'description' );
 }
 
-/**
- * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
- */
+	/**
+	 * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
+	 */
 function apera_bags_customize_preview_js() {
-	wp_enqueue_script( 'apera-bags-customizer', esc_url( get_stylesheet_directory_uri() . '/inc/js/customizer.js' ), array( 'customize-preview' ), '20190819', true );
+	wp_enqueue_script( 'aperabags-customizer', esc_url( get_stylesheet_directory_uri() . '/inc/js/customizer.js' ), array( 'customize-preview' ), '20190819', true );
 }
-add_action( 'customize_preview_init', 'apera_bags_customize_preview_js' );
+	add_action( 'customize_preview_init', 'apera_bags_customize_preview_js' );

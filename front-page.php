@@ -24,6 +24,7 @@ if ( is_home() ) :
 
 	/* This gets the slides as an object */
 	$top_slider = $page_mods->top_slider;
+
 	do_action( 'get_mods_before_section', 'top_slider', $top_slider );
 
 	/* This checks for slider object in order to parse slider section */
@@ -98,25 +99,62 @@ if ( is_home() ) :
 		<?php endforeach; ?>
 
 			</div><!-- .top-page-slider -->
-
 		</section><!-- .header-slider-section -->
-		<section class="info-section-1">
+	<?php endif; ?>
+	<?php
+	$discovery_section = $page_mods->discovery_section;
+
+	if ( empty( $dicovery_section ) ) :
+		$discovery_section = apply_filters( 'wonkasoft_filter_before_discovery_section', get_section_mods( 'discovery_section' ), 'discovery_section' );
+	endif;
+
+	$discovery_section = $discovery_section->discovery_section;
+	do_action( 'wonkasoft_action_before_discovery_section', 'discovery_section', $discovery_section );
+
+	?>
+	<?php if ( ! empty( $discovery_section ) ) : ?>
+		<section class="discovery-section">
 			<div class="container">
 				<div class="row">
 					<div class="col-12 col-md-4">
-						<h3>Discover a bag that's as tough as you are</h3>
-						<p>Don't let your underperforming gym bag hold you back.</p>
-						<p>You've stepped up your workout. Now it's time to upgrade your bag.</p>
+						<h3><?php echo esc_html( $discovery_section->title ); ?></h3>
+						<?php
+							echo $discovery_section->body;
+						?>
 						<div class="text-center">
-							<a href="<?php echo esc_url( get_site_url() . '/shop/' ); ?>" class="btn wonka-btn mx-auto">Shop all bags</a>
+							<a href="<?php echo esc_url( $discovery_section->cta_link ); ?>" class="btn wonka-btn mx-auto"><?php echo esc_html( $discovery_section->cta_text ); ?></a>
 						</div>
 					</div>
 					<div class="col-12 col-md-8">
-						<img src="" class="img-responsive" />
+						<img src="<?php echo esc_url( wp_get_attachment_image_src( $discovery_section->image, 'full', false )[0] ); ?>" class="img-responsive" />
 					</div>
 				</div>
 			</div>
 		</section>
+	<?php endif; ?>
+	<?php
+	// The tax query
+	$tax_query[] = array(
+		'taxonomy' => 'product_visibility',
+		'field'    => 'name',
+		'terms'    => 'featured',
+		'operator' => 'IN', // or 'NOT IN' to exclude feature products
+	);
+
+	// The query
+	$pro_query = new WP_Query(
+		array(
+			'post_type'           => 'product',
+			'post_status'         => 'publish',
+			'ignore_sticky_posts' => 1,
+			'posts_per_page'      => -1,
+			'orderby'             => 'post_title',
+			'order'               => 'desc',
+			'tax_query'           => $tax_query,
+		)
+	);
+	?>
+	<?php if ( $pro_query->have_posts() ) : ?>
 		<section class="featured-bags-section">
 			<div class="container">
 				<div class="row justify-content-space-around">
@@ -127,35 +165,14 @@ if ( is_home() ) :
 				</div>
 				<div class="row justify-content-space-around">
 				<?php
-					// The tax query
-					$tax_query[] = array(
-						'taxonomy' => 'product_visibility',
-						'field'    => 'name',
-						'terms'    => 'featured',
-						'operator' => 'IN', // or 'NOT IN' to exclude feature products
-					);
 
-					// The query
-					$pro_query = new WP_Query(
-						array(
-							'post_type'           => 'product',
-							'post_status'         => 'publish',
-							'ignore_sticky_posts' => 1,
-							'posts_per_page'      => -1,
-							'orderby'             => 'post_title',
-							'order'               => 'desc',
-							'tax_query'           => $tax_query,
-						)
-					);
+				while ( $pro_query->have_posts() ) :
+					$pro_query->the_post();
 
-				if ( $pro_query->have_posts() ) :
-					while ( $pro_query->have_posts() ) :
-						$pro_query->the_post();
+					$post_id                   = get_the_ID();
+					$featured_product_image_id = get_featured_product_img_id( $post );
 
-						$post_id                   = get_the_ID();
-						$featured_product_image_id = get_featured_product_img_id( $post );
-
-						?>
+					?>
 						<div class="col-12 col-md-4 featured-product-wrap">
 							<a href="<?php esc_url( the_permalink( $post_id ) ); ?>" class="shop-link">
 								<div class="featured-product-image" style="background-image: url('<?php echo esc_url( wp_get_attachment_image_src( $featured_product_image_id, 'full', false )[0] ); ?>');">
@@ -166,46 +183,55 @@ if ( is_home() ) :
 						<?php
 					endwhile;
 					wp_reset_postdata();
-					else :
-						?>
-					<p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
-					<?php endif; ?>
+				?>
 				</div><!-- justify-content-space-around -->
 			</div>
 		</section>
-		<section class="info-section-2">
+	<?php endif; ?>
+	<?php
+	$our_brand_section = $page_mods->our_brand_section;
+
+	if ( empty( $our_brand_section ) ) :
+		$our_brand_section = apply_filters( 'wonkasoft_filter_before_our_brand_section', get_section_mods( 'our_brand_section' ), 'our_brand_section' );
+	endif;
+
+	$our_brand_section = $our_brand_section->our_brand_section;
+	do_action( 'wonkasoft_action_before_discovery_section', 'our_brand_section', $our_brand_section );
+	?>
+	<?php if ( ! empty( $our_brand_section ) ) : ?>
+		<section class="our-brand-section">
 		<div class="container">
 				<div class="row">
 					<div class="col-12 col-md-7"></div>
-						<img src="" class="img-responsive" />
+						<img src="<?php echo esc_url( wp_get_attachment_image_src( $our_brand_section->image, 'full', false )[0] ); ?>" class="img-responsive" />
 					<div class="col-12 col-md-5">
-						<h3>Engineered to perform</h3>
-						<p>Our bags keep your gear separated and organized Cutting-edge, anti-microbial fabrics are designed to fight odor.</p>
-						<h3>Built to Last</h3>
-						<p>We use top-quality materials and construction to create tough bags with a lifetime guarantee.</p>
+						<h3><?php echo esc_html( $our_brand_section->title ); ?></h3>
+						<?php
+							echo $our_brand_section->body;
+						?>
 						<div class="text-center">
-							<a class="btn wonka-btn mx-auto">Save $10 & Get Free Shipping</a>
+							<a href="<?php echo esc_url( $our_brand_section->cta_link ); ?>" class="btn wonka-btn mx-auto"><?php echo esc_html( $our_brand_section->cta_text ); ?></a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-
-		<?php
-		$args         = array(
-			'meta_query' => array(
-				array(
-					'key'     => 'featured',
-					'value'   => 'checked',
-					'compare' => 'LIKE',
-				),
+	<?php endif; ?>
+	<?php
+	$args         = array(
+		'meta_query' => array(
+			array(
+				'key'     => 'featured',
+				'value'   => 'checked',
+				'compare' => 'LIKE',
 			),
-		);
-		$testimonials = new Wonkasoft_Testimonial_Query( $args );
-		$testimonials->get_testimonials();
+		),
+	);
+	$testimonials = new Wonkasoft_Testimonial_Query( $args );
+	$testimonials->get_testimonials();
 
-		if ( $testimonials->results->have_posts() ) :
-			?>
+	if ( $testimonials->results->have_posts() ) :
+		?>
 		<section class="testimonial-section">
 			<div class="container-fluid">
 				<div class="row justify-content-center testimonial-row">
@@ -219,13 +245,23 @@ if ( is_home() ) :
 							<p><span class="testimonial-quotes">"</span><?php echo esc_html( $post->post_content ); ?><span class="testimonial-quotes">"</span><br />- <?php echo esc_html( $post->post_title ); ?></p>
 						</div>
 						<?php
-					endwhile;
+						endwhile;
 					?>
 					</div>
 				</div>
 			</div>
 		</section>
-		<?php endif; ?>
+	<?php endif; ?>
+	<?php
+	$term_args = array(
+		'taxonomy'   => 'product_cat',
+		'orderby'    => 'name',
+		'order'      => 'ASC',
+		'hide_empty' => true,
+	);
+	$cats      = new WP_Term_Query( $term_args );
+	?>
+	<?php if ( ! empty( $cats ) ) : ?>
 		<section class="category-section">
 			<div class="container">
 				<div class="row justify-content-space-around">
@@ -233,13 +269,6 @@ if ( is_home() ) :
 						<h3 class="cat-section-title">Crush Your Next Workout<br /> & Look Good Doing It</h3>
 					</div>
 				<?php
-				$term_args = array(
-					'taxonomy'   => 'product_cat',
-					'orderby'    => 'name',
-					'order'      => 'ASC',
-					'hide_empty' => true,
-				);
-				$cats      = new WP_Term_Query( $term_args );
 				list( $accessories, $all_bags, $backpacks, $duffles, $onemore, $logo, $organiztion, $over_shoulder, $totes ) = $cats->terms;
 				$ordered_cats   = array();
 				$ordered_cats[] = $duffles;

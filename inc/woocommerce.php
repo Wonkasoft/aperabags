@@ -3534,16 +3534,18 @@ function get_featured_product_img_id( $post = null ) {
 }
 
 function wonkasoft_featured_product_img_save_post() {
-	$nonce = ( isset( $_REQUEST['woocommerce_meta_nonce'] ) ) ? esc_html( wp_unslash( $_REQUEST['woocommerce_meta_nonce'] ) ) : '';
+	if ( isset( $_REQUEST['woocommerce_meta_nonce'] ) ) :
+		$nonce = ( isset( $_REQUEST['woocommerce_meta_nonce'] ) ) ? esc_html( wp_unslash( $_REQUEST['woocommerce_meta_nonce'] ) ) : '';
 
-	wp_verify_nonce( $nonce, 'woocommerce_save_data' ) || die( 'Your nonce has failed.' );
+		wp_verify_nonce( $nonce, 'woocommerce_save_data' ) || die( 'Your nonce has failed lol.' );
 
-	global $post;
-	$post_id    = $post->ID;
-	$meta_key   = '_featured_product_img_id';
-	$meta_value = ( isset( $_REQUEST['_featured_product_img_id'] ) ) ? esc_html( wp_unslash( $_REQUEST['_featured_product_img_id'] ) ) : '';
+		global $post;
+		$post_id    = $post->ID;
+		$meta_key   = '_featured_product_img_id';
+		$meta_value = ( isset( $_REQUEST['_featured_product_img_id'] ) ) ? esc_html( wp_unslash( $_REQUEST['_featured_product_img_id'] ) ) : '';
 
-	update_post_meta( $post_id, $meta_key, $meta_value, '' );
+		update_post_meta( $post_id, $meta_key, $meta_value, '' );
+	endif;
 
 }
 add_action( 'save_post', 'wonkasoft_featured_product_img_save_post', 10 );

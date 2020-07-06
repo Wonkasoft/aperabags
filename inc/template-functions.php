@@ -76,144 +76,42 @@ function the_mods_for_section( $section ) {
 			$section_mods['top_slider'] = $top_slider;
 		}
 	endif;
-	if ( 'shop_area' === $section || 'all' === $section ) :
-		$shop_area_count = 0;
-		$shop_area       = array();
-		if ( ! empty( get_theme_mod( 'shop_title' ) ) ) :
-			$shop_area_count++;
-			$shop                            = array(
-				'shop_title'            => get_theme_mod( 'shop_title' ),
-				'shop_background_image' => get_theme_mod( 'shop_background_image' ),
-				'enable_sale_banner'    => get_theme_mod( 'enable_sale_banner' ),
-				'shop_product_per_row'  => get_theme_mod( 'shop_product_per_row' ),
-				'shop_num_of_products'  => get_theme_mod( 'shop_num_of_products' ),
+	if ( 'discovery_section' === $section || 'all' === $section ) :
+		$discovery_section = array();
+		$discovery         = array(
+			'image'    => ! empty( get_theme_mod( 'discovery_featured_image' ) ) ? get_theme_mod( 'discovery_featured_image' ) : null,
+			'title'    => ! empty( get_theme_mod( 'discovery_title' ) ) ? get_theme_mod( 'discovery_title' ) : null,
+			'body'     => ! empty( get_theme_mod( 'discovery_body' ) ) ? get_theme_mod( 'discovery_body' ) : null,
+			'cta_text' => ! empty( get_theme_mod( 'discovery_cta_text' ) ) ? get_theme_mod( 'discovery_cta_text' ) : null,
+			'cta_link' => ! empty( get_theme_mod( 'discovery_cta_link' ) ) ? get_permalink( get_theme_mod( 'discovery_cta_link' ) ) : null,
+		);
+
+		if ( 'discovery_section' === $section ) {
+			$section_mods['discovery_section'] = $discovery;
+			return json_decode( json_encode( $section_mods ) );
+		} else {
+			$section_mods['discovery_section'] = $discovery;
+		}
+	endif;
+	if ( 'our_brand_section' === $section || 'all' === $section ) :
+		$our_brand_section = array();
+		if ( ! empty( get_theme_mod( 'our_brand_section_title' ) ) ) :
+			$our_brand = array(
+				'image'    => ! empty( get_theme_mod( 'our_brand_featured_image' ) ) ? get_theme_mod( 'our_brand_featured_image' ) : null,
+				'title'    => ! empty( get_theme_mod( 'our_brand_title' ) ) ? get_theme_mod( 'our_brand_title' ) : null,
+				'body'     => ! empty( get_theme_mod( 'our_brand_body' ) ) ? get_theme_mod( 'our_brand_body' ) : null,
+				'cta_text' => ! empty( get_theme_mod( 'our_brand_cta_text' ) ) ? get_theme_mod( 'our_brand_cta_text' ) : null,
+				'cta_link' => ! empty( get_theme_mod( 'our_brand_cta_link' ) ) ? get_permalink( get_theme_mod( 'our_brand_cta_link' ) ) : null,
 			);
-			$shop_area['shop_mods']          = $shop;
-			$shop_area['shop_mods']['count'] = $shop_area_count;
 		endif;
-		if ( 'shop_area' === $section ) {
-			$section_mods['shop_area'] = $shop_area;
+		if ( 'our_brand_section' === $section ) {
+			$section_mods['our_brand_section'] = $our_brand;
 			return json_decode( json_encode( $section_mods ) );
 		} else {
-			$section_mods['shop_area'] = $shop_area;
+			$section_mods['our_brand_section'] = $our_brand;
 		}
 	endif;
-	if ( 'cta_slider' === $section || 'all' === $section ) :
-		$cta_slider           = array();
-		$cta_slider['slides'] = array();
-		$cta_slider_count     = 0;
-		for ( $i = 1; $i <= 5; $i++ ) {
-			if ( ! empty( get_theme_mod( 'cta_slider_' . $i ) ) || ! empty( get_theme_mod( 'cta_slider_html_' . $i ) ) ) :
-				$cta_slider_count++;
-				$slide = array(
-					'slide_img_id'           => get_theme_mod( 'cta_slider_' . $i ),
-					'slide_mobile_img_id'    => get_theme_mod( 'cta_slider_mobile_' . $i ),
-					'slide_text_position'    => get_theme_mod( 'cta_slider_text_position_' . $i ),
-					'slide_title'            => get_theme_mod( 'cta_slider_title_' . $i ),
-					'slide_html'             => get_theme_mod( 'cta_slider_html_' . $i ),
-					'slide_text_message'     => get_theme_mod( 'cta_slider_text_' . $i ),
-					'slide_description_icon' => get_theme_mod( 'cta_slider_description_list_icon_' . $i ),
-					'slide_link_btn'         => get_theme_mod( 'cta_slider_btn_text_' . $i ),
-					'slide_link'             => get_theme_mod( 'cta_slider_btn_link_' . $i ),
-				);
-				for ( $a = 1; $a <= 3; $a++ ) {
-					$slide['cta_descriptions'][ "description_$a" ] = get_theme_mod( 'cta_slider_' . $i . '_description_' . $a );
-				}
-				$cta_slider['slides'][ "slide_$i" ] = $slide;
-			endif;
-		}
-		$cta_slider['slides']['count'] = $cta_slider_count;
-		if ( 'cta_slider' === $section ) {
-			$section_mods['cta_slider'] = $cta_slider;
-			return json_decode( json_encode( $section_mods ) );
-		} else {
-			$section_mods['cta_slider'] = $cta_slider;
-		}
-	endif;
-	if ( 'cause_area' === $section || 'all' === $section ) :
-		$cause_area       = array();
-		$cause_area_count = 0;
-		if ( ! empty( get_theme_mod( 'cause_section_title' ) ) ) :
-			$cause_area_count++;
-			$cause                             = array(
-				'cause_section_title'      => get_theme_mod( 'cause_section_title' ),
-				'cause_section_background' => get_theme_mod( 'cause_section_background' ),
-			);
-			$cause_area['cause_mods']          = $cause;
-			$cause_area['cause_mods']['count'] = $cause_area_count;
-		endif;
-		$cause_area_count2    = 0;
-		$cause_area['causes'] = array();
-		for ( $i = 1; $i <= 3; $i++ ) {
-			if ( ! empty( get_theme_mod( 'cause_image_' . $i ) ) ) :
-				$cause_area_count2++;
-				$cause                              = array(
-					'img_id'      => get_theme_mod( 'cause_image_' . $i ),
-					'img_link'    => get_theme_mod( 'cause_image_link_' . $i ),
-					'position'    => get_theme_mod( 'cause_message_position_' . $i ),
-					'header'      => get_theme_mod( 'cause_header_' . $i ),
-					'header_link' => get_theme_mod( 'cause' . $i . '_header_link' ),
-					'message'     => get_theme_mod( 'cause_message_' . $i ),
-				);
-				$cause_area['causes'][ "cause_$i" ] = $cause;
-			endif;
-		}
-		$cause_area['causes']['count'] = $cause_area_count2;
-		if ( 'cta_slider' === $section ) {
-			$section_mods['cause_area'] = $cause_area;
-			return json_decode( json_encode( $section_mods ) );
-		} else {
-			$section_mods['cause_area'] = $cause_area;
-		}
-	endif;
-	if ( 'about_area' === $section || 'all' === $section ) :
-		$about_area       = array();
-		$about_area_count = 0;
-		if ( ! empty( get_theme_mod( 'about_the_brand_header' ) ) ) :
-			$about_area_count++;
-			$about                                  = array(
-				'about_header'                    => get_theme_mod( 'about_the_brand_header' ),
-				'about_subheader'                 => get_theme_mod( 'about_the_brand_subheader' ),
-				'about_message'                   => get_theme_mod( 'about_the_brand_message' ),
-				'about_the_brand_btn_text'        => get_theme_mod( 'about_the_brand_btn_text' ),
-				'about_the_brand_button_link'     => get_permalink( get_theme_mod( 'about_the_brand_button_link' ) ),
-				'about_the_brand_second_image_id' => get_theme_mod( 'about_the_brand_second_image' ),
-				'about_the_brand_image_link'      => get_permalink( get_theme_mod( 'about_the_brand_second_image_link', '#' ) ),
-				'about_videoplaceholder_src_id'   => get_theme_mod( 'about_the_brand_video_placeholder' ),
-			);
-			$about_area['about_area']               = $about;
-			$about_area->{'about_the_brand'}->count = $about_area_count;
-		endif;
-		if ( 'about_area' === $section ) {
-			$section_mods['about_area'] = $about_area;
-			return json_decode( json_encode( $section_mods ) );
-		} else {
-			$section_mods['about_area'] = $about_area;
-		}
-	endif;
-	if ( 'social_area' === $section || 'all' === $section ) :
-		$social_area       = array();
-		$social_area_count = 0;
-		if ( ! empty( get_theme_mod( 'social_section_title' ) ) ) :
-			$social_area_count++;
-			$social                     = array(
-				'social_title'       => get_theme_mod( 'social_section_title' ),
-				'social_message'     => get_theme_mod( 'social_section_message' ),
-				'social_shortcode'   => get_theme_mod( 'social_shortcode' ),
-				'social_btn_text'    => get_theme_mod( 'social_btn_text' ),
-				'social_shop_button' => get_permalink( get_theme_mod( 'social_shop_button' ) ),
-			);
-			$social_area['social_mods'] = $social;
-		endif;
-		$social_area['count'] = $social_area_count;
-		if ( 'social_area' === $section ) {
-			$section_mods['social_area'] = $social_area;
-			return json_decode( json_encode( $section_mods ) );
-		} else {
-			$section_mods['social_area'] = $social_area;
-		}
-	endif;
-	if ( 'footer_area' === $section || 'all' === $section ) :
+	if ( 'footer_area' === $section ) :
 		$footer_area       = array();
 		$footer_area_count = 0;
 		if ( ! empty( get_theme_mod( 'footer_social_instagram' ) ) ) :
@@ -252,7 +150,7 @@ function the_mods_for_section( $section ) {
 			$section_mods['footer_area'] = $footer_area;
 		}
 	endif;
-	if ( 'newsletter_area' === $section || 'all' === $section ) :
+	if ( 'newsletter_area' === $section ) :
 		$newsletter_area       = array();
 		$newsletter_area_count = 0;
 		if ( ! empty( get_theme_mod( 'enable_newsletter_popup' ) ) ) :
