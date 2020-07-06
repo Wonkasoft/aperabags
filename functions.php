@@ -44,7 +44,7 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		$footer_section = get_section_mods( 'footer_area' );
+		$footer_section = get_section_mods( 'footer_section' );
 		$menus_array    = array(
 			'menu-primary' => esc_html__( 'Primary', 'aperabags' ),
 			'menu-cart'    => esc_html__( 'Cart', 'aperabags' ),
