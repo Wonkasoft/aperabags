@@ -907,36 +907,6 @@ function apera_bags_customize_register( $wp_customize ) {
 	);
 
 	/**
-	 * About the brand second image link settings Section
-	 *
-	 * @since  1.0.0
-	 * @author Carlos
-	 */
-	$wp_customize->add_setting(
-		'about_the_brand_second_image_link',
-		array(
-			'default'   => 0,
-			'transport' => 'refresh',
-		)
-	);
-
-	// About the brand button Link Setting Control.
-	$wp_customize->add_control(
-		new WP_Customize_Control(
-			$wp_customize,
-			'about_the_brand_second_image_link_control',
-			array(
-				'label'       => __( 'About the brand image link', 'aperabags' ),
-				'section'     => 'about_section',
-				'settings'    => 'about_the_brand_second_image_link',
-				'type'        => 'select',
-				'description' => 'About the brand button link',
-				'choices'     => $products,
-			)
-		)
-	);
-
-	/**
 	 * Footer settings Section
 	 *
 	 * @since  1.0.0
