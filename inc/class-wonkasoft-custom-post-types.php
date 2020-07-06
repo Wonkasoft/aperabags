@@ -153,6 +153,7 @@ if ( ! class_exists( 'Wonkasoft_Custom_Post_Types' ) ) :
 				'has_archive'         => true,
 				'exclude_from_search' => true,
 				'publicly_queryable'  => true,
+				'capability_type'     => array( 'testimonial', 'testimonials' ),
 				'capabilities'        => array(
 					'edit_post'          => 'edit_testimonial',
 					'read_post'          => 'read_testimonial',
@@ -163,6 +164,7 @@ if ( ! class_exists( 'Wonkasoft_Custom_Post_Types' ) ) :
 					'read_private_posts' => 'read_private_testimonials',
 					'create_posts'       => 'edit_testimonials',
 				),
+				'map_meta_cap'        => true,
 				'rewrite'             => $rewrite,
 				'show_in_rest'        => true,
 				'rest_base'           => 'testimonials',
