@@ -95,15 +95,13 @@ function the_mods_for_section( $section ) {
 	endif;
 	if ( 'our_brand_section' === $section || 'all' === $section ) :
 		$our_brand_section = array();
-		if ( ! empty( get_theme_mod( 'our_brand_section_title' ) ) ) :
-			$our_brand = array(
-				'image'    => ! empty( get_theme_mod( 'our_brand_featured_image' ) ) ? get_theme_mod( 'our_brand_featured_image' ) : null,
-				'title'    => ! empty( get_theme_mod( 'our_brand_title' ) ) ? get_theme_mod( 'our_brand_title' ) : null,
-				'body'     => ! empty( get_theme_mod( 'our_brand_body' ) ) ? get_theme_mod( 'our_brand_body' ) : null,
-				'cta_text' => ! empty( get_theme_mod( 'our_brand_cta_text' ) ) ? get_theme_mod( 'our_brand_cta_text' ) : null,
-				'cta_link' => ! empty( get_theme_mod( 'our_brand_cta_link' ) ) ? get_permalink( get_theme_mod( 'our_brand_cta_link' ) ) : null,
-			);
-		endif;
+		$our_brand         = array(
+			'image'    => ! empty( get_theme_mod( 'our_brand_featured_image' ) ) ? get_theme_mod( 'our_brand_featured_image' ) : null,
+			'title'    => ! empty( get_theme_mod( 'our_brand_title' ) ) ? get_theme_mod( 'our_brand_title' ) : null,
+			'body'     => ! empty( get_theme_mod( 'our_brand_body' ) ) ? get_theme_mod( 'our_brand_body' ) : null,
+			'cta_text' => ! empty( get_theme_mod( 'our_brand_cta_text' ) ) ? get_theme_mod( 'our_brand_cta_text' ) : null,
+			'cta_link' => ! empty( get_theme_mod( 'our_brand_cta_link' ) ) ? get_permalink( get_theme_mod( 'our_brand_cta_link' ) ) : null,
+		);
 		if ( 'our_brand_section' === $section ) {
 			$section_mods['our_brand_section'] = $our_brand;
 			return json_decode( json_encode( $section_mods ) );
@@ -111,12 +109,12 @@ function the_mods_for_section( $section ) {
 			$section_mods['our_brand_section'] = $our_brand;
 		}
 	endif;
-	if ( 'footer_area' === $section ) :
-		$footer_area       = array();
-		$footer_area_count = 0;
+	if ( 'footer_section' === $section ) :
+		$footer_section       = array();
+		$footer_section_count = 0;
 		if ( ! empty( get_theme_mod( 'footer_social_instagram' ) ) ) :
-			$footer_area_count++;
-			$footer                              = array(
+			$footer_section_count++;
+			$footer                                 = array(
 				'footer_social_title'          => get_theme_mod( 'footer_social_title' ),
 				'footer_social_instagram'      => get_theme_mod( 'footer_social_instagram' ),
 				'footer_social_twitter'        => get_theme_mod( 'footer_social_twitter' ),
@@ -131,23 +129,23 @@ function the_mods_for_section( $section ) {
 				'footer_logo'                  => get_theme_mod( 'footer_logo' ),
 				'footer_form_shortcode'        => get_theme_mod( 'footer_form_shortcode' ),
 			);
-			$footer_area['footer_mods']          = $footer;
-			$footer_area['footer_mods']['count'] = $footer_area_count;
+			$footer_section['footer_mods']          = $footer;
+			$footer_section['footer_mods']['count'] = $footer_section_count;
 		endif;
-		$footer_area_count2           = 0;
-		$footer_area['footer_titles'] = array();
+		$footer_section_count2           = 0;
+		$footer_section['footer_titles'] = array();
 		for ( $i = 1; $i <= 5; $i++ ) {
 			if ( ! empty( get_theme_mod( 'footer_menu_header_' . $i ) ) ) :
-				$footer_area_count2++;
-				$footer_area['footer_titles'][ "footer_title_$i" ] = get_theme_mod( 'footer_menu_header_' . $i );
+				$footer_section_count2++;
+				$footer_section['footer_titles'][ "footer_title_$i" ] = get_theme_mod( 'footer_menu_header_' . $i );
 			endif;
 		}
-		$footer_area['footer_titles']['count'] = $footer_area_count2;
-		if ( 'footer_area' === $section ) {
-			$section_mods['footer_area'] = $footer_area;
+		$footer_section['footer_titles']['count'] = $footer_section_count2;
+		if ( 'footer_section' === $section ) {
+			$section_mods['footer_section'] = $footer_section;
 			return json_decode( json_encode( $section_mods ) );
 		} else {
-			$section_mods['footer_area'] = $footer_area;
+			$section_mods['footer_section'] = $footer_section;
 		}
 	endif;
 	if ( 'newsletter_area' === $section ) :

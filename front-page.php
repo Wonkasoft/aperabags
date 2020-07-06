@@ -196,14 +196,15 @@ if ( is_home() ) :
 	endif;
 
 	$our_brand_section = $our_brand_section->our_brand_section;
-	do_action( 'wonkasoft_action_before_discovery_section', 'our_brand_section', $our_brand_section );
+	do_action( 'wonkasoft_action_before_our_brand_section', 'our_brand_section', $our_brand_section );
 	?>
 	<?php if ( ! empty( $our_brand_section ) ) : ?>
 		<section class="our-brand-section">
 		<div class="container">
 				<div class="row">
-					<div class="col-12 col-md-7"></div>
+					<div class="col-12 col-md-7">
 						<img src="<?php echo esc_url( wp_get_attachment_image_src( $our_brand_section->image, 'full', false )[0] ); ?>" class="img-responsive" />
+					</div>
 					<div class="col-12 col-md-5">
 						<h3><?php echo esc_html( $our_brand_section->title ); ?></h3>
 						<?php
