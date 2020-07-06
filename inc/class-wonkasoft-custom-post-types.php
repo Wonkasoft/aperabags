@@ -154,8 +154,6 @@ if ( ! class_exists( 'Wonkasoft_Custom_Post_Types' ) ) :
 				'exclude_from_search' => true,
 				'publicly_queryable'  => true,
 				'rewrite'             => $rewrite,
-				'capability_type'     => array( 'testimonial', 'testimonials' ),
-				'map_meta_cap'        => true,
 				'show_in_rest'        => true,
 				'rest_base'           => 'testimonials',
 			);
