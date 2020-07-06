@@ -52,9 +52,11 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 			'menu-cart'    => esc_html__( 'Cart', 'aperabags' ),
 		);
 
-		foreach ( $footer_section->footer_titles as $title ) {
-			$new_menu                 = 'menu-' . preg_replace( '/ /', '-', strtolower( $title ) );
-			$menus_array[ $new_menu ] = esc_html( 'Footer ' . ucfirst( strtolower( $title ) ), 'aperabags' );
+		foreach ( $footer_section->footer_titles as $title_number => $title ) {
+			if ( 'count' !== $title_number ) :
+				$new_menu                 = 'menu-' . preg_replace( '/ /', '-', strtolower( $title ) );
+				$menus_array[ $new_menu ] = esc_html( 'Footer ' . ucfirst( strtolower( $title ) ), 'aperabags' );
+			endif;
 		}
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( $menus_array );

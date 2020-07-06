@@ -27,54 +27,32 @@
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
 			<div class="row upper-footer wonka-row-footer">
-				<div class="col col-sm-3 col-lg-3">
-					<div class="row wonka-menu-footer">
-							<div class="col">
-							<h3 class="footer-menu-1-title"><?php echo esc_html( $footer_section->footer_titles->footer_title_1 ); ?></h3>
-								<?php
-									wp_nav_menu(
-										array(
-											'theme_location' => 'menu-footer',
-											'menu_class' => 'wonka-footer-menu wonka-footer-menu-' . preg_replace( '/ /', '-', strtolower( $footer_section->footer_titles->footer_title_1 ) ),
-										)
-									);
-									?>
-							</div><!-- .col -->
+				<?php
+				foreach ( $footer_section->footer_titles as $title_number => $title ) {
+					if ( 'count' !== $title_number ) :
+						$new_menu = 'menu-' . preg_replace( '/ /', '-', strtolower( $title ) );
+						$col_set  = (int) 12 / ( $footer_section->footer_titles->count + 1 );
+						?>
+						<div class="col col-sm-<?php echo $col_set; ?> col-lg-<?php echo $col_set; ?>">
+							<div class="row wonka-menu-footer">
+									<div class="col">
+									<h3 class="<?php echo esc_attr( preg_replace( '/ /', '-', strtolower( $title ) ) ); ?>-title"><?php echo esc_html( $title ); ?></h3>
+										<?php
+											wp_nav_menu(
+												array(
+													'theme_location' => $new_menu,
+													'menu_class' => 'wonka-footer-menu wonka-footer-menu-' . preg_replace( '/ /', '-', strtolower( $title ) ),
+												)
+											);
+										?>
+									</div><!-- .col -->
 
-					</div><!-- .row -->
-				</div><!-- .col-3 -->
-				<div class="col col-sm-3 col-lg-3">
-					<div class="row wonka-menu-footer">
-							<div class="col">
-							<h3 class="footer-menu-2-title"><?php echo esc_html( $footer_section->footer_titles->footer_title_2 ); ?></h3>
-								<?php
-									wp_nav_menu(
-										array(
-											'theme_location' => 'menu-footer',
-											'menu_class' => 'wonka-footer-menu wonka-footer-menu-' . preg_replace( '/ /', '-', strtolower( $footer_section->footer_titles->footer_title_2 ) ),
-										)
-									);
-									?>
-							</div><!-- .col -->
-
-					</div><!-- .row -->
-				</div><!-- .col-3 -->
-				<div class="col col-sm-3 col-lg-3">
-					<div class="row wonka-menu-footer">
-							<div class="col">
-							<h3 class="footer-menu-3-title"><?php echo esc_html( $footer_section->footer_titles->footer_title_3 ); ?></h3>
-								<?php
-									wp_nav_menu(
-										array(
-											'theme_location' => 'menu-footer',
-											'menu_class' => 'wonka-footer-menu wonka-footer-menu-' . preg_replace( '/ /', '-', strtolower( $footer_section->footer_titles->footer_title_3 ) ),
-										)
-									);
-									?>
-							</div><!-- .col -->
-
-					</div><!-- .row -->
-				</div><!-- .col-3 -->
+							</div><!-- .row -->
+						</div><!-- .col-3 -->
+						<?php
+				endif;
+				}
+				?>
 				<?php if ( ! empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
 				<div class="col-12 col-lg-3">
 					<div class="row align-items-center text-center justify-content-center">
