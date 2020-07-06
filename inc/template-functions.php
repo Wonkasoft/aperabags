@@ -112,32 +112,32 @@ function the_mods_for_section( $section ) {
 	if ( 'footer_section' === $section ) :
 		$footer_section       = array();
 		$footer_section_count = 0;
-		if ( ! empty( get_theme_mod( 'footer_social_instagram' ) ) ) :
-			$footer_section_count++;
-			$footer                                 = array(
-				'footer_social_title'          => get_theme_mod( 'footer_social_title' ),
-				'footer_social_instagram'      => get_theme_mod( 'footer_social_instagram' ),
-				'footer_social_twitter'        => get_theme_mod( 'footer_social_twitter' ),
-				'footer_social_facebook'       => get_theme_mod( 'footer_social_facebook' ),
-				'footer_social_pinterest'      => get_theme_mod( 'footer_social_pinterest' ),
-				'footer_contact_message'       => get_theme_mod( 'footer_contact_message' ),
-				'footer_contact_support_email' => get_theme_mod( 'footer_contact_support_email' ),
-				'footer_insta_username'        => get_theme_mod( 'footer_insta_username' ),
-				'footer_insta_username_link'   => get_theme_mod( 'footer_insta_username_link' ),
-				'footer_insta_hashtag'         => get_theme_mod( 'footer_insta_hashtags' ),
-				'footer_insta_hashtag_link'    => get_theme_mod( 'footer_insta_hashtags_link' ),
-				'footer_logo'                  => get_theme_mod( 'footer_logo' ),
-				'footer_form_shortcode'        => get_theme_mod( 'footer_form_shortcode' ),
-			);
-			$footer_section['footer_mods']          = $footer;
-			$footer_section['footer_mods']['count'] = $footer_section_count;
-		endif;
+
+		$footer_section_count++;
+		$footer                                 = array(
+			'footer_social_title'          => ! empty( get_theme_mod( 'footer_social_title' ) ) ? get_theme_mod( 'footer_social_title' ) : null,
+			'footer_social_instagram'      => ! empty( get_theme_mod( 'footer_social_instagram' ) ) ? get_theme_mod( 'footer_social_instagram' ) : null,
+			'footer_social_twitter'        => ! empty( get_theme_mod( 'footer_social_twitter' ) ) ? get_theme_mod( 'footer_social_twitter' ) : null,
+			'footer_social_facebook'       => ! empty( get_theme_mod( 'footer_social_facebook' ) ) ? get_theme_mod( 'footer_social_facebook' ) : null,
+			'footer_social_pinterest'      => ! empty( get_theme_mod( 'footer_social_pinterest' ) ) ? get_theme_mod( 'footer_social_pinterest' ) : null,
+			'footer_contact_message'       => ! empty( get_theme_mod( 'footer_contact_message' ) ) ? get_theme_mod( 'footer_contact_message' ) : null,
+			'footer_contact_support_email' => ! empty( get_theme_mod( 'footer_contact_support_email' ) ) ? get_theme_mod( 'footer_contact_support_email' ) : null,
+			'footer_insta_username'        => ! empty( get_theme_mod( 'footer_insta_username' ) ) ? get_theme_mod( 'footer_insta_username' ) : null,
+			'footer_insta_username_link'   => ! empty( get_theme_mod( 'footer_insta_username_link' ) ) ? get_theme_mod( 'footer_insta_username_link' ) : null,
+			'footer_insta_hashtag'         => ! empty( get_theme_mod( 'footer_insta_hashtags' ) ) ? get_theme_mod( 'footer_insta_hashtags' ) : null,
+			'footer_insta_hashtag_link'    => ! empty( get_theme_mod( 'footer_insta_hashtags_link' ) ) ? get_theme_mod( 'footer_insta_hashtags_link' ) : null,
+			'footer_logo'                  => ! empty( get_theme_mod( 'footer_logo' ) ) ? get_theme_mod( 'footer_logo' ) : null,
+			'footer_form_shortcode'        => ! empty( get_theme_mod( 'footer_form_shortcode' ) ) ? get_theme_mod( 'footer_form_shortcode' ) : null,
+		);
+		$footer_section['footer_mods']          = $footer;
+		$footer_section['footer_mods']['count'] = $footer_section_count;
+
 		$footer_section_count2           = 0;
 		$footer_section['footer_titles'] = array();
 		for ( $i = 1; $i <= 5; $i++ ) {
 			if ( ! empty( get_theme_mod( 'footer_menu_header_' . $i ) ) ) :
 				$footer_section_count2++;
-				$footer_section['footer_titles'][ "footer_title_$i" ] = get_theme_mod( 'footer_menu_header_' . $i );
+				$footer_section['footer_titles'][ "footer_title_$i" ] = ! empty( get_theme_mod( 'footer_menu_header_' . $i ) ) ? get_theme_mod( 'footer_menu_header_' . $i ) : null;
 			endif;
 		}
 		$footer_section['footer_titles']['count'] = $footer_section_count2;
