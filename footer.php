@@ -55,8 +55,8 @@
 				?>
 				<?php if ( ! empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
 				<div class="col col-6 col-lg-5">
-					<div class="row align-items-center text-center justify-content-center">
-						<div class="col-11 wonka-email-form">
+					<div class="row align-items-center text-center justify-content-center row-inner">
+						<div class="col-12 wonka-email-form">
 								<?php
 									echo wp_kses(
 										'<p class="footer-title pb-2">Save $10 and get free shipping on your first order.</p>',
@@ -74,7 +74,7 @@
 							</div> <!-- .col -->
 						</div> <!-- .row -->
 						<?php if ( ! empty( $footer_section->footer_mods ) ) : ?>
-						<div class="row">
+						<div class="row row-inner">
 						<div class="col col-12 align-self-center">
 							<div class="social-icons-btns">
 
