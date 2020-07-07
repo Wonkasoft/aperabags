@@ -73,9 +73,40 @@
 								?>
 							</div> <!-- .col -->
 						</div> <!-- .row -->
+						<?php if ( ! empty( $footer_section->footer_mods ) ) : ?>
+						<div class="row mt-8px">
+						<div class="col col-12 align-self-center">
+							<div class="footer-insta footer-title">
+								<?php // echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_username_link ) . '" target="_blank">' . esc_html( $footer_section->footer_mods->footer_insta_username ) . '</a>'; ?>
+								<?php // echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_hashtag_link ) . '" target="_blank">' . esc_html( $footer_section->footer_mods->footer_insta_hashtag ) . '</a>'; ?>
+							</div> <!-- .footer-insta -->
+							<div class="social-icons-btns">
+
+								<?php
+								if ( ! empty( $footer_section->footer_mods->footer_social_instagram ) ) {
+									echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_instagram ) . '" target="_blank"><i class="fa fa-instagram"></i></a>';
+								}
+
+								if ( ! empty( $footer_section->footer_mods->footer_social_facebook ) ) {
+									echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_facebook ) . '" target="_blank"><i class="fa fa-facebook"></i></a>';
+								}
+
+								if ( ! empty( $footer_section->footer_mods->footer_social_pinterest ) ) {
+									echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_pinterest ) . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
+								}
+
+								if ( ! empty( $footer_section->footer_mods->footer_social_twitter ) ) {
+									echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_twitter ) . '" target="_blank"><i class="fa fa-twitter"></i></a>';
+								}
+
+								?>
+							</div><!-- .social-icons-btns -->
+							</div>
+						</div>
+					<?php endif; ?>
 					</div>
 					<?php endif; ?>
-				<div class="col col-6">
+				<div class="col col-12">
 					<div class="row align-items-end text-center justify-content-center have-a-question">
 						<div class="col-12">
 							<div class="footer-question footer-title">
@@ -90,36 +121,6 @@
 						</div> <!-- .col -->
 					</div> <!-- /.row -->
 				</div><!-- .col -->
-				<div class="col col-6 align-self-center">
-					<div class="footer-insta footer-title">
-						<?php // echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_username_link ) . '" target="_blank">' . esc_html( $footer_section->footer_mods->footer_insta_username ) . '</a>'; ?>
-						<?php // echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_hashtag_link ) . '" target="_blank">' . esc_html( $footer_section->footer_mods->footer_insta_hashtag ) . '</a>'; ?>
-					</div> <!-- .footer-insta -->
-					<div class="social-icons-btns">
-
-						<?php
-						if ( ! empty( $footer_section->footer_mods->footer_social_instagram ) ) {
-							echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_instagram ) . '" target="_blank"><i class="fa fa-instagram"></i></a>';
-						}
-
-						if ( ! empty( $footer_section->footer_mods->footer_social_facebook ) ) {
-							echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_facebook ) . '" target="_blank"><i class="fa fa-facebook"></i></a>';
-						}
-
-						if ( ! empty( $footer_section->footer_mods->footer_social_pinterest ) ) {
-							echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_pinterest ) . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
-						}
-
-						if ( ! empty( $footer_section->footer_mods->footer_social_twitter ) ) {
-							echo '<a href="' . esc_url( $footer_section->footer_mods->footer_social_twitter ) . '" target="_blank"><i class="fa fa-twitter"></i></a>';
-						}
-
-						?>
-					</div><!-- .social-icons-btns -->
-					<?php if ( ! empty( $footer_section->footer_mods->footer_insta_username ) ) : ?>
-
-					<?php endif; ?>
-				</div>
 		</div> <!-- .row -->
 
 		<div class="site-info row align-items-center">
