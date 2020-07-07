@@ -74,12 +74,8 @@
 							</div> <!-- .col -->
 						</div> <!-- .row -->
 						<?php if ( ! empty( $footer_section->footer_mods ) ) : ?>
-						<div class="row mt-8px">
+						<div class="row">
 						<div class="col col-12 align-self-center">
-							<div class="footer-insta footer-title">
-								<?php // echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_username_link ) . '" target="_blank">' . esc_html( $footer_section->footer_mods->footer_insta_username ) . '</a>'; ?>
-								<?php // echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_hashtag_link ) . '" target="_blank">' . esc_html( $footer_section->footer_mods->footer_insta_hashtag ) . '</a>'; ?>
-							</div> <!-- .footer-insta -->
 							<div class="social-icons-btns">
 
 								<?php
