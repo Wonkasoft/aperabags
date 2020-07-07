@@ -100,8 +100,8 @@
 							</div>
 						</div>
 					<?php endif; ?>
-					</div>
-					<?php endif; ?>
+				</div>
+				<?php endif; ?>
 				<div class="col col-12">
 					<div class="row align-items-end text-center justify-content-center have-a-question">
 						<div class="col-12">
