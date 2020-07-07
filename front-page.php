@@ -125,8 +125,8 @@ if ( is_home() ) :
 							<a href="<?php echo esc_url( $discovery_section->cta_link ); ?>" class="btn wonka-btn mx-auto"><?php echo esc_html( $discovery_section->cta_text ); ?></a>
 						</div>
 					</div>
-					<div class="col-12 col-md-8">
-						<a href="<?php echo esc_url( $discovery_section->cta_link ); ?>">
+					<div class="col-12 col-md-8 text-right">
+						<a href="<?php echo esc_url( $discovery_section->cta_link ); ?>" class="img-link">
 							<img src="<?php echo esc_url( wp_get_attachment_image_src( $discovery_section->image, 'full', false )[0] ); ?>" class="img-responsive" />
 						</a>
 					</div>
@@ -205,7 +205,7 @@ if ( is_home() ) :
 		<div class="container">
 				<div class="row">
 					<div class="col-12 col-md-7">
-						<a href="<?php echo esc_url( $our_brand_section->cta_link ); ?>">
+						<a href="<?php echo esc_url( $our_brand_section->cta_link ); ?>" class="img-link">
 							<img src="<?php echo esc_url( wp_get_attachment_image_src( $our_brand_section->image, 'full', false )[0] ); ?>" class="img-responsive" />
 						</a>
 					</div>

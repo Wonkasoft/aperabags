@@ -1254,4 +1254,4 @@ function apera_bags_customize_partial_blogdescription() {
 function apera_bags_customize_preview_js() {
 	wp_enqueue_script( 'aperabags-customizer', esc_url( get_stylesheet_directory_uri() . '/inc/js/customizer.js' ), array( 'customize-preview' ), '20190819', true );
 }
-	add_action( 'customize_preview_init', 'apera_bags_customize_preview_js' );
+add_action( 'customize_preview_init', 'apera_bags_customize_preview_js' );

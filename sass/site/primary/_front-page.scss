@@ -275,6 +275,20 @@ section.header-slider-section {
 }
 /*----------  End Header Slider  ----------*/
 
+/*----------  Discovery Section  ----------*/
+section.discovery_section,
+section.our-brand-section {
+
+	a.img-link {
+		display: inline-block;
+
+		img {
+			max-height: 350px;
+		}
+	}
+}
+/*----------  End Discovery Section  ----------*/
+
 /*----------  Shop Section  ----------*/
 section.featured-bags-section {
 
