@@ -115,7 +115,7 @@ if ( is_home() ) :
 	<?php if ( ! empty( $discovery_section ) ) : ?>
 		<section class="discovery-section">
 			<div class="container">
-				<div class="row">
+				<div class="row align-items-center">
 					<div class="col-12 col-md-4">
 						<h3><?php echo esc_html( $discovery_section->title ); ?></h3>
 						<?php
@@ -203,7 +203,7 @@ if ( is_home() ) :
 	<?php if ( ! empty( $our_brand_section ) ) : ?>
 		<section class="our-brand-section">
 		<div class="container">
-				<div class="row">
+				<div class="row align-items-center">
 					<div class="col-12 col-md-7">
 						<a href="<?php echo esc_url( $our_brand_section->cta_link ); ?>" class="img-link">
 							<img src="<?php echo esc_url( wp_get_attachment_image_src( $our_brand_section->image, 'full', false )[0] ); ?>" class="img-responsive" />

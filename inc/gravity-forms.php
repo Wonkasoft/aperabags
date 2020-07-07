@@ -26,7 +26,7 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 		$form['cssClass'] = 'wonka-gform wonka-gform-' . $form['id'];
 	endif;
 	if ( in_array( $form['title'], $inline_forms ) ) :
-		$form['cssClass'] .= ' form-inline wonka-newsletter-form';
+		$form['cssClass'] .= ' form-inline wonka-newsletter-form justify-content-center';
 	endif;
 	if ( in_array( $form['title'], array( 'Refersion Registration Ambassador', 'Refersion Registration Zip' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-refersion-form';
@@ -1391,9 +1391,9 @@ function wonkasoft_gform_field_groups_form_editor( $field_groups ) {
 	foreach ( $field_groups as &$group ) {
 		if ( 'post_fields' === $group['name'] ) {
 			$group['fields'][] = array(
-				'class' => 'button',
+				'class'     => 'button',
 				'data-type' => 'Order Select',
-				'value' => 'Order Select',
+				'value'     => 'Order Select',
 			);
 		}
 	}
@@ -1402,43 +1402,45 @@ function wonkasoft_gform_field_groups_form_editor( $field_groups ) {
 // add_filter( 'gform_field_groups_form_editor', 'wonkasoft_gform_field_groups_form_editor', 10, 1 );
 
 function wonkasoft_gform_field_standard_settings( $position, $form_id ) {
-    if ( 5 === $position ) {
-        ?>
-        <li class="order_select field_setting">
+	if ( 5 === $position ) {
+		?>
+		<li class="order_select field_setting">
 				<label for="field_admin_value">
 					<?php esc_html_e( 'Order Number Select', 'gravityforms' ); ?>
-                	<?php gform_tooltip( 'form_field_order_number_label_value' ) ?>
+					<?php gform_tooltip( 'form_field_order_number_label_value' ); ?>
 				</label>
 				<select class="select-box drop-down" id="order_selection" name="order_selection">
 					<option class="select-option" value="">Select Order Number</option>
 					<?php
-						$customer_orders = wc_get_orders( array( 
-							'status' => 'processing',
-							'return' => 'ids',
-							'limit' => -1,
-						) );
+						$customer_orders = wc_get_orders(
+							array(
+								'status' => 'processing',
+								'return' => 'ids',
+								'limit'  => -1,
+							)
+						);
 
-						foreach ( $customer_orders as $order_number ) {
-							$order = wc_get_order( $order_number );
-							$seq_order_number = $order->get_order_number();
-							?>
+					foreach ( $customer_orders as $order_number ) {
+						$order            = wc_get_order( $order_number );
+						$seq_order_number = $order->get_order_number();
+						?>
 								<option class="select-option" data-order="<?php echo esc_attr( $order_number ); ?>" value="<?php echo esc_attr( $seq_order_number ); ?>"><?php echo esc_html( $seq_order_number ); ?></option>
 							<?php
-						}
+					}
 					?>
 				</select>	
 			</li>
-        <?php
-    }
+		<?php
+	}
 }
 // add_action( 'gform_field_standard_settings', 'wonkasoft_gform_field_standard_settings', 10, 2 );
 
-//Action to inject supporting script to the form editor page
-function editor_script(){
+// Action to inject supporting script to the form editor page
+function editor_script() {
 	?>
-    <script type='text/javascript'>
-        fieldSettings.orderSelect += ", .order_select";
-        jQuery(document).on("gform_load_field_settings", function(event, field, form){
+	<script type='text/javascript'>
+		fieldSettings.orderSelect += ", .order_select";
+		jQuery(document).on("gform_load_field_settings", function(event, field, form){
 			if ( 'Order Select' === field.type ) {
 				console.log( field );
 				console.log( form );
@@ -1449,15 +1451,15 @@ function editor_script(){
 					jQuery( '.order_select' ).attr("value", field.order_select );
 				}
 			}
-        });
+		});
 		</script>
-    <?php
+	<?php
 }
 // add_action( 'gform_editor_js', 'editor_script' );
 
-//Filter to add a new tooltip
+// Filter to add a new tooltip
 function add_encryption_tooltips( $tooltips ) {
-	$tooltips['form_field_order_number_label_value'] = "<h6>Order Select</h6>Select an order to update.";
+	$tooltips['form_field_order_number_label_value'] = '<h6>Order Select</h6>Select an order to update.';
 	return $tooltips;
 }
 // add_filter( 'gform_tooltips', 'add_encryption_tooltips' );

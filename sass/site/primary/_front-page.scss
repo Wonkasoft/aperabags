@@ -349,6 +349,7 @@ section.testimonial-section {
 		@include font-size( 1.5 );
 		margin: 0;
 		padding: 0 15px;
+		font-weight: 300;
 
 		&:focus {
 			outline: none;

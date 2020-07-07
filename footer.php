@@ -26,14 +26,14 @@
 	<div id="footer-spacer"></div>
 	<footer id="colophon" class="site-footer">
 		<div class="container-fluid">
-			<div class="row upper-footer wonka-row-footer">
+			<div class="row upper-footer wonka-row-footer justify-content-around">
 				<?php
 				foreach ( $footer_section->footer_titles as $title_number => $title ) {
 					if ( 'count' !== $title_number ) :
 						$new_menu = 'menu-' . preg_replace( '/ /', '-', strtolower( $title ) );
-						$col_set  = (int) 12 / ( $footer_section->footer_titles->count + 1 );
+						$col_set  = (int) 2;
 						?>
-						<div class="col col-sm-<?php echo $col_set; ?> col-lg-<?php echo $col_set; ?>">
+						<div class="col col-6 col-sm-<?php echo $col_set; ?> col-lg-<?php echo $col_set; ?>">
 							<div class="row wonka-menu-footer">
 									<div class="col">
 									<h3 class="<?php echo esc_attr( preg_replace( '/ /', '-', strtolower( $title ) ) ); ?>-title"><?php echo esc_html( $title ); ?></h3>
@@ -54,7 +54,7 @@
 				}
 				?>
 				<?php if ( ! empty( $footer_section->footer_mods->footer_form_shortcode ) ) : ?>
-				<div class="col-12 col-lg-3">
+				<div class="col col-6 col-lg-5">
 					<div class="row align-items-center text-center justify-content-center">
 						<div class="col-11 wonka-email-form">
 								<?php
@@ -75,9 +75,9 @@
 						</div> <!-- .row -->
 					</div>
 					<?php endif; ?>
-				<div class="col-6">
+				<div class="col col-6">
 					<div class="row align-items-end text-center justify-content-center have-a-question">
-						<div class="col-12 col-lg">
+						<div class="col-12">
 							<div class="footer-question footer-title">
 								<h4 class="footer-title menu-title-shop pb-2">Have Questions?</h4>
 							</div> <!-- .footer-title -->
@@ -90,7 +90,7 @@
 						</div> <!-- .col -->
 					</div> <!-- /.row -->
 				</div><!-- .col -->
-				<div class="col-6">
+				<div class="col col-6 align-self-center">
 					<div class="footer-insta footer-title">
 						<?php echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_username_link ) . '" target="_blank">' . esc_html( $footer_section->footer_mods->footer_insta_username ) . '</a>'; ?>
 						<?php echo '<a href="' . esc_url( $footer_section->footer_mods->footer_insta_hashtag_link ) . '" target="_blank">' . esc_html( $footer_section->footer_mods->footer_insta_hashtag ) . '</a>'; ?>
