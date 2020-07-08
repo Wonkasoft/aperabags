@@ -1399,7 +1399,7 @@ function wonkasoft_gform_field_groups_form_editor( $field_groups ) {
 	}
 	return $field_groups;
 }
-// add_filter( 'gform_field_groups_form_editor', 'wonkasoft_gform_field_groups_form_editor', 10, 1 );
+add_filter( 'gform_field_groups_form_editor', 'wonkasoft_gform_field_groups_form_editor', 10, 1 );
 
 function wonkasoft_gform_field_standard_settings( $position, $form_id ) {
 	if ( 5 === $position ) {
@@ -1433,7 +1433,7 @@ function wonkasoft_gform_field_standard_settings( $position, $form_id ) {
 		<?php
 	}
 }
-// add_action( 'gform_field_standard_settings', 'wonkasoft_gform_field_standard_settings', 10, 2 );
+add_action( 'gform_field_appearance_settings', 'wonkasoft_gform_field_standard_settings', 10, 2 );
 
 // Action to inject supporting script to the form editor page
 function editor_script() {
@@ -1455,13 +1455,13 @@ function editor_script() {
 		</script>
 	<?php
 }
-// add_action( 'gform_editor_js', 'editor_script' );
+add_action( 'gform_editor_js', 'editor_script' );
 
 // Filter to add a new tooltip
-function add_encryption_tooltips( $tooltips ) {
+function add_order_select_tooltips( $tooltips ) {
 	$tooltips['form_field_order_number_label_value'] = '<h6>Order Select</h6>Select an order to update.';
 	return $tooltips;
 }
-// add_filter( 'gform_tooltips', 'add_encryption_tooltips' );
+add_filter( 'gform_tooltips', 'add_order_select_tooltips' );
 
 /*=====  End of Customizing of Gravity forms  ======*/

@@ -144,3 +144,15 @@ th#featured {
 		display: none;
 	}
 }
+
+.gform_fields {
+
+	.tooltip {
+		position: relative;
+		display: inline-block;
+
+		&:after {
+			display: none;
+		}
+	}
+}
