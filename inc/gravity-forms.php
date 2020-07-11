@@ -995,7 +995,7 @@ add_filter( 'gform_confirmation', 'wonkasoft_after_perks_registration_entry', 10
 function tracking_post_processing( $order_id, $order_number, $tracking_number, $process = false ) {
 	if ( ! $process ) :
 		$output       = '';
-		$output      .= '<p>Order# ' . $order_id . ' does not seem to be a valid order number. Please recheck the order number and try again by clicking the link below.</p>';
+		$output      .= '<p>Order Number: ' . $order_id . ' does not seem to be a valid order number. Please recheck the order number and try again by clicking the link below.</p>';
 		$output      .= '<p><a class="wonka-btn" href="' . get_site_url() . '/tracking-portal/?have_tracking=true">Reload form</a></p>';
 		$confirmation = $output;
 	endif;
@@ -1005,9 +1005,9 @@ function tracking_post_processing( $order_id, $order_number, $tracking_number, $
 		if ( ! empty( $check_tracking ) ) :
 			$output = '';
 			if ( ! empty( $order_number ) ) :
-				$output .= '<p>Order# ' . $order_number . ' already has the following tracking number. <br />tracking# ' . $check_tracking . '</p>';
+				$output .= '<p>Order Number: ' . $order_number . ' already has the following tracking number. <br />tracking Number: ' . $check_tracking . '</p>';
 			else :
-				$output .= '<p>Order# ' . $order_id . ' already has the following tracking number. <br />tracking# ' . $check_tracking . '</p>';
+				$output .= '<p>Order Number: ' . $order_id . ' already has the following tracking number. <br />tracking Number: ' . $check_tracking . '</p>';
 			endif;
 			$output .= '<p><a class="wonka-btn" href="' . get_site_url() . '/tracking-portal/?have_tracking=true">Reload form</a></p>';
 
@@ -1031,9 +1031,9 @@ function tracking_post_processing( $order_id, $order_number, $tracking_number, $
 
 				$output = '';
 				if ( ! empty( $order_number ) ) :
-					$output .= '<p>Order# ' . $order_number . ' has been updated. <br />tracking# ' . $tracking_number . '</p>';
+					$output .= '<p>Order Number: ' . $order_number . ' has been updated. <br />tracking Number: ' . $tracking_number . '</p>';
 				else :
-					$output .= '<p>Order# ' . $order_id . ' has been updated. <br />tracking# ' . $tracking_number . '</p>';
+					$output .= '<p>Order Number: ' . $order_id . ' has been updated. <br />tracking Number: ' . $tracking_number . '</p>';
 				endif;
 				$output .= '<p><a class="wonka-btn" href="' . get_site_url() . '/tracking-portal/?have_tracking=true">Reload form</a></p>';
 
@@ -1275,6 +1275,10 @@ function wonkasoft_pre_submission( $form ) {
 				$order_input = 'input_' . $field['id'];
 			}
 
+			if ( 'Order Number' === $field['label'] ) {
+				$order_input = 'input_' . $field['id'];
+			}
+
 			if ( 'Email' === $field['label'] ) {
 				$email_input = 'input_' . $field['id'];
 			}
@@ -1380,12 +1384,4 @@ function wonkasoft_custom_merge_tags( $merge_tags, $form_id, $fields, $element_i
 	return $merge_tags;
 }
 add_filter( 'gform_custom_merge_tags', 'wonkasoft_custom_merge_tags', 10, 4 );
-
-// Filter to add a new tooltip
-function add_order_select_tooltips( $tooltips ) {
-	$tooltips['form_field_order_number_label_value'] = '<h6>Order Select</h6>Select an order to update.';
-	return $tooltips;
-}
-add_filter( 'gform_tooltips', 'add_order_select_tooltips' );
-
 /*=====  End of Customizing of Gravity forms  ======*/
