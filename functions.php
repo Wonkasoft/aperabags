@@ -339,6 +339,13 @@ if ( ! class_exists( 'Wonkasoft_Testimonial_Query' ) ) {
 }
 
 /**
+ * Load Wonkasoft Testimonial compatibility file.
+ */
+if ( class_exists( 'GFForms' ) ) {
+	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-gf-order-select.php';
+}
+
+/**
  * Search for only products
  *
  * @since  1.0.0
