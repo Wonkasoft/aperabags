@@ -1185,7 +1185,7 @@ var componentForm;
 			adjustment -= document.querySelector( '#wpadminbar' ).offsetHeight;
 		}
 
-		header_slider_section.style.height = ( adjustment - 50 ) + 'px';
+		header_slider_section.style.height = ( adjustment - 150 ) + 'px';
 		top_slide.style.height = header_slider_section.offsetHeight;
 		top_slide.style.width = header_slider_section.offsetWidth;
 	}
