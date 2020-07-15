@@ -133,6 +133,12 @@
 
 			li {
 				position: relative;
+				padding: 0 15px;
+
+				&.shop.wonka-btn {
+					background: #dad3a2;
+					border-radius: 6px;
+				}
 
 				ul {
 					top: 0;
@@ -202,25 +208,8 @@
 
 			.menu-item-has-children > a {
 
-				&:after {
-					content: "\f107";
-					position: relative;
-					font-family: "FontAwesome";
-					color: #ffffff;
-					@include font-size( 1.1 );
-					line-height: 1;
-					top: -4px;
-					padding: 0 8px;
-					right: 0;
-					@include prefix( text-shadow, 1px 1px 4px rgba(#000, .7 ), o moz webkit );
-					@include prefix( transition, $trans_25, webkit moz o);
-				}
-
 				&:hover {
 
-					&:after {
-						color: #dad3a2;
-					}
 				}
 			}
 
