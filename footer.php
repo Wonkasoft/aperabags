@@ -121,7 +121,7 @@
 
 		<div class="site-info row align-items-center">
 			<!-- This column is still parsed in order to hold spacing for formating -->
-			<div class="col col-5 footer-logo">
+			<div class="col col-12 col-md-5 footer-logo">
 				<?php if ( ! empty( $footer_section->footer_mods->footer_logo ) ) : ?>
 					<?php
 					echo wp_kses(
@@ -139,7 +139,7 @@
 				<?php endif; ?>
 			</div> <!-- .col -->
 			<!-- End logo spacing column -->
-			<div class="col col-7 text-right">
+			<div class="col col-12 col-md-7 text-right">
 				<?php
 					/* Printing copyright date */
 					echo sprintf( esc_html__( '%1$s %2$s Apera LLC, All Rights Reserved', 'apera-bags' ), date( 'Y' ), '&copy;' );

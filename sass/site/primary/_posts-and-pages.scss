@@ -509,6 +509,7 @@ div#give-feedback:hover {
 		input[type=text] {
 			width: 70%;
 			padding: 15px;
+			height: 52px;
 			@include font-size( 1.2 );
 			@include prefix( transition, $trans_25, o moz webkit );
 		}
@@ -522,6 +523,7 @@ div#give-feedback:hover {
 			margin-top: 0px;
 			margin-left: 0;
 			padding: 15px;
+			height: 52px;
 			border: 1px solid #52abf6;
 			@include font-size( 1.2 );
 			@include prefix( transition, $trans_25, o moz webkit );

@@ -104,11 +104,11 @@ button.slick-arrow {
 	@include prefix( transition, $trans_25, webkit moz o);
 
 	&.slick-prev {
-		left: -50px;
+		left: -30px;
 	}
 
 	&.slick-next {
-		right: -50px;
+		right: -30px;
 	}
 
 	&:before {

@@ -187,28 +187,54 @@ if ( ! empty( $product_specs_data ) ) :
 <hr />
 <div class="row wonka-row-product-built">
 	<div class="col-12 col-md-6">
-		<table class="table wonka-healthy-design-table">
+		<table class="table table-hover wonka-healthy-design-table">
 			<thead>
 				<tr>
 					<th>
-						<h4 class="wonka wonka-h4">Healthy by Design</h4>
+						<h4 class="wonka wonka-h4">Engineered to Perform</h4>
 					</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td>
-						Sanitized Freshness <sup>&reg;</sup>
+						<span>Our bags keep your gear separated and organized. Cutting-edge, anti-microbial fabrics are designed to fight odor. Get the details:</span>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Antimicrobial product protection (inside and out, helps fight odor)
+						<ul>
+							<li>
+								Antimicrobial protection - bags are treated with Sanitized Freshness <sup>&reg;</sup> to help fight odor
+							</li>
+						</ul>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Water and stain resistant fabric (that&#39;s easy to clean)
+						<ul>
+							<li>
+								Water and stain-resistant fabric - easy to clean
+							</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<ul>
+							<li>
+								Laser-cut venting - allows your gear to breathe
+							</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<ul>
+							<li>
+								Water-resistant base - protects your gear when placed on wet or damp surfaces
+							</li>
+						</ul>
 					</td>
 				</tr>
 				<?php
@@ -217,13 +243,21 @@ if ( ! empty( $product_specs_data ) ) :
 					$some_features  = '';
 					$some_features .= '<tr>';
 					$some_features .= '<td>';
-					$some_features .= 'Laser-Cut Venting (allows your gear to breathe)';
+					$some_features .= '<ul>';
+					$some_features .= '<li>';
+					$some_features .= 'Laser-Cut Venting - allows your gear to breathe';
+					$some_features .= '</li>';
+					$some_features .= '</ul>';
 					$some_features .= '</tr>';
 					$some_features .= '</td>';
 
 					$some_features .= '<tr>';
 					$some_features .= '<td>';
-					$some_features .= 'Water resistant base (protects your gear when sitting on wet and damp surfaces)';
+					$some_features .= '<ul>';
+					$some_features .= '<li>';
+					$some_features .= 'Water resistant base - protects your gear when sitting on wet and damp surfaces';
+					$some_features .= '</li>';
+					$some_features .= '</ul>';
 					$some_features .= '</td>';
 					$some_features .= '</tr>';
 
@@ -234,7 +268,7 @@ if ( ! empty( $product_specs_data ) ) :
 		</table>
 	</div>
 	<div class="col-12 col-md-6">
-		<table class="table wonka-built-to-last-table">
+		<table class="table table-hover wonka-built-to-last-table">
 			<thead>
 				<tr>
 					<th>
@@ -245,22 +279,43 @@ if ( ! empty( $product_specs_data ) ) :
 			<tbody>
 				<tr>
 					<td>
-						Lifetime guarantee against manufacturer defects (provides peace of mind)
+						<span>We use top-quality materials and construction to create tough bags with a lifetime guarantee. Here's where we spared no expense:</span>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Ergonomic and secure zipper pulls (make accessing your gear a snap)
+						<ul>
+							<li>
+								Lifetime guarantee against manufacturer defects - provides peace of mind
+							</li>
+						</ul>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Durable fabrics and material (stand up to the rigors of life)
+						<ul>
+							<li>
+								Ergonomic and secure zipper pulls - make accessing your gear a snap	
+							</li>
+						</ul>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						High visibility logo and venting (adds to Apera&#39;s distinct styling)
+						<ul>
+							<li>
+								Durable fabrics and material - stand up to the rigors of life
+							</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<ul>
+							<li>
+								High visibility logo and venting - adds to Apera&#39;s distinct styling
+							</li>
+						</ul>
 					</td>
 				</tr>
 			</tbody>

@@ -45,7 +45,7 @@ gulp.task('sass', function () {
 
 	return gulp.src('./sass/style.scss')
 
-	.pipe(sourcemaps.init())
+	.pipe(sourcemaps.init( { loadMaps: true } ) )
 
 	.pipe(plumber(plumberErrorHandler))
 
@@ -74,7 +74,7 @@ gulp.task('admin-sass', function () {
 
 	return gulp.src('./sass/admin-styles.scss')
 
-	.pipe(sourcemaps.init())
+	.pipe(sourcemaps.init( { loadMaps: true } ) )
 
 	.pipe(plumber(plumberErrorHandler))
 
@@ -103,7 +103,7 @@ gulp.task('woo-sass', function () {
 
 	return gulp.src('./sass/woocommerce.scss')
 
-	.pipe(sourcemaps.init())
+	.pipe(sourcemaps.init( { loadMaps: true } ) )
 
 	.pipe(plumber(plumberErrorHandler))
 
@@ -129,6 +129,8 @@ gulp.task('woo-sass', function () {
 gulp.task('js', function () {
 
 	return gulp.src( ['./js/navigation.js', './js/skip-link-focus-fix.js', './js/wonkamizer-js.js'] )
+
+	.pipe(sourcemaps.init( { loadMaps: true } ) )
 
 	.pipe(concat(themeName + '.min.js'))
 
@@ -158,6 +160,8 @@ gulp.task('js', function () {
 gulp.task('admin-js', function () {
 
 	return gulp.src( ['./inc/js/admin-edit.js'] )
+	
+	.pipe(sourcemaps.init( { loadMaps: true } ) )
 
 	.pipe(concat( 'admin-' + themeName + '.min.js' ))
 

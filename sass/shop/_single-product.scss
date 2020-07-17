@@ -790,6 +790,7 @@ section.product-tabs-section {
 					td {
 						font-weight: 400;
 						font-family: $font__main;
+						border: none;
 						@include font-size( 1 );
 
 						&.product-disclosures {
@@ -801,7 +802,7 @@ section.product-tabs-section {
 					thead {
 
 						th {
-							border-top: none;
+							border: none;
 
 							h4 {
 								font-weight: 600;

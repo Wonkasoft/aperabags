@@ -350,7 +350,7 @@ function custom_pre_get_posts_query( $q ) {
 	$tax_query[] = array(
 		'taxonomy' => 'product_cat',
 		'field'    => 'slug',
-		'terms'    => array( 'outlet' ), // Don't display products in the outlet category on the shop page.
+		'terms'    => array( 'accessories' ), // Don't display products in the outlet category on the shop page.
 		'operator' => 'NOT IN',
 	);
 
@@ -365,8 +365,8 @@ add_action( 'woocommerce_product_query', 'custom_pre_get_posts_query' );
  * @since 1.0.1 Updates
  */
 function add_outlet_items() {
-	echo "<div class='text-center outlet-title'><h2>Outlet Section</h2></div>";
-	echo do_shortcode( '[products columns="2" category="outlet"]' );
+	echo "<div class='text-center outlet-title'><h2>Accessories</h2></div>";
+	echo do_shortcode( '[products columns="2" category="accessories"]' );
 }
 add_action( 'woocommerce_after_shop_loop', 'add_outlet_items' );
 

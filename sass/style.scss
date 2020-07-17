@@ -52,15 +52,6 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 @import "normalize";
 
 /*--------------------------------------------------------------
-# FontAwesome
---------------------------------------------------------------*/
-@import "fontawesome/solid";
-@import "fontawesome/v4-shims";
-@import "fontawesome/regular";
-@import "fontawesome/brands";
-@import "fontawesome/fontawesome";
-
-/*--------------------------------------------------------------
 # Typography
 --------------------------------------------------------------*/
 @import "typography/typography";
@@ -99,6 +90,15 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 # Widgets
 --------------------------------------------------------------*/
 @import "site/secondary/widgets";
+
+/*--------------------------------------------------------------
+# FontAwesome
+--------------------------------------------------------------*/
+@import "fontawesome/solid";
+@import "fontawesome/v4-shims";
+@import "fontawesome/regular";
+@import "fontawesome/brands";
+@import "fontawesome/fontawesome";
 
 /*--------------------------------------------------------------
 # Content

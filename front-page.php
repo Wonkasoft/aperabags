@@ -114,18 +114,18 @@ if ( is_home() ) :
 	?>
 	<?php if ( ! empty( $discovery_section ) ) : ?>
 		<section class="discovery-section">
-			<div class="container">
+			<div class="container-fluid">
 				<div class="row align-items-center">
-					<div class="col-12 col-md-4">
+					<div class="col col-12 col-md-4">
 						<h3><?php echo esc_html( $discovery_section->title ); ?></h3>
 						<?php
 							echo $discovery_section->body;
 						?>
-						<div class="text-center">
-							<a href="<?php echo esc_url( $discovery_section->cta_link ); ?>" class="btn wonka-btn mx-auto"><?php echo esc_html( $discovery_section->cta_text ); ?></a>
+						<div class="text-left">
+							<a href="<?php echo esc_url( $discovery_section->cta_link ); ?>" class="btn wonka-btn"><?php echo esc_html( $discovery_section->cta_text ); ?></a>
 						</div>
 					</div>
-					<div class="col-12 col-md-8 text-right">
+					<div class="col col-12 col-md-8 text-center">
 						<a href="<?php echo esc_url( $discovery_section->cta_link ); ?>" class="img-link">
 							<img src="<?php echo esc_url( wp_get_attachment_image_src( $discovery_section->image, 'medium', false )[0] ); ?>" class="img-responsive" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $discovery_section->image, 'medium', null ) ); ?>" />
 						</a>
@@ -158,7 +158,7 @@ if ( is_home() ) :
 	?>
 	<?php if ( $pro_query->have_posts() ) : ?>
 		<section class="featured-bags-section">
-			<div class="container">
+			<div class="container-fluid">
 				<div class="row justify-content-space-around">
 					<div class="col-12">
 						<h2 class="shop-section-title text-center">Reimagine Your Gym Bag</h2>
@@ -175,7 +175,7 @@ if ( is_home() ) :
 					$featured_product_image_id = get_featured_product_img_id( $post );
 
 					?>
-						<div class="col-12 col-md-4 featured-product-wrap">
+						<div class="col col-12 col-md-4 featured-product-wrap">
 							<a href="<?php esc_url( the_permalink( $post_id ) ); ?>" class="shop-link">
 								<div class="featured-product-image" style="background-image: url('<?php echo esc_url( wp_get_attachment_image_src( $featured_product_image_id, 'full', false )[0] ); ?>');">
 										<button class="btn wonka-btn"><h6 class="featured-product-title"><?php the_title(); ?></h6></button>
@@ -202,20 +202,20 @@ if ( is_home() ) :
 	?>
 	<?php if ( ! empty( $our_brand_section ) ) : ?>
 		<section class="our-brand-section">
-		<div class="container">
+		<div class="container-fluid">
 				<div class="row align-items-center">
-					<div class="col-12 col-md-7">
+					<div class="col col-12 col-md-8 text-center">
 						<a href="<?php echo esc_url( $our_brand_section->cta_link ); ?>" class="img-link">
 							<img src="<?php echo esc_url( wp_get_attachment_image_src( $our_brand_section->image, 'medium', false )[0] ); ?>" class="img-responsive" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $our_brand_section->image, 'medium', null ) ); ?>" />
 						</a>
 					</div>
-					<div class="col-12 col-md-5">
+					<div class="col col-12 col-md-4">
 						<h3><?php echo esc_html( $our_brand_section->title ); ?></h3>
 						<?php
 							echo $our_brand_section->body;
 						?>
-						<div class="text-center">
-							<a href="<?php echo esc_url( $our_brand_section->cta_link ); ?>" class="btn wonka-btn mx-auto"><?php echo esc_html( $our_brand_section->cta_text ); ?></a>
+						<div class="text-left">
+							<a href="<?php echo esc_url( $our_brand_section->cta_link ); ?>" class="btn wonka-btn"><?php echo esc_html( $our_brand_section->cta_text ); ?></a>
 						</div>
 					</div>
 				</div>
@@ -268,7 +268,7 @@ if ( is_home() ) :
 	?>
 	<?php if ( ! empty( $cats ) ) : ?>
 		<section class="category-section">
-			<div class="container">
+			<div class="container-fluid">
 				<div class="row justify-content-space-around">
 					<div class="col-12">
 						<h3 class="cat-section-title">Crush Your Next Workout<br /> & Look Good Doing It</h3>
@@ -283,7 +283,7 @@ if ( is_home() ) :
 							$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
 							$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
 						?>
-							<div class="col-6 cat-col">
+							<div class="col col-6 cat-col">
 								<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
 									<div class="cat-container" style="background-image: url('<?php echo esc_url( $src[0] ); ?>');">
 										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
@@ -299,7 +299,7 @@ if ( is_home() ) :
 							$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
 							$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
 						?>
-							<div class="col-6 cat-col">
+							<div class="col col-6 cat-col">
 								<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
 									<div class="cat-container" style="background-image: url('<?php echo esc_url( $src[0] ); ?>');">
 										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
@@ -315,7 +315,7 @@ if ( is_home() ) :
 							$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
 							$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
 						?>
-							<div class="col-6 cat-col">
+							<div class="col col-6 cat-col">
 								<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
 									<div class="cat-container" style="background-image: url('<?php echo esc_url( $src[0] ); ?>');">
 										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
@@ -331,7 +331,7 @@ if ( is_home() ) :
 							$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
 							$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
 						?>
-							<div class="col-6 cat-col">
+							<div class="col col-6 cat-col">
 								<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
 									<div class="cat-container" style="background-image: url('<?php echo esc_url( $src[0] ); ?>');">
 										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>

@@ -10,8 +10,8 @@ textarea {
 	@include font-size( .9 );
 
 	@include media-breakpoint( md ) {
-		line-height: 1.2;
-		@include font-size( 1.1 );
+		line-height: 1.4;
+		@include font-size( 1.3 );
 	}
 }
 

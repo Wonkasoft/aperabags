@@ -69,14 +69,9 @@ footer#colophon {
 			display: flex;
 			justify-content: space-evenly;
 			align-items: center;
-			margin: 8px auto 15px;
-			max-width: 300px;
-			margin-bottom: 1.2rem;
+			margin: 15px auto;
 			@include font-size( 1.4 );
 
-			a {
-				padding: 0 15px 0 15px;
-			}
 		}
 
 		ul {
@@ -230,10 +225,7 @@ footer#colophon {
 		}
 	}
 
-	.row:not( :last-child ) {
-
-		.col {
-			margin-bottom: 15px;
-		}
+	.col:not( :last-child ) {
+		margin-bottom: 15px;
 	}
 }

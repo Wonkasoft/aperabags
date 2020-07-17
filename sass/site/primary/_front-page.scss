@@ -30,6 +30,13 @@
 		}
 	}
 
+	section {
+
+		.col:not( :last-child ) {
+			margin-bottom: 15px;
+		}
+	}
+
 	section:not(:first-of-type) {
 		padding: 35px 0;
 	}
@@ -278,10 +285,20 @@ section.header-slider-section {
 section.discovery_section,
 section.our-brand-section {
 
+	h2 {
+		@include font-size( 2 );
+	}
+
+	h3 {
+		@include font-size( 1.9 );
+	}
+
 	a.img-link {
 		display: inline-block;
+		margin: auto;
 
 		img {
+			margin: auto;
 			max-height: 350px;
 		}
 	}
@@ -306,7 +323,7 @@ section.featured-bags-section {
 			align-items: center;
 			justify-content: center;
 			margin-bottom: 25px;
-			background: rgba( #e6e6e6, .7 );
+			background: rgba( #e6e6e6, .5 );
 			color: #333333;
 
 			.featured-product-title {
@@ -315,6 +332,10 @@ section.featured-bags-section {
 				padding: 0;
 				margin: 0;
 				top: 2px;
+			}
+
+			&:hover {
+				background: rgba( #e6e6e6, .7 );
 			}
 		}
 	}
@@ -379,16 +400,17 @@ section.testimonial-section {
 		background-repeat: no-repeat;
 		background-size: cover;
 		text-align: center;
-		height: 300px;
+		height: 200px;
 		margin-bottom: 15px;
 		font-weight: 800;
 		
 		button {
 			position: relative;
-			width: 200px;
-			padding: 15px 45px;
+			width: 140px;
+			padding: 15px;
 			font-weight: 800;
 			z-index: 10;
+			@include transition( all .25s ease-in-out );
 		}
 
 		&:after {
@@ -406,6 +428,15 @@ section.testimonial-section {
 
 			&:after {
 				opacity: 0;
+			}
+		}
+
+		@include media-breakpoint( md ) {
+			height: 400px;
+			
+			button {
+				width: 200px;
+				padding: 15px 35px;
 			}
 		}
 	}
