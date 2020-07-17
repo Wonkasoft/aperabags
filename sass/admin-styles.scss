@@ -3,6 +3,15 @@
  */
  @import "mixins/mixins-master";
 
+ /*--------------------------------------------------------------
+# FontAwesome
+--------------------------------------------------------------*/
+@import "fontawesome/solid";
+@import "fontawesome/v4-shims";
+@import "fontawesome/regular";
+@import "fontawesome/brands";
+@import "fontawesome/fontawesome";
+
 form#custom-options-form input:not( #submit ) {
 	margin-top: 0;
   	width: 85%;

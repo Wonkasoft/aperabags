@@ -258,7 +258,8 @@
 						padding: 0 25px;
 						
 						a {
-							display: contents;
+							display: inline-flex;
+							align-items: center;
 						}
 					}
 
