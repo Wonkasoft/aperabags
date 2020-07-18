@@ -238,34 +238,36 @@ if ( ! class_exists( 'Wonkasoft_Custom_Post_Types' ) ) :
 		}
 
 		public function wonkasoft_display_custom_quickedit( $column_name, $post_type, $taxonomy ) {
-			switch ( $column_name ) :
-				case 'featured':
-					wp_nonce_field( "{$post_type}_save_action_nonce", "{$post_type}_edit_nonce", true, true );
-					$output = '<fieldset class="inline-edit-col-right"><label for="testimonial_featured"><input type="checkbox" name="testimonial_featured" value="checked" /><span class="checkbox-title">' . ucfirst( $column_name ) . '</span></label></fieldset>';
-					echo wp_kses(
-						$output,
-						array(
-							'fieldset' => array(
-								'class' => array(),
-							),
-							'label'    => array(
-								'class' => array(),
-								'for'   => array(),
-							),
-							'input'    => array(
-								'for'   => array(),
-								'class' => array(),
-								'name'  => array(),
-								'type'  => array(),
-								'value' => array(),
-							),
-							'span'     => array(
-								'class' => array(),
-							),
-						)
-					);
-					break;
-			endswitch;
+			if ( $this->current_post_type === $post_type ) :
+				switch ( $column_name ) :
+					case 'featured':
+						wp_nonce_field( "{$post_type}_save_action_nonce", "{$post_type}_edit_nonce", true, true );
+						$output = '<fieldset class="inline-edit-col-right"><label for="testimonial_featured"><input type="checkbox" name="testimonial_featured" value="checked" /><span class="checkbox-title">' . ucfirst( $column_name ) . '</span></label></fieldset>';
+						echo wp_kses(
+							$output,
+							array(
+								'fieldset' => array(
+									'class' => array(),
+								),
+								'label'    => array(
+									'class' => array(),
+									'for'   => array(),
+								),
+								'input'    => array(
+									'for'   => array(),
+									'class' => array(),
+									'name'  => array(),
+									'type'  => array(),
+									'value' => array(),
+								),
+								'span'     => array(
+									'class' => array(),
+								),
+							)
+						);
+						break;
+				endswitch;
+			endif;
 		}
 
 		public function save_post_type_meta( $post_id ) {
