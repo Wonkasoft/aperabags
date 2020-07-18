@@ -433,10 +433,6 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
  * @param array $q contains the current query.
  */
 function custom_pre_get_posts_query( $q ) {
-	echo "<pre>\n";
-	print_r( $q );
-	echo "</pre>\n";
-
 	if ( isset( $q->query['product_cat'] ) && 'product' !== $q->query['product_cat'] ) :
 		$tax_query = (array) $q->get( 'tax_query' );
 
