@@ -433,7 +433,7 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
  * @param array $q contains the current query.
  */
 function custom_pre_get_posts_query( $q ) {
-	if ( 'accessories' !== $q->query['product_cat'] ) :
+	if ( isset( $q->query['product_cat'] ) && 'accessories' !== $q->query['product_cat'] ) :
 		$tax_query = (array) $q->get( 'tax_query' );
 
 		$tax_query[] = array(

@@ -223,22 +223,26 @@ if ( ! class_exists( 'Wonkasoft_Custom_Post_Types' ) ) :
 		}
 
 		public function manage_post_type_posts_custom_column( $column_name, $post_id ) {
-			switch ( $column_name ) :
-				case 'featured':
-					$featured = ( ! empty( get_post_meta( $post_id, 'featured', true ) ) ) ? 'fas' : 'far';
-					$data     = ( ! empty( get_post_meta( $post_id, 'featured', true ) ) ) ? get_post_meta( $post_id, 'featured', true ) : 'false';
-					$title    = 'checked' === $data ? 'yes' : 'no';
-					print_r( '<a href="javascript:void(0);" class="btn" data="' . $data . '" post-id="' . $post_id . '" data-toggle="tooltip" data-placement="bottom" title="' . $title . '"><i class="' . $featured . ' fa-star"></i></a>' );
-					break;
-				case 'excerpt_col':
-					$post = get_post( $post_id );
-					print_r( wp_trim_words( $post->post_content, 15, '...' ) );
-					break;
-			endswitch;
+			$post = get_post( $post_id );
+
+			if ( 'testimonial' === $post->post_type ) :
+				switch ( $column_name ) :
+					case 'featured':
+						$featured = ( ! empty( get_post_meta( $post_id, 'featured', true ) ) ) ? 'fas' : 'far';
+						$data     = ( ! empty( get_post_meta( $post_id, 'featured', true ) ) ) ? get_post_meta( $post_id, 'featured', true ) : 'false';
+						$title    = 'checked' === $data ? 'yes' : 'no';
+						print_r( '<a href="javascript:void(0);" class="btn" data="' . $data . '" post-id="' . $post_id . '" data-toggle="tooltip" data-placement="bottom" title="' . $title . '"><i class="' . $featured . ' fa-star"></i></a>' );
+						break;
+					case 'excerpt_col':
+						$post = get_post( $post_id );
+						print_r( wp_trim_words( $post->post_content, 15, '...' ) );
+						break;
+				endswitch;
+			endif;
 		}
 
 		public function wonkasoft_display_custom_quickedit( $column_name, $post_type, $taxonomy ) {
-			if ( $this->current_post_type === $post_type ) :
+			if ( 'testimonial' === $post_type ) :
 				switch ( $column_name ) :
 					case 'featured':
 						wp_nonce_field( "{$post_type}_save_action_nonce", "{$post_type}_edit_nonce", true, true );
@@ -287,9 +291,9 @@ if ( ! class_exists( 'Wonkasoft_Custom_Post_Types' ) ) :
 					return;
 				}
 
-				if ( isset( $_REQUEST['testimonial_featured'] ) ) {
+				if ( isset( $_REQUEST['testimonial_featured'] ) && in_array( $_POST['post_type'], $this->custom_post_types ) ) {
 					update_post_meta( $post_id, 'featured', $_REQUEST['testimonial_featured'] );
-				} else {
+				} elseif ( in_array( $_POST['post_type'], $this->custom_post_types ) ) {
 					update_post_meta( $post_id, 'featured', '' );
 				}
 			endif;
