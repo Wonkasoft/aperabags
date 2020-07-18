@@ -433,16 +433,18 @@ remove_filter( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
  * @param array $q contains the current query.
  */
 function custom_pre_get_posts_query( $q ) {
-	$tax_query = (array) $q->get( 'tax_query' );
+	if ( 'accessories' !== $q->query['product_cat'] ) :
+		$tax_query = (array) $q->get( 'tax_query' );
 
-	$tax_query[] = array(
-		'taxonomy' => 'product_cat',
-		'field'    => 'slug',
-		'terms'    => array( 'accessories' ), // Don't display products in the outlet category on the shop page.
-		'operator' => 'NOT IN',
-	);
+		$tax_query[] = array(
+			'taxonomy' => 'product_cat',
+			'field'    => 'slug',
+			'terms'    => array( 'accessories' ), // Don't display products in the outlet category on the shop page.
+			'operator' => 'NOT IN',
+		);
 
-	$q->set( 'tax_query', $tax_query );
+		$q->set( 'tax_query', $tax_query );
+	endif;
 }
 add_action( 'woocommerce_product_query', 'custom_pre_get_posts_query' );
 
@@ -453,8 +455,12 @@ add_action( 'woocommerce_product_query', 'custom_pre_get_posts_query' );
  * @since 1.0.1 Updates
  */
 function add_outlet_items() {
-	echo "<div class='text-center outlet-title'><h2>Accessories</h2></div>";
-	echo do_shortcode( '[products columns="2" category="accessories"]' );
+	global $wp_query;
+	$cat_query = $wp_query->get_queried_object()->name;
+	if ( 'product' === $cat_query ) :
+		echo "<div class='text-center outlet-title'><h2>Accessories</h2></div>";
+		echo do_shortcode( '[products columns="2" category="accessories"]' );
+	endif;
 }
 add_action( 'woocommerce_after_shop_loop', 'add_outlet_items' );
 

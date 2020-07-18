@@ -239,7 +239,7 @@ if ( is_home() ) :
 		?>
 		<section class="testimonial-section">
 			<div class="container-fluid">
-				<div class="row justify-content-center testimonial-row">
+				<div class="row align-items-center justify-content-center testimonial-row">
 					<div class="col-10 testimonial-wrap text-center">
 					<?php
 					while ( $testimonials->results->have_posts() ) :

@@ -30,7 +30,6 @@ remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 )
 add_action( 'wonkasoft_moved_breadcrumb', 'woocommerce_breadcrumb', 10 );
 
 do_action( 'woocommerce_before_main_content' );
-
 ?>
 <header class="woocommerce-products-header">
 	<div class="breadcrumb-title-wrap">

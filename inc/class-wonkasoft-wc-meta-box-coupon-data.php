@@ -23,6 +23,9 @@ class Wonkasoft_WC_Meta_Box_Coupon_Data {
 	 * @param WP_Post $post
 	 */
 	public static function output( $post ) {
+		if ( 'shop_coupon' !== $post->post_type ) :
+			return;
+		endif;
 
 		$coupon_id = absint( $post->ID );
 		$coupon    = new Wonkasoft_WC_Coupon( $coupon_id );
