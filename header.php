@@ -39,7 +39,7 @@
 				</div><!-- col col-12 -->
 			</div><!-- topbar-notice -->
 		<?php endif; ?>
-		<div class="row brand-nav-bar justify-content-end">
+		<div class="row brand-nav-bar">
 			<div class="col col-5 col-lg-2 branding">
 				<div class="site-branding">
 					<?php

@@ -10,6 +10,50 @@
 	}
 }
 
+.shop-content-container {
+
+	.shop-cat-container {
+		margin: 35px auto;
+	}
+
+	.cat-col {
+
+		a.cat-link {
+
+			button {
+				width: 100%;
+				border-radius: 6px;
+				padding: 15px;
+				@include font-size( 1.4 );
+			}
+		}
+	}
+
+	.shop-box-text {
+
+		.wonka-shop-img-wrap {
+			display: flex;
+			flex-flow: column;
+			justify-content: space-between;
+			height: 100%;
+			max-height: 545px;
+
+			h2 {
+				font-weight: 700;
+				@include font-size( 1.5 );
+			}
+
+			p {
+				@include font-size( 1.5 );
+			}
+
+			p:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
 .archive {
 
 	&.woocommerce-page {

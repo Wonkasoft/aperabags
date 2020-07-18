@@ -122,6 +122,93 @@ function apera_bags_woocommerce_related_products_args( $args ) {
 }
 add_filter( 'woocommerce_output_related_products_args', 'apera_bags_woocommerce_related_products_args' );
 
+if ( ! function_exists( 'apera_bags_woocommerce_before_shop_loop_category_btns' ) ) {
+	/**
+	 Product Category Buttons.
+
+	 @return  void
+	 */
+	function apera_bags_woocommerce_before_shop_loop_category_btns() {
+		$term_args = array(
+			'taxonomy'   => 'product_cat',
+			'orderby'    => 'name',
+			'order'      => 'ASC',
+			'hide_empty' => true,
+		);
+		$cats      = new WP_Term_Query( $term_args );
+		?>
+		<?php if ( ! empty( $cats ) ) : ?>
+				<div class="container-fluid shop-cat-container">
+					<div class="row justify-content-space-around">
+					<?php
+
+					foreach ( $cats->get_terms() as $cur_cat ) :
+
+						if ( 'Backpacks' === $cur_cat->name ) :
+							?>
+							<?php
+								$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
+								$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
+							?>
+								<div class="col col-3 cat-col">
+									<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
+										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
+									</a>
+								</div>
+							<?php
+						endif;
+
+						if ( 'Duffels' === $cur_cat->name ) :
+							?>
+							<?php
+								$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
+								$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
+							?>
+								<div class="col col-3 cat-col">
+									<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
+										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
+									</a>
+								</div>
+							<?php
+						endif;
+
+						if ( 'Accessories' === $cur_cat->name ) :
+							?>
+							<?php
+								$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
+								$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
+							?>
+								<div class="col col-3 cat-col">
+									<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
+										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
+									</a>
+								</div>
+							<?php
+						endif;
+
+						if ( 'Totes' === $cur_cat->name ) :
+							?>
+							<?php
+								$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
+								$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
+							?>
+								<div class="col col-3 cat-col">
+									<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
+										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
+									</a>
+								</div>
+							<?php
+						endif;
+					endforeach;
+					?>
+				</div>
+			</div>
+			<?php
+		endif;
+	}
+}
+add_action( 'woocommerce_before_shop_loop', 'apera_bags_woocommerce_before_shop_loop_category_btns', 5 );
+
 if ( ! function_exists( 'apera_bags_woocommerce_product_columns_wrapper' ) ) {
 	/**
 	 Product columns wrapper.
@@ -130,6 +217,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_product_columns_wrapper' ) ) {
 	 */
 	function apera_bags_woocommerce_product_columns_wrapper() {
 		$columns = apera_bags_woocommerce_loop_columns();
+
 		echo '<div class="row wonka-row row-columns-' . absint( $columns ) . '">';
 	}
 }

@@ -270,7 +270,7 @@ if ( is_home() ) :
 		<section class="category-section">
 			<div class="container-fluid">
 				<div class="row justify-content-space-around">
-					<div class="col-12">
+					<div class="col col-12">
 						<h3 class="cat-section-title">Crush Your Next Workout<br /> & Look Good Doing It</h3>
 					</div>
 				<?php
