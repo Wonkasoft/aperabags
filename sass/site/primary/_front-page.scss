@@ -282,7 +282,7 @@ section.header-slider-section {
 /*----------  End Header Slider  ----------*/
 
 /*----------  Discovery Section  ----------*/
-section.discovery_section,
+section.discovery-section,
 section.our-brand-section {
 
 	h2 {
@@ -300,6 +300,14 @@ section.our-brand-section {
 		img {
 			margin: auto;
 			max-height: 350px;
+		}
+	}
+
+	@include media-breakpoint( md ) {
+
+		.container-fluid {
+			padding-left: 75px;
+			padding-right: 75px;
 		}
 	}
 }
@@ -409,6 +417,7 @@ section.testimonial-section {
 			width: 140px;
 			padding: 15px;
 			font-weight: 800;
+			@include font-size( .8 );
 			z-index: 10;
 			@include transition( all .25s ease-in-out );
 		}
@@ -437,6 +446,7 @@ section.testimonial-section {
 			button {
 				width: 200px;
 				padding: 15px 35px;
+				@include font-size( 1 );
 			}
 		}
 	}

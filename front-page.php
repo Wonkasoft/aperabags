@@ -158,7 +158,7 @@ if ( is_home() ) :
 	?>
 	<?php if ( $pro_query->have_posts() ) : ?>
 		<section class="featured-bags-section">
-			<div class="container-fluid">
+			<div class="container">
 				<div class="row justify-content-space-around">
 					<div class="col-12">
 						<h2 class="shop-section-title text-center">Reimagine Your Gym Bag</h2>
