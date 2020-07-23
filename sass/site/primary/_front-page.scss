@@ -363,6 +363,11 @@ section.featured-bags-section {
 /*----------  Testimonial Section  ----------*/
 section.testimonial-section {
 
+	.slick-track {
+		display: flex;
+		align-items: center;
+	}
+
 	.testimonial-box {
 		
 		&:focus {

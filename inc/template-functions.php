@@ -79,11 +79,12 @@ function the_mods_for_section( $section ) {
 	if ( 'discovery_section' === $section || 'all' === $section ) :
 		$discovery_section = array();
 		$discovery         = array(
-			'image'    => ! empty( get_theme_mod( 'discovery_featured_image' ) ) ? get_theme_mod( 'discovery_featured_image' ) : null,
-			'title'    => ! empty( get_theme_mod( 'discovery_title' ) ) ? get_theme_mod( 'discovery_title' ) : null,
-			'body'     => ! empty( get_theme_mod( 'discovery_body' ) ) ? get_theme_mod( 'discovery_body' ) : null,
-			'cta_text' => ! empty( get_theme_mod( 'discovery_cta_text' ) ) ? get_theme_mod( 'discovery_cta_text' ) : null,
-			'cta_link' => ! empty( get_theme_mod( 'discovery_cta_link' ) ) ? get_permalink( get_theme_mod( 'discovery_cta_link' ) ) : null,
+			'image'        => ! empty( get_theme_mod( 'discovery_featured_image' ) ) ? get_theme_mod( 'discovery_featured_image' ) : null,
+			'second_image' => ! empty( get_theme_mod( 'discovery_featured_flip_image' ) ) ? get_theme_mod( 'discovery_featured_flip_image' ) : null,
+			'title'        => ! empty( get_theme_mod( 'discovery_title' ) ) ? get_theme_mod( 'discovery_title' ) : null,
+			'body'         => ! empty( get_theme_mod( 'discovery_body' ) ) ? get_theme_mod( 'discovery_body' ) : null,
+			'cta_text'     => ! empty( get_theme_mod( 'discovery_cta_text' ) ) ? get_theme_mod( 'discovery_cta_text' ) : null,
+			'cta_link'     => ! empty( get_theme_mod( 'discovery_cta_link' ) ) ? get_permalink( get_theme_mod( 'discovery_cta_link' ) ) : null,
 		);
 
 		if ( 'discovery_section' === $section ) {
@@ -96,11 +97,12 @@ function the_mods_for_section( $section ) {
 	if ( 'our_brand_section' === $section || 'all' === $section ) :
 		$our_brand_section = array();
 		$our_brand         = array(
-			'image'    => ! empty( get_theme_mod( 'our_brand_featured_image' ) ) ? get_theme_mod( 'our_brand_featured_image' ) : null,
-			'title'    => ! empty( get_theme_mod( 'our_brand_title' ) ) ? get_theme_mod( 'our_brand_title' ) : null,
-			'body'     => ! empty( get_theme_mod( 'our_brand_body' ) ) ? get_theme_mod( 'our_brand_body' ) : null,
-			'cta_text' => ! empty( get_theme_mod( 'our_brand_cta_text' ) ) ? get_theme_mod( 'our_brand_cta_text' ) : null,
-			'cta_link' => ! empty( get_theme_mod( 'our_brand_cta_link' ) ) ? get_permalink( get_theme_mod( 'our_brand_cta_link' ) ) : null,
+			'image'        => ! empty( get_theme_mod( 'our_brand_featured_image' ) ) ? get_theme_mod( 'our_brand_featured_image' ) : null,
+			'second_image' => ! empty( get_theme_mod( 'our_brand_featured_flip_image' ) ) ? get_theme_mod( 'our_brand_featured_flip_image' ) : null,
+			'title'        => ! empty( get_theme_mod( 'our_brand_title' ) ) ? get_theme_mod( 'our_brand_title' ) : null,
+			'body'         => ! empty( get_theme_mod( 'our_brand_body' ) ) ? get_theme_mod( 'our_brand_body' ) : null,
+			'cta_text'     => ! empty( get_theme_mod( 'our_brand_cta_text' ) ) ? get_theme_mod( 'our_brand_cta_text' ) : null,
+			'cta_link'     => ! empty( get_theme_mod( 'our_brand_cta_link' ) ) ? get_permalink( get_theme_mod( 'our_brand_cta_link' ) ) : null,
 		);
 		if ( 'our_brand_section' === $section ) {
 			$section_mods['our_brand_section'] = $our_brand;

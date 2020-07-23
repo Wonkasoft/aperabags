@@ -128,6 +128,7 @@ if ( is_home() ) :
 					<div class="col col-12 col-md-8 text-center">
 						<a href="<?php echo esc_url( $discovery_section->cta_link ); ?>" class="img-link">
 							<img src="<?php echo esc_url( wp_get_attachment_image_src( $discovery_section->image, 'medium', false )[0] ); ?>" class="img-responsive" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $discovery_section->image, 'medium', null ) ); ?>" />
+							<img src="<?php echo esc_url( wp_get_attachment_image_src( $discovery_section->second_image, 'medium', false )[0] ); ?>" class="img-responsive" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $discovery_section->second_image, 'medium', null ) ); ?>" />
 						</a>
 					</div>
 				</div>
@@ -207,6 +208,7 @@ if ( is_home() ) :
 					<div class="col col-12 col-md-8 text-center">
 						<a href="<?php echo esc_url( $our_brand_section->cta_link ); ?>" class="img-link">
 							<img src="<?php echo esc_url( wp_get_attachment_image_src( $our_brand_section->image, 'medium', false )[0] ); ?>" class="img-responsive" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $our_brand_section->image, 'medium', null ) ); ?>" />
+							<img src="<?php echo esc_url( wp_get_attachment_image_src( $our_brand_section->second_image, 'medium', false )[0] ); ?>" class="img-responsive" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $our_brand_section->second_image, 'medium', null ) ); ?>" />
 						</a>
 					</div>
 					<div class="col col-12 col-md-4">
