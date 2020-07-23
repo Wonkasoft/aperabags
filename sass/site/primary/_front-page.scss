@@ -294,12 +294,33 @@ section.our-brand-section {
 	}
 
 	a.img-link {
+		position: relative;
 		display: inline-block;
 		margin: auto;
+		@include transition( all .25s ease-in-out );
 
 		img {
+			width: 100%;
 			margin: auto;
-			max-height: 350px;
+			max-height: 650px;
+			object-fit: cover;
+			@include transition( all .25s ease-in-out );
+
+			&.flip-image {
+				position: absolute;
+				opacity: 0;
+				left: 0;
+			}
+		}
+
+		&:hover {
+
+			img {
+
+				&.flip-image {
+					opacity: 1;
+				}
+			}
 		}
 	}
 
