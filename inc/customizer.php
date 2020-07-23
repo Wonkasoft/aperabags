@@ -403,6 +403,30 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
+	// Discovery featured image Setting.
+	$wp_customize->add_setting(
+		'discovery_featured_flip_image',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Disvovery featured image Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Media_Control(
+			$wp_customize,
+			'discovery_featured_flip_image_control',
+			array(
+				'label'       => __( 'Discovery Featured flip image', 'aperabags' ),
+				'section'     => 'discovery_section',
+				'settings'    => 'discovery_featured_flip_image',
+				'type'        => 'media',
+				'description' => 'Add image for featured image ',
+			)
+		)
+	);
+
 	// Discovery Title for Section Setting.
 	$wp_customize->add_setting(
 		'discovery_title',
@@ -603,6 +627,34 @@ function apera_bags_customize_register( $wp_customize ) {
 				'label'       => __( 'Our Brand Featured image', 'aperabags' ),
 				'section'     => 'our_brand_section',
 				'settings'    => 'our_brand_featured_image',
+				'type'        => 'media',
+				'description' => 'Add image for featured image ',
+			)
+		)
+	);
+
+	/**
+	* Our Brand featured flip image Setting.
+	*
+	* @since  1.0.1
+	*/
+	$wp_customize->add_setting(
+		'our_brand_featured_flip_image',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Our Brand featured flip image Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Media_Control(
+			$wp_customize,
+			'our_brand_featured_flip_image_control',
+			array(
+				'label'       => __( 'Our Brand Featured flip image', 'aperabags' ),
+				'section'     => 'our_brand_section',
+				'settings'    => 'our_brand_featured_flip_image',
 				'type'        => 'media',
 				'description' => 'Add image for featured image ',
 			)
