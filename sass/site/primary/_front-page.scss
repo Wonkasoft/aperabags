@@ -498,6 +498,10 @@ section.press-section {
 		display: flex;
 		align-items: center;
 		justify-content: space-around;
+
+		img {
+			max-width: 150px;
+		}
 	}
 }
 /*----------  END Press Section  ----------*/

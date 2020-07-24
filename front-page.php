@@ -369,7 +369,7 @@ if ( is_home() ) :
 			<div class="row justify-content-space-around">
 				<div class="col col-12 press-logos">
 					<?php foreach ( $press_section->logos as $logo ) : ?>
-						<img src="<?php echo esc_url( wp_get_attachment_image_src( $logo, 'thumbnail', false )[0] ); ?>" class="img-responsive" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $logo, 'thumbnail', null ) ); ?>" />
+						<img src="<?php echo esc_url( wp_get_attachment_image_src( $logo, 'medium', false )[0] ); ?>" class="img-responsive" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $logo, 'medium', null ) ); ?>" />
 					<?php endforeach; ?>
 				</div>
 			</div>
