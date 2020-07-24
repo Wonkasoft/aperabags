@@ -439,7 +439,7 @@ div#give-feedback {
     z-index: 500;
     display: none;
     bottom: 50%;
-    right: -50px;
+    right: -55px;
     background: #52abf6;
     border-radius: 4px 4px 0 0;
     @include prefix( transform, rotate(-90deg), o moz webkit );
@@ -459,7 +459,7 @@ div#give-feedback a {
 }
 
 div#give-feedback:hover {
-    right: -43px;
+    right: -48px;
 }
 
 #launcher.zEWidget-launcher {
@@ -864,6 +864,7 @@ body.elementor-page-12687 {
  	z-index:999;
  	@include prefix( transition, all 0.3s ease, o moz webkit );
 }
+
 #return-to-top i {
    color: #fff;
    margin: 0;
@@ -876,9 +877,11 @@ body.elementor-page-12687 {
 	z-index:9999;
 	@include prefix( transition, all 0.3s ease, o moz webkit );
 }
+
 #return-to-top:hover {
    background: rgba(0, 0, 0, 0.9);
 }
+
 #return-to-top:hover i {
    color: #fff;
    top: 0;
@@ -888,7 +891,8 @@ body.elementor-page-12687 {
 /*=========================================
 =      Shipping and returns page        =
 =========================================*/
-.shipping-column-container ul, .contact-column-container ul {
+.shipping-column-container ul, 
+.contact-column-container ul {
 	margin: 0 0 1.5em 1em;
 }
 
@@ -940,6 +944,7 @@ a.wonka-btn.shipping-btn {
 .join-mse-gform .gform_footer {
 	text-align: center;
 }
+
 .join-mse-gform .gform_footer input {
 	font-size: 25px;
 	font-weight: 700;
@@ -964,6 +969,7 @@ a.wonka-btn.shipping-btn {
 .mse-type ul {
 	padding: 0;
 }
+
 .mse-type li {
 	margin-bottom: 8px;
 }
