@@ -302,7 +302,7 @@ section.our-brand-section {
 		img {
 			width: 100%;
 			margin: auto;
-			max-height: 650px;
+			max-height: 500px;
 			object-fit: cover;
 			@include transition( all .25s ease-in-out );
 
@@ -323,14 +323,6 @@ section.our-brand-section {
 			}
 		}
 	}
-
-	@include media-breakpoint( md ) {
-
-		.container-fluid {
-			padding-left: 75px;
-			padding-right: 75px;
-		}
-	}
 }
 /*----------  End Discovery Section  ----------*/
 
@@ -345,7 +337,7 @@ section.featured-bags-section {
 		background-position: center center;
 		-webkit-background-size: cover;
 		background-size: cover;
-		height: 300px;
+		height: 500px;
 
 		button {
 			display: flex;
@@ -418,7 +410,7 @@ section.testimonial-section {
 /*----------  END Testimonial Section  ----------*/
 
 /*----------  Category Section  ----------*/
-.category-section {
+section.category-section {
 	
 	.cat-section-title {
 		margin: 20px auto;
@@ -478,4 +470,19 @@ section.testimonial-section {
 	}
 }
 /*----------  END Category Section  ----------*/
+section.discovery-section,
+section.our-brand-section,
+section.testimonial-section,
+section.category-section,
+section.featured-bags-section {
+
+
+	@include media-breakpoint( md ) {
+
+		.container-fluid {
+			padding-left: 75px;
+			padding-right: 75px;
+		}
+	}
+}
 /*=====  End of front page styles  ======*/
