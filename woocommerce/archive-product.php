@@ -66,25 +66,28 @@ if ( woocommerce_product_loop() ) {
 	woocommerce_product_loop_start();
 
 	if ( wc_get_loop_prop( 'total' ) ) {
-		$added_classes = array(
-			'col',
-			'col-6',
-			'col-sm-4',
-			'shop-box-text',
-		);
-		?>
-		<li <?php wc_product_class( $added_classes ); ?>>
-			<div class="wonka-shop-img-wrap">
-				<h2>Engineered to perform.<br />Built to last.</h2>
-				<p>
-					Shop gym bags that meet the same high standards as your workout. Separate pockets for your shoes, gear, and technology.
-				</p>
-				<p>
-					Antimicrobial materials and lifetime guarantee.
-				</p>
-			</div>
-		</li><!-- END li -->
-		<?php
+		global $wp_query;
+		if ( 'product' === $wp_query->get_queried_object()->name ) :
+			$added_classes = array(
+				'col',
+				'col-6',
+				'col-sm-4',
+				'shop-box-text',
+			);
+			?>
+			<li <?php wc_product_class( $added_classes ); ?>>
+				<div class="wonka-shop-img-wrap">
+					<h2>Engineered to perform.<br />Built to last.</h2>
+					<p>
+						Shop gym bags that meet the same high standards as your workout. Separate pockets for your shoes, gear, and technology.
+					</p>
+					<p>
+						Antimicrobial materials and lifetime guarantee.
+					</p>
+				</div>
+			</li><!-- END li -->
+			<?php
+		endif;
 		while ( have_posts() ) {
 			the_post();
 

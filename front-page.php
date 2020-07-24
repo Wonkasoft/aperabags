@@ -249,7 +249,7 @@ if ( is_home() ) :
 						$post_id = get_the_ID();
 						?>
 						<div class="text-center testimonial-box">
-							<p><span class="testimonial-quotes">"</span><?php echo get_the_content(); ?><span class="testimonial-quotes">"</span><br />- <?php the_title(); ?></p>
+							<p><span class="testimonial-quotes"><i class="fa fa-quote-left"></i></span>&nbsp;<?php echo get_the_content(); ?>&nbsp;<span class="testimonial-quotes"><i class="fa fa-quote-right"></i></span><br />- <?php the_title(); ?></p>
 						</div>
 						<?php
 						endwhile;

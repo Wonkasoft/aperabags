@@ -150,7 +150,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_before_shop_loop_category_btns' 
 								$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
 								$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
 							?>
-								<div class="col col-3 cat-col">
+								<div class="col col-6 col-md-3 cat-col">
 									<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
 										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
 									</a>
@@ -164,7 +164,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_before_shop_loop_category_btns' 
 								$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
 								$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
 							?>
-								<div class="col col-3 cat-col">
+								<div class="col col-6 col-md-3 cat-col">
 									<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
 										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
 									</a>
@@ -178,7 +178,7 @@ if ( ! function_exists( 'apera_bags_woocommerce_before_shop_loop_category_btns' 
 								$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
 								$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
 							?>
-								<div class="col col-3 cat-col">
+								<div class="col col-6 col-md-3 cat-col">
 									<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
 										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
 									</a>
@@ -192,12 +192,13 @@ if ( ! function_exists( 'apera_bags_woocommerce_before_shop_loop_category_btns' 
 								$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
 								$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
 							?>
-								<div class="col col-3 cat-col">
+								<div class="col col-6 col-md-3 cat-col">
 									<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
 										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
 									</a>
 								</div>
 							<?php
+
 						endif;
 					endforeach;
 					?>
