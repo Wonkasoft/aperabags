@@ -493,6 +493,12 @@ section.press-section {
 		text-align: center;
 		@include font-size( 2 );
 	}
+
+	.press-logos {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+	}
 }
 /*----------  END Press Section  ----------*/
 section.discovery-section,
