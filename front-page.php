@@ -273,7 +273,7 @@ if ( is_home() ) :
 			<div class="container-fluid">
 				<div class="row justify-content-space-around">
 					<div class="col col-12">
-						<h3 class="cat-section-title">Crush Your Next Workout<br /> & Look Good Doing It</h3>
+						<h2 class="cat-section-title">Crush Your Next Workout<br /> & Look Good Doing It</h2>
 					</div>
 				<?php
 
@@ -348,6 +348,34 @@ if ( is_home() ) :
 			</div>
 		</section>
 	<?php endif; ?>
+	<?php
+	$press_section = ! empty( $page_mods->press_section ) ? $page_mods->press_section : '';
+
+	if ( empty( $press_section ) ) :
+		$press_section = apply_filters( 'wonkasoft_filter_before_press_section', get_section_mods( 'press_section' ), 'press_section' );
+	endif;
+
+	$press_section = $press_section->press_section;
+	do_action( 'wonkasoft_action_before_press_section', 'press_section', $press_section );
+	?>
+	<?php if ( ! empty( $press_section ) ) : ?>
+	<section class="press-section">
+		<div class="container-fluid">
+			<div class="row justify-content-space-around">
+				<div class="col col-12">
+					<h2 class="press-section-title"><?php echo esc_html( $press_section->title ); ?></h2>
+				</div>
+			</div>
+			<div class="row justify-content-space-around">
+				<div class="col col-12 press-logos">
+					<?php foreach ( $press_section->logos as $logo ) : ?>
+						<img src="<?php echo esc_url( wp_get_attachment_image_src( $logo, 'thumbnail', false )[0] ); ?>" class="img-responsive" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $logo, 'thumbnail', null ) ); ?>" />
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</div>
+	</section>
+<?php endif; ?>
 <?php else : ?>
 	<div id="primary" class="content-area row">
 	<main id="main" class="site-main col col-12">

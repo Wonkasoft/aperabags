@@ -428,6 +428,7 @@ section.category-section {
 	.cat-section-title {
 		margin: 20px auto;
 		text-align: center;
+		@include font-size( 2 );
 	}
 	
 	.cat-container {
@@ -483,11 +484,23 @@ section.category-section {
 	}
 }
 /*----------  END Category Section  ----------*/
+
+/*----------  Press Section  ----------*/
+section.press-section {
+
+	.press-section-title {
+		margin: 20px auto;
+		text-align: center;
+		@include font-size( 2 );
+	}
+}
+/*----------  END Press Section  ----------*/
 section.discovery-section,
 section.our-brand-section,
 section.testimonial-section,
 section.category-section,
-section.featured-bags-section {
+section.featured-bags-section,
+section.press-section {
 
 
 	@include media-breakpoint( md ) {

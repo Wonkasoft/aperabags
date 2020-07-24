@@ -763,197 +763,186 @@ function apera_bags_customize_register( $wp_customize ) {
 	);
 
 	/**
-	 * About subheader settings Section
-	 *
-	 * @since  1.0.0
-	 */
-	$wp_customize->add_setting(
-		'about_the_brand_subheader',
+	  * Press settings Section
+	  *
+	  * @since  1.0.1
+	  */
+	$wp_customize->add_section(
+		'press_section',
 		array(
-			'default'   => '',
+			'capability'     => 'edit_theme_options',
+			'theme_supports' => '',
+			'priority'       => 10,
+			'title'          => __( 'Press Section', 'aperabags' ),
+			'description'    => __( 'Press Section Options version 1.0.1', 'aperabags' ),
+			'panel'          => 'wonkasoft_theme_options',
+		)
+	);
+
+	/**
+	* Press Section Title Setting.
+	*
+	* @since  1.0.1
+	*/
+	$wp_customize->add_setting(
+		'press_section_title',
+		array(
+			'default'   => 'Press & Partnership',
 			'transport' => 'refresh',
 		)
 	);
 
-	// About the brand subheader Setting Control.
+	// Press Title Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
-			'about_the_brand_subheader_control',
+			'press_section_title_control',
 			array(
-				'label'       => __( 'About the brand subheader', 'aperabags' ),
-				'section'     => 'about_section',
-				'settings'    => 'about_the_brand_subheader',
+				'label'       => __( 'Press Section Title', 'aperabags' ),
+				'section'     => 'press_section',
+				'settings'    => 'press_section_title',
 				'type'        => 'text',
-				'description' => 'About the brand subheader',
+				'description' => 'Press Section title.',
 			)
 		)
 	);
 
 	/**
-	 * About the brand message settings Section
-	 *
-	 * @since  1.0.0
-	 */
+	* Press featured Logo Setting.
+	*
+	* @since  1.0.1
+	*/
 	$wp_customize->add_setting(
-		'about_the_brand_message',
+		'press_featured_logo_1',
 		array(
 			'default'   => '',
 			'transport' => 'refresh',
 		)
 	);
 
-	// About the brand message Setting Control.
-	$wp_customize->add_control(
-		new WP_Customize_Control(
-			$wp_customize,
-			'about_the_brand_message_control',
-			array(
-				'label'       => __( 'About the brand message', 'aperabags' ),
-				'section'     => 'about_section',
-				'settings'    => 'about_the_brand_message',
-				'type'        => 'textarea',
-				'description' => 'About the brand message',
-			)
-		)
-	);
-
-	/**
-	 * About the brand embeded video placeholder settings Section
-	 *
-	 * @since  1.0.0
-	 */
-	$wp_customize->add_setting(
-		'about_the_brand_video_placeholder',
-		array(
-			'default'   => '',
-			'transport' => 'refresh',
-		)
-	);
-
-	// About the brand embeded video placeholder Setting Control.
+	// Press featured Logo Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Media_Control(
 			$wp_customize,
-			'about_the_brand_video_placeholder_contol',
+			'press_featured_logo_control_1',
 			array(
-				'label'       => __( 'About the brand video placeholder', 'aperabags' ),
-				'section'     => 'about_section',
-				'settings'    => 'about_the_brand_video_placeholder',
+				'label'       => __( 'Press Featured Logo 1', 'aperabags' ),
+				'section'     => 'press_section',
+				'settings'    => 'press_featured_logo_1',
 				'type'        => 'media',
-				'description' => 'Add placeholder image for video',
+				'description' => 'Add image for featured logo ',
 			)
 		)
 	);
 
 	/**
-	 * About the brand embeded video settings Section
-	 *
-	 * @since  1.0.0
-	 */
+	* Press featured Logo Setting.
+	*
+	* @since  1.0.1
+	*/
 	$wp_customize->add_setting(
-		'about_the_brand_video',
+		'press_featured_logo_2',
 		array(
 			'default'   => '',
 			'transport' => 'refresh',
 		)
 	);
 
-	// About the brand embeded video Setting Control.
-	$wp_customize->add_control(
-		new WP_Customize_Control(
-			$wp_customize,
-			'about_the_brand_video_control',
-			array(
-				'label'       => __( 'About the brand video', 'aperabags' ),
-				'section'     => 'about_section',
-				'settings'    => 'about_the_brand_video',
-				'type'        => 'text',
-				'description' => 'Add only the video id from YouTube: Example lifw9kAbMic',
-			)
-		)
-	);
-
-	/**
-	 * About the brand button text settings Section
-	 *
-	 * @since  1.0.0
-	 */
-	$wp_customize->add_setting(
-		'about_the_brand_btn_text',
-		array(
-			'default'   => '',
-			'transport' => 'refresh',
-		)
-	);
-
-	// About the brand button text Setting Control.
-	$wp_customize->add_control(
-		new WP_Customize_Control(
-			$wp_customize,
-			'about_the_brand_btn_text_control',
-			array(
-				'label'       => __( 'About the brand message', 'aperabags' ),
-				'section'     => 'about_section',
-				'settings'    => 'about_the_brand_btn_text',
-				'type'        => 'text',
-				'description' => 'About the brand button text',
-			)
-		)
-	);
-
-	/**
-	 *About the brand button Link settings Section
-	 *
-	 * @since  1.0.0
-	 */
-	$wp_customize->add_setting(
-		'about_the_brand_button_link',
-		array(
-			'default'   => '',
-			'transport' => 'refresh',
-		)
-	);
-
-	// About the brand button Link Setting Control.
-	$wp_customize->add_control(
-		new WP_Customize_Control(
-			$wp_customize,
-			'about_the_brand_button_link_control',
-			array(
-				'label'       => __( 'About the brand button', 'aperabags' ),
-				'section'     => 'about_section',
-				'settings'    => 'about_the_brand_button_link',
-				'type'        => 'dropdown-pages',
-				'description' => 'About the brand button link',
-			)
-		)
-	);
-
-	/**
-	 * About the brand second image settings Section
-	 *
-	 * @since  1.0.0
-	 */
-	$wp_customize->add_setting(
-		'about_the_brand_second_image',
-		array(
-			'default'   => '',
-			'transport' => 'refresh',
-		)
-	);
-
-	// About the brand second image Setting Control.
+	// Press featured Logo Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Media_Control(
 			$wp_customize,
-			'about_the_brand_second_image_control',
+			'press_featured_logo_control_2',
 			array(
-				'label'       => __( 'About the brand second image', 'aperabags' ),
-				'section'     => 'about_section',
-				'settings'    => 'about_the_brand_second_image',
+				'label'       => __( 'Press Featured Logo 2', 'aperabags' ),
+				'section'     => 'press_section',
+				'settings'    => 'press_featured_logo_2',
 				'type'        => 'media',
-				'description' => 'About the brand second image',
+				'description' => 'Add image for featured logo ',
+			)
+		)
+	);
+
+	/**
+	* Press featured Logo Setting.
+	*
+	* @since  1.0.1
+	*/
+	$wp_customize->add_setting(
+		'press_featured_logo_3',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Press featured Logo Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Media_Control(
+			$wp_customize,
+			'press_featured_logo_control_3',
+			array(
+				'label'       => __( 'Press Featured Logo 3', 'aperabags' ),
+				'section'     => 'press_section',
+				'settings'    => 'press_featured_logo_3',
+				'type'        => 'media',
+				'description' => 'Add image for featured logo ',
+			)
+		)
+	);
+
+	/**
+	* Press featured Logo Setting.
+	*
+	* @since  1.0.1
+	*/
+	$wp_customize->add_setting(
+		'press_featured_logo_4',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Press featured Logo Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Media_Control(
+			$wp_customize,
+			'press_featured_logo_control_4',
+			array(
+				'label'       => __( 'Press Featured Logo 4', 'aperabags' ),
+				'section'     => 'press_section',
+				'settings'    => 'press_featured_logo_4',
+				'type'        => 'media',
+				'description' => 'Add image for featured logo ',
+			)
+		)
+	);
+
+	/**
+	* Press featured Logo Setting.
+	*
+	* @since  1.0.1
+	*/
+	$wp_customize->add_setting(
+		'press_featured_logo_5',
+		array(
+			'default'   => '',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Press featured Logo Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Media_Control(
+			$wp_customize,
+			'press_featured_logo_control_5',
+			array(
+				'label'       => __( 'Press Featured Logo 5', 'aperabags' ),
+				'section'     => 'press_section',
+				'settings'    => 'press_featured_logo_5',
+				'type'        => 'media',
+				'description' => 'Add image for featured logo ',
 			)
 		)
 	);

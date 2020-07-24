@@ -111,6 +111,25 @@ function the_mods_for_section( $section ) {
 			$section_mods['our_brand_section'] = $our_brand;
 		}
 	endif;
+	if ( 'press_section' === $section || 'all' === $section ) :
+		$press_section = array();
+		$press         = array(
+			'title' => ! empty( get_theme_mod( 'press_section_title' ) ) ? get_theme_mod( 'press_section_title' ) : null,
+			'logos' => array(
+				'logo_1' => ! empty( get_theme_mod( 'press_featured_logo_1' ) ) ? get_theme_mod( 'press_featured_logo_1' ) : null,
+				'logo_2' => ! empty( get_theme_mod( 'press_featured_logo_2' ) ) ? get_theme_mod( 'press_featured_logo_2' ) : null,
+				'logo_3' => ! empty( get_theme_mod( 'press_featured_logo_3' ) ) ? get_theme_mod( 'press_featured_logo_3' ) : null,
+				'logo_4' => ! empty( get_theme_mod( 'press_featured_logo_4' ) ) ? get_theme_mod( 'press_featured_logo_4' ) : null,
+				'logo_5' => ! empty( get_theme_mod( 'press_featured_logo_5' ) ) ? get_theme_mod( 'press_featured_logo_5' ) : null,
+			),
+		);
+		if ( 'press_section' === $section ) {
+			$section_mods['press_section'] = $press;
+			return json_decode( json_encode( $section_mods ) );
+		} else {
+			$section_mods['press_section'] = $press;
+		}
+	endif;
 	if ( 'footer_section' === $section ) :
 		$footer_section       = array();
 		$footer_section_count = 0;
