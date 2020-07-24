@@ -498,9 +498,19 @@ section.press-section {
 		display: flex;
 		align-items: center;
 		justify-content: space-around;
+		flex-wrap: wrap;
 
 		img {
-			max-width: 150px;
+			max-width: 350px;
+			max-height: 50px;
+
+			&:not( :last-child ) {
+				margin-bottom: 15px;
+
+				@include media-breakpoint( md ) {
+					margin-bottom: 0;
+				}
+			}
 		}
 	}
 }
