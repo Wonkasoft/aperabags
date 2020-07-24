@@ -31,11 +31,11 @@
 
 .lined-title:before,
 .lined-title:after {
-content: '';
-border-top: 3px solid;
-margin: 0 20px 0 20px;
-flex: 1 0 20px;
-color: #fff;
+	content: '';
+	border-top: 3px solid;
+	margin: 0 20px 0 20px;
+	flex: 1 0 20px;
+	color: #fff;
 }
 
 a.perks-btn {
@@ -462,9 +462,14 @@ div#give-feedback:hover {
     right: -48px;
 }
 
-#launcher.zEWidget-launcher {
-	visibility: hidden !important;
+#launcher {
+	bottom: 50px !important;
+
+	.zEWidget-launcher {
+		visibility: hidden !important;
+	}
 }
+
 
 /*=====================================
 =            Search styles            =
@@ -845,24 +850,24 @@ body.elementor-page-12687 {
 =            Back to top style            =
 =========================================*/
 #return-to-top {
-   position: fixed;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   bottom: 95px;
-   right: 20px;
-   background: rgb(0, 0, 0);
-   background: rgba(0, 0, 0, 0.7);
-   width: 50px;
-   height: 50px;
-   display: block;
-   text-decoration: none;
-   -webkit-border-radius: 2px;
-   -moz-border-radius: 2px;
-   border-radius: 2px;
-   display: none;
- 	z-index:999;
- 	@include prefix( transition, all 0.3s ease, o moz webkit );
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	bottom: 115px;
+	right: 20px;
+	background: rgb(0, 0, 0);
+	background: rgba(0, 0, 0, 0.7);
+	width: 50px;
+	height: 50px;
+	display: block;
+	text-decoration: none;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	display: none;
+	z-index:999;
+	@include prefix( transition, all 0.3s ease, o moz webkit );
 }
 
 #return-to-top i {
@@ -939,7 +944,6 @@ a.wonka-btn.shipping-btn {
 		padding-bottom: 12px
 	}
 }
-
 
 .join-mse-gform .gform_footer {
 	text-align: center;
