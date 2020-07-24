@@ -328,6 +328,10 @@ section.our-brand-section {
 /*----------  Shop Section  ----------*/
 section.featured-bags-section {
 
+	h2 {
+		@include font-size( 2 );
+	}
+
 	.featured-product-image {
 		display: flex;
 		align-items: flex-end;
