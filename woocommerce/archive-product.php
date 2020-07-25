@@ -30,9 +30,20 @@ remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 )
 add_action( 'wonkasoft_moved_breadcrumb', 'woocommerce_breadcrumb', 10 );
 
 do_action( 'woocommerce_before_main_content' );
+$header_bg = get_stylesheet_directory_uri() . '/assets/img/shop-header.jpeg';
+global $wp_query;
+$cat = $wp_query->get_queried_object()->name;
+
+if ( 'Accessories' === $cat || 'Backpacks' === $cat || 'Duffels' === $cat || 'Totes' === $cat ) :
+	$cat_id       = $wp_query->get_queried_object()->term_id;
+	$thumbnail_id = get_woocommerce_term_meta( $cat_id, 'thumbnail_id', true );
+	$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
+	$header_bg    = $src[0];
+endif;
+
 ?>
 <header class="woocommerce-products-header">
-	<div class="breadcrumb-title-wrap">
+	<div class="breadcrumb-title-wrap" style="background-image: url( '<?php echo esc_url( $header_bg ); ?>' );">
 	<?php
 		do_action( 'wonkasoft_moved_breadcrumb' );
 	if ( apply_filters( 'woocommerce_show_page_title', true ) ) :
