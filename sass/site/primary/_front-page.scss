@@ -394,6 +394,7 @@ section.featured-bags-section {
 
 /*----------  Testimonial Section  ----------*/
 section.testimonial-section {
+	z-index: 5;
 
 	.slick-track {
 		display: flex;
@@ -436,6 +437,7 @@ section.testimonial-section {
 
 /*----------  Category Section  ----------*/
 section.category-section {
+	background: #fafafa;
 	
 	.cat-section-title {
 		margin: 20px auto;
