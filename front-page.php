@@ -359,7 +359,7 @@ if ( is_home() ) :
 	do_action( 'wonkasoft_action_before_press_section', 'press_section', $press_section );
 	?>
 	<?php if ( ! empty( $press_section ) ) : ?>
-	<section class="press-section">
+	<section class="press-section fixed-divider-460">
 		<div class="container-fluid">
 			<div class="row justify-content-space-around">
 				<div class="col col-12">
