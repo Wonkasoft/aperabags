@@ -161,9 +161,6 @@ if ( is_home() ) :
 	if ( empty( $shop_section ) ) :
 		$shop_section = apply_filters( 'wonkasoft_filter_before_shop_section', get_section_mods( 'shop_section' ), 'shop_section', $pro_query );
 	endif;
-	echo "<pre>\n";
-	print_r( $shop_section );
-	echo "</pre>\n";
 
 	$shop_section = $shop_section->shop_section;
 	do_action( 'wonkasoft_action_before_shop_section', 'shop_section', $shop_section, $pro_query );
