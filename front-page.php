@@ -159,17 +159,20 @@ if ( is_home() ) :
 	$shop_section = ! empty( $page_mods->shop_section ) ? $page_mods->shop_section : '';
 
 	if ( empty( $shop_section ) ) :
-		$shop_section = apply_filters( 'wonkasoft_filter_before_shop_section', get_section_mods( 'shop_section' ), 'shop_section' );
+		$shop_section = apply_filters( 'wonkasoft_filter_before_shop_section', get_section_mods( 'shop_section' ), 'shop_section', $pro_query );
 	endif;
+	echo "<pre>\n";
+	print_r( $shop_section );
+	echo "</pre>\n";
 
 	$shop_section = $shop_section->shop_section;
-	do_action( 'wonkasoft_action_before_shop_section', 'shop_section', $shop_section );
+	do_action( 'wonkasoft_action_before_shop_section', 'shop_section', $shop_section, $pro_query );
 	?>
 	<?php if ( $pro_query->have_posts() ) : ?>
 		<section class="featured-bags-section">
 			<div class="container-fluid">
 				<div class="row justify-content-space-around">
-					<div class="col-12">
+					<div class="col col-12">
 						<h2 class="shop-section-title text-center"><?php echo esc_html( $shop_section->title ); ?></h2>
 						<p class="shop-section-subtitle text-center mx-auto"><?php echo esc_html( $shop_section->subtitle ); ?></p>
 					</div>
