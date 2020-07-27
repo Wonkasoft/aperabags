@@ -277,7 +277,7 @@ if ( is_home() ) :
 	$cats         = new WP_Term_Query( $term_args );
 	$cats_section = ! empty( $page_mods->cats_section ) ? $page_mods->cats_section : '';
 
-	if ( empty( $discovery_section ) ) :
+	if ( empty( $cats_section ) ) :
 		$cats_section = apply_filters( 'wonkasoft_filter_before_cats_section', get_section_mods( 'cats_section' ), 'cats_section', $cats );
 	endif;
 
