@@ -104,7 +104,7 @@ if ( is_home() ) :
 	<?php
 	$discovery_section = ! empty( $page_mods->discovery_section ) ? $page_mods->discovery_section : '';
 
-	if ( empty( $dicovery_section ) ) :
+	if ( empty( $discovery_section ) ) :
 		$discovery_section = apply_filters( 'wonkasoft_filter_before_discovery_section', get_section_mods( 'discovery_section' ), 'discovery_section' );
 	endif;
 
@@ -145,7 +145,7 @@ if ( is_home() ) :
 	);
 
 	// The query
-	$pro_query = new WP_Query(
+	$pro_query    = new WP_Query(
 		array(
 			'post_type'           => 'product',
 			'post_status'         => 'publish',
@@ -156,14 +156,22 @@ if ( is_home() ) :
 			'tax_query'           => $tax_query,
 		)
 	);
+	$shop_section = ! empty( $page_mods->shop_section ) ? $page_mods->shop_section : '';
+
+	if ( empty( $shop_section ) ) :
+		$shop_section = apply_filters( 'wonkasoft_filter_before_shop_section', get_section_mods( 'shop_section' ), 'shop_section' );
+	endif;
+
+	$shop_section = $shop_section->shop_section;
+	do_action( 'wonkasoft_action_before_shop_section', 'shop_section', $shop_section );
 	?>
 	<?php if ( $pro_query->have_posts() ) : ?>
 		<section class="featured-bags-section">
 			<div class="container-fluid">
 				<div class="row justify-content-space-around">
 					<div class="col-12">
-						<h2 class="shop-section-title text-center">Reimagine Your Gym Bag</h2>
-						<p class="shop-section-subtitle text-center mx-auto">Shop Bestsellers</p>
+						<h2 class="shop-section-title text-center"><?php echo esc_html( $shop_section->title ); ?></h2>
+						<p class="shop-section-subtitle text-center mx-auto"><?php echo esc_html( $shop_section->subtitle ); ?></p>
 					</div>
 				</div>
 				<div class="row justify-content-space-around">
@@ -260,20 +268,29 @@ if ( is_home() ) :
 		</section>
 	<?php endif; ?>
 	<?php
-	$term_args = array(
+	$term_args    = array(
 		'taxonomy'   => 'product_cat',
 		'orderby'    => 'name',
 		'order'      => 'ASC',
 		'hide_empty' => true,
 	);
-	$cats      = new WP_Term_Query( $term_args );
+	$cats         = new WP_Term_Query( $term_args );
+	$cats_section = ! empty( $page_mods->cats_section ) ? $page_mods->cats_section : '';
+
+	if ( empty( $discovery_section ) ) :
+		$cats_section = apply_filters( 'wonkasoft_filter_before_cats_section', get_section_mods( 'cats_section' ), 'cats_section', $cats );
+	endif;
+
+	$cats_section = $cats_section->cats_section;
+	do_action( 'wonkasoft_action_before_cats_section', 'cats_section', $cats_section, $cats );
 	?>
 	<?php if ( ! empty( $cats ) ) : ?>
 		<section class="category-section">
 			<div class="container-fluid">
 				<div class="row justify-content-space-around">
 					<div class="col col-12">
-						<h2 class="cat-section-title">Crush Your Next Workout<br /> & Look Good Doing It</h2>
+						<h2 class="cat-section-title text-center"><?php echo esc_html( $cats_section->title ); ?></h2>
+						<p class="cat-section-subtitle text-center"><?php echo esc_html( $cats_section->subtitle ); ?></p>
 					</div>
 				<?php
 

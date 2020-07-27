@@ -762,6 +762,71 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
+	 /**
+	  * category settings Section
+	  *
+	  * @since  1.0.1
+	  */
+	$wp_customize->add_section(
+		'cats_section',
+		array(
+			'capability'     => 'edit_theme_options',
+			'theme_supports' => '',
+			'priority'       => 10,
+			'title'          => __( 'Cats Section', 'aperabags' ),
+			'description'    => __( 'Cats Options version 1.0.1 ', 'aperabags' ),
+			'panel'          => 'wonkasoft_theme_options',
+		)
+	);
+
+	// Shop Title for Section Setting.
+	$wp_customize->add_setting(
+		'cats_title',
+		array(
+			'default'   => 'Section Title',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Shop Title for Section Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+			'cats_title_control',
+			array(
+				'label'       => __( 'Categories Section Title', 'aperabags' ),
+				'section'     => 'cats_section',
+				'settings'    => 'cats_title',
+				'type'        => 'text',
+				'description' => 'Title for Categories Section',
+			)
+		)
+	);
+
+	// Shop Subtitle for Section Setting.
+	$wp_customize->add_setting(
+		'cats_subtitle',
+		array(
+			'default'   => 'section subtitle',
+			'transport' => 'refresh',
+		)
+	);
+
+	// Shop Subtitle for Section Setting Control.
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+			'cats_subtitle_control',
+			array(
+				'label'       => __( 'Categories Section Subtitle', 'aperabags' ),
+				'section'     => 'cats_section',
+				'settings'    => 'cats_subtitle',
+				'type'        => 'text',
+				'description' => 'Subtitle for Categories Section',
+			)
+		)
+	);
+
 	/**
 	  * Press settings Section
 	  *

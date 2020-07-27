@@ -94,6 +94,20 @@ function the_mods_for_section( $section ) {
 			$section_mods['discovery_section'] = $discovery;
 		}
 	endif;
+	if ( 'shop_section' === $section || 'all' === $section ) :
+		$shop_section = array();
+		$shop         = array(
+			'title'    => ! empty( get_theme_mod( 'shop_title' ) ) ? get_theme_mod( 'shop_title' ) : null,
+			'subtitle' => ! empty( get_theme_mod( 'shop_subtitle' ) ) ? get_theme_mod( 'shop_subtitle' ) : null,
+		);
+
+		if ( 'shop_section' === $section ) {
+			$section_mods['shop_section'] = $shop;
+			return json_decode( json_encode( $section_mods ) );
+		} else {
+			$section_mods['shop_section'] = $shop;
+		}
+	endif;
 	if ( 'our_brand_section' === $section || 'all' === $section ) :
 		$our_brand_section = array();
 		$our_brand         = array(
@@ -109,6 +123,20 @@ function the_mods_for_section( $section ) {
 			return json_decode( json_encode( $section_mods ) );
 		} else {
 			$section_mods['our_brand_section'] = $our_brand;
+		}
+	endif;
+	if ( 'cats_section' === $section || 'all' === $section ) :
+		$cats_section = array();
+		$cats         = array(
+			'title'    => ! empty( get_theme_mod( 'cats_title' ) ) ? get_theme_mod( 'cats_title' ) : null,
+			'subtitle' => ! empty( get_theme_mod( 'cats_subtitle' ) ) ? get_theme_mod( 'cats_subtitle' ) : null,
+		);
+
+		if ( 'cats_section' === $section ) {
+			$section_mods['cats_section'] = $cats;
+			return json_decode( json_encode( $section_mods ) );
+		} else {
+			$section_mods['cats_section'] = $cats;
 		}
 	endif;
 	if ( 'press_section' === $section || 'all' === $section ) :
@@ -259,8 +287,7 @@ function aperabags_options_sanitize( $option ) {
 /**
  * This builds the display of the options page.
  */
-function aperabags_theme_options_page() {
-	?>
+function aperabags_theme_options_page() {   ?>
 		<div class="container">
 			<div class="row">
 				<div class="col-12 title-column">
@@ -774,7 +801,6 @@ function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null ) {
  */
 function wonkasoft_media_sideload_image( $file, $post_id = 0, $desc = null, $return = 'html' ) {
 	if ( ! empty( $file ) ) {
-
 		// Set variables for storage, fix file filename for query strings.
 		preg_match( '/[^\?]+\.(jpe?g|jpg|gif|png|svg|ai|eps)\b/i', $file, $matches );
 
@@ -992,7 +1018,6 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		$user_id = $user->ID;
 
 		if ( 'ambassador_program_signups' === $campaign_name ) {
-
 			if ( 'approved' === $passed_tag ) {
 				update_user_meta( $user_id, 'ambassador_affiliate_status', 'Approved', 'Pending' );
 			}
@@ -1003,7 +1028,6 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		}
 
 		if ( 'zip_program_signups' === $campaign_name ) {
-
 			if ( 'zipapproved' === $passed_tag ) {
 				update_user_meta( $user_id, 'zip_affiliate_status', 'Approved', 'Pending' );
 			}
@@ -1150,7 +1174,7 @@ function wonkasoft_api_responses_user_data( $user ) {
 							<p id="affiliate-error"><?php echo wp_kses_post( $refersion_error[0] ); ?></p>
 						</td>
 					</tr>
-				<?php endif; ?>
+			<?php endif; ?>
 			<?php
 			if ( ! empty( $refersion ) && empty( $refersion_error ) ) :
 				?>
@@ -1206,12 +1230,12 @@ function wonkasoft_api_responses_user_data( $user ) {
 						?>
 						<span><?php print_r( $value ); ?></span>
 						<?php
-						endforeach;
+					endforeach;
 					?>
 					</td>
 				</tr>
 				<?php
-		endforeach;
+			endforeach;
 			?>
 				<tr>
 					<th style="text-align: center;" colspan="2"><label>Tags</label></th>
@@ -1232,14 +1256,14 @@ function wonkasoft_api_responses_user_data( $user ) {
 					</td>
 				</tr>
 				<?php
-		endforeach;
+			endforeach;
 			?>
 		<?php endif; ?>
 			</tbody>
 		</table>
 		<hr />
 		<?php
-		endif;
+	endif;
 }
 add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 2 );
 add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 2 );
@@ -1323,9 +1347,9 @@ function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, 
 		<td data-value="<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $date ); ?></td>  
 		<td><?php echo esc_html( $first_name ); ?></td> 
 		<td><?php echo esc_html( ucfirst( $order_status ) ); ?></td>
-		<td><?php echo esc_html( $replace_msg ); ?></td> 	
-		<td><?php echo esc_html( $replace_msg ); ?></td> 	
-		<td></td> 	
+		<td><?php echo esc_html( $replace_msg ); ?></td>    
+		<td><?php echo esc_html( $replace_msg ); ?></td>    
+		<td></td>   
 	</tr>
 	<?php
 }
@@ -1334,7 +1358,6 @@ function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, 
  * Cron executed function.
  */
 function refersion_cron_exec() {
-
 	$entry_fields = array( 'report_id' => 141082 );
 	// Init API Class.
 	$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
@@ -1394,7 +1417,6 @@ function refersion_cron_exec() {
 	);
 
 	foreach ( $finaldata as $key => $value ) {
-
 		$query = $wpdb->query( $wpdb->prepare( "SELECT affiliate_id FROM $table_name WHERE affiliate_id = %d", $value['affiliate_id'] ) );
 
 		if ( $query ) {
@@ -1410,11 +1432,9 @@ function refersion_cron_exec() {
 	 * Schedule Cron Job Event
 	 */
 function REFERSION_CronJob() {
-
 	if ( ! wp_next_scheduled( 'refersion_cron_hook' ) ) {
 		wp_schedule_event( time(), 'daily', 'refersion_cron_hook' );
 	}
-
 }
 // add_action( 'after_setup_theme', 'REFERSION_CronJob' );
 
@@ -1447,7 +1467,7 @@ function create_custom_database_tables() {
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
 		update_option( 'refersion_affiliates_database_version', REFERSION_AFFILIATES_DATABASE_VERSION );
-	  else :
+	else :
 		  $sql = "CREATE TABLE $table_name (
         id INT(11) NOT NULL AUTO_INCREMENT,
 				affiliate_id INT(11) NOT NULL,
@@ -1469,8 +1489,7 @@ function create_custom_database_tables() {
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $sql );
 			update_option( 'refersion_affiliates_database_version', REFERSION_AFFILIATES_DATABASE_VERSION );
-	  endif;
-
+	endif;
 }
 add_action( 'after_setup_theme', 'create_custom_database_tables' );
 
@@ -1502,7 +1521,7 @@ add_action( 'user_register', 'wonkasoft_apera_basic_roles' );
  * @return  string returns the logo url.
  */
 function wonkasoft_logo_url() {
-	return 'https://wonkasoft.com';
+	 return 'https://wonkasoft.com';
 }
 add_filter( 'login_headerurl', 'wonkasoft_logo_url' );
 
@@ -1548,7 +1567,7 @@ function get_hooks( $tag ) {
 	}
 	if ( substr( $tag, 0, 1 ) === '<' ) :
 		return;
-		endif;
+	endif;
 	print_r( '<pre class="found-hook">' . $tag . '</pre>' );
 	$debug_tags[] = $tag;
 }
