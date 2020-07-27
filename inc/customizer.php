@@ -779,7 +779,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Shop Title for Section Setting.
+	// Categories Title for Section Setting.
 	$wp_customize->add_setting(
 		'cats_title',
 		array(
@@ -788,7 +788,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Shop Title for Section Setting Control.
+	// Categories Title for Section Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
@@ -803,7 +803,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Shop Subtitle for Section Setting.
+	// Categories Subtitle for Section Setting.
 	$wp_customize->add_setting(
 		'cats_subtitle',
 		array(
@@ -812,7 +812,7 @@ function apera_bags_customize_register( $wp_customize ) {
 		)
 	);
 
-	// Shop Subtitle for Section Setting Control.
+	// Categories Subtitle for Section Setting Control.
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
