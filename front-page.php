@@ -179,13 +179,12 @@ if ( is_home() ) :
 
 				while ( $pro_query->have_posts() ) :
 					$pro_query->the_post();
-
-					$post_id                   = get_the_ID();
+					$pro_query_id              = get_the_ID();
 					$featured_product_image_id = get_featured_product_img_id( $post );
 
 					?>
 						<div class="col col-12 col-md-4 featured-product-wrap">
-							<a href="<?php esc_url( the_permalink( $post_id ) ); ?>" class="shop-link">
+							<a href="<?php esc_url( the_permalink( $pro_query_id ) ); ?>" class="shop-link">
 								<div class="featured-product-image" style="background-image: url('<?php echo esc_url( wp_get_attachment_image_src( $featured_product_image_id, 'full', false )[0] ); ?>');">
 										<button class="btn wonka-btn"><h6 class="featured-product-title"><?php the_title(); ?></h6></button>
 								</div>
@@ -254,13 +253,14 @@ if ( is_home() ) :
 					<?php
 					while ( $testimonials->results->have_posts() ) :
 						$testimonials->results->the_post();
-						$post_id = get_the_ID();
+						$testimonial_id = get_the_ID();
 						?>
 						<div class="text-center testimonial-box">
-							<p><span class="testimonial-quotes"><i class="fa fa-quote-left"></i></span>&nbsp;<?php echo get_the_content(); ?>&nbsp;<span class="testimonial-quotes"><i class="fa fa-quote-right"></i></span><br />- <?php the_title(); ?></p>
+							<p><span class="testimonial-quotes"><i class="fa fa-quote-left"></i></span>&nbsp;<?php echo esc_html( get_the_content() ); ?>&nbsp;<span class="testimonial-quotes"><i class="fa fa-quote-right"></i></span><br />- <?php the_title(); ?></p>
 						</div>
 						<?php
 						endwhile;
+						wp_reset_postdata();
 					?>
 					</div>
 				</div>
