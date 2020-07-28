@@ -256,7 +256,7 @@ if ( is_home() ) :
 						$testimonial_id = get_the_ID();
 						?>
 						<div class="text-center testimonial-box">
-							<p><span class="testimonial-quotes"><i class="fa fa-quote-left"></i></span>&nbsp;<?php echo esc_html( get_the_content() ); ?>&nbsp;<span class="testimonial-quotes"><i class="fa fa-quote-right"></i></span><br />- <?php the_title(); ?></p>
+							<p><span class="testimonial-quotes"><i class="fa fa-quote-left"></i></span>&nbsp;<?php echo esc_html( wp_strip_all_tags( get_the_content(), true ) ); ?>&nbsp;<span class="testimonial-quotes"><i class="fa fa-quote-right"></i></span><br />- <?php the_title(); ?></p>
 						</div>
 						<?php
 						endwhile;
