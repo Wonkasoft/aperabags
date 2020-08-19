@@ -11,8 +11,8 @@
  * the readme will list any important changes.
  *
  * @see     https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce/Templates
- * @version 3.8.0
+ * @package WooCommerce\Templates
+ * @version 4.4.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -61,8 +61,9 @@ do_action( 'woocommerce_before_cart' );
 
                         <td class="product-remove">
                             <?php
-								// @codingStandardsIgnoreLine
-								echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf(
+								
+								echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped.
+                                    'woocommerce_cart_item_remove_link', sprintf(
                                     '<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">&times;</a>',
                                     esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
                                     esc_html__( 'Remove this item', 'woocommerce' ),
