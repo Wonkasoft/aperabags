@@ -79,7 +79,7 @@ add_filter( 'body_class', 'apera_bags_woocommerce_active_body_class' );
  * @return integer number of products.
  */
 function apera_bags_woocommerce_products_per_page() {
-	return 12;
+	return -1;
 }
 add_filter( 'loop_shop_per_page', 'apera_bags_woocommerce_products_per_page' );
 
