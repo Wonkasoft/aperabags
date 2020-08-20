@@ -287,13 +287,6 @@ function wonkasoft_woocommerce_data_stores( $stores ) {
 add_filter( 'woocommerce_data_stores', 'wonkasoft_woocommerce_data_stores' );
 
 /**
- * Load WC_Gateway_CyberSource compatibility file.
- */
-if ( class_exists( 'WC_Gateway_CyberSource' ) ) {
-	require_once get_stylesheet_directory() . '/inc/wc-cybersource-custom.php';
-}
-
-/**
  * Load Wonkasoft_Refersion_Api class file.
  */
 if ( ! class_exists( 'Wonkasoft_Refersion_Api' ) ) {
