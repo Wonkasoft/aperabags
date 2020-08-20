@@ -266,8 +266,6 @@ if ( class_exists( 'WooCommerce' ) ) {
 	require_once get_stylesheet_directory() . '/inc/woocommerce.php';
 
 	require_once get_stylesheet_directory() . '/inc/checkout-login.php';
-
-	add_action( 'do_meta_boxes', 'customize_coupon_data_meta_box' );
 }
 
 /**
@@ -276,21 +274,6 @@ if ( class_exists( 'WooCommerce' ) ) {
 if ( class_exists( 'FPRewardSystem' ) ) {
 	require_once get_stylesheet_directory() . '/inc/custom-rewardsystems-plugin.php';
 }
-
-/**
- * This removes the original meta box in order to load the custom meta box.
- */
-function customize_coupon_data_meta_box() {
-	// Coupons.
-	remove_meta_box( 'woocommerce-coupon-data', 'shop_coupon', 'normal' );
-
-	// Coupons.
-	add_meta_box( 'woocommerce-coupon-data', __( 'Coupon data', 'woocommerce' ), 'Wonkasoft_WC_Meta_Box_Coupon_Data::output', 'shop_coupon', 'normal', 'high' );
-
-}
-
-// Save Coupon Meta Boxes.
-add_action( 'woocommerce_coupon_options_save', array( 'Wonkasoft_WC_Meta_Box_Coupon_Data', 'save' ), 15, 2 );
 
 /**
  * This filters the woocommerce data stores.
