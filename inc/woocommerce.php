@@ -48,7 +48,7 @@ function apera_bags_woocommerce_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_woocommerce_scripts', 9 );
 
-require_once get_stylesheet_directory() . '/inc/class-wonkasoft-wc-meta-box-coupon-data.php';
+// require_once get_stylesheet_directory() . '/inc/class-wonkasoft-wc-meta-box-coupon-data.php';
 
 /**
 * Disable the default WooCommerce stylesheet.
