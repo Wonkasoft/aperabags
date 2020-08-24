@@ -2170,7 +2170,6 @@ var componentForm;
 
 			if ( document.querySelector( 'p.woocommerce-verification-required' ) ) {
 				write_review.remove();
-				comment_login_required.style.height = review_form.offsetHeight + 'px';
 			}
 
 			/***********************************************************************
