@@ -2147,26 +2147,23 @@ var componentForm;
 					});
 			}
 
-			if ( document.querySelector( 'div#review_form_wrapper' ) ) {
-				
-				var write_review_initial_text = write_review.innerText;
-				var comment_wrapper_height = comment_form_wrapper.offsetHeight;
-				var review_form = document.querySelector( '#review_form' );
-				write_review.addEventListener( 'click', function( e ) 
+			var write_review_initial_text = write_review.innerText;
+			var comment_wrapper_height = comment_form_wrapper.offsetHeight;
+			var review_form = document.querySelector( '#review_form' );
+			write_review.addEventListener( 'click', function( e ) 
+				{
+					e.preventDefault();
+					if ( comment_form_wrapper.offsetHeight <= 35 ) 
 					{
-						e.preventDefault();
-						if ( comment_form_wrapper.offsetHeight <= 35 ) 
-						{
-							comment_form_wrapper.style.height = review_form.offsetHeight + 'px';
-							write_review.innerText = 'Cancel';
-						}
-						else
-						{
-							comment_form_wrapper.style.height = comment_wrapper_height + 'px';
-							write_review.innerText = write_review_initial_text;
-						}
-					});
-			}
+						comment_form_wrapper.style.height = review_form.offsetHeight + 'px';
+						write_review.innerText = 'Cancel';
+					}
+					else
+					{
+						comment_form_wrapper.style.height = comment_wrapper_height + 'px';
+						write_review.innerText = write_review_initial_text;
+					}
+				});
 
 			/***********************************************************************
 			 * This is for Review length
