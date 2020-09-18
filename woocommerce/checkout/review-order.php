@@ -22,6 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="wonka checkout-form-section-title"><h5 class="wonka wonka-h5">2. Delivery Options <span>(US only)</span></h5></div>
 <?php
+echo "<pre style='display: none;'>\n";
+print_r( WC()->shipping  );
+echo "</pre>\n";
 $available_methods = WC()->session->get( 'shipping_for_package_0' )['rates'];
 $chosen_method     = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : '';
 ?>
