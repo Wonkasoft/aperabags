@@ -32,7 +32,7 @@ $chosen_method     = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping
 		<ul id="shipping_ad" class="woocommerce-shipping-ads list-group list-group-flush">
 			<li class="list-group-item card-title"><h6>Perks Members</h6></li>
 			<?php
-			echo "<pre style="display: none;">\n";
+			echo "<pre style='display: none;'>\n";
 			print_r( $available_methods );
 			echo "</pre>\n";
 				
