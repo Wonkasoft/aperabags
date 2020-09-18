@@ -1416,7 +1416,7 @@ function apply_all_aperacash() {
 
 		if ( empty( WC()->cart->get_cart_contents_count() ) ) {
 			WC()->session->set( 'auto_redeemcoupon', 'yes' );
-			foreach ( WC()->cart->applied_coupons as $code => $coupon ) {
+			foreach ( WC()->cart->get_applied_coupons() as $code => $coupon ) {
 				WC()->cart->remove_coupon( $code );
 			}
 
@@ -3386,7 +3386,7 @@ add_filter( 'wad_get_discounts_conditions', 'wonkasoft_wad_get_discounts_conditi
 function wonkasoft_wad_get_evaluable_condition( $rule, $product_id = false ) {
 
 	if ( 'is-coupon-set' == $rule['condition'] ) :
-		$applied_coupons = WC()->cart->applied_coupons;
+		$applied_coupons = is_array( WC()->cart->get_applied_coupons() ) ? WC()->cart->get_applied_coupons(): array();
 
 		$couponargs   = array(
 			'post_type'      => 'shop_coupon',
