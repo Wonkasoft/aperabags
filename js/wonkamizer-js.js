@@ -3537,7 +3537,6 @@ var componentForm;
 						document.querySelector( '.checkout-shipping-city input' ).value = document.querySelector( '#shipping_city' ).value;
 						document.querySelector( '.checkout-shipping-state input' ).value = document.querySelector( '#shipping_state' ).value;
 						document.querySelector( '.checkout-shipping-postcode input' ).value = document.querySelector( '#shipping_postcode' ).value;
-						document.querySelector( '.checkout-shipping-country input' ).value = document.querySelector( '#shipping_country' ).value;
 						document.querySelector( '.checkout-shipping-phone input' ).value = document.querySelector( '#shipping_phone' ).value;
 						document.querySelector( '.checkout-mc4wp_subscribe input' ).checked = document.querySelector( 'input[name="mc4wp-subscribe"]' ).checked;
 						document.querySelector( '.checkout-mc4wp_subscribe input' ).value = document.querySelector( 'input[name="mc4wp-subscribe"]' ).value;
@@ -4486,7 +4485,9 @@ var componentForm;
 		});
 
 		$( document.body ).on( 'select_default_shipping', function( e ) {
-			document.querySelector( '#shipping_method input' ).click();
+			if ( document.querySelector( '#shipping_method input' ) ) {
+				document.querySelector( '#shipping_method input' ).click();
+			}
 		});
 		
 		$( document.body ).on( 'added_to_cart removed_from_cart wc_fragments_refreshed wc_fragments_loaded wc_fragment_refresh updated_wc_div update_checkout updated_checkout updated_cart_totals', function( e ) { 
