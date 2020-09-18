@@ -18,6 +18,9 @@
 defined( 'ABSPATH' ) || exit;
 
 $guest = ( isset( $_GET['guestcheckout'] ) ) ? wp_kses_post( wp_unslash( $_GET['guestcheckout'] ) ) : 'false';
+if ( ! WC()->session->has_session() ) {
+    WC()->session->set_customer_session_cookie( true );
+}
 
 if ( ! is_user_logged_in() && 'false' === $guest ) :
 	echo do_shortcode( '[wc_login_register]' );
