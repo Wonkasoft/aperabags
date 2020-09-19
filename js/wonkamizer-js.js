@@ -3583,13 +3583,6 @@ var componentForm;
 
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
 
-				console.log( document.querySelector( '#shipping_method input' ) );
-			if ( null == document.querySelector( '#shipping_method input' ) || 'undefined' == document.querySelector( '#shipping_method input' ) ) {
-				console.log( 'inside' );
-				console.log( document.querySelector( '#shipping_method input' ) );
-				window.location.reload();
-			}
-
 			document.body.addEventListener( 'keydown', function( e ) {
 				if ( 13 === e.keyCode ) {
 					e.stopImmediatePropagation();
