@@ -3582,6 +3582,11 @@ var componentForm;
 
 
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
+
+			if ( null == document.querySelector( '#shipping_method input' ) || 'undefined' == document.querySelector( '#shipping_method input' ) ) {
+				window.location.reload();
+			}
+			
 			document.body.addEventListener( 'keydown', function( e ) {
 				if ( 13 === e.keyCode ) {
 					e.stopImmediatePropagation();
@@ -4487,11 +4492,6 @@ var componentForm;
 		$( document.body ).on( 'select_default_shipping', function( e ) {
 			if ( document.querySelector( '#shipping_method input' ) ) {
 				document.querySelector( '#shipping_method input' ).click();
-			} else {
-				
-				if ( null == document.querySelector( '#shipping_method input' ) || 'undefined' == document.querySelector( '#shipping_method input' ) ) {
-					window.location.reload();
-				}
 			}
 		});
 		
