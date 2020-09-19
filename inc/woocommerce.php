@@ -1048,7 +1048,13 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 </tr>
 	<?php endforeach; ?>
 	<?php
-	$current_method = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : '';
+	if ( ! empty( WC()->session->get( 'chosen_shipping_methods' ) ) ) :
+		$available_shipping_methods = WC()->get_shipping_methods( true, 'view' );
+		echo '<pre>';
+		print_r( $available_shipping_methods );
+		echo '</pre>';
+		$current_method = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : '';
+	endif;
 	if ( ! $current_method ) :
 		?>
 
@@ -3386,7 +3392,7 @@ add_filter( 'wad_get_discounts_conditions', 'wonkasoft_wad_get_discounts_conditi
 function wonkasoft_wad_get_evaluable_condition( $rule, $product_id = false ) {
 
 	if ( 'is-coupon-set' == $rule['condition'] ) :
-		$applied_coupons = is_array( WC()->cart->get_applied_coupons() ) ? WC()->cart->get_applied_coupons(): array();
+		$applied_coupons = is_array( WC()->cart->get_applied_coupons() ) ? WC()->cart->get_applied_coupons() : array();
 
 		$couponargs   = array(
 			'post_type'      => 'shop_coupon',
