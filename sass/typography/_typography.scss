@@ -10,10 +10,16 @@ textarea {
 	@include font-size( .9 );
 
 	@include media-breakpoint( md ) {
-		line-height: 1.2;
-		@include font-size( 1.1 );
+		line-height: 1.4;
+		@include font-size( 1.3 );
 	}
 }
+
+@font-face {
+    font-family: 'Open Sans', sans-serif;
+    unicode-range: U+0020, U+0039;
+}
+
 
 @import "headings";
 

@@ -18,7 +18,8 @@ $ws_post_slug = ( ! empty( $post->post_name ) ) ? ' main-' . $post->post_name : 
 
 $check_user = ( isset( $_GET['mustbe'] ) ) ? wp_kses_post( wp_unslash( $_GET['mustbe'] ) ) : '';
 $user       = md5( 'karin' );
-if ( $user === $check_user ) {
+$check_admin = current_user_can( 'manage_options' );
+if ( $user === $check_user || $check_admin ) {
 	get_header();
 	?>
 

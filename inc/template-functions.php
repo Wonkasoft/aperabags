@@ -16,16 +16,13 @@ function apera_bags_body_classes( $classes ) {
 	if ( ! is_singular() ) {
 		$classes[] = 'hfeed';
 	}
-
 	// Adds a class of no-sidebar when there is no sidebar present.
 	if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 		$classes[] = 'no-sidebar';
 	}
-
 	return $classes;
 }
 add_filter( 'body_class', 'apera_bags_body_classes' );
-
 /**
  * Add a pingback url auto-discovery header for single posts, pages, or attachments.
  */
@@ -35,7 +32,6 @@ function apera_bags_pingback_header() {
 	}
 }
 add_action( 'wp_head', 'apera_bags_pingback_header' );
-
 /**
  * This will return an object of the section mods
  *
@@ -52,445 +48,193 @@ function get_section_mods( $section ) {
  * @return bool/object    returns false if no slides are set in customizer.
  */
 function the_mods_for_section( $section ) {
-	$mods_class = new stdClass();
-	$count      = 0;
-	if ( 'top' === $section ) :
-		$mods_class->slides = new stdClass();
+	$section_mods = array();
+	if ( 'top_slider' === $section || 'all' === $section ) :
+		$top_slider_count     = 0;
+		$top_slider           = array();
+		$top_slider['slides'] = array();
 		for ( $i = 1; $i <= 5; $i++ ) {
 			if ( ! empty( get_theme_mod( 'slider_' . $i ) ) ) :
-				$count++;
-				$slide                       = new stdClass();
-				$slide->slide_img            = get_theme_mod( 'slider_' . $i );
-				$slide->slide_text_position  = get_theme_mod( 'slider_text_position_' . $i );
-				$slide->slide_header_message = get_theme_mod( 'slider_header_' . $i );
-				$slide->slide_subheader      = get_theme_mod( 'slider_subheader_' . $i );
-				$slide->slide_link_btn       = get_theme_mod( 'slider_btn_text_' . $i );
-				$slide->slide_link           = get_theme_mod( 'slider_btn_link_' . $i );
-				// Mobile theme mod.
-				$slide->slide_mobile_img = get_theme_mod( 'slider_mobile_' . $i );
-
-				$mods_class->slides->{"slide_{$i}"} = $slide;
+				$top_slider_count++;
+				$slide                              = array(
+					'slide_img_id'         => get_theme_mod( 'slider_' . $i ),
+					'slide_mobile_img_id'  => get_theme_mod( 'slider_mobile_' . $i ),
+					'slide_text_position'  => get_theme_mod( 'slider_text_position_' . $i ),
+					'slide_header_message' => get_theme_mod( 'slider_header_' . $i ),
+					'slide_subheader'      => get_theme_mod( 'slider_subheader_' . $i ),
+					'slide_link_btn'       => get_theme_mod( 'slider_btn_text_' . $i ),
+					'slide_link'           => get_theme_mod( 'slider_btn_link_' . $i ),
+				);
+				$top_slider['slides'][ "slide_$i" ] = $slide;
 			endif;
 		}
-
-		$mods_class->slides->count = $count;
-
-		return $mods_class;
-	endif;
-
-	if ( 'shop' === $section ) :
-		if ( ! empty( get_theme_mod( 'shop_title' ) ) ) :
-			$count++;
-			$shop                        = new stdClass();
-			$shop->shop_title            = get_theme_mod( 'shop_title' );
-			$shop->shop_background_image = get_theme_mod( 'shop_background_image' );
-			$shop->enable_sale_banner    = get_theme_mod( 'enable_sale_banner' );
-			$shop->shop_product_per_row  = get_theme_mod( 'shop_product_per_row' );
-			$shop->shop_num_of_products  = get_theme_mod( 'shop_num_of_products' );
-
-			$mods_class->{'shop_mods'}        = $shop;
-			$mods_class->{'shop_mods'}->count = $count;
-		endif;
-
-		return $mods_class;
-	endif;
-
-	if ( 'cta' === $section ) :
-		$mods_class->slides = new stdClass();
-		for ( $i = 1; $i <= 5; $i++ ) {
-			if ( ! empty( get_theme_mod( 'cta_slider_' . $i ) ) ) :
-				$count++;
-				$slide                      = new stdClass();
-				$slide->slide_img           = get_theme_mod( 'cta_slider_' . $i );
-				$slide->slide_text_position = get_theme_mod( 'cta_slider_text_position_' . $i );
-				$slide->slide_title         = get_theme_mod( 'cta_slider_title_' . $i );
-
-				$slide->slide_text_message = get_theme_mod( 'cta_slider_text_' . $i );
-
-				for ( $a = 1; $a <= 3; $a++ ) {
-
-					$slide->{ 'cta_description_' . $a } = get_theme_mod( 'cta_slider_' . $i . '_description_' . $a );
-
-				}
-				$slide->slide_description_icon = get_theme_mod( 'slider_description_list_icon_' . $i );
-				$slide->slide_link_btn         = get_theme_mod( 'cta_slider_btn_text_' . $i );
-				$slide->slide_link             = get_theme_mod( 'cta_slider_btn_link_' . $i );
-				// Mobile Theme mod.
-				$slide->slide_mobile_img = get_theme_mod( 'cta_slider_mobile_' . $i );
-
-				$mods_class->slides->{"slide_{$i}"} = $slide;
-			endif;
+		$top_slider['slides']['count'] = $top_slider_count;
+		if ( 'top_slider' === $section ) {
+			$section_mods['top_slider'] = $top_slider;
+			return json_decode( json_encode( $section_mods ) );
+		} else {
+			$section_mods['top_slider'] = $top_slider;
 		}
-
-		$mods_class->slides->count = $count;
-
-		return $mods_class;
 	endif;
+	if ( 'discovery_section' === $section || 'all' === $section ) :
+		$discovery_section = array();
+		$discovery         = array(
+			'image'        => ! empty( get_theme_mod( 'discovery_featured_image' ) ) ? get_theme_mod( 'discovery_featured_image' ) : null,
+			'second_image' => ! empty( get_theme_mod( 'discovery_featured_flip_image' ) ) ? get_theme_mod( 'discovery_featured_flip_image' ) : null,
+			'title'        => ! empty( get_theme_mod( 'discovery_title' ) ) ? get_theme_mod( 'discovery_title' ) : null,
+			'body'         => ! empty( get_theme_mod( 'discovery_body' ) ) ? get_theme_mod( 'discovery_body' ) : null,
+			'cta_text'     => ! empty( get_theme_mod( 'discovery_cta_text' ) ) ? get_theme_mod( 'discovery_cta_text' ) : null,
+			'cta_link'     => ! empty( get_theme_mod( 'discovery_cta_link' ) ) ? get_permalink( get_theme_mod( 'discovery_cta_link' ) ) : null,
+		);
 
-	if ( 'cause' === $section ) :
-		if ( ! empty( get_theme_mod( 'cause_section_title' ) ) ) :
-			$count++;
-			$cause                           = new stdClass();
-			$cause->cause_section_title      = get_theme_mod( 'cause_section_title' );
-			$cause->cause_section_background = get_theme_mod( 'cause_section_background' );
-
-			$mods_class->{'cause_mods'}        = $cause;
-			$mods_class->{'cause_mods'}->count = $count;
-		endif;
-
-		$count              = 0;
-		$mods_class->causes = new stdClass();
-		for ( $i = 1; $i <= 3; $i++ ) {
-			if ( ! empty( get_theme_mod( 'cause_image_' . $i ) ) ) :
-				$count++;
-				${"cause_$i"}              = new stdClass();
-				${"cause_$i"}->img         = get_theme_mod( 'cause_image_' . $i );
-				${"cause_$i"}->img_link    = get_theme_mod( 'cause_image_link_' . $i );
-				${"cause_$i"}->img_src     = wp_get_attachment_image_src( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', false );
-				${"cause_$i"}->img_srcset  = wp_get_attachment_image_srcset( get_theme_mod( 'cause_image_' . $i ), 'custom_products_size', null );
-				${"cause_$i"}->position    = get_theme_mod( 'cause_message_position_' . $i );
-				${"cause_$i"}->header      = get_theme_mod( 'cause_header_' . $i );
-				${"cause_$i"}->header_link = get_theme_mod( 'cause' . $i . '_header_link' );
-				${"cause_$i"}->message     = get_theme_mod( 'cause_message_' . $i );
-
-				$mods_class->causes->{"cause_$i"} = ${"cause_$i"};
-			endif;
+		if ( 'discovery_section' === $section ) {
+			$section_mods['discovery_section'] = $discovery;
+			return json_decode( json_encode( $section_mods ) );
+		} else {
+			$section_mods['discovery_section'] = $discovery;
 		}
-
-		$mods_class->causes->count = $count;
-
-		return $mods_class;
 	endif;
+	if ( 'shop_section' === $section || 'all' === $section ) :
+		$shop_section = array();
+		$shop         = array(
+			'title'    => ! empty( get_theme_mod( 'shop_title' ) ) ? get_theme_mod( 'shop_title' ) : null,
+			'subtitle' => ! empty( get_theme_mod( 'shop_subtitle' ) ) ? get_theme_mod( 'shop_subtitle' ) : null,
+		);
 
-	if ( 'about' === $section ) :
-		if ( ! empty( get_theme_mod( 'about_the_brand_header' ) ) ) :
-			$count++;
-			$about                                      = new stdClass();
-			$about->about_header                        = get_theme_mod( 'about_the_brand_header' );
-			$about->about_subheader                     = get_theme_mod( 'about_the_brand_subheader' );
-			$about->about_message                       = get_theme_mod( 'about_the_brand_message' );
-			$about->about_the_brand_btn_text            = get_theme_mod( 'about_the_brand_btn_text' );
-			$about->about_the_brand_button_link         = get_permalink( get_theme_mod( 'about_the_brand_button_link' ) );
-			$about->about_the_brand_second_image_src    = wp_get_attachment_image_src( get_theme_mod( 'about_the_brand_second_image' ), 'custom_products_size', false );
-			$about->about_the_brand_second_image_srcset = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_second_image' ), 'custom_products_size', null );
-			$about->about_the_brand_image_link          = get_permalink( get_theme_mod( 'about_the_brand_second_image_link', '#' ) );
-			$about->about_videoplaceholder_src          = wp_get_attachment_image_src( get_theme_mod( 'about_the_brand_video_placeholder' ), 'custom_products_size', false );
-			$about->about_videoplaceholder_srcset       = wp_get_attachment_image_srcset( get_theme_mod( 'about_the_brand_video_placeholder' ), 'custom_products_size', null );
-
-			$mods_class->{'about_the_brand'}        = $about;
-			$mods_class->{'about_the_brand'}->count = $count;
-		endif;
-
-		return $mods_class;
+		if ( 'shop_section' === $section ) {
+			$section_mods['shop_section'] = $shop;
+			return json_decode( json_encode( $section_mods ) );
+		} else {
+			$section_mods['shop_section'] = $shop;
+		}
 	endif;
-
-	if ( 'social' === $section ) :
-		if ( ! empty( get_theme_mod( 'social_section_title' ) ) ) :
-			$count++;
-			$social                     = new stdClass();
-			$social->social_title       = get_theme_mod( 'social_section_title' );
-			$social->social_message     = get_theme_mod( 'social_section_message' );
-			$social->social_shortcode   = get_theme_mod( 'social_shortcode' );
-			$social->social_btn_text    = get_theme_mod( 'social_btn_text' );
-			$social->social_shop_button = get_permalink( get_theme_mod( 'social_shop_button' ) );
-
-			$mods_class->{'social_mods'} = $social;
-		endif;
-
-		$mods_class->count = $count;
-
-		return $mods_class;
+	if ( 'our_brand_section' === $section || 'all' === $section ) :
+		$our_brand_section = array();
+		$our_brand         = array(
+			'image'        => ! empty( get_theme_mod( 'our_brand_featured_image' ) ) ? get_theme_mod( 'our_brand_featured_image' ) : null,
+			'second_image' => ! empty( get_theme_mod( 'our_brand_featured_flip_image' ) ) ? get_theme_mod( 'our_brand_featured_flip_image' ) : null,
+			'title'        => ! empty( get_theme_mod( 'our_brand_title' ) ) ? get_theme_mod( 'our_brand_title' ) : null,
+			'body'         => ! empty( get_theme_mod( 'our_brand_body' ) ) ? get_theme_mod( 'our_brand_body' ) : null,
+			'cta_text'     => ! empty( get_theme_mod( 'our_brand_cta_text' ) ) ? get_theme_mod( 'our_brand_cta_text' ) : null,
+			'cta_link'     => ! empty( get_theme_mod( 'our_brand_cta_link' ) ) ? get_permalink( get_theme_mod( 'our_brand_cta_link' ) ) : null,
+		);
+		if ( 'our_brand_section' === $section ) {
+			$section_mods['our_brand_section'] = $our_brand;
+			return json_decode( json_encode( $section_mods ) );
+		} else {
+			$section_mods['our_brand_section'] = $our_brand;
+		}
 	endif;
+	if ( 'cats_section' === $section || 'all' === $section ) :
+		$cats_section = array();
+		$cats         = array(
+			'title'    => ! empty( get_theme_mod( 'cats_title' ) ) ? get_theme_mod( 'cats_title' ) : null,
+			'subtitle' => ! empty( get_theme_mod( 'cats_subtitle' ) ) ? get_theme_mod( 'cats_subtitle' ) : null,
+		);
 
-	if ( 'footer' === $section ) :
-		if ( ! empty( get_theme_mod( 'footer_social_instagram' ) ) ) :
-			$count++;
-			$footer                               = new stdClass();
-			$footer->footer_social_title          = get_theme_mod( 'footer_social_title' );
-			$footer->footer_social_instagram      = get_theme_mod( 'footer_social_instagram' );
-			$footer->footer_social_twitter        = get_theme_mod( 'footer_social_twitter' );
-			$footer->footer_social_facebook       = get_theme_mod( 'footer_social_facebook' );
-			$footer->footer_social_pinterest      = get_theme_mod( 'footer_social_pinterest' );
-			$footer->footer_contact_message       = get_theme_mod( 'footer_contact_message' );
-			$footer->footer_contact_support_email = get_theme_mod( 'footer_contact_support_email' );
+		if ( 'cats_section' === $section ) {
+			$section_mods['cats_section'] = $cats;
+			return json_decode( json_encode( $section_mods ) );
+		} else {
+			$section_mods['cats_section'] = $cats;
+		}
+	endif;
+	if ( 'press_section' === $section || 'all' === $section ) :
+		$press_section = array();
+		$press         = array(
+			'title' => ! empty( get_theme_mod( 'press_section_title' ) ) ? get_theme_mod( 'press_section_title' ) : null,
+			'logos' => array(
+				'logo_1' => ! empty( get_theme_mod( 'press_featured_logo_1' ) ) ? get_theme_mod( 'press_featured_logo_1' ) : null,
+				'logo_2' => ! empty( get_theme_mod( 'press_featured_logo_2' ) ) ? get_theme_mod( 'press_featured_logo_2' ) : null,
+				'logo_3' => ! empty( get_theme_mod( 'press_featured_logo_3' ) ) ? get_theme_mod( 'press_featured_logo_3' ) : null,
+				'logo_4' => ! empty( get_theme_mod( 'press_featured_logo_4' ) ) ? get_theme_mod( 'press_featured_logo_4' ) : null,
+				'logo_5' => ! empty( get_theme_mod( 'press_featured_logo_5' ) ) ? get_theme_mod( 'press_featured_logo_5' ) : null,
+			),
+		);
+		if ( 'press_section' === $section ) {
+			$section_mods['press_section'] = $press;
+			return json_decode( json_encode( $section_mods ) );
+		} else {
+			$section_mods['press_section'] = $press;
+		}
+	endif;
+	if ( 'footer_section' === $section ) :
+		$footer_section       = array();
+		$footer_section_count = 0;
 
-			$footer->footer_insta_username      = get_theme_mod( 'footer_insta_username' );
-			$footer->footer_insta_username_link = get_theme_mod( 'footer_insta_username_link' );
-			$footer->footer_insta_hashtag       = get_theme_mod( 'footer_insta_hashtags' );
-			$footer->footer_insta_hashtag_link  = get_theme_mod( 'footer_insta_hashtags_link' );
+		$footer_section_count++;
+		$footer                                 = array(
+			'footer_social_title'          => ! empty( get_theme_mod( 'footer_social_title' ) ) ? get_theme_mod( 'footer_social_title' ) : null,
+			'footer_social_instagram'      => ! empty( get_theme_mod( 'footer_social_instagram' ) ) ? get_theme_mod( 'footer_social_instagram' ) : null,
+			'footer_social_twitter'        => ! empty( get_theme_mod( 'footer_social_twitter' ) ) ? get_theme_mod( 'footer_social_twitter' ) : null,
+			'footer_social_facebook'       => ! empty( get_theme_mod( 'footer_social_facebook' ) ) ? get_theme_mod( 'footer_social_facebook' ) : null,
+			'footer_social_pinterest'      => ! empty( get_theme_mod( 'footer_social_pinterest' ) ) ? get_theme_mod( 'footer_social_pinterest' ) : null,
+			'footer_contact_message'       => ! empty( get_theme_mod( 'footer_contact_message' ) ) ? get_theme_mod( 'footer_contact_message' ) : null,
+			'footer_contact_support_email' => ! empty( get_theme_mod( 'footer_contact_support_email' ) ) ? get_theme_mod( 'footer_contact_support_email' ) : null,
+			'footer_insta_username'        => ! empty( get_theme_mod( 'footer_insta_username' ) ) ? get_theme_mod( 'footer_insta_username' ) : null,
+			'footer_insta_username_link'   => ! empty( get_theme_mod( 'footer_insta_username_link' ) ) ? get_theme_mod( 'footer_insta_username_link' ) : null,
+			'footer_insta_hashtag'         => ! empty( get_theme_mod( 'footer_insta_hashtags' ) ) ? get_theme_mod( 'footer_insta_hashtags' ) : null,
+			'footer_insta_hashtag_link'    => ! empty( get_theme_mod( 'footer_insta_hashtags_link' ) ) ? get_theme_mod( 'footer_insta_hashtags_link' ) : null,
+			'footer_logo'                  => ! empty( get_theme_mod( 'footer_logo' ) ) ? get_theme_mod( 'footer_logo' ) : null,
+			'footer_form_shortcode'        => ! empty( get_theme_mod( 'footer_form_shortcode' ) ) ? get_theme_mod( 'footer_form_shortcode' ) : null,
+		);
+		$footer_section['footer_mods']          = $footer;
+		$footer_section['footer_mods']['count'] = $footer_section_count;
 
-			$footer->footer_logo           = get_theme_mod( 'footer_logo' );
-			$footer->footer_form_shortcode = get_theme_mod( 'footer_form_shortcode' );
-
-			$mods_class->{'footer_mods'}        = $footer;
-			$mods_class->{'footer_mods'}->count = $count;
-		endif;
-
-		$count                     = 0;
-		$mods_class->footer_titles = new stdClass();
+		$footer_section_count2           = 0;
+		$footer_section['footer_titles'] = array();
 		for ( $i = 1; $i <= 5; $i++ ) {
 			if ( ! empty( get_theme_mod( 'footer_menu_header_' . $i ) ) ) :
-				$count++;
-				$mods_class->footer_titles->{"footer_title_$i"} = get_theme_mod( 'footer_menu_header_' . $i );
+				$footer_section_count2++;
+				$footer_section['footer_titles'][ "footer_title_$i" ] = ! empty( get_theme_mod( 'footer_menu_header_' . $i ) ) ? get_theme_mod( 'footer_menu_header_' . $i ) : null;
 			endif;
 		}
-
-		$mods_class->footer_titles->count = $count;
-
-		return $mods_class;
+		$footer_section['footer_titles']['count'] = $footer_section_count2;
+		if ( 'footer_section' === $section ) {
+			$section_mods['footer_section'] = $footer_section;
+			return json_decode( json_encode( $section_mods ) );
+		} else {
+			$section_mods['footer_section'] = $footer_section;
+		}
 	endif;
-
-	if ( 'newsletter' === $section ) :
+	if ( 'newsletter_area' === $section ) :
+		$newsletter_area       = array();
+		$newsletter_area_count = 0;
 		if ( ! empty( get_theme_mod( 'enable_newsletter_popup' ) ) ) :
-			$count++;
-			$newsletter                    = new stdClass();
-			$newsletter->enable_popup      = get_theme_mod( 'enable_newsletter_popup' );
-			$newsletter->message_text      = get_theme_mod( 'newsletter_popup_message_text' );
-			$newsletter->background_image  = get_theme_mod( 'newsletter_background_image' );
-			$newsletter->background_color  = ( ! empty( get_theme_mod( 'newsletter_background_color' ) ) ) ? get_theme_mod( 'newsletter_background_color' ) : '#ffffff';
-			$newsletter->popup_form_select = get_theme_mod( 'newsletter_popup_form_select' );
-			$newsletter->session_length    = ( ! empty( get_theme_mod( 'newsletter_popup_message_session_length' ) ) ) ? get_theme_mod( 'newsletter_popup_message_session_length' ) : 24;
-			$newsletter->time_to_pop       = ( ! empty( get_theme_mod( 'newsletter_popup_time_to_pop' ) ) ) ? get_theme_mod( 'newsletter_popup_time_to_pop' ) : 20;
-
-			$mods_class->{'newsletter_mods'} = $newsletter;
+			$newsletter_area_count++;
+			$background_color                   = ( ! empty( get_theme_mod( 'newsletter_background_color' ) ) ) ? get_theme_mod( 'newsletter_background_color' ) : '#ffffff';
+			$session_length                     = ( ! empty( get_theme_mod( 'newsletter_popup_message_session_length' ) ) ) ? get_theme_mod( 'newsletter_popup_message_session_length' ) : 24;
+			$time_to_pop                        = ( ! empty( get_theme_mod( 'newsletter_popup_time_to_pop' ) ) ) ? get_theme_mod( 'newsletter_popup_time_to_pop' ) : 20;
+			$newsletter                         = array(
+				'enable_popup'      => get_theme_mod( 'enable_newsletter_popup' ),
+				'message_text'      => get_theme_mod( 'newsletter_popup_message_text' ),
+				'background_image'  => get_theme_mod( 'newsletter_background_image' ),
+				'background_color'  => $background_color,
+				'popup_form_select' => get_theme_mod( 'newsletter_popup_form_select' ),
+				'session_length'    => $session_length,
+				'time_to_pop'       => $time_to_pop,
+			);
+			$newsletter_area['newsletter_mods'] = $newsletter;
 		endif;
-
-		$mods_class->count = $count;
-
-		return $mods_class;
+		$newsletter_area['count'] = $newsletter_area_count;
+		if ( 'newsletter_area' === $section ) {
+			$section_mods['newsletter_area'] = $newsletter_area;
+			return json_decode( json_encode( $section_mods ) );
+		} else {
+			$section_mods['newsletter_area'] = $newsletter_area;
+		}
 	endif;
-
+	if ( 'all' === $section ) {
+		return json_decode( json_encode( $section_mods ) );
+	}
 	return false;
 }
 add_action( 'get_mods_before_section', 'the_mods_for_section', 10, 1 );
 
 /**
- * Adding bootstrap classes to the form elements
- *
- * Customizing of Gravity forms.
- *
- * @param array $form         contains the form elements to work with.
- * @param array $ajax         ajax callback.
- * @param array $field_values this is an array of the field values.
- */
-function add_bootstrap_container_class( $form, $ajax, $field_values ) {
-
-	$inline_forms = array( 'Sign Up', 'Popup', 'Promotion Sign Up' );
-	if ( ! empty( $form['cssClass'] ) ) :
-		$form['cssClass'] .= ' wonka-gform wonka-gform-' . $form['id'];
-	else :
-		$form['cssClass'] = 'wonka-gform wonka-gform-' . $form['id'];
-	endif;
-
-	if ( in_array( $form['title'], $inline_forms ) ) :
-		$form['cssClass'] .= ' form-inline wonka-newsletter-form';
-	endif;
-
-	if ( in_array( $form['title'], array( 'Refersion Registration Ambassador', 'Refersion Registration Zip' ) ) ) :
-		$form['cssClass'] .= ' inline-form wonka-refersion-form';
-	endif;
-
-	if ( in_array( $form['title'], array( 'ZIP Program' ) ) ) :
-		$form['cssClass'] .= ' inline-form wonka-zip-form';
-	endif;
-
-	if ( in_array( $form['title'], array( 'Ambassador Program' ) ) ) :
-		$form['cssClass'] .= ' inline-form wonka-ambassador-form';
-	endif;
-
-	if ( in_array( $form['title'], array( 'Apera Perks Registration' ) ) ) :
-		$form['cssClass'] .= ' inline-form wonka-perks-form';
-	endif;
-
-	if ( in_array( $form['title'], array( 'Add Discount Code' ) ) ) :
-		$form['cssClass'] .= ' inline-form wonka-discount-form';
-	endif;
-
-	foreach ( $form['fields'] as &$field ) :
-
-		if ( strpos( $field['cssClass'], 'gform_validation_container' ) === false ) :
-			if ( ! empty( $field['cssClass'] ) ) :
-				$field['cssClass'] .= ' form-group wonka-form-group';
-			else :
-				$field['cssClass'] = 'form-group wonka-form-group';
-			endif;
-
-			if ( ! empty( $field['size'] ) ) :
-				$field['size'] .= ' form-control wonka-form-control';
-			else :
-				$field['size'] = 'form-control wonka-form-control';
-			endif;
-
-			if ( 'fileupload' === $field['type'] ) :
-				$field['size'] = 'custom-file-input';
-			endif;
-
-			if ( empty( $field['placeholder'] ) ) :
-				$field['placeholder'] = $field['label'];
-			endif;
-		endif;
-	endforeach;
-
-	return $form;
-}
-add_filter( 'gform_pre_render', 'add_bootstrap_container_class', 10, 6 );
-
-add_filter( 'gform_enable_password_field', '__return_true' );
-
-/**
- * This is to add a prepend element to a specific field.
- *
- * @param  html  $field_content contains the field content in html.
- * @param  array $field         contains the field data.
- * @return html                returns the newly constructed field content.
- */
-function wonka_gform_field_modifications( $field_content, $field ) {
-	$form        = GFAPI::get_form( $field['formId'] );
-	$new_content = '';
-	if ( 'Refersion Registration Ambassador' === $form['title'] ) :
-
-		if ( 'Company' === $field['label'] ) :
-
-			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
-			foreach ( $split_content as $key => $value ) {
-				if ( strpos( $value, 'input name' ) !== false ) :
-					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text">@</span> </div><' . $value . '</div>';
-
-				else :
-					$new_content .= $value;
-				endif;
-			}
-
-			return $new_content;
-
-		endif;
-
-	endif;
-
-	if ( 'Apera Perks Registration' === $form['title'] ) :
-
-		if ( 'Password' === $field['label'] ) :
-
-			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
-			foreach ( $split_content as $key => $value ) {
-
-				if ( strpos( $value, "input type='password'" ) !== false ) :
-					$element_array = explode( ' ', $value );
-
-					foreach ( $element_array as $key => $values ) {
-						if ( empty( $values ) ) {
-							unset( $element_array[ $key ] );
-						}
-					}
-
-					array_splice( $element_array, 2, 0, "class='form-control'" );
-
-					$element_string = implode( ' ', $element_array );
-
-					$new_content .= 'div class="input-group"><' . $element_string . '<div class="input-group-append"><div class="input-group-text"> <i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i> </div></div></div>';
-
-				else :
-					$new_content .= $value;
-				endif;
-			}
-
-			return $new_content;
-
-		endif;
-
-		if ( 'Military Date' === $field['label'] || 'Student Grad Date' === $field['label'] ) :
-
-			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
-
-			foreach ( $split_content as $key => $value ) {
-
-				if ( strpos( $value, "class='datepicker" ) !== false ) :
-
-					$new_content .= 'div class="input-group"><div class="input-group-prepend"> <span class="input-group-text"></span> </div><' . $value . '<input type="hidden" class="new-cal-icon" value="' . get_stylesheet_directory_uri() . '/assets/img/calendar-icon.svg" />';
-
-					elseif ( strpos( $value, "id='gforms_calendar_icon" ) !== false ) :
-
-						$new_content .= $value . '</div>';
-
-				else :
-
-					$new_content .= $value;
-
-				endif;
-
-			}
-
-			return $new_content;
-
-		endif;
-
-	endif;
-
-	if ( 'fileupload' === $field['type'] ) :
-
-		$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
-		$element       = '';
-		foreach ( $split_content as $key => $value ) {
-			if ( strpos( $value, 'input name' ) !== false ) :
-				$element   .= '<' . $value;
-				$attributes = simplexml_load_string( $element );
-				$attributes = json_decode( json_encode( $attributes ) );
-				foreach ( $attributes->{'@attributes'} as $key => $str ) :
-					if ( 'id' === $key ) {
-						$for = $str;
-					}
-					if ( 'aria-describedby' === $key ) {
-						$add_id = $str;
-					}
-				endforeach;
-				$new_content .= 'div class="input-group">';
-				$new_content .= '<div class="input-group-prepend">';
-				$new_content .= '<span class="input-group-text" id="' . $add_id . '">Upload</span>';
-				$new_content .= '</div>';
-				$new_content .= '<div class="custom-file"><';
-				$new_content .= $value;
-				$new_content .= '<label class="custom-file-label" for="' . $for . '">Choose file</label>';
-				$new_content .= '</div>';
-				$new_content .= '</div>';
-
-				else :
-					$new_content .= $value;
-			endif;
-		}
-
-		return $new_content;
-	endif;
-
-	return $field_content;
-}
-  add_filter( 'gform_field_content', 'wonka_gform_field_modifications', 10, 2 );
-
-/**
- * Adding classes to gform buttons
- *
- * @param  object $button contains the html of the button.
- * @param  object $form   contains the html of the form.
- * @return string         returns the classes that are set for the button.
- */
-function wonka_add_classes_to_button( $button, $form ) {
-	$dom = new DOMDocument();
-	$dom->loadHTML( $button );
-	$input    = $dom->getElementsByTagName( 'input' )->item( 0 );
-	$classes  = $input->getAttribute( 'class' );
-	$classes .= ' wonka-btn';
-	$input->setAttribute( 'class', $classes );
-
-	return $dom->saveHtml( $input );
-}
-
-add_filter( 'gform_submit_button', 'wonka_add_classes_to_button', 8, 2 );
-/*=====  End of Customizing of Gravity forms  ======*/
-
-/**
  * This will check is screen is an admin screen
  */
 if ( ! function_exists( 'is_admin_page' ) ) {
-
 	/**
 	 * This is an admin referer check.
 	 *
@@ -516,11 +260,8 @@ function aperabags_add_theme_options() {
 		'aperabags-theme-options',
 		'aperabags_theme_options_page'
 	);
-
 	$registered_options = ( ! empty( get_option( 'custom_options_added' ) ) ) ? get_option( 'custom_options_added' ) : '';
-
 	if ( ! empty( $registered_options ) ) {
-
 		foreach ( $registered_options as $register_option ) {
 			$set_args = array(
 				'type'              => 'string',
@@ -528,13 +269,11 @@ function aperabags_add_theme_options() {
 				'sanitize_callback' => 'aperabags_options_sanitize',
 				'show_in_rest'      => false,
 			);
-
 			register_setting( 'aperabags-theme-options-group', $register_option['id'], $set_args );
 		}
 	}
 }
 add_action( 'admin_menu', 'aperabags_add_theme_options' );
-
 /**
  * Used to sanitize the options
  *
@@ -545,7 +284,6 @@ function aperabags_options_sanitize( $option ) {
 	$option = esc_html( $option );
 	return $option;
 }
-
 /**
  * This builds the display of the options page.
  */
@@ -575,11 +313,9 @@ function aperabags_theme_options_page() {   ?>
 
 							<?php
 								$registered_options = ( ! empty( get_option( 'custom_options_added' ) ) ) ? get_option( 'custom_options_added' ) : '';
-
 							if ( ! empty( $registered_options ) ) :
 								foreach ( $registered_options as $register_option ) {
 									$current_option = ( ! empty( get_option( $register_option['id'] ) ) ) ? get_option( $register_option['id'] ) : '';
-
 									wonkasoft_theme_option_parse(
 										array(
 											'id'          => $register_option['id'],
@@ -644,14 +380,12 @@ function aperabags_theme_options_page() {   ?>
 		</div>
 	<?php
 }
-
 /**
  * For the parsing of option fields.
  *
  * @param  array $field array of the fields.
  */
 function wonkasoft_theme_option_parse( $field ) {
-
 	$field['class']         = isset( $field['class'] ) ? $field['class'] : 'select short';
 	$field['style']         = isset( $field['style'] ) ? $field['style'] : '';
 	$field['wrapper_class'] = isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
@@ -659,24 +393,19 @@ function wonkasoft_theme_option_parse( $field ) {
 	$field['name']          = isset( $field['name'] ) ? $field['name'] : $field['id'];
 	$field['desc_tip']      = isset( $field['desc_tip'] ) ? $field['desc_tip'] : false;
 	$styles_set             = ( ! empty( $field['style'] ) ) ? ' style="' . esc_attr( $field['style'] ) . '" ' : '';
-
 	// Custom attribute handling.
 	$custom_attributes = array();
 	$output            = '';
-
 	if ( ! empty( $field['custom_attributes'] ) && is_array( $field['custom_attributes'] ) ) {
 		foreach ( $field['custom_attributes'] as $attribute => $value ) {
 			$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $value ) . '"';
 		}
 	}
-
 	$output .= '<div class="' . esc_attr( $field['id'] ) . '_field ' . esc_attr( $field['wrapper_class'] ) . '">
 		<label for="' . esc_attr( $field['id'] ) . '">' . wp_kses_post( $field['label'] ) . '</label>';
-
 	if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
 		$output .= '<span class="woocommerce-help-tip" data-toggle="tooltip" data-placement="top" title="' . esc_attr( $field['description'] ) . '"></span>';
 	}
-
 	if ( 'ga' === $field['api'] ) :
 		$place_holder = ' placeholder="UA-XXXXXX-X"';
 	else :
@@ -691,9 +420,7 @@ function wonkasoft_theme_option_parse( $field ) {
 	if ( ! empty( $field['description'] ) && false !== $field['desc_tip'] ) {
 		$output .= '<span class="description">' . wp_kses_post( $field['description'] ) . '</span>';
 	}
-
 	$output .= '</div>';
-
 	echo wp_kses(
 		$output,
 		array(
@@ -725,28 +452,21 @@ function wonkasoft_theme_option_parse( $field ) {
 		)
 	);
 }
-
 /**
  * This is for enqueuing the script for the theme options page only.
  *
  * @param  string $page contains the page name.
  */
 function theme_options_js( $page ) {
-
 	if ( 'settings_page_aperabags-theme-options' === $page ) :
 		wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1', 'all' );
-
 		wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', 'anonymous' ) );
-
 		wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array( 'jquery' ), '4.3.1', true );
-
 		wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', 'anonymous' ) );
-
 		wp_enqueue_script( 'theme-options-js', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/inc/js/theme-options-js.js' ), array( 'jquery' ), '20190819', true );
 	endif;
 }
 add_action( 'admin_enqueue_scripts', 'theme_options_js', 10, 1 );
-
 /**
  * The adding of meta boxes
  *
@@ -768,7 +488,6 @@ function wonkasoft_get_meta_boxes( $post_type, $post ) {
 	);
 }
 add_action( 'add_meta_boxes', 'wonkasoft_get_meta_boxes', 10, 2 );
-
 /**
  * Display of the author in the meta box.
  *
@@ -779,13 +498,10 @@ function author_display_meta_box( $post, $option ) {
 	wp_nonce_field( 'author_display_option', 'author_display_wpnonce', true, true );
 	$checked = ( get_post_meta( $post->ID, $option['args']['option_name'], false ) ) ? ' checked="true"' : '';
 	$output  = '';
-
 	$output .= '<input type="checkbox" name="' . esc_attr( $option['args']['option_name'] ) . '" id="' . esc_attr( $option['args']['option_name'] ) . '" class="form-check-input"' . $checked . ' />';
 	$output .= '<label class="option-title form-check-label">' . $option['args']['label'] . '</label>';
-
 	echo '<div class="form-check">' . wp_kses_post( $output ) . '</div>';
 }
-
 /**
  * For saving the author display
  *
@@ -794,29 +510,24 @@ function author_display_meta_box( $post, $option ) {
  */
 function wonkasoft_save_author_display( $post_id, $post ) {
 	$nonce_action = 'author_display_option';
-
 	// Check if nonce is valid.
 	if ( ! wp_verify_nonce( isset( $_POST['author_display_wpnonce'] ), $nonce_action ) ) {
 		return;
 	}
-
 	// Check if user has permissions to save data.
 	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		return;
 	}
-
 	// Check if not an autosave.
 	if ( wp_is_post_autosave( $post_id ) ) {
 		return;
 	}
-
 	// Check if not a revision.
 	if ( wp_is_post_revision( $post_id ) ) {
 		return;
 	}
 }
 add_action( 'save_post', 'wonkasoft_save_author_display', 10, 2 );
-
 /**
  * For the theme popup cookie.
  */
@@ -827,71 +538,13 @@ function wonkasoft_theme_popup_cookie() {
 			'show'          => true,
 			'time_of_visit' => time(),
 		);
-
 		$wonkasoft_popup_cookie = json_encode( $wonkasoft_popup_cookie );
-
 		if ( ! isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
 			setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * get_theme_mod( 'newsletter_popup_message_session_length' ), '/' );
 		 endif;
 	endif;
 }
-
 add_action( 'init', 'wonkasoft_theme_popup_cookie', 10 );
-
-/**
- * Newsletter popup entry or form submission.
- *
- * @param  array $entry contains the data from the entry.
- * @param  array $form  array of the form fields.
- * @return blank
- */
-function wonkasoft_newsletter_popup_entry( $entry, $form ) {
-
-	$user_id    = get_current_user_id();
-	$form_title = str_replace( ' ', '-', strtolower( $form['title'] ) );
-
-	if ( 'popup' === $form_title ) :
-		$wonkasoft_popup_cookie = array(
-			'user_id'       => get_current_user_id(),
-			'show'          => false,
-			'time_of_visit' => time(),
-		);
-
-		$wonkasoft_popup_cookie = json_encode( $wonkasoft_popup_cookie );
-
-		if ( isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
-			unset( $_COOKIE['wonkasoft_newsletter_popup'] );
-			setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * 24 * 365, '/' );
-		endif;
-
-		if ( ! isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
-			setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * 24 * 365, '/' );
-		endif;
-	endif;
-
-	if ( 'sign-up' === $form_title ) :
-		$wonkasoft_popup_cookie = array(
-			'user_id'       => get_current_user_id(),
-			'show'          => false,
-			'time_of_visit' => time(),
-		);
-
-		$wonkasoft_popup_cookie = json_encode( $wonkasoft_popup_cookie );
-
-		if ( isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
-			unset( $_COOKIE['wonkasoft_newsletter_popup'] );
-			setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * 24 * 365, '/' );
-		endif;
-
-		if ( ! isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
-			setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * 24 * 365, '/' );
-		endif;
-	endif;
-
-	return;
-}
-
-add_action( 'gform_after_submission', 'wonkasoft_newsletter_popup_entry', 10, 2 );
 
 /**
  * Allow to remove method for an hook when, it's a class method used and class don't have global for instanciation !
@@ -923,7 +576,6 @@ function ws_remove_filters_with_method_name( $hook_name = '', $method_name = '',
 	}
 	return false;
 }
-
 /**
  * Allow to remove method for an hook when, it's a class method used and class don't have variable, but you know the class name :)
  *
@@ -957,363 +609,18 @@ function ws_remove_filters_for_anonymous_class( $hook_name = '', $class_name = '
 }
 
 /**
- * This function is filtering the states to abbriviations.
- *
- * @param  array $address_types An array of address types.
- * @param  int   $form_id The ID of the form being filtered.
- * @return array $address_types A modified array of address types.
- */
-function filter_states_to_abbriviations( $address_types, $form_id ) {
-	$address_types['us'] = array(
-		'label'       => 'United States',
-		'country'     => 'US',
-		'zip_label'   => 'Zip Code',
-		'state_label' => 'State',
-		'states'      => array(
-			''   => '',
-			'AL' => 'Alabama',
-			'AK' => 'Alaska',
-			'AZ' => 'Arizona',
-			'AR' => 'Arkansas',
-			'CA' => 'California',
-			'CO' => 'Colorado',
-			'CT' => 'Connecticut',
-			'DE' => 'Delaware',
-			'DC' => 'District of Columbia',
-			'FL' => 'Florida',
-			'GA' => 'Georgia',
-			'GU' => 'Guam',
-			'HI' => 'Hawaii',
-			'ID' => 'Idaho',
-			'IL' => 'Illinois',
-			'IN' => 'Indiana',
-			'IA' => 'Iowa',
-			'KS' => 'Kansas',
-			'KY' => 'Kentucky',
-			'LA' => 'Louisiana',
-			'ME' => 'Maine',
-			'MD' => 'Maryland',
-			'MA' => 'Massachusetts',
-			'MI' => 'Michigan',
-			'MN' => 'Minnesota',
-			'MS' => 'Mississippi',
-			'MO' => 'Missouri',
-			'MT' => 'Montana',
-			'NE' => 'Nebraska',
-			'NV' => 'Nevada',
-			'NH' => 'New Hampshire',
-			'NJ' => 'New Jersey',
-			'NM' => 'New Mexico',
-			'NY' => 'New York',
-			'NC' => 'North Carolina',
-			'ND' => 'North Dakota',
-			'OH' => 'Ohio',
-			'OK' => 'Oklahoma',
-			'OR' => 'Oregon',
-			'PA' => 'Pennsylvania',
-			'PR' => 'Puerto Rico',
-			'RI' => 'Rhode Island',
-			'SC' => 'South Carolina',
-			'SD' => 'South Dakota',
-			'TN' => 'Tennessee',
-			'TX' => 'Texas',
-			'UT' => 'Utah',
-			'VT' => 'Vermont',
-			'VA' => 'Virginia',
-			'WA' => 'Washington',
-			'WV' => 'West Virginia',
-			'WI' => 'Wisconsin',
-			'WY' => 'Wyoming',
-		),
-	);
-	return $address_types;
-}
-add_filter( 'gform_address_types', 'filter_states_to_abbriviations', 10, 2 );
-
-/**
- * This function fires after Refersion Registration form is submitted.
- *
- * @param  array $entry contains the data from surrent.
- * @param  array $form  Contains an array of the form.
- */
-function wonkasoft_after_form_submission( $entry, $form ) {
-
-	$set_forms = array(
-		'Refersion Registration Ambassador',
-		'Refersion Registration Zip',
-		'Media Upload',
-	);
-
-	update_option( 'registration_passing_args', null );
-
-	// Check to see if form should be processed here.
-	if ( ! in_array( $form['title'], $set_forms ) ) :
-		return;
-	endif;
-
-	// Setting the campaign name.
-	if ( 'Refersion Registration Ambassador' === $form['title'] ) :
-		$campaign_name = 'ambassador_program_signups';
-		$set_tag       = 'ambassadorcompleted';
-		$role          = 'apera_ambassador_affiliate';
-		$role_display  = 'Apera Ambassador Affiliate';
-	endif;
-
-	if ( 'Refersion Registration Zip' === $form['title'] ) :
-		$campaign_name = 'zip_program_signups';
-		$set_tag       = 'zipcompleted';
-		$role          = 'apera_zip_affiliate';
-		$role_display  = 'Apera Zip Affiliate';
-	endif;
-
-	// Get current user object.
-	$current_user = wp_get_current_user();
-
-	// Get current user ID.
-	$user_id = $current_user->ID;
-
-	$entry_fields                  = array();
-	$entry_fields['custom_fields'] = array();
-	$set_labels                    = array(
-		'First',
-		'Last',
-		'Company',
-		'Logo Upload',
-		'Email',
-		'Password',
-		'Street Address',
-		'Address Line 2',
-		'City',
-		'State / Province',
-		'ZIP / Postal Code',
-		'Phone',
-	);
-	$custom_fields                 = array();
-
-	$pattern = '/([ \/]{1,5})/';
-
-	foreach ( $form['fields'] as $field ) {
-		if ( 'honeypot' !== $field['type'] ) :
-			if ( in_array( $field['label'], $set_labels ) ) :
-				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
-			endif;
-
-			if ( in_array( $field['label'], $custom_fields ) ) :
-				$current_label = strtolower( preg_replace( $pattern, $field['label'] ) );
-					array_push(
-						$entry_fields['custom_fields'],
-						array(
-							'label' => $current_label,
-							'value' => $entry[ $field['id'] ],
-						)
-					);
-			endif;
-
-			if ( ! empty( $field->inputs ) ) :
-				foreach ( $field->inputs as $input ) {
-					if ( in_array( $input['label'], $set_labels ) ) :
-						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
-					endif;
-				}
-			endif;
-		endif;
-	}
-
-	if ( 'Media Upload' === $form['title'] ) :
-
-		if ( ! empty( $entry_fields['logo_upload'] ) ) :
-
-			wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id );
-
-			header( 'Refresh:0' );
-
-			return;
-
-		endif;
-
-	endif;
-
-	// Setting getResponse api args.
-	$api_args = array(
-		'email'         => $entry_fields['email'],
-		'tags'          => array(
-			$set_tag,
-		),
-		'campaign_name' => $campaign_name,
-	);
-
-	if ( 0 === $user_id ) :
-
-		// Check if email has user account already.
-		if ( email_exists( $entry_fields['email'] ) ) {
-
-			$user    = get_user_by( 'email', $entry_fields['email'] );
-			$user_id = $user->data->ID;
-			$user    = new WP_User( $user_id );
-			if ( ! in_array( $role, $user->roles ) ) :
-				$user->add_role( $role, $role_display );
-			endif;
-
-			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
-
-			$refersion_response = $refersion_api_init->add_new_affiliate();
-
-			if ( 'failed' !== $refersion_response->status ) :
-
-				if ( ! empty( $refersion_response->errors ) ) :
-
-					if ( ! empty( $refersion_api_init->affiliate_code ) ) :
-
-						wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-
-						return;
-
-					else :
-
-						wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-
-						return;
-
-					endif;
-
-					else :
-
-						wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-
-						return;
-
-				endif;
-
-					else :
-
-						echo $refersion_response->status;
-
-						return;
-
-			endif;
-
-		} else {
-
-			$user_id = wonkasoft_make_user_account( $entry_fields, $role );
-
-			$user = new WP_User( $user_id );
-
-			if ( ! in_array( $role, $user->roles ) ) :
-				$user->add_role( $role, $role_display );
-			endif;
-
-			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
-
-			$refersion_response = $refersion_api_init->add_new_affiliate();
-
-			if ( 'failed' !== $refersion_response->status ) :
-
-				if ( ! empty( $refersion_response->errors ) ) :
-
-					if ( ! empty( $refersion_api_init->affiliate_code ) ) :
-
-						wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-
-						return;
-
-					else :
-
-						wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-
-						return;
-
-					endif;
-
-					else :
-
-						wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-
-						return;
-
-				endif;
-
-					else :
-
-						echo $refersion_response->status;
-
-						return;
-
-			endif;
-
-		}
-
-		else :
-
-			$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
-
-			$refersion_response = $refersion_api_init->add_new_affiliate();
-
-			if ( email_exists( $entry_fields['email'] ) ) {
-				$user    = get_user_by( 'email', $entry_fields['email'] );
-				$user_id = $user->data->ID;
-				$user    = new WP_User( $user_id );
-			} else {
-				$user_id = wonkasoft_make_user_account( $entry_fields, $role );
-				$user    = new WP_User( $user_id );
-			}
-
-			if ( ! in_array( $role, $user->roles ) ) :
-				$user->add_role( $role, $role_display );
-			endif;
-
-			if ( 'failed' !== $refersion_response->status ) :
-
-				if ( ! empty( $refersion_response->errors ) ) :
-
-					if ( ! empty( $refersion_api_init->affiliate_code ) ) :
-
-						wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-
-						return;
-
-					else :
-
-						wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-
-						return;
-
-					endif;
-
-					else :
-
-						wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args );
-
-						return;
-
-				endif;
-
-					else :
-
-						echo $refersion_response->status;
-
-						return;
-
-			endif;
-
-	endif;
-
-}
-add_action( 'gform_after_submission', 'wonkasoft_after_form_submission', 10, 2 );
-
-/**
  * This function creates new user accounts.
  *
  * @param  array  $entry_fields contains the form fields.
  * @param  string $role         the role set to give new user.
- * @return number               returns the new user id.
+ * @return integer               returns the new user id.
  */
-function wonkasoft_make_user_account( $entry_fields, $role ) {
-
+function wonkasoft_make_user_account( $entry_fields, $role = 'apera_perks_partner' ) {
 	// Setting time stamp.
 	$ts   = time();
 	$date = new DateTime( "@$ts" );
 	$date->setTimezone( new DateTimeZone( get_option( 'timezone_string' ) ) );
-
+	$user_pass = ( ! empty( $entry_fields['password'] ) ) ? $entry_fields['password'] : wp_generate_password( 19, true, false );
 	// Setting new user args.
 	$userdata = array(
 		'user_pass'            => $entry_fields['password'],   // (string) The plain-text user password.
@@ -1328,14 +635,10 @@ function wonkasoft_make_user_account( $entry_fields, $role ) {
 		'show_admin_bar_front' => false,   // (string|bool) Whether to display the Admin Bar for the user on the site's front end. Default true.
 		'role'                 => $role,   // (string) User's role.
 	);
-
 	// Inserting new user and getting user id.
 	$user_id = wp_insert_user( $userdata );
-
 	return $user_id;
-
 }
-
 /**
  * Function is called if refersion successfully created affiliate.
  *
@@ -1346,7 +649,6 @@ function wonkasoft_make_user_account( $entry_fields, $role ) {
  * @param  array  $api_args          api args for getresponse.
  */
 function wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args ) {
-
 	// Setting affiliate code and link to send to getResponse.
 	$api_args['custom_fields']        = array(
 		'affiliate_code',
@@ -1359,16 +661,25 @@ function wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fi
 	// Send to getResponse.
 	$getresponse = get_response_api_call( $api_args );
 
+	if ( 'ambassador_program_signups' === $api_args['campaign_name'] ) {
+		update_user_meta( $user_id, 'ambassador_affiliate_status', 'Pending' );
+	}
+
+	if ( 'zip_program_signups' === $api_args['campaign_name'] ) {
+		update_user_meta( $user_id, 'zip_affiliate_status', 'Pending' );
+	}
+
 	update_user_meta( $user_id, 'refersion_data', $refersion_response );
 	update_user_meta( $user_id, 'getResponse_data', $getresponse );
-	if ( ! empty( $entry_fields['logo_upload'] ) ) :
 
-		wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
-
+	if ( ! empty( $entry_fields['company'] ) ) :
+		update_user_meta( $user_id, 'company_name', $entry_fields['company'] );
 	endif;
 
+	if ( ! empty( $entry_fields['logo_upload'] ) ) :
+		wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
+	endif;
 }
-
 /**
  * Function is called if refersion new affiliate successful and affiliate code is empty.
  *
@@ -1379,9 +690,7 @@ function wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fi
  * @param  array  $api_args          api args for getresponse.
  */
 function wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args ) {
-
 	$refersion_response = $refersion_api_init->get_affiliate();
-
 	// Setting affiliate code and link to send to getResponse.
 	$api_args['custom_fields']        = array(
 		'affiliate_code',
@@ -1391,20 +700,23 @@ function wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api
 		'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
 		'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
 	);
-
 	// Send to getResponse.
 	$getresponse = get_response_api_call( $api_args );
+
+	if ( 'ambassador_program_signups' === $api_args['campaign_name'] ) {
+		update_user_meta( $user_id, 'ambassador_affiliate_status', 'Pending' );
+	}
+
+	if ( 'zip_program_signups' === $api_args['campaign_name'] ) {
+		update_user_meta( $user_id, 'zip_affiliate_status', 'Pending' );
+	}
 
 	update_user_meta( $user_id, 'refersion_data', $refersion_response );
 	update_user_meta( $user_id, 'getResponse_data', $getresponse );
 	if ( ! empty( $entry_fields['logo_upload'] ) ) :
-
 		wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
-
 	endif;
-
 }
-
 /**
  * Function is called if refersion new affiliate successful and affiliate code is not empty.
  *
@@ -1415,7 +727,6 @@ function wonkasoft_affiliate_code_empty( $user_id, $entry_fields, $refersion_api
  * @param  array  $api_args          api args for getresponse.
  */
 function wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api_init, $refersion_response, $api_args ) {
-
 	// Setting affiliate code and link to send to getResponse.
 	$api_args['custom_fields']        = array(
 		'affiliate_error_code',
@@ -1426,44 +737,43 @@ function wonkasoft_new_affiliate_errors( $user_id, $entry_fields, $refersion_api
 	// Send to getResponse.
 	$getresponse = get_response_api_call( $api_args );
 
+	if ( 'ambassador_program_signups' === $api_args['campaign_name'] ) {
+		update_user_meta( $user_id, 'ambassador_affiliate_status', 'Pending' );
+	}
+
+	if ( 'zip_program_signups' === $api_args['campaign_name'] ) {
+		update_user_meta( $user_id, 'zip_affiliate_status', 'Pending' );
+	}
+
 	update_user_meta( $user_id, 'refersion_error', $refersion_response->errors );
 	update_user_meta( $user_id, 'getResponse_data', $getresponse );
 	if ( ! empty( $entry_fields['logo_upload'] ) ) :
-
 		wonkasoft_add_club_gym_logo( $entry_fields['logo_upload'], $user_id, $entry_fields['company'] );
-
 	endif;
-
 }
 
 /**
  * This adds a company logo.
+ *
+ * @param string  $url contains the logo url.
+ * @param integer $user_id contains the user id.
+ * @param string  $company_name contains the users company.
  */
 function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null ) {
-
 	$current_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
-
 	if ( ! empty( $current_logo ) ) {
-
 		$current_logo = json_decode( $current_logo );
-
 	}
-
 	$image = array();
 	require_once ABSPATH . 'wp-admin/includes/image.php';
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/media.php';
-
-	$attachment_id = media_sideload_image( $url, $user_id, ' ' . $user_id, 'id' );
+	$attachment_id = wonkasoft_media_sideload_image( $url, $user_id, ' ' . $user_id, 'id' );
 
 	if ( is_wp_error( $attachment_id ) ) {
-
 		$error = $attachment_id->get_error_messages();
-
 		update_user_meta( $user_id, 'company_logo', $error );
-
 	} else {
-
 		$image['id']  = $attachment_id;
 		$image['url'] = wp_get_attachment_url( $attachment_id );
 		if ( ! empty( $company_name ) ) {
@@ -1471,144 +781,73 @@ function wonkasoft_add_club_gym_logo( $url, $user_id, $company_name = null ) {
 		} elseif ( ! empty( $current_logo->company_name ) ) {
 			$image['company_name'] = $current_logo->company_name;
 		}
-
 		$image = json_encode( $image );
-
 		if ( ! empty( $current_logo ) ) {
-
 			wp_delete_post( $current_logo->id, true );
-
 		}
 
 		update_user_meta( $user_id, 'company_logo', $image );
-
 	}
 }
 
 /**
- * This adds the my account menu link for the logo.
+ * A modified version of the core function
  *
- * @param  array $menu_links contains the current my account links.
- * @return [type]             [description]
+ * @param  string  $file    contains file url.
+ * @param  integer $post_id contains the parent post ID.
+ * @param  string  $desc    contains passed description.
+ * @param  string  $return  contains desired return of html, src, or id.
+ * @return            returns error or desired return.
  */
-function wonkasoft_my_account_club_gym_logo( $menu_links ) {
+function wonkasoft_media_sideload_image( $file, $post_id = 0, $desc = null, $return = 'html' ) {
+	if ( ! empty( $file ) ) {
+		// Set variables for storage, fix file filename for query strings.
+		preg_match( '/[^\?]+\.(jpe?g|jpg|gif|png|svg|ai|eps)\b/i', $file, $matches );
 
-	$user = wp_get_current_user();
-
-	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) :
-
-		$menu_links = array_slice( $menu_links, 0, 5, true )
-		+ array( 'club-gym-logo' => 'Club/Gym Logo' )
-		+ array_slice( $menu_links, 5, null, true );
-
-	endif;
-
-	return $menu_links;
-
-}
-add_filter( 'woocommerce_account_menu_items', 'wonkasoft_my_account_club_gym_logo', 50 );
-
-/**
- * This is for the adding of the endpoint for my account page logo link.
- */
-function wonkasoft_add_endpoint_my_account() {
-
-	add_rewrite_endpoint( 'club-gym-logo', EP_PAGES );
-
-}
-add_action( 'init', 'wonkasoft_add_endpoint_my_account' );
-
-/**
- * This is the content that is parsed at the logo end point.
- */
-function wonkasoft_my_account_logo_link_endpoint_content() {
-
-	$user         = wp_get_current_user();
-	$user_id      = $user->ID;
-	$company_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
-
-	$output = '';
-	if ( ! empty( $company_logo ) ) {
-		$company_logo = json_decode( $company_logo );
-	}
-
-	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) {
-
-		$output .= '<div class="my-account-logo-content-wrap">';
-		$output .= '<h2>Club/Gym Logo</h2>';
-
-		if ( ! empty( $company_logo->company_name ) ) {
-			$output .= '<span>' . $company_logo->coupon_code . '</span>';
-		} else {
-			$output .= '<span>need a coupon code</span>';
+		if ( ! $matches ) {
+			return new WP_Error( 'image_sideload_failed', __( 'Invalid image URL' ) );
 		}
 
-		if ( ! empty( $company_logo->url ) ) {
+		$file_array         = array();
+		$file_array['name'] = wp_basename( $matches[0] );
 
-			$output .= '<div class="current-logo-wrap">';
-			$output .= '<img src="' . wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) . '" srcset="' . wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) . '" class="current-logo" />';
-			$output .= '</div>';
-			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
-			$output .= '<div class="form-wrap">';
-			$output .= '<div class="form-container">';
-			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 0, false );
-			$output .= '</div>';
-			$output .= '</div>';
+		// Download file to temp location.
+		$file_array['tmp_name'] = download_url( $file );
 
-		} else {
-
-			$output .= '<div class="current-logo-wrap">';
-			$output .= '<div class="no-logo">You have no logo on file.</div>';
-			$output .= '</div>';
-			$output .= '<p>To update/change your logo, simply upload a new one below.</p>';
-			$output .= '<div class="form-wrap">';
-			$output .= '<div class="form-container">';
-			$output .= gravity_form( 'Media Upload', false, false, false, null, true, 0, false );
-			$output .= '</div>';
-			$output .= '</div>';
-
+		// If error storing temporarily, return the error.
+		if ( is_wp_error( $file_array['tmp_name'] ) ) {
+			return $file_array['tmp_name'];
 		}
 
-		$output .= '</div>';
+		// Do the validation and storage stuff.
+		$id = media_handle_sideload( $file_array, $post_id, $desc );
 
-		echo $output;
-
-	}
-
-}
-add_action( 'woocommerce_account_club-gym-logo_endpoint', 'wonkasoft_my_account_logo_link_endpoint_content' );
-
-
-function wonkasoft_parse_account_logo() {
-
-	$user         = wp_get_current_user();
-	$user_id      = $user->ID;
-	$company_logo = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : null;
-
-	$output = '';
-
-	if ( ! empty( $company_logo ) ) {
-		$company_logo = json_decode( $company_logo );
-	}
-
-	if ( in_array( 'apera_zip_affiliate', $user->roles ) ) {
-
-		if ( ! empty( $company_logo->url ) ) {
-
-			$output .= '<img src="' . esc_attr( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) ) . '" srcset="' . esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ) . '" data-attachment-id="' . $company_logo->id . '" class="current-logo" />';
-
-		} else {
-
-			$output .= '<div class="no-logo">You have no logo on file. If you just tried to update your logo there must have been a problem with the upload. Try again or contact us for further help.</div>';
-
+		// If error storing permanently, unlink.
+		if ( is_wp_error( $id ) ) {
+			@unlink( $file_array['tmp_name'] );
+			return $id;
+			// If attachment id was requested, return it early.
+		} elseif ( 'id' === $return ) {
+			return $id;
 		}
 
-		wp_send_json_success( $output );
+		$src = wp_get_attachment_url( $id );
+	}
 
+	// Finally, check to make sure the file has been saved, then return the HTML.
+	if ( ! empty( $src ) ) {
+		if ( 'src' === $return ) {
+			return $src;
+		}
+
+		$alt  = isset( $desc ) ? esc_attr( $desc ) : '';
+		$html = "<img src='" . esc_url( wp_get_attachment_image_src( $id, 'thumbnail', false )[0] ) . "' srcset='" . esc_attr( wp_get_attachment_image_srcset( $id, 'thumbnail', null ) ) . "' alt='$alt' />";
+
+		return $html;
+	} else {
+		return new WP_Error( 'image_sideload_failed' );
 	}
 }
-add_action( 'wp_ajax_wonkasoft_parse_account_logo', 'wonkasoft_parse_account_logo' );
-add_action( 'wp_ajax_nopriv_wonkasoft_parse_account_logo', 'wonkasoft_parse_account_logo' );
 
 /**
  * This will check for coupons and create one if needed.
@@ -1618,35 +857,27 @@ add_action( 'wp_ajax_nopriv_wonkasoft_parse_account_logo', 'wonkasoft_parse_acco
  * @return  string returns null or a string that is the created coupon code.
  */
 function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
-
 	$coupon_code = null;
-
-	$args = array(
+	$args        = array(
 		'post_type'      => 'shop_coupon',
 		'post_status'    => 'publish',
 		'posts_per_page' => -1,
 	);
-
-	$coupons    = new WP_Query( $args );
-	$found_code = false;
-	$percentage = $entry_fields['percentage'];
-
+	$coupons     = new WP_Query( $args );
+	$found_code  = false;
+	$percentage  = $entry_fields['percentage'];
 	foreach ( $coupons->posts as $coupon ) :
 		if ( $entry_fields['discount_code'] === $coupon->post_name ) :
 			$found_code = true;
 		endif;
 	endforeach;
-
 	if ( 'Add Discount Code' === $form_title && ! $found_code ) :
-
 		/**
 		 * Create a coupon programatically
 		 */
-		$coupon_code = $entry_fields['discount_code']; // Code.
-
+		$coupon_code   = $entry_fields['discount_code']; // Code.
 		$discount_type = 'percent'; // Type: fixed_cart, percent, fixed_product, percent_product.
-
-		$coupon = array(
+		$coupon        = array(
 			'post_title'   => $coupon_code,
 			'post_content' => '',
 			'post_status'  => 'publish',
@@ -1654,9 +885,7 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 			'post_type'    => 'shop_coupon',
 			'post_excerpt' => 'This coupon gives ' . $percentage . '% off',
 		);
-
 		$new_coupon_id = wp_insert_post( $coupon );
-
 		// Add meta.
 		update_post_meta( $new_coupon_id, 'discount_type', $discount_type );
 		update_post_meta( $new_coupon_id, 'coupon_amount', $percentage );
@@ -1667,279 +896,10 @@ function wonkasoft_coupon_creation( $entry_fields, $form_title ) {
 		update_post_meta( $new_coupon_id, 'expiry_date', '' );
 		update_post_meta( $new_coupon_id, 'apply_before_tax', 'yes' );
 		update_post_meta( $new_coupon_id, 'free_shipping', 'no' );
-
 		return $coupon_code;
-
 	endif;
-
 	return false;
-
 }
-
-/**
- * Runs after discount code creation.
- *
- * @param  array $entry array of entry.
- * @param  array $form  array of the form.
- */
-function wonkasoft_after_code_entry( $entry, $form ) {
-
-	if ( 'Add Discount Code' !== $form['title'] ) {
-		return;
-	}
-
-	$entry_fields                  = array();
-	$entry_fields['custom_fields'] = array();
-	$set_labels                    = array(
-		'Discount Code',
-		'Percentage',
-		'Email',
-		'Tag',
-		'First Name',
-		'Last Name',
-		'Users Discount',
-	);
-
-	$custom_fields = array();
-
-	$pattern = '/([ \/]{1,5})/';
-
-	foreach ( $form['fields'] as $field ) {
-		if ( 'honeypot' !== $field['type'] ) :
-			if ( in_array( $field['label'], $set_labels ) ) :
-				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
-			endif;
-
-			if ( in_array( $field['label'], $custom_fields ) ) :
-				$current_label = strtolower( preg_replace( $pattern, $field['label'] ) );
-					array_push(
-						$entry_fields['custom_fields'],
-						array(
-							'label' => $current_label,
-							'value' => $entry[ $field['id'] ],
-						)
-					);
-			endif;
-
-			if ( ! empty( $field->inputs ) ) :
-				foreach ( $field->inputs as $input ) {
-					if ( in_array( $input['label'], $set_labels ) ) :
-						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
-					endif;
-				}
-			endif;
-		endif;
-	}
-
-	$user_id = get_user_by( 'email', $entry_fields['email'] )->data->ID;
-
-	$refersion_data = wonkasoft_get_refersion_data( $user_id );
-
-	$coupon_code = wonkasoft_coupon_creation( $entry_fields, $form['title'] );
-
-	if ( false !== $coupon_code ) {
-
-		$entry_fields['affiliate_code'] = $refersion_data->id;
-		$entry_fields['type']           = 'COUPON';
-		$entry_fields['trigger']        = $entry_fields['discount_code'];
-
-		$refersion_init          = new Wonkasoft_Refersion_Api( $entry_fields );
-		$refersion_added_trigger = $refersion_init->create_conversion_trigger();
-
-		$refersion_data->trigger_id = $refersion_added_trigger->trigger_id;
-		$refersion_data->trigger    = $refersion_added_trigger->trigger;
-
-		// Setting getResponse api args.
-		$api_args = array(
-			'email' => $entry_fields['email'],
-			'tags'  => array(
-				$entry_fields['tag'],
-			),
-		);
-
-		// Setting affiliate code and link to send to getResponse.
-		$api_args['custom_fields']        = array(
-			'discount_code',
-		);
-		$api_args['custom_fields_values'] = array(
-			'discount_code' => $entry_fields['discount_code'],
-		);
-
-		// Send to getResponse.
-		$getresponse = get_response_api_call( $api_args );
-
-		update_user_meta( $user_id, 'users_discount_percentage', $entry_fields['users_discount'] );
-		update_user_meta( $user_id, 'refersion_discount_code', $refersion_data );
-		update_user_meta( $user_id, 'getResponse_discount_code', $getresponse );
-	}
-
-}
-add_action( 'gform_after_submission', 'wonkasoft_after_code_entry', 10, 2 );
-
-/**
- * This handles the submission of the perks registration form.
- *
- * @param  array $entry contains the entry fields.
- * @param  array $form  contains the form array.
- */
-function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry, $ajax ) {
-
-	if ( 'Apera Perks Registration' !== $form['title'] ) {
-		return $confirmation;
-	}
-
-	$entry_fields                  = array();
-	$entry_fields['custom_fields'] = array();
-	$set_labels                    = array(
-		'First',
-		'Last',
-		'Email',
-		'Password',
-		'MSE Request',
-		'MSE Occupation',
-		'Military Active',
-		'Military Date',
-		'Military Branch',
-		'Street Address',
-		'Address Line 2',
-		'State / Province',
-		'ZIP / Postal Code',
-		'Country',
-		'Military Occupational Code',
-		'Military Note',
-		'Student School Website',
-		'Student School Email',
-		'Student Grad Date',
-		'Student Sports',
-		'Student Note',
-		'Educator School Website',
-		'Educator School Email',
-		'Educator Subject',
-		'Educator Years',
-		'Educator Note',
-	);
-
-	$custom_fields = array();
-
-	$pattern = '/([ \/]{1,5})/';
-
-	foreach ( $form['fields'] as $field ) {
-		if ( 'honeypot' !== $field['type'] ) :
-
-			if ( in_array( $field['label'], $set_labels ) ) :
-				$entry_fields[ strtolower( preg_replace( $pattern, '_', $field['label'] ) ) ] = $entry[ $field['id'] ];
-			endif;
-
-			if ( in_array( $field['label'], $custom_fields ) ) :
-				$current_label = strtolower( preg_replace( $pattern, $field['label'] ) );
-					array_push(
-						$entry_fields['custom_fields'],
-						array(
-							'label' => esc_html( $current_label ),
-							'value' => esc_html( $entry[ $field['id'] ] ),
-						)
-					);
-			endif;
-
-			if ( ! empty( $field->inputs ) ) :
-				foreach ( $field->inputs as $input ) {
-					if ( in_array( $input['label'], $set_labels ) ) :
-						$entry_fields[ strtolower( preg_replace( $pattern, '_', $input['label'] ) ) ] = $entry[ $input['id'] ];
-					endif;
-				}
-			endif;
-
-		endif;
-
-	}
-
-	if ( email_exists( $entry_fields['email'] ) ) {
-		$output  = '';
-		$output .= '<p>' . $entry_fields['email'] . ' is already being used. You can login at the link below</p>';
-
-		$confirmation['redirect'] = '';
-		return $output;
-
-	} else {
-
-		$role         = 'apera_perks_partner';
-		$role_display = 'Apera Perks Partner';
-
-		$user_id = wonkasoft_make_user_account( $entry_fields, $role );
-
-		$user = new WP_User( $user_id );
-
-		if ( ! in_array( $role, $user->roles ) ) :
-			$user->add_role( $role, $role_display );
-		endif;
-
-		// Setting Apera Perks affiliate link to send to getResponse.
-		$api_args['contact_name']         = $entry_fields['first'] . ' ' . $entry_fields['last'];
-		$api_args['email']                = $entry_fields['email'];
-		$api_args['custom_fields']        = array(
-			'affiliate_link',
-			'apera_id',
-		);
-		$api_args['custom_fields_values'] = array(
-			'affiliate_link' => get_site_url() . '/?ref=' . $user_id,
-			'apera_id'       => $user_id,
-		);
-
-		$getresponse_init = new Wonkasoft_GetResponse_Api( $api_args );
-		$getresponse_mse  = '';
-
-		if ( empty( $getresponse_init->campaign_id ) ) :
-			foreach ( $getresponse_init->campaign_list as $campaign ) :
-				if ( 'perks_program_signups' === $campaign->name ) :
-					$getresponse_init->campaign_id = $campaign->campaignId;
-				endif;
-			endforeach;
-
-		endif;
-
-		if ( ! empty( $getresponse_init->custom_fields ) ) :
-			foreach ( $getresponse_init->custom_fields_list as $field ) {
-				if ( in_array( $field->name, $getresponse_init->custom_fields ) ) :
-					$add_field = array(
-						'customFieldId' => $field->customFieldId,
-						'value'         => array(
-							$getresponse_init->custom_fields_values[ $field->name ],
-						),
-					);
-					array_push( $getresponse_init->custom_fields_to_update, $add_field );
-				endif;
-			}
-		endif;
-
-		$getresponse_perks = $getresponse_init->create_a_new_contact();
-
-		if ( ! empty( $entry_fields['mse_occupation'] ) ) :
-			foreach ( $getresponse_init->campaign_list as $campaign ) :
-				if ( 'perks_mse_program_signups' === $campaign->name ) :
-					$getresponse_init->campaign_id = $campaign->campaignId;
-				endif;
-			endforeach;
-
-			$getresponse_mse = $getresponse_init->create_a_new_contact();
-		endif;
-		$getresponse_perks = json_encode( $getresponse_perks );
-		update_user_meta( $user_id, 'getResponse_data_perks', $getresponse_perks );
-
-		if ( ! empty( $getresponse_mse ) ) {
-			$getresponse_mse = json_encode( $getresponse_mse );
-			update_user_meta( $user_id, 'getResponse_data_mse', $getresponse_mse );
-		}
-
-		if ( ! empty( $entry_fields['mse_occupation'] ) ) {
-			$entry_fields = json_encode( $entry_fields );
-			update_user_meta( $user_id, 'mse_data', $entry_fields );
-		}
-	}
-
-	return $confirmation;
-
-}
-add_filter( 'gform_confirmation', 'wonkasoft_after_perks_registration_entry', 10, 4 );
 
 /**
  * This function handles the api request to send data to getResponse.
@@ -1948,7 +908,6 @@ add_filter( 'gform_confirmation', 'wonkasoft_after_perks_registration_entry', 10
  * @return object           returns error or response from the api call.
  */
 function get_response_api_call( $api_args ) {
-
 	$response    = array();
 	$getresponse = new Wonkasoft_GetResponse_Api( $api_args );
 
@@ -1958,7 +917,6 @@ function get_response_api_call( $api_args ) {
 				$getresponse->campaign_id = $campaign->campaignId;
 			endif;
 		endforeach;
-
 	endif;
 
 	if ( empty( $getresponse->contact_id ) ) :
@@ -2007,7 +965,6 @@ function get_response_api_call( $api_args ) {
 
 	return $response;
 }
-
 /**
  * This function registers the custom api route.
  *
@@ -2025,7 +982,6 @@ function wonkasoft_register_custom_api() {
 	);
 }
 add_action( 'rest_api_init', 'wonkasoft_register_custom_api' );
-
 /**
  * This function resets the wp-json rest api.
  *
@@ -2036,7 +992,6 @@ function wonka_rest_api( $api ) {
 	return 'api';
 }
 add_filter( 'rest_url_prefix', 'wonka_rest_api' );
-
 /**
  * This function handles the rest api endpoint for getResponse.
  *
@@ -2044,22 +999,54 @@ add_filter( 'rest_url_prefix', 'wonka_rest_api' );
  * @return json    returns the response data.
  */
 function wonkasoft_getresponse_endpoint( $data ) {
-
 	if ( ! isset( $_GET['email'] ) && ! isset( $_GET['tag'] ) && ! isset( $_GET['campaign_name'] ) ) :
 		return 'Invalid request, contact support for more information.';
 	endif;
-
 	$email         = wp_kses_post( wp_unslash( $_GET['email'] ) );
 	$passed_tag    = wp_kses_post( wp_unslash( $_GET['tag'] ) );
 	$campaign_name = wp_kses_post( wp_unslash( $_GET['campaign_name'] ) );
-
-	$prep_data = array(
+	$prep_data     = array(
 		'email'         => $email,
 		'tags'          => array(
 			$passed_tag,
 		),
 		'campaign_name' => $campaign_name,
 	);
+
+	if ( 'ambassador_program_signups' === $campaign_name || 'zip_program_signups' === $campaign_name || 'perks_mse_program_signups' === $campaign_name ) {
+		$user    = get_user_by( 'email', $email );
+		$user_id = $user->ID;
+
+		if ( 'ambassador_program_signups' === $campaign_name ) {
+			if ( 'approved' === $passed_tag ) {
+				update_user_meta( $user_id, 'ambassador_affiliate_status', 'Approved', 'Pending' );
+			}
+
+			if ( 'denial' === $passed_tag ) {
+				update_user_meta( $user_id, 'ambassador_affiliate_status', 'Denied', 'Pending' );
+			}
+		}
+
+		if ( 'zip_program_signups' === $campaign_name ) {
+			if ( 'zipapproved' === $passed_tag ) {
+				update_user_meta( $user_id, 'zip_affiliate_status', 'Approved', 'Pending' );
+			}
+
+			if ( 'zipdenial' === $passed_tag ) {
+				update_user_meta( $user_id, 'zip_affiliate_status', 'Denied', 'Pending' );
+			}
+		}
+
+		if ( 'perks_mse_program_signups' === $campaign_name ) {
+			$role         = 'apera_mse_partner';
+			$role_display = 'Apera Mse Partner';
+
+			$user = new WP_User( $user_id );
+			if ( ! in_array( $role, $user->roles ) ) :
+				$user->add_role( $role, $role_display );
+			endif;
+		}
+	}
 
 	$getresponse = new Wonkasoft_GetResponse_Api( $prep_data );
 
@@ -2070,7 +1057,6 @@ function wonkasoft_getresponse_endpoint( $data ) {
 			endif;
 		endforeach;
 	endif;
-
 	if ( empty( $getresponse->contact_id ) ) :
 		foreach ( $getresponse->contact_list as $contact ) :
 			if ( $getresponse->campaign_id === $contact->campaign->campaignId ) :
@@ -2078,7 +1064,13 @@ function wonkasoft_getresponse_endpoint( $data ) {
 			endif;
 		endforeach;
 	endif;
-
+	if ( 'apera_195932' === $campaign_name && empty( $getresponse->contact_id ) ) {
+		foreach ( $getresponse->contact_list as $contact ) :
+			if ( $email === $contact->email ) :
+				$getresponse->contact_id = $contact->contactId;
+			endif;
+		endforeach;
+	}
 	if ( ! empty( $getresponse->tags ) && ! empty( $getresponse->contact_id ) ) :
 		$getresponse->tags_to_update = array();
 		foreach ( $getresponse->tag_list as $tag ) {
@@ -2089,117 +1081,192 @@ function wonkasoft_getresponse_endpoint( $data ) {
 				array_push( $getresponse->tags_to_update, $tag_id );
 			endif;
 		}
-		$response = $getresponse->upsert_the_tags_of_contact();
-
+		if ( 'apera_195932' === $campaign_name ) {
+			$response = $getresponse->update_contact_details();
+		} else {
+			$response = $getresponse->upsert_the_tags_of_contact();
+		}
 		$data_send = array(
 			'email'      => $email,
 			'tag'        => $passed_tag,
 			'contact_id' => $getresponse->contact_id,
 		);
-
 		$data_send = json_decode( json_encode( $data_send ) );
 		$data_send = http_build_query( $data_send );
-		$url       = 'https://aperabags.com/response-page/?' . $data_send;
+		if ( 'apera_195932' === $campaign_name ) {
+			$url = 'https://aperabags.com/iff-thankyou/?' . $data_send;
+		} else {
+			$url = 'https://aperabags.com/response-page/?' . $data_send;
+		}
 		header( 'Content-Type: application/x-www-form-urlencoded' );
 		header( 'Location: ' . $url );
 	endif;
-
 	return $getresponse;
 }
-
 /**
  * This function adds Affiliate and Contact data to user profile.
  *
  * @param  object $user contains an object of the user.
  */
 function wonkasoft_api_responses_user_data( $user ) {
-
 	if ( in_array( 'apera_ambassador_affiliate', $user->roles ) || in_array( 'apera_zip_affiliate', $user->roles ) || in_array( 'apera_perks_partner', $user->roles ) ) :
 		$user_id         = $user->ID;
 		$refersion       = ( ! empty( get_user_meta( $user_id, 'refersion_data', true ) ) ) ? get_user_meta( $user_id, 'refersion_data', true ) : '';
 		$refersion_error = ( ! empty( get_user_meta( $user_id, 'refersion_error', true ) ) ) ? get_user_meta( $user_id, 'refersion_error', true ) : '';
 		$getresponse     = ( ! empty( get_user_meta( $user_id, 'getResponse_data', true ) ) ) ? get_user_meta( $user_id, 'getResponse_data', true ) : '';
 		$company_logo    = ( ! empty( get_user_meta( $user_id, 'company_logo', true ) ) ) ? get_user_meta( $user_id, 'company_logo', true ) : '';
+		$user_birthday   = ( ! empty( get_user_meta( $user_id, 'users_birthday', true ) ) ) ? get_user_meta( $user_id, 'users_birthday', true ) : '';
+
 		if ( ! empty( $company_logo ) ) {
 			$company_logo = json_decode( $company_logo );
 		}
-
 		?>
 	<hr />
-		<div class="header-container"><h3 class="h3 header-text"><?php esc_html_e( 'Apera Affiliate and Contact Info', 'aperabags' ); ?></h3></div>
-		<table class="form-table">
-			<tbody>
-					<?php
-					if ( ! empty( $company_logo ) ) :
-						?>
+		<div class="header-container"><h3 class="h3 header-text"><?php esc_html_e( 'Apera Affiliate and Contact Info', 'aperabags' ); ?></h3>
+
+		</div>
+
+		<?php
+		if ( ! empty( $user_birthday ) ) :
+			?>
+			<table class="form-table birthday-table">
+				<tbody>
+					<tr>
+						<th>
+							<label for="user-birthday">Your Birthday</label>
+						</th>
+						<td colspan="2">
+							<span><?php echo esc_html( $user_birthday ); ?></span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		<?php endif; ?>
+		<?php
+		if ( ! empty( $company_logo ) ) :
+			?>
+			<table class="form-table logo-table">
+				<tbody>
 					<tr>
 						<th>
 							<label for="club-gym-logo">Club/Gym Logo</label>
 						</th>
-						<td>
-							<img src="<?php echo esc_attr( wp_get_attachment_image_src( $company_logo->id, 'thumbnail', false ) ); ?>" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $company_logo->id, 'thumbnail', null ) ); ?>" id="club-gym-logo" class="company-logo" />
+						<td colspan="2">
+							<img image-id="<?php echo esc_attr( $company_logo->id ); ?>" src="<?php echo esc_url( $company_logo->url ); ?>" id="club-gym-logo" class="company-logo" />
 						</td>
 					</tr>
-					<?php endif; ?>
-					<?php
-					if ( ! empty( $refersion_error ) ) :
-						?>
+				</tbody>
+			</table>
+		<?php endif; ?>
+		<?php
+		if ( ! empty( $refersion_error ) || ! empty( $refersion ) ) :
+			?>
+			<table class="form-table refersion-table">
+				<tbody>
+			<?php
+			if ( ! empty( $refersion_error ) ) :
+				?>
 					<tr>
 						<th>
 							<label for="affiliate-error">Refersion Error</label>
 						</th>
-						<td>
-							<p id="affiliate-error"><?php echo wp_kses_post( $refersion_error ); ?></p>
+						<td colspan="2">
+							<p id="affiliate-error"><?php echo wp_kses_post( $refersion_error[0] ); ?></p>
 						</td>
 					</tr>
-					<?php endif; ?>
-					<?php
-					if ( ! empty( $refersion ) ) :
-						?>
-							<tr>
-								<th>
-									<label for="affiliate-id">Affiliate Code</label>
-								</th>
-								<td>
-									<p id="affiliate-id"><?php echo wp_kses_post( $refersion->id ); ?></p>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<label for="affiliate-link">Affiliate Link</label>
-								</th>
-								<td>
-									<p id="affiliate-link"><?php echo wp_kses_post( $refersion->link ); ?></p>
-								</td>
-							</tr>
-					<?php endif; ?>
-					<?php
-					if ( ! empty( $getresponse ) ) :
-						?>
+			<?php endif; ?>
+			<?php
+			if ( ! empty( $refersion ) && empty( $refersion_error ) ) :
+				?>
+					<tr>
+						<th>
+							<label for="affiliate-id">Affiliate Code</label>
+						</th>
+						<td colspan="2">
+							<p id="affiliate-id"><?php echo wp_kses_post( $refersion->id ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							<label for="affiliate-link">Affiliate Link</label>
+						</th>
+						<td colspan="2">
+							<p id="affiliate-link"><?php echo wp_kses_post( $refersion->link ); ?></p>
+						</td>
+					</tr>
+			<?php endif; ?>
+				</tbody>
+			</table>
+		<?php endif; ?>
+		<?php
+		if ( ! empty( $getresponse ) ) :
+			?>
+			<table class="form-table getresponse-table">
+				<tbody>
 				<tr>
-					<th>
+					<th colspan="2">
 						<label for="getresponse-data">GetResponse Data</label>
 					</th>
-						<?php
-						foreach ( $getresponse as $value ) :
-							echo "<td style='background: #333; color: #fff;'>";
-							echo "<pre>\n";
-							print_r( json_encode( $value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
-							echo "</pre>\n";
-							echo '</td>';
-						endforeach;
-						?>
 				</tr>
-					<?php endif; ?>
+				<tr>
+					<th style="text-align: center;" colspan="2">
+						<label>Custom Fields</label>
+					</th>
+				</tr>
+				<tr>
+					<th><label>Field ID</label></th>
+					<th><label>Value</label></th>
+				</tr>
+			<?php
+			foreach ( $getresponse[0]->customFieldValues as $field ) :
+				?>
+				<tr>
+					<td>
+						<span><?php print_r( $field->customFieldId ); ?></span>
+					</td>
+					<td>
+					<?php
+					foreach ( $field->values as $value ) :
+						?>
+						<span><?php print_r( $value ); ?></span>
+						<?php
+					endforeach;
+					?>
+					</td>
+				</tr>
+				<?php
+			endforeach;
+			?>
+				<tr>
+					<th style="text-align: center;" colspan="2"><label>Tags</label></th>
+				</tr>
+				<tr>
+					<th><label>Tag ID</label></th>
+					<th><label>Tag Name</label></th>
+				</tr>
+			<?php
+			foreach ( $getresponse[1]->tags as $tag ) :
+				?>
+				<tr>
+					<td>
+						<span><?php print_r( $tag->tagId ); ?></span>
+					</td>
+					<td>
+						<span><?php print_r( $tag->name ); ?></span>
+					</td>
+				</tr>
+				<?php
+			endforeach;
+			?>
+		<?php endif; ?>
 			</tbody>
 		</table>
 		<hr />
 		<?php
-		endif;
+	endif;
 }
-add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 1 );
-add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 1 );
-
+add_action( 'show_user_profile', 'wonkasoft_api_responses_user_data', 2 );
+add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 2 );
 /**
  * This returns the refersion data that is set for the user.
  *
@@ -2207,67 +1274,301 @@ add_action( 'edit_user_profile', 'wonkasoft_api_responses_user_data', 1 );
  * @return object          returns an object of the users refersion data.
  */
 function wonkasoft_get_refersion_data( $user_id ) {
-
 	$refersion = ( ! empty( get_user_meta( $user_id, 'refersion_data', true ) ) ) ? get_user_meta( $user_id, 'refersion_data', true ) : '';
 	return $refersion;
-
 }
 
 /**
- * Adds the javascript required to view your password.
- *  Turn the the input type into text and back to password.
+ * Allowing tags in the editor.
  *
- * @param   [object] $form  form object
- *
- * @author Carlos
+ * @param  [type] $mceInit [description]
+ * @return [type]            [description]
  */
-function wonka_gform_validation( $form ) {
-
-	$output = "if ( document.querySelectorAll( 'div.input-group-append' ) )
-	{
-		var password_toggle_btns = document.querySelectorAll( 'div.input-group-append' );
-		password_toggle_btns.forEach( function( password_toggle_btn )
-		{
-			password_toggle_btn.addEventListener( 'click', function( e )
-			{
-				var parent_input, password_input, password_icon_btn, password_type;
-				var target = e.target;
-
-				if ( target.nodeName === 'DIV' ) 
-				{
-					password_icon_btn = target.firstElementChild;
-					parent_input = target.parentElement.parentElement;
-					password_input = parent_input.firstElementChild;
-					password_type = password_input.getAttribute( 'type' );
-				}
-
-				if ( target.nodeName === 'I' ) 
-				{
-					password_icon_btn = target;
-					target = target.parentElement;
-					parent_input = target.parentElement.parentElement;
-					password_input = parent_input.firstElementChild;
-					password_type = password_input.getAttribute( 'type' );
-				}
-
-				if( password_type === 'password' )
-				{
-					password_icon_btn.classList.toggle( 'fa-eye' );
-					password_icon_btn.classList.toggle( 'fa-eye-slash' );
-					password_input.type = 'text';
-				}
-
-				if ( password_type === 'text' ) 
-				{
-					password_icon_btn.classList.toggle( 'fa-eye' );
-					password_icon_btn.classList.toggle( 'fa-eye-slash' );
-					password_input.type = 'password';
-				}
-			});
-		});
-	}";
-
-	GFFormDisplay::add_init_script( $form['id'], 'myaccoutn_validation', GFFormDisplay::ON_PAGE_RENDER, $output );
-
+function override_mce_options( $mceInit ) {
+	$opts                               = '*[*]';
+	$mceInit['valid_elements']          = $opts;
+	$mceInit['extended_valid_elements'] = $opts;
+	return $mceInit;
 }
-add_action( 'gform_register_init_scripts', 'wonka_gform_validation' );
+add_filter( 'tiny_mce_before_init', 'override_mce_options' );
+
+
+/**
+ * This is replacing the re-order btns on the site.
+ *
+ * @param  object $order contains the current order.
+ */
+function wonkasoft_btn_fix_for_re_order( $actions, $order ) {
+	$status = $order->status;
+	unset( $actions['view'] );
+	if ( 'completed' !== $status ) {
+		$wp_nonce_url      = wp_nonce_url(
+			add_query_arg(
+				array(
+					'cancel_order' => 'true',
+					'order'        => $order->get_order_key(),
+					'order_id'     => $order->get_id(),
+					'redirect'     => $redirect,
+				),
+				$order->get_cancel_endpoint()
+			),
+			'woocommerce-cancel_order'
+		);
+		$actions['cancel'] = array(
+			'url'  => $wp_nonce_url,
+			'name' => 'Cancel',
+		);
+	}
+	return $actions;
+}
+add_filter( 'woocommerce_my_account_my_orders_actions', 'wonkasoft_btn_fix_for_re_order', 10, 2 );
+/**
+ * This function is an override of Sumo for my account page.
+ *
+ * @param  integer $order_id     contains current orders ID.
+ * @param  array   $order_obj    contains current order.
+ * @param  string  $order_status contains current orders status.
+ * @param  string  $first_name   contains current users first name.
+ * @param  integer $i           contains line integer.
+ * @param  integer $points      contains points for current user.
+ * @param  array   $order_list   contains the list of orders for user.
+ */
+function wonkasoft_order_status_settings( $order_id, $order_obj, $order_status, $first_name, $i, $points, $order_list ) {
+	$my_acc_link           = get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
+	$order_link            = esc_url_raw( add_query_arg( 'view-order', $order_id, $my_acc_link ) );
+	$order_link            = '<a href="' . $order_link . '">#' . $order_id . '</a>';
+	$order_status_to_reach = ucfirst( implode( ',', $order_list ) );
+	$message               = __( 'Currently, the order status is in [status]. Once the order status reached to the [order_status_to_reach], [points] points for purchasing the product(s) in this order([order_id]) will be added to your account', 'aperabags' );
+	$replace_msg           = str_replace( '[points]', $points, str_replace( '[order_id]', $order_link, str_replace( '[status]', ucfirst( $order_status ), $message ) ) );
+	$replace_msg           = str_replace( '[order_status_to_reach]', $order_status_to_reach, $replace_msg );
+	$date                  = ( ! empty( $order ) ) ? esc_html( $order->get_date_created()->date( 'm/d/Y' ) ) : '-';
+	?>
+	<tr>
+		<td data-value="<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $date ); ?></td>  
+		<td><?php echo esc_html( $first_name ); ?></td> 
+		<td><?php echo esc_html( ucfirst( $order_status ) ); ?></td>
+		<td><?php echo esc_html( $replace_msg ); ?></td>    
+		<td><?php echo esc_html( $replace_msg ); ?></td>    
+		<td></td>   
+	</tr>
+	<?php
+}
+
+/**
+ * Cron executed function.
+ */
+function refersion_cron_exec() {
+	$entry_fields = array( 'report_id' => 141082 );
+	// Init API Class.
+	$refersion_api_init = new Wonkasoft_Refersion_Api( $entry_fields );
+	// Generate download link.
+	$refersion_response = $refersion_api_init->generate_download_link();
+	// Data Declaration as String.
+	$data = '';
+	// CSV data link from refersion.
+	$download_link = $refersion_response->download_link;
+
+	$csvdata = array();
+
+	$file = fopen( $download_link, 'r' );
+
+	while ( ( $data = fgetcsv( $file ) ) !== false ) {
+		array_push( $csvdata, $data );
+	}
+	fclose( $file );
+
+	$finaldata  = array();
+	$csvheaders = array_slice( $csvdata, 0, 1 );
+	foreach ( $csvheaders[0] as $key => $header ) {
+		$csvheaders[0][ $key ] = str_replace( ' ', '_', preg_replace( '/[\(\)]/', '', strtolower( $header ) ) );
+	}
+
+	$data = array_slice( $csvdata, 1 );
+
+	if ( empty( $data ) ) {
+		return false;
+	}
+
+	foreach ( $data as $key => $value ) {
+		array_push( $finaldata, array_combine( $csvheaders[0], $value ) );
+	}
+
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'refersion_affiliates_data';
+
+	$format = array(
+		'%d',
+		'%s',
+		'%s',
+		'%s',
+		'%d',
+		'%s',
+		'%s',
+		'%d',
+		'%d',
+		'%s',
+		'%s',
+		'%s',
+		'%s',
+	);
+
+	$where_format = array(
+		'%d',
+	);
+
+	foreach ( $finaldata as $key => $value ) {
+		$query = $wpdb->query( $wpdb->prepare( "SELECT affiliate_id FROM $table_name WHERE affiliate_id = %d", $value['affiliate_id'] ) );
+
+		if ( $query ) {
+			$wpdb->update( $table_name, $value, array( 'affiliate_id' => $value['affiliate_id'] ), $format, $where_format );
+		} else {
+			$wpdb->insert( $table_name, $value, $format );
+		}
+	}
+}
+// add_action( 'refersion_cron_hook', 'refersion_cron_exec' );
+
+	/**
+	 * Schedule Cron Job Event
+	 */
+function REFERSION_CronJob() {
+	if ( ! wp_next_scheduled( 'refersion_cron_hook' ) ) {
+		wp_schedule_event( time(), 'daily', 'refersion_cron_hook' );
+	}
+}
+// add_action( 'after_setup_theme', 'REFERSION_CronJob' );
+
+/**
+ * This creates the table for Refersion Data to be stored.
+ */
+function create_custom_database_tables() {
+	global $wpdb;
+	$charset_collate = $wpdb->get_charset_collate();
+	$table_name      = $wpdb->prefix . 'refersion_affiliates_data';
+	if ( $wpdb->get_var( "SHOW TABLES LIKE '%s'", $table_name ) !== $table_name ) :
+		$sql = "CREATE TABLE $table_name (
+      id INT(11) NOT NULL AUTO_INCREMENT,
+	  	affiliate_id INT(11) NOT NULL,
+      affiliate_name VARCHAR(150) NOT NULL,
+      affiliate_email VARCHAR(150) NOT NULL,
+      company_name VARCHAR(150) NOT NULL,
+      subid INT(15) NOT NULL,
+      offer_id VARCHAR(16) NOT NULL,
+      offer_name VARCHAR(150) NOT NULL,
+      visits INT(15) NOT NULL,
+      conversions INT(15) NOT NULL,
+      revenue_usd VARCHAR(150) NOT NULL,
+      commission_usd VARCHAR(150) NOT NULL,
+      conversion_rate VARCHAR(150) NOT NULL,
+      eepc_usd VARCHAR(150) NOT NULL,
+      updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (id) 
+      )$charset_collate;";
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		dbDelta( $sql );
+		update_option( 'refersion_affiliates_database_version', REFERSION_AFFILIATES_DATABASE_VERSION );
+	else :
+		  $sql = "CREATE TABLE $table_name (
+        id INT(11) NOT NULL AUTO_INCREMENT,
+				affiliate_id INT(11) NOT NULL,
+        affiliate_name VARCHAR(150) NOT NULL,
+        affiliate_email VARCHAR(150) NOT NULL,
+        company_name VARCHAR(150) NOT NULL,
+        subid INT(15) NOT NULL,
+        offer_id VARCHAR(16) NOT NULL,
+        offer_name VARCHAR(150) NOT NULL,
+        visits INT(15) NOT NULL,
+        conversions INT(15) NOT NULL,
+        revenue_usd VARCHAR(150) NOT NULL,
+        commission_usd VARCHAR(150) NOT NULL,
+        conversion_rate VARCHAR(150) NOT NULL,
+        eepc_usd VARCHAR(150) NOT NULL,
+        updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id) 
+        )$charset_collate;";
+			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+			dbDelta( $sql );
+			update_option( 'refersion_affiliates_database_version', REFERSION_AFFILIATES_DATABASE_VERSION );
+	endif;
+}
+add_action( 'after_setup_theme', 'create_custom_database_tables' );
+
+/**
+ * This is supposed to set basic roles for users.
+ *
+ * @param  [type] $user_id [description]
+ */
+function wonkasoft_apera_basic_roles( $user_id ) {
+	$role          = 'apera_perks_partner';
+	$role_display  = 'Apera Perks Partner';
+	$role2         = 'customer';
+	$role2_display = 'Customer';
+
+	$user = new WP_User( $user_id );
+	if ( ! in_array( $role, $user->roles ) ) :
+		$user->add_role( $role, $role_display );
+	endif;
+
+	if ( ! in_array( $role2, $user->roles ) ) :
+		$user->add_role( $role2, $role2_display );
+	endif;
+}
+add_action( 'user_register', 'wonkasoft_apera_basic_roles' );
+
+/**
+ * This fixes the login screen logo url.
+ *
+ * @return  string returns the logo url.
+ */
+function wonkasoft_logo_url() {
+	 return 'https://wonkasoft.com';
+}
+add_filter( 'login_headerurl', 'wonkasoft_logo_url' );
+
+/**
+ * Title to identify the current site.
+ *
+ * @return string returns title info.
+ */
+function wonkasoft_logo_url_title( $login_header_text ) {
+	$output = '<img src="https://wonkasoft.com/wp-content/uploads/2018/03/wonkasoft-teal-dark-logo-192.png" class="login-logo" /><p>Aperabags.com built by Wonkasoft</p>';
+	return $output;
+}
+add_filter( 'login_headertext', 'wonkasoft_logo_url_title' );
+
+/**
+ * This will place Wonkasoft Logo over the login form.
+ */
+function wonkasoft_login_logo() {
+	?>
+	<style type="text/css">
+		#login h1 a, .login h1 a {
+			background-image: unset;
+			height: 94px;
+			width: 100%;
+			text-indent: 0;
+			margin: 0 auto;
+		}
+	</style>
+	<?php
+}
+add_action( 'login_enqueue_scripts', 'wonkasoft_login_logo' );
+
+/**
+ * This is for debugging.
+ *
+ * @param  array $tag contains all hooks on page.
+ */
+function get_hooks( $tag ) {
+	global $wp_current_filter;
+	global $debug_tags;
+	if ( in_array( $tag, $debug_tags ) ) {
+		return;
+	}
+	if ( substr( $tag, 0, 1 ) === '<' ) :
+		return;
+	endif;
+	print_r( '<pre class="found-hook">' . $tag . '</pre>' );
+	$debug_tags[] = $tag;
+}
+	// add_action( 'all', 'get_hooks', 999 );

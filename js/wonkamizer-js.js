@@ -39,16 +39,54 @@ var componentForm;
 	drop_down,
 	header_el,
 	header_height,
-	xhr = new XMLHttpRequest();
+	config = { attributes: true, childList: true },
+	qty_changers_array = [],
+	xhr;
+	if ( document.querySelector( '.fp_apply_reward' ) ) 
+	{
+		if ( document.querySelector( '.redeemit' ) ) 
+		{
+			var redeem_it_btn = document.querySelector( '.redeemit' );
+			var redeem_it_form = document.querySelector( 'form.checkout_redeeming' );
+			redeem_it_btn.classList.add( 'wonka-btn' );
+			redeem_it_btn.addEventListener( 'click', function( e ) 
+				{
+					e.stopPropagation();
+					redeem_it_form.style = 'display: block;';
+					setTimeout( function() 
+						{
+							if ( redeem_it_form.classList.contains( 'show' ) ) 
+							{
+								redeem_it_form.classList.remove( 'show' );
+								
+								setTimeout( function() 
+									{
+										redeem_it_form.style = 'display: none;';
+									}, 200 );
+							}
+							else
+							{
+								redeem_it_form.classList.add( 'show' );
+								
+							}
+						}, 200 );
+				});
+		}
+		var apply_reward_container = document.querySelector( '.fp_apply_reward' );
+		var new_div_group = document.createElement( 'DIV' );
+		var input_text = apply_reward_container.querySelectorAll( 'input' )[0];
+		var input_btn = apply_reward_container.querySelectorAll( 'input' )[1];
+		new_div_group.classList.add( 'input-group' );
+		new_div_group.appendChild( input_text );
+		new_div_group.appendChild( input_btn );
+		apply_reward_container.appendChild( new_div_group );
+	}
 
 	if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 	{
+
 		if ( document.querySelector( '#shipping_address_1' ) ) 
 		{
-			$( 'docmuent body' ).on( 'update_checkout', function( e ) 
-				{
-					e.stopImmediatePropagation();
-				});
 
 			$( '#shipping_address_1' ).on( 'keydown', function( e ) 
 				{
@@ -150,48 +188,203 @@ var componentForm;
 		var input_label = document.querySelector( 'label.custom-file-label' );
 		var file_name;
 		var current_logo_wrap = document.querySelector( 'div.current-logo-wrap' );
+		var agree_to_fee_modal_wrap;
+		var inner_markup = '';
+		var closebtns;
+		var consent_checkbox;
 
-		file_input.addEventListener( 'change', function( e ) 
+		document.ongform_post_render = function( event, form_id, current_page )
+		{
+
+			if ( document.querySelector( '#agree-to-fee-modal' ) ) 
 			{
-				if ( '' === file_input.value ) 
-				{
-					input_label.innerText = 'Choose file';
-				}
-				else
-				{
-					file_name = file_input.value.split('\\')[file_input.value.split('\\').length - 1];
-					input_label.innerText = file_name;
-				}
-			} );
-
-		document.ongform_confirmation_loaded = function( e ) 
+				agree_to_fee_modal_wrap = document.querySelector( '#agree-to-fee-modal' );
+			}
+			else
 			{
-				var data = {
-					'url': wonkasoft_request.ajax,
-					'action': 'wonkasoft_parse_account_logo',
-					'security': wonkasoft_request.security
-				};
-				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
-				xhr.onreadystatechange = function() {
+				agree_to_fee_modal_wrap = document.createElement('DIV');
+				agree_to_fee_modal_wrap.classList.add( 'agree-to-fee-modal-wrap');
+				agree_to_fee_modal_wrap.classList.add( 'modal');
+				agree_to_fee_modal_wrap.classList.add( 'fade');
+				agree_to_fee_modal_wrap.setAttribute( 'id', 'agree-to-fee-modal');
 
-					if ( this.readyState == 4 && this.status == 200 ) 
+				inner_markup += '<div class="modal-dialog modal-dialog-centered">';
+				inner_markup += '<div class="modal-content">';
+				inner_markup += '<!-- Modal Header -->';
+				inner_markup += '<div class="modal-header">';
+				inner_markup += '<button type="button" class="btn close" data-dismiss="modal">&times;</button>';
+				inner_markup += '</div>';
+				inner_markup += '<!-- Modal body -->';
+				inner_markup += '<div class="modal-body">';
+				inner_markup += '<p><strong>Oops!</strong> Looks like you are not uploading an .ai, .eps, .pdf, or vector image. Please close this box and upload your logo as one of those image files.</p>';
+				inner_markup += '<p>Don’t worry, if you do not have your logo as one of those file types, we can create one for you! Simply check the box below to continue submitting this image and accept the one-time $75 design fee.</p>';
+				inner_markup += '<p>';
+				inner_markup += '<div id="agree-to-fee-input-group" class="input-group">';
+				inner_markup += '</div>';
+				inner_markup += '</p>';
+				inner_markup += '</div>';
+				inner_markup += '<!-- Modal footer -->';
+				inner_markup += '<div class="modal-footer">';
+				inner_markup += '<button type="button" class="wonka-btn" data-dismiss="modal">Close</button>';
+				inner_markup += '</div>';
+				inner_markup += '</div>';
+				inner_markup += '</div>';
+				agree_to_fee_modal_wrap.innerHTML = inner_markup;
+				document.body.appendChild( agree_to_fee_modal_wrap );
+				agree_to_fee_form_wrap = document.querySelector( '#agree-to-fee-input-group' );
+				agree_to_fee_form = document.querySelector( 'form.wonka-design-fees-form' ).parentElement;
+				agree_to_fee_form_wrap.appendChild( agree_to_fee_form );
+			}
+			closebtns = document.querySelectorAll( '#agree-to-fee-modal button' );
+
+			$( '.ginput_card_expiration' ).select2();
+
+			file_input.addEventListener( 'change', function( e ) 
+				{
+					if ( '' === file_input.value ) 
 					{
-						var response = JSON.parse( this.responseText );
-						if ( response.success ) 
+						input_label.innerText = 'Choose file';
+					}
+					else
+					{
+						file_name = file_input.value.split('\\')[file_input.value.split('\\').length - 1];
+						input_label.innerText = file_name;
+					}
+
+					if ( file_name.includes( '.png' ) !== false || file_name.includes( '.jpg' ) !== false || file_name.includes( '.jpeg' ) !== false || file_name.includes( '.gif' ) !== false ) 
+					{
+						closebtns.forEach( function( btn, i ) 
+							{
+								btn.addEventListener( 'click', function( e ) 
+									{
+										consent_checkbox = document.querySelector( '.agree-to-fees-consent input[type=checkbox]' );
+										if ( true !== consent_checkbox.checked ) 
+										{
+											file_input.value = '';
+											input_label.innerText = 'Choose file';
+										}
+									} );
+							});
+
+						agree_to_fee_modal_wrap.addEventListener( 'click', function( e ) 
+							{
+								if ( e.target.classList.contains( 'show' ) && agree_to_fee_modal_wrap.classList.contains( 'show' ) ) 
+								{
+									consent_checkbox = document.querySelector( '.agree-to-fees-consent input[type=checkbox]' );
+									if ( true !== consent_checkbox.checked ) 
+									{
+										document.querySelector( 'button[data-dismiss=modal]' ).click();
+									}
+								}
+							});
+
+						$( '#agree-to-fee-modal' ).modal({ backdrop: 'static', keyboard: false });
+						if ( document.querySelector( '.agree-to-fees-consent input[type=checkbox]' ) ) 
 						{
-							current_logo_wrap.innerHTML = response.data;
-						}
-						else
-						{
-							current_logo_wrap.innerText = 'There was an issue with your upload. Please try again.';
+							consent_checkbox = document.querySelector( '.agree-to-fees-consent input[type=checkbox]' );
+							consent_checkbox.addEventListener( 'change', function( e ) 
+								{
+									if ( true === consent_checkbox.checked ) 
+									{
+										closebtns.forEach( function( btn, i ) 
+										{
+											btn.removeAttribute( 'data-dismiss' );
+										});
+										$( '#agree-to-fee-modal' ).modal({ backdrop: 'static', keyboard: false });
+									}
+									else
+									{
+										closebtns.forEach( function( btn, i ) 
+										{
+											if ( null === btn.getAttribute( 'data-dismiss' ) ) 
+											{
+												btn.setAttribute( 'data-dismiss', 'modal' );
+											}
+										});
+										$( '#agree-to-fee-modal' ).modal({ backdrop: true, keyboard: true });
+									}
+								});
 						}
 					}
-				};
 
-				xhr.open('GET', data.url + "?" + query_string );
-				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhr.send();
-			};
+				} );
+ 
+			document.ongform_confirmation_loaded = function( event, formId ) 
+				{
+					var parent_el;
+					var add_close_btn;
+					var close_btn_text;
+					var text;
+					parent_el = agree_to_fee_form_wrap.parentElement;
+					if ( parent_el ) 
+					{
+						parent_el.innerHTML = '';
+					}
+
+					var data = {
+						'url': wonkasoft_request.ajax,
+						'action': 'wonkasoft_parse_account_logo_or_process_fees',
+						'form_id': formId,
+						'security': wonkasoft_request.security
+					};
+					var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+					xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function() {
+
+						if ( this.readyState == 4 && this.status == 200 ) 
+						{
+							var response = JSON.parse( this.responseText );
+
+							if ( response.success && 'Design Fees Capture' === response.data.form_title ) 
+							{
+								parent_el.appendChild( agree_to_fee_form_wrap );
+								document.querySelector( '.hidden-agree-to-fees input[type=hidden]' ).value = response.data.consent_text;
+								closebtns.forEach( function( btn, i ) 
+								{
+									if ( null === btn.getAttribute( 'data-dismiss' ) ) 
+									{
+										btn.setAttribute( 'data-dismiss', 'modal' );
+									}
+								});
+								$( '#agree-to-fee-modal' ).modal({ backdrop: true, keyboard: true });
+							}
+							else
+							{
+								if ( null === response.success && 'Design Fees Capture' === response.data.form_title ) 
+								{
+									document.querySelector( '#agree-to-fee-input-group' ).innerHTML = 'There was a error during processing. please contact our Customer Care.';
+
+									parent_el.appendChild( agree_to_fee_form_wrap );
+									closebtns.forEach( function( btn, i ) 
+									{
+										if ( null === btn.getAttribute( 'data-dismiss' ) ) 
+										{
+											btn.setAttribute( 'data-dismiss', 'modal' );
+										}
+									});
+									$( '#agree-to-fee-modal' ).modal({ backdrop: true, keyboard: true });
+								}
+							}
+
+							if ( response.success && 'Media Upload' === response.data.form_title ) 
+							{
+								current_logo_wrap.innerHTML = response.data.content;
+							}
+							else
+							{
+								if ( 'Media Upload' === response.data.form_title ) 
+								{
+									current_logo_wrap.innerText = 'There was an issue with your upload. Please try again.';
+								}
+							}
+						}
+					};
+
+					xhr.open('GET', data.url + "?" + query_string );
+					xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xhr.send();
+				};
+    	};
 
 	}
 
@@ -205,6 +398,7 @@ var componentForm;
 	{
 		var ship_ul = document.querySelector( 'ul#shipping_method' );
 		var ship_method = document.querySelectorAll('input[name="shipping_method[0]"]');
+		var multistep_link_list = document.querySelector( '#wonka-checkout-nav-steps' );
 		var multistep_links = document.querySelectorAll( '#wonka-checkout-nav-steps li a.nav-link' );
 		var info_table_contact_cells = document.querySelectorAll( '.contact-email-cell' );
 		var info_table_ship_cells = document.querySelectorAll( '.ship-to-address-cell' );
@@ -215,8 +409,8 @@ var componentForm;
 
 		/**
 		 * Add Shipping method to current status table
-		 * @author Carlos
 		 *
+		 * @author Carlos
 		 * @since 1.0.0
 		 */
 		if( document.querySelector( '#wonka_payment_method_tab' ) )
@@ -236,6 +430,7 @@ var componentForm;
 						item.addEventListener( 'change', function( event ) 
 							{
 								var target = event.target;
+								xhr = new XMLHttpRequest();
 								if ( target.checked && target.id == 'bill-to-different-address-checkbox2' ) 
 								{
 									wonka_ajax_request( xhr, 'shipping_to_billing', '&opt_set=billing' );
@@ -300,12 +495,35 @@ var componentForm;
 						{
 							target = target.parentElement;
 						}
+
 						var completed_check = false;
 
 						if ( target.id === 'wonka_shipping_method_tab' ) 
 						{
 							var get_shipping_set = document.querySelector( '#shipping_method' );
+						}
+						
+						switch( target.id ) {
 							
+							case 'wonka_customer_information_tab':
+								multistep_link_list.classList = 'nav nav-fill shipping-address';
+								break;
+
+							case 'wonka_shipping_method_tab':
+								multistep_link_list.classList = 'nav nav-fill shipping-address delivery-options';
+								break;
+
+							case 'wonka_payment_method_tab':
+								multistep_link_list.classList = 'nav nav-fill shipping-address delivery-options payment-methods';
+								break;
+
+							case 'place_order':
+								multistep_link_list.classList = 'nav nav-fill shipping-address delivery-options payment-methods completed';
+								break;
+							
+							default:
+								multistep_link_list.classList = 'nav nav-fill shipping-address';
+								break;
 						}
 
 						if ( !target.classList.contains( 'active' ) ) 
@@ -445,6 +663,7 @@ var componentForm;
 						if ( e.target.getAttribute( 'data-target' ) === '#wonka_shipping_method_tab' ) 
 						{
 							e.preventDefault();
+							$( document.body ).trigger( 'select_default_shipping' );
 							var shipping_form_fields = document.querySelectorAll( '.woocommerce-shipping-fields input' );
 							var validation_checker = true;
 							var field_count = shipping_form_fields.length;
@@ -917,7 +1136,7 @@ var componentForm;
 	{
 		var current_el = document.querySelector( '#' + scroll_to_id );
 		$('body,html').animate({
-			scrollTop : $('#' + scroll_to_id).offset().top                     // Scroll to top of body
+			scrollTop : $('#' + scroll_to_id).offset().top - 125                   // Scroll to top of body
 		}, 1000);
 	}
 
@@ -955,7 +1174,6 @@ var componentForm;
 		var header_slider_section = document.querySelector( '.header-slider-section' ),
 		top_slide = document.querySelector( '.top-page-slide' ),
 		top_slide_img_holder = top_slide.querySelectorAll( '.top-slide-img-holder' )[0],
-		cta_slider_section = document.querySelector( '.desirable-slider-section' ),
 		img_for_sizing = new Image(),
 		adjustment = window.innerHeight,
 		height_set;
@@ -967,8 +1185,7 @@ var componentForm;
 			adjustment -= document.querySelector( '#wpadminbar' ).offsetHeight;
 		}
 
-		header_slider_section.style.height = adjustment + 'px';
-		cta_slider_section.style.height = adjustment + 'px';
+		header_slider_section.style.height = ( adjustment - 175 ) + 'px';
 		top_slide.style.height = header_slider_section.offsetHeight;
 		top_slide.style.width = header_slider_section.offsetWidth;
 	}
@@ -978,11 +1195,12 @@ var componentForm;
 		if ( document.querySelector( 'footer#colophon' ) ) 
 		{
 			var footer_height = document.querySelector( 'footer#colophon' ).offsetHeight,
+			footer_el = document.querySelector( 'footer#colophon' ),
 			new_space;
 
 			new_space = document.getElementById( 'footer-spacer' );
 			new_space.style.width = '100%';
-			new_space.style.height = footer_height + 'px';
+			new_space.style.height = ( footer_height + parseFloat( window.getComputedStyle( footer_el, null ).getPropertyValue( 'padding-top' ) ) ) + 'px';
 		}
 	}
 
@@ -1056,29 +1274,6 @@ var componentForm;
 		if ( window.pageYOffset <= top_slider_section.offsetTop ) 
 		{
 			slide_imgs = top_slider_section.querySelectorAll( '.top-slide-img-holder' );
-			slide_imgs.forEach( function( el, i ) 
-				{
-					el.style.backgroundPositionY = '';
-				});
-		}
-		/*=====  End of This is for the top slider section for parallax  ======*/
-
-		/*=======================================================================
-		=            This is for the cta slider section for parallax            =
-		=======================================================================*/
-		if ( window.pageYOffset > cta_section.offsetTop && window.pageYOffset < cta_section.offsetTop + cta_section.offsetHeight ) 
-		{
-			parallax_adjust = parseFloat( (window.pageYOffset - cta_section.offsetTop ) / ( cta_section.offsetHeight / 50 ) ).toFixed( 5 );
-			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
-			slide_imgs.forEach( function( el, i ) 
-				{
-					el.style.backgroundPositionY = parallax_adjust + 'vh';
-				});
-		}
-
-		if ( window.pageYOffset <= cta_section.offsetTop ) 
-		{
-			slide_imgs = cta_section.querySelectorAll( '.cta-slide-img-holder' );
 			slide_imgs.forEach( function( el, i ) 
 				{
 					el.style.backgroundPositionY = '';
@@ -1345,6 +1540,50 @@ var componentForm;
 
 	} 
 
+	function set_password_events() {
+		var password_toggle_btns = document.querySelectorAll( 'div.input-group-text' );
+		password_toggle_btns.forEach( function( password_toggle_btn )
+		{
+
+			password_toggle_btn.addEventListener( 'click', function( e )
+			{
+				e.stopImmediatePropagation();
+				var parent_input, password_input, password_icon_btn, password_type;
+				var target = e.target;
+
+				if ( target.nodeName === 'DIV' ) 
+				{
+					password_icon_btn = target.firstElementChild;
+					parent_input = target.parentElement.parentElement;
+					password_input = parent_input.firstElementChild;
+					password_type = password_input.getAttribute( "type" );
+				}
+
+				if ( target.nodeName === "I" ) 
+				{
+					password_icon_btn = target;
+					target = target.parentElement;
+					parent_input = target.parentElement.parentElement;
+					password_input = parent_input.firstElementChild;
+					password_type = password_input.getAttribute( "type" );
+				}
+
+				if( password_type === "password" )
+				{
+					password_icon_btn.classList.toggle( 'fa-eye' );
+					password_icon_btn.classList.toggle( 'fa-eye-slash' );
+					password_input.type = "text";
+				}
+
+				if ( password_type === "text" ) 
+				{
+					password_icon_btn.classList.toggle( 'fa-eye' );
+					password_icon_btn.classList.toggle( 'fa-eye-slash' );
+					password_input.type = "password";
+				}
+			});
+		});
+	}
 
 	/**
 	 * Single Product variant set up for images
@@ -1354,11 +1593,11 @@ var componentForm;
 	 */
 	function single_product_variants_setup()
 	{
-		var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li');
-		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails [data-variant-check="true"]');
-		var thumb_lis_parent = document.querySelector( 'div.wonka-thumbnails ul');
-		var full_imgs = document.querySelectorAll( 'div.wonka-image-viewer [data-variant-check="true"]');
-		var full_imgs_parent = document.querySelector( 'div.wonka-image-viewer');
+		var variant_lis = document.querySelectorAll( 'ul[data-attribute_name="attribute_pa_color"] li' );
+		var thumb_lis = document.querySelectorAll( 'div.wonka-thumbnails [data-variant-check="true"]' );
+		var thumb_lis_parent = document.querySelector( 'div.wonka-thumbnails ul' );
+		var full_imgs = document.querySelectorAll( 'div.wonka-image-viewer [data-variant-check="true"]' );
+		var full_imgs_parent = document.querySelector( 'div.wonka-image-viewer' );
 		var variant_selected;
 		var thumbs_set;
 		var imgs_set;
@@ -1652,6 +1891,20 @@ var componentForm;
 					});
 			});
 	}
+
+	function get_product_imgs() 
+	{
+		var page_offset = window.pageYOffset;
+		var product_imgs = document.querySelectorAll( 'li.product img' );
+		if ( 166 < page_offset ) 
+		{
+			product_imgs.forEach( function( img, i ) 
+				{
+					img.src = img.getAttribute( 'data-src' );
+					img.srcset = img.getAttribute( 'data-srcset' );
+				} );
+		}
+	}
 	/*=====  End of This is area for writing callable functions  ======*/
 
 	/*====================================================================
@@ -1720,61 +1973,6 @@ var componentForm;
 				create_toggle_btn.click();
 			}
 		}
-
-		// if ( document.querySelector( 'div.xoo-wsc-modal' ) ) 
-		// {
-		// 	var side_cart_btn = document.querySelector( '.wonka-cart-open' );
-		// 	var side_cart_modal = document.querySelector( 'div.xoo-wsc-modal' );
-		// 	var side_cart_container = document.querySelector( 'div.xoo-wsc-container' );
-		// 	var side_cart_header = document.querySelector( 'div.xoo-wsc-header' );
-		// 	var side_cart_body = document.querySelector( 'div.xoo-wsc-body' );
-		// 	var side_cart_body_content = document.querySelector( 'div.xoo-wsc-content' );
-		// 	var side_cart_footer = document.querySelector( 'div.xoo-wsc-footer' );
-		// 	var side_cart_footer_content = document.querySelector( 'div.xoo-wsc-footer-content' );
-		// 	var footer_btn_container = document.createElement( 'DIV' );
-		// 	var footer_btn = document.createElement( 'A' );
-		// 	var footer_btn_text = 'Checkout <i class="fa fa-angle-down"></i>';
-		// 	footer_btn_container.classList.add( 'wonka-btn-container' );
-		// 	footer_btn.classList.add( 'wonka-btn' );
-		// 	footer_btn.setAttribute( 'href', '#' );
-		// 	footer_btn.innerHTML = footer_btn_text;
-		// 	footer_btn_container.appendChild( footer_btn );
-
-		// 	console.log( side_cart_footer );
-		// 	side_cart_btn.
-		// 	document.addEventListener( 'scroll', function(e)  
-		// 		{
-		// 			console.log(e);
-		// 		});
-			
-		// 	side_cart_body_content.onload = function( e ) 
-		// 		{
-		// 			console.log( e );
-		// 			if ( side_cart_body.scrollTop > 0 ) 
-		// 			{
-		// 				side_cart_footer.insertBefore( footer_btn_container, side_cart_footer_content );
-		// 				side_cart_footer.style.bottom = - side_cart_footer.offsetHeight + footer_btn_container.offsetHeight + 15 + 'px';
-
-		// 				setTimeout( function() 
-		// 					{
-		// 						footer_btn_container.style.opacity = 1;
-		// 						side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - footer_btn_container.offsetHeight - 15 + 'px';
-		// 					}, 350 );
-		// 			}
-					
-		// 		};
-
-		// 	footer_btn.addEventListener( 'click', function( e ) 
-		// 		{
-		// 			footer_btn_container.style.opacity = 0;
-		// 			side_cart_footer.style.bottom = 0;
-		// 			setTimeout( function( side_cart_body ) 
-		// 				{
-		// 					side_cart_footer.removeChild( footer_btn_container );
-		// 					side_cart_body.style.height = side_cart_container.offsetHeight - side_cart_header.offsetHeight - side_cart_footer.offsetHeight + 'px';
-		// 				}, 350, side_cart_body );
-		// 		});
-		// }
 		
 		/*==========================================================
 		=            For parallax on front page sliders            =
@@ -1789,11 +1987,12 @@ var componentForm;
 			{
 				shifting_parallax();
 				add_transparent( screen_height );
+				get_product_imgs();
 			};
 			
 		}
 
-		if ( document.querySelector( '.page-template-default' ) || document.querySelector( '.page-template' ) || document.querySelector( '.error404' ) ) 
+		if ( document.querySelector( 'body:not(.home) #masthead' ) ) 
 		{
 			header_el = document.querySelector( '#masthead' );
 			header_height = header_el.offsetHeight;
@@ -1850,7 +2049,8 @@ var componentForm;
 						{
 							popup_wrap.classList.remove( 'popped-up' );
 						}
-						
+
+						xhr = new XMLHttpRequest();
 				        xhr.onreadystatechange = function() {
 					        if ( this.readyState == 4 && this.status == 200 )  {
 					        	var response =   this;
@@ -1870,55 +2070,18 @@ var componentForm;
 		 **************************************************************************/
 		if ( document.querySelectorAll( 'div.input-group-append' ) )
 		{
-			var password_toggle_btns = document.querySelectorAll( 'div.input-group-append' );
-			password_toggle_btns.forEach( function( password_toggle_btn )
-			{
-				password_toggle_btn.addEventListener( 'click', function( e )
-				{
-					var parent_input, password_input, password_icon_btn, password_type;
-					var target = e.target;
-
-					if ( target.nodeName === 'DIV' ) 
-					{
-						password_icon_btn = target.firstElementChild;
-						parent_input = target.parentElement.parentElement;
-						password_input = parent_input.firstElementChild;
-						password_type = password_input.getAttribute( "type" );
-					}
-
-					if ( target.nodeName === "I" ) 
-					{
-						password_icon_btn = target;
-						target = target.parentElement;
-						parent_input = target.parentElement.parentElement;
-						password_input = parent_input.firstElementChild;
-						password_type = password_input.getAttribute( "type" );
-					}
-
-					if( password_type === "password" )
-					{
-						password_icon_btn.classList.toggle( 'fa-eye' );
-						password_icon_btn.classList.toggle( 'fa-eye-slash' );
-						password_input.type = "text";
-					}
-
-					if ( password_type === "text" ) 
-					{
-						password_icon_btn.classList.toggle( 'fa-eye' );
-						password_icon_btn.classList.toggle( 'fa-eye-slash' );
-						password_input.type = "password";
-					}
-				});
-			});
+			set_password_events();
+			document.body.addEventListener( 'keyup', set_password_events );
+			document.body.addEventListener( 'change', set_password_events );
 		}
 		/*===============================================================================
 		=            This is the setup for the Wonka Express Checkout Button            =
 		===============================================================================*/
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) 
 		{
-			if ( window.location.href.indexOf( '?add-to-cart' ) ) 
+			if ( window.location.href.indexOf( '?add-to-cart' ) > 0 ) 
 			{
-				window.history.replaceState({}, document.title, window.location.href.split( '?' )[0] );
+				window.location = window.location.href.split( '?' )[0];
 				if ( document.querySelector( 'div.woocommerce-message' ) ) 
 				{
 					setTimeout( function() 
@@ -1950,6 +2113,7 @@ var componentForm;
 		{
 			var write_review = document.querySelector( '#write-review' ),
 			comment_form_wrapper = document.querySelector( 'div#review_form_wrapper' ),
+			comment_login_required = document.querySelector( 'p.woocommerce-verification-required' ),
 			reviews_top = document.querySelector( '.wonka-section-reviews' ),
 			more_reviews,
 			comment_list;
@@ -1984,22 +2148,29 @@ var componentForm;
 					});
 			}
 
-			var write_review_initial_text = write_review.innerText;
-			var comment_wrapper_height = comment_form_wrapper.offsetHeight;
-			write_review.addEventListener( 'click', function( e ) 
-				{
-					e.preventDefault();
-					if ( comment_form_wrapper.offsetHeight <= 25 ) 
+			if ( document.querySelector( 'div#review_form_wrapper' ) ) {
+				var write_review_initial_text = write_review.innerText;
+				var comment_wrapper_height = comment_form_wrapper.offsetHeight;
+				var review_form = document.querySelector( '#review_form' );
+				write_review.addEventListener( 'click', function( e ) 
 					{
-						comment_form_wrapper.style.height = 100 + '%';
-						write_review.innerText = 'Cancel';
-					}
-					else
-					{
-						comment_form_wrapper.style.height = comment_wrapper_height + 'px';
-						write_review.innerText = write_review_initial_text;
-					}
-				});
+						e.preventDefault();
+						if ( comment_form_wrapper.offsetHeight <= 35 ) 
+						{
+							comment_form_wrapper.style.height = review_form.offsetHeight + 'px';
+							write_review.innerText = 'Cancel';
+						}
+						else
+						{
+							comment_form_wrapper.style.height = comment_wrapper_height + 'px';
+							write_review.innerText = write_review_initial_text;
+						}
+					});
+			}
+
+			if ( document.querySelector( 'p.woocommerce-verification-required' ) ) {
+				write_review.remove();
+			}
 
 			/***********************************************************************
 			 * This is for Review length
@@ -2267,6 +2438,7 @@ var componentForm;
 			        {
 
 				        //Post Form with data
+				        xhr = new XMLHttpRequest();
 				        xhr.onreadystatechange = function() {
 					        if ( this.readyState == 4 && this.status == 200 )  {
 					        	var response =   this;
@@ -2354,31 +2526,7 @@ var componentForm;
 		{
 			document.querySelector( '.summary.entry-summary' ).classList.add( 'loaded' );
 		}
-		/*=====  End of This is for reordering the placement of elements in add to cart area  ======*/
-
-		/*========================================================================================
-		=            This will move paypal checkout buttons into express checkout box            =
-		========================================================================================*/
-		if ( document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' ) ) 
-		{
-			var express_box = document.querySelector( 'div.wonka-row-express-checkout-btns div.express-checkout-btns' );
-		
-			if ( document.querySelector( '#checkout_paypal_message' ) ) 
-			{
-				var iframe_btns = document.querySelector( '.angelleye_smart_button_checkout_top' );
-
-				express_box.appendChild( iframe_btns );	
-			}
-
-			if ( document.querySelector( '#pay_with_amazon' ) ) 
-			{
-				var amazon_quick = document.querySelector( '#pay_with_amazon' );
-
-				express_box.appendChild( amazon_quick );
-			}
-		}
-		/*=====  End of This will move paypal checkout buttons into express checkout box  ======*/
-		
+		/*=====  End of This is for reordering the placement of elements in add to cart area  ======*/		
 		
 		/*===================================================================
 		=            This is to kill the about us video on close            =
@@ -2399,6 +2547,7 @@ var componentForm;
 					'security': wonkasoft_request.security
 				};
 				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+				xhr = new XMLHttpRequest();
 				xhr.onreadystatechange = function() {
 					if ( this.readyState == 4 && this.status == 200 ) 
 					{
@@ -2456,6 +2605,7 @@ var componentForm;
 					'security': wonkasoft_request.security
 				};
 				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+				xhr = new XMLHttpRequest();
 				xhr.onreadystatechange = function() {
 
 					if ( this.readyState == 4 && this.status == 200 ) 
@@ -2635,9 +2785,7 @@ var componentForm;
 				
 			}
 			/*=====  End of This is the setup for the Wonka Express Checkout Button  ======*/
-			header_el = document.querySelector( '#masthead' );
-			header_height = header_el.offsetHeight;
-			add_fixed_header( window.pageYOffset, header_el, header_height );
+
 			// When the user scrolls the page, execute stickyStatus 
 			window.onscroll = function(e) 
 			{ 
@@ -2669,10 +2817,10 @@ var componentForm;
 			});
 		}
 
-		if ( document.querySelector( '.desirable-slider-section' ) ) 
+		if ( document.querySelector( '.testimonial-section' ) ) 
 		{
 			
-			$( '.cta-section-slider-wrap' ).slick({
+			$( '.testimonial-wrap' ).slick({
 			  // adaptiveHeight: true,
 			  slidesToShow: 1,
 			  slidesToScroll: 1,
@@ -2680,8 +2828,9 @@ var componentForm;
 			  autoplaySpeed: 4000,
 			  pauseOnFocus: true,
 			  pauseOnHover: true,
-			  fade: true,
+			  fade: false,
 			  dots: false,
+			  swipe: true,
 			  prevArrow: '<button class="slick-prev" type="button"><i class="far fa-arrow-alt-circle-left"></i></button>',
 			  nextArrow: '<button class="slick-next" type="button"><i class="far fa-arrow-alt-circle-right"></i></button>',
 			});
@@ -2824,6 +2973,97 @@ var componentForm;
 						}
 					} );
 			}
+
+			if ( document.querySelector( '#faq-general' ) ) 
+			{
+				var faq_general_jump = document.querySelector( '#faq-general a' );
+
+				faq_general_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							one_click = false;
+							scrollToSection( 'general', 15 );
+						}
+					} );
+			}
+
+			if ( document.querySelector( '#faq-payment' ) ) 
+			{
+				var faq_payment_jump = document.querySelector( '#faq-payment a' );
+
+				faq_payment_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							one_click = false;
+							scrollToSection( 'payment', 15 );
+						}
+					} );
+			}
+
+			if ( document.querySelector( '#faq-shipping' ) ) 
+			{
+				var faq_shipping_jump = document.querySelector( '#faq-shipping a' );
+
+				faq_shipping_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							one_click = false;
+							scrollToSection( 'shipping-returns', 15 );
+						}
+					} );
+			}
+
+			if ( document.querySelector( '#faq-perks' ) ) 
+			{
+				var faq_perks_jump = document.querySelector( '#faq-perks a' );
+
+				faq_perks_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							one_click = false;
+							scrollToSection( 'perks', 15 );
+						}
+					} );
+			}
+
+			if ( document.querySelector( '#faq-ambassador' ) ) 
+			{
+				var faq_ambassador_jump = document.querySelector( '#faq-ambassador a' );
+
+				faq_ambassador_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							one_click = false;
+							scrollToSection( 'ambassador', 15 );
+						}
+					} );
+			}
+
+			if ( document.querySelector( '#faq-zip' ) ) 
+			{
+				var faq_zip_jump = document.querySelector( '#faq-zip a' );
+
+				faq_zip_jump.addEventListener( 'click', function( e ) 
+					{
+						e.preventDefault();
+						if ( e.target.tagName.toLowerCase() === 'a') 
+						{
+							one_click = false;
+							scrollToSection( 'zip', 15 );
+						}
+					} );
+			}
+
 		/*=====  End of This is for single product page short description scrolling  ======*/
 	
 
@@ -2833,7 +3073,7 @@ var componentForm;
 		 * 
 		 */
 
-		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) ||document.querySelector( 'form.woocommerce-ResetPassword' ) ) 
+		if ( document.querySelector( 'main.main-my-account' ) || document.querySelector( 'main.main-checkout' ) || document.querySelector( 'form.woocommerce-ResetPassword' ) ) 
 		{
 			
 			var validation_div = document.querySelector( '.woocommerce-error' );
@@ -2843,7 +3083,7 @@ var componentForm;
 			var count = 0;
 
 			/** Form structure for edit my account  */
-			if ( document.querySelector( 'form.woocommerce-EditAccountForm' ) || document.querySelector('form.woocommerce-ResetPassword') )
+			if ( document.querySelector( 'form.woocommerce-EditAccountForm' ) || document.querySelector('form.woocommerce-ResetPassword') && document.querySelector( 'form.strength-checker #password_1' ) )
 			{
 				var password_one = document.querySelector( 'form.strength-checker #password_1' );
 				var password_parent = document.querySelector( 'form.strength-checker #password_1' ).parentElement;
@@ -3071,6 +3311,7 @@ var componentForm;
 		=================================================*/
 		if ( document.querySelector('input#s') )
 		{
+			xhr = new XMLHttpRequest();
 			wonka_ajax_request( xhr, "search_site", null);
 		}
 		/*=====  End of Setup for the search form  ======*/
@@ -3087,7 +3328,7 @@ var componentForm;
 
 			// This example requires the Places library. Include the libraries=places
 			// parameter when you first load the API. For example:
-			// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+			// <script src="https://maps.googleapis.com/maps/api/place/autocomplete/output?key=YOUR_API_KEY&libraries=places">
 
 		    componentForm = 
 		    {
@@ -3111,9 +3352,7 @@ var componentForm;
 				{
 					var parent_el = picker.parentElement;
 					var close_span = parent_el.querySelector( 'span.input-group-text' );
-					var datepicker_new_icon_url = parent_el.querySelector( '.new-cal-icon' ).value;
 					close_span.appendChild( picker );
-					picker.src = datepicker_new_icon_url;
 				});
 
 			var observer_callback = function( mutationsList, observer ) 
@@ -3126,7 +3365,6 @@ var componentForm;
 				});
 			};
 
-			var config = { attributes: true, childList: true };
 			var observer = new MutationObserver( observer_callback );
 			observer.observe( datepicker_div, config);
 		}
@@ -3141,6 +3379,1122 @@ var componentForm;
 					photo_link.target = '_self';
 				});
 		}
+	
+		if( document.querySelector('#perks-upgrade-btn')  ) 
+		{
+			var upgrade_btn = document.querySelector("#perks-upgrade-btn");
+			var upgrade_btn_wrapper = document.querySelector("#upgrade-btn-wrapper");
+
+			upgrade_btn.addEventListener( 'click', function( e ) {
+					e.preventDefault();
+					var data = {
+						'url': wonkasoft_request.ajax,
+						'action': 'wonkasoft_upgrade_account_perks',
+						'user_id': upgrade_btn.getAttribute('data-user'),
+						'security': wonkasoft_request.security
+					};
+					var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+					xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function() {
+	
+						if ( this.readyState == 4 && this.status == 200 ) 
+						{
+							var response = JSON.parse( this.responseText );
+							if ( response.success ) 
+							{
+								if ( 'role added' === response.data.msg || 'roles added' === response.data.msg ) {
+									upgrade_btn_wrapper.remove();
+									document.location.reload( true );
+								}
+							}
+							else
+							{
+								console.log('error '+ response);
+							}
+						}
+					};
+	
+					xhr.open('POST', data.url );
+					xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xhr.send( query_string );
+			});
+		}
+		
+		if ( $('#shipping_phone').length ) {
+
+			$('#shipping_phone').inputmask('1 (999) 999-9999');
+		}
+
+		$('#loader-wrapper').fadeOut();
+		
+		$('[data-toggle="tooltip"]').tooltip();
+
+		if ( document.querySelector( '#earn-aperacash-modal' ) ) 
+		{
+			var the_modal_title = document.querySelector( '#earn-aperacash-modal .modal-header h3' );
+			var the_modal_content = document.querySelector( '#earn-aperacash-modal .modal-body' );
+			var aperacash_btns = document.querySelectorAll( 'a[data-target="#earn-aperacash-modal"]' );
+			var modal_contents = {
+				birthday: {
+					title: document.querySelector( '#birthday-for-modal' ).getAttribute( 'data-title' ),
+					content: document.querySelector( '#birthday-for-modal' )
+				},
+				refer: {
+					title: document.querySelector( '#refer-for-modal' ).getAttribute( 'data-title' ),
+					content: document.querySelector( '#refer-for-modal' )
+				},
+				review: {
+					title: document.querySelector( '#review-for-modal' ).getAttribute( 'data-title' ),
+					content: document.querySelector( '#review-for-modal' )
+				},
+				signup: {
+					title: document.querySelector( '#signup-for-modal' ).getAttribute( 'data-title' ),
+					content: document.querySelector( '#signup-for-modal' )
+				}
+			};
+			aperacash_btns.forEach( function( btn, i ) 
+				{
+					btn.addEventListener( 'click', function( e ) 
+						{
+							e.preventDefault();
+							var target = this;
+							var target_id = target.id.split( '-' )[0];
+							var target_header = modal_contents[target_id].title;
+							var target_content = modal_contents[target_id].content;
+							the_modal_title.innerText = '';
+							the_modal_title.innerText = target_header;
+							the_modal_content.innerHTML = '';
+							the_modal_content.appendChild( target_content );
+							if ( 'review' === target_id ) {
+								var go_btn = document.querySelector( '#review-product-btn' );
+								var product_select = document.querySelector( '#product-select-box' );
+								go_btn.addEventListener( 'click', function( e ) {
+									e.preventDefault();
+									var url = document.querySelector( '#product-select-box' ).value;
+									
+									window.location.href = url;
+								});
+							}
+
+						});
+				});
+		}
+
+		if ( document.querySelectorAll( 'button[data-btn_id]' ) ) 
+		{
+			var save_btns = document.querySelectorAll( 'button[data-btn_id]' );
+			
+			save_btns.forEach( function( btn, i ) 
+				{
+					btn.addEventListener( 'click', function( e ) 
+						{
+							e.preventDefault();
+							var target = this;
+							var form = document.querySelector( 'form.' + target.getAttribute( 'data-btn_id' ) );
+							var form_submit_btn = document.querySelector( 'form.' + target.getAttribute( 'data-btn_id' ) + ' *[type=submit]' );
+							if ( 'form-contact-details' === target.getAttribute( 'data-btn_id' ) ) 
+							{
+								form.appendChild( document.querySelector( '#save-account-details-nonce') );
+								form_submit_btn.click();
+							}
+							else 
+							{
+								form_submit_btn.click();
+							}
+						});
+				});
+		}
+
+		if ( document.querySelector( 'form.post-password-form' ) ) {
+			if ( getUrlVars().canregister ) 
+			{
+				var canregister = decodeURIComponent( getUrlVars().canregister ).replace( /\+/gi, ' ' );
+				document.querySelector( 'form.post-password-form input[name="post_password"]' ).value = canregister;
+				document.querySelector( 'form.post-password-form input[type="submit"]' ).click();
+			}
+		}
+		if ( document.querySelector( '#wonka_shipping_method' ) ) {
+			var wonka_shipping_method_init = {
+				get_all_labels: document.querySelectorAll( '#wonka_shipping_method ul li label' ),
+				shipping_links_init: function() {
+					this.get_all_labels.forEach( this.shipping_links_foreach );
+
+					if ( document.querySelector( '.checkout-signup-pop' ) ) {
+						document.querySelector( '.checkout-signup-pop' ).addEventListener( 'click', this.checkout_signup_pop );
+					}
+				},
+				shipping_links_foreach: function( label, i ) {
+					label.addEventListener( 'click', wonka_shipping_method_init.label_click );
+				},
+				label_click: function( e ) {
+					this.previousElementSibling.click();
+				},
+				checkout_signup_pop: function( e ) {
+					setTimeout( function() {
+						document.querySelector( '.checkout-shipping-company input' ).value = document.querySelector( '#shipping_company' ).value;
+						document.querySelector( '.checkout-shipping-address1 input' ).value = document.querySelector( '#shipping_address_1' ).value;
+						document.querySelector( '.checkout-shipping-address2 input' ).value = document.querySelector( '#shipping_address_2' ).value;
+						document.querySelector( '.checkout-shipping-city input' ).value = document.querySelector( '#shipping_city' ).value;
+						document.querySelector( '.checkout-shipping-state input' ).value = document.querySelector( '#shipping_state' ).value;
+						document.querySelector( '.checkout-shipping-postcode input' ).value = document.querySelector( '#shipping_postcode' ).value;
+						document.querySelector( '.checkout-shipping-phone input' ).value = document.querySelector( '#shipping_phone' ).value;
+						document.querySelector( '.checkout-mc4wp_subscribe input' ).checked = document.querySelector( 'input[name="mc4wp-subscribe"]' ).checked;
+						document.querySelector( '.checkout-mc4wp_subscribe input' ).value = document.querySelector( 'input[name="mc4wp-subscribe"]' ).value;
+						document.querySelector( '.checkout-order-comments input' ).value = document.querySelector( '#order_comments' ).value;
+					}, 1000 );
+				}
+			};
+			wonka_shipping_method_init.shipping_links_init();
+		}
+
+		if ( document.querySelector( '.engage-member' ) ) {
+			var cep_radios = document.querySelectorAll( '.engage-member input[type="radio"]');
+			var input_yes, input_no;
+
+			cep_radios.forEach( function( radio, i ) {
+				if ( 'yes' === radio.value.toLowerCase() ) {
+					input_yes = radio;
+				}
+
+				if ( 'no' === radio.value.toLowerCase() ) {
+					input_no = radio;
+				}
+
+				radio.addEventListener( 'click', function( e ) {
+					if ( 'yes' === this.value.toLowerCase() && input_no.checked ) {
+						input_no.checked = false;
+						input_no.value = '';
+						input_no.click();
+						input_no.checked = false;
+						input_no.value = 'No';
+					}
+
+					if ( 'no' === this.value.toLowerCase() && input_yes.checked ) {
+						input_yes.checked = false;
+						input_yes.value = '';
+						input_yes.click();
+						input_yes.checked = false;
+						input_yes.value = 'Yes';
+					}
+				});
+			});
+		}
+
+
+		if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
+			document.body.addEventListener( 'keydown', function( e ) {
+				if ( 13 === e.keyCode ) {
+					e.stopImmediatePropagation();
+					if ( document.querySelector( '#wonka_payment_method_tab' ).classList.contains( 'active' ) ) {
+						document.querySelector( '#place_order').click();
+					}
+				}
+			});
+
+			var aperacash_class = {
+				apply_aperacash : function( e ) {
+					var data = {
+						'url': wonkasoft_request.ajax,
+						'action': 'apply_all_aperacash',
+						'checkbox': this.checked,
+						'security': wonkasoft_request.security
+					};
+
+					var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+
+					xhr = new XMLHttpRequest();
+					xhr.open('POST', data.url + '?' + query_string, true );
+					xhr.onreadystatechange = function() {
+
+						if ( this.readyState == 4 && this.status == 200 ) 
+						{
+							$(document.body).trigger('wc_fragments_refreshed');
+							$(document.body).trigger('xoo_wsc_cart_updated');
+						}
+					};
+
+					xhr.setRequestHeader( "Content-type", "application/json; charset= UTF-8" );
+					xhr.send();
+				}
+			};
+
+			if ( document.querySelector( '#aperacash-apply' ) ) {
+				document.querySelector( '#aperacash-apply' ).addEventListener( 'click', aperacash_class.apply_aperacash );
+			}
+
+			var checkout_init = {
+				evt: {},
+				get_qty_changers: [],
+				qty_changers_init: function() {
+					this.get_qty_changers = document.querySelectorAll( '.wonkasoft-wsc-chng' );
+					var qty_changers = this.get_qty_changers;
+					this.qty_changers_foreach();
+				},
+				qty_changers_foreach: function() {
+					checkout_init.get_qty_changers.forEach( checkout_init.qty_changers_foreach_loop );
+				},
+				qty_changers_foreach_loop: function( qty_changer, i ) {
+					qty_changer.removeEventListener( 'click', checkout_init.qty_changers_set_actions );
+					qty_changer.addEventListener( 'click', checkout_init.qty_changers_set_actions );
+					checkout_init.get_input_to_set( qty_changer );
+				},
+				qty_changers_set_actions: function( e ) {
+					e.stopImmediatePropagation();
+					var qty_input = this.parentElement.querySelector( 'input' );
+					var qty_input_value = qty_input.value;
+					if ( this.classList.contains( 'wonkasoft-wsc-minus' ) && 1 < qty_input_value ) {
+						qty_input.value = parseFloat( qty_input_value ) - 1;
+						if ( qty_input_value != qty_input.value ) {
+							if ( "createEvent" in document ) {
+							    checkout_init.evt = document.createEvent( "HTMLEvents" );
+							    checkout_init.evt.initEvent( "input", false, true );
+							    qty_input.dispatchEvent( checkout_init.evt );
+							}
+							else {
+							    qty_input.fireEvent( "input" );
+							}
+						}
+					}
+
+					if ( this.classList.contains( 'wonkasoft-wsc-plus' ) ) {
+						qty_input.value = parseFloat( qty_input_value ) + 1;
+						if ( qty_input_value != qty_input.value ) {
+							if ( "createEvent" in document ) {
+							    checkout_init.evt = document.createEvent( "HTMLEvents" );
+							    checkout_init.evt.initEvent( "input", false, true );
+							    qty_input.dispatchEvent( checkout_init.evt );
+							}
+							else {
+							    qty_input.fireEvent( "input" );
+							}
+						}
+					}
+				},
+				get_input_to_set: function( qty_changer ) {
+					var qty_input_for_event = qty_changer.parentElement.querySelector( 'input' );
+
+					qty_input_for_event.removeEventListener( "input", checkout_init.set_input_listener );
+					qty_input_for_event.addEventListener( "input", checkout_init.set_input_listener );
+				},
+				set_input_listener: function( e ) {
+					
+					var endpoint = 'xoo_wsc_update_cart';
+					endpoint += e.target.value > 0 ? '&xoo_wsc_qty_update' : '';
+
+					$.ajax({
+						url: xoo_wsc_localize.wc_ajax_url.toString().replace( '%%endpoint%%', endpoint ),
+						type: 'POST',
+						data: {
+							cart_key: e.target.parentElement.parentElement.getAttribute( 'data-product-key' ),
+							new_qty: e.target.value
+						},
+						success: function(response){
+							if(response.fragments){
+								var fragments = response.fragments,
+									cart_hash =  response.cart_hash;
+								// Set fragments.
+						   		$.each( response.fragments, function( key, value ) {
+									$( key ).replaceWith( value );
+									$( key ).stop( true ).css( 'opacity', '1' ).unblock();
+								});
+
+						   		if(wc_cart_fragments_params){
+							   		var cart_hash_key = wc_cart_fragments_params.ajax_url.toString() + '-wc_cart_hash';
+									// Set cart hash.
+									sessionStorage.setItem( wc_cart_fragments_params.fragment_name, JSON.stringify( fragments ) );
+									localStorage.setItem( cart_hash_key, cart_hash );
+									sessionStorage.setItem( cart_hash_key, cart_hash );
+								}
+
+								$(document.body).trigger('wc_fragments_refreshed');
+								$(document.body).trigger('xoo_wsc_cart_updated');
+							}
+							else{
+								// Print error.
+								show_notice('error',response.error);
+							}
+						}
+
+					});
+				}
+			};
+
+			if ( null !== wc_stripe_payment_request_params ) {
+				var stripe = Stripe( wc_stripe_payment_request_params.stripe.key ),
+				paymentRequestType;
+			}
+
+			/**
+			 * Object to handle Stripe payment forms.
+			 */
+			var wonkasoft_wc_stripe_payment_request = {
+				/**
+				 * Get WC AJAX endpoint URL.
+				 *
+				 * @param  {String} endpoint Endpoint.
+				 * @return {String}
+				 */
+				getAjaxURL: function( endpoint ) {
+					return wc_stripe_payment_request_params.ajax_url
+						.toString()
+						.replace( '%%endpoint%%', 'wc_stripe_' + endpoint );
+				},
+
+				getCartDetails: function() {
+					var data = {
+						security: wc_stripe_payment_request_params.nonce.payment
+					};
+
+					$.ajax( {
+						type:    'POST',
+						data:    data,
+						url:     wonkasoft_wc_stripe_payment_request.getAjaxURL( 'get_cart_details' ),
+						success: function( response ) {
+							wonkasoft_wc_stripe_payment_request.startPaymentRequest( response );
+						}
+					} );
+				},
+
+				getAttributes: function() {
+					var select = $( '.variations_form' ).find( '.variations select' ),
+						data   = {},
+						count  = 0,
+						chosen = 0;
+
+					select.each( function() {
+						var attribute_name = $( this ).data( 'attribute_name' ) || $( this ).attr( 'name' );
+						var value          = $( this ).val() || '';
+
+						if ( value.length > 0 ) {
+							chosen ++;
+						}
+
+						count ++;
+						data[ attribute_name ] = value;
+					});
+
+					return {
+						'count'      : count,
+						'chosenCount': chosen,
+						'data'       : data
+					};
+				},
+
+				processSource: function( source, paymentRequestType ) {
+					var data = wonkasoft_wc_stripe_payment_request.getOrderData( source, paymentRequestType );
+
+					return $.ajax( {
+						type:    'POST',
+						data:    data,
+						dataType: 'json',
+						url:     wonkasoft_wc_stripe_payment_request.getAjaxURL( 'create_order' )
+					} );
+				},
+
+				/**
+				 * Get order data.
+				 *
+				 * @since 3.1.0
+				 * @version 4.0.0
+				 * @param {PaymentResponse} source Payment Response instance.
+				 *
+				 * @return {Object}
+				 */
+				getOrderData: function( evt, paymentRequestType ) {
+					var source   = evt.source;
+					var email    = source.owner.email;
+					var phone    = source.owner.phone;
+					var billing  = source.owner.address;
+					var name     = source.owner.name;
+					var shipping = evt.shippingAddress;
+					var data     = {
+						_wpnonce:                  wc_stripe_payment_request_params.nonce.checkout,
+						billing_first_name:        null !== name ? name.split( ' ' ).slice( 0, 1 ).join( ' ' ) : '',
+						billing_last_name:         null !== name ? name.split( ' ' ).slice( 1 ).join( ' ' ) : '',
+						billing_company:           '',
+						billing_email:             null !== email   ? email : evt.payerEmail,
+						billing_phone:             null !== phone   ? phone : evt.payerPhone.replace( '/[() -]/g', '' ),
+						billing_country:           null !== billing ? billing.country : '',
+						billing_address_1:         null !== billing ? billing.line1 : '',
+						billing_address_2:         null !== billing ? billing.line2 : '',
+						billing_city:              null !== billing ? billing.city : '',
+						billing_state:             null !== billing ? billing.state : '',
+						billing_postcode:          null !== billing ? billing.postal_code : '',
+						shipping_first_name:       '',
+						shipping_last_name:        '',
+						shipping_company:          '',
+						shipping_country:          '',
+						shipping_address_1:        '',
+						shipping_address_2:        '',
+						shipping_city:             '',
+						shipping_state:            '',
+						shipping_postcode:         '',
+						shipping_method:           [ null === evt.shippingOption ? null : evt.shippingOption.id ],
+						order_comments:            '',
+						payment_method:            'stripe',
+						ship_to_different_address: 1,
+						terms:                     1,
+						stripe_source:             source.id,
+						payment_request_type:      paymentRequestType
+					};
+
+					if ( shipping ) {
+						data.shipping_first_name = shipping.recipient.split( ' ' ).slice( 0, 1 ).join( ' ' );
+						data.shipping_last_name  = shipping.recipient.split( ' ' ).slice( 1 ).join( ' ' );
+						data.shipping_company    = shipping.organization;
+						data.shipping_country    = shipping.country;
+						data.shipping_address_1  = typeof shipping.addressLine[0] === 'undefined' ? '' : shipping.addressLine[0];
+						data.shipping_address_2  = typeof shipping.addressLine[1] === 'undefined' ? '' : shipping.addressLine[1];
+						data.shipping_city       = shipping.city;
+						data.shipping_state      = shipping.region;
+						data.shipping_postcode   = shipping.postalCode;
+					}
+
+					return data;
+				},
+
+				/**
+				 * Generate error message HTML.
+				 *
+				 * @since 3.1.0
+				 * @version 4.0.0
+				 * @param  {String} message Error message.
+				 * @return {Object}
+				 */
+				getErrorMessageHTML: function( message ) {
+					return $( '<div class="woocommerce-error" />' ).text( message );
+				},
+
+				/**
+				 * Abort payment and display error messages.
+				 *
+				 * @since 3.1.0
+				 * @version 4.0.0
+				 * @param {PaymentResponse} payment Payment response instance.
+				 * @param {String}          message Error message to display.
+				 */
+				abortPayment: function( payment, message ) {
+					payment.complete( 'fail' );
+
+					$( '.woocommerce-error' ).remove();
+
+					if ( wc_stripe_payment_request_params.is_product_page ) {
+						var element = $( '.product' );
+
+						element.before( message );
+
+						$( 'html, body' ).animate({
+							scrollTop: element.prev( '.woocommerce-error' ).offset().top
+						}, 600 );
+					} else {
+						var $form = $( '.shop_table.cart' ).closest( 'form' );
+
+						$form.before( message );
+
+						$( 'html, body' ).animate({
+							scrollTop: $form.prev( '.woocommerce-error' ).offset().top
+						}, 600 );
+					}
+				},
+
+				/**
+				 * Complete payment.
+				 *
+				 * @since 3.1.0
+				 * @version 4.0.0
+				 * @param {PaymentResponse} payment Payment response instance.
+				 * @param {String}          url     Order thank you page URL.
+				 */
+				completePayment: function( payment, url ) {
+					wonkasoft_wc_stripe_payment_request.block();
+
+					payment.complete( 'success' );
+
+					// Success, then redirect to the Thank You page.
+					window.location = url;
+				},
+
+				block: function() {
+					$.blockUI( {
+						message: null,
+						overlayCSS: {
+							background: '#fff',
+							opacity: 0.6
+						}
+					} );
+				},
+
+				/**
+				 * Update shipping options.
+				 *
+				 * @param {Object}         details Payment details.
+				 * @param {PaymentAddress} address Shipping address.
+				 */
+				updateShippingOptions: function( details, address ) {
+					var data = {
+						security:  wc_stripe_payment_request_params.nonce.shipping,
+						country:   address.country,
+						state:     address.region,
+						postcode:  address.postalCode,
+						city:      address.city,
+						address:   typeof address.addressLine[0] === 'undefined' ? '' : address.addressLine[0],
+						address_2: typeof address.addressLine[1] === 'undefined' ? '' : address.addressLine[1],
+						payment_request_type: paymentRequestType
+					};
+
+					return $.ajax( {
+						type:    'POST',
+						data:    data,
+						url:     wonkasoft_wc_stripe_payment_request.getAjaxURL( 'get_shipping_options' )
+					} );
+				},
+
+				/**
+				 * Updates the shipping price and the total based on the shipping option.
+				 *
+				 * @param {Object}   details        The line items and shipping options.
+				 * @param {String}   shippingOption User's preferred shipping option to use for shipping price calculations.
+				 */
+				updateShippingDetails: function( details, shippingOption ) {
+					var data = {
+						security: wc_stripe_payment_request_params.nonce.update_shipping,
+						shipping_method: [ shippingOption.id ],
+						payment_request_type: paymentRequestType
+					};
+
+					return $.ajax( {
+						type: 'POST',
+						data: data,
+						url:  wonkasoft_wc_stripe_payment_request.getAjaxURL( 'update_shipping_method' )
+					} );
+				},
+
+				/**
+				 * Adds the item to the cart and return cart details.
+				 *
+				 */
+				addToCart: function() {
+					var product_id = $( '.single_add_to_cart_button' ).val();
+
+					// Check if product is a variable product.
+					if ( $( '.single_variation_wrap' ).length ) {
+						product_id = $( '.single_variation_wrap' ).find( 'input[name="product_id"]' ).val();
+					}
+
+					var data = {
+						security: wc_stripe_payment_request_params.nonce.add_to_cart,
+						product_id: product_id,
+						qty: $( '.quantity .qty' ).val(),
+						attributes: $( '.variations_form' ).length ? wonkasoft_wc_stripe_payment_request.getAttributes().data : []
+					};
+
+					// add addons data to the POST body
+					var formData = $( 'form.cart' ).serializeArray();
+					$.each( formData, function( i, field ) {
+						if ( /^addon-/.test( field.name ) ) {
+							if ( /\[\]$/.test( field.name ) ) {
+								var fieldName = field.name.substring( 0, field.name.length - 2);
+								if ( data[ fieldName ] ) {
+									data[ fieldName ].push( field.value );
+								} else {
+									data[ fieldName ] = [ field.value ];
+								}
+							} else {
+								data[ field.name ] = field.value;
+							}
+						}
+					} );
+
+					return $.ajax( {
+						type: 'POST',
+						data: data,
+						url:  wonkasoft_wc_stripe_payment_request.getAjaxURL( 'add_to_cart' )
+					} );
+				},
+
+				clearCart: function() {
+					var data = {
+							'security': wc_stripe_payment_request_params.nonce.clear_cart
+						};
+
+					return $.ajax( {
+						type:    'POST',
+						data:    data,
+						url:     wonkasoft_wc_stripe_payment_request.getAjaxURL( 'clear_cart' ),
+						success: function( response ) {}
+					} );
+				},
+
+				getRequestOptionsFromLocal: function() {
+					return {
+						total: wc_stripe_payment_request_params.product.total,
+						currency: wc_stripe_payment_request_params.checkout.currency_code,
+						country: wc_stripe_payment_request_params.checkout.country_code,
+						requestPayerName: true,
+						requestPayerEmail: true,
+						requestPayerPhone: true,
+						requestShipping: wc_stripe_payment_request_params.product.requestShipping,
+						displayItems: wc_stripe_payment_request_params.product.displayItems
+					};
+				},
+
+				/**
+				 * Starts the payment request
+				 *
+				 * @since 4.0.0
+				 * @version 4.0.0
+				 */
+				startPaymentRequest: function( cart ) {
+					var paymentDetails,
+						options;
+
+					if ( wc_stripe_payment_request_params.is_product_page ) {
+						options = wonkasoft_wc_stripe_payment_request.getRequestOptionsFromLocal();
+
+						paymentDetails = options;
+					} else {
+						options = {
+							total: cart.order_data.total,
+							currency: cart.order_data.currency,
+							country: cart.order_data.country_code,
+							requestPayerName: true,
+							requestPayerEmail: true,
+							requestPayerPhone: true,
+							requestShipping: cart.shipping_required ? true : false,
+							displayItems: cart.order_data.displayItems
+						};
+
+						paymentDetails = cart.order_data;
+					}
+
+					var paymentRequest = stripe.paymentRequest( options );
+
+					var elements = stripe.elements( { locale: wc_stripe_payment_request_params.button.locale } );
+					var prButton = wonkasoft_wc_stripe_payment_request.createPaymentRequestButton( elements, paymentRequest );
+
+					// Check the availability of the Payment Request API first.
+					paymentRequest.canMakePayment().then( function( result ) {
+						if ( ! result ) {
+							return;
+						}
+						paymentRequestType = result.applePay ? 'apple_pay' : 'payment_request_api';
+						wonkasoft_wc_stripe_payment_request.attachPaymentRequestButtonEventListeners( prButton, paymentRequest );
+						wonkasoft_wc_stripe_payment_request.showPaymentRequestButton( prButton );
+					} );
+
+					// Possible statuses success, fail, invalid_payer_name, invalid_payer_email, invalid_payer_phone, invalid_shipping_address.
+					paymentRequest.on( 'shippingaddresschange', function( evt ) {
+						$.when( wonkasoft_wc_stripe_payment_request.updateShippingOptions( paymentDetails, evt.shippingAddress ) ).then( function( response ) {
+							evt.updateWith( { status: response.result, shippingOptions: response.shipping_options, total: response.total, displayItems: response.displayItems } );
+						} );
+					} );
+
+					paymentRequest.on( 'shippingoptionchange', function( evt ) {
+						$.when( wonkasoft_wc_stripe_payment_request.updateShippingDetails( paymentDetails, evt.shippingOption ) ).then( function( response ) {
+							if ( 'success' === response.result ) {
+								evt.updateWith( { status: 'success', total: response.total, displayItems: response.displayItems } );
+							}
+
+							if ( 'fail' === response.result ) {
+								evt.updateWith( { status: 'fail' } );
+							}
+						} );
+					} );
+
+					paymentRequest.on( 'source', function( evt ) {
+						// Check if we allow prepaid cards.
+						if ( 'no' === wc_stripe_payment_request_params.stripe.allow_prepaid_card && 'prepaid' === evt.source.card.funding ) {
+							wonkasoft_wc_stripe_payment_request.abortPayment( evt, wonkasoft_wc_stripe_payment_request.getErrorMessageHTML( wc_stripe_payment_request_params.i18n.no_prepaid_card ) );
+						} else {
+							$.when( wonkasoft_wc_stripe_payment_request.processSource( evt, paymentRequestType ) ).then( function( response ) {
+								if ( 'success' === response.result ) {
+									wonkasoft_wc_stripe_payment_request.completePayment( evt, response.redirect );
+								} else {
+									wonkasoft_wc_stripe_payment_request.abortPayment( evt, response.messages );
+								}
+							} );
+						}
+					} );
+				},
+
+				getSelectedProductData: function() {
+					var product_id = $( '.single_add_to_cart_button' ).val();
+
+					// Check if product is a variable product.
+					if ( $( '.single_variation_wrap' ).length ) {
+						product_id = $( '.single_variation_wrap' ).find( 'input[name="product_id"]' ).val();
+					}
+
+					var addons = $( '#product-addons-total' ).data('price_data') || [];
+					var addon_value = addons.reduce( function ( sum, addon ) { return sum + addon.cost; }, 0 );
+
+					var data = {
+						security: wc_stripe_payment_request_params.nonce.get_selected_product_data,
+						product_id: product_id,
+						qty: $( '.quantity .qty' ).val(),
+						attributes: $( '.variations_form' ).length ? wonkasoft_wc_stripe_payment_request.getAttributes().data : [],
+						addon_value: addon_value,
+					};
+
+					return $.ajax( {
+						type: 'POST',
+						data: data,
+						url:  wonkasoft_wc_stripe_payment_request.getAjaxURL( 'get_selected_product_data' )
+					} );
+				},
+
+
+				/**
+				 * Creates a wrapper around a function that ensures a function can not
+				 * called in rappid succesion. The function can only be executed once and then agin after
+				 * the wait time has expired.  Even if the wrapper is called multiple times, the wrapped
+				 * function only excecutes once and then blocks until the wait time expires.
+				 *
+				 * @param {int} wait       Milliseconds wait for the next time a function can be executed.
+				 * @param {function} func       The function to be wrapped.
+				 * @param {bool} immediate Overriding the wait time, will force the function to fire everytime.
+				 *
+				 * @return {function} A wrapped function with execution limited by the wait time.
+				 */
+				debounce: function( wait, func, immediate ) {
+					var timeout;
+					return function() {
+						var context = this, args = arguments;
+						var later = function() {
+							timeout = null;
+							if (!immediate) func.apply(context, args);
+						};
+						var callNow = immediate && !timeout;
+						clearTimeout(timeout);
+						timeout = setTimeout(later, wait);
+						if (callNow) func.apply(context, args);
+					};
+				},
+
+				/**
+				 * Creates stripe paymentRequest element or connects to custom button
+				 *
+				 * @param {object} elements       Stripe elements instance.
+				 * @param {object} paymentRequest Stripe paymentRequest object.
+				 *
+				 * @return {object} Stripe paymentRequest element or custom button jQuery element.
+				 */
+				createPaymentRequestButton: function( elements, paymentRequest ) {
+					var button;
+					if ( wc_stripe_payment_request_params.button.is_custom ) {
+						button = $( wc_stripe_payment_request_params.button.css_selector );
+						if ( button.length ) {
+							// We fallback to default paymentRequest button if no custom button is found in the UI.
+							// Add flag to be sure that created button is custom button rather than fallback element.
+							button.data( 'isCustom', true );
+							return button;
+						}
+					}
+
+					if ( wc_stripe_payment_request_params.button.is_branded ) {
+						if ( wonkasoft_wc_stripe_payment_request.shouldUseGooglePayBrand() ) {
+							button = wonkasoft_wc_stripe_payment_request.createGooglePayButton();
+							// Add flag to be sure that created button is branded rather than fallback element.
+							button.data( 'isBranded', true );
+							return button;
+						} else {
+							// Not implemented branded buttons default to Stripe's button
+							// Apple Pay buttons can also fall back to Stripe's button, as it's already branded
+							// Set button type to default to avoid issues with Stripe
+							wc_stripe_payment_request_params.button.type = 'default';
+						}
+					}
+
+					return elements.create( 'paymentRequestButton', {
+						paymentRequest: paymentRequest,
+						style: {
+							paymentRequestButton: {
+								type: wc_stripe_payment_request_params.button.type,
+								theme: wc_stripe_payment_request_params.button.theme,
+								height: wc_stripe_payment_request_params.button.height + 'px',
+							},
+						},
+					} );
+				},
+
+				/**
+				 * Checks if button is custom payment request button.
+				 *
+				 * @param {object} prButton Stripe paymentRequest element or custom jQuery element.
+				 *
+				 * @return {boolean} True when prButton is custom button jQuery element.
+				 */
+				isCustomPaymentRequestButton: function ( prButton ) {
+					return prButton && 'function' === typeof prButton.data && prButton.data( 'isCustom' );
+				},
+
+				isBrandedPaymentRequestButton: function ( prButton ) {
+					return prButton && 'function' === typeof prButton.data && prButton.data( 'isBranded' );
+				},
+
+				shouldUseGooglePayBrand: function () {
+					return window.navigator.userAgent.match(/Chrome\/([0-9]+)\./i) && 'Google Inc.' == window.navigator.vendor;
+				},
+
+				createGooglePayButton: function () {
+					var allowedThemes = [ 'dark', 'light' ];
+					var allowedTypes = [ 'short', 'long' ];
+
+					var theme  = wc_stripe_payment_request_params.button.theme;
+					var type   = wc_stripe_payment_request_params.button.branded_type;
+					var locale = wc_stripe_payment_request_params.button.locale;
+					var height = wc_stripe_payment_request_params.button.height;
+					theme = allowedThemes.includes( theme ) ? theme : 'light';
+					type = allowedTypes.includes( type ) ? type : 'long';
+
+					var button = $( '<button type="button" id="wc-stripe-branded-button" aria-label="Google Pay" class="gpay-button"></button>' );
+					button.css( 'height', height + 'px' );
+					button.addClass( theme + ' ' + type );
+					if ( 'long' === type ) {
+						var url = 'https://www.gstatic.com/instantbuy/svg/' + theme + '/' + locale + '.svg';
+						var fallbackUrl = 'https://www.gstatic.com/instantbuy/svg/' + theme + '/en.svg';
+						// Check if locale GPay button exists, default to en if not
+						setBackgroundImageWithFallback( button, url, fallbackUrl );
+					}
+
+					return button;
+				},
+
+				attachPaymentRequestButtonEventListeners: function( prButton, paymentRequest ) {
+					if ( wc_stripe_payment_request_params.is_checkout_page ) {
+						wonkasoft_wc_stripe_payment_request.attachCartPageEventListeners( prButton, paymentRequest );
+					}
+				},
+
+				attachProductPageEventListeners: function( prButton, paymentRequest ) {
+					var paymentRequestError = [];
+					var addToCartButton = $( '.single_add_to_cart_button' );
+
+					prButton.on( 'click', function ( evt ) {
+						// First check if product can be added to cart.
+						if ( addToCartButton.is( '.disabled' ) ) {
+							evt.preventDefault(); // Prevent showing payment request modal.
+							if ( addToCartButton.is( '.wc-variation-is-unavailable' ) ) {
+								window.alert( wc_add_to_cart_variation_params.i18n_unavailable_text );
+							} else if ( addToCartButton.is( '.wc-variation-selection-needed' ) ) {
+								window.alert( wc_add_to_cart_variation_params.i18n_make_a_selection_text );
+							}
+							return;
+						}
+
+						if ( 0 < paymentRequestError.length ) {
+							evt.preventDefault();
+							window.alert( paymentRequestError );
+							return;
+						}
+
+						wonkasoft_wc_stripe_payment_request.addToCart();
+
+						if ( wonkasoft_wc_stripe_payment_request.isCustomPaymentRequestButton( prButton ) || wonkasoft_wc_stripe_payment_request.isBrandedPaymentRequestButton( prButton ) ) {
+							evt.preventDefault();
+							paymentRequest.show();
+						}
+					});
+
+					$( document.body ).on( 'woocommerce_variation_has_changed', function () {
+						wonkasoft_wc_stripe_payment_request.blockPaymentRequestButton( prButton );
+
+						$.when( wonkasoft_wc_stripe_payment_request.getSelectedProductData() ).then( function ( response ) {
+							$.when(
+								paymentRequest.update( {
+									total: response.total,
+									displayItems: response.displayItems,
+								} )
+							).then( function () {
+								wonkasoft_wc_stripe_payment_request.unblockPaymentRequestButton( prButton );
+							} );
+						});
+					} );
+
+					// Block the payment request button as soon as an "input" event is fired, to avoid sync issues
+					// when the customer clicks on the button before the debounced event is processed.
+					$( '.quantity' ).on( 'input', '.qty', function() {
+						wonkasoft_wc_stripe_payment_request.blockPaymentRequestButton( prButton );
+					} );
+
+					$( '.quantity' ).on( 'input', '.qty', wonkasoft_wc_stripe_payment_request.debounce( 250, function() {
+						wonkasoft_wc_stripe_payment_request.blockPaymentRequestButton( prButton );
+						paymentRequestError = [];
+
+						$.when( wonkasoft_wc_stripe_payment_request.getSelectedProductData() ).then( function ( response ) {
+							if ( response.error ) {
+								paymentRequestError = [ response.error ];
+								wonkasoft_wc_stripe_payment_request.unblockPaymentRequestButton( prButton );
+							} else {
+								$.when(
+									paymentRequest.update( {
+										total: response.total,
+										displayItems: response.displayItems,
+									} )
+								).then( function () {
+									wonkasoft_wc_stripe_payment_request.unblockPaymentRequestButton( prButton );
+								});
+							}
+						} );
+					}));
+				},
+
+				attachCartPageEventListeners: function ( prButton, paymentRequest ) {
+					if ( ( ! wc_stripe_payment_request_params.button.is_custom || ! wonkasoft_wc_stripe_payment_request.isCustomPaymentRequestButton( prButton ) ) &&
+						( ! wc_stripe_payment_request_params.button.is_branded || ! wonkasoft_wc_stripe_payment_request.isBrandedPaymentRequestButton( prButton ) ) ) {
+						return;
+					}
+
+					prButton.on( 'click', function ( evt ) {
+						evt.preventDefault();
+						paymentRequest.show();
+					} );
+				},
+
+				showPaymentRequestButton: function( prButton ) {
+					if ( wonkasoft_wc_stripe_payment_request.isCustomPaymentRequestButton( prButton ) ) {
+						prButton.addClass( 'is-active' );
+						$( '.express-checkout-btns' ).show();
+						$( '.wonka-row-express-checkout-btns' ).css( 'display', 'flex' );
+						setTimeout( function() {
+							$( '.wonka-row-express-checkout-btns' ).css( { opacity: '1', height: '158px' } );
+						}, 200 );
+					} else if ( wonkasoft_wc_stripe_payment_request.isBrandedPaymentRequestButton( prButton ) ) {
+						$( '.express-checkout-btns' ).show();
+						if ( $( '#wc-stripe-branded-button' ).length == 0 ) {
+							$( '.express-checkout-btns' ).append( prButton );
+						}
+						$( '.wonka-row-express-checkout-btns' ).css( 'display', 'flex' );
+						setTimeout( function() {
+							$( '.wonka-row-express-checkout-btns' ).css( { opacity: '1', height: '158px' } );
+						}, 200 );
+					} else if ( $( '.express-checkout-btns' ).length ) {
+						$( '.express-checkout-btns' ).show();
+						prButton.mount( '.express-checkout-btns' );
+						$( '.wonka-row-express-checkout-btns' ).css( 'display', 'flex' );
+						setTimeout( function() {
+							$( '.wonka-row-express-checkout-btns' ).css( { opacity: '1', height: '158px' } );
+						}, 200 );
+					}
+				},
+
+				blockPaymentRequestButton: function( prButton ) {
+					// check if element isn't already blocked before calling block() to avoid blinking overlay issues
+					// blockUI.isBlocked is either undefined or 0 when element is not blocked
+					if ( $( '#wc-stripe-payment-request-button' ).data( 'blockUI.isBlocked' ) ) {
+						return;
+					}
+
+					$( '#wc-stripe-payment-request-button' ).block( { message: null } );
+					if ( wonkasoft_wc_stripe_payment_request.isCustomPaymentRequestButton( prButton ) ) {
+						prButton.addClass( 'is-blocked' );
+					}
+				},
+
+				unblockPaymentRequestButton: function( prButton ) {
+					$( '#wc-stripe-payment-request-button' ).unblock();
+					if ( wonkasoft_wc_stripe_payment_request.isCustomPaymentRequestButton( prButton ) ) {
+						prButton.removeClass( 'is-blocked' );
+					}
+				},
+
+				/**
+				 * Initialize event handlers and UI state
+				 *
+				 * @since 4.0.0
+				 * @version 4.0.0
+				 */
+				init: function() {
+					if ( wc_stripe_payment_request_params.is_product_page ) {
+						wonkasoft_wc_stripe_payment_request.startPaymentRequest( '' );
+					} else {
+						wonkasoft_wc_stripe_payment_request.getCartDetails();
+					}
+
+				},
+			};
+
+			if ( null !== wc_stripe_payment_request_params ) {
+				wonkasoft_wc_stripe_payment_request.init();
+			}
+		}
+
+		if ( document.querySelector( 'form.coupon.form-group' ) ) {
+			var coupon_form = document.querySelector( 'form.coupon.form-group' );
+
+			coupon_form.addEventListener( 'submit', function() {
+				if ("createEvent" in document) {
+				    evt = document.createEvent("HTMLEvents");
+				    evt.initEvent("wc_fragments_refreshed", false, true);
+				    this.dispatchEvent(evt);
+				}
+				else {
+				    this.fireEvent("wc_fragments_refreshed");
+				}
+			});
+		}
+
+		if ( document.querySelector( '.woocommerce-remove-coupon' ) ) {
+			var coupon_remove_btn = document.querySelector( '.woocommerce-remove-coupon' );
+
+			coupon_remove_btn.addEventListener( 'click', function( e ) {
+				e.stopImmediatePropagation();
+				if ("createEvent" in document) {
+				    evt = document.createEvent("HTMLEvents");
+				    evt.initEvent("wc_fragments_refreshed", false, true);
+				    this.dispatchEvent(evt);
+				}
+				else {
+				    this.fireEvent("wc_fragments_refreshed");
+				}
+			});
+		}
+
+		$( document ).on('click','.xoo-wsc-coupon-submit',function(e) {
+			setTimeout( function() {
+				var fix_url;
+				if ( getUrlVars().remove_coupon && getUrlVars().guestcheckout ) {
+					fix_url = window.location.href.split( '?' )[0];
+					window.location.href = fix_url + '?guestcheckout=true';
+				}
+
+				if ( getUrlVars().guestcheckout ) {
+					fix_url = window.location.href.split( '?' )[0];
+					window.location.href = fix_url + '?guestcheckout=true';
+				} else {
+					window.location.reload();
+				}
+			}, 800 );
+		});
+
+		$(document).on('click','.xoo-wsc-remove-coupon',function(e) {
+			setTimeout( function() {
+				var fix_url;
+				if ( getUrlVars().remove_coupon && getUrlVars().guestcheckout ) {
+					fix_url = window.location.href.split( '?' )[0];
+					window.location.href = fix_url + '?guestcheckout=true';
+				}
+
+				if ( getUrlVars().guestcheckout ) {
+					fix_url = window.location.href.split( '?' )[0];
+					window.location.href = fix_url + '?guestcheckout=true';
+				} else {
+					window.location.reload();
+				}
+			}, 800 );
+		});
+
+		$( document.body ).on( 'select_default_shipping', function( e ) {
+			if ( document.querySelector( '#shipping_method input' ) ) {
+				document.querySelector( '#shipping_method input' ).click();
+			}
+		});
+		
+		$( document.body ).on( 'added_to_cart removed_from_cart wc_fragments_refreshed wc_fragments_loaded wc_fragment_refresh updated_wc_div update_checkout updated_checkout updated_cart_totals', function( e ) { 
+			if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
+				checkout_init.qty_changers_init();
+			}
+		});
 	};
 		/*=====  End of This is for running after document is ready  ======*/
 
@@ -3150,9 +4504,15 @@ function initAutocomplete()
 {
   // Create the autocomplete object, restricting the search to geographical
   // location types.
-  autocomplete = new google.maps.places.Autocomplete(
-      /** @type {!HTMLInputElement} */( document.getElementById( 'shipping_address_1' ) ),
-      {types: ['geocode']});
+  try {
+	  autocomplete = new google.maps.places.Autocomplete(
+	      /** @type {!HTMLInputElement} */( document.getElementById( 'shipping_address_1' ) ),
+	      {types: ['geocode']});
+  }
+  catch( err ) {
+  	console.log( err );
+  	return;
+  }
 
   // Avoid paying for data that you don't need by restricting the set of
 	// place fields that are returned to just the address components.
@@ -3163,7 +4523,7 @@ function initAutocomplete()
   autocomplete.addListener('place_changed', fillInAddress);
 }
 
-function fillInAddress() 
+function fillInAddress()
 {
 	// Get the place details from the autocomplete object.
 	var place = autocomplete.getPlace();

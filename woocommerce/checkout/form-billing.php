@@ -24,20 +24,18 @@ defined( 'ABSPATH' ) || exit;
 	<div class="checkout-form-section-title"><h5 class="billing-address-section-title">Billing Address</h5></div>
 
 	<div class="card">
-		<ul class="list-group list-group-flush">
+		<ul class="list-group list-group-flush billing-address-options">
 			<li class="list-group-item">
 				<div id="bill-to-different-address-radio1" class="custom-control custom-radio">
-					<input id="bill-to-different-address-checkbox1" class="custom-control-input" type="radio" <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> name="ship_to_different_address" />
-					<label class="custom-control-label" for="bill-to-different-address-checkbox1"><span><?php _e( 'Same as shipping address', 'woocommerce' ); ?></span></label>
+					<input id="bill-to-different-address-checkbox1" class="input-radio custom-control-input" type="radio" <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'shipping' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> name="ship_to_different_address" />
+					<label class="custom-control-label wonka-custom-control-label" for="bill-to-different-address-checkbox1"><span><?php esc_html_e( 'Same as shipping address', 'woocommerce' ); ?></span></label>
 				</div>
 			</li>
 			<li class="list-group-item">
 				<div id="bill-to-different-address-radio2" class="custom-control custom-radio">
-					<input id="bill-to-different-address-checkbox2" class="custom-control-input" type="radio" <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'billing' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> name="ship_to_different_address" />
-					<label class="custom-control-label" for="bill-to-different-address-checkbox2"><span><?php _e( 'Use a different billing address', 'woocommerce' ); ?></span></label>
+					<input id="bill-to-different-address-checkbox2" class="input-radio custom-control-input" type="radio" <?php checked( apply_filters( 'woocommerce_ship_to_different_address_checked', 'billing' === get_option( 'woocommerce_ship_to_destination' ) ? 1 : 0 ), 1 ); ?> name="ship_to_different_address" />
+					<label class="custom-control-label wonka-custom-control-label" for="bill-to-different-address-checkbox2"><span><?php esc_html_e( 'Use a different billing address', 'woocommerce' ); ?></span></label>
 				</div>
-			</li>
-			<li class="list-group-item">
 				<div class="billing_address">
 
 					<?php do_action( 'woocommerce_before_checkout_billing_form', $checkout ); ?>

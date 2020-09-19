@@ -1,6 +1,6 @@
 # [Apera Bags](http://wonkasoft.com/aperabags)
 
-Custom Built for Hit And Run
+Custom Built for Aperabags.com
 
 * Project: [github.com/wonkasoft/aperabags](https://github.com/wonkasoft/aperabags)
 * Website: [wonkasoft.com](http://wonkasoft.com)
@@ -13,6 +13,10 @@ Custom Built for Hit And Run
 
 
 ## Features
+![](screenshot.png)
+
+### Description
+Our custom theme is designed for AperaBags.com. It features many homepage options in the customizer, and is built so that what you see in the customizer looks like what you’ll see on your website. This custom theme is designed with Apera's style guide, but is adaptable to a wide range of websites. Featuring custom sliders, parallax, and a custom product's page with a vertical slider. This theme was made to be a modern optimize, and to be beautiful on all screen sizes.
 
 ### HTML5
 * Basic Semantic HTML5 Markup

@@ -57,7 +57,8 @@ button.wonka-btn,
 input[type="button"].wonka-btn,
 input[type="reset"].wonka-btn,
 input[type="submit"].wonka-btn {
-	padding: 4px 8px;
+	padding: 8px 25px;
+	margin: auto;
 	text-align: center;
 	border-radius: 100px;
 	background: rgba( #52abf6, 1 );
@@ -103,11 +104,11 @@ button.slick-arrow {
 	@include prefix( transition, $trans_25, webkit moz o);
 
 	&.slick-prev {
-		left: -50px;
+		left: -30px;
 	}
 
 	&.slick-next {
-		right: -50px;
+		right: -30px;
 	}
 
 	&:before {

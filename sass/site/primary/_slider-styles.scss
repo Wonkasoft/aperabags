@@ -1,0 +1,136 @@
+div.slider-1-content-wrap {
+	position: relative;
+	display: grid;
+	align-items: stretch;
+	grid-gap: 8px;
+	margin: auto;
+	color: #ffffff;
+	padding: 0 15px;
+	width: 100%;
+	height: 100%;
+	@include prefix( transition, all .25s ease-in-out, o moz webkit );
+
+	.slider-content-header {
+		text-align: center;
+		display: grid;
+		align-items: end;
+		margin: auto;
+		margin-bottom: 30px;
+		@include prefix( transition, all .25s ease-in-out, o moz webkit );
+
+		.slider-content-header-title {
+			margin: auto;
+			margin-bottom: 15px;
+			font-weight: 700;
+			@include font-size( 1.5 );
+			@include prefix( transition, all .25s ease-in-out, o moz webkit );
+		}
+
+		.sub-header {
+			margin: auto;
+			@include prefix( transition, all .25s ease-in-out, o moz webkit );
+
+			span {
+				background: #52abf6;
+				padding: 8px;
+				font-weight: 700;
+				@include font-size( 1.1 );
+				@include prefix( transition, all .25s ease-in-out, o moz webkit );
+			}
+		}
+	}
+
+	.slider-content-body {
+		margin: 8px auto;
+		display: grid;
+		align-items: start;
+		text-align: center;
+		height: 220px;
+		@include prefix( transition, all .25s ease-in-out, o moz webkit );
+		
+		span {
+			display: inline-block;
+			max-width: 800px;
+			line-height: 1.5;
+			@include font-size( .9 );
+		}
+	}
+
+	.slider-content-footer {
+		position: relative;
+		margin: auto;
+		display: grid;
+		align-items: center;
+		justify-content: center;
+		right: 0;
+		width: 100%;
+		height: 220px;
+		@include prefix( transition, all .25s ease-in-out, o moz webkit );
+
+		.wonka-btn {
+			@include font-size( 1.1 );
+		}
+	}
+
+	@include media-breakpoint( md ) {
+		.slider-content-header {
+
+			.slider-content-header-title {
+				@include font-size( 2 );
+			}
+
+			.sub-header {
+
+				span {
+					@include font-size( 1.8 );
+				}
+			}
+		}
+
+		.slider-content-body {
+
+			span {
+				@include font-size( 1.4 );
+			}
+		}
+
+		.slider-content-footer {
+
+			.wonka-btn {
+				@include font-size( 1.5 );
+			}
+		}
+	}
+
+	@include media-breakpoint( lg ) {
+		.slider-content-header {
+
+			.slider-content-header-title {
+				@include font-size( 2 );
+			}
+
+			.sub-header {
+
+				span {
+					@include font-size( 1.8 );
+				}
+			}
+		}
+
+		.slider-content-body {
+
+			span {
+				@include font-size( 1.2 );
+			}
+		}
+
+		.slider-content-footer {
+			right: 16%;
+
+			.wonka-btn {
+				margin: auto;
+				@include font-size( 1.5 );
+			}
+		}
+	}
+}

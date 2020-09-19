@@ -13,394 +13,370 @@
  */
 
 get_header();
-?>
-<?php if ( is_home() ) : ?>
-	<?php
 
+if ( is_home() ) :
 	/* This can be used to filter slide object */
-	do_action( 'get_mods_before_section', 'top' );
+	do_action( 'get_mods_before_section', 'top_slider' );
+
+	$page_mods = get_section_mods( 'top_slider' );
+
+	do_action( 'get_mods_after_section', 'top_slider', $page_mods );
 
 	/* This gets the slides as an object */
-	$top_slider = get_section_mods( 'top' );
+	$top_slider = $page_mods->top_slider;
+
+	do_action( 'get_mods_before_section', 'top_slider', $top_slider );
 
 	/* This checks for slider object in order to parse slider section */
 	if ( ! empty( $top_slider->slides ) ) :
 		?>
 		<section class="header-slider-section">
 			<div class="top-page-slider-wrap">
-				<?php
-				/* Foreach loop to build slider according to slides entered in the customizer */
-				foreach ( $top_slider->slides as $slide ) :
-					/* Checks for an img set in the slide object */
-					if ( ! empty( $slide->slide_img ) ) :
-						?>
-						<div class="top-page-slide">
-							<?php
-							if ( wp_is_mobile() ) :
-								?>
-								<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_mobile_img ); ?>');">
-									<?php
-								else :
-									if ( strpos( $slide->slide_img, '.mp4' ) !== false ) {
-										?>
-										<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>">
-											<video autoplay="true" loop muted class="cta-slide">
-												<source src="<?php echo esc_attr( $slide->slide_img ); ?>" type="video/mp4">
-													Your browser does not support the video tag.
-												</video>
-												<?php
-									} else {
-										?>
-												<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_img ); ?>');">
-											<?php
-									}
-											endif;
-											/* Checks for an message set in the slide object */
-								if ( ! empty( $slide->slide_header_message ) ) :
-									?>
-												<div class="row img-header-text-wrap">
-													<div class="col col-12 img-header-text-container">
-														<div class="text-box text-center
-											<?php
-											$set_text_align = ( ! empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position : ' set-align-center';
-											echo wp_kses_data( $set_text_align );
-											?>
-														">
-														<h2 class="img-header-text text-center"><?php echo wp_kses_data( $slide->slide_header_message ); ?></h2>
-														<?php
-														/* Checks for an subheader set in the slide object */
-														if ( ! empty( $slide->slide_subheader ) ) :
-															?>
-															<h4 class="img-subheader-text text-center"><?php echo wp_kses_data( $slide->slide_subheader ); ?></h4>
-															<?php
-															if ( ! empty( $slide->slide_link_btn ) ) :
-																?>
-																<a href="<?php echo esc_url( get_the_permalink( $slide->slide_link, false ) ); ?>" class="wonka-btn img-top-slide-link text-center"><?php echo wp_kses_data( $slide->slide_link_btn ); ?></a>
-															<?php endif; ?>
+		<?php
+		/* Foreach loop to build slider according to slides entered in the customizer */
+		foreach ( $top_slider->slides as $slide ) :
 
-														<?php endif; ?>
-													</div><!-- .text-box -->
-												</div><!-- .img-header-text-container -->
-
-											</div><!-- .img-header-text-wrap -->
-
-										<?php endif; ?>
-									</div><!-- .top-slide-img-holder -->
-								</div><!-- .top-page-slide -->
-							<?php endif; ?>
-
-						<?php endforeach; ?>
-
-					</div><!-- .top-page-slider -->
-
-				</section><!-- .header-slider-section -->
-			<?php endif; ?>
-
-			<?php
-
-			do_action( 'get_mods_before_section', 'shop' );
-
-			$shop_section = get_section_mods( 'shop' );
-			if ( ! empty( $shop_section->shop_mods ) ) :
+			/* Checks for an img set in the slide object */
+			if ( ! empty( $slide->slide_img_id ) ) :
 				?>
-
-				<section class="shop-section container-fluid" style="background-image:url(<?php echo esc_url( $shop_section->shop_mods->shop_background_image ); ?>);">
-					<div class="row wonka-row align-items-center justify-content-center">
-						<div class="col-12">
-							<div class="row">
-								<div class="col-12">
-									<div class="wonka wonka-section-title text-center">
-										<h3 class="wonka wonka-h3 section-title shop-title"><?php echo wp_kses_post( $shop_section->shop_mods->shop_title ); ?></h3>
-									</div>
-								</div>
-							</div>
-								<div class="row">
-									<div class="col-12">
-										<?php
-										$shop_shortcode = '[products limit="' . $shop_section->shop_mods->shop_num_of_products . '" columns="' . $shop_section->shop_mods->shop_product_per_row . '" visibility="featured"]';
-										echo do_shortcode( $shop_shortcode );
-										?>
-									</div><!-- .col-12 -->
-								</div><!-- .row -->
-								<div class="row">
-									<div class="col col-12 text-center">
-										<a href="<?php echo esc_url( get_site_url() ); ?>/shop" class="wonka-btn" target="_self"><?php esc_html_e( 'Shop All' ); ?></a>
-									</div><!-- .col -->
-								</div><!-- .row -->
-							</div><!-- .col -->
-						</div><!-- .wonka-row -->
-					</section><!-- .shop-section -->
-				<?php endif; ?>
+				<div class="top-page-slide">
 				<?php
-				do_action( 'get_mods_before_section', 'cta' );
-				$cta_slider = get_section_mods( 'cta' );
-
-				if ( ! empty( $cta_slider->slides ) ) :
+				if ( wp_is_mobile() ) :
 					?>
-					<section class="desirable-slider-section">
-						<div class="cta-section-slider-wrap">
+				<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_mobile_img_id ) ); ?>" style="background-image:url('<?php echo esc_url( wp_get_attachment_url( $slide->slide_mobile_img_id ) ); ?>');">
+					<?php
+			else :
+
+				if ( strpos( wp_get_attachment_url( $slide->slide_img_id ), '.mp4' ) !== false ) {
+					?>
+						<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img_id ) ); ?>">
+						<video autoplay="true" loop muted class="cta-slide">
+						<source src="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img_id ) ); ?>" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
+						<?php
+				} else {
+					?>
+					<div class="top-slide-img-holder" data-img-url="<?php echo esc_attr( wp_get_attachment_url( $slide->slide_img_id ) ); ?>" style="background-image:url('<?php echo esc_url( wp_get_attachment_url( $slide->slide_img_id ) ); ?>');">
+					<?php
+				}
+			endif;
+				/* Checks for an message set in the slide object */
+			if ( ! empty( $slide->slide_header_message ) ) :
+				?>
+						<div class="row img-header-text-wrap">
+							<div class="col col-12 img-header-text-container">
+								<div class="text-box text-center 
 							<?php
-							/* Foreach loop to build slider according to slides entered in the customizer */
-							foreach ( $cta_slider->slides as $slide ) :
-								/* Checks for an img set in the slide object */
-								if ( ! empty( $slide->slide_img ) ) :
+							$set_text_align = ( ! empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position : ' set-align-center';
+							echo wp_kses_data( $set_text_align );
+							?>
+								">
+									<h1 class="img-header-text text-center">
+									<?php echo wp_kses_data( $slide->slide_header_message ); ?></h1>
+								<?php
+								/* Checks for an subheader set in the slide object */
+								if ( ! empty( $slide->slide_subheader ) ) :
 									?>
-									<div class="cta-section-slide">
-										<?php
-										if ( wp_is_mobile() ) :
-											?>
-											<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_mobile_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_mobile_img ); ?>');">
-												<?php
-											else :
-												if ( strpos( $slide->slide_img, '.mp4' ) !== false ) {
-													?>
-													<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>">
-														<video autoplay loop muted class="cta-slide">
-															<source src="<?php echo esc_attr( $slide->slide_img ); ?>" type="video/mp4">
-																Your browser does not support the video tag.
-															</video>
-															<?php
-												} else {
-													?>
-															<div class="cta-slide-img-holder" data-img-url="<?php echo esc_attr( $slide->slide_img ); ?>" style="background-image:url('<?php echo esc_url( $slide->slide_img ); ?>');">
-														<?php
-												}
-														endif;
-														/* Checks for an message set in the slide object */
-											if ( ! empty( $slide->slide_title ) ) :
-												?>
-															<div class="row img-header-text-wrap">
-																<div class="col col-12 img-header-text-container">
-																	<div class="text-box text-center
-																		<?php
-																		$set_text_align = ( ! empty( $slide->slide_text_position ) ) ? ' set-align-' . $slide->slide_text_position : ' set-align-center';
-																		echo wp_kses_data( $set_text_align );
-																		?>
-																	">
-																	<h2 class="img-header-text text-center"><?php echo wp_kses_data( $slide->slide_title ); ?></h2>
-																	<?php
-																	if ( ! empty( $slide->slide_text_message ) ) :
-																		?>
-																	<h3 class="img-header-text text-center "><?php echo wp_kses_data( $slide->slide_text_message ); ?></h3>
-																		<?php
-																	endif;
-
-																	if ( ! empty( $slide->cta_description_1 ) ) :
-																		?>
-																		<ul class="perks-description-ul">
-																			<?php
-																			for ( $i = 1; $i <= 3; $i++ ) :
-																				echo '<li class="perks-description" style="list-style-image: url(' . esc_url( $slide->slide_description_icon ) . ')">' . esc_html( $slide->{'cta_description_' . $i } ) . '</li>';
-																				endfor;
-																			?>
-																		</ul>
-																		<?php
-																	endif;
-
-																	/* Checks for an subheader set in the slide object */
-																	if ( ! empty( $slide->slide_link ) ) :
-																		?>
-																		<a href="<?php echo esc_url( get_the_permalink( $slide->slide_link, false ) ); ?>" class="wonka-btn img-cta-link text-center"><?php echo wp_kses_data( $slide->slide_link_btn ); ?></a>
-																	<?php endif; ?>
-																</div><!-- .text-box -->
-															</div><!-- .img-header-text-container -->
-
-														</div><!-- .img-header-text-wrap -->
-
-													<?php endif; ?>
-
-												</div><!-- .cta-slide-img-holder -->
-											</div><!-- .cta-section-slide -->
-										<?php endif; ?>
-									<?php endforeach; ?>
-								</div><!-- .cta-section-slider-wrap -->
-							</section><!-- .desirable-slider-section -->
-						<?php endif; ?>
-						<?php
-						do_action( 'get_mods_before_section', 'cause' );
-						$cause_section = get_section_mods( 'cause' );
-
-						/* Check for Cause object */
-						if ( ! empty( $cause_section->cause_mods ) ) :
-							?>
-							<section class="container-fluid our-cause-section">
-								<div class="row wonka-row">
-									<div class="col-12 text-center title-wrap">
-										<h3 class="section-title our-cause-title"><?php echo wp_kses_data( $cause_section->cause_mods->cause_section_title ); ?></h3>
-									</div>
-								</div>
-								<div class="row wonka-row">
-									<?php
-									foreach ( $cause_section->causes as $cause ) :
-										if ( ! empty( $cause->img ) ) :
-											?>
-											<div class="col-12 col-md-4">
-												<div class="cause-section-module">
-													<div class="module-component-wrap">
-														<div class="img-container">
-															<a href="<?php echo esc_url( $cause->img_link ); ?>">
-																<img class="cause-img img-fluid" src="<?php echo esc_attr( $cause->img_src ); ?>" srcset="<?php echo esc_attr( $cause->img_srcset ); ?>" />
-															</a>
-														</div>
-														<?php if ( ! empty( $cause->header_link ) ) : ?>
-															<a href="<?php echo esc_url( $cause->header_link ); ?>" >
-																<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>
-															</a>
-														<?php else : ?>
-															<h3 class="cause-title text-<?php echo esc_attr( $cause->position ); ?>"><?php echo wp_kses_data( $cause->header ); ?></h3>										
-														<?php endif; ?>
-														<p class="cause-message text-<?php echo esc_attr( $cause->position ); ?>">
-															<?php
-																echo wp_kses(
-																	$cause->message,
-																	array(
-																		'a' => array(
-																			'href' => array(),
-																			'data-toggle' => array(),
-																			'data-target' => array(),
-																			'id' => array(),
-																		),
-																	)
-																);
-															?>
-														</p>
-													</div><!-- .module-component-wrap -->
-												</div><!-- .cause-section-module -->
-											</div>
-										<?php endif; ?>
-									<?php endforeach; ?>
-								</div>
-
-									<!-- Modal -->
-									<div class="modal fade" id="videoModalpop" tabindex="-1" role="dialog" aria-labelledby="causeAperaModal" aria-hidden="true">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-body">
-													<!-- 16:9 aspect ratio -->
-													<div class="embed-responsive embed-responsive-16by9" id="cause-youtube-source">
-														
-													</div>
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">X</span>
-													</button>        
-												</div>
-											</div>
-										</div>
-									</div> 
-							</section><!-- .our-cause-section -->
-						<?php endif; ?>
-
-
-
-						<?php
-						do_action( 'get_mods_before_section', 'about' );
-						$about_section = get_section_mods( 'about' );
-
-						if ( ! empty( $about_section->about_the_brand->about_header ) ) :
-							?>
-							<section class="container-fluid about-brand-section align-items-center justify-content-around">
-								<div class="row wonka-row">
-									<div class="col-12 col-sm-6 text-center">
-										<div class="about-components-wrap">
-											<h2 class="about-brand-header"><?php echo wp_kses_post( $about_section->about_the_brand->about_header ); ?></h2>
-											<h4 class="about-brand-subheader"><?php echo wp_kses_post( $about_section->about_the_brand->about_subheader ); ?></h4>
-											<p class="about-brand-message"><?php echo wp_kses_post( $about_section->about_the_brand->about_message ); ?></p>
-											<div class="about-brand-video">
-												<?php
-
-												if ( ! empty( $about_section->about_the_brand->about_videoplaceholder ) ) :
-													?>
-													<a id="about-modal-link" href="#" data-toggle="modal" data-target="#videoModal" class="video-img-link">
-														<img src="<?php echo esc_attr( $about_section->about_the_brand->about_videoplaceholder_src ); ?>" srcset="<?php echo esc_attr( $about_section->about_the_brand->about_videoplaceholder_srcset ); ?>" />
-														<span data-toggle="modal" data-target="#videoModal" class="video-img-symbol-link"><i class="fa fa-play-circle"></i></span>
-													</a>
-													<?php
-												endif;
-												?>
-											</div>
-											<?php
-											if ( ! empty( $about_section->about_the_brand->about_videoplaceholder ) ) :
-												?>
-
-												<!-- Modal -->
-												<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="aboutAperaModal" aria-hidden="true">
-													<div class="modal-dialog" role="document">
-														<div class="modal-content">
-															<div class="modal-body">
-																<!-- 16:9 aspect ratio -->
-																<div id="about-youtube-source" class="embed-responsive embed-responsive-16by9">
-																	
-																</div>
-																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																	<span aria-hidden="true">X</span>
-																</button>        
-															</div>
-														</div>
-													</div>
-												</div> 
-											<?php endif; ?>
-											<?php
-											if ( ! empty( $about_section->about_the_brand->about_the_brand_button_link ) ) :
-												?>
-												<a class="wonka-btn" href="<?php echo esc_url( $about_section->about_the_brand->about_the_brand_button_link ); ?>"><?php echo wp_kses_post( $about_section->about_the_brand->about_the_brand_btn_text ); ?></a>
-											<?php endif; ?>
-										</div><!-- .about-components-wrap -->
-									</div>
-									<?php if ( ! empty( $about_section->about_the_brand->about_the_brand_second_image ) ) : ?>
-										<div class="col-12 col-sm-6 text-center">
-											<div class="img-container">
-												<a href="<?php echo esc_url( $about_section->about_the_brand->about_the_brand_image_link ); ?>">
-													<img class="about-second-image" src="<?php echo esc_attr( $about_section->about_the_brand->about_the_brand_second_image_src ); ?>" srcset="<?php echo esc_attr( $about_section->about_the_brand->about_the_brand_second_image_srcset ); ?>" />
-												</a>
-											</div>
-										</div>
+										<h2 class="img-subheader-text text-center">
+									<?php echo wp_kses_data( $slide->slide_subheader ); ?></h2>
 									<?php endif; ?>
-								</div>
-							</section>
-						<?php endif; ?>
-
-						<?php
-						do_action( 'get_mods_before_section', 'social' );
-						$social_section = get_section_mods( 'social' );
-
-						if ( ! empty( $social_section->social_mods->social_title ) ) :
-							?>
-							<section class="container-fluid social-section fixed-divider-460">
-								<div class="row wonka-row align-items-center justify-content-around">
-									<div class="col-12 text-center">
-										<h3 class="section-title social-title"><?php echo wp_kses_post( $social_section->social_mods->social_title ); ?></h3>
-									</div> <!-- .col -->
-									<div class="col-12 col-md-8 text-center">
-										<p class="social-message"><?php echo wp_kses_post( $social_section->social_mods->social_message ); ?></p>
-									</div> <!-- .col -->
-									<div class="col-12 social-shortcode">
-										<?php echo do_shortcode( $social_section->social_mods->social_shortcode ); ?>
-									</div>
-									<div class="col-12 shop-social-btn text-center">
-										<a class="wonka-btn" href="<?php echo esc_url( $social_section->social_mods->social_shop_button ); ?>"><?php echo wp_kses_post( $social_section->social_mods->social_btn_text ); ?></a>
-									</div> <!-- .col -->
-								</div>
-							</section><!-- .instagram-section -->
-						<?php endif; ?>
-						<?php else : ?>
-							<div id="primary" class="content-area row">
-								<main id="main" class="site-main col col-12">
 									<?php
-									while ( have_posts() ) :
-										the_post();
+									if ( ! empty( $slide->slide_link_btn ) ) :
+										?>
+										<a href="<?php echo esc_url( get_the_permalink( $slide->slide_link, false ) ); ?>" class="wonka-btn img-header-slide-link text-center"><?php echo wp_kses_data( $slide->slide_link_btn ); ?></a>
+									<?php endif; ?>
+								</div><!-- .text-box -->
+							</div><!-- .img-header-text-container -->
 
-										get_template_part( 'template-parts/content', 'page' );
+						</div><!-- .img-header-text-wrap -->
 
-										// If comments are open or we have at least one comment, load up the comment template.
-										if ( comments_open() || get_comments_number() ) :
-											comments_template();
-									endif;
-			endwhile; // End of the loop.
-									?>
+								<?php endif; ?>
+					</div><!-- .top-slide-img-holder -->
+				</div><!-- .top-page-slide -->
+				<?php endif; ?>
 
-		</main><!-- #main .col-12 -->
-	</div><!-- #primary .row -->
+		<?php endforeach; ?>
+
+			</div><!-- .top-page-slider -->
+		</section><!-- .header-slider-section -->
+	<?php endif; ?>
+	<?php
+	$discovery_section = ! empty( $page_mods->discovery_section ) ? $page_mods->discovery_section : '';
+
+	if ( empty( $discovery_section ) ) :
+		$discovery_section = apply_filters( 'wonkasoft_filter_before_discovery_section', get_section_mods( 'discovery_section' ), 'discovery_section' );
+	endif;
+
+	$discovery_section = $discovery_section->discovery_section;
+	do_action( 'wonkasoft_action_before_discovery_section', 'discovery_section', $discovery_section );
+
+	?>
+	<?php if ( ! empty( $discovery_section ) ) : ?>
+		<section class="discovery-section">
+			<div class="container-fluid">
+				<div class="row align-items-center">
+					<div class="col col-12 col-md-4">
+						<h3><?php echo esc_html( $discovery_section->title ); ?></h3>
+						<?php
+							echo $discovery_section->body;
+						?>
+						<div class="text-left">
+							<a href="<?php echo esc_url( $discovery_section->cta_link ); ?>" class="btn wonka-btn"><?php echo esc_html( $discovery_section->cta_text ); ?></a>
+						</div>
+					</div>
+					<div class="col col-12 col-md-8 text-center">
+						<a href="<?php echo esc_url( $discovery_section->cta_link ); ?>" class="img-link">
+							<img src="<?php echo esc_url( wp_get_attachment_image_src( $discovery_section->image, 'medium', false )[0] ); ?>" class="img-responsive" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $discovery_section->image, 'medium', null ) ); ?>" />
+							<img src="<?php echo esc_url( wp_get_attachment_image_src( $discovery_section->second_image, 'medium', false )[0] ); ?>" class="img-responsive flip-image" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $discovery_section->second_image, 'medium', null ) ); ?>" />
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	<?php endif; ?>
+	<?php
+	// The tax query
+	$tax_query[] = array(
+		'taxonomy' => 'product_visibility',
+		'field'    => 'name',
+		'terms'    => 'featured',
+		'operator' => 'IN', // or 'NOT IN' to exclude feature products
+	);
+
+	// The query
+	$pro_query    = new WP_Query(
+		array(
+			'post_type'           => 'product',
+			'post_status'         => 'publish',
+			'ignore_sticky_posts' => 1,
+			'posts_per_page'      => -1,
+			'orderby'             => 'post_title',
+			'order'               => 'desc',
+			'tax_query'           => $tax_query,
+		)
+	);
+	$shop_section = ! empty( $page_mods->shop_section ) ? $page_mods->shop_section : '';
+
+	if ( empty( $shop_section ) ) :
+		$shop_section = apply_filters( 'wonkasoft_filter_before_shop_section', get_section_mods( 'shop_section' ), 'shop_section', $pro_query );
+	endif;
+
+	$shop_section = $shop_section->shop_section;
+	do_action( 'wonkasoft_action_before_shop_section', 'shop_section', $shop_section, $pro_query );
+	?>
+	<?php if ( $pro_query->have_posts() ) : ?>
+		<section class="featured-bags-section">
+			<div class="container-fluid">
+				<div class="row justify-content-space-around">
+					<div class="col col-12">
+						<h2 class="shop-section-title text-center"><?php echo esc_html( $shop_section->title ); ?></h2>
+						<p class="shop-section-subtitle text-center mx-auto"><?php echo esc_html( $shop_section->subtitle ); ?></p>
+					</div>
+				</div>
+				<div class="row justify-content-space-around">
+				<?php
+
+				while ( $pro_query->have_posts() ) :
+					$pro_query->the_post();
+					$pro_query_id              = get_the_ID();
+					$featured_product_image_id = get_featured_product_img_id( $post );
+
+					?>
+						<div class="col col-12 col-md-4 featured-product-wrap">
+							<a href="<?php esc_url( the_permalink( $pro_query_id ) ); ?>" class="shop-link">
+								<div class="featured-product-image" style="background-image: url('<?php echo esc_url( wp_get_attachment_image_src( $featured_product_image_id, 'full', false )[0] ); ?>');">
+										<button class="btn wonka-btn"><h6 class="featured-product-title"><?php the_title(); ?></h6></button>
+								</div>
+							</a>
+						</div>
+						<?php
+					endwhile;
+					wp_reset_postdata();
+				?>
+				</div><!-- justify-content-space-around -->
+			</div>
+		</section>
+	<?php endif; ?>
+	<?php
+	$our_brand_section = ! empty( $page_mods->our_brand_section ) ? $page_mods->our_brand_section : '';
+
+	if ( empty( $our_brand_section ) ) :
+		$our_brand_section = apply_filters( 'wonkasoft_filter_before_our_brand_section', get_section_mods( 'our_brand_section' ), 'our_brand_section' );
+	endif;
+
+	$our_brand_section = $our_brand_section->our_brand_section;
+	do_action( 'wonkasoft_action_before_our_brand_section', 'our_brand_section', $our_brand_section );
+	?>
+	<?php if ( ! empty( $our_brand_section ) ) : ?>
+		<section class="our-brand-section">
+		<div class="container-fluid">
+				<div class="row align-items-center">
+					<div class="col col-12 col-md-8 text-center">
+						<a href="<?php echo esc_url( $our_brand_section->cta_link ); ?>" class="img-link">
+							<img src="<?php echo esc_url( wp_get_attachment_image_src( $our_brand_section->image, 'medium', false )[0] ); ?>" class="img-responsive" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $our_brand_section->image, 'medium', null ) ); ?>" />
+							<img src="<?php echo esc_url( wp_get_attachment_image_src( $our_brand_section->second_image, 'medium', false )[0] ); ?>" class="img-responsive flip-image" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $our_brand_section->second_image, 'medium', null ) ); ?>" />
+						</a>
+					</div>
+					<div class="col col-12 col-md-4">
+						<h3><?php echo esc_html( $our_brand_section->title ); ?></h3>
+						<?php
+							echo $our_brand_section->body;
+						?>
+						<div class="text-left">
+							<a href="<?php echo esc_url( $our_brand_section->cta_link ); ?>" class="btn wonka-btn"><?php echo esc_html( $our_brand_section->cta_text ); ?></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	<?php endif; ?>
+	<?php
+	$args         = array(
+		'meta_query' => array(
+			array(
+				'key'     => 'featured',
+				'value'   => 'checked',
+				'compare' => 'LIKE',
+			),
+		),
+	);
+	$testimonials = new Wonkasoft_Testimonial_Query( $args );
+	$testimonials->get_testimonials();
+
+	if ( $testimonials->results->have_posts() ) :
+		?>
+		<section class="testimonial-section">
+			<div class="container-fluid">
+				<div class="row align-items-center justify-content-center testimonial-row">
+					<div class="col-10 testimonial-wrap text-center">
+					<?php
+					while ( $testimonials->results->have_posts() ) :
+						$testimonials->results->the_post();
+						$testimonial_id = get_the_ID();
+						?>
+						<div class="text-center testimonial-box">
+							<p><span class="testimonial-quotes"><i class="fa fa-quote-left"></i></span>&nbsp;<?php echo esc_html( wp_strip_all_tags( get_the_content(), true ) ); ?>&nbsp;<span class="testimonial-quotes"><i class="fa fa-quote-right"></i></span><br />- <?php the_title(); ?></p>
+						</div>
+						<?php
+						endwhile;
+						wp_reset_postdata();
+					?>
+					</div>
+				</div>
+			</div>
+		</section>
+	<?php endif; ?>
+	<?php
+	$term_args    = array(
+		'taxonomy'   => 'product_cat',
+		'orderby'    => 'name',
+		'order'      => 'ASC',
+		'hide_empty' => true,
+	);
+	$cats         = new WP_Term_Query( $term_args );
+	$cats_section = ! empty( $page_mods->cats_section ) ? $page_mods->cats_section : '';
+
+	if ( empty( $cats_section ) ) :
+		$cats_section = apply_filters( 'wonkasoft_filter_before_cats_section', get_section_mods( 'cats_section' ), 'cats_section', $cats );
+	endif;
+
+	$cats_section = $cats_section->cats_section;
+	do_action( 'wonkasoft_action_before_cats_section', 'cats_section', $cats_section, $cats );
+	?>
+	<?php if ( ! empty( $cats ) ) : ?>
+		<section class="category-section">
+			<div class="container-fluid">
+				<div class="row justify-content-space-around">
+					<div class="col col-12">
+						<h2 class="cat-section-title text-center"><?php echo esc_html( $cats_section->title ); ?></h2>
+						<p class="cat-section-subtitle text-center"><?php echo esc_html( $cats_section->subtitle ); ?></p>
+					</div>
+				<?php
+				/**
+				 * This array will set the order to display cats in.
+				 * @var array
+				 */
+				$mapped_cats_order = array(
+					'Backpacks',
+					'Duffels',
+					'Accessories',
+					'Totes',
+				);
+				$terms = $cats->get_terms();
+				usort( $terms, function( $a, $b ) use ( $mapped_cats_order ) {
+					return array_search( $a->name, $mapped_cats_order ) > array_search( $b->name, $mapped_cats_order );
+				});
+					
+				foreach ( $terms as $cur_cat ) :
+					if ( in_array( $cur_cat->name, $mapped_cats_order ) ) :
+						?>
+						<?php
+							$thumbnail_id = get_woocommerce_term_meta( $cur_cat->term_id, 'thumbnail_id', true );
+							$src          = wp_get_attachment_image_src( $thumbnail_id, 'full', false );
+						?>
+							<div class="col col-6 cat-col">
+								<a href="<?php echo esc_url( get_term_link( $cur_cat->term_id ) ); ?>" class="cat-link">
+									<div class="cat-container" style="background-image: url('<?php echo esc_url( $src[0] ); ?>');">
+										<button class="btn wonka-btn"><?php echo esc_html( $cur_cat->name ); ?></button>
+									</div>
+								</a>
+							</div>
+						<?php
+					endif;
+				endforeach;
+				?>
+				</div>
+			</div>
+		</section>
+	<?php endif; ?>
+	<?php
+	$press_section = ! empty( $page_mods->press_section ) ? $page_mods->press_section : '';
+
+	if ( empty( $press_section ) ) :
+		$press_section = apply_filters( 'wonkasoft_filter_before_press_section', get_section_mods( 'press_section' ), 'press_section' );
+	endif;
+
+	$press_section = $press_section->press_section;
+	do_action( 'wonkasoft_action_before_press_section', 'press_section', $press_section );
+	?>
+	<?php if ( ! empty( $press_section ) ) : ?>
+	<section class="press-section fixed-divider-460">
+		<div class="container-fluid">
+			<div class="row justify-content-space-around">
+				<div class="col col-12">
+					<h2 class="press-section-title"><?php echo esc_html( $press_section->title ); ?></h2>
+				</div>
+			</div>
+			<div class="row justify-content-space-around">
+				<div class="col col-12 press-logos">
+					<?php foreach ( $press_section->logos as $logo ) : ?>
+						<img src="<?php echo esc_url( wp_get_attachment_image_src( $logo, 'medium', false )[0] ); ?>" class="img-responsive" srcset="<?php echo esc_attr( wp_get_attachment_image_srcset( $logo, 'medium', null ) ); ?>" />
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</div>
+	</section>
 <?php endif; ?>
+<?php else : ?>
+	<div id="primary" class="content-area row">
+	<main id="main" class="site-main col col-12">
+						<?php
+						while ( have_posts() ) :
+							the_post();
 
-<?php
-get_footer();
+							get_template_part( 'template-parts/content', 'page' );
+
+							// If comments are open or we have at least one comment, load up the comment template.
+							if ( comments_open() || get_comments_number() ) :
+								comments_template();
+							endif;
+						endwhile; // End of the loop.
+						?>
+
+	</main><!-- #main .col-12 -->
+</div><!-- #primary .row -->
+				<?php endif; ?>
+
+					<?php
+					get_footer();

@@ -19,6 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 global $product;
 $added_classes = array(
+	'col',
 	'col-6',
 	'col-sm-4',
 );

@@ -12,7 +12,7 @@
  *
  * @see     https://docs.woocommerce.com/document/template-structure/
  * @package WooCommerce/Templates
- * @version 3.6.0
+ * @version 4.1.0
  */
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
@@ -47,7 +47,12 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 			<div class="form-group">
 				<label for="password" class="sr-only"><?php esc_html_e( 'Password', 'woocommerce' ); ?>&nbsp;<span class="required sr-only">*</span></label>
 				<div class="input-group">
-					<input class="form-control input-text" type="password" name="password" id="password" autocomplete="current-password" placeholder="<?php esc_html_e( 'Password *', 'woocommerce' ); ?>" /><div class="input-group-append"><div class="input-group-text"><i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i></div></div>
+					<input class="form-control input-text" type="password" name="password" id="password" autocomplete="current-password" placeholder="<?php esc_html_e( 'Password *', 'woocommerce' ); ?>" />
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<i toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></i>
+						</div>
+					</div>
 					<div class="invalid-feedback password"></div>
 				</div>
 			</div>
@@ -79,7 +84,9 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 		<!-- </p> -->
 
 		<div class="apera-registration-form-container">
-			<?php echo gravity_form( 'Apera Perks Registration', false, false, false, null, true, 0, false ); ?>
+			<?php
+			gravity_form( 'Apera Perks Registration', false, false, false, null, true, 0, true );
+			?>
 
 			<?php do_action( 'woocommerce_register_form' ); ?>
 

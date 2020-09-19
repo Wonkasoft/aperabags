@@ -1,14 +1,14 @@
 /*!
 Theme Name: Apera Bags
-Theme URI: http://underscores.me/
+Theme URI: https://wonkasoft.com/aperabags-theme
 Author: Wonkasoft
 Author URI: https://wonkasoft.com
-Description: Custom Theme for Apera Bags
+Description: Our custom theme is designed for AperaBags.com. It features many homepage options in the customizer, and is built so that what you see in the customizer looks like what you’ll see on your website. This custom theme is designed with Apera's style guide, but is adaptable to a wide range of websites. Featuring custom sliders, parallax, and a custom product's page with a vertical slider. This theme was made to be a modern optimize, and to be beautiful on all screen sizes.
 Version: 1.0.0
 License: GNU General Public License v2 or later
 License URI: LICENSE
-Text Domain: apera-bags
-Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+Text Domain: aperabags
+Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, customizer options, parallax, vertical sliders, mobile-friendly
 
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
@@ -42,7 +42,7 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 	## Captions
 	## Galleries
 --------------------------------------------------------------*/
-@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i|Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i|Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800');
 @import "variables-site/variables-site";
 @import "mixins/mixins-master";
 
@@ -90,6 +90,15 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 # Widgets
 --------------------------------------------------------------*/
 @import "site/secondary/widgets";
+
+/*--------------------------------------------------------------
+# FontAwesome
+--------------------------------------------------------------*/
+@import "fontawesome/solid";
+@import "fontawesome/v4-shims";
+@import "fontawesome/regular";
+@import "fontawesome/brands";
+@import "fontawesome/fontawesome";
 
 /*--------------------------------------------------------------
 # Content
