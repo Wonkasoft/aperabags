@@ -1048,8 +1048,8 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 </tr>
 	<?php endforeach; ?>
 	<?php
-	$current_method = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : null;
-	if ( ! $current_method ) :
+	$current_method = ( ! empty( WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : null;
+	if ( empty( $current_method ) ) :
 		?>
 
 	<tr class="shipping-methods">
@@ -1062,7 +1062,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	</tr>
 	<?php else : ?>
 		<tr class="shipping-methods">
-			<?php foreach ( WC()->session->get( 'chosen_shipping_methods' ) as $method_id => $rate ) : ?>
+			<?php foreach ( $current_method as $method_id => $rate ) : ?>
 				<?php
 				if ( WC()->session->get( 'chosen_shipping_methods' )[0] === $method_id ) :
 					$rate_label = $rate->label;
