@@ -1048,10 +1048,10 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 </tr>
 	<?php endforeach; ?>
 	<?php
-		$available_shipping_methods = WC()->shipping->get_shipping_methods( true, 'admin' );
-		// echo '<pre>';
-		// print_r( $available_shipping_methods );
-		// echo '</pre>';
+		$available_shipping_methods = WC()->shipping->get_shipping_methods( true, 'array' );
+		echo '<pre>';
+		print_r( $available_shipping_methods );
+		echo '</pre>';
 	if ( ! empty( WC()->session->get( 'chosen_shipping_methods' ) ) ) :
 		$current_method = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : $available_shipping_methods[0];
 	endif;
