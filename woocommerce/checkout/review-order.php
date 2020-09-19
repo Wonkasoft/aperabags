@@ -32,8 +32,7 @@ $chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->sess
 		<ul id="shipping_ad" class="woocommerce-shipping-ads list-group list-group-flush">
 			<li class="list-group-item card-title"><h6>Perks Members</h6></li>
 			<?php
-			if ( $available_methods ) :
-				foreach ( $available_methods as $index => $method ) :
+			foreach ( $available_methods as $index => $method ) :
 					if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal || 'USPS_Priority_Mail_under_25' === $method->method_id && 25 > WC()->cart->subtotal || 'USPS_Priority_Mail_Express' === $method->method_id ) :
 						?>
 						<li class="list-group-item">
@@ -74,7 +73,6 @@ $chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->sess
 						</li>
 				<?php endif; ?>
 			<?php endforeach; ?>
-		<?php endif; ?>
 		</ul>
 </div>
 <?php endif; ?>
