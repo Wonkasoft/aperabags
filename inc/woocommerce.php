@@ -862,21 +862,6 @@ function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 add_filter( 'woocommerce_form_field', 'wonka_woocommerce_form_field', 10, 4 );
 
 /**
- * wonkasoft_force_guest_session
- * @return [type] [description]
- */
-function wonkasoft_force_guest_session() {
-	if ( is_user_logged_in() || is_admin() ) :
-		return;
-	endif;
-
-	if ( isset(WC()->session) && ! WC()->session->has_session() ) {
-        WC()->session->set_customer_session_cookie( true );
-    }
-}
-add_action( 'init', 'wonkasoft_force_guest_session', 10, 1 );
-
-/**
  * This builds a custom table of order details on the checkout page.
  *
  * @param  array $checkout contains the checkout items.
@@ -1063,8 +1048,8 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 </tr>
 	<?php endforeach; ?>
 	<?php
-	$current_method = ( ! empty( WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : null;
-	if ( empty( $current_method ) ) :
+	$chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->session->chosen_shipping_methods[0] : '';
+	if ( ! $current_method ) :
 		?>
 	<tr class="shipping-methods">
 		<td colspan="2" class="ship-method-cell">
@@ -1166,7 +1151,7 @@ add_filter( 'woocommerce_cart_totals_coupon_html', 'wonkasoft_woocommerce_cart_t
  * @return array            returns the fragments after being modified.
  */
 function wonka_woocommerce_update_order_review_fragments( $fragments ) {
-	$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
+	$chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->session->chosen_shipping_methods[0] : '';
 
 	foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
 		if ( $current_method === $method_id ) :
