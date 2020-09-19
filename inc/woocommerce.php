@@ -1059,6 +1059,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 </tr>
 	<?php endforeach; ?>
 	<?php
+	
 	$chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->session->chosen_shipping_methods[0] : '';
 	if ( ! $current_method ) :
 		?>
