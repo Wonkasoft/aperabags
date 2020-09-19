@@ -1048,7 +1048,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 </tr>
 	<?php endforeach; ?>
 	<?php
-		$available_shipping_methods = get_shipping_methods( true, 'admin' );
+		$available_shipping_methods = WC()->shipping->get_shipping_methods( true, 'view' );
 		echo '<pre>';
 		print_r( $available_shipping_methods );
 		echo '</pre>';
