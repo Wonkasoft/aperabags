@@ -4487,7 +4487,10 @@ var componentForm;
 		$( document.body ).on( 'select_default_shipping', function( e ) {
 			if ( document.querySelector( '#shipping_method input' ) ) {
 				document.querySelector( '#shipping_method input' ).click();
-				
+			} else {
+				if ( 'undefined' == document.querySelector( '#shipping_method input' ) ) {
+					window.location.reload();
+				}
 			}
 		});
 		
