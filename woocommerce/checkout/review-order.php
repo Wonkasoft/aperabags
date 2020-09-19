@@ -25,12 +25,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $available_methods = WC()->session->get( 'shipping_for_package_0' )['rates'];
 <<<<<<< HEAD
+<<<<<<< HEAD
 if ( ! empty( WC()->session->get( 'chosen_shipping_methods' ) ) ) :
 	$chosen_method     = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : '';
 endif; 
 =======
 $chosen_method     = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : null;
 >>>>>>> stage
+=======
+$chosen_method     = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : null;
+>>>>>>> 3a626fd2009acb1eaf7c005227d0cfa31ccb6dcc
 ?>
 
 <?php if ( ! is_user_logged_in() ) : ?>
