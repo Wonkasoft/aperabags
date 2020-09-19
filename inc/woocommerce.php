@@ -1048,6 +1048,9 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 </tr>
 	<?php endforeach; ?>
 	<?php
+	if ( !WC()->session->has_session() ) {
+	    WC()->session->set_customer_session_cookie(true);
+    }
 	$current_method = ( ! empty( WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : null;
 	if ( empty( $current_method ) ) :
 		?>
