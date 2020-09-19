@@ -866,15 +866,15 @@ add_filter( 'woocommerce_form_field', 'wonka_woocommerce_form_field', 10, 4 );
  * @return [type] [description]
  */
 function wonkasoft_force_guest_session() {
-	if ( is_user_logged_in() ) :
+	if ( is_user_logged_in() || is_admin() ) :
 		return;
 	endif;
 
-	if ( !WC()->session->has_session() ) {
-	    WC()->session->set_customer_session_cookie(true);
+	if ( isset(WC()->session) && ! WC()->session->has_session() ) {
+        WC()->session->set_customer_session_cookie( true );
     }
 }
-add_action( 'woocommerce_init', 'wonkasoft_force_guest_session', 10, 1 );
+add_action( 'init', 'wonkasoft_force_guest_session', 10, 1 );
 
 /**
  * This builds a custom table of order details on the checkout page.
