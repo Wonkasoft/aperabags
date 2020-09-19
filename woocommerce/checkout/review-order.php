@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="wonka checkout-form-section-title"><h5 class="wonka wonka-h5">2. Delivery Options <span>(US only)</span></h5></div>
 <?php
-$available_methods = ( WC()->shipping()->get_packages()[0]['rates'] ) ? WC()->shipping()->get_packages()[0]['rates']: '';
+$available_methods = WC()->session->get( 'shipping_for_package_0' )['rates'];
 $chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->session->chosen_shipping_methods[0] : '';
 ?>
 
@@ -32,7 +32,7 @@ $chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->sess
 		<ul id="shipping_ad" class="woocommerce-shipping-ads list-group list-group-flush">
 			<li class="list-group-item card-title"><h6>Perks Members</h6></li>
 			<?php
-			foreach ( $available_methods as $index => $method ) :
+				foreach ( $available_methods as $index => $method ) :
 					if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal || 'USPS_Priority_Mail_under_25' === $method->method_id && 25 > WC()->cart->subtotal || 'USPS_Priority_Mail_Express' === $method->method_id ) :
 						?>
 						<li class="list-group-item">
