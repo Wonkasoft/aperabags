@@ -861,6 +861,17 @@ function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 }
 add_filter( 'woocommerce_form_field', 'wonka_woocommerce_form_field', 10, 4 );
 
+function wonkasoft_woocommerce_init( $array ) { 
+    if ( is_user_logged_in() || is_admin() ) :
+    	return;
+    endif; 
+
+    if ( ! WC()->session->has_session() ) :
+    	WC()->session->set_customer_session_cookie(true);
+    endif;
+}; 
+add_action( 'woocommerce_init', 'wonkasoft_woocommerce_init', 10, 1 ); 
+
 /**
  * This builds a custom table of order details on the checkout page.
  *
