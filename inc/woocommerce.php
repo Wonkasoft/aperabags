@@ -1048,9 +1048,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 </tr>
 	<?php endforeach; ?>
 	<?php
-	if ( ! empty( WC()->session->get( 'chosen_shipping_methods' ) ) ) :
-		$current_method = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : $available_shipping_methods[0];
-	endif;
+	$current_method = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : null;
 	if ( ! $current_method ) :
 		?>
 
