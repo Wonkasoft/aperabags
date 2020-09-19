@@ -34,19 +34,54 @@ $calculator_text          = '';
 	<td colspan="3" data-title="<?php echo esc_attr( $package_name ); ?>">
 		<?php if ( $available_methods ) : ?>
 			<ul id="shipping_method" class="woocommerce-shipping-methods">
-				<?php foreach ( $available_methods as $method ) : ?>
-					<li>
-						<?php
-						if ( 1 < count( $available_methods ) ) {
-							printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
-						} else {
-							printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
-						}
-						printf( '<label for="shipping_method_%1$s_%2$s" data-label="">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
-						do_action( 'woocommerce_after_shipping_rate', $method, $index );
-						?>
-					</li>
-				<?php endforeach; ?>
+				<?php
+				if ( ! is_user_logged_in() ) :
+					?>
+					<li class="list-group-item card-title"><h6>Guests</h6></li>
+					<?php
+					foreach ( $available_methods as $index => $method ) :
+
+						if ( 'free_shipping' !== $method->method_id && 'USPS_Priority_Mail_under_25' !== $method->method_id && 'USPS_Priority_Mail_Express' !== $method->method_id ) :
+							?>
+							<li class="list-group-item">
+								<?php
+
+								if ( 1 < count( $available_methods ) ) {
+									printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+								} else {
+									printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
+								}
+
+								printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
+
+								do_action( 'woocommerce_after_shipping_rate', $method, $index );
+								?>
+							</li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				<?php else : ?>
+					<li class="list-group-item card-title"><h6>Perks Members</h6></li>
+					<?php
+					foreach ( $available_methods as $index => $method ) :
+						if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal || 'USPS_Priority_Mail_under_25' === $method->method_id && 25 > WC()->cart->subtotal || 'USPS_Priority_Mail_Express' === $method->method_id ) :
+							?>
+							<li class="list-group-item">
+								<?php
+
+								if ( 1 < count( $available_methods ) ) {
+									printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+								} else {
+									printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
+								}
+
+								printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
+
+								do_action( 'woocommerce_after_shipping_rate', $method, $index );
+								?>
+							</li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				<?php endif; ?>
 			</ul>
 			<?php if ( is_cart() ) : ?>
 				<p class="woocommerce-shipping-destination">

@@ -10,45 +10,125 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see         https://docs.woocommerce.com/document/template-structure/
- * @author      WooThemes
- * @package     WooCommerce/Templates
- * @version     3.3.0
+ * @see https://docs.woocommerce.com/document/template-structure/
+ * @package WooCommerce/Templates
+ * @version 3.8.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 ?>
-<div class="wonka checkout-form-section-title"><h5 class="wonka wonka-h5">Shipping Method <span>(US only)</span></h5></div>
-<div class="card wonka-card wonka-card-shipping-selection">
+<div class="wonka checkout-form-section-title"><h5 class="wonka wonka-h5">2. Delivery Options <span>(US only)</span></h5></div>
 <?php
 $available_methods = WC()->session->get( 'shipping_for_package_0' )['rates'];
-	$chosen_method = WC()->session->get( 'chosen_shipping_methods' )[0];
+$chosen_method     = ( array_key_exists( 0, WC()->session->get( 'chosen_shipping_methods' ) ) ) ? WC()->session->get( 'chosen_shipping_methods' )[0] : null;
 ?>
-<?php if ( $available_methods ) : ?>
-		<ul id="shipping_method" class="woocommerce-shipping-methods list-group list-group-flush">
-			<?php foreach ( $available_methods as $index => $method ) : ?>
-				<li class="list-group-item">
+
+<?php if ( ! is_user_logged_in() ) : ?>
+<div class="card wonka-card wonka-card-shipping-ads">
+
+		<ul id="shipping_ad" class="woocommerce-shipping-ads list-group list-group-flush">
+			<li class="list-group-item card-title"><h6>Perks Members</h6></li>
+			<?php
+
+			foreach ( $available_methods as $index => $method ) :
+				if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal || 'USPS_Priority_Mail_under_25' === $method->method_id && 25 > WC()->cart->subtotal || 'USPS_Priority_Mail_Express' === $method->method_id ) :
+					?>
+					<li class="list-group-item">
 					<?php
-					if ( $method->label === 'USPS Priority Mail: FREE' ) :
-						$shipping_eta = '1-3 business days';
-					endif;
+				endif;
 
-					if ( $method->label === 'USPS Priority Mail Express' ) :
-						$shipping_eta = '1 business day (weekends excluded)';
-					endif;
-
+				if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal ) :
 					if ( 1 < count( $available_methods ) ) {
-						printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+						printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method checkout-signup-pop" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
 					} else {
 						printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
 					}
-					printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label> | <span class="shipping-eta">%4$s</span>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ), $shipping_eta ); // WPCS: XSS ok.
-					do_action( 'woocommerce_after_shipping_rate', $method, $index );
+
+					printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
+				endif;
+
+				if ( 'USPS_Priority_Mail_under_25' === $method->method_id && 25 > WC()->cart->subtotal ) :
+					if ( 1 < count( $available_methods ) ) {
+						printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method checkout-signup-pop" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+					} else {
+						printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
+					}
+
+					printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
+				endif;
+
+				if ( 'USPS_Priority_Mail_Express' === $method->method_id ) :
+					if ( 1 < count( $available_methods ) ) {
+						printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method checkout-signup-pop" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+					} else {
+						printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
+					}
+
+					printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
+				endif;
+				if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal || 'USPS_Priority_Mail_under_25' === $method->method_id && 25 > WC()->cart->subtotal || 'USPS_Priority_Mail_Express' === $method->method_id ) :
 					?>
-				</li>
-			<?php endforeach; ?>
+					</li>
+			<?php endif; ?>
+		<?php endforeach; ?>
+		</ul>
+</div>
+<?php endif; ?>
+<div class="card wonka-card wonka-card-shipping-selection">
+
+<?php if ( $available_methods ) : ?>
+		<ul id="shipping_method" class="woocommerce-shipping-methods list-group list-group-flush">
+			<?php
+			if ( ! is_user_logged_in() ) :
+				?>
+				<li class="list-group-item card-title"><h6>Guests</h6></li>
+				<?php
+				foreach ( $available_methods as $index => $method ) :
+
+					if ( 'free_shipping' !== $method->method_id && 'USPS_Priority_Mail_under_25' !== $method->method_id && 'USPS_Priority_Mail_Express' !== $method->method_id ) :
+						?>
+						<li class="list-group-item">
+							<?php
+
+							if ( 1 < count( $available_methods ) ) {
+								printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+							} else {
+								printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
+							}
+
+							printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
+
+							do_action( 'woocommerce_after_shipping_rate', $method, $index );
+							?>
+						</li>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			<?php else : ?>
+				<li class="list-group-item card-title"><h6>Perks Members</h6></li>
+				<?php
+				foreach ( $available_methods as $index => $method ) :
+					if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal || 'USPS_Priority_Mail_under_25' === $method->method_id && 25 > WC()->cart->subtotal || 'USPS_Priority_Mail_Express' === $method->method_id ) :
+						?>
+						<li class="list-group-item">
+							<?php
+
+							if ( 1 < count( $available_methods ) ) {
+								printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+							} else {
+								printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
+							}
+
+							printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
+
+							do_action( 'woocommerce_after_shipping_rate', $method, $index );
+							?>
+						</li>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			<?php endif; ?>
 		</ul>
 <?php endif; ?>
 </div>

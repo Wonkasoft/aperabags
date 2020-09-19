@@ -1,4 +1,4 @@
-a {
+body a {
 	color: $color__link;
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
@@ -10,13 +10,6 @@ a {
 	&:active {
 		color: $color__link-hover;
 		text-decoration: none;
-	}
-	&:focus {
 		outline: none;
-	}
-	&:hover,
-	&:active {
-		outline: none;
-
 	}
 }

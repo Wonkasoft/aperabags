@@ -26,7 +26,7 @@ if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) {
 	$get_addresses = apply_filters(
 		'woocommerce_my_account_get_addresses',
 		array(
-			'billing' => __( 'Billing address', 'woocommerce' ),
+			'billing'  => __( 'Billing address', 'woocommerce' ),
 			'shipping' => __( 'Shipping address', 'woocommerce' ),
 		),
 		$customer_id
@@ -50,7 +50,7 @@ $col    = 1;
 </p>
 
 <?php if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) : ?>
-	<div class="u-columns woocommerce-Addresses col2-set addresses">
+	<div id="ship-billing-address" class="u-columns woocommerce-Addresses col2-set addresses">
 <?php endif; ?>
 
 <div class="row wonka-row">

@@ -31,16 +31,21 @@
 
 .lined-title:before,
 .lined-title:after {
-content: '';
-border-top: 3px solid;
-margin: 0 20px 0 20px;
-flex: 1 0 20px;
-color: #fff;
+	content: '';
+	border-top: 3px solid;
+	margin: 0 20px 0 20px;
+	flex: 1 0 20px;
+	color: #fff;
 }
 
 a.perks-btn {
-width: 9rem;
-font-size: 1.5rem
+	width: 7.5rem;
+	font-size: 1.3rem;
+
+	@include media-breakpoint( lg ) {
+		width: 8rem;
+		font-size: 1.3rem;
+	}
 }
 
 .sticky {
@@ -50,6 +55,25 @@ font-size: 1.5rem
 #page {
 	position: relative;
 	min-height: 100%;
+}
+
+body.page-template-warehouse-tracking-portal,
+body.page-template-complete-registration {
+
+	#content {
+
+		main#main {
+			margin-top: 0;
+
+			header.entry-header {
+				display: none;
+
+				.entry-tile {
+
+				}
+			}
+		}
+	}
 }
 
 #content {
@@ -83,6 +107,57 @@ font-size: 1.5rem
 		.entry-title {
 			display: none;
 		}
+
+	}
+	
+	.u-userLauncherColor:not([disabled]) {
+	  box-shadow: none;
+	  background-color: #52abf6 !important;
+	  color: #163B5A !important;
+	  fill: #163B5A !important;
+	}
+
+	.u-userLauncherColor:not([disabled]) svg {
+	  color: #163B5A;
+	  fill: #163B5A;
+	}
+
+	.u-userLauncherColor:not([disabled]) svg path {
+	  fill: #163B5A;
+	}
+
+	.u-userLauncherColor:not([disabled]):focus {
+	  box-shadow: inset 0 0 0 0.21428571428571427rem rgba(22, 59, 90, 0.3) !important;
+	}
+
+	button.wrapper-AtBcr {
+		padding: .7rem 1.5rem;
+		border-radius: 999rem;
+		font-size: 1.07143rem;
+		text-transform: capitalize;
+		letter-spacing: 0;
+		line-height: 1.2;
+		display: flex !important;
+		justify-content: space-evenly;
+
+		i {
+			font-weight: 200;
+			@include font-size( 1.3 );
+		}
+
+		span {
+			display: inline-block;
+			padding-left: 8px;
+		}
+	}
+
+	.u-inlineBlock {
+	    display: inline-block!important;
+	    max-width: 100%;
+	}
+
+	.Arrange--middle .Arrange-sizeFit {
+	  	vertical-align: middle;
 	}
 }
 
@@ -93,8 +168,17 @@ font-size: 1.5rem
 .page-content,
 .entry-content,
 .entry-summary {
+	
 	p {
 		line-height: 1.1;
+
+		&.form-submit {
+			padding: 8px;
+		}
+	}
+
+	footer.entry-footer {
+		padding: 15px;
 	}
 }
 
@@ -270,18 +354,18 @@ body.search {
 	}
 }
 
-#searchform {
+form.search-form {
 	margin: 15px;
 	justify-content: flex-end;
 
-	input#s {
+	input.field.wonka-form-control {
 		border-radius: 100px;
 		border-width: 1px;
 		padding: 8px;
-		line-height: 1.2;
+		line-height: 1;
 		height: 100%;
 		border-radius: 100px 0 0 100px;
-		@include font-size( 1.1 );
+		@include font-size( 1.2);
 
 		&::placeholder {
 			font-style: italic;
@@ -291,11 +375,10 @@ body.search {
 	button.wonka-btn {
 		padding: 8px 15px;
 		border-radius: 100px;
-		line-height: 1.2;
+		line-height: 1;
 		text-transform: none;
-		height: 100%;
 		border-radius: 0 100px 100px 0;
-		@include font-size( 1.1 );
+		@include font-size( 1.2 );
 
 		i {
 			color: rgba( #fff, .8 );
@@ -312,7 +395,7 @@ body.search {
 
 	@include media-breakpoint( md ) {
 
-		input#s {
+		input.field.wonka-form-control {
 			border-radius: 100px 0 0 100px;
 		}
 
@@ -322,6 +405,71 @@ body.search {
 		}
 	}
 }
+
+div#get-10-sidebar {
+    position: fixed;
+    z-index: 500;
+    display: none;
+    bottom: 50%;
+    left: -39px;
+    background: #52abf6;
+    border-radius: 0 0 4px 4px;
+    @include prefix( transform, rotate(-90deg), o moz webkit );
+    @include prefix( transition, $trans_25, o moz webkit );
+    @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .3 ), o moz webkit );
+
+    @include media-breakpoint( md ) {
+    	display: block;
+    }
+}
+
+div#get-10-sidebar a {
+	display: inline-block;
+    color: #fff;
+    padding: 12px 20px 8px;
+    font-weight: 700;
+}
+
+div#get-10-sidebar:hover {
+    left: -32px;
+}
+
+div#give-feedback {
+    position: fixed;
+    z-index: 500;
+    display: none;
+    bottom: 50%;
+    right: -55px;
+    background: #52abf6;
+    border-radius: 4px 4px 0 0;
+    @include prefix( transform, rotate(-90deg), o moz webkit );
+    @include prefix( transition, $trans_25, o moz webkit );
+    @include prefix( box-shadow, 0 1px 4px 0 rgba( #000, .3 ), o moz webkit );
+
+    @include media-breakpoint( md ) {
+    	display: block;
+    }
+}
+
+div#give-feedback a {
+	display: inline-block;
+    color: #fff;
+    padding: 8px 20px 12px;
+    font-weight: 700;
+}
+
+div#give-feedback:hover {
+    right: -48px;
+}
+
+#launcher {
+	bottom: 50px !important;
+
+	.zEWidget-launcher {
+		visibility: hidden !important;
+	}
+}
+
 
 /*=====================================
 =            Search styles            =
@@ -355,7 +503,7 @@ body.search {
 	overflow: hidden;
 	@include prefix( transition, $trans_25, o moz webkit );
 
-	form#searchform {
+	form.search-form {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -365,8 +513,9 @@ body.search {
 		/* Style the search field */
 		input[type=text] {
 			width: 70%;
-			padding: 13px;
-			@include font-size( 1.1 );
+			padding: 15px;
+			height: 52px;
+			@include font-size( 1.2 );
 			@include prefix( transition, $trans_25, o moz webkit );
 		}
 
@@ -378,12 +527,16 @@ body.search {
 			width: auto;
 			margin-top: 0px;
 			margin-left: 0;
+			padding: 15px;
+			height: 52px;
+			border: 1px solid #52abf6;
+			@include font-size( 1.2 );
 			@include prefix( transition, $trans_25, o moz webkit );
 		}
 	}
 	@include media-breakpoint( md ) {
 		width: 80%;
-		form#searchform {
+		form.search-form {
 			width: 65%;
 
 			input[type=text] {
@@ -676,4 +829,175 @@ main#full-width {
     height: 8px;
     width: 25%;
     background: #52abf6;
+}
+
+body.elementor-page-12687 {
+
+	.fixed-divider-460:before {
+		content: "";
+			position: absolute;
+			display: inline-block;
+			top: -4px;
+			left: calc(50% - 17.5%);
+			margin: auto;
+			height: 8px;
+			width: 35%;
+			background: #52abf6;
+	}	
+}
+
+/*=========================================
+=            Back to top style            =
+=========================================*/
+#return-to-top {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	bottom: 115px;
+	right: 20px;
+	background: rgb(0, 0, 0);
+	background: rgba(0, 0, 0, 0.7);
+	width: 50px;
+	height: 50px;
+	display: block;
+	text-decoration: none;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	display: none;
+	z-index:999;
+	@include prefix( transition, all 0.3s ease, o moz webkit );
+}
+
+#return-to-top i {
+   color: #fff;
+   margin: 0;
+   top: 5px;
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   @include font-size( 2 );
+	z-index:9999;
+	@include prefix( transition, all 0.3s ease, o moz webkit );
+}
+
+#return-to-top:hover {
+   background: rgba(0, 0, 0, 0.9);
+}
+
+#return-to-top:hover i {
+   color: #fff;
+   top: 0;
+}
+/*=====  End of Back to top style  ======*/
+
+/*=========================================
+=      Shipping and returns page        =
+=========================================*/
+.shipping-column-container ul, 
+.contact-column-container ul {
+	margin: 0 0 1.5em 1em;
+}
+
+.shipping-column-container li {
+	list-style: outside;
+}
+
+.fixed-divider-under-460:after {
+	content: "";
+    position: absolute;
+    display: inline-block;
+    left: calc(50% - 50%);
+    margin: auto;
+    height: 5px;
+    width: 100%;
+    background: #52abf6;
+}
+
+a.wonka-btn.shipping-btn {
+	padding: 8px 20px;
+	font-size: 1.4rem;
+
+}
+/*=====  End of Shipping and returns page  ======*/
+
+/*=========================================
+=               FAQ page                 =
+=========================================*/
+.faq-toggle .elementor-active>a {
+	background-color: #52abf6;
+	color: #ffffff!important;
+	padding: 8px 20px;
+	display: inline-grid;
+	font-weight: 400;
+}
+/*=====  End of FAQ page  ======*/
+
+/*=========================================
+=               MSE Page                 =
+=========================================*/
+.join-mse-gform {
+
+		.gfield_description {
+		padding-bottom: 12px
+	}
+}
+
+.join-mse-gform .gform_footer {
+	text-align: center;
+}
+
+.join-mse-gform .gform_footer input {
+	font-size: 25px;
+	font-weight: 700;
+	padding: 5px 20px;
+}
+
+.join-mse-gform input,
+.join-mse-gform textarea {
+	border: none;
+	border-radius:5px;
+}
+
+.mse-email .gfield_description {
+	font-weight: bold;
+}
+
+.mse-email input {
+	height: 48px;
+	width: 270px;
+}
+
+.mse-type ul {
+	padding: 0;
+}
+
+.mse-type li {
+	margin-bottom: 8px;
+}
+
+.mse-comments textarea {
+	height: 72px;
+	width: 270px;
+}
+		@media screen and ( min-width: 576px ) {
+	
+	.mse-comments textarea {
+		height: 72px;
+		width: 470px;
+	}
+}
+
+/*=====  End of MSE Page  ======*/
+
+form.post-password-form {
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.row-inner {
+	margin-left: 0;
+	margin-right: 0;
 }

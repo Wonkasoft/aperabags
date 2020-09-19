@@ -10,9 +10,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see         https://docs.woocommerce.com/document/template-structure/
- * @package     WooCommerce/Templates
- * @version     3.4.0
+ * @see     https://docs.woocommerce.com/document/template-structure/
+ * @package WooCommerce/Templates
+ * @version 4.0.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -63,9 +63,10 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 								woocommerce_quantity_input(
 									array(
 										'input_name'  => 'quantity[' . $grouped_product_child->get_id() . ']',
-										'input_value' => isset( $_POST['quantity'][ $grouped_product_child->get_id() ] ) ? wc_stock_amount( wc_clean( wp_unslash( $_POST['quantity'][ $grouped_product_child->get_id() ] ) ) ) : 0, // WPCS: CSRF ok, input var okay, sanitization ok.
+										'input_value' => isset( $_POST['quantity'][ $grouped_product_child->get_id() ] ) ? wc_stock_amount( wc_clean( wp_unslash( $_POST['quantity'][ $grouped_product_child->get_id() ] ) ) ) : '', // WPCS: CSRF ok, input var okay, sanitization ok.
 										'min_value'   => apply_filters( 'woocommerce_quantity_input_min', 0, $grouped_product_child ),
 										'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $grouped_product_child->get_max_purchase_quantity(), $grouped_product_child ),
+										'placeholder' => '0',
 									)
 								);
 
@@ -94,7 +95,7 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 
 				echo '</tr>';
 			}
-			$post = $previous_post; // WPCS: override ok.
+			$post = $previous_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			setup_postdata( $post );
 			?>
 		</tbody>

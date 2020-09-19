@@ -7,10 +7,6 @@ defined( 'ABSPATH' ) or exit;
 
 class WONKA_WC_Gateway_CyberSource extends WC_Gateway_CyberSource {
 
-
-
-
-
 	/**
 	 * Payment fields for CyberSource.
 	 *

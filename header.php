@@ -10,19 +10,22 @@
  */
 
 ?>
-<!doctype html>
+<!DOCTYPE html>
 
 <html <?php language_attributes(); ?>>
 <head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta charset="<?php bloginfo( 'charset' ); ?>" />
 	<meta name="google-site-verification" content="eYMU9wHvI9cwK4rHA5VmPSE4SXRoAbXD6XCFlDQi4Vk" />
+	<meta name="p:domain_verify" content="7af7e6aa3e8004eaf65dafe6a3b4ae8f"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="profile" href="https://gmpg.org/xfn/11">
 
 	<?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
+	<div id="loader-wrapper">
+		<span class="loader"><span class="loader-inner"></span></span>
+	</div>
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'apera-bags' ); ?></a>
 
@@ -37,7 +40,7 @@
 			</div><!-- topbar-notice -->
 		<?php endif; ?>
 		<div class="row brand-nav-bar">
-			<div class="col col-6 col-lg-2 offset-1 branding">
+			<div class="col col-5 col-lg-2 branding">
 				<div class="site-branding">
 					<?php
 						the_custom_logo();
@@ -98,6 +101,5 @@
 				</nav><!-- #site-navigation -->
 			</div> <!-- .col-8 -->
 		</div> <!-- .row -->
-	</header><!-- #masthead -->
-																																					 
+	</header><!-- #masthead -->																																	 
 	<div id="content" class="site-content">

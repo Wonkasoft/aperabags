@@ -1,4 +1,4 @@
-/**
+ /**
  * Products
  */
 
@@ -6,26 +6,152 @@
 	
 	ul {
 		list-style: none;
-		margin: 0; 
+		margin: 0 0 1.5em; 
+	}
+}
+
+.shop-content-container {
+
+	.shop-cat-container {
+		margin: 35px auto;
+	}
+
+	.cat-col {
+		margin-bottom: 8px;
+
+		a.cat-link {
+
+			button {
+				width: 100%;
+				border-radius: 6px;
+				padding: 15px;
+				@include font-size( .85 );
+			}
+		}
+
+		@include media-breakpoint( md ) {
+
+			a.cat-link {
+
+				button {
+					@include font-size( 1.4 );
+				}
+			}
+		}
+	}
+
+	.shop-box-text {
+
+		.wonka-shop-img-wrap {
+			display: flex;
+			flex-flow: column;
+			justify-content: center;
+			height: 100%;
+			max-height: 545px;
+
+			h2 {
+				font-weight: 700;
+				margin-bottom: .9rem;
+				@include font-size( .9 );
+			}
+
+			p {
+				margin-bottom: .9rem;
+				@include font-size( .85 );
+			}
+
+			p:last-child {
+				margin-bottom: 0;
+			}
+
+			@include media-breakpoint( md ) {
+
+				h2 {
+					@include font-size( 1.5 );
+				}
+
+				p {
+					@include font-size( 1.4 );
+				}
+			}
+		}
 	}
 }
 
 .archive {
+
+	&.woocommerce-page {
+
+		#content {
+
+			main#main {
+				margin: 0 auto 15px;
+				max-width: 100%;
+
+
+				.breadcrumb-title-wrap {
+					display: flex;
+					align-items: flex-start;
+					justify-content: flex-start;
+					flex-wrap: wrap;
+					margin: 0 -15px 15px;
+					min-height: 350px;
+					background-size: cover;
+					background-position: center;
+					@include prefix( box-shadow, 0 1px 4px 0 rgba(0,0,0,0.5), o moz webkit );
+
+					nav.woocommerce-breadcrumb {
+						flex: 1 0 100%;
+						color: #ffffff;
+						font-weight: 500;
+						@include prefix( text-shadow, 1px 1px 3px rgba(0,0,0,0.8), o moz webkit );
+
+						a {
+							color: #e6e6e6;
+							@include prefix( text-shadow, 1px 1px 3px rgba(0,0,0,0.8), o moz webkit );
+						}
+					}
+
+					.woocommerce-products-header__title {
+						flex: 1 0 100%;
+						text-align: center;
+						font-weight: 700;
+						color: #ffffff;
+						@include font-size( 3 );
+						@include prefix( text-shadow, 1px 1px 3px rgba(0,0,0,0.8), o moz webkit );
+					}
+				}
+
+				.shop-content-container {
+					position: relative;
+					margin: auto;
+					width: 100%;
+					max-width: 1200px;
+				}
+			}
+		}
+	}
 	
 	div.wonka-row {
 		clear: both;
 	}
 }
 
+.final-sale-disclosure {
+	font-style: italic;
+	@include font-size( .9 );
+}
+
 ul.products {
 	margin: 15px auto;
 	padding: 0;
 	max-width: 1180px;
+	justify-content: flex-start;
 
 	li {
 		margin-bottom: 25px;
 		position: relative;
-		padding: 0;
+		padding: 0 15px;
 		overflow: hidden;
 
 		a {
@@ -34,7 +160,6 @@ ul.products {
 			justify-content: center;
 			flex-wrap: wrap;
 			text-align: center;
-			padding: 8px;
 			color: #333333;
 
 			span.onsale {
@@ -70,7 +195,7 @@ ul.products {
 				font-family: $font__main_jose;
 				text-align: center;
 				margin-bottom: 4px;
-				height: 25px;
+				height: 40px;
 				letter-spacing: -1px;
 				@include font-size( .8 );
 				
@@ -104,6 +229,7 @@ ul.products {
 				}
 
 				.woocommerce-loop-product__title {
+					height: 25px;
 					@include font-size( 1 );
 				}
 
@@ -139,7 +265,13 @@ form.woocommerce-ordering {
 	}
 }
 
+div.outlet-title {
+	width: 100%;
+}
 
+.page-description {
+	padding: 0 15px;
+}
 /*=====  End of Styles for products page  ======*/
 
 
@@ -198,55 +330,3 @@ ul.products li.pif-has-gallery a.woocommerce-loop-product__link:hover .wp-post-i
 	opacity: 1;
 }
 /*=====  End of For Products images  ======*/
-
-/*=========================================
-=            Back to top style            =
-=========================================*/
-#return-to-top {
-   position: fixed;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   bottom: 20px;
-   right: 20px;
-   background: rgb(0, 0, 0);
-   background: rgba(0, 0, 0, 0.7);
-   width: 50px;
-   height: 50px;
-   display: block;
-   text-decoration: none;
-   -webkit-border-radius: 2px;
-   -moz-border-radius: 2px;
-   border-radius: 2px;
-   display: none;
- 	z-index:999;
-   -webkit-transition: all 0.3s linear;
-   -moz-transition: all 0.3s ease;
-   -ms-transition: all 0.3s ease;
-   -o-transition: all 0.3s ease;
-   transition: all 0.3s ease;
-}
-#return-to-top i {
-   color: #fff;
-   margin: 0;
-   top: 5px;
-   position: relative;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   @include font-size( 2 );
- 	z-index:9999;
-   -webkit-transition: all 0.3s ease;
-   -moz-transition: all 0.3s ease;
-   -ms-transition: all 0.3s ease;
-   -o-transition: all 0.3s ease;
-   transition: all 0.3s ease;
-}
-#return-to-top:hover {
-   background: rgba(0, 0, 0, 0.9);
-}
-#return-to-top:hover i {
-   color: #fff;
-   top: 0;
-}
-/*=====  End of Back to top style  ======*/

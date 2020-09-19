@@ -276,35 +276,35 @@ class Wonkasoft_Refersion_Api {
 	 */
 	public function __construct( $data = null ) {
 
-		$this->data = ( ! empty( $data ) ) ? $data : null;
+		$this->data                 = ( ! empty( $data ) ) ? $data : null;
 		$this->refersion_public_key = ( ! empty( get_option( 'refersion_public_key' ) ) ) ? get_option( 'refersion_public_key' ) : null;
 		$this->refersion_secret_key = ( ! empty( get_option( 'refersion_secret_key' ) ) ) ? get_option( 'refersion_secret_key' ) : null;
-		$this->offer = ( ! empty( $data['offer'] ) ) ? $data['offer'] : null;
-		$this->first_name = ( ! empty( $data['first'] ) ) ? $data['first'] : null;
-		$this->last_name = ( ! empty( $data['last'] ) ) ? $data['last'] : null;
-		$this->company = ( ! empty( $data['company'] ) ) ? $data['company'] : null;
-		$this->email = ( ! empty( $data['email'] ) ) ? $data['email'] : null;
-		$this->paypal_email = ( ! empty( $data['paypal_email'] ) ) ? $data['paypal_email'] : null;
-		$this->password = ( ! empty( $data['password'] ) ) ? $data['password'] : null;
-		$this->address1 = ( ! empty( $data['street_address'] ) ) ? $data['street_address'] : null;
-		$this->address2 = ( ! empty( $data['address_2'] ) ) ? $data['address_2'] : null;
-		$this->city = ( ! empty( $data['city'] ) ) ? $data['city'] : null;
-		$this->zip = ( ! empty( $data['zip_postal_code'] ) ) ? $data['zip_postal_code'] : null;
-		$this->country = ( ! empty( $data['country'] ) ) ? $data['country'] : 'US';
-		$this->state = ( ! empty( $data['state_province'] ) ) ? $data['state_province'] : null;
-		$this->phone = ( ! empty( $data['phone'] ) ) ? $data['phone'] : null;
-		$this->send_welcome = ( ! empty( $data['send_welcome'] ) ) ? true : false;
-		$this->affiliate_code = ( ! empty( $data['affiliate_code'] ) ) ? $data['affiliate_code'] : null;
-		$this->keyword = ( ! empty( $data['keyword'] ) ) ? $data['keyword'] : null;
-		$this->limit = ( ! empty( $data['limit'] ) ) ? $data['limit'] : null;
-		$this->page = ( ! empty( $data['page'] ) ) ? $data['page'] : null;
-		$this->type = ( ! empty( $data['type'] ) ) ? $data['type'] : null;
-		$this->trigger = ( ! empty( $data['trigger'] ) ) ? $data['trigger'] : null;
-		$this->offer_id = ( ! empty( $data['offer_id'] ) ) ? $data['offer_id'] : null;
-		$this->conversion_ids = ( ! empty( $data['conversion_ids'] ) ) ? $data['conversion_ids'] : null;
-		$this->report_id = ( ! empty( $data['report_id'] ) ) ? $data['report_id'] : null;
-		$this->custom_fields = ( ! empty( $data['custom_fields'] ) ) ? $data['custom_fields'] : null;
-		$this->affiliate_list = $this->list_all_affiliates();
+		$this->offer                = ( ! empty( $data['offer'] ) ) ? $data['offer'] : null;
+		$this->first_name           = ( ! empty( $data['first'] ) ) ? $data['first'] : null;
+		$this->last_name            = ( ! empty( $data['last'] ) ) ? $data['last'] : null;
+		$this->company              = ( ! empty( $data['company'] ) ) ? $data['company'] : null;
+		$this->email                = ( ! empty( $data['email'] ) ) ? $data['email'] : null;
+		$this->paypal_email         = ( ! empty( $data['paypal_email'] ) ) ? $data['paypal_email'] : null;
+		$this->password             = ( ! empty( $data['password'] ) ) ? $data['password'] : null;
+		$this->address1             = ( ! empty( $data['street_address'] ) ) ? $data['street_address'] : null;
+		$this->address2             = ( ! empty( $data['address_2'] ) ) ? $data['address_2'] : null;
+		$this->city                 = ( ! empty( $data['city'] ) ) ? $data['city'] : null;
+		$this->zip                  = ( ! empty( $data['zip_postal_code'] ) ) ? $data['zip_postal_code'] : null;
+		$this->country              = ( ! empty( $data['country'] ) ) ? $data['country'] : 'US';
+		$this->state                = ( ! empty( $data['state_province'] ) ) ? $data['state_province'] : null;
+		$this->phone                = ( ! empty( $data['phone'] ) ) ? $data['phone'] : null;
+		$this->send_welcome         = ( ! empty( $data['send_welcome'] ) ) ? $data['send_welcome'] : false;
+		$this->affiliate_code       = ( ! empty( $data['affiliate_code'] ) ) ? $data['affiliate_code'] : null;
+		$this->keyword              = ( ! empty( $data['keyword'] ) ) ? $data['keyword'] : null;
+		$this->limit                = ( ! empty( $data['limit'] ) ) ? $data['limit'] : null;
+		$this->page                 = ( ! empty( $data['page'] ) ) ? $data['page'] : null;
+		$this->type                 = ( ! empty( $data['type'] ) ) ? $data['type'] : null;
+		$this->trigger              = ( ! empty( $data['trigger'] ) ) ? $data['trigger'] : null;
+		$this->offer_id             = ( ! empty( $data['offer_id'] ) ) ? $data['offer_id'] : null;
+		$this->conversion_ids       = ( ! empty( $data['conversion_ids'] ) ) ? $data['conversion_ids'] : null;
+		$this->report_id            = ( ! empty( $data['report_id'] ) ) ? $data['report_id'] : null;
+		$this->custom_fields        = ( ! empty( $data['custom_fields'] ) ) ? $data['custom_fields'] : null;
+		$this->affiliate_list       = $this->list_all_affiliates();
 		foreach ( $this->affiliate_list->results as $affiliate ) {
 			if ( $this->email === $affiliate->email ) :
 				$this->affiliate_code = $affiliate->id;
@@ -319,7 +319,7 @@ class Wonkasoft_Refersion_Api {
 	 * @return array returns a json response from the api call.
 	 */
 	public function check_api_keys() {
-		$ch = curl_init();
+		$ch   = curl_init();
 		$data = array(
 			'refersion_public_key' => $this->refersion_public_key,
 			'refersion_secret_key' => $this->refersion_secret_key,
@@ -339,8 +339,8 @@ class Wonkasoft_Refersion_Api {
 		if ( false === $response ) :
 			curl_close( $ch );
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 			$error_obj = json_decode( $error_obj );
 			return $error_obj;
@@ -358,25 +358,25 @@ class Wonkasoft_Refersion_Api {
 	 * @return object This will contain the new affiliates id and link.
 	 */
 	public function add_new_affiliate() {
-		$ch = curl_init();
+		$ch   = curl_init();
 		$data = array(
-			'refersion_public_key'  => $this->refersion_public_key,
-			'refersion_secret_key'  => $this->refersion_secret_key,
-			'offer'                 => $this->offer,
-			'first_name'            => $this->first_name,
-			'last_name'             => $this->last_name,
-			'company'               => $this->company,
-			'email'                 => $this->email,
-			'paypal_email'          => $this->paypal_email,
-			'password'              => $this->password,
-			'address1'              => $this->address1,
-			'address2'              => $this->address2,
-			'city'                  => $this->city,
-			'zip'                   => $this->zip,
-			'country'               => $this->country,
-			'state'                 => $this->state,
-			'phone'                 => $this->phone,
-			'send_welcome'          => $this->send_welcome,
+			'refersion_public_key' => $this->refersion_public_key,
+			'refersion_secret_key' => $this->refersion_secret_key,
+			'offer'                => $this->offer,
+			'first_name'           => $this->first_name,
+			'last_name'            => $this->last_name,
+			'company'              => $this->company,
+			'email'                => $this->email,
+			'paypal_email'         => $this->paypal_email,
+			'password'             => $this->password,
+			'address1'             => $this->address1,
+			'address2'             => $this->address2,
+			'city'                 => $this->city,
+			'zip'                  => $this->zip,
+			'country'              => $this->country,
+			'state'                => $this->state,
+			'phone'                => $this->phone,
+			'send_welcome'         => $this->send_welcome,
 		);
 
 		$data = json_encode( $data );
@@ -393,8 +393,8 @@ class Wonkasoft_Refersion_Api {
 		if ( false === $response ) :
 			curl_close( $ch );
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 			$error_obj = json_decode( $error_obj );
 			return $error_obj;
@@ -414,7 +414,7 @@ class Wonkasoft_Refersion_Api {
 	 * @return object returns an object of the data from the api request.
 	 */
 	public function get_affiliate() {
-		$ch = curl_init();
+		$ch   = curl_init();
 		$data = array(
 			'refersion_public_key' => $this->refersion_public_key,
 			'refersion_secret_key' => $this->refersion_secret_key,
@@ -435,8 +435,8 @@ class Wonkasoft_Refersion_Api {
 		if ( false === $response ) :
 			curl_close( $ch );
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 			$error_obj = json_decode( $error_obj );
 			return $error_obj;
@@ -456,7 +456,7 @@ class Wonkasoft_Refersion_Api {
 	 * @return object returns an object of the data from the api request.
 	 */
 	public function search_affiliates() {
-		$ch = curl_init();
+		$ch   = curl_init();
 		$data = array(
 			'refersion_public_key' => $this->refersion_public_key,
 			'refersion_secret_key' => $this->refersion_secret_key,
@@ -477,8 +477,8 @@ class Wonkasoft_Refersion_Api {
 		if ( false === $response ) :
 			curl_close( $ch );
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 			$error_obj = json_decode( $error_obj );
 			return $error_obj;
@@ -496,7 +496,7 @@ class Wonkasoft_Refersion_Api {
 	 * @return object returns an object of the data from the api request.
 	 */
 	public function list_all_affiliates() {
-		$ch = curl_init();
+		$ch   = curl_init();
 		$data = array(
 			'refersion_public_key' => $this->refersion_public_key,
 			'refersion_secret_key' => $this->refersion_secret_key,
@@ -518,8 +518,8 @@ class Wonkasoft_Refersion_Api {
 		if ( false === $response ) :
 			curl_close( $ch );
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 			$error_obj = json_decode( $error_obj );
 			return $error_obj;
@@ -537,7 +537,7 @@ class Wonkasoft_Refersion_Api {
 	 * @return object returns an object of the reponse containing trigger_id and trigger.
 	 */
 	public function create_conversion_trigger() {
-		$ch = curl_init();
+		$ch   = curl_init();
 		$data = array(
 			'refersion_public_key' => $this->refersion_public_key,
 			'refersion_secret_key' => $this->refersion_secret_key,
@@ -560,8 +560,8 @@ class Wonkasoft_Refersion_Api {
 		if ( false === $response ) :
 			curl_close( $ch );
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 			$error_obj = json_decode( $error_obj );
 			return $error_obj;
@@ -579,7 +579,7 @@ class Wonkasoft_Refersion_Api {
 	 * @return [type] [description]
 	 */
 	public function new_sku_level_commission() {
-		$ch = curl_init();
+		$ch   = curl_init();
 		$data = array(
 			'refersion_public_key' => $this->refersion_public_key,
 			'refersion_secret_key' => $this->refersion_secret_key,
@@ -601,8 +601,8 @@ class Wonkasoft_Refersion_Api {
 		if ( false === $response ) :
 			curl_close( $ch );
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 			$error_obj = json_decode( $error_obj );
 			return $error_obj;
@@ -620,7 +620,7 @@ class Wonkasoft_Refersion_Api {
 	 * @return boolean true on success.
 	 */
 	public function process_manual_payment() {
-		$ch = curl_init();
+		$ch   = curl_init();
 		$data = array(
 			'refersion_public_key' => $this->refersion_public_key,
 			'refersion_secret_key' => $this->refersion_secret_key,
@@ -642,8 +642,8 @@ class Wonkasoft_Refersion_Api {
 		if ( false === $response ) :
 			curl_close( $ch );
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 			$error_obj = json_decode( $error_obj );
 			return $error_obj;
@@ -661,7 +661,7 @@ class Wonkasoft_Refersion_Api {
 	 * @return object returns the generated report download_link and expire_time.
 	 */
 	public function generate_download_link() {
-		$ch = curl_init();
+		$ch   = curl_init();
 		$data = array(
 			'refersion_public_key' => $this->refersion_public_key,
 			'refersion_secret_key' => $this->refersion_secret_key,
@@ -682,8 +682,8 @@ class Wonkasoft_Refersion_Api {
 		if ( false === $response ) :
 			curl_close( $ch );
 			$error_obj = array(
-				'error' => curl_error( $ch ),
-				'status'    => 'failed',
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
 			);
 			$error_obj = json_decode( $error_obj );
 			return $error_obj;

@@ -7,6 +7,8 @@
  * @package aperabags
  */
 
+define( 'REFERSION_AFFILIATES_DATABASE_VERSION', '1.0.0' );
+
 if ( ! function_exists( 'apera_bags_setup' ) ) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
@@ -42,19 +44,22 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		// This theme uses wp_nav_menu() in one location.
-		register_nav_menus(
-			array(
-				'menu-primary'  => esc_html__( 'Primary', 'apera-bags' ),
-				'menu-cart'     => esc_html__( 'Cart', 'apera-bags' ),
-				'menu-shop'     => esc_html__( 'Footer Shop', 'apera-bags' ),
-				'menu-contact'  => esc_html__( 'Footer Contact', 'apera-bags' ),
-				'menu-account'  => esc_html__( 'Footer My Account', 'apera-bags' ),
-				'menu-company'  => esc_html__( 'Footer Company', 'apera-bags' ),
-				'menu-programs' => esc_html__( 'Footer Programs', 'apera-bags' ),
-				'menu-footer'   => esc_html__( 'Footer', 'apera-bags' ),
-			)
+		$footer_section = get_section_mods( 'footer_section' );
+		$footer_section = $footer_section->footer_section;
+
+		$menus_array = array(
+			'menu-primary' => esc_html__( 'Primary', 'aperabags' ),
+			'menu-cart'    => esc_html__( 'Cart', 'aperabags' ),
 		);
+
+		foreach ( $footer_section->footer_titles as $title_number => $title ) {
+			if ( 'count' !== $title_number ) :
+				$new_menu                 = 'menu-' . preg_replace( '/ /', '-', strtolower( $title ) );
+				$menus_array[ $new_menu ] = esc_html( 'Footer ' . ucfirst( strtolower( $title ) ), 'aperabags' );
+			endif;
+		}
+		// This theme uses wp_nav_menu() in one location.
+		register_nav_menus( $menus_array );
 
 		/*
 		 * Switch default core markup for search form, comment form, and comments
@@ -158,9 +163,19 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 		 */
 		add_image_size( 'custom_products_size', 370, 550, false );
 		add_image_size( 'cart_products_size', 75, 115, false );
+
+		/**
+		 * This class can be used to load custom post types.
+		 */
+		if ( class_exists( 'Wonkasoft_Custom_Post_Types' ) ) :
+			$add_post_types = array(
+				'testimonial',
+			);
+			new Wonkasoft_Custom_Post_Types( $add_post_types );
+		endif;
 	}
+	add_action( 'after_setup_theme', 'apera_bags_setup' );
 endif;
-add_action( 'after_setup_theme', 'apera_bags_setup' );
 
 /**
  * Adding SVG support.
@@ -171,6 +186,8 @@ add_action( 'after_setup_theme', 'apera_bags_setup' );
 function add_file_types_to_uploads( $file_types ) {
 	$new_filetypes        = array();
 	$new_filetypes['svg'] = 'image/svg+xml';
+	$new_filetypes['eps'] = 'application/postscript';
+	$new_filetypes['ai']  = 'application/postscript';
 	$file_types           = array_merge( $file_types, $new_filetypes );
 
 	return $file_types;
@@ -238,25 +255,70 @@ require_once get_stylesheet_directory() . '/inc/theme-ajax-functions.php';
 require_once get_stylesheet_directory() . '/inc/customizer.php';
 
 /**
+ * Gravity forms additions.
+ */
+require_once get_stylesheet_directory() . '/inc/gravity-forms.php';
+
+/**
  * Load WooCommerce compatibility file.
  */
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once get_stylesheet_directory() . '/inc/woocommerce.php';
+
+	require_once get_stylesheet_directory() . '/inc/checkout-login.php';
 }
 
 /**
- * Load WC_Gateway_CyberSource compatibility file.
+ * Load RewardSystem compatibility file.
  */
-if ( class_exists( 'WC_Gateway_CyberSource' ) ) {
-	require_once get_stylesheet_directory() . '/inc/wc-cybersource-custom.php';
+if ( class_exists( 'FPRewardSystem' ) ) {
+	require_once get_stylesheet_directory() . '/inc/custom-rewardsystems-plugin.php';
 }
 
+/**
+ * This filters the woocommerce data stores.
+ *
+ * @param  array $stores Contains data stores.
+ * @return array         returns data stores.
+ */
+function wonkasoft_woocommerce_data_stores( $stores ) {
+	return $stores;
+}
+add_filter( 'woocommerce_data_stores', 'wonkasoft_woocommerce_data_stores' );
+
+/**
+ * Load Wonkasoft_Refersion_Api class file.
+ */
 if ( ! class_exists( 'Wonkasoft_Refersion_Api' ) ) {
 	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-refersion-api.php';
 }
 
+/**
+ * Load Wonkasoft_GetResponse_Api class file.
+ */
 if ( ! class_exists( 'Wonkasoft_GetResponse_Api' ) ) {
 	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-getresponse-api.php';
+}
+
+/**
+ * Load Wonkasoft_Custom_Post_Types class file.
+ */
+if ( ! class_exists( 'Wonkasoft_Custom_Post_Types' ) ) {
+	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-custom-post-types.php';
+}
+
+/**
+ * Load Wonkasoft Testimonial compatibility file.
+ */
+if ( ! class_exists( 'Wonkasoft_Testimonial_Query' ) ) {
+	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-testimonial-query.php';
+}
+
+/**
+ * Load Wonkasoft Testimonial compatibility file.
+ */
+if ( class_exists( 'GFForms' ) ) {
+	require_once get_stylesheet_directory() . '/inc/class-wonkasoft-gf-order-select.php';
 }
 
 /**
@@ -291,7 +353,7 @@ function wonka_get_nav_menu_object( $items, $args ) {
 		foreach ( (object) $items as $key => $item ) {
 
 			if ( in_array( 'account-menu-icon', $item->classes, true ) ) {
-				$apera_icon  = '<svg version="1.1" id="svg2" xml:space="preserve" width="25" height="20" viewBox="0 0 500 500" sodipodi:docname="apera_logo_A_only_white.svg" inkscape:version="0.92.3 (2405546, 2018-03-11)" inkscape:export-filename="/home/lister/Downloads/aperabags/logo/apera_logo_bw200x100.png" inkscape:export-xdpi="96" inkscape:export-ydpi="96"><metadata id="metadata8"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:title/></cc:Work></rdf:RDF></metadata><defs id="defs6"/><sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="1230" inkscape:window-height="675" id="namedview4" showgrid="false" units="px" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0" inkscape:zoom="0.77083333" inkscape:cx="88.015803" inkscape:cy="242.4555" inkscape:window-x="0" inkscape:window-y="140" inkscape:window-maximized="0" inkscape:current-layer="g12" inkscape:lockguides="false"/><g id="g10" inkscape:groupmode="layer" inkscape:label="ink_ext_XXXXXX" transform="matrix(1.3333333,0,0,-1.3333333,-1.7231138e-4,499.99957)"><g id="g12" transform="matrix(0.18889578,0,0,0.18889578,9.2463299,33.587505)"><path d="m 1472.7964,269.43961 c 0,0 221.5336,-107.34265 419.3909,-261.9102764 13.1318,-10.215312 22.4693,1.5980153 14.85,12.9998264 -7.5784,11.353938 -857.6408,1428.84614 -959.24082,1599.75454 -4.64627,7.7318 -15.40947,7.425 -19.93199,0 C 845.1236,1481.3152 272.04308,510.34465 -19.526687,20.52916 -28.211903,6.1510517 -15.703437,-0.62853237 -6.2751566,6.5585482 398.54964,314.08484 694.543,398.16448 943.15021,398.16448 c 177.33629,0 280.49899,-22.09301 379.69359,-51.6724 3.4568,-1.08205 4.3364,1.23034 1.1966,3.48751 C 1137.5149,483.5297 834.12517,565.93206 600.59504,563.15126 L 938.19202,1122.0404 1472.7964,269.43961" style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.02272987" id="path14" inkscape:connector-curvature="0" inkscape:export-xdpi="96" inkscape:export-ydpi="96"/></g></g></svg>';
+				$apera_icon  = '<i><svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" height="20" width="20" xml:space="preserve" id="svg2" version="1.1"><metadata id="metadata8"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs id="defs6" /><g transform="matrix(1.3333333,0,0,-1.3333333,-1.7231138e-4,499.99957)" id="g10"><g transform="matrix(0.18889578,0,0,0.18889578,9.2463299,33.587505)" id="g12"><path id="path14" style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.02272987" d="m 1472.7964,269.43961 c 0,0 221.5336,-107.34265 419.3909,-261.9102764 13.1318,-10.215312 22.4693,1.5980153 14.85,12.9998264 -7.5784,11.353938 -857.6408,1428.84614 -959.24082,1599.75454 -4.64627,7.7318 -15.40947,7.425 -19.93199,0 C 845.1236,1481.3152 272.04308,510.34465 -19.526687,20.52916 -28.211903,6.1510517 -15.703437,-0.62853237 -6.2751566,6.5585482 398.54964,314.08484 694.543,398.16448 943.15021,398.16448 c 177.33629,0 280.49899,-22.09301 379.69359,-51.6724 3.4568,-1.08205 4.3364,1.23034 1.1966,3.48751 C 1137.5149,483.5297 834.12517,565.93206 600.59504,563.15126 L 938.19202,1122.0404 1472.7964,269.43961" /></g></g></svg></i>';
 				$item->title = $apera_icon;
 			}
 		}
@@ -320,22 +382,20 @@ function apera_bags_scripts() {
 			$slick_themecss_load = false;
 		endif;
 	}
-	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1', 'all' );
-
-	wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', 'anonymous' ) );
-
-	wp_enqueue_style( 'fontawesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', array(), '4.7.0', 'all' );
+	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css', array(), '4.5.0', 'all' );
+	wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk', 'anonymous' ) );
 
 	wp_enqueue_style( 'jquery-auto-complete', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css', array(), '1.0.7' );
+
 	if ( $slick_css_load ) :
-		wp_enqueue_style( 'slick-js-style', get_stylesheet_directory_uri() . '/assets/slick/slick.css', array(), '1.8.0', 'all' );
+		wp_enqueue_style( 'slick-js-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick.css' ), array(), '1.8.0', 'all' );
 	endif;
 
 	if ( $slick_themecss_load ) :
-		wp_enqueue_style( 'slick-js-theme-style', get_stylesheet_directory_uri() . '/assets/slick/slick-theme.css', array(), '1.8.0', 'all' );
+		wp_enqueue_style( 'slick-js-theme-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_directory_uri() . '/assets/slick/slick-theme.css' ), array(), '1.8.0', 'all' );
 	endif;
 
-	wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), '1.0.0' );
+	wp_enqueue_style( 'apera-bags-style', str_replace( array( 'http:', 'https:' ), '', get_stylesheet_uri() ), array(), wp_get_theme()->get( 'Version' ), 'all' );
 
 	/**
 	 * For enqueues of scripts
@@ -350,26 +410,31 @@ function apera_bags_scripts() {
 
 		endif;
 	}
-	wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array( 'jquery' ), '4.3.1', true );
 
-	wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', 'anonymous' ) );
+	wp_enqueue_script( 'popperjs', 'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', array( 'jquery' ), '1.16.0', true );
+	wp_script_add_data( 'popperjs', array( 'integrity', 'crossorigin' ), array( 'sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', 'anonymous' ) );
+
+	wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js', array( 'jquery', 'popperjs' ), '4.5.0', true );
+	wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI', 'anonymous' ) );
 
 	if ( $slick_js_load ) :
 		wp_enqueue_script( 'slick-js', get_stylesheet_directory_uri() . '/assets/slick/slick.min.js', array( 'jquery' ), '1.8.0', true );
 	endif;
 
-	wp_enqueue_script( 'apera-bags-navigation-js', get_stylesheet_directory_uri() . '/js/navigation.js', array( 'jquery' ), time(), true );
-
-	wp_enqueue_script( 'apera-bags-skip-link-js', get_stylesheet_directory_uri() . '/js/skip-link-focus-fix.js', array( 'jquery' ), time(), true );
+	if ( $slick_js_load ) :
+		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'slick-js' ), wp_get_theme()->get( 'Version' ), true );
+	else :
+		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', $slick_script ), wp_get_theme()->get( 'Version' ), true );
+	endif;
 
 	if ( is_page( 'checkout' ) && ! empty( get_option( 'google_api_key' ) ) ) :
 			wp_enqueue_script( 'googleapi', 'https://maps.googleapis.com/maps/api/js?key=' . get_option( 'google_api_key' ) . '&libraries=places&callback=initAutocomplete', array( 'apera-bags-wonkamizer-js' ), 'all', true );
+
+			wp_enqueue_script( 'jquery-inputmask', get_stylesheet_directory_uri() . '/assets/js/jquery.inputmask.min.js', array( 'jquery' ), 'all', true );
 	endif;
 
-	if ( $slick_js_load ) :
-		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'slick-js' ), time(), true );
-	else :
-		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', $slick_script ), time(), true );
+	if ( is_plugin_active( 'woocommerce-gateway-stripe' ) ) :
+		wp_localize_script( 'apera-bags-wonkamizer-js', 'wc_stripe_payment_request_params', apply_filters( 'wc_stripe_payment_request_params', $stripe_params ) );
 	endif;
 
 	$ga_id = ( ! empty( get_option( 'google_analytics_id' ) ) ) ? get_option( 'google_analytics_id' ) : '';
@@ -387,16 +452,41 @@ function apera_bags_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	endif;
 }
-add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 50 );
+add_action( 'wp_enqueue_scripts', 'apera_bags_scripts', 100 );
 
+/**
+ * This filters the localized script for woocommerce gateway stripe plugin.
+ *
+ * @param  array $stripe_params Contains array of stripe params.
+ * @return array                Returns the array of the stripe params.
+ */
+function wonkasoft_wc_stripe_payment_request_params( $stripe_params ) {
+	$stripe_params['is_checkout_page'] = is_checkout();
+
+	return $stripe_params;
+}
+add_filter( 'wc_stripe_payment_request_params', 'wonkasoft_wc_stripe_payment_request_params', 10 );
 
 /**
  * This loads the theme styles on the admin side.
  */
-function admin_styles() {
-	wp_enqueue_style( 'apera-bags-admin-styles', get_stylesheet_directory_uri() . '/assets/css/admin-styles.css', array(), '1.0.0', 'all' );
+function admin_styles( $hook ) {
+	wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css', array(), '4.5.0', 'all' );
+	wp_style_add_data( 'bootstrap', array( 'integrity', 'crossorigin' ), array( 'sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk', 'anonymous' ) );
+
+	wp_enqueue_style( 'apera-bags-admin-styles', get_stylesheet_directory_uri() . '/assets/css/admin-styles.css', array(), wp_get_theme()->get( 'Version' ), 'all' );
+
+	wp_enqueue_script( 'popperjs', 'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', array( 'jquery' ), '1.16.0', true );
+	wp_script_add_data( 'popperjs', array( 'integrity', 'crossorigin' ), array( 'sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', 'anonymous' ) );
+
+	wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js', array( 'jquery', 'popperjs' ), '4.5.0', true );
+	wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI', 'anonymous' ) );
+
+	if ( ( 'edit.php' === $hook && isset( $_GET['post_type'] ) && 'testimonial' === $_GET['post_type'] ) || ( 'post.php' === $hook && isset( $_GET['action'] ) && 'edit' === $_GET['action'] ) ) {
+		wp_enqueue_script( 'aperabags-admin-js', get_stylesheet_directory_uri() . '/assets/js/admin-aperabags.min.js', array( 'jquery' ), wp_get_theme()->get( 'Version' ), true );
+	}
 }
-add_action( 'admin_enqueue_scripts', 'admin_styles', 50 );
+add_action( 'admin_enqueue_scripts', 'admin_styles', 100 );
 
 /**
  * This is preventing reCAPTCHA from sending verification link.
@@ -419,3 +509,39 @@ function wonkasoft_add_defer_attribute( $tag, $handle ) {
 	return str_replace( ' src', ' defer src', $tag );
 }
 add_filter( 'script_loader_tag', 'wonkasoft_add_defer_attribute', 10, 2 );
+
+
+/**
+ * Auto login after registration.
+ *
+ * @author Louis L <llister@wonkasoft.com>
+ * @since 1.0.2 Adding auto login after check account creation
+ */
+function ws_gravity_registration_autologin( $user_id, $user_config, $entry, $password ) {
+	$user          = get_userdata( $user_id );
+	$user_login    = $user->user_login;
+	$user_password = $password;
+
+	$role          = 'apera_perks_partner';
+	$role_display  = 'Apera Perks Partner';
+	$role2         = 'customer';
+	$role2_display = 'Customer';
+
+	if ( ! in_array( $role, $user->roles ) ) :
+		$user->add_role( $role, $role_display );
+	endif;
+
+	if ( ! in_array( $role2, $user->roles ) ) :
+		$user->add_role( $role2, $role2_display );
+	endif;
+
+	wp_signon(
+		array(
+			'user_login'    => $user_login,
+			'user_password' => $user_password,
+			'remember'      => false,
+
+		)
+	);
+}
+add_action( 'gform_user_registered', 'ws_gravity_registration_autologin', 10, 4 );

@@ -18,57 +18,16 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div class="row wonka-row">
-	<div class="col col-12">
 <div class="woocommerce-shipping-fields">
 
 
 	<?php do_action( 'woocommerce_before_checkout_shipping_form', $checkout ); ?>
 
-				<?php if ( ! WC()->cart->needs_shipping() ) : ?>
-					<?php
-					_e( '<h5 class="wonka-contact-information">Contact Information</h5>', 'aperabags' );
-					$fields = $checkout->get_checkout_fields( 'billing' );
-					foreach ( $fields as $key => $field ) :
-						if ( strtolower( $key ) === 'billing_email' ) :
-							if ( ! isset( $field['placeholder'] ) ) :
-								$field['placeholder'] = $field['label'];
-								$field['required'] = true;
-							endif;
-
-							$field['priority'] = 1;
-
-							woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
-						endif;
-					endforeach;
-				else :
-					?>
-					<?php
-					_e( '<h5 class="wonka-contact-information">Contact Information</h5>', 'aperabags' );
-					$fields = $checkout->get_checkout_fields( 'shipping' );
-					foreach ( $fields as $key => $field ) :
-						if ( strtolower( $key ) === 'shipping_email' ) :
-							if ( ! isset( $field['placeholder'] ) ) :
-								$field['placeholder'] = $field['label'];
-								$field['required'] = true;
-							endif;
-
-							$field['priority'] = 1;
-
-							woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
-						endif;
-					endforeach;
-				endif;
-				?>
-
-					<div class="wonka-newletter-form-check checkbox">
-						<label for="mc4wp-subscribe">
-							<input type="checkbox" class="wonka-checkbox form-checkbox" name="mc4wp-subscribe" checked="checked" value="1" />
-							Keep me up to date on news and exclusive offers.	</label>
-					</div>
-
 				<div class="woocommerce-shipping-fields__field-wrapper">
-				<?php if ( ! WC()->cart->needs_shipping() ) : ?>
+				<?php
+				if ( ! WC()->cart->needs_shipping() ) :
+					$fields = $checkout->get_checkout_fields( 'billing' );
+					?>
 
 
 					<h5><?php _e( 'Billing Details', 'woocommerce' ); ?></h5>
@@ -79,30 +38,47 @@ defined( 'ABSPATH' ) || exit;
 						<?php
 
 						foreach ( $fields as $key => $field ) {
-							if ( $key !== 'billing_email' ) :
-								if ( isset( $field['country_field'], $fields[ $field['country_field'] ] ) ) {
-									$field['country'] = $checkout->get_value( $field['country_field'] );
-								}
-								woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
-							endif;
+							if ( isset( $field['country_field'], $fields[ $field['country_field'] ] ) ) {
+								$field['country'] = $checkout->get_value( $field['country_field'] );
+							}
+							woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 						}
 						?>
 					</div>
 
 					<?php do_action( 'woocommerce_after_checkout_billing_form', $checkout ); ?>
 
-				<?php else : ?>
+					<?php
+				else :
+					$fields = $checkout->get_checkout_fields( 'shipping' );
+					?>
 
-					<h5><?php _e( 'Shipping details', 'woocommerce' ); ?></h5>
+					<h5><?php _e( '1. Shipping', 'woocommerce' ); ?></h5>
 					<?php
 					foreach ( $fields as $key => $field ) {
-						if ( $key !== 'shipping_email' ) :
+						if ( isset( $field['country_field'], $fields[ $field['country_field'] ] ) ) {
+							$field['country'] = $checkout->get_value( $field['country_field'] );
+						}
 
-							if ( isset( $field['country_field'], $fields[ $field['country_field'] ] ) ) {
-								$field['country'] = $checkout->get_value( $field['country_field'] );
-							}
+						if ( strtolower( $key ) !== 'shipping_email' ) :
 							woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
 						endif;
+
+						if ( strtolower( $key ) === 'shipping_email' ) :
+							if ( ! isset( $field['placeholder'] ) ) :
+								$field['placeholder'] = $field['label'];
+								$field['required']    = true;
+							endif;
+
+							woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
+							?>
+							<div class="wonka-newletter-form-check checkbox">
+								<label for="mc4wp-subscribe">
+									<input type="checkbox" class="wonka-checkbox form-checkbox" name="mc4wp-subscribe" checked="checked" value="1" />
+									Keep me up to date on news and exclusive offers.	</label>
+							</div>
+							<?php
+					endif;
 					}
 				endif;
 				?>
@@ -117,8 +93,6 @@ defined( 'ABSPATH' ) || exit;
 	<?php do_action( 'woocommerce_before_order_notes', $checkout ); ?>
 
 	<?php if ( apply_filters( 'woocommerce_enable_order_notes_field', 'yes' === get_option( 'woocommerce_enable_order_comments', 'yes' ) ) ) : ?>
-		
-		<?php _e( '<h5>Memo</h5>', 'woocommerce' ); ?>
 
 		<div class="woocommerce-additional-fields__field-wrapper">
 			<?php
@@ -154,34 +128,3 @@ defined( 'ABSPATH' ) || exit;
 	<?php do_action( 'woocommerce_after_order_notes', $checkout ); ?>
 </div><!-- .woocommerce-additional-fields -->
 <?php endif; ?>
-
-<?php if ( ! is_user_logged_in() && $checkout->is_registration_enabled() ) : ?>
-	<div class="woocommerce-account-fields">
-		<?php if ( ! $checkout->is_registration_required() ) : ?>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">
-			<div class="custom-control custom-checkbox">
-					<input class="woocommerce-form__input woocommerce-form__input-checkbox custom-control-input" id="createaccount" <?php checked( ( true === $checkout->get_value( 'createaccount' ) || ( true === apply_filters( 'woocommerce_create_account_default_checked', false ) ) ), true ); ?> type="checkbox" name="createaccount" value="1" /> 
-				<label class="woocommerce-form__label custom-control-label" for="createaccount"><span><?php _e( 'Create an account?', 'woocommerce' ); ?></span></label>
-			</div><!-- .custom-control -->
-					</li>
-		<?php endif; ?>
-
-		<?php do_action( 'woocommerce_before_checkout_registration_form', $checkout ); ?>
-
-		<?php if ( $checkout->get_checkout_fields( 'account' ) ) : ?>
-			<li class="list-group-item">
-			<div class="create-account">
-				<?php foreach ( $checkout->get_checkout_fields( 'account' ) as $key => $field ) : ?>
-					<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
-				<?php endforeach; ?>
-				<div class="clear"></div>
-			</div><!-- .create-account -->
-			</li>
-		<?php endif; ?>
-		<?php do_action( 'woocommerce_after_checkout_registration_form', $checkout ); ?>
-				</ul>
-	</div><!-- .woocommerce-account-fields -->
-<?php endif; ?>
-		</div><!-- .col-12 -->
-	</div><!-- .wonka-row -->

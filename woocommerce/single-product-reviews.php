@@ -12,7 +12,7 @@
  *
  * @see     https://docs.woocommerce.com/document/template-structure/
  * @package WooCommerce/Templates
- * @version 3.6.0
+ * @version 4.3.0
  */
 
 defined( 'ABSPATH' ) || exit; // Exit if accessed directly
@@ -39,7 +39,7 @@ if ( ! comments_open() ) {
 			}
 			?>
 		</h2>
-		<a id="write-review" href="#" class="btn wonka-btn">Write a review</a>
+		<a id="write-review" href="javascript:void(0);" class="btn wonka-btn">Write a review</a>
 	</div>
 	<?php if ( get_option( 'woocommerce_review_rating_verification_required' ) === 'no' || wc_customer_bought_product( '', get_current_user_id(), $product->get_id() ) ) : ?>
 
@@ -49,7 +49,7 @@ if ( ! comments_open() ) {
 					$commenter = wp_get_current_commenter();
 
 					$comment_form = array(
-						'title_reply'         => have_comments() ? __( 'Write your review', 'woocommerce' ) : sprintf( __( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
+						'title_reply'         => have_comments() ? __( 'Apera Perks members receive $5 AperaCash for each review written.', 'woocommerce' ) : sprintf( __( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
 						'title_reply_to'      => __( 'Leave a Reply to %s', 'woocommerce' ),
 						'title_reply_before'  => '<span id="reply-title" class="comment-reply-title">',
 						'title_reply_after'   => '</span>',

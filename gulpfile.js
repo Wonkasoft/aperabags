@@ -8,6 +8,7 @@ jsmin = require('gulp-js-minify'),
 cleanCSS = require('gulp-clean-css'),
 plumber = require('gulp-plumber'),
 notify = require('gulp-notify'),
+replace = require('gulp-replace'),
 browserSync = require('browser-sync').create(),
 json = require('json-file'),
 themeName = json.read('./package.json').get('name'),
@@ -30,7 +31,11 @@ sass.compiler = require('node-sass');
 // Static server
 gulp.task('browser-sync', function() {
 	browserSync.init({
-		proxy: local + siteName,
+		proxy: {
+			target: local + siteName,
+			ws: true
+		},
+		watch: true,
 		https: true,
 		port: 4000
 	});
@@ -40,7 +45,7 @@ gulp.task('sass', function () {
 
 	return gulp.src('./sass/style.scss')
 
-	.pipe(sourcemaps.init())
+	.pipe(sourcemaps.init( { loadMaps: true } ) )
 
 	.pipe(plumber(plumberErrorHandler))
 
@@ -50,19 +55,55 @@ gulp.task('sass', function () {
 
 	.pipe(concat('style.css'))
 
+	.pipe( replace( /@charset.*?;/, '' ) )
+	
 	.pipe(sourcemaps.write('./maps'))
 
 	.pipe(gulp.dest('./'))
+	
+	.pipe(browserSync.stream())
+	
+	.pipe(notify({
+		message: "✔︎ STYLES-CSS task complete",
+		onLast: true
+	}));
+	
+});
 
-	.pipe(browserSync.stream());
+gulp.task('admin-sass', function () {
 
+	return gulp.src('./sass/admin-styles.scss')
+
+	.pipe(sourcemaps.init( { loadMaps: true } ) )
+
+	.pipe(plumber(plumberErrorHandler))
+
+	.pipe(sass())
+
+	.pipe(cleanCSS())
+
+	.pipe(concat('admin-styles.css'))
+
+	.pipe( replace( /@charset.*?;/, '' ) )
+	
+	.pipe(sourcemaps.write('./maps'))
+
+	.pipe(gulp.dest('./assets/css'))
+	
+	.pipe(browserSync.stream())
+	
+	.pipe(notify({
+		message: "✔︎ ADMIN-STYLES-CSS task complete",
+		onLast: true
+	}));
+	
 });
 
 gulp.task('woo-sass', function () {
 
 	return gulp.src('./sass/woocommerce.scss')
 
-	.pipe(sourcemaps.init())
+	.pipe(sourcemaps.init( { loadMaps: true } ) )
 
 	.pipe(plumber(plumberErrorHandler))
 
@@ -79,7 +120,7 @@ gulp.task('woo-sass', function () {
 	.pipe(browserSync.stream())
 
 	.pipe(notify({
-		message: "✔︎ CSS task complete",
+		message: "✔︎ WOOCOMMERCE-CSS task complete",
 		onLast: true
 	}));
 
@@ -87,7 +128,9 @@ gulp.task('woo-sass', function () {
 
 gulp.task('js', function () {
 
-	return gulp.src( './js/wonkamizer-js.js' )
+	return gulp.src( ['./js/navigation.js', './js/skip-link-focus-fix.js', './js/wonkamizer-js.js'] )
+
+	.pipe(sourcemaps.init( { loadMaps: true } ) )
 
 	.pipe(concat(themeName + '.min.js'))
 
@@ -107,16 +150,50 @@ gulp.task('js', function () {
 
 	.pipe(browserSync.stream())
 
-	.pipe(notify({ message: "✔︎ JS task complete"}));
+	.pipe(notify({ 
+		message: "✔︎ JS task complete",
+		onLast: true
+	}));
+
+});
+
+gulp.task('admin-js', function () {
+
+	return gulp.src( ['./inc/js/admin-edit.js'] )
+	
+	.pipe(sourcemaps.init( { loadMaps: true } ) )
+
+	.pipe(concat( 'admin-' + themeName + '.min.js' ))
+
+	.pipe(plumber(plumberErrorHandler))
+
+	.pipe(jshint())
+
+	.pipe(jshint.reporter('default'))
+
+	.pipe(jshint.reporter('fail'))
+
+	.pipe(jsmin())
+	
+	.pipe(sourcemaps.write('./maps'))
+
+	.pipe(gulp.dest('./assets/js'))
+
+	.pipe(browserSync.stream())
+
+	.pipe(notify({ 
+		message: "✔︎ ADMIN-JS task complete",
+		onLast: true
+	}));
 
 });
 
 gulp.task('watch', function() {
 
-	gulp.watch('**/sass/**/*.scss', gulp.series(gulp.parallel('sass', 'woo-sass'))).on('change', browserSync.reload);
+	gulp.watch('**/sass/**/*.scss', gulp.series( gulp.parallel( 'sass', 'woo-sass', 'admin-sass' ) ) ).on( 'change', browserSync.reload );
 	gulp.watch('**/*.php').on('change', browserSync.reload);
-	gulp.watch('./js/*.js', gulp.series(gulp.parallel('js'))).on('change', browserSync.reload);
+	gulp.watch(['./js/*.js', './inc/js/*.js'], gulp.series( gulp.parallel( 'js', 'admin-js' ) ) ).on( 'change', browserSync.reload );
 
 });
 
-gulp.task('default', gulp.series(gulp.parallel('sass', 'woo-sass', 'js', 'watch', 'browser-sync')));
+gulp.task( 'default', gulp.series( gulp.parallel( 'sass', 'woo-sass', 'admin-sass', 'js', 'admin-js', 'watch', 'browser-sync' ) ) );
