@@ -1065,7 +1065,7 @@ function wonka_checkout_after_checkout_form_custom( $checkout ) {
 	</tr>
 	<?php else : ?>
 		<tr class="shipping-methods">
-			<?php foreach ( WC()->shipping->get_shipping_methods( true, 'array' ) as $method_id => $rate ) : ?>
+			<?php foreach ( WC()->session->get( 'chosen_shipping_methods' ) as $method_id => $rate ) : ?>
 				<?php
 				if ( WC()->session->get( 'chosen_shipping_methods' )[0] === $method_id ) :
 					$rate_label = $rate->label;
