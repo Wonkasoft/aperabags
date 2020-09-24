@@ -3580,7 +3580,6 @@ var componentForm;
 			});
 		}
 
-
 		if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
 
 			document.body.addEventListener( 'keydown', function( e ) {
