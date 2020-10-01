@@ -66,6 +66,8 @@ class Wonkasoft_GetResponse_Api {
 
 	public $note = null; // Will be set to the note.
 
+	public $shop_id = null; // Will be set to the shop ID.
+
 	/**
 	 * Class Init constructor.
 	 *
@@ -661,5 +663,160 @@ class Wonkasoft_GetResponse_Api {
 
 		  return $response;
 	  endif;
+	}
+
+	/**
+	 *
+	 * Ecommerce
+	 *
+	 */
+	
+
+	/**
+	 *
+	 * Carts
+	 *
+	 */
+	
+	/**
+	 * Get shop carts 
+	 *
+	 * $current_query = array(
+	 *		'shopId'   => $this->shop_id,
+	 *		'query'   => array(
+	 *			'createdOn' => array(
+	 *				'from' => null,
+	 *			),
+	 *		),
+	 *		'query'   => array(
+	 *			'createdOn' => array(
+	 *				'to' => null,
+	 *			),
+	 *		),
+	 *		'query'    => array(
+	 *			'externalId' => null,
+	 *		),
+	 *		'sort'    => array(
+	 *			'createdOn' => 'ASC',
+	 *		),
+	 *		'fields'  => null,
+	 *		'perPage' => null,
+	 *		'page'    => null,
+	 *	);
+	 * @param  array $passed_query Contains array of 
+	 * @return object               returns object of response
+	 */
+	public function get_shop_carts( $passed_query = null ) {
+
+			if ( ! empty( $passed_query ) ) {
+				$current_query = $passed_query;
+			} else {
+				$current_query = array(
+					'shopId'   => $this->shop_id,
+					'query'   => array(
+						'createdOn' => array(
+							'from' => null,
+						),
+					),
+					'query'   => array(
+						'createdOn' => array(
+							'to' => null,
+						),
+					),
+					'query'    => array(
+						'externalId' => null,
+					),
+					'sort'    => array(
+						'createdOn' => 'ASC',
+					),
+					'fields'  => null,
+					'perPage' => null,
+					'page'    => null,
+				);
+			}
+
+			$current_query = json_decode( json_encode( $current_query ) );
+			$current_query = http_build_query( $current_query );
+
+			$ch  = curl_init();
+			$url = $this->getresponse_url . '/shops/{shopId}/carts' . $current_query;
+			curl_setopt( $ch, CURLOPT_URL, $url );
+			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+			curl_setopt( $ch, CURLOPT_HEADER, false );
+			curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
+			curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+			$response = curl_exec( $ch );
+
+			if ( false === $response ) :
+				$error_obj = array(
+					'error'  => curl_error( $ch ),
+					'status' => 'failed',
+				);
+
+				curl_close( $ch );
+
+				$error_obj = json_decode( json_encode( $error_obj ) );
+
+				return $error_obj;
+		  else :
+			  curl_close( $ch );
+			  $response = json_decode( $response );
+
+			  return $response;
+		  endif;
+	}
+
+	public function create_cart( $passed_query = null ) {
+
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$payload = array(
+			'shopId'   => ( isset( $passed_query['shop_id'] ) ? $passed_query['shop_id']: null ),
+			'contactId'   => ( isset( $passed_query['contact_id'] ) ? $passed_query['contact_id']: null ),
+			'totalPrice'   => ( isset( $passed_query['total_price'] ) ? $passed_query['total_price']: null ),
+			'totalTaxPrice'   => ( isset( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price']: null ),
+			'currency'   => ( isset( $passed_query['currency'] ) ? $passed_query['currency']: null ),
+			'selectedVariants'   => array(
+				'variantId' => ( isset( $passed_query['variant_id'] ) ? $passed_query['variant_id']: null ),
+				'quantity' => ( isset( $passed_query['quantity'] ) ? $passed_query['quantity']: null ),
+				'price' => ( isset( $passed_query['price'] ) ? $passed_query['price']: null ),
+				'priceTax' => ( isset( $passed_query['priceTax'] ) ? $passed_query['priceTax']: null ),
+			),
+			'externalId'   => ( isset( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
+			'cartUrl'   => ( isset( $passed_query['cart_url'] ) ? $passed_query['cart_url']: null ),
+		);
+		$shop_id = $passed_query['shop_id'];
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/{$shop_id}/carts";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
 	}
 }
