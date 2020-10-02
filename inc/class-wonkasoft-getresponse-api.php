@@ -637,7 +637,7 @@ class Wonkasoft_GetResponse_Api {
 		}
 
 		$ch  = curl_init();
-		$url = $this->getresponse_url . '/contacts/' . $passed_id;
+		$url = $this->getresponse_url . "/contacts/$passed_id";
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -739,7 +739,7 @@ class Wonkasoft_GetResponse_Api {
 			$current_query = http_build_query( $current_query );
 
 			$ch  = curl_init();
-			$url = $this->getresponse_url . '/shops/{shopId}/carts' . $current_query;
+			$url = $this->getresponse_url . '/shops/{shopId}/carts?' . $current_query;
 			curl_setopt( $ch, CURLOPT_URL, $url );
 			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 			curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -767,6 +767,11 @@ class Wonkasoft_GetResponse_Api {
 		  endif;
 	}
 
+	/**
+	 * Create cart
+	 * @param  array $passed_query Contains array of passed params.
+	 * @return object              returns response object.
+	 */
 	public function create_cart( $passed_query = null ) {
 
 		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
@@ -791,6 +796,410 @@ class Wonkasoft_GetResponse_Api {
 
 		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/{$shop_id}/carts";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 * Get cart by ID
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object               returns response object.
+	 */
+	public function get_cart_by_ID( $passed_query = null ) {
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'shopId'   => $this->shop_id,
+				'cartId'   => $this->cart_id,
+				'fields'  => null,
+			);
+		}
+
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/{$shop_id}/carts/{$cart_id}?" . $current_query;
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+	  else :
+		  curl_close( $ch );
+		  $response = json_decode( $response );
+
+		  return $response;
+	  endif;
+	}
+
+	/**
+	 * Update cart
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function update_cart( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$payload = array(
+			'shopId'   => ( isset( $passed_query['shop_id'] ) ? $passed_query['shop_id']: null ),
+			'cartId'   => ( isset( $passed_query['cart_id'] ) ? $passed_query['cart_id']: null ),
+			'contactId'   => ( isset( $passed_query['contact_id'] ) ? $passed_query['contact_id']: null ),
+			'totalPrice'   => ( isset( $passed_query['total_price'] ) ? $passed_query['total_price']: null ),
+			'totalTaxPrice'   => ( isset( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price']: null ),
+			'currency'   => ( isset( $passed_query['currency'] ) ? $passed_query['currency']: null ),
+			'selectedVariants'   => array(
+				'variantId' => ( isset( $passed_query['variant_id'] ) ? $passed_query['variant_id']: null ),
+				'quantity' => ( isset( $passed_query['quantity'] ) ? $passed_query['quantity']: null ),
+				'price' => ( isset( $passed_query['price'] ) ? $passed_query['price']: null ),
+				'priceTax' => ( isset( $passed_query['priceTax'] ) ? $passed_query['priceTax']: null ),
+			),
+			'externalId'   => ( isset( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
+			'cartUrl'   => ( isset( $passed_query['cart_url'] ) ? $passed_query['cart_url']: null ),
+		);
+		$shop_id = $passed_query['shop_id'];
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/{$shop_id}/carts";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 * Delete cart
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function delete_cart( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$payload = array(
+			'shopId'   => ( isset( $passed_query['shop_id'] ) ? $passed_query['shop_id']: null ),
+			'cartId'   => ( isset( $passed_query['cart_id'] ) ? $passed_query['cart_id']: null ),
+		);
+		$shop_id = $passed_query['shop_id'];
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/{$shop_id}/carts";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 *
+	 * Shops
+	 *
+	 */
+
+	/**
+	 * Get a single shop by ID
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function get_a_single_shop_by_ID( $passed_query = null ) {
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'shopId'   => $this->shop_id,
+				'fields'  => null,
+			);
+		}
+
+		$shop_id = $passed_query['shop_id'];
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/{$shop_id}?" . $current_query;
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+	  else :
+		  curl_close( $ch );
+		  $response = json_decode( $response );
+
+		  return $response;
+	  endif;
+	}
+
+	/**
+	 * Update shop
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function update_shop( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$payload = array(
+			'shopId'   => ( isset( $passed_query['shop_id'] ) ? $passed_query['shop_id']: null ),
+			'name'   => ( isset( $passed_query['name'] ) ? $passed_query['name']: null ),
+			'locale'   => ( isset( $passed_query['locale'] ) ? $passed_query['locale']: null ),
+			'currency'   => ( isset( $passed_query['currency'] ) ? $passed_query['currency']: null ),
+		);
+		$shop_id = $passed_query['shop_id'];
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/{$shop_id}?";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 * Delete shop
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function delete_shop( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$payload = array(
+			'shopId'   => ( isset( $passed_query['shop_id'] ) ? $passed_query['shop_id']: null ),
+		);
+
+		$shop_id = $passed_query['shop_id'];
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/{$shop_id}";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 * Get a list of shops
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function get_a_list_of_shops( $passed_query = null ) {
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'query'   => array(
+					'name' => ( isset( $passed_query['query']['name'] ) ? $passed_query['query']['name']: null ),
+				),
+				'sort'   => array(
+					'name' => ( isset( $passed_query['sort']['name'] ) ? $passed_query['sort']['name']: 'ASC' ),
+				),
+				'sort'   => array(
+					'createdOn' => ( isset( $passed_query['sort']['createdOn'] ) ? $passed_query['sort']['createdOn']: 'ASC' ),
+				),
+				'fields'  => ( isset( $passed_query['fields'] ) ? $passed_query['fields']: null ),
+				'perPage'  => ( isset( $passed_query['perPage'] ) ? $passed_query['perPage']: null ),
+				'page'  => ( isset( $passed_query['page'] ) ? $passed_query['page']: null ),
+			);
+		}
+
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops?" . $current_query;
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+	  else :
+		  curl_close( $ch );
+		  $response = json_decode( $response );
+
+		  return $response;
+	  endif;
+	}
+
+	/**
+	 * Create shop
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function create_shop( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$payload = array(
+			'name'   => ( isset( $passed_query['name'] ) ? $passed_query['name']: null ),
+			'locale'   => ( isset( $passed_query['locale'] ) ? $passed_query['locale']: null ),
+			'currency'   => ( isset( $passed_query['currency'] ) ? $passed_query['currency']: null ),
+		);
+
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops";
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
