@@ -1162,6 +1162,7 @@ add_filter( 'woocommerce_cart_totals_coupon_html', 'wonkasoft_woocommerce_cart_t
  * @return array            returns the fragments after being modified.
  */
 function wonka_woocommerce_update_order_review_fragments( $fragments ) {
+	$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
 	$chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->session->chosen_shipping_methods[0] : '';
 
 	foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
