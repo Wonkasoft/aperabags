@@ -1926,9 +1926,6 @@ var componentForm;
 	===================================================================*/
 	window.onload = function()
 	{
-		if ( GrTracking('setUserId', '" .$email ."') != 'undefined' || GrTracking('setUserId', '" .$email ."') != null ) {
-			GrTracking('setUserId', '" .$email ."');
-		}
 		/**
 		 * Allows register side on my account page to slide out and in.
 		 *
