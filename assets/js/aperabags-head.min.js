@@ -1,5 +1,5 @@
 (function(i, s, o, g, r, a, m){
-i.__GetResponseAnalyticsObject = r;i[r] = i[r] || function() {(i[r].q = i[r].q || []).push(arguments); };
+i['__GetResponseAnalyticsObject'] = r;i[r] = i[r] || function() {(i[r].q = i[r].q || []).push(arguments); };
 a = s.createElement(o);m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m);
 })(window, document, 'script', 'https://ga.getresponse.com/script/ga.js?v=2&grid=sBDcIX0NffHoIBw%3D%3D', 'GrTracking');
 
