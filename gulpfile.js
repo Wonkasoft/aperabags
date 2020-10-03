@@ -35,9 +35,9 @@ gulp.task('browser-sync', function() {
 			target: local + siteName,
 			ws: true
 		},
+		browser: 'chrome',
 		watch: true,
-		https: true,
-		port: 4000
+		https: true
 	});
 });
 
@@ -166,6 +166,12 @@ gulp.task('js-grations', function () {
 	.pipe(concat(themeName + '-head.min.js'))
 
 	.pipe(plumber(plumberErrorHandler))
+
+	.pipe(jshint())
+
+	.pipe(jshint.reporter('default'))
+
+	.pipe(jshint.reporter('fail'))
 	
 	.pipe(sourcemaps.write('./maps'))
 
