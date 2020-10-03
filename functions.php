@@ -416,15 +416,17 @@ function apera_bags_scripts() {
 
 	wp_enqueue_script( 'bootstrapjs', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js', array( 'jquery', 'popperjs' ), '4.5.0', true );
 	wp_script_add_data( 'bootstrapjs', array( 'integrity', 'crossorigin' ), array( 'sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI', 'anonymous' ) );
+	
+	wp_enqueue_script( 'apera-bags-wonkagrations-js', get_stylesheet_directory_uri() . '/assets/js/aperabags-head.min.js', array( 'jquery' ), wp_get_theme()->get( 'Version' ), false );
 
 	if ( $slick_js_load ) :
 		wp_enqueue_script( 'slick-js', get_stylesheet_directory_uri() . '/assets/slick/slick.min.js', array( 'jquery' ), '1.8.0', true );
 	endif;
 
 	if ( $slick_js_load ) :
-		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'slick-js' ), wp_get_theme()->get( 'Version' ), true );
+		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', 'slick-js', 'apera-bags-wonkagrations-js' ), wp_get_theme()->get( 'Version' ), true );
 	else :
-		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', $slick_script ), wp_get_theme()->get( 'Version' ), true );
+		wp_enqueue_script( 'apera-bags-wonkamizer-js', get_stylesheet_directory_uri() . '/assets/js/aperabags.min.js', array( 'jquery', $slick_script, 'apera-bags-wonkagrations-js' ), wp_get_theme()->get( 'Version' ), true );
 	endif;
 
 	if ( is_page( 'checkout' ) && ! empty( get_option( 'google_api_key' ) ) ) :
@@ -447,8 +449,6 @@ function apera_bags_scripts() {
 			'security' => wp_create_nonce( 'ws-request-nonce' ),
 		)
 	);
-
-	wp_enqueue_script( 'apera-bags-wonkagrations-js', get_stylesheet_directory_uri() . '/assets/js/aperabags-head.min.js', array( 'jquery' ), wp_get_theme()->get( 'Version' ), false );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) :
 		wp_enqueue_script( 'comment-reply' );
