@@ -35,7 +35,6 @@ gulp.task('browser-sync', function() {
 			target: local + siteName,
 			ws: true
 		},
-		browser: 'chrome',
 		watch: true,
 		https: true
 	});
