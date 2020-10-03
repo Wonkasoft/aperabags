@@ -156,35 +156,6 @@ gulp.task('js', function () {
 
 });
 
-gulp.task('js-grations', function () {
-
-	return gulp.src( './js/wonkagrations.js' )
-
-	.pipe(sourcemaps.init( { loadMaps: true } ) )
-
-	.pipe(concat(themeName + '-head.min.js'))
-
-	.pipe(plumber(plumberErrorHandler))
-
-	.pipe(jshint())
-
-	.pipe(jshint.reporter('default'))
-
-	.pipe(jshint.reporter('fail'))
-	
-	.pipe(sourcemaps.write('./maps'))
-
-	.pipe(gulp.dest('./assets/js'))
-
-	.pipe(browserSync.stream())
-
-	.pipe(notify({ 
-		message: "✔︎ JS-Grations task complete",
-		onLast: true
-	}));
-
-});
-
 gulp.task('admin-js', function () {
 
 	return gulp.src( ['./inc/js/admin-edit.js'] )
@@ -220,8 +191,8 @@ gulp.task('watch', function() {
 
 	gulp.watch('**/sass/**/*.scss', gulp.series( gulp.parallel( 'sass', 'woo-sass', 'admin-sass' ) ) ).on( 'change', browserSync.reload );
 	gulp.watch('**/*.php').on('change', browserSync.reload);
-	gulp.watch(['./js/*.js', './inc/js/*.js'], gulp.series( gulp.parallel( 'js', 'admin-js', 'js-grations' ) ) ).on( 'change', browserSync.reload );
+	gulp.watch(['./js/*.js', './inc/js/*.js'], gulp.series( gulp.parallel( 'js', 'admin-js' ) ) ).on( 'change', browserSync.reload );
 
 });
 
-gulp.task( 'default', gulp.series( gulp.parallel( 'sass', 'woo-sass', 'admin-sass', 'js', 'admin-js', 'js-grations', 'watch', 'browser-sync' ) ) );
+gulp.task( 'default', gulp.series( gulp.parallel( 'sass', 'woo-sass', 'admin-sass', 'js', 'admin-js', 'watch', 'browser-sync' ) ) );
