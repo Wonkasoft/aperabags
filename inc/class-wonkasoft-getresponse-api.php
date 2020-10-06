@@ -1049,7 +1049,7 @@ class Wonkasoft_GetResponse_Api {
 		$payload = json_encode( $payload );
 
 		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops/{$shop_id}?";
+		$url = $this->getresponse_url . "/shops/{$shop_id}";
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );

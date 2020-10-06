@@ -1086,17 +1086,19 @@ function wonkasoft_getresponse_endpoint( $data ) {
 		} else {
 			$response = $getresponse->upsert_the_tags_of_contact();
 		}
+
 		$data_send = array(
 			'email'      => $email,
 			'tag'        => $passed_tag,
 			'contact_id' => $getresponse->contact_id,
 		);
-		$data_send = json_decode( json_encode( $data_send ) );
-		$data_send = http_build_query( $data_send );
+
 		if ( 'apera_195932' === $campaign_name ) {
+			$data_send = json_decode( json_encode( $data_send ) );
+			$data_send = http_build_query( $data_send );
 			$url = 'https://aperabags.com/iff-thankyou/?' . $data_send;
 		} else {
-			$url = 'https://aperabags.com/response-page/?' . $data_send;
+			wp_send_json_success( $data_send, 200 );
 		}
 		header( 'Content-Type: application/x-www-form-urlencoded' );
 		header( 'Location: ' . $url );

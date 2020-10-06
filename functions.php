@@ -445,6 +445,9 @@ function apera_bags_scripts() {
 			'ajax'     => admin_url( 'admin-ajax.php' ),
 			'ga_id'    => $ga_id,
 			'security' => wp_create_nonce( 'ws-request-nonce' ),
+			'api_url' => array(
+				'getResponse' => get_site_url() . '/api/wonkasoft/v1/getresponse-api/',
+			),
 		)
 	);
 

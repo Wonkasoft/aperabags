@@ -118,6 +118,7 @@ var componentForm;
 	 * 
 	 */
 	if (document.getElementById("ambassadar-first-name") || document.getElementById("zip-first-name") || document.getElementById("confirm-email") ) {
+
 		if ( getUrlVars().firstname ) 
 		{
 			var firstname = decodeURIComponent( getUrlVars().firstname ).replace( /\+/gi, ' ' );
@@ -159,18 +160,33 @@ var componentForm;
 
 	if ( document.querySelector( '#tag' ) ) 
 	{
-		if ( getUrlVars().email ) 
-		{
-			var email = decodeURIComponent( getUrlVars().email ).replace( /\+/gi, ' ' );
-			document.getElementById("email").innerHTML = email;
-		}
+		var queryString = window.location.search;
+		var urlparams = new URLSearchParams( queryString );
+		var sent_email = urlparams.get('email');
+		var sent_tag = urlparams.get('tag');
+		var sent_campaign_name = urlparams.get('campaign_name');
 
-		if ( getUrlVars().tag ) 
-		{
-			var tag = decodeURIComponent( getUrlVars().tag ).replace( /\+/gi, ' ' );
-			document.getElementById("tag").innerHTML = tag;
-		}
-
+		var data = {
+			'email': sent_email,
+			'tag': sent_tag,
+			'campaign_name': sent_campaign_name
+		};
+		var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+		xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if ( this.readyState == 4 && this.status == 200 ) 
+			{
+				var response = JSON.parse( this.responseText );
+				console.log( response );
+				if ( 'undefined' != response.data.email && null != response.data.email ) {
+					document.getElementById("email").innerHTML = response.data.email;
+					document.getElementById("tag").innerHTML = response.data.tag;
+				}
+			}
+		};
+		xhr.open('GET', wonkasoft_request.api_url.getResponse + "?" + query_string );
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.send();
 	}
 
 	if ( document.querySelector( '#subscriber-email' ) ) 
