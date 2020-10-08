@@ -160,6 +160,9 @@ var componentForm;
 
 	if ( document.querySelector( '#tag' ) ) 
 	{
+		/**
+		 * This is for the response page.
+		 */
 		var queryString = window.location.search;
 		var urlparams = new URLSearchParams( queryString );
 		var sent_email = urlparams.get('email');
@@ -599,77 +602,6 @@ var componentForm;
 						}
 					});
 			});
-
-		var cybersource_form_field_group = document.querySelectorAll( '.payment_box.payment_method_cybersource .form-row' );
-		cybersource_form_field_group.forEach( function( field_group, i ) 
-			{
-				var new_container, new_row_container;
-				if ( i === 0 )
-				{
-					new_container = document.createElement( 'DIV' );
-					new_container.classList.add( 'form-group', 'form-row' );
-					new_container.innerHTML = field_group.innerHTML;
-					field_group.parentElement.insertBefore( new_container, field_group );
-					field_group.remove();
-				}
-
-				if ( i === 1 ) 
-				{
-					new_row_container = document.createElement( 'DIV' );
-					new_row_container.classList.add( 'form-row', 'form-inline', 'justify-content-between', 'wonka-form-row' );
-					new_container = document.createElement( 'DIV' );
-					new_container.classList.add( 'form-group' );
-					new_container.innerHTML = field_group.innerHTML;
-					new_row_container.appendChild( new_container );
-					field_group.parentElement.insertBefore( new_row_container, field_group );
-					field_group.remove();
-				}
-
-				if ( i > 1 ) 
-				{
-					new_container = document.createElement( 'DIV' );
-					new_container.classList.add( 'form-group', 'form-inline' );
-					new_container.innerHTML = field_group.innerHTML;
-					field_group.parentElement.querySelector( '.wonka-form-row' ).appendChild( new_container );
-					field_group.parentElement.querySelector( '.clear' ).remove();
-					field_group.remove();
-				}
-			});
-		
-		var cybersource_labels = document.querySelectorAll( '.payment_box.payment_method_cybersource label' );
-		cybersource_labels.forEach( function( label, i ) 
-			{
-				label.classList.add( 'sr-only' );
-			});
-
-		var cybersource_inputs = document.querySelectorAll( '.payment_box.payment_method_cybersource input' );
-		cybersource_inputs.forEach( function( input, i ) 
-			{
-				input.classList.add( 'form-control' );
-				if ( input.id === 'cybersource_cvNumber' ) 
-				{
-					input.setAttribute( 'placeholder', 'CCV' );
-				}
-				else
-				{
-					input.setAttribute( 'placeholder', input.parentElement.querySelector( 'label' ).innerText );
-				}
-			});
-
-		var cybersource_select_boxes = document.querySelectorAll( '.payment_box.payment_method_cybersource select' );
-		cybersource_select_boxes.forEach( function( select, i ) 
-			{
-				select.classList.add( 'form-control' );
-				if ( select.name === 'cybersource_cardType' ) 
-				{
-					select.firstElementChild.innerText = select.parentElement.querySelector( 'label' ).innerText;
-				}
-
-				if ( select.name === 'cybersource_expirationMonth' ) 
-				{
-					select.style.marginRight = 15 + 'px';
-				}
-			});
 		
 		multistep_btns.forEach( function( item, i ) 
 			{
@@ -713,6 +645,7 @@ var componentForm;
 										{
 											document.querySelector( '.pac-container' ).style.display = 'none';
 										}
+										$(document.body).trigger('wonkasoft_cart_response');
 									}
 								});
 						}
@@ -746,130 +679,6 @@ var componentForm;
 							e.preventDefault();
 							next_tab = document.querySelector( e.target.getAttribute( 'data-target' ) );
 
-							if ( document.querySelector( '#payment_method_cybersource' ).checked ) 
-							{
-								var cybersource_inputs_for_validation = document.querySelectorAll( '.payment_box.payment_method_cybersource input' );
-								var cybersource_selects_for_validation = document.querySelectorAll( '.payment_box.payment_method_cybersource select' );
-								var feedback_div;
-								cybersource_inputs_for_validation.forEach( function( input, i ) 
-									{
-										input.required = true;
-										if ( input.name === 'cybersource_accountNumber' ) 
-										{
-											feedback_div = document.createElement( 'DIV' );
-											feedback_div.classList.add( 'invalid-feedback' );
-											feedback_div.innerText = 'Credit Card Number is a required field';
-											if ( !input.parentElement.querySelector( '.invalid-feedback' ) ) 
-											{
-												input.parentElement.appendChild( feedback_div );
-											}
-											if ( input.reportValidity() === false ) 
-											{
-												input.classList.add( 'is-invalid' );
-											}
-											else
-											{
-												if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
-												{
-													input.classList.remove( 'is-invalid' );
-												}
-											}
-										}
-
-										if ( input.name === 'cybersource_cvNumber' ) 
-										{
-											feedback_div = document.createElement( 'DIV' );
-											feedback_div.classList.add( 'invalid-feedback' );
-											feedback_div.innerText = 'CCV is a required field';
-											if ( !input.parentElement.querySelector( '.invalid-feedback' ) ) 
-											{
-												input.parentElement.appendChild( feedback_div );
-											}
-											if ( input.reportValidity() === false ) 
-											{
-												input.classList.add( 'is-invalid' );
-												input.style.width = 100 + 'px';
-											}
-											else
-											{
-												if ( input.reportValidity() && input.classList.contains( 'is-invalid' ) ) 
-												{
-													input.classList.remove( 'is-invalid' );
-													input.style.width = '';
-												}
-											}
-										}
-									});
-
-								cybersource_selects_for_validation.forEach( function( select, i ) 
-									{
-										if ( select.name === 'cybersource_cardType' ) 
-										{
-											feedback_div = document.createElement( 'DIV' );
-											feedback_div.classList.add( 'invalid-feedback' );
-											feedback_div.innerText = 'Select Card Type is a required field';
-											if ( !select.parentElement.querySelector( '.invalid-feedback' ) ) 
-											{
-												select.parentElement.appendChild( feedback_div );
-											}
-											if ( select.selectedIndex === 0 ) 
-											{
-												select.classList.add( 'is-invalid' );
-											}
-											else
-											{
-												if ( select.selectedIndex > 0 && select.classList.contains( 'is-invalid' ) ) 
-												{
-													select.classList.remove( 'is-invalid' );
-												}
-											}
-										}
-
-										if ( select.name === 'cybersource_expirationMonth' ) 
-										{
-											feedback_div = document.createElement( 'DIV' );
-											feedback_div.classList.add( 'invalid-feedback', 'invalid-feedback-month' );
-											feedback_div.innerText = 'Expiration Month is a required field';
-											if ( !select.parentElement.querySelector( '.invalid-feedback.invalid-feedback-month' ) ) 
-											{
-												select.parentElement.appendChild( feedback_div );
-											}
-											if ( select.selectedIndex === 0 ) 
-											{
-												select.classList.add( 'is-invalid' );
-											}
-											else
-											{
-												if ( select.selectedIndex > 0 && select.classList.contains( 'is-invalid' ) ) 
-												{
-													select.classList.remove( 'is-invalid' );
-												}
-											}
-										}
-
-										if ( select.name === 'cybersource_expirationYear' ) 
-										{
-											feedback_div = document.createElement( 'DIV' );
-											feedback_div.classList.add( 'invalid-feedback', 'invalid-feedback-year' );
-											feedback_div.innerText = 'Expiration Year is a required field';
-											if ( !select.parentElement.querySelector( '.invalid-feedback.invalid-feedback-year' ) ) 
-											{
-												select.parentElement.appendChild( feedback_div );
-											}
-											if ( select.selectedIndex === 0 ) 
-											{
-												select.classList.add( 'is-invalid' );
-											}
-											else
-											{
-												if ( select.selectedIndex > 0 && select.classList.contains( 'is-invalid' ) ) 
-												{
-													select.classList.remove( 'is-invalid' );
-												}
-											}
-										}
-									});
-							}
 
 							if ( document.querySelector( '.woocommerce-billing-fields__field-wrapper' ) ) 
 							{
@@ -877,8 +686,6 @@ var componentForm;
 								var billing_form_selects = document.querySelectorAll( '.woocommerce-billing-fields__field-wrapper select' );
 								var billing_field_count = billing_form_fields.length;
 								var validation_billing_checker = true;
-
-
 
 								billing_form_selects.forEach( function( select, i ) 
 									{
