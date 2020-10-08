@@ -3414,10 +3414,10 @@ var componentForm;
 				}
 			});
 
-			document.body.addEventListener( 'wonkasoft_cart_response', function() {
+			document.body.addEventListener( 'wonkasoft_cart_response', function( e ) {
 				console.log( 'hit' );
 			});
-
+			$(document.body).trigger('wonkasoft_cart_response');
 			var aperacash_class = {
 				apply_aperacash : function( e ) {
 					var data = {
