@@ -3414,7 +3414,7 @@ var componentForm;
 				}
 			});
 
-			document.body.addEventListener( 'wonkasoft_cart_response', function( e ) {
+			$( document.body ).on( 'wonkasoft_cart_response', function( e ) {
 				console.log( 'hit' );
 			});
 			$(document.body).trigger('wonkasoft_cart_response');
