@@ -3414,6 +3414,10 @@ var componentForm;
 				}
 			});
 
+			document.body.addEventListener( 'wonkasoft_cart_response', function() {
+				console.log( 'hit' );
+			});
+
 			var aperacash_class = {
 				apply_aperacash : function( e ) {
 					var data = {
