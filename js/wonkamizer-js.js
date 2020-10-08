@@ -640,12 +640,12 @@ var componentForm;
 									{
 										next_tab.classList.remove( 'disabled' );
 										next_tab.click();
+										$(document.body).trigger('wonkasoft_cart_response');
 										scrollToSection( 'wonka_shipping_method_tab', 15 );
 										if ( document.querySelector( '.pac-container' ) ) 
 										{
 											document.querySelector( '.pac-container' ).style.display = 'none';
 										}
-										$(document.body).trigger('wonkasoft_cart_response');
 									}
 								});
 						}
