@@ -192,6 +192,8 @@ function wonkasoft_register_session() {
 
 add_action('init', 'wonkasoft_register_session');
 
+add_filter('action_scheduler_run_schedule', function($arg) { return 86400; });
+
 /**
  * Adding SVG support.
  *
