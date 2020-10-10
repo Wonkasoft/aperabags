@@ -18,7 +18,7 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 	 * as indicating support for post thumbnails.
 	 */
 	function apera_bags_setup() {
-		add_filter( 'woocommerce_get_cart_url', 'wonkasoft_woocommerce_get_cart_url' );
+		// add_filter( 'woocommerce_get_cart_url', 'wonkasoft_woocommerce_get_cart_url' );
 		
 		/*
 		 * Make theme available for translation.
