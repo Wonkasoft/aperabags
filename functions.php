@@ -186,6 +186,7 @@ function wonkasoft_register_session() {
   if( !session_id() )
   {
     session_start();
+    session_write_close(); 
   }
 }
 
