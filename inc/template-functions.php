@@ -544,7 +544,7 @@ function wonkasoft_theme_popup_cookie() {
 		 endif;
 	endif;
 }
-add_action( 'init', 'wonkasoft_theme_popup_cookie', 10 );
+add_action( 'init', 'wonkasoft_theme_popup_cookie', 20 );
 
 /**
  * Allow to remove method for an hook when, it's a class method used and class don't have global for instanciation !

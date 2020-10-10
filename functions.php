@@ -19,7 +19,7 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 	 */
 	function apera_bags_setup() {
 		// add_filter( 'woocommerce_get_cart_url', 'wonkasoft_woocommerce_get_cart_url' );
-		
+
 		/*
 		 * Make theme available for translation.
 		 * Translations can be filed in the /languages/ directory.
@@ -178,6 +178,18 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 	}
 	add_action( 'after_setup_theme', 'apera_bags_setup' );
 endif;
+
+/**
+ * This check to see if a session has started.
+ */
+function wonkasoft_register_session() {
+  if( !session_id() )
+  {
+    session_start();
+  }
+}
+
+add_action('init', 'wonkasoft_register_session');
 
 /**
  * Adding SVG support.
