@@ -248,3 +248,242 @@ function wonkasoft_parse_account_logo_or_process_fees() {
 }
 add_action( 'wp_ajax_wonkasoft_parse_account_logo_or_process_fees', 'wonkasoft_parse_account_logo_or_process_fees' );
 add_action( 'wp_ajax_nopriv_wonkasoft_parse_account_logo_or_process_fees', 'wonkasoft_parse_account_logo_or_process_fees' );
+
+/**
+ * Ajax request for AperaCash apply on checkout.
+ *
+ * @param  [type] $params [description]
+ * @return [type]         [description]
+ */
+function apply_all_aperacash() {
+	$nonce = ( isset( $_REQUEST['security'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['security'] ) ) : false;
+	wp_verify_nonce( $nonce, 'ws-request-nonce' ) || die( 'nonce failed' );
+
+	$data                 = array();
+	$add_discount         = ( isset( $_REQUEST['checkbox'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['checkbox'] ) ) : null;
+	$data['add_discount'] = $add_discount;
+
+	if ( $add_discount ) :
+		WC()->session->set( 'auto_redeemcoupon', 'yes' );
+		update_option( 'rs_enable_disable_auto_redeem_points', 'yes' );
+		update_option( 'rs_enable_disable_auto_redeem_checkout', 'yes' );
+
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
+
+		if ( empty( WC()->cart->get_cart_contents_count() ) ) {
+			WC()->session->set( 'auto_redeemcoupon', 'yes' );
+			foreach ( WC()->cart->get_applied_coupons() as $code => $coupon ) {
+				WC()->cart->remove_coupon( $code );
+			}
+
+			return;
+		}
+
+		$UserId     = get_current_user_id();
+		$PointsData = new RS_Points_Data( $UserId );
+		$Points     = $PointsData->total_available_points();
+
+		if ( empty( $Points ) ) {
+			return;
+		}
+
+		if ( $Points < get_option( 'rs_first_time_minimum_user_points' ) ) {
+			return;
+		}
+
+		if ( $Points < get_option( 'rs_minimum_user_points_to_redeem' ) ) {
+			return;
+		}
+
+		if ( check_if_pointprice_product_exist_in_cart() ) {
+			return;
+		}
+
+		if ( get_option( 'rs_enable_disable_auto_redeem_points' ) != 'yes' ) {
+			return;
+		}
+
+		$CartSubtotal = srp_cart_subtotal();
+
+		$MinCartTotal = get_option( 'rs_minimum_cart_total_points' );
+		$MaxCartTotal = get_option( 'rs_maximum_cart_total_points' );
+
+		$capture = RSRedeemingFrontend::auto_redeeming_in_checkout( $UserId, $Points, $CartSubtotal, $MaxCartTotal, $MinCartTotal );
+
+		update_option( 'rs_enable_disable_auto_redeem_points', 'no' );
+		update_option( 'rs_enable_disable_auto_redeem_checkout', 'no' );
+		WC()->session->set( 'auto_redeemcoupon', 'no' );
+	endif;
+
+	if ( 'false' === $add_discount ) :
+		foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
+			preg_match( '/aperacash_|sumo_|auto_redeem_|auto_aperacash_/', strtolower( $code ), $matches, PREG_UNMATCHED_AS_NULL );
+			if ( ! empty( $matches ) ) :
+				if ( 'checked' === get_option( 'apply_all_aperacash', false ) ) :
+					update_option( 'apply_all_aperacash', false );
+				endif;
+				WC()->cart->remove_coupon( $code );
+				$data['coupon_removed'] = $code;
+			endif;
+		endforeach;
+	endif;
+
+	wp_send_json_success( $data, null );
+}
+add_action( 'wp_ajax_apply_all_aperacash', 'apply_all_aperacash' );
+
+/**
+ * Setting Cart Response for the abandon carts
+ * @return [type] [description]
+ */
+function wonkasoft_set_cart_response() {
+	$nonce = ( isset( $_REQUEST['security'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['security'] ) ) : false;
+	wp_verify_nonce( $nonce, 'ws-request-nonce' ) || die( 'nonce failed' );
+
+	$email = ( isset( $_REQUEST['email'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['email'] ) ) : null;
+	$name = ( isset( $_REQUEST['first_name'] ) && isset( $_REQUEST['last_name'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['first_name'] . ' ' . $_REQUEST['last_name'] ) ) : null;
+	if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+		$ip = $_SERVER['HTTP_CLIENT_IP'];
+	} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	} else {
+		$ip = $_SERVER['REMOTE_ADDR'];
+	}
+	$data = array(
+		'email' => 'mr.r.lister@gmail.com',
+		'contact_name' => $name,
+		'ip_address' => $ip,
+	);
+	
+	$getresponse_api = new Wonkasoft_GetResponse_Api( $data );
+	
+	foreach( $getresponse_api->campaign_list as $campaign ) {
+		if ( 'abandon_cart' === $campaign->name ) :
+			$getresponse_api->campaign_id = $campaign->campaignId;
+			$getresponse_api->campaign_name = $campaign->name;
+			break;
+		endif; 
+	}
+
+	$contact_list_query = array(
+		'query' => array(
+			'email' => 'mr.r.lister@gmail.com',
+			'name' => $name,
+			'campaignId' => $getresponse_api->campaign_id,
+		),
+	);
+		
+	if ( 0 == sizeOf( $getresponse_api->contact_list ) ) :
+		$getresponse_api->create_a_new_contact();
+		$getresponse_api->contact_list = $getresponse_api->get_contact_list( $contact_list_query );
+	endif;
+
+	foreach( $getresponse_api->contact_list as $contact ) {
+		$getresponse_api->contact_id = $contact->contactId;
+		$getresponse_api->contact_name = $contact->name;
+	}
+
+	$shop_query = array(
+		'query'   => array(
+			'name' => 'Aperabags.com',
+		),
+		'sort'   => array(
+			'name' => 'ASC',
+		),
+		'sort'   => array(
+			'createdOn' => 'ASC',
+		),
+		'fields'  => null,
+		'perPage'  => null,
+		'page'  => null,
+	);
+
+	$getresponse_api->shop_list = $getresponse_api->get_a_list_of_shops( $shop_query );
+
+	foreach( $getresponse_api->shop_list as $shop ) {
+		$getresponse_api->shop_id = $shop->shopId;
+	}
+	
+		
+	$cart_data = WC()->cart->get_cart();
+
+	$cart_hash = array();
+	$selected_variants = array();
+
+	foreach ( $cart_data as $row ) {
+		$cart_hash[] = array(
+			'product_id'    => $row['product_id'],
+			'variation_id'  => $row['variation_id'],
+			'quantity'      => $row['quantity'],
+			'line_total'    => $row['line_total'],
+			'line_tax'      => $row['line_tax'],
+			'line_subtotal' => $row['line_subtotal']
+		);
+		$_product = new WC_Product_Variation( $row['variation_id'] );
+		$variant_price = round( $_product->get_price(), 2 );
+		array_push( $selected_variants, array(
+			'variation_id'  => $row['variation_id'],
+			'quantity'      => $row['quantity'],
+			'price'    		=> $variant_price,
+			'priceTax'      => $variant_price,
+		) );
+	}
+
+	$cart_external_id = md5( serialize( $cart_hash ) );
+
+	$cart_query = array(
+		'shopId'   => $getresponse_api->shop_id,
+		'query'   => array(
+			'createdOn' => array(
+				'from' => null,
+				'to' => null,
+			),
+			'externalId' => null,
+		),
+		'sort'    => array(
+			'createdOn' => 'DESC',
+		),
+		'fields'  => null,
+		'perPage' => null,
+		'page'    => null,
+	);
+		
+	$getresponse_api->shop_carts = $getresponse_api->get_shop_carts( $cart_query );
+
+	if (  0 == sizeOf( $getresponse_api->shop_carts ) ) :
+		// $new_cart = array(
+		// 	'shop_id'   => $getresponse_api->shop_id,
+		// 	'contact_id'   => $getresponse_api->contact_id,
+		// 	'total_price'   => WC()->cart->get_totals(),
+		// 	'total_tax_price'   => WC()->cart->get_totals(),
+		// 	'currency'   => 'USD',
+		// 	'selectedVariants'   => $selected_variants,
+		// 	'external_id'   => $cart_external_id,
+		// 	'cart_url'   => wc_get_checkout_url(),
+		// );
+
+		// $new_created_cart = $getresponse_api->create_cart( $new_cart );
+		// echo "<pre>\n";
+		// print_r( $new_created_cart );
+		// echo "</pre>\n";
+			
+		// $getresponse_api->shop_carts = $getresponse_api->get_shop_carts( $cart_query );
+	endif; 
+
+	do_action( 'woocommerce_cart_updated' );
+
+	$output = array(
+		'api' => $getresponse_api,
+		'current_cart' => $cart_data,
+		'cart_external_id' => $cart_external_id,
+		'cart_query' => $cart_query,
+		'email' => $email,
+		'contact_name' => $name,
+	);
+
+	wp_send_json_success( $output, 200 );
+}
+add_action( 'wp_ajax_wonkasoft_set_cart_response', 'wonkasoft_set_cart_response' );
+add_action( 'wp_ajax_nopriv_wonkasoft_set_cart_response', 'wonkasoft_set_cart_response' );

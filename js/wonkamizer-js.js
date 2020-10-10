@@ -3415,9 +3415,31 @@ var componentForm;
 			});
 
 			$( document.body ).on( 'wonkasoft_cart_response', function( e ) {
-				console.log( 'hit' );
+				var data = {
+					'url': wonkasoft_request.ajax,
+					'action': 'wonkasoft_set_cart_response',
+					'email': document.querySelector( '#shipping_email' ).value,
+					'first_name': document.querySelector( '#shipping_first_name' ).value,
+					'last_name': document.querySelector( '#shipping_last_name' ).value,
+					'security': wonkasoft_request.security
+				};
+
+				var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+
+				xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function() {
+
+					if ( this.readyState == 4 && this.status == 200 ) 
+					{
+						var response = JSON.parse( this.responseText );
+						console.log( response );
+					}
+				};
+				xhr.open('POST', data.url + '?' + query_string, true );
+				xhr.setRequestHeader( "Content-type", "application/json; charset= UTF-8" );
+				xhr.send();
 			});
-			$(document.body).trigger('wonkasoft_cart_response');
+
 			var aperacash_class = {
 				apply_aperacash : function( e ) {
 					var data = {

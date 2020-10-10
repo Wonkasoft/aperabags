@@ -68,6 +68,10 @@ class Wonkasoft_GetResponse_Api {
 
 	public $shop_id = null; // Will be set to the shop ID.
 
+	public $shop_list = array(); // Will be list of shops.
+
+	public $shop_carts = array(); // Will be list of shop's carts.
+
 	/**
 	 * Class Init constructor.
 	 *
@@ -374,7 +378,7 @@ class Wonkasoft_GetResponse_Api {
 	 * @return object        return an object of a list of contacts.
 	 */
 	public function get_contact_list( $passed_query = null ) {
-
+			
 		if ( ! empty( $passed_query ) ) {
 			$current_query = $passed_query;
 		} else {
@@ -407,7 +411,7 @@ class Wonkasoft_GetResponse_Api {
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-
+			
 		$ch  = curl_init();
 		$url = $this->getresponse_url . '/contacts?' . $current_query;
 		curl_setopt( $ch, CURLOPT_URL, $url );
@@ -432,7 +436,7 @@ class Wonkasoft_GetResponse_Api {
 	  else :
 		  curl_close( $ch );
 		  $response = json_decode( $response );
-
+		  	
 		  return $response;
 		endif;
 	}
@@ -716,14 +720,8 @@ class Wonkasoft_GetResponse_Api {
 					'query'   => array(
 						'createdOn' => array(
 							'from' => null,
-						),
-					),
-					'query'   => array(
-						'createdOn' => array(
 							'to' => null,
 						),
-					),
-					'query'    => array(
 						'externalId' => null,
 					),
 					'sort'    => array(
@@ -735,11 +733,12 @@ class Wonkasoft_GetResponse_Api {
 				);
 			}
 
+			$shop_id = $this->shop_id;
 			$current_query = json_decode( json_encode( $current_query ) );
 			$current_query = http_build_query( $current_query );
 
 			$ch  = curl_init();
-			$url = $this->getresponse_url . '/shops/{shopId}/carts?' . $current_query;
+			$url = $this->getresponse_url . "/shops/{$shop_id}/carts?" . $current_query;
 			curl_setopt( $ch, CURLOPT_URL, $url );
 			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 			curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -782,12 +781,7 @@ class Wonkasoft_GetResponse_Api {
 			'totalPrice'   => ( isset( $passed_query['total_price'] ) ? $passed_query['total_price']: null ),
 			'totalTaxPrice'   => ( isset( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price']: null ),
 			'currency'   => ( isset( $passed_query['currency'] ) ? $passed_query['currency']: null ),
-			'selectedVariants'   => array(
-				'variantId' => ( isset( $passed_query['variant_id'] ) ? $passed_query['variant_id']: null ),
-				'quantity' => ( isset( $passed_query['quantity'] ) ? $passed_query['quantity']: null ),
-				'price' => ( isset( $passed_query['price'] ) ? $passed_query['price']: null ),
-				'priceTax' => ( isset( $passed_query['priceTax'] ) ? $passed_query['priceTax']: null ),
-			),
+			'selectedVariants'   => ( isset( $passed_query['selectedVariants'] ) ? $passed_query['selectedVariants']: null ),
 			'externalId'   => ( isset( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
 			'cartUrl'   => ( isset( $passed_query['cart_url'] ) ? $passed_query['cart_url']: null ),
 		);

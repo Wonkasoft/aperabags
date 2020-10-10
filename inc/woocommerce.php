@@ -1403,91 +1403,6 @@ function wonka_woocommerce_review_order_after_order_total() {
 add_action( 'woocommerce_review_order_after_order_total', 'wonka_woocommerce_review_order_after_order_total', 50 );
 
 /**
- * Ajax request for AperaCash apply on checkout.
- *
- * @param  [type] $params [description]
- * @return [type]         [description]
- */
-function apply_all_aperacash() {
-	$nonce = ( isset( $_REQUEST['security'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['security'] ) ) : false;
-	wp_verify_nonce( $nonce, 'ws-request-nonce' ) || die( 'nonce failed' );
-
-	$data                 = array();
-	$add_discount         = ( isset( $_REQUEST['checkbox'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['checkbox'] ) ) : null;
-	$data['add_discount'] = $add_discount;
-
-	if ( $add_discount ) :
-		WC()->session->set( 'auto_redeemcoupon', 'yes' );
-		update_option( 'rs_enable_disable_auto_redeem_points', 'yes' );
-		update_option( 'rs_enable_disable_auto_redeem_checkout', 'yes' );
-
-		if ( ! is_user_logged_in() ) {
-			return;
-		}
-
-		if ( empty( WC()->cart->get_cart_contents_count() ) ) {
-			WC()->session->set( 'auto_redeemcoupon', 'yes' );
-			foreach ( WC()->cart->get_applied_coupons() as $code => $coupon ) {
-				WC()->cart->remove_coupon( $code );
-			}
-
-			return;
-		}
-
-		$UserId     = get_current_user_id();
-		$PointsData = new RS_Points_Data( $UserId );
-		$Points     = $PointsData->total_available_points();
-
-		if ( empty( $Points ) ) {
-			return;
-		}
-
-		if ( $Points < get_option( 'rs_first_time_minimum_user_points' ) ) {
-			return;
-		}
-
-		if ( $Points < get_option( 'rs_minimum_user_points_to_redeem' ) ) {
-			return;
-		}
-
-		if ( check_if_pointprice_product_exist_in_cart() ) {
-			return;
-		}
-
-		if ( get_option( 'rs_enable_disable_auto_redeem_points' ) != 'yes' ) {
-			return;
-		}
-
-		$CartSubtotal = srp_cart_subtotal();
-
-		$MinCartTotal = get_option( 'rs_minimum_cart_total_points' );
-		$MaxCartTotal = get_option( 'rs_maximum_cart_total_points' );
-
-		$capture = RSRedeemingFrontend::auto_redeeming_in_checkout( $UserId, $Points, $CartSubtotal, $MaxCartTotal, $MinCartTotal );
-
-		update_option( 'rs_enable_disable_auto_redeem_points', 'no' );
-		update_option( 'rs_enable_disable_auto_redeem_checkout', 'no' );
-		WC()->session->set( 'auto_redeemcoupon', 'no' );
-	endif;
-
-	if ( 'false' === $add_discount ) :
-		foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
-			preg_match( '/aperacash_|sumo_|auto_redeem_|auto_aperacash_/', strtolower( $code ), $matches, PREG_UNMATCHED_AS_NULL );
-			if ( ! empty( $matches ) ) :
-				if ( 'checked' === get_option( 'apply_all_aperacash', false ) ) :
-					update_option( 'apply_all_aperacash', false );
-				endif;
-				WC()->cart->remove_coupon( $code );
-				$data['coupon_removed'] = $code;
-			endif;
-		endforeach;
-	endif;
-
-	wp_send_json_success( $data, null );
-}
-add_action( 'wp_ajax_apply_all_aperacash', 'apply_all_aperacash' );
-
-/**
  * This function filters the coupon display area on the order review of checkout page.
  *
  * @param  string  $captured contains the caputed string from the filter.
@@ -3644,3 +3559,12 @@ function wonkasoft_featured_product_img_save_post() {
 	endif;
 }
 add_action( 'save_post', 'wonkasoft_featured_product_img_save_post', 10 );
+
+/**
+ * This changed due to not using cart page.
+ * @param  string $url Contains the currently set page permalink.
+ * @return string      Returns filtered page permalink.
+ */
+function wonkasoft_woocommerce_get_cart_url( $url ) {
+	return wc_get_page_permalink( 'checkout' );
+}
