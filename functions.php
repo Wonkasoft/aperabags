@@ -18,7 +18,7 @@ if ( ! function_exists( 'apera_bags_setup' ) ) :
 	 * as indicating support for post thumbnails.
 	 */
 	function apera_bags_setup() {
-		// add_filter( 'woocommerce_get_cart_url', 'wonkasoft_woocommerce_get_cart_url' );
+		add_filter( 'woocommerce_get_cart_url', 'wonkasoft_woocommerce_get_cart_url' );
 
 		/*
 		 * Make theme available for translation.
@@ -192,7 +192,7 @@ function wonkasoft_register_session() {
 
 add_action('init', 'wonkasoft_register_session');
 
-add_filter('action_scheduler_run_schedule', function($arg) { return 86400; });
+add_filter('action_scheduler_run_queue', function($arg) { return 86400; });
 
 /**
  * Adding SVG support.
