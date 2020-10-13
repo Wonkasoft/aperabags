@@ -22,6 +22,11 @@ if ( wonkasoft_request.ga_id !== '' )
 	ga('send', 'pageview');
 }
 /*=====  End of For Google Analytics  ======*/
+(function(i, s, o, g, r, a, m){
+i['__GetResponseAnalyticsObject'] = r;i[r] = i[r] || function() {(i[r].q = i[r].q || []).push(arguments)};
+a = s.createElement(o);m = s.getElementsByTagName(o)[0];a.async = 1;a.src = g;m.parentNode.insertBefore(a, m);
+})(window, document, 'script', 'https://ga.getresponse.com/script/ga.js?v=2&grid=sBDcIX0NffHoIBw%3D%3D', 'GrTracking');
+
 var placeSearch, autocomplete;
 var componentForm;
 
@@ -3415,6 +3420,11 @@ var componentForm;
 			});
 
 			$( document.body ).on( 'wonkasoft_cart_response', function( e ) {
+				if ( GrTracking() !== 'undefined') {
+					console.log( 'sent Gr.' );
+					GrTracking('setUserId', document.querySelector( '#shipping_email' ).value );
+				}
+
 				var data = {
 					'url': wonkasoft_request.ajax,
 					'action': 'wonkasoft_set_cart_response',
