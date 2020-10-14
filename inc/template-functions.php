@@ -977,11 +977,19 @@ function wonkasoft_register_custom_api() {
 		array(
 			'methods'  => 'GET',
 			'callback' => 'wonkasoft_getresponse_endpoint',
+			'permission_callback' => 'wonkasoft_getresponse_endpoint_permissions',
 		),
 		false
 	);
 }
 add_action( 'rest_api_init', 'wonkasoft_register_custom_api' );
+/**
+ * wonkasoft_getresponse_endpoint_permissions returns permissions
+ * @return bool Returns true or false.
+ */
+function wonkasoft_getresponse_endpoint_permissions() {
+	return '__return_true';
+}
 /**
  * This function resets the wp-json rest api.
  *
