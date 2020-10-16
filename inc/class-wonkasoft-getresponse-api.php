@@ -738,7 +738,7 @@ class Wonkasoft_GetResponse_Api {
 			$current_query = http_build_query( $current_query );
 
 			$ch  = curl_init();
-			$url = $this->getresponse_url . "/shops/{$shop_id}/carts?" . $current_query;
+			$url = $this->getresponse_url . "/shops/$shop_id/carts?$current_query";
 			curl_setopt( $ch, CURLOPT_URL, $url );
 			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 			curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -776,20 +776,19 @@ class Wonkasoft_GetResponse_Api {
 		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
 
 		$payload = array(
-			'shopId'   => ( isset( $passed_query['shop_id'] ) ? $passed_query['shop_id']: null ),
-			'contactId'   => ( isset( $passed_query['contact_id'] ) ? $passed_query['contact_id']: null ),
-			'totalPrice'   => ( isset( $passed_query['total_price'] ) ? $passed_query['total_price']: null ),
-			'totalTaxPrice'   => ( isset( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price']: null ),
-			'currency'   => ( isset( $passed_query['currency'] ) ? $passed_query['currency']: null ),
-			'selectedVariants'   => ( isset( $passed_query['selectedVariants'] ) ? $passed_query['selectedVariants']: null ),
-			'externalId'   => ( isset( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
-			'cartUrl'   => ( isset( $passed_query['cart_url'] ) ? $passed_query['cart_url']: null ),
+			'contactId'   => ( ! empty( $passed_query['contact_id'] ) ? $passed_query['contact_id']: null ),
+			'totalPrice'   => ( ! empty( $passed_query['total_price'] ) ? $passed_query['total_price']: null ),
+			'totalTaxPrice'   => ( ! empty( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price']: null ),
+			'currency'   => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency']: null ),
+			'selectedVariants'   => ( ! empty( $passed_query['selectedVariants'] ) ? $passed_query['selectedVariants']: null ),
+			'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
+			'cartUrl'   => ( ! empty( $passed_query['cart_url'] ) ? $passed_query['cart_url']: null ),
 		);
 		$shop_id = $passed_query['shop_id'];
 		$payload = json_encode( $payload );
 
 		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops/{$shop_id}/carts";
+		$url = $this->getresponse_url . "/shops/$shop_id/carts";
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -829,17 +828,17 @@ class Wonkasoft_GetResponse_Api {
 			$current_query = $passed_query;
 		} else {
 			$current_query = array(
-				'shopId'   => $this->shop_id,
-				'cartId'   => $this->cart_id,
-				'fields'  => null,
+				'fields'  => ( ( ! empty( $padded_query['fields'] ) ) ? $padded_query['fields']: null ),
 			);
 		}
 
+		$shop_id = $passed_query['shop_id'];
+		$cart_id = $passed_query['cart_id'];
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
 
 		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops/{$shop_id}/carts/{$cart_id}?" . $current_query;
+		$url = $this->getresponse_url . "/shops/$shop_id/carts/$cart_id?$current_query";
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -876,26 +875,25 @@ class Wonkasoft_GetResponse_Api {
 		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
 
 		$payload = array(
-			'shopId'   => ( isset( $passed_query['shop_id'] ) ? $passed_query['shop_id']: null ),
-			'cartId'   => ( isset( $passed_query['cart_id'] ) ? $passed_query['cart_id']: null ),
-			'contactId'   => ( isset( $passed_query['contact_id'] ) ? $passed_query['contact_id']: null ),
-			'totalPrice'   => ( isset( $passed_query['total_price'] ) ? $passed_query['total_price']: null ),
-			'totalTaxPrice'   => ( isset( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price']: null ),
-			'currency'   => ( isset( $passed_query['currency'] ) ? $passed_query['currency']: null ),
+			'contactId'   => ( ! empty( $passed_query['contact_id'] ) ? $passed_query['contact_id']: null ),
+			'totalPrice'   => ( ! empty( $passed_query['total_price'] ) ? $passed_query['total_price']: null ),
+			'totalTaxPrice'   => ( ! empty( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price']: null ),
+			'currency'   => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency']: null ),
 			'selectedVariants'   => array(
-				'variantId' => ( isset( $passed_query['variant_id'] ) ? $passed_query['variant_id']: null ),
-				'quantity' => ( isset( $passed_query['quantity'] ) ? $passed_query['quantity']: null ),
-				'price' => ( isset( $passed_query['price'] ) ? $passed_query['price']: null ),
-				'priceTax' => ( isset( $passed_query['priceTax'] ) ? $passed_query['priceTax']: null ),
+				'variantId' => ( ! empty( $passed_query['variant_id'] ) ? $passed_query['variant_id']: null ),
+				'quantity' => ( ! empty( $passed_query['quantity'] ) ? $passed_query['quantity']: null ),
+				'price' => ( ! empty( $passed_query['price'] ) ? $passed_query['price']: null ),
+				'priceTax' => ( ! empty( $passed_query['priceTax'] ) ? $passed_query['priceTax']: null ),
 			),
-			'externalId'   => ( isset( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
-			'cartUrl'   => ( isset( $passed_query['cart_url'] ) ? $passed_query['cart_url']: null ),
+			'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
+			'cartUrl'   => ( ! empty( $passed_query['cart_url'] ) ? $passed_query['cart_url']: null ),
 		);
 		$shop_id = $passed_query['shop_id'];
+		$cart_id = $passed_query['cart_id'];
 		$payload = json_encode( $payload );
 
 		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops/{$shop_id}/carts";
+		$url = $this->getresponse_url . "/shops/$shop_id/carts/$cart_id";
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -933,21 +931,16 @@ class Wonkasoft_GetResponse_Api {
 	public function delete_cart( $passed_query = null ) {
 		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
 
-		$payload = array(
-			'shopId'   => ( isset( $passed_query['shop_id'] ) ? $passed_query['shop_id']: null ),
-			'cartId'   => ( isset( $passed_query['cart_id'] ) ? $passed_query['cart_id']: null ),
-		);
 		$shop_id = $passed_query['shop_id'];
-		$payload = json_encode( $payload );
+		$cart_id = $passed_query['cart_id'];
 
 		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops/{$shop_id}/carts";
+		$url = $this->getresponse_url . "/shops/$shop_id/carts/$cart_id";
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
 		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
 		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
 		$response = curl_exec( $ch );
@@ -973,6 +966,79 @@ class Wonkasoft_GetResponse_Api {
 
 	/**
 	 *
+	 * Products
+	 *
+	 */
+	
+	/**
+	 * Get a product list
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function get_a_product_list( $passed_query = null ) {
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'query'  => array( 
+					'name' => ( ( ! empty( $passed_query['query_name'] ) ) ? $passed_query['query_name']: null ),
+					'vendor' => ( ( ! empty( $passed_query['query_vendor'] ) ) ? $passed_query['query_vendor']: null ),
+					'category' => ( ( ! empty( $passed_query['query_category'] ) ) ? $passed_query['query_category']: null ),
+					'categoryId' => ( ( ! empty( $passed_query['query_category_id'] ) ) ? $passed_query['query_category_id']: null ),
+					'externalId' => ( ( ! empty( $passed_query['query_external_id'] ) ) ? $passed_query['query_external_id']: null ),
+					'variantName' => ( ( ! empty( $passed_query['query_variant_name'] ) ) ? $passed_query['query_variant_name']: null ),
+					'metaFieldNames' => ( ( ! empty( $passed_query['query_meta_field_names'] ) ) ? $passed_query['query_meta_field_names']: null ),
+					'metaFieldValues' => ( ( ! empty( $passed_query['query_meta_field_values'] ) ) ? $passed_query['query_meta_field_values']: null ),
+					'createdOn' => array( 
+						'from' => ( ( ! empty( $passed_query['query_created_on_from'] ) ) ? $passed_query['query_created_on_from']: null ),
+						'to' => ( ( ! empty( $passed_query['query_created_on_to'] ) ) ? $passed_query['query_created_on_to']: null ),
+					),
+				),
+				'sort'  => array( 
+					'name' => ( ( ! empty( $passed_query['sort_name'] ) ) ? $passed_query['sort_name']: null ),
+					'createdOn' => ( ( ! empty( $passed_query['sort_created_on'] ) ) ? $passed_query['sort_created_on']: null ),
+				),
+				'fields'  => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields']: null ),
+				'perPage'  => ( ( ! empty( $passed_query['perPage'] ) ) ? $passed_query['perPage']: null ),
+				'page'  => ( ( ! empty( $passed_query['page'] ) ) ? $passed_query['page']: null ),
+			);
+		}
+
+		$shop_id = $passed_query['shop_id'];
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/products";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+	  else :
+		  curl_close( $ch );
+		  $response = json_decode( $response );
+
+		  return $response;
+	  endif;
+	}
+
+	/**
+	 *
 	 * Shops
 	 *
 	 */
@@ -987,7 +1053,6 @@ class Wonkasoft_GetResponse_Api {
 			$current_query = $passed_query;
 		} else {
 			$current_query = array(
-				'shopId'   => $this->shop_id,
 				'fields'  => null,
 			);
 		}
@@ -997,7 +1062,7 @@ class Wonkasoft_GetResponse_Api {
 		$current_query = http_build_query( $current_query );
 
 		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops/{$shop_id}?" . $current_query;
+		$url = $this->getresponse_url . "/shops/$shop_id?" . $current_query;
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -1034,16 +1099,16 @@ class Wonkasoft_GetResponse_Api {
 		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
 
 		$payload = array(
-			'shopId'   => ( isset( $passed_query['shop_id'] ) ? $passed_query['shop_id']: null ),
-			'name'   => ( isset( $passed_query['name'] ) ? $passed_query['name']: null ),
-			'locale'   => ( isset( $passed_query['locale'] ) ? $passed_query['locale']: null ),
-			'currency'   => ( isset( $passed_query['currency'] ) ? $passed_query['currency']: null ),
+			'shopId'   => ( ! empty( $passed_query['shop_id'] ) ? $passed_query['shop_id']: null ),
+			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
+			'locale'   => ( ! empty( $passed_query['locale'] ) ? $passed_query['locale']: null ),
+			'currency'   => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency']: null ),
 		);
 		$shop_id = $passed_query['shop_id'];
 		$payload = json_encode( $payload );
 
 		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops/{$shop_id}";
+		$url = $this->getresponse_url . "/shops/$shop_id";
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -1081,21 +1146,15 @@ class Wonkasoft_GetResponse_Api {
 	public function delete_shop( $passed_query = null ) {
 		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
 
-		$payload = array(
-			'shopId'   => ( isset( $passed_query['shop_id'] ) ? $passed_query['shop_id']: null ),
-		);
-
 		$shop_id = $passed_query['shop_id'];
-		$payload = json_encode( $payload );
 
 		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops/{$shop_id}";
+		$url = $this->getresponse_url . "/shops/$shop_id";
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
 		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
 		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
 		$response = curl_exec( $ch );
@@ -1130,17 +1189,17 @@ class Wonkasoft_GetResponse_Api {
 		} else {
 			$current_query = array(
 				'query'   => array(
-					'name' => ( isset( $passed_query['query']['name'] ) ? $passed_query['query']['name']: null ),
+					'name' => ( ! empty( $passed_query['query']['name'] ) ? $passed_query['query']['name']: null ),
 				),
 				'sort'   => array(
-					'name' => ( isset( $passed_query['sort']['name'] ) ? $passed_query['sort']['name']: 'ASC' ),
+					'name' => ( ! empty( $passed_query['sort']['name'] ) ? $passed_query['sort']['name']: 'ASC' ),
 				),
 				'sort'   => array(
-					'createdOn' => ( isset( $passed_query['sort']['createdOn'] ) ? $passed_query['sort']['createdOn']: 'ASC' ),
+					'createdOn' => ( ! empty( $passed_query['sort']['createdOn'] ) ? $passed_query['sort']['createdOn']: 'ASC' ),
 				),
-				'fields'  => ( isset( $passed_query['fields'] ) ? $passed_query['fields']: null ),
-				'perPage'  => ( isset( $passed_query['perPage'] ) ? $passed_query['perPage']: null ),
-				'page'  => ( isset( $passed_query['page'] ) ? $passed_query['page']: null ),
+				'fields'  => ( ! empty( $passed_query['fields'] ) ? $passed_query['fields']: null ),
+				'perPage'  => ( ! empty( $passed_query['perPage'] ) ? $passed_query['perPage']: null ),
+				'page'  => ( ! empty( $passed_query['page'] ) ? $passed_query['page']: null ),
 			);
 		}
 
@@ -1148,7 +1207,7 @@ class Wonkasoft_GetResponse_Api {
 		$current_query = http_build_query( $current_query );
 
 		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops?" . $current_query;
+		$url = $this->getresponse_url . "/shops?$current_query";
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -1185,9 +1244,9 @@ class Wonkasoft_GetResponse_Api {
 		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
 
 		$payload = array(
-			'name'   => ( isset( $passed_query['name'] ) ? $passed_query['name']: null ),
-			'locale'   => ( isset( $passed_query['locale'] ) ? $passed_query['locale']: null ),
-			'currency'   => ( isset( $passed_query['currency'] ) ? $passed_query['currency']: null ),
+			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
+			'locale'   => ( ! empty( $passed_query['locale'] ) ? $passed_query['locale']: null ),
+			'currency'   => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency']: null ),
 		);
 
 		$payload = json_encode( $payload );
