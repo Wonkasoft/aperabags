@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 $count = WC()->cart->cart_contents_count;
 
 if ( 0 < $count ) :
-    // header( "Location:" . esc_url( wc_get_checkout_url() ) );
+    header( "Location:" . esc_url( wc_get_checkout_url() ) );
 endif; 
 
 do_action( 'woocommerce_before_cart' );
