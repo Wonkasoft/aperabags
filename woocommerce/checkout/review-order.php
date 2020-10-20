@@ -29,7 +29,7 @@ $chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->sess
 <?php if ( ! is_user_logged_in() ) : ?>
 <div class="card wonka-card wonka-card-shipping-ads">
 
-		<ul id="shipping_ad" class="woocommerce-shipping-ads list-group list-group-flush">
+		<ul id="shipping_ad" class="woocommerce-shipping-ads list-group list-group-flush checkout-signup-pop">
 			<li class="list-group-item card-title"><h6>Perks Members</h6></li>
 			<?php
 				foreach ( $available_methods as $index => $method ) :
@@ -41,7 +41,7 @@ $chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->sess
 
 					if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal ) :
 						if ( 1 < count( $available_methods ) ) {
-							printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method checkout-signup-pop" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+							printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" disabled class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
 						} else {
 							printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
 						}
@@ -51,7 +51,7 @@ $chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->sess
 
 					if ( 'USPS_Priority_Mail_under_25' === $method->method_id && 25 > WC()->cart->subtotal ) :
 						if ( 1 < count( $available_methods ) ) {
-							printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method checkout-signup-pop" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+							printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" disabled class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
 						} else {
 							printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
 						}
@@ -61,7 +61,7 @@ $chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->sess
 
 					if ( 'USPS_Priority_Mail_Express' === $method->method_id ) :
 						if ( 1 < count( $available_methods ) ) {
-							printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method checkout-signup-pop" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+							printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" disabled class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
 						} else {
 							printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
 						}

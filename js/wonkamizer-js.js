@@ -4317,6 +4317,12 @@ var componentForm;
 			}, 800 );
 		});
 
+		$( document.body ).on( 'update_order_review', function( e ) {
+			if ( document.querySelector( 'body.woocommerce-checkout' ) ) {
+				copy_to_billing();
+			}
+		});
+
 		$( document.body ).on( 'select_default_shipping', function( e ) {
 			if ( document.querySelector( '#shipping_method input' ) ) {
 				document.querySelector( '#shipping_method input' ).click();
