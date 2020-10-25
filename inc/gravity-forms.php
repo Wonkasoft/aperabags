@@ -37,7 +37,7 @@ function add_bootstrap_container_class( $form, $ajax, $field_values ) {
 	if ( in_array( $form['title'], array( 'Ambassador Program' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-ambassador-form';
 	endif;
-	if ( in_array( $form['title'], array( 'Apera Perks Registration', 'Get $10 & FREE Shipping Now' ) ) ) :
+	if ( in_array( $form['title'], array( 'Apera Perks Registration', 'Get $10 & FREE Shipping Now', 'Get $10 & FREE Shipping Now Popup' ) ) ) :
 		$form['cssClass'] .= ' inline-form wonka-perks-form';
 	endif;
 	if ( in_array( $form['title'], array( 'Apera Customer Engagement Program New Member', 'Apera Customer Engagement Program Update Member' ) ) ) :
@@ -210,7 +210,7 @@ function wonka_gform_field_modifications( $field_content, $field ) {
 		endif;
 	endif;
 
-	if ( 'Apera Perks Registration' === $form['title'] || 'Get $10 & FREE Shipping Now' === $form['title'] || 'Apera Customer Engagement Program New Member' === $form['title'] ) :
+	if ( 'Apera Perks Registration' === $form['title'] || 'Get $10 & FREE Shipping Now' === $form['title'] || 'Get $10 & FREE Shipping Now Popup' === $form['title'] || 'Apera Customer Engagement Program New Member' === $form['title'] ) :
 		if ( 'Password' === $field['label'] ) :
 			$split_content = preg_split( '/([<])/', $field_content, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
 			foreach ( $split_content as $key => $value ) {

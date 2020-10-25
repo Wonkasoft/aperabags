@@ -488,8 +488,8 @@ function wonkasoft_set_cart_response() {
 		$new_cart = array(
 			'shop_id'   => $getresponse_api->shop_id,
 			'contact_id'   => $getresponse_api->contact_id,
-			'total_price'   => number_format( WC()->cart->get_totals()->subtotal, 2 ),
-			'total_tax_price'   => number_format( WC()->cart->get_totals()->total, 2 ),
+			'total_price'   => number_format( intval( json_decode( json_encode( WC()->cart->get_totals() ) )->subtotal ), 2 ),
+			'total_tax_price'   => number_format( intval( json_decode( json_encode( WC()->cart->get_totals() ) )->total ), 2 ),
 			'currency'   => 'USD',
 			'selected_variants'   => $selected_variants,
 			'external_id'   => $cart_id,
@@ -502,6 +502,9 @@ function wonkasoft_set_cart_response() {
 
 	$output = array(
 		'api' => $getresponse_api,
+		'totals' => json_decode( json_encode( WC()->cart->get_totals() ) )->subtotal,
+		'total_price'   => number_format( intval( json_decode( json_encode( WC()->cart->get_totals() ) )->subtotal ), 2 ),
+		'total_tax_price'   => number_format( intval( json_decode( json_encode( WC()->cart->get_totals() ) )->total ), 2 ),
 	);
 
 	wp_send_json_success( $output, 200 );

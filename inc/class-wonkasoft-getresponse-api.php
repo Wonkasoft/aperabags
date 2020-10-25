@@ -834,8 +834,8 @@ class Wonkasoft_GetResponse_Api {
 			);
 		}
 
-		$shop_id = $passed_query['shop_id'];
-		$cart_id = $passed_query['cart_id'];
+		$shop_id = $this->shop_id;
+		$cart_id = $this->cart_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
 
