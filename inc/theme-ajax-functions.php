@@ -336,7 +336,7 @@ add_action( 'wp_ajax_apply_all_aperacash', 'apply_all_aperacash' );
 
 /**
  * Setting Cart Response for the abandon carts
- * @return [type] [description]
+ * @return object returns the getresponse response.
  */
 function wonkasoft_set_cart_response() {
 	$nonce = ( isset( $_REQUEST['security'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['security'] ) ) : false;
@@ -502,16 +502,6 @@ function wonkasoft_set_cart_response() {
 
 	$output = array(
 		'api' => $getresponse_api,
-		'gr_cart_id' => $cart_id,
-		'gr_hash' => $cart_hash,
-		'gr_cart_hash' => $_SESSION['gr_cart_hash'],
-		'gr_new_cart' => $new_created_cart,
-		'current_cart' => $cart_data,
-		'current_cart_variants' => $selected_variants,
-		'cc_hash' => $cc_hash,
-		'cart_query' => $cart_query,
-		'email' => $email,
-		'contact_name' => $name,
 	);
 
 	wp_send_json_success( $output, 200 );
