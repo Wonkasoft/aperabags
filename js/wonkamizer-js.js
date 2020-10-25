@@ -3248,7 +3248,6 @@ var componentForm;
 		}
 		
 		if ( $('#shipping_phone').length ) {
-
 			$('#shipping_phone').inputmask('1 (999) 999-9999');
 		}
 
@@ -3367,7 +3366,6 @@ var componentForm;
 						document.querySelector( '.checkout-shipping-phone input' ).value = document.querySelector( '#shipping_phone' ).value;
 						document.querySelector( '.checkout-mc4wp_subscribe input' ).checked = document.querySelector( 'input[name="mc4wp-subscribe"]' ).checked;
 						document.querySelector( '.checkout-mc4wp_subscribe input' ).value = document.querySelector( 'input[name="mc4wp-subscribe"]' ).value;
-						document.querySelector( '.checkout-order-comments input' ).value = document.querySelector( '#order_comments' ).value;
 					}, 1000 );
 				}
 			};
@@ -3421,6 +3419,30 @@ var componentForm;
 			$( document.body ).on( 'wonkasoft_cart_response', function( e ) {
 				if ( GrTracking() !== 'undefined') {
 					GrTracking('setUserId', document.querySelector( '#shipping_email' ).value );
+
+					var data = {
+						'url': wonkasoft_request.ajax,
+						'action': 'wonkasoft_set_cart_response',
+						'email': document.querySelector( '#shipping_email' ).value,
+						'first_name': document.querySelector( '#shipping_first_name' ).value,
+						'last_name': document.querySelector( '#shipping_last_name' ).value,
+						'security': wonkasoft_request.security
+					};
+
+					var query_string = Object.keys( data ).map( function( key ) { return key + '=' + data[key]; } ).join('&');
+
+					xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function() {
+
+						if ( this.readyState == 4 && this.status == 200 ) 
+						{
+							var response = JSON.parse( this.responseText );
+							console.log( response );
+						}
+					};
+					xhr.open('POST', data.url + '?' + query_string, true );
+					xhr.setRequestHeader( "Content-type", "application/json; charset= UTF-8" );
+					xhr.send();
 				}
 			});
 

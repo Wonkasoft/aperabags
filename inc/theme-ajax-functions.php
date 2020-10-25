@@ -352,7 +352,7 @@ function wonkasoft_set_cart_response() {
 		$ip = $_SERVER['REMOTE_ADDR'];
 	}
 	$data = array(
-		'email' => 'mr.r.lister@gmail.com',
+		'email' => $email,
 		'contact_name' => $name,
 		'ip_address' => $ip,
 	);
@@ -369,7 +369,7 @@ function wonkasoft_set_cart_response() {
 
 	$contact_list_query = array(
 		'query' => array(
-			'email' => 'mr.r.lister@gmail.com',
+			'email' => $email,
 			'name' => $name,
 			'campaignId' => $getresponse_api->campaign_id,
 		),
@@ -400,20 +400,28 @@ function wonkasoft_set_cart_response() {
 		'page'  => null,
 	);
 
-	$getresponse_api->shop_list = $getresponse_api->get_a_list_of_shops( $shop_query );
+	$getresponse_api->shop_list = $getresponse_api->get_list_of_shops( $shop_query );
 
 	foreach( $getresponse_api->shop_list as $shop ) {
 		$getresponse_api->shop_id = $shop->shopId;
 	}
 	
-		
-	$cart_data = WC()->cart->get_cart();
 
-	$cart_hash = array();
+	$cart_id = $_SESSION['gr_cart'];
+
+	if ( empty( $cart_id ) ) :
+		$cart_id = md5( time() + rand( 0, 99999 ) );
+		$_SESSION['gr_cart'] = $cart_id;
+	endif;
+
+
+	$cart_hash = $_SESSION['gr_cart_hash'];
+	$cart_data = WC()->cart->get_cart();
 	$selected_variants = array();
 
+	$data = array();
 	foreach ( $cart_data as $row ) {
-		$cart_hash[] = array(
+		$data[] = array(
 			'product_id'    => $row['product_id'],
 			'variation_id'  => $row['variation_id'],
 			'quantity'      => $row['quantity'],
@@ -421,26 +429,50 @@ function wonkasoft_set_cart_response() {
 			'line_tax'      => $row['line_tax'],
 			'line_subtotal' => $row['line_subtotal']
 		);
-		$_product = new WC_Product_Variation( $row['variation_id'] );
-		$variant_price = round( $_product->get_price(), 2 );
-		array_push( $selected_variants, array(
-			'variation_id'  => $row['variation_id'],
-			'quantity'      => $row['quantity'],
-			'price'    		=> $variant_price,
-			'priceTax'      => $variant_price,
-		) );
+		$get_product = array(
+			'query' => array(
+				'externalId' => $row['product_id'],
+			),
+		);
+
+		$getresponse_api->product_list = $getresponse_api->get_product_list( $get_product );
+		$getresponse_api->product_id = $getresponse_api->product_list[0]->productId;
+
+		$get_variant = array(
+			'query' => array(
+				'externalId' => $row['variation_id'],
+			),
+		);
+
+		$selected_variants[] = $getresponse_api->get_list_of_product_variants( $get_variant )[0];
 	}
 
-	$cart_external_id = md5( serialize( $cart_hash ) );
+	$cc_hash = md5( serialize( $data ) );
+
+	if ( empty( $cart_id ) ) {
+		$cart_id = md5( time() + rand( 0, 99999 ) );
+		$_SESSION['gr_cart'] = $cart_id;
+	} else if ( $cc_hash !== $cart_hash && empty( $cart_data ) ) {
+		$cart_to_remove = array(
+			'cart_id' => $_SESSION['gr_cart']
+		);
+		$getresponse_api->delete_cart( $cart_to_remove );
+		$_SESSION['gr_cart_hash'] = $cc_hash;
+
+		return;
+	} else if ( $cc_hash === $cart_hash ) {
+		return;
+	}
+	
+	$_SESSION['gr_cart_hash'] = $cc_hash;
 
 	$cart_query = array(
-		'shopId'   => $getresponse_api->shop_id,
 		'query'   => array(
 			'createdOn' => array(
 				'from' => null,
 				'to' => null,
 			),
-			'externalId' => null,
+			'externalId' => $cart_id,
 		),
 		'sort'    => array(
 			'createdOn' => 'DESC',
@@ -453,31 +485,30 @@ function wonkasoft_set_cart_response() {
 	$getresponse_api->shop_carts = $getresponse_api->get_shop_carts( $cart_query );
 
 	if (  0 == sizeOf( $getresponse_api->shop_carts ) ) :
-		// $new_cart = array(
-		// 	'shop_id'   => $getresponse_api->shop_id,
-		// 	'contact_id'   => $getresponse_api->contact_id,
-		// 	'total_price'   => WC()->cart->get_totals(),
-		// 	'total_tax_price'   => WC()->cart->get_totals(),
-		// 	'currency'   => 'USD',
-		// 	'selectedVariants'   => $selected_variants,
-		// 	'external_id'   => $cart_external_id,
-		// 	'cart_url'   => wc_get_checkout_url(),
-		// );
+		$new_cart = array(
+			'shop_id'   => $getresponse_api->shop_id,
+			'contact_id'   => $getresponse_api->contact_id,
+			'total_price'   => number_format( WC()->cart->get_totals()->subtotal, 2 ),
+			'total_tax_price'   => number_format( WC()->cart->get_totals()->total, 2 ),
+			'currency'   => 'USD',
+			'selected_variants'   => $selected_variants,
+			'external_id'   => $cart_id,
+			'cart_url'   => wc_get_checkout_url(),
+		);
 
-		// $new_created_cart = $getresponse_api->create_cart( $new_cart );
-		// echo "<pre>\n";
-		// print_r( $new_created_cart );
-		// echo "</pre>\n";
-			
-		// $getresponse_api->shop_carts = $getresponse_api->get_shop_carts( $cart_query );
+		$new_created_cart = $getresponse_api->create_cart( $new_cart );
 	endif; 
 
-	do_action( 'woocommerce_cart_updated' );
 
 	$output = array(
 		'api' => $getresponse_api,
+		'gr_cart_id' => $cart_id,
+		'gr_hash' => $cart_hash,
+		'gr_cart_hash' => $_SESSION['gr_cart_hash'],
+		'gr_new_cart' => $new_created_cart,
 		'current_cart' => $cart_data,
-		'cart_external_id' => $cart_external_id,
+		'current_cart_variants' => $selected_variants,
+		'cc_hash' => $cc_hash,
 		'cart_query' => $cart_query,
 		'email' => $email,
 		'contact_name' => $name,

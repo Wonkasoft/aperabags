@@ -654,6 +654,7 @@ function wonkasoft_refersion_affiliate_created_successfully( $user_id, $entry_fi
 		'affiliate_code',
 		'affiliate_link',
 	);
+
 	$api_args['custom_fields_values'] = array(
 		'affiliate_code' => ( ! empty( $refersion_response->id ) ) ? $refersion_response->id : '',
 		'affiliate_link' => ( ! empty( $refersion_response->link ) ) ? $refersion_response->link : '',
@@ -932,7 +933,7 @@ function get_response_api_call( $api_args ) {
 	endif;
 
 	if ( ! empty( $getresponse->custom_fields ) ) :
-		$getresponse->custom_fields_list      = $getresponse->get_a_list_of_custom_fields();
+		$getresponse->custom_fields_list      = $getresponse->get_list_of_custom_fields();
 		$getresponse->custom_fields_to_update = array();
 		foreach ( $getresponse->custom_fields_list as $field ) {
 			if ( in_array( $field->name, $getresponse->custom_fields ) ) :
@@ -1581,4 +1582,4 @@ function get_hooks( $tag ) {
 	print_r( '<pre class="found-hook">' . $tag . '</pre>' );
 	$debug_tags[] = $tag;
 }
-	// add_action( 'all', 'get_hooks', 999 );
+// add_action( 'all', 'get_hooks', 999 );

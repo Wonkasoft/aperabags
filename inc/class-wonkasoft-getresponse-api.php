@@ -12,7 +12,6 @@
 
 defined( 'ABSPATH' ) || exit;
 
-
 /**
  * This is the class for the GetResponse API.
  */
@@ -70,6 +69,12 @@ class Wonkasoft_GetResponse_Api {
 
 	public $shop_list = array(); // Will be list of shops.
 
+	public $product_list = array(); // Will be list of products.
+
+	public $product_id = null; // Will be product ID.
+
+	public $product_variant_list = array(); // Will be list of variant products.
+
 	public $shop_carts = array(); // Will be list of shop's carts.
 
 	/**
@@ -121,8 +126,8 @@ class Wonkasoft_GetResponse_Api {
 		$this->scoring                 = ( ! empty( $data['scoring'] ) ) ? $data['scoring'] : null;
 		$this->contact_list            = $this->get_contact_list();
 		$this->tag_list                = $this->get_the_list_of_tags();
-		$this->campaign_list           = $this->get_a_list_of_campaigns();
-		$this->custom_fields_list      = $this->get_a_list_of_custom_fields();
+		$this->campaign_list           = $this->get_list_of_campaigns();
+		$this->custom_fields_list      = $this->get_list_of_custom_fields();
 	}
 
 	/**
@@ -244,11 +249,11 @@ class Wonkasoft_GetResponse_Api {
 					),
 				),
 			);
-	else :
-		$payload = array(
-			'tags' => $this->tags_to_update,
-		);
-	endif;
+		else :
+			$payload = array(
+				'tags' => $this->tags_to_update,
+			);
+		endif;
 
 		$payload = json_encode( $payload );
 
@@ -264,23 +269,23 @@ class Wonkasoft_GetResponse_Api {
 
 		$response = curl_exec( $ch );
 
-	if ( false === $response ) :
-		$error_obj = array(
-			'error'  => curl_error( $ch ),
-			'status' => 'failed',
-		);
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
 
-		curl_close( $ch );
+			curl_close( $ch );
 
-		$error_obj = json_decode( json_encode( $error_obj ) );
+			$error_obj = json_decode( json_encode( $error_obj ) );
 
-		return $error_obj;
-	else :
-		curl_close( $ch );
-		$response = json_decode( $response );
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
 
-		return $response;
-	endif;
+			return $response;
+		endif;
 	}
 
 	/**
@@ -462,7 +467,7 @@ class Wonkasoft_GetResponse_Api {
 	 * @param array $passed_query contains passed query.
 	 * @return object                returns object of campaigns.
 	 */
-	public function get_a_list_of_campaigns( $passed_query = null ) {
+	public function get_list_of_campaigns( $passed_query = null ) {
 
 		if ( ! empty( $passed_query ) ) {
 			$current_query = $passed_query;
@@ -532,7 +537,7 @@ class Wonkasoft_GetResponse_Api {
 	 * @param array $passed_query contains passed query.
 	 * @return object returns an object of a list of custom fields.
 	 */
-	public function get_a_list_of_custom_fields( $passed_query = null ) {
+	public function get_list_of_custom_fields( $passed_query = null ) {
 
 		if ( ! empty( $passed_query ) ) {
 			$current_query = $passed_query;
@@ -675,7 +680,6 @@ class Wonkasoft_GetResponse_Api {
 	 *
 	 */
 	
-
 	/**
 	 *
 	 * Carts
@@ -686,7 +690,6 @@ class Wonkasoft_GetResponse_Api {
 	 * Get shop carts 
 	 *
 	 * $current_query = array(
-	 *		'shopId'   => $this->shop_id,
 	 *		'query'   => array(
 	 *			'createdOn' => array(
 	 *				'from' => null,
@@ -716,7 +719,6 @@ class Wonkasoft_GetResponse_Api {
 				$current_query = $passed_query;
 			} else {
 				$current_query = array(
-					'shopId'   => $this->shop_id,
 					'query'   => array(
 						'createdOn' => array(
 							'from' => null,
@@ -780,11 +782,11 @@ class Wonkasoft_GetResponse_Api {
 			'totalPrice'   => ( ! empty( $passed_query['total_price'] ) ? $passed_query['total_price']: null ),
 			'totalTaxPrice'   => ( ! empty( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price']: null ),
 			'currency'   => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency']: null ),
-			'selectedVariants'   => ( ! empty( $passed_query['selectedVariants'] ) ? $passed_query['selectedVariants']: null ),
+			'selectedVariants'   => ( ! empty( $passed_query['selected_variants'] ) ? $passed_query['selected_variants']: null ),
 			'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
 			'cartUrl'   => ( ! empty( $passed_query['cart_url'] ) ? $passed_query['cart_url']: null ),
 		);
-		$shop_id = $passed_query['shop_id'];
+		$shop_id = $this->shop_id;
 		$payload = json_encode( $payload );
 
 		$ch  = curl_init();
@@ -931,7 +933,7 @@ class Wonkasoft_GetResponse_Api {
 	public function delete_cart( $passed_query = null ) {
 		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
 
-		$shop_id = $passed_query['shop_id'];
+		$shop_id = $this->shop_id;
 		$cart_id = $passed_query['cart_id'];
 
 		$ch  = curl_init();
@@ -975,28 +977,28 @@ class Wonkasoft_GetResponse_Api {
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
-	public function get_a_product_list( $passed_query = null ) {
+	public function get_product_list( $passed_query = null ) {
 		if ( ! empty( $passed_query ) ) {
 			$current_query = $passed_query;
 		} else {
 			$current_query = array(
 				'query'  => array( 
-					'name' => ( ( ! empty( $passed_query['query_name'] ) ) ? $passed_query['query_name']: null ),
-					'vendor' => ( ( ! empty( $passed_query['query_vendor'] ) ) ? $passed_query['query_vendor']: null ),
-					'category' => ( ( ! empty( $passed_query['query_category'] ) ) ? $passed_query['query_category']: null ),
-					'categoryId' => ( ( ! empty( $passed_query['query_category_id'] ) ) ? $passed_query['query_category_id']: null ),
-					'externalId' => ( ( ! empty( $passed_query['query_external_id'] ) ) ? $passed_query['query_external_id']: null ),
-					'variantName' => ( ( ! empty( $passed_query['query_variant_name'] ) ) ? $passed_query['query_variant_name']: null ),
-					'metaFieldNames' => ( ( ! empty( $passed_query['query_meta_field_names'] ) ) ? $passed_query['query_meta_field_names']: null ),
-					'metaFieldValues' => ( ( ! empty( $passed_query['query_meta_field_values'] ) ) ? $passed_query['query_meta_field_values']: null ),
+					'name' => ( ( ! empty( $passed_query['query']['name'] ) ) ? $passed_query['query']['name']: null ),
+					'vendor' => ( ( ! empty( $passed_query['query']['vendor'] ) ) ? $passed_query['query']['vendor']: null ),
+					'category' => ( ( ! empty( $passed_query['query']['category'] ) ) ? $passed_query['query']['category']: null ),
+					'categoryId' => ( ( ! empty( $passed_query['query']['category_id'] ) ) ? $passed_query['query']['category_id']: null ),
+					'externalId' => ( ( ! empty( $passed_query['query']['external_id'] ) ) ? $passed_query['query']['external_id']: null ),
+					'variantName' => ( ( ! empty( $passed_query['query']['variant_name'] ) ) ? $passed_query['query']['variant_name']: null ),
+					'metaFieldNames' => ( ( ! empty( $passed_query['query']['meta_field_names'] ) ) ? $passed_query['query']['meta_field_names']: null ),
+					'metaFieldValues' => ( ( ! empty( $passed_query['query']['meta_field_values'] ) ) ? $passed_query['query']['meta_field_values']: null ),
 					'createdOn' => array( 
-						'from' => ( ( ! empty( $passed_query['query_created_on_from'] ) ) ? $passed_query['query_created_on_from']: null ),
-						'to' => ( ( ! empty( $passed_query['query_created_on_to'] ) ) ? $passed_query['query_created_on_to']: null ),
+						'from' => ( ( ! empty( $passed_query['query']['created_on']['from'] ) ) ? $passed_query['query']['created_on']['from']: null ),
+						'to' => ( ( ! empty( $passed_query['query']['created_on']['to'] ) ) ? $passed_query['query']['created_on']['to']: null ),
 					),
 				),
 				'sort'  => array( 
-					'name' => ( ( ! empty( $passed_query['sort_name'] ) ) ? $passed_query['sort_name']: null ),
-					'createdOn' => ( ( ! empty( $passed_query['sort_created_on'] ) ) ? $passed_query['sort_created_on']: null ),
+					'name' => ( ( ! empty( $passed_query['sort']['name'] ) ) ? $passed_query['sort']['name']: null ),
+					'createdOn' => ( ( ! empty( $passed_query['sort']['created_on'] ) ) ? $passed_query['sort']['created_on']: null ),
 				),
 				'fields'  => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields']: null ),
 				'perPage'  => ( ( ! empty( $passed_query['perPage'] ) ) ? $passed_query['perPage']: null ),
@@ -1004,12 +1006,12 @@ class Wonkasoft_GetResponse_Api {
 			);
 		}
 
-		$shop_id = $passed_query['shop_id'];
+		$shop_id = $this->shop_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
 
 		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops/$shop_id/products";
+		$url = $this->getresponse_url . "/shops/$shop_id/products?$current_query";
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
@@ -1029,12 +1031,784 @@ class Wonkasoft_GetResponse_Api {
 			$error_obj = json_decode( json_encode( $error_obj ) );
 
 			return $error_obj;
-	  else :
+		else :
 		  curl_close( $ch );
 		  $response = json_decode( $response );
 
 		  return $response;
-	  endif;
+		endif;
+	}
+
+	/**
+	 * Create product
+	 * $payload = array(
+	 *   'name'   => string,
+	 *   'type'   => string,
+	 *   'url'   => string,
+	 *   'vendor'   => string,
+	 *   'externalId'   => string,
+	 *   'categories'   => array(
+	 *   		array(
+	 *   			'name'   => string,
+	 *   		 	'parentId'   => string,
+	 *   		  	'isDefault'   => boolean,
+	 *   		  	'url'   => string,
+	 *   		   	'externalId'   => string,
+	 *   	     ),
+	 *   	),
+	 *   'variants'   => array(
+	 *   	array(
+	 *   		'name'   => string,
+	 *   		'url'   => string,
+	 *   		'sku'   => string,
+	 *   		'price'   => number,
+	 *   		'priceTax'   => number,
+	 *   		'previousPrice'   => number,
+	 *   		'previousPriceTax'   => number,
+	 *   		'quantity'   => integer,
+	 *   		'position'   => integer,
+	 *   		'barcode'   => string,
+	 *   		'externalId'   => string,
+	 *   		'description'   => string,
+	 *   		'images'   => array(
+	 *   			array(
+	 *   				'src'   => string,
+	 *   		 		'position'   => integer,
+	 *   		 	),
+	 *    		),
+	 *    		'metaFields'   => array(
+	 *   			array(
+	 *   				'name'   => string,
+	 *   		 		'value'   => string,
+	 *   		 	 	'valueType'   => "string" or "integer",
+	 *   		 	  	'description'   => string,
+	 *    		    ),
+	 *    		),
+	 *    		'taxes'   => array(
+	 *   			array(
+	 *   				'name'   => string,
+	 *   		 		'rate'   => string,
+	 *    		    ),
+	 *    		),
+	 *    	),
+	 *   ),
+	 *   'metaFields'   => array(
+	 *   	array(
+	 *   		'name'   => string,
+	 *   	 	'value'   => string,
+	 *   	  	'valueType'   => "string" or "integer",
+	 *   	   	'description'   => string,
+	 *    	),
+	 *    ),
+	 * );
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function create_product( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$payload = array(
+			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
+			'type'   => ( ! empty( $passed_query['type'] ) ? $passed_query['type']: null ),
+			'url'   => ( ! empty( $passed_query['url'] ) ? $passed_query['url']: null ),
+			'vendor'   => ( ! empty( $passed_query['vendor'] ) ? $passed_query['vendor']: null ),
+			'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
+			'categories'   => ( ! empty( $passed_query['categories'] ) ? $passed_query['categories']: null ),
+			'variants'   => ( ! empty( $passed_query['variants'] ) ? $passed_query['variants']: null ),
+			'metaFields'   => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields']: null ),
+		);
+		$shop_id = $this->shop_id;
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/products";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 * Get single product by ID
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function get_single_product_by_ID( $passed_query = null ) {
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'fields'  => '',
+			);
+		}
+
+		$shop_id = $this->shop_id;
+		$product_id = $passed_query['product_id'];
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+		  curl_close( $ch );
+		  $response = json_decode( $response );
+
+		  return $response;
+		endif;
+	}
+
+	/**
+	 * Update product
+	 * $payload = array(
+	 *   'name'   => string,
+	 *   'type'   => string,
+	 *   'url'   => string,
+	 *   'vendor'   => string,
+	 *   'externalId'   => string,
+	 *   'categories'   => array(
+	 *   		array(
+	 *   			'name'   => string,
+	 *   		 	'parentId'   => string,
+	 *   		  	'isDefault'   => boolean,
+	 *   		  	'url'   => string,
+	 *   		   	'externalId'   => string,
+	 *   	     ),
+	 *   	),
+	 *   'variants'   => array(
+	 *   	array(
+	 *   		'name'   => string,
+	 *   		'url'   => string,
+	 *   		'sku'   => string,
+	 *   		'price'   => number,
+	 *   		'priceTax'   => number,
+	 *   		'previousPrice'   => number,
+	 *   		'previousPriceTax'   => number,
+	 *   		'quantity'   => integer,
+	 *   		'position'   => integer,
+	 *   		'barcode'   => string,
+	 *   		'externalId'   => string,
+	 *   		'description'   => string,
+	 *   		'images'   => array(
+	 *   			array(
+	 *   				'src'   => string,
+	 *   		 		'position'   => integer,
+	 *   		 	),
+	 *    		),
+	 *    		'metaFields'   => array(
+	 *   			array(
+	 *   				'name'   => string,
+	 *   		 		'value'   => string,
+	 *   		 	 	'valueType'   => "string" or "integer",
+	 *   		 	  	'description'   => string,
+	 *    		    ),
+	 *    		),
+	 *    		'taxes'   => array(
+	 *   			array(
+	 *   				'name'   => string,
+	 *   		 		'rate'   => string,
+	 *    		    ),
+	 *    		),
+	 *    	),
+	 *   ),
+	 *   'metaFields'   => array(
+	 *   	array(
+	 *   		'name'   => string,
+	 *   	 	'value'   => string,
+	 *   	  	'valueType'   => "string" or "integer",
+	 *   	   	'description'   => string,
+	 *    	),
+	 *    ),
+	 * );
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function update_product( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$payload = array(
+			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
+			'type'   => ( ! empty( $passed_query['type'] ) ? $passed_query['type']: null ),
+			'url'   => ( ! empty( $passed_query['url'] ) ? $passed_query['url']: null ),
+			'vendor'   => ( ! empty( $passed_query['vendor'] ) ? $passed_query['vendor']: null ),
+			'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
+			'categories'   => ( ! empty( $passed_query['categories'] ) ? $passed_query['categories']: null ),
+			'variants'   => ( ! empty( $passed_query['variants'] ) ? $passed_query['variants']: null ),
+			'metaFields'   => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields']: null ),
+		);
+		$shop_id = $this->shop_id;
+		$product_id = $passed_query['product_id'];
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 * Delete product
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function delete_product( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$shop_id = $this->shop_id;
+		$product_id = $passed_query['product_id'];
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 * Upsert product categories
+	 * $payload = array(
+	 *   'categories'   => array(
+	 *   		array(
+	 *   			'categoryId'   => string,
+	 *   		  	'isDefault'   => boolean,
+	 *   	    ),
+	 *   	),
+	 * );
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function upsert_product_categories( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$payload = array(
+			'categories'   => ( ! empty( $passed_query['categories'] ) ? $passed_query['categories']: null ),
+		);
+		$shop_id = $this->shop_id;
+		$product_id = $passed_query['product_id'];
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/categories";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 * Upsert product meta fields
+	 * $payload = array(
+	 *   'metaFields'   => array(
+	 *   	array(
+	 *   		'metaFieldId'   => string,
+	 *    	),
+	 *    ),
+	 * );
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function upsert_product_meta_fields( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$payload = array(
+			'metaFields'   => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields']: null ),
+		);
+		$shop_id = $this->shop_id;
+		$product_id = $passed_query['product_id'];
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/meta-fields";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 *
+	 * Product Variants
+	 *
+	 */
+	
+	/**
+	 * Get a list of product variants
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function get_list_of_product_variants( $passed_query = null ) {
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'query'  => array( 
+					'name' => ( ( ! empty( $passed_query['query']['name'] ) ) ? $passed_query['query']['name']: null ),
+					'sku' => ( ( ! empty( $passed_query['query']['sku'] ) ) ? $passed_query['query']['sku']: null ),
+					'description' => ( ( ! empty( $passed_query['query']['description'] ) ) ? $passed_query['query']['description']: null ),
+					'externalId' => ( ( ! empty( $passed_query['query']['external_id'] ) ) ? $passed_query['query']['external_id']: null ),
+					'createdAt' => array( 
+						'from' => ( ( ! empty( $passed_query['query']['created_at']['from'] ) ) ? $passed_query['query']['created_at']['from']: null ),
+						'to' => ( ( ! empty( $passed_query['query']['created_at']['to'] ) ) ? $passed_query['query']['created_at']['to']: null ),
+					),
+				),
+				'sort'  => array( 
+					'createdOn' => ( ( ! empty( $passed_query['sort']['created_on'] ) ) ? $passed_query['sort']['created_on']: null ),
+				),
+				'fields'  => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields']: null ),
+				'perPage'  => ( ( ! empty( $passed_query['perPage'] ) ) ? $passed_query['perPage']: null ),
+				'page'  => ( ( ! empty( $passed_query['page'] ) ) ? $passed_query['page']: null ),
+			);
+		}
+
+		$shop_id = $this->shop_id;
+		$product_id = $this->product_id;
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants?$current_query";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+		  curl_close( $ch );
+		  $response = json_decode( $response );
+
+		  return $response;
+		endif;
+	}
+
+	/**
+	 * Create product variant
+	 * $payload = array(
+	 *   'name'   => string,
+	 *   'url'   => string,
+	 *   'sku'   => string,
+	 *   'price'   => number,
+	 *   'priceTax'   => number,
+	 *   'previousPrice'   => number,
+	 *   'previousPriceTax'   => number,
+	 *   'quantity'   => integer,
+	 *   'position'   => integer,
+	 *   'barcode'   => string,
+	 *   'externalId'   => string,
+	 *   'description'   => string,
+	 *   'images'   => array(
+	 *   	array(
+	 *   		'src'   => string,
+	 *    		'position'   => integer,
+	 *    	),
+	 *    ),
+	 *    'metaFields'   => array(
+	 *   	array(
+	 *   		'name'   => string,
+	 *    		'value'   => string,
+	 *    	 	'valueType'   => "string" or "integer",
+	 *    	  	'description'   => string,
+	 *        ),
+	 *    ),
+	 *    'taxes'   => array(
+	 *   	array(
+	 *   		'name'   => string,
+	 *    		'rate'   => string,
+	 *        ),
+	 *    ),
+	 * );
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function create_product_variant( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		
+		$payload = array(
+		  'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
+		  'url'   => ( ! empty( $passed_query['url'] ) ? $passed_query['url']: null ),
+		  'sku'   => ( ! empty( $passed_query['sku'] ) ? $passed_query['sku']: null ),
+		  'price'   => ( ! empty( $passed_query['price'] ) ? $passed_query['price']: null ),
+		  'priceTax'   => ( ! empty( $passed_query['price_tax'] ) ? $passed_query['price_tax']: null ),
+		  'previousPrice'   => ( ! empty( $passed_query['previous_price'] ) ? $passed_query['previous_price']: null ),
+		  'previousPriceTax'   => ( ! empty( $passed_query['previous_price_tax'] ) ? $passed_query['previous_price_tax']: null ),
+		  'quantity'   => ( ! empty( $passed_query['quantity'] ) ? $passed_query['quantity']: null ),
+		  'position'   => ( ! empty( $passed_query['position'] ) ? $passed_query['position']: null ),
+		  'barcode'   => ( ! empty( $passed_query['barcode'] ) ? $passed_query['barcode']: null ),
+		  'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
+		  'description'   => ( ! empty( $passed_query['description'] ) ? $passed_query['description']: null ),
+		  'images'   => ( ! empty( $passed_query['images'] ) ? $passed_query['images']: null ),
+		  'metaFields'   => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields']: null ),
+		  'taxes'   => ( ! empty( $passed_query['taxes'] ) ? $passed_query['taxes']: null ),
+		);
+		$shop_id = $this->shop_id;
+		$product_id = $this->product_id;
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 * Get a single product variant by ID
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function get_single_product_variant_by_ID( $passed_query = null ) {
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'fields'  => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields']: null ),
+			);
+		}
+
+		$shop_id = $this->shop_id;
+		$product_id = $passed_query['product_id'];
+		$variant_id = $passed_query['variant_id'];
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+		  curl_close( $ch );
+		  $response = json_decode( $response );
+
+		  return $response;
+		endif;
+	}
+
+	/**
+	 * Update product variant
+	 * $payload = array(
+	 *   'name'   => string,
+	 *   'url'   => string,
+	 *   'sku'   => string,
+	 *   'price'   => number,
+	 *   'priceTax'   => number,
+	 *   'previousPrice'   => number,
+	 *   'previousPriceTax'   => number,
+	 *   'quantity'   => integer,
+	 *   'position'   => integer,
+	 *   'barcode'   => string,
+	 *   'externalId'   => string,
+	 *   'description'   => string,
+	 *   'images'   => array(
+	 *   	array(
+	 *   		'src'   => string,
+	 *    		'position'   => integer,
+	 *    	),
+	 *   ),
+	 *   'metaFields'   => array(
+	 *   	array(
+	 *   		'name'   => string,
+	 *    		'value'   => string,
+	 *    	 	'valueType'   => "string" or "integer",
+	 *    	  	'description'   => string,
+	 *        ),
+	 *   ),
+	 *   'taxes'   => array(
+	 *   	array(
+	 *   		'name'   => string,
+	 *    		'rate'   => string,
+	 *        ),
+	 *   ),
+	 * );
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function update_product_variant( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		
+		$payload = array(
+		  'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
+		  'url'   => ( ! empty( $passed_query['url'] ) ? $passed_query['url']: null ),
+		  'sku'   => ( ! empty( $passed_query['sku'] ) ? $passed_query['sku']: null ),
+		  'price'   => ( ! empty( $passed_query['price'] ) ? $passed_query['price']: null ),
+		  'priceTax'   => ( ! empty( $passed_query['price_tax'] ) ? $passed_query['price_tax']: null ),
+		  'previousPrice'   => ( ! empty( $passed_query['previous_price'] ) ? $passed_query['previous_price']: null ),
+		  'previousPriceTax'   => ( ! empty( $passed_query['previous_price_tax'] ) ? $passed_query['previous_price_tax']: null ),
+		  'quantity'   => ( ! empty( $passed_query['quantity'] ) ? $passed_query['quantity']: null ),
+		  'position'   => ( ! empty( $passed_query['position'] ) ? $passed_query['position']: null ),
+		  'barcode'   => ( ! empty( $passed_query['barcode'] ) ? $passed_query['barcode']: null ),
+		  'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
+		  'description'   => ( ! empty( $passed_query['description'] ) ? $passed_query['description']: null ),
+		  'images'   => ( ! empty( $passed_query['images'] ) ? $passed_query['images']: null ),
+		  'metaFields'   => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields']: null ),
+		  'taxes'   => ( ! empty( $passed_query['taxes'] ) ? $passed_query['taxes']: null ),
+		);
+		$shop_id = $this->shop_id;
+		$product_id = $passed_query['product_id'];
+		$variant_id = $passed_query['variant_id'];
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 * Delete product variant
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function delete_product_variant( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$shop_id = $this->shop_id;
+		$product_id = $passed_query['product_id'];
+		$variant_id = $passed_query['variant_id'];
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
 	}
 
 	/**
@@ -1048,7 +1822,7 @@ class Wonkasoft_GetResponse_Api {
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
-	public function get_a_single_shop_by_ID( $passed_query = null ) {
+	public function get_single_shop_by_ID( $passed_query = null ) {
 		if ( ! empty( $passed_query ) ) {
 			$current_query = $passed_query;
 		} else {
@@ -1183,7 +1957,7 @@ class Wonkasoft_GetResponse_Api {
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
-	public function get_a_list_of_shops( $passed_query = null ) {
+	public function get_list_of_shops( $passed_query = null ) {
 		if ( ! empty( $passed_query ) ) {
 			$current_query = $passed_query;
 		} else {
@@ -1193,8 +1967,6 @@ class Wonkasoft_GetResponse_Api {
 				),
 				'sort'   => array(
 					'name' => ( ! empty( $passed_query['sort']['name'] ) ? $passed_query['sort']['name']: 'ASC' ),
-				),
-				'sort'   => array(
 					'createdOn' => ( ! empty( $passed_query['sort']['createdOn'] ) ? $passed_query['sort']['createdOn']: 'ASC' ),
 				),
 				'fields'  => ( ! empty( $passed_query['fields'] ) ? $passed_query['fields']: null ),
@@ -1259,6 +2031,255 @@ class Wonkasoft_GetResponse_Api {
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
 		curl_setopt( $ch, CURLOPT_POST, true );
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 *
+	 * Taxes
+	 *
+	 */
+	
+	/**
+	 * Get a list of taxes
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function get_list_of_taxes( $passed_query = null ) {
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'query'   => array(
+					'name' => ( ! empty( $passed_query['query']['name'] ) ? $passed_query['query']['name']: null ),
+					'createdOn' => array( 
+						'from' => ( ! empty( $passed_query['query']['createdOn']['from'] ) ? $passed_query['query']['createdOn']['from']: null ),
+						'to' => ( ! empty( $passed_query['query']['createdOn']['to'] ) ? $passed_query['query']['createdOn']['to']: null ),
+					),
+				),
+				'sort'   => array(
+					'createdOn' => ( ! empty( $passed_query['sort']['createdOn'] ) ? $passed_query['sort']['createdOn']: 'ASC' ),
+				),
+				'fields'  => ( ! empty( $passed_query['fields'] ) ? $passed_query['fields']: null ),
+				'perPage'  => ( ! empty( $passed_query['perPage'] ) ? $passed_query['perPage']: null ),
+				'page'  => ( ! empty( $passed_query['page'] ) ? $passed_query['page']: null ),
+			);
+		}
+
+		$shop_id = $this->shop_id;
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/taxes?$current_query";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+	  else :
+		  curl_close( $ch );
+		  $response = json_decode( $response );
+
+		  return $response;
+	  endif;
+	}
+	
+	/**
+	 * Create tax
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function create_tax( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$payload = array(
+			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
+			'rate'   => ( ! empty( $passed_query['rate'] ) ? $passed_query['rate']: null ),
+		);
+
+		$shop_id = $this->shop_id;
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/taxes";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 * Get a single tax by ID
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function get_single_tax_by_ID( $passed_query = null ) {
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'fields'  => ( ! empty( $passed_query['fields'] ) ? $passed_query['fields']: null ),
+			);
+		}
+
+		$shop_id = $this->shop_id;
+		$tax_id = $passed_query['tax_id'];
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id?$current_query";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+	  else :
+		  curl_close( $ch );
+		  $response = json_decode( $response );
+
+		  return $response;
+	  endif;
+	}
+
+	/**
+	 * Update tax
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function update_tax( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$payload = array(
+			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
+			'rate'   => ( ! empty( $passed_query['rate'] ) ? $passed_query['rate']: null ),
+		);
+
+		$shop_id = $this->shop_id;
+		$tax_id = $passed_query['tax_id'];
+		$payload = json_encode( $payload );
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_POST, true );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+
+		$response = curl_exec( $ch );
+
+		if ( false === $response ) :
+			$error_obj = array(
+				'error'  => curl_error( $ch ),
+				'status' => 'failed',
+			);
+
+			curl_close( $ch );
+
+			$error_obj = json_decode( json_encode( $error_obj ) );
+
+			return $error_obj;
+		else :
+			curl_close( $ch );
+			$response = json_decode( $response );
+
+			return $response;
+		endif;
+	}
+
+	/**
+	 * Delete tax by ID
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function delete_tax_by_ID( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+
+		$shop_id = $this->shop_id;
+		$tax_id = $passed_query['tax_id'];
+
+		$ch  = curl_init();
+		$url = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id";
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
+		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
 		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
 		$response = curl_exec( $ch );
