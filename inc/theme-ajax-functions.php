@@ -365,16 +365,17 @@ function wonkasoft_set_cart_response() {
 	}
 
 	$contact_list_query = array(
-		'query'           => array(
+		'query' => array(
 			'email'      => $email,
 			'name'       => $name,
 			'campaignId' => $getresponse_api->campaign_id,
 			'origin'     => 'api',
 		),
-		'additionalFlags' => 'exactMatch',
 	);
 
+	$first_list                    = $getresponse_api->contact_list;
 	$getresponse_api->contact_list = $getresponse_api->get_contact_list( $contact_list_query );
+	$sec_list                      = $getresponse_api->contact_list;
 
 	if ( 0 == sizeOf( $getresponse_api->contact_list ) ) :
 		$getresponse_api->create_a_new_contact();
@@ -501,7 +502,9 @@ function wonkasoft_set_cart_response() {
   endif;
 
 	$output = array(
-		'api' => $getresponse_api,
+		'api'        => $getresponse_api,
+		'first_list' => $first_list,
+		'sec_list'   => $sec_list,
 	);
 
 	wp_send_json_success( $output, 200 );
