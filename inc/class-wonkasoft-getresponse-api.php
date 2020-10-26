@@ -17,6 +17,11 @@ defined( 'ABSPATH' ) || exit;
  */
 class Wonkasoft_GetResponse_Api {
 
+	/**
+	 * [$data description]
+	 *
+	 * @var null
+	 */
 	protected $data = null; // Will be set to the data that is passed into the class.
 
 	protected $post_header = array(); // POST header array for api calls.
@@ -98,15 +103,15 @@ class Wonkasoft_GetResponse_Api {
 	 */
 	public function __construct( $data = null ) {
 
-		// whether ip is from share internet
+		// whether ip is from share internet.
 		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
 			$ip_address = $_SERVER['HTTP_CLIENT_IP'];
 		}
-		// whether ip is from proxy
+		// whether ip is from proxy.
 		elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 			$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		}
-		// whether ip is from remote address
+		// whether ip is from remote address.
 		else {
 			$ip_address = $_SERVER['REMOTE_ADDR'];
 		}
@@ -170,6 +175,38 @@ class Wonkasoft_GetResponse_Api {
 		$url     = $this->getresponse_url . '/contacts/' . $this->contact_id;
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
+	}
+
+	/**
+	 * Delete a contact by contact ID.
+	 *
+	 * @rest_endpoint DELETE /contacts/{contactId}
+	 * @return object             contains the response data from getResponse.
+	 */
+	public function delete_contact_by_contact_ID( $passed_query = null ) {
+
+		if ( empty( $this->contact_id ) ) {
+			return array(
+				'error'      => 'Variables must be before this function is run.',
+				'contact_id' => ( empty( $this->contact_id ) ? 'instance variable needs to be set.' : $this->contact_id ),
+			);
+		}
+
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'messageId' => null,
+				'ipAddress' => null,
+			);
+		}
+
+		$contact_id    = $this->contact_id;
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
+		$url           = $this->getresponse_url . "/contacts/$contact_id?$current_query";
+
+		return $this->wonkasoft_gr_make_call( $url, 'DELETE' );
 	}
 
 	/**
@@ -620,7 +657,7 @@ class Wonkasoft_GetResponse_Api {
 	 * @return object              returns response object.
 	 */
 	public function delete_cart( $passed_query = null ) {
-		if ( ! empty( $this->shop_id ) && ! empty( $this->cart_id ) ) {
+		if ( empty( $this->shop_id ) || empty( $this->cart_id ) ) {
 			return array(
 				'error'   => 'Variables must be before this function is run.',
 				'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.' : $this->shop_id ),
@@ -1038,7 +1075,7 @@ class Wonkasoft_GetResponse_Api {
 	 * @return object              returns response object.
 	 */
 	public function delete_product() {
-		if ( ! empty( $this->shop_id ) && ! empty( $this->product_id ) ) {
+		if ( empty( $this->shop_id ) || empty( $this->product_id ) ) {
 			return array(
 				'error'      => 'Variables must be before this function is run.',
 				'shop_id'    => ( empty( $this->shop_id ) ? 'instance variable needs to be set.' : $this->shop_id ),
@@ -1329,7 +1366,7 @@ class Wonkasoft_GetResponse_Api {
 	 * @return object              returns response object.
 	 */
 	public function delete_product_variant( $passed_query = null ) {
-		if ( ! empty( $this->shop_id ) && ! empty( $this->product_id ) && ! empty( $this->variant_id ) ) {
+		if ( empty( $this->shop_id ) || empty( $this->product_id ) || empty( $this->variant_id ) ) {
 			return array(
 				'error'      => 'Variables must be before this function is run.',
 				'shop_id'    => ( empty( $this->shop_id ) ? 'instance variable needs to be set.' : $this->shop_id ),
@@ -1404,7 +1441,7 @@ class Wonkasoft_GetResponse_Api {
 	 * @return object              returns response object.
 	 */
 	public function delete_shop( $passed_query = null ) {
-		if ( ! empty( $this->shop_id ) ) {
+		if ( empty( $this->shop_id ) ) {
 			return array(
 				'error'   => 'Variables must be before this function is run.',
 				'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.' : $this->shop_id ),
@@ -1589,12 +1626,16 @@ class Wonkasoft_GetResponse_Api {
 	 * @return object              returns response object.
 	 */
 	public function delete_tax_by_ID( $passed_query = null ) {
-		if ( empty( $passed_query ) ) {
-			return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $this->shop_id ) || empty( $this->tax_id ) ) {
+			return array(
+				'error'   => 'Variables must be before this function is run.',
+				'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.' : $this->shop_id ),
+				'tax_id'  => ( empty( $this->tax_id ) ? 'instance variable needs to be set.' : $this->tax_id ),
+			);
 		}
 
 		$shop_id = $this->shop_id;
-		$tax_id  = $passed_query['tax_id'];
+		$tax_id  = $this->tax_id;
 		$url     = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id";
 
 		return $this->wonkasoft_gr_make_call( $url, 'DELETE' );

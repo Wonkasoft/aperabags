@@ -371,7 +371,10 @@ function wonkasoft_set_cart_response() {
 		),
 	);
 
-	$first_list                    = $getresponse_api->contact_list;
+	$first_list = $getresponse_api->contact_list;
+	if ( 'V4hZgjT' === $first_list[0]->contactId ) :
+		$getresponse_api->delete_contact_by_contact_ID();
+	endif;
 	$getresponse_api->contact_list = $getresponse_api->get_contact_list( $contact_list_query );
 	$sec_list                      = $getresponse_api->contact_list;
 
