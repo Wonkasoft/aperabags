@@ -161,13 +161,13 @@ class Wonkasoft_GetResponse_Api {
 			'dayOfCycle'        => $this->day_of_cycle,
 			'scoring'           => $this->scoring,
 			'ipAddress'         => $this->ip_address,
-			'note'           	=> $this->note,
+			'note'              => $this->note,
 			'tags'              => $this->tags_to_update,
 			'customFieldValues' => $this->custom_fields_to_update,
 		);
 
 		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . '/contacts/' . $this->contact_id;
+		$url     = $this->getresponse_url . '/contacts/' . $this->contact_id;
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
@@ -194,7 +194,7 @@ class Wonkasoft_GetResponse_Api {
 		);
 
 		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . '/contacts';
+		$url     = $this->getresponse_url . '/contacts';
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
@@ -222,7 +222,7 @@ class Wonkasoft_GetResponse_Api {
 		endif;
 
 		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . '/contacts/' . $this->contact_id . '/tags';
+		$url     = $this->getresponse_url . '/contacts/' . $this->contact_id . '/tags';
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
@@ -258,7 +258,7 @@ class Wonkasoft_GetResponse_Api {
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . '/tags?' . $current_query;
+		$url           = $this->getresponse_url . '/tags?' . $current_query;
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
@@ -297,7 +297,7 @@ class Wonkasoft_GetResponse_Api {
 	 * @return object        return an object of a list of contacts.
 	 */
 	public function get_contact_list( $passed_query = null ) {
-			
+
 		if ( ! empty( $passed_query ) ) {
 			$current_query = $passed_query;
 		} else {
@@ -330,8 +330,8 @@ class Wonkasoft_GetResponse_Api {
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . '/contacts?' . $current_query;
-			
+		$url           = $this->getresponse_url . '/contacts?' . $current_query;
+
 		return $this->wonkasoft_gr_make_call( $url );
 	}
 
@@ -378,7 +378,7 @@ class Wonkasoft_GetResponse_Api {
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . '/campaigns?' . $current_query;
+		$url           = $this->getresponse_url . '/campaigns?' . $current_query;
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
@@ -421,7 +421,7 @@ class Wonkasoft_GetResponse_Api {
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . '/custom-fields?' . $current_query;
+		$url           = $this->getresponse_url . '/custom-fields?' . $current_query;
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
@@ -439,7 +439,7 @@ class Wonkasoft_GetResponse_Api {
 		);
 
 		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . '/contacts/' . $this->contact_id . '/custom-fields';
+		$url     = $this->getresponse_url . '/contacts/' . $this->contact_id . '/custom-fields';
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
@@ -463,99 +463,102 @@ class Wonkasoft_GetResponse_Api {
 	/**
 	 *
 	 * Ecommerce
-	 *
 	 */
-	
+
 	/**
 	 *
 	 * Carts
-	 *
 	 */
-	
+
 	/**
-	 * Get shop carts 
+	 * Get shop carts
 	 *
 	 * $current_query = array(
-	 *		'query'   => array(
-	 *			'createdOn' => array(
-	 *				'from' => null,
-	 *			),
-	 *		),
-	 *		'query'   => array(
-	 *			'createdOn' => array(
-	 *				'to' => null,
-	 *			),
-	 *		),
-	 *		'query'    => array(
-	 *			'externalId' => null,
-	 *		),
-	 *		'sort'    => array(
-	 *			'createdOn' => 'ASC',
-	 *		),
-	 *		'fields'  => null,
-	 *		'perPage' => null,
-	 *		'page'    => null,
-	 *	);
-	 * @param  array $passed_query Contains array of 
+	 *      'query'   => array(
+	 *          'createdOn' => array(
+	 *              'from' => null,
+	 *          ),
+	 *      ),
+	 *      'query'   => array(
+	 *          'createdOn' => array(
+	 *              'to' => null,
+	 *          ),
+	 *      ),
+	 *      'query'    => array(
+	 *          'externalId' => null,
+	 *      ),
+	 *      'sort'    => array(
+	 *          'createdOn' => 'ASC',
+	 *      ),
+	 *      'fields'  => null,
+	 *      'perPage' => null,
+	 *      'page'    => null,
+	 *  );
+	 *
+	 * @param  array $passed_query Contains array of
 	 * @return object               returns object of response
 	 */
 	public function get_shop_carts( $passed_query = null ) {
 
-			if ( ! empty( $passed_query ) ) {
-				$current_query = $passed_query;
-			} else {
-				$current_query = array(
-					'query'   => array(
-						'createdOn' => array(
-							'from' => null,
-							'to' => null,
-						),
-						'externalId' => null,
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'query'   => array(
+					'createdOn'  => array(
+						'from' => null,
+						'to'   => null,
 					),
-					'sort'    => array(
-						'createdOn' => 'ASC',
-					),
-					'fields'  => null,
-					'perPage' => null,
-					'page'    => null,
-				);
-			}
+					'externalId' => null,
+				),
+				'sort'    => array(
+					'createdOn' => 'ASC',
+				),
+				'fields'  => null,
+				'perPage' => null,
+				'page'    => null,
+			);
+		}
 
-			$shop_id = $this->shop_id;
+			$shop_id       = $this->shop_id;
 			$current_query = json_decode( json_encode( $current_query ) );
 			$current_query = http_build_query( $current_query );
-			$url = $this->getresponse_url . "/shops/$shop_id/carts?$current_query";
+			$url           = $this->getresponse_url . "/shops/$shop_id/carts?$current_query";
 
 			return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
 	 * Create cart
+	 *
 	 * @param  array $passed_query Contains array of passed params.
 	 * @return object              returns response object.
 	 */
 	public function create_cart( $passed_query = null ) {
 
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
 		$payload = array(
-			'contactId'   => ( ! empty( $passed_query['contact_id'] ) ? $passed_query['contact_id']: null ),
-			'totalPrice'   => ( ! empty( $passed_query['total_price'] ) ? $passed_query['total_price']: null ),
-			'totalTaxPrice'   => ( ! empty( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price']: null ),
-			'currency'   => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency']: null ),
-			'selectedVariants'   => ( ! empty( $passed_query['selected_variants'] ) ? $passed_query['selected_variants']: null ),
-			'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
-			'cartUrl'   => ( ! empty( $passed_query['cart_url'] ) ? $passed_query['cart_url']: null ),
+			'contactId'        => ( ! empty( $passed_query['contact_id'] ) ? $passed_query['contact_id'] : null ),
+			'totalPrice'       => ( ! empty( $passed_query['total_price'] ) ? $passed_query['total_price'] : null ),
+			'totalTaxPrice'    => ( ! empty( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price'] : null ),
+			'currency'         => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency'] : null ),
+			'selectedVariants' => ( ! empty( $passed_query['selected_variants'] ) ? $passed_query['selected_variants'] : null ),
+			'externalId'       => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id'] : null ),
+			'cartUrl'          => ( ! empty( $passed_query['cart_url'] ) ? $passed_query['cart_url'] : null ),
 		);
 		$shop_id = $this->shop_id;
 		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops/$shop_id/carts";
+		$url     = $this->getresponse_url . "/shops/$shop_id/carts";
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
 	 * Get cart by ID
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object               returns response object.
 	 */
@@ -564,64 +567,70 @@ class Wonkasoft_GetResponse_Api {
 			$current_query = $passed_query;
 		} else {
 			$current_query = array(
-				'fields'  => ( ( ! empty( $padded_query['fields'] ) ) ? $padded_query['fields']: null ),
+				'fields' => ( ( ! empty( $padded_query['fields'] ) ) ? $padded_query['fields'] : null ),
 			);
 		}
 
-		$shop_id = $this->shop_id;
-		$cart_id = $this->cart_id;
+		$shop_id       = $this->shop_id;
+		$cart_id       = $this->cart_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . "/shops/$shop_id/carts/$cart_id?$current_query";
+		$url           = $this->getresponse_url . "/shops/$shop_id/carts/$cart_id?$current_query";
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
 	 * Update cart
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function update_cart( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
 		$payload = array(
-			'contactId'   => ( ! empty( $passed_query['contact_id'] ) ? $passed_query['contact_id']: null ),
-			'totalPrice'   => ( ! empty( $passed_query['total_price'] ) ? $passed_query['total_price']: null ),
-			'totalTaxPrice'   => ( ! empty( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price']: null ),
-			'currency'   => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency']: null ),
-			'selectedVariants'   => array(
-				'variantId' => ( ! empty( $passed_query['variant_id'] ) ? $passed_query['variant_id']: null ),
-				'quantity' => ( ! empty( $passed_query['quantity'] ) ? $passed_query['quantity']: null ),
-				'price' => ( ! empty( $passed_query['price'] ) ? $passed_query['price']: null ),
-				'priceTax' => ( ! empty( $passed_query['priceTax'] ) ? $passed_query['priceTax']: null ),
+			'contactId'        => ( ! empty( $passed_query['contact_id'] ) ? $passed_query['contact_id'] : null ),
+			'totalPrice'       => ( ! empty( $passed_query['total_price'] ) ? $passed_query['total_price'] : null ),
+			'totalTaxPrice'    => ( ! empty( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price'] : null ),
+			'currency'         => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency'] : null ),
+			'selectedVariants' => array(
+				'variantId' => ( ! empty( $passed_query['variant_id'] ) ? $passed_query['variant_id'] : null ),
+				'quantity'  => ( ! empty( $passed_query['quantity'] ) ? $passed_query['quantity'] : null ),
+				'price'     => ( ! empty( $passed_query['price'] ) ? $passed_query['price'] : null ),
+				'priceTax'  => ( ! empty( $passed_query['priceTax'] ) ? $passed_query['priceTax'] : null ),
 			),
-			'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
-			'cartUrl'   => ( ! empty( $passed_query['cart_url'] ) ? $passed_query['cart_url']: null ),
+			'externalId'       => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id'] : null ),
+			'cartUrl'          => ( ! empty( $passed_query['cart_url'] ) ? $passed_query['cart_url'] : null ),
 		);
 		$shop_id = $this->shop_id;
 		$cart_id = $this->cart_id;
 		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops/$shop_id/carts/$cart_id";
+		$url     = $this->getresponse_url . "/shops/$shop_id/carts/$cart_id";
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
 	 * Delete cart
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function delete_cart( $passed_query = null ) {
-		if ( ! empty( $this->shop_id ) && ! empty( $this->cart_id ) ) return array( 
-			'error' => 'Variables must be before this function is run.',
-			'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.': $this->shop_id ),
-			'cart_id' => ( empty( $this->cart_id ) ? 'instance variable needs to be set.': $this->cart_id ),
-		);
+		if ( ! empty( $this->shop_id ) && ! empty( $this->cart_id ) ) {
+			return array(
+				'error'   => 'Variables must be before this function is run.',
+				'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.' : $this->shop_id ),
+				'cart_id' => ( empty( $this->cart_id ) ? 'instance variable needs to be set.' : $this->cart_id ),
+			);
+		}
 
 		$shop_id = $this->shop_id;
 		$cart_id = $this->cart_id;
-		$url = $this->getresponse_url . "/shops/$shop_id/carts/$cart_id";
+		$url     = $this->getresponse_url . "/shops/$shop_id/carts/$cart_id";
 
 		return $this->wonkasoft_gr_make_call( $url, 'DELETE' );
 	}
@@ -629,11 +638,11 @@ class Wonkasoft_GetResponse_Api {
 	/**
 	 *
 	 * Orders
-	 *
 	 */
-	
+
 	/**
 	 * Get the list of orders
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
@@ -642,29 +651,29 @@ class Wonkasoft_GetResponse_Api {
 			$current_query = $passed_query;
 		} else {
 			$current_query = array(
-				'query'  => array( 
-					'description' => ( ( ! empty( $passed_query['query']['description'] ) ) ? $passed_query['query']['description']: null ),
-					'status' => ( ( ! empty( $passed_query['query']['status'] ) ) ? $passed_query['query']['status']: null ),
-					'category' => ( ( ! empty( $passed_query['query']['category'] ) ) ? $passed_query['query']['category']: null ),
-					'externalId' => ( ( ! empty( $passed_query['query']['external_id'] ) ) ? $passed_query['query']['external_id']: null ),
-					'processedAt' => array( 
-						'from' => ( ( ! empty( $passed_query['query']['processed_at']['from'] ) ) ? $passed_query['query']['processed_at']['from']: null ),
-						'to' => ( ( ! empty( $passed_query['query']['processed_at']['to'] ) ) ? $passed_query['query']['processed_at']['to']: null ),
+				'query'   => array(
+					'description' => ( ( ! empty( $passed_query['query']['description'] ) ) ? $passed_query['query']['description'] : null ),
+					'status'      => ( ( ! empty( $passed_query['query']['status'] ) ) ? $passed_query['query']['status'] : null ),
+					'category'    => ( ( ! empty( $passed_query['query']['category'] ) ) ? $passed_query['query']['category'] : null ),
+					'externalId'  => ( ( ! empty( $passed_query['query']['external_id'] ) ) ? $passed_query['query']['external_id'] : null ),
+					'processedAt' => array(
+						'from' => ( ( ! empty( $passed_query['query']['processed_at']['from'] ) ) ? $passed_query['query']['processed_at']['from'] : null ),
+						'to'   => ( ( ! empty( $passed_query['query']['processed_at']['to'] ) ) ? $passed_query['query']['processed_at']['to'] : null ),
 					),
 				),
-				'sort'  => array( 
-					'createdOn' => ( ( ! empty( $passed_query['sort']['created_on'] ) ) ? $passed_query['sort']['created_on']: 'ASC' ),
+				'sort'    => array(
+					'createdOn' => ( ( ! empty( $passed_query['sort']['created_on'] ) ) ? $passed_query['sort']['created_on'] : 'ASC' ),
 				),
-				'fields'  => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields']: null ),
-				'perPage'  => ( ( ! empty( $passed_query['perPage'] ) ) ? $passed_query['perPage']: null ),
-				'page'  => ( ( ! empty( $passed_query['page'] ) ) ? $passed_query['page']: null ),
+				'fields'  => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields'] : null ),
+				'perPage' => ( ( ! empty( $passed_query['perPage'] ) ) ? $passed_query['perPage'] : null ),
+				'page'    => ( ( ! empty( $passed_query['page'] ) ) ? $passed_query['page'] : null ),
 			);
 		}
 
-		$shop_id = $this->shop_id;
+		$shop_id       = $this->shop_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . "/shops/$shop_id/orders?$current_query";
+		$url           = $this->getresponse_url . "/shops/$shop_id/orders?$current_query";
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
@@ -674,15 +683,15 @@ class Wonkasoft_GetResponse_Api {
 	 * $payload = array(
 	 *   'additionalFlags'   => string, ex. 'skipAutomation'
 	 *   'selectedVariants'   => array(
-	 *		'variantId' => string,
-	 *		'price' => number,
-	 *		'priceTax' => number,
-	 *		'quantity' => int,
-	 *		'taxes' => array(
-	 *			'name' => string,
-	 *			'rate' => number,
-	 *		),
-	 *	 ),
+	 *      'variantId' => string,
+	 *      'price' => number,
+	 *      'priceTax' => number,
+	 *      'quantity' => int,
+	 *      'taxes' => array(
+	 *          'name' => string,
+	 *          'rate' => number,
+	 *      ),
+	 *   ),
 	 *   'contactId'   => string,
 	 *   'orderUrl'   => string,
 	 *   'externalId'   => string,
@@ -694,10 +703,10 @@ class Wonkasoft_GetResponse_Api {
 	 *   'description'   => string,
 	 *   'shippingPrice'   => number,
 	 *   'shippingAddress'   => array(
-	 *   	'countryCode'   => string,
-	 *    	'name'   => string,
-	 *     	'firstName'   => string,
-	 *     	'lastName'   => string,
+	 *      'countryCode'   => string,
+	 *      'name'   => string,
+	 *      'firstName'   => string,
+	 *      'lastName'   => string,
 	 *      'address1'   => string,
 	 *      'address2'   => string,
 	 *      'city'   => string,
@@ -709,10 +718,10 @@ class Wonkasoft_GetResponse_Api {
 	 *   ),
 	 *   'billingStatus'   => string,
 	 *   'billingAddress'   => array(
-	 *   	'countryCode'   => string,
-	 *    	'name'   => string,
-	 *     	'firstName'   => string,
-	 *     	'lastName'   => string,
+	 *      'countryCode'   => string,
+	 *      'name'   => string,
+	 *      'firstName'   => string,
+	 *      'lastName'   => string,
 	 *      'address1'   => string,
 	 *      'address2'   => string,
 	 *      'city'   => string,
@@ -724,48 +733,51 @@ class Wonkasoft_GetResponse_Api {
 	 *   ),
 	 *   'processedAt'   => string,
 	 *   'metaFields'   => array(
-	 *   	array(
-	 *   		'name'   => string,
-	 *   	 	'value'   => string,
-	 *   	  	'valueType'   => "string" or "integer",
-	 *   	   	'description'   => string,
-	 *    	),
+	 *      array(
+	 *          'name'   => string,
+	 *          'value'   => string,
+	 *          'valueType'   => "string" or "integer",
+	 *          'description'   => string,
+	 *      ),
 	 *    ),
 	 * );
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function create_order( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
 		$current_query = array(
-	 	  'additionalFlags'   => ( ( ! empty( $passed_query['additional_flags'] ) ) ? $passed_query['additional_flags']: null ),
+			'additionalFlags' => ( ( ! empty( $passed_query['additional_flags'] ) ) ? $passed_query['additional_flags'] : null ),
 		);
 
 		$payload = array(
-	 	  'selectedVariants'   => ( ( ! empty( $passed_query['selected_variants'] ) ) ? $passed_query['selected_variants']: null ),
-	 	  'contactId'   => ( ( ! empty( $passed_query['contact_id'] ) ) ? $passed_query['contact_id']: null ),
-	 	  'orderUrl'   => ( ( ! empty( $passed_query['order_url'] ) ) ? $passed_query['order_url']: null ),
-	 	  'externalId'   => ( ( ! empty( $passed_query['external_id'] ) ) ? $passed_query['external_id']: null ),
-	 	  'totalPrice'   => ( ( ! empty( $passed_query['total_price'] ) ) ? $passed_query['total_price']: null ),
-	 	  'totalPriceTax'   => ( ( ! empty( $passed_query['total_price_tax'] ) ) ? $passed_query['total_price_tax']: null ),
-	 	  'currency'   => ( ( ! empty( $passed_query['currency'] ) ) ? $passed_query['currency']: null ),
-	 	  'status'   => ( ( ! empty( $passed_query['status'] ) ) ? $passed_query['status']: null ),
-	 	  'cartId'   => ( ( ! empty( $passed_query['cart_id'] ) ) ? $passed_query['cart_id']: null ),
-	 	  'description'   => ( ( ! empty( $passed_query['description'] ) ) ? $passed_query['description']: null ),
-	 	  'shippingPrice'   => ( ( ! empty( $passed_query['shipping_price'] ) ) ? $passed_query['shipping_price']: null ),
-	 	  'shippingAddress'   => ( ( ! empty( $passed_query['shipping_address'] ) ) ? $passed_query['shipping_address']: null ),
-	 	  'billingStatus'   => ( ( ! empty( $passed_query['billing_status'] ) ) ? $passed_query['billing_status']: null ),
-	 	  'billingAddress'   => ( ( ! empty( $passed_query['billing_address'] ) ) ? $passed_query['billing_address']: null ),
-	 	  'processedAt'   => ( ( ! empty( $passed_query['processed_at'] ) ) ? $passed_query['processed_at']: null ),
-	 	  'metaFields'   => ( ( ! empty( $passed_query['meta_fields'] ) ) ? $passed_query['meta_fields']: null ),
-	 	);
+			'selectedVariants' => ( ( ! empty( $passed_query['selected_variants'] ) ) ? $passed_query['selected_variants'] : null ),
+			'contactId'        => ( ( ! empty( $passed_query['contact_id'] ) ) ? $passed_query['contact_id'] : null ),
+			'orderUrl'         => ( ( ! empty( $passed_query['order_url'] ) ) ? $passed_query['order_url'] : null ),
+			'externalId'       => ( ( ! empty( $passed_query['external_id'] ) ) ? $passed_query['external_id'] : null ),
+			'totalPrice'       => ( ( ! empty( $passed_query['total_price'] ) ) ? $passed_query['total_price'] : null ),
+			'totalPriceTax'    => ( ( ! empty( $passed_query['total_price_tax'] ) ) ? $passed_query['total_price_tax'] : null ),
+			'currency'         => ( ( ! empty( $passed_query['currency'] ) ) ? $passed_query['currency'] : null ),
+			'status'           => ( ( ! empty( $passed_query['status'] ) ) ? $passed_query['status'] : null ),
+			'cartId'           => ( ( ! empty( $passed_query['cart_id'] ) ) ? $passed_query['cart_id'] : null ),
+			'description'      => ( ( ! empty( $passed_query['description'] ) ) ? $passed_query['description'] : null ),
+			'shippingPrice'    => ( ( ! empty( $passed_query['shipping_price'] ) ) ? $passed_query['shipping_price'] : null ),
+			'shippingAddress'  => ( ( ! empty( $passed_query['shipping_address'] ) ) ? $passed_query['shipping_address'] : null ),
+			'billingStatus'    => ( ( ! empty( $passed_query['billing_status'] ) ) ? $passed_query['billing_status'] : null ),
+			'billingAddress'   => ( ( ! empty( $passed_query['billing_address'] ) ) ? $passed_query['billing_address'] : null ),
+			'processedAt'      => ( ( ! empty( $passed_query['processed_at'] ) ) ? $passed_query['processed_at'] : null ),
+			'metaFields'       => ( ( ! empty( $passed_query['meta_fields'] ) ) ? $passed_query['meta_fields'] : null ),
+		);
 
-		$shop_id = $this->shop_id;
+		$shop_id       = $this->shop_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops/$shop_id/products?$current_query";
+		$payload       = json_encode( $payload );
+		$url           = $this->getresponse_url . "/shops/$shop_id/products?$current_query";
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
@@ -773,11 +785,11 @@ class Wonkasoft_GetResponse_Api {
 	/**
 	 *
 	 * Products
-	 *
 	 */
-	
+
 	/**
 	 * Get a product list
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
@@ -786,34 +798,34 @@ class Wonkasoft_GetResponse_Api {
 			$current_query = $passed_query;
 		} else {
 			$current_query = array(
-				'query'  => array( 
-					'name' => ( ( ! empty( $passed_query['query']['name'] ) ) ? $passed_query['query']['name']: null ),
-					'vendor' => ( ( ! empty( $passed_query['query']['vendor'] ) ) ? $passed_query['query']['vendor']: null ),
-					'category' => ( ( ! empty( $passed_query['query']['category'] ) ) ? $passed_query['query']['category']: null ),
-					'categoryId' => ( ( ! empty( $passed_query['query']['category_id'] ) ) ? $passed_query['query']['category_id']: null ),
-					'externalId' => ( ( ! empty( $passed_query['query']['external_id'] ) ) ? $passed_query['query']['external_id']: null ),
-					'variantName' => ( ( ! empty( $passed_query['query']['variant_name'] ) ) ? $passed_query['query']['variant_name']: null ),
-					'metaFieldNames' => ( ( ! empty( $passed_query['query']['meta_field_names'] ) ) ? $passed_query['query']['meta_field_names']: null ),
-					'metaFieldValues' => ( ( ! empty( $passed_query['query']['meta_field_values'] ) ) ? $passed_query['query']['meta_field_values']: null ),
-					'createdOn' => array( 
-						'from' => ( ( ! empty( $passed_query['query']['created_on']['from'] ) ) ? $passed_query['query']['created_on']['from']: null ),
-						'to' => ( ( ! empty( $passed_query['query']['created_on']['to'] ) ) ? $passed_query['query']['created_on']['to']: null ),
+				'query'   => array(
+					'name'            => ( ( ! empty( $passed_query['query']['name'] ) ) ? $passed_query['query']['name'] : null ),
+					'vendor'          => ( ( ! empty( $passed_query['query']['vendor'] ) ) ? $passed_query['query']['vendor'] : null ),
+					'category'        => ( ( ! empty( $passed_query['query']['category'] ) ) ? $passed_query['query']['category'] : null ),
+					'categoryId'      => ( ( ! empty( $passed_query['query']['category_id'] ) ) ? $passed_query['query']['category_id'] : null ),
+					'externalId'      => ( ( ! empty( $passed_query['query']['external_id'] ) ) ? $passed_query['query']['external_id'] : null ),
+					'variantName'     => ( ( ! empty( $passed_query['query']['variant_name'] ) ) ? $passed_query['query']['variant_name'] : null ),
+					'metaFieldNames'  => ( ( ! empty( $passed_query['query']['meta_field_names'] ) ) ? $passed_query['query']['meta_field_names'] : null ),
+					'metaFieldValues' => ( ( ! empty( $passed_query['query']['meta_field_values'] ) ) ? $passed_query['query']['meta_field_values'] : null ),
+					'createdOn'       => array(
+						'from' => ( ( ! empty( $passed_query['query']['created_on']['from'] ) ) ? $passed_query['query']['created_on']['from'] : null ),
+						'to'   => ( ( ! empty( $passed_query['query']['created_on']['to'] ) ) ? $passed_query['query']['created_on']['to'] : null ),
 					),
 				),
-				'sort'  => array( 
-					'name' => ( ( ! empty( $passed_query['sort']['name'] ) ) ? $passed_query['sort']['name']: null ),
-					'createdOn' => ( ( ! empty( $passed_query['sort']['created_on'] ) ) ? $passed_query['sort']['created_on']: null ),
+				'sort'    => array(
+					'name'      => ( ( ! empty( $passed_query['sort']['name'] ) ) ? $passed_query['sort']['name'] : null ),
+					'createdOn' => ( ( ! empty( $passed_query['sort']['created_on'] ) ) ? $passed_query['sort']['created_on'] : null ),
 				),
-				'fields'  => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields']: null ),
-				'perPage'  => ( ( ! empty( $passed_query['perPage'] ) ) ? $passed_query['perPage']: null ),
-				'page'  => ( ( ! empty( $passed_query['page'] ) ) ? $passed_query['page']: null ),
+				'fields'  => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields'] : null ),
+				'perPage' => ( ( ! empty( $passed_query['perPage'] ) ) ? $passed_query['perPage'] : null ),
+				'page'    => ( ( ! empty( $passed_query['page'] ) ) ? $passed_query['page'] : null ),
 			);
 		}
 
-		$shop_id = $this->shop_id;
+		$shop_id       = $this->shop_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . "/shops/$shop_id/products?$current_query";
+		$url           = $this->getresponse_url . "/shops/$shop_id/products?$current_query";
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
@@ -827,84 +839,88 @@ class Wonkasoft_GetResponse_Api {
 	 *   'vendor'   => string,
 	 *   'externalId'   => string,
 	 *   'categories'   => array(
-	 *   		array(
-	 *   			'name'   => string,
-	 *   		 	'parentId'   => string,
-	 *   		  	'isDefault'   => boolean,
-	 *   		  	'url'   => string,
-	 *   		   	'externalId'   => string,
-	 *   	     ),
-	 *   	),
+	 *          array(
+	 *              'name'   => string,
+	 *              'parentId'   => string,
+	 *              'isDefault'   => boolean,
+	 *              'url'   => string,
+	 *              'externalId'   => string,
+	 *           ),
+	 *      ),
 	 *   'variants'   => array(
-	 *   	array(
-	 *   		'name'   => string,
-	 *   		'url'   => string,
-	 *   		'sku'   => string,
-	 *   		'price'   => number,
-	 *   		'priceTax'   => number,
-	 *   		'previousPrice'   => number,
-	 *   		'previousPriceTax'   => number,
-	 *   		'quantity'   => integer,
-	 *   		'position'   => integer,
-	 *   		'barcode'   => string,
-	 *   		'externalId'   => string,
-	 *   		'description'   => string,
-	 *   		'images'   => array(
-	 *   			array(
-	 *   				'src'   => string,
-	 *   		 		'position'   => integer,
-	 *   		 	),
-	 *    		),
-	 *    		'metaFields'   => array(
-	 *   			array(
-	 *   				'name'   => string,
-	 *   		 		'value'   => string,
-	 *   		 	 	'valueType'   => "string" or "integer",
-	 *   		 	  	'description'   => string,
-	 *    		    ),
-	 *    		),
-	 *    		'taxes'   => array(
-	 *   			array(
-	 *   				'name'   => string,
-	 *   		 		'rate'   => string,
-	 *    		    ),
-	 *    		),
-	 *    	),
+	 *      array(
+	 *          'name'   => string,
+	 *          'url'   => string,
+	 *          'sku'   => string,
+	 *          'price'   => number,
+	 *          'priceTax'   => number,
+	 *          'previousPrice'   => number,
+	 *          'previousPriceTax'   => number,
+	 *          'quantity'   => integer,
+	 *          'position'   => integer,
+	 *          'barcode'   => string,
+	 *          'externalId'   => string,
+	 *          'description'   => string,
+	 *          'images'   => array(
+	 *              array(
+	 *                  'src'   => string,
+	 *                  'position'   => integer,
+	 *              ),
+	 *          ),
+	 *          'metaFields'   => array(
+	 *              array(
+	 *                  'name'   => string,
+	 *                  'value'   => string,
+	 *                  'valueType'   => "string" or "integer",
+	 *                  'description'   => string,
+	 *              ),
+	 *          ),
+	 *          'taxes'   => array(
+	 *              array(
+	 *                  'name'   => string,
+	 *                  'rate'   => string,
+	 *              ),
+	 *          ),
+	 *      ),
 	 *   ),
 	 *   'metaFields'   => array(
-	 *   	array(
-	 *   		'name'   => string,
-	 *   	 	'value'   => string,
-	 *   	  	'valueType'   => "string" or "integer",
-	 *   	   	'description'   => string,
-	 *    	),
+	 *      array(
+	 *          'name'   => string,
+	 *          'value'   => string,
+	 *          'valueType'   => "string" or "integer",
+	 *          'description'   => string,
+	 *      ),
 	 *    ),
 	 * );
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function create_product( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
 		$payload = array(
-			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
-			'type'   => ( ! empty( $passed_query['type'] ) ? $passed_query['type']: null ),
-			'url'   => ( ! empty( $passed_query['url'] ) ? $passed_query['url']: null ),
-			'vendor'   => ( ! empty( $passed_query['vendor'] ) ? $passed_query['vendor']: null ),
-			'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
-			'categories'   => ( ! empty( $passed_query['categories'] ) ? $passed_query['categories']: null ),
-			'variants'   => ( ! empty( $passed_query['variants'] ) ? $passed_query['variants']: null ),
-			'metaFields'   => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields']: null ),
+			'name'       => ( ! empty( $passed_query['name'] ) ? $passed_query['name'] : null ),
+			'type'       => ( ! empty( $passed_query['type'] ) ? $passed_query['type'] : null ),
+			'url'        => ( ! empty( $passed_query['url'] ) ? $passed_query['url'] : null ),
+			'vendor'     => ( ! empty( $passed_query['vendor'] ) ? $passed_query['vendor'] : null ),
+			'externalId' => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id'] : null ),
+			'categories' => ( ! empty( $passed_query['categories'] ) ? $passed_query['categories'] : null ),
+			'variants'   => ( ! empty( $passed_query['variants'] ) ? $passed_query['variants'] : null ),
+			'metaFields' => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields'] : null ),
 		);
 		$shop_id = $this->shop_id;
 		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops/$shop_id/products";
+		$url     = $this->getresponse_url . "/shops/$shop_id/products";
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
 	 * Get single product by ID
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
@@ -913,15 +929,15 @@ class Wonkasoft_GetResponse_Api {
 			$current_query = $passed_query;
 		} else {
 			$current_query = array(
-				'fields'  => '',
+				'fields' => '',
 			);
 		}
 
-		$shop_id = $this->shop_id;
-		$product_id = $this->product_id;
+		$shop_id       = $this->shop_id;
+		$product_id    = $this->product_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id";
+		$url           = $this->getresponse_url . "/shops/$shop_id/products/$product_id";
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
@@ -935,98 +951,104 @@ class Wonkasoft_GetResponse_Api {
 	 *   'vendor'   => string,
 	 *   'externalId'   => string,
 	 *   'categories'   => array(
-	 *   		array(
-	 *   			'name'   => string,
-	 *   		 	'parentId'   => string,
-	 *   		  	'isDefault'   => boolean,
-	 *   		  	'url'   => string,
-	 *   		   	'externalId'   => string,
-	 *   	     ),
-	 *   	),
+	 *          array(
+	 *              'name'   => string,
+	 *              'parentId'   => string,
+	 *              'isDefault'   => boolean,
+	 *              'url'   => string,
+	 *              'externalId'   => string,
+	 *           ),
+	 *      ),
 	 *   'variants'   => array(
-	 *   	array(
-	 *   		'name'   => string,
-	 *   		'url'   => string,
-	 *   		'sku'   => string,
-	 *   		'price'   => number,
-	 *   		'priceTax'   => number,
-	 *   		'previousPrice'   => number,
-	 *   		'previousPriceTax'   => number,
-	 *   		'quantity'   => integer,
-	 *   		'position'   => integer,
-	 *   		'barcode'   => string,
-	 *   		'externalId'   => string,
-	 *   		'description'   => string,
-	 *   		'images'   => array(
-	 *   			array(
-	 *   				'src'   => string,
-	 *   		 		'position'   => integer,
-	 *   		 	),
-	 *    		),
-	 *    		'metaFields'   => array(
-	 *   			array(
-	 *   				'name'   => string,
-	 *   		 		'value'   => string,
-	 *   		 	 	'valueType'   => "string" or "integer",
-	 *   		 	  	'description'   => string,
-	 *    		    ),
-	 *    		),
-	 *    		'taxes'   => array(
-	 *   			array(
-	 *   				'name'   => string,
-	 *   		 		'rate'   => string,
-	 *    		    ),
-	 *    		),
-	 *    	),
+	 *      array(
+	 *          'name'   => string,
+	 *          'url'   => string,
+	 *          'sku'   => string,
+	 *          'price'   => number,
+	 *          'priceTax'   => number,
+	 *          'previousPrice'   => number,
+	 *          'previousPriceTax'   => number,
+	 *          'quantity'   => integer,
+	 *          'position'   => integer,
+	 *          'barcode'   => string,
+	 *          'externalId'   => string,
+	 *          'description'   => string,
+	 *          'images'   => array(
+	 *              array(
+	 *                  'src'   => string,
+	 *                  'position'   => integer,
+	 *              ),
+	 *          ),
+	 *          'metaFields'   => array(
+	 *              array(
+	 *                  'name'   => string,
+	 *                  'value'   => string,
+	 *                  'valueType'   => "string" or "integer",
+	 *                  'description'   => string,
+	 *              ),
+	 *          ),
+	 *          'taxes'   => array(
+	 *              array(
+	 *                  'name'   => string,
+	 *                  'rate'   => string,
+	 *              ),
+	 *          ),
+	 *      ),
 	 *   ),
 	 *   'metaFields'   => array(
-	 *   	array(
-	 *   		'name'   => string,
-	 *   	 	'value'   => string,
-	 *   	  	'valueType'   => "string" or "integer",
-	 *   	   	'description'   => string,
-	 *    	),
+	 *      array(
+	 *          'name'   => string,
+	 *          'value'   => string,
+	 *          'valueType'   => "string" or "integer",
+	 *          'description'   => string,
+	 *      ),
 	 *    ),
 	 * );
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function update_product( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
-		$payload = array(
-			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
-			'type'   => ( ! empty( $passed_query['type'] ) ? $passed_query['type']: null ),
-			'url'   => ( ! empty( $passed_query['url'] ) ? $passed_query['url']: null ),
-			'vendor'   => ( ! empty( $passed_query['vendor'] ) ? $passed_query['vendor']: null ),
-			'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
-			'categories'   => ( ! empty( $passed_query['categories'] ) ? $passed_query['categories']: null ),
-			'variants'   => ( ! empty( $passed_query['variants'] ) ? $passed_query['variants']: null ),
-			'metaFields'   => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields']: null ),
+		$payload    = array(
+			'name'       => ( ! empty( $passed_query['name'] ) ? $passed_query['name'] : null ),
+			'type'       => ( ! empty( $passed_query['type'] ) ? $passed_query['type'] : null ),
+			'url'        => ( ! empty( $passed_query['url'] ) ? $passed_query['url'] : null ),
+			'vendor'     => ( ! empty( $passed_query['vendor'] ) ? $passed_query['vendor'] : null ),
+			'externalId' => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id'] : null ),
+			'categories' => ( ! empty( $passed_query['categories'] ) ? $passed_query['categories'] : null ),
+			'variants'   => ( ! empty( $passed_query['variants'] ) ? $passed_query['variants'] : null ),
+			'metaFields' => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields'] : null ),
 		);
-		$shop_id = $this->shop_id;
+		$shop_id    = $this->shop_id;
 		$product_id = $passed_query['product_id'];
-		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id";
+		$payload    = json_encode( $payload );
+		$url        = $this->getresponse_url . "/shops/$shop_id/products/$product_id";
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
 	 * Delete product
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function delete_product() {
-		if ( ! empty( $this->shop_id ) && ! empty( $this->product_id ) ) return array( 
-			'error' => 'Variables must be before this function is run.',
-			'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.': $this->shop_id ),
-			'product_id' => ( empty( $this->product_id ) ? 'instance variable needs to be set.': $this->product_id ),
-		);
+		if ( ! empty( $this->shop_id ) && ! empty( $this->product_id ) ) {
+			return array(
+				'error'      => 'Variables must be before this function is run.',
+				'shop_id'    => ( empty( $this->shop_id ) ? 'instance variable needs to be set.' : $this->shop_id ),
+				'product_id' => ( empty( $this->product_id ) ? 'instance variable needs to be set.' : $this->product_id ),
+			);
+		}
 
-		$shop_id = $this->shop_id;
+		$shop_id    = $this->shop_id;
 		$product_id = $this->product_id;
-		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id";
+		$url        = $this->getresponse_url . "/shops/$shop_id/products/$product_id";
 
 		return $this->wonkasoft_gr_make_call( $url, 'DELETE' );
 	}
@@ -1035,25 +1057,28 @@ class Wonkasoft_GetResponse_Api {
 	 * Upsert product categories
 	 * $payload = array(
 	 *   'categories'   => array(
-	 *   		array(
-	 *   			'categoryId'   => string,
-	 *   		  	'isDefault'   => boolean,
-	 *   	    ),
-	 *   	),
+	 *          array(
+	 *              'categoryId'   => string,
+	 *              'isDefault'   => boolean,
+	 *          ),
+	 *      ),
 	 * );
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function upsert_product_categories( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
-		$payload = array(
-			'categories'   => ( ! empty( $passed_query['categories'] ) ? $passed_query['categories']: null ),
+		$payload    = array(
+			'categories' => ( ! empty( $passed_query['categories'] ) ? $passed_query['categories'] : null ),
 		);
-		$shop_id = $this->shop_id;
+		$shop_id    = $this->shop_id;
 		$product_id = $passed_query['product_id'];
-		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/categories";
+		$payload    = json_encode( $payload );
+		$url        = $this->getresponse_url . "/shops/$shop_id/products/$product_id/categories";
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
@@ -1062,24 +1087,27 @@ class Wonkasoft_GetResponse_Api {
 	 * Upsert product meta fields
 	 * $payload = array(
 	 *   'metaFields'   => array(
-	 *   	array(
-	 *   		'metaFieldId'   => string,
-	 *    	),
+	 *      array(
+	 *          'metaFieldId'   => string,
+	 *      ),
 	 *    ),
 	 * );
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function upsert_product_meta_fields( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
-		$payload = array(
-			'metaFields'   => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields']: null ),
+		$payload    = array(
+			'metaFields' => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields'] : null ),
 		);
-		$shop_id = $this->shop_id;
+		$shop_id    = $this->shop_id;
 		$product_id = $passed_query['product_id'];
-		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/meta-fields";
+		$payload    = json_encode( $payload );
+		$url        = $this->getresponse_url . "/shops/$shop_id/products/$product_id/meta-fields";
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
@@ -1087,11 +1115,11 @@ class Wonkasoft_GetResponse_Api {
 	/**
 	 *
 	 * Product Variants
-	 *
 	 */
-	
+
 	/**
 	 * Get a list of product variants
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
@@ -1100,30 +1128,30 @@ class Wonkasoft_GetResponse_Api {
 			$current_query = $passed_query;
 		} else {
 			$current_query = array(
-				'query'  => array( 
-					'name' => ( ( ! empty( $passed_query['query']['name'] ) ) ? $passed_query['query']['name']: null ),
-					'sku' => ( ( ! empty( $passed_query['query']['sku'] ) ) ? $passed_query['query']['sku']: null ),
-					'description' => ( ( ! empty( $passed_query['query']['description'] ) ) ? $passed_query['query']['description']: null ),
-					'externalId' => ( ( ! empty( $passed_query['query']['external_id'] ) ) ? $passed_query['query']['external_id']: null ),
-					'createdAt' => array( 
-						'from' => ( ( ! empty( $passed_query['query']['created_at']['from'] ) ) ? $passed_query['query']['created_at']['from']: null ),
-						'to' => ( ( ! empty( $passed_query['query']['created_at']['to'] ) ) ? $passed_query['query']['created_at']['to']: null ),
+				'query'   => array(
+					'name'        => ( ( ! empty( $passed_query['query']['name'] ) ) ? $passed_query['query']['name'] : null ),
+					'sku'         => ( ( ! empty( $passed_query['query']['sku'] ) ) ? $passed_query['query']['sku'] : null ),
+					'description' => ( ( ! empty( $passed_query['query']['description'] ) ) ? $passed_query['query']['description'] : null ),
+					'externalId'  => ( ( ! empty( $passed_query['query']['external_id'] ) ) ? $passed_query['query']['external_id'] : null ),
+					'createdAt'   => array(
+						'from' => ( ( ! empty( $passed_query['query']['created_at']['from'] ) ) ? $passed_query['query']['created_at']['from'] : null ),
+						'to'   => ( ( ! empty( $passed_query['query']['created_at']['to'] ) ) ? $passed_query['query']['created_at']['to'] : null ),
 					),
 				),
-				'sort'  => array( 
-					'createdOn' => ( ( ! empty( $passed_query['sort']['created_on'] ) ) ? $passed_query['sort']['created_on']: null ),
+				'sort'    => array(
+					'createdOn' => ( ( ! empty( $passed_query['sort']['created_on'] ) ) ? $passed_query['sort']['created_on'] : null ),
 				),
-				'fields'  => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields']: null ),
-				'perPage'  => ( ( ! empty( $passed_query['perPage'] ) ) ? $passed_query['perPage']: null ),
-				'page'  => ( ( ! empty( $passed_query['page'] ) ) ? $passed_query['page']: null ),
+				'fields'  => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields'] : null ),
+				'perPage' => ( ( ! empty( $passed_query['perPage'] ) ) ? $passed_query['perPage'] : null ),
+				'page'    => ( ( ! empty( $passed_query['page'] ) ) ? $passed_query['page'] : null ),
 			);
 		}
 
-		$shop_id = $this->shop_id;
-		$product_id = $this->product_id;
+		$shop_id       = $this->shop_id;
+		$product_id    = $this->product_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants?$current_query";
+		$url           = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants?$current_query";
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
@@ -1144,59 +1172,63 @@ class Wonkasoft_GetResponse_Api {
 	 *   'externalId'   => string,
 	 *   'description'   => string,
 	 *   'images'   => array(
-	 *   	array(
-	 *   		'src'   => string,
-	 *    		'position'   => integer,
-	 *    	),
+	 *      array(
+	 *          'src'   => string,
+	 *          'position'   => integer,
+	 *      ),
 	 *    ),
 	 *    'metaFields'   => array(
-	 *   	array(
-	 *   		'name'   => string,
-	 *    		'value'   => string,
-	 *    	 	'valueType'   => "string" or "integer",
-	 *    	  	'description'   => string,
+	 *      array(
+	 *          'name'   => string,
+	 *          'value'   => string,
+	 *          'valueType'   => "string" or "integer",
+	 *          'description'   => string,
 	 *        ),
 	 *    ),
 	 *    'taxes'   => array(
-	 *   	array(
-	 *   		'name'   => string,
-	 *    		'rate'   => string,
+	 *      array(
+	 *          'name'   => string,
+	 *          'rate'   => string,
 	 *        ),
 	 *    ),
 	 * );
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function create_product_variant( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
-		$payload = array(
-		  'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
-		  'url'   => ( ! empty( $passed_query['url'] ) ? $passed_query['url']: null ),
-		  'sku'   => ( ! empty( $passed_query['sku'] ) ? $passed_query['sku']: null ),
-		  'price'   => ( ! empty( $passed_query['price'] ) ? $passed_query['price']: null ),
-		  'priceTax'   => ( ! empty( $passed_query['price_tax'] ) ? $passed_query['price_tax']: null ),
-		  'previousPrice'   => ( ! empty( $passed_query['previous_price'] ) ? $passed_query['previous_price']: null ),
-		  'previousPriceTax'   => ( ! empty( $passed_query['previous_price_tax'] ) ? $passed_query['previous_price_tax']: null ),
-		  'quantity'   => ( ! empty( $passed_query['quantity'] ) ? $passed_query['quantity']: null ),
-		  'position'   => ( ! empty( $passed_query['position'] ) ? $passed_query['position']: null ),
-		  'barcode'   => ( ! empty( $passed_query['barcode'] ) ? $passed_query['barcode']: null ),
-		  'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
-		  'description'   => ( ! empty( $passed_query['description'] ) ? $passed_query['description']: null ),
-		  'images'   => ( ! empty( $passed_query['images'] ) ? $passed_query['images']: null ),
-		  'metaFields'   => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields']: null ),
-		  'taxes'   => ( ! empty( $passed_query['taxes'] ) ? $passed_query['taxes']: null ),
+		$payload    = array(
+			'name'             => ( ! empty( $passed_query['name'] ) ? $passed_query['name'] : null ),
+			'url'              => ( ! empty( $passed_query['url'] ) ? $passed_query['url'] : null ),
+			'sku'              => ( ! empty( $passed_query['sku'] ) ? $passed_query['sku'] : null ),
+			'price'            => ( ! empty( $passed_query['price'] ) ? $passed_query['price'] : null ),
+			'priceTax'         => ( ! empty( $passed_query['price_tax'] ) ? $passed_query['price_tax'] : null ),
+			'previousPrice'    => ( ! empty( $passed_query['previous_price'] ) ? $passed_query['previous_price'] : null ),
+			'previousPriceTax' => ( ! empty( $passed_query['previous_price_tax'] ) ? $passed_query['previous_price_tax'] : null ),
+			'quantity'         => ( ! empty( $passed_query['quantity'] ) ? $passed_query['quantity'] : null ),
+			'position'         => ( ! empty( $passed_query['position'] ) ? $passed_query['position'] : null ),
+			'barcode'          => ( ! empty( $passed_query['barcode'] ) ? $passed_query['barcode'] : null ),
+			'externalId'       => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id'] : null ),
+			'description'      => ( ! empty( $passed_query['description'] ) ? $passed_query['description'] : null ),
+			'images'           => ( ! empty( $passed_query['images'] ) ? $passed_query['images'] : null ),
+			'metaFields'       => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields'] : null ),
+			'taxes'            => ( ! empty( $passed_query['taxes'] ) ? $passed_query['taxes'] : null ),
 		);
-		$shop_id = $this->shop_id;
+		$shop_id    = $this->shop_id;
 		$product_id = $this->product_id;
-		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants";
+		$payload    = json_encode( $payload );
+		$url        = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants";
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
 	 * Get a single product variant by ID
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
@@ -1205,16 +1237,16 @@ class Wonkasoft_GetResponse_Api {
 			$current_query = $passed_query;
 		} else {
 			$current_query = array(
-				'fields'  => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields']: null ),
+				'fields' => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields'] : null ),
 			);
 		}
 
-		$shop_id = $this->shop_id;
-		$product_id = $this->product_id;
-		$variant_id = $this->variant_id;
+		$shop_id       = $this->shop_id;
+		$product_id    = $this->product_id;
+		$variant_id    = $this->variant_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id?$current_query";
+		$url           = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id?$current_query";
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
@@ -1235,75 +1267,81 @@ class Wonkasoft_GetResponse_Api {
 	 *   'externalId'   => string,
 	 *   'description'   => string,
 	 *   'images'   => array(
-	 *   	array(
-	 *   		'src'   => string,
-	 *    		'position'   => integer,
-	 *    	),
+	 *      array(
+	 *          'src'   => string,
+	 *          'position'   => integer,
+	 *      ),
 	 *   ),
 	 *   'metaFields'   => array(
-	 *   	array(
-	 *   		'name'   => string,
-	 *    		'value'   => string,
-	 *    	 	'valueType'   => "string" or "integer",
-	 *    	  	'description'   => string,
+	 *      array(
+	 *          'name'   => string,
+	 *          'value'   => string,
+	 *          'valueType'   => "string" or "integer",
+	 *          'description'   => string,
 	 *        ),
 	 *   ),
 	 *   'taxes'   => array(
-	 *   	array(
-	 *   		'name'   => string,
-	 *    		'rate'   => string,
+	 *      array(
+	 *          'name'   => string,
+	 *          'rate'   => string,
 	 *        ),
 	 *   ),
 	 * );
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function update_product_variant( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
-		
-		$payload = array(
-		  'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
-		  'url'   => ( ! empty( $passed_query['url'] ) ? $passed_query['url']: null ),
-		  'sku'   => ( ! empty( $passed_query['sku'] ) ? $passed_query['sku']: null ),
-		  'price'   => ( ! empty( $passed_query['price'] ) ? $passed_query['price']: null ),
-		  'priceTax'   => ( ! empty( $passed_query['price_tax'] ) ? $passed_query['price_tax']: null ),
-		  'previousPrice'   => ( ! empty( $passed_query['previous_price'] ) ? $passed_query['previous_price']: null ),
-		  'previousPriceTax'   => ( ! empty( $passed_query['previous_price_tax'] ) ? $passed_query['previous_price_tax']: null ),
-		  'quantity'   => ( ! empty( $passed_query['quantity'] ) ? $passed_query['quantity']: null ),
-		  'position'   => ( ! empty( $passed_query['position'] ) ? $passed_query['position']: null ),
-		  'barcode'   => ( ! empty( $passed_query['barcode'] ) ? $passed_query['barcode']: null ),
-		  'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
-		  'description'   => ( ! empty( $passed_query['description'] ) ? $passed_query['description']: null ),
-		  'images'   => ( ! empty( $passed_query['images'] ) ? $passed_query['images']: null ),
-		  'metaFields'   => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields']: null ),
-		  'taxes'   => ( ! empty( $passed_query['taxes'] ) ? $passed_query['taxes']: null ),
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
+
+		$payload    = array(
+			'name'             => ( ! empty( $passed_query['name'] ) ? $passed_query['name'] : null ),
+			'url'              => ( ! empty( $passed_query['url'] ) ? $passed_query['url'] : null ),
+			'sku'              => ( ! empty( $passed_query['sku'] ) ? $passed_query['sku'] : null ),
+			'price'            => ( ! empty( $passed_query['price'] ) ? $passed_query['price'] : null ),
+			'priceTax'         => ( ! empty( $passed_query['price_tax'] ) ? $passed_query['price_tax'] : null ),
+			'previousPrice'    => ( ! empty( $passed_query['previous_price'] ) ? $passed_query['previous_price'] : null ),
+			'previousPriceTax' => ( ! empty( $passed_query['previous_price_tax'] ) ? $passed_query['previous_price_tax'] : null ),
+			'quantity'         => ( ! empty( $passed_query['quantity'] ) ? $passed_query['quantity'] : null ),
+			'position'         => ( ! empty( $passed_query['position'] ) ? $passed_query['position'] : null ),
+			'barcode'          => ( ! empty( $passed_query['barcode'] ) ? $passed_query['barcode'] : null ),
+			'externalId'       => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id'] : null ),
+			'description'      => ( ! empty( $passed_query['description'] ) ? $passed_query['description'] : null ),
+			'images'           => ( ! empty( $passed_query['images'] ) ? $passed_query['images'] : null ),
+			'metaFields'       => ( ! empty( $passed_query['metaFields'] ) ? $passed_query['metaFields'] : null ),
+			'taxes'            => ( ! empty( $passed_query['taxes'] ) ? $passed_query['taxes'] : null ),
 		);
-		$shop_id = $this->shop_id;
+		$shop_id    = $this->shop_id;
 		$product_id = $this->product_id;
 		$variant_id = $this->variant_id;
-		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id";
+		$payload    = json_encode( $payload );
+		$url        = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id";
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
 	 * Delete product variant
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function delete_product_variant( $passed_query = null ) {
-		if ( ! empty( $this->shop_id ) && ! empty( $this->product_id ) && ! empty( $this->variant_id ) ) return array( 
-			'error' => 'Variables must be before this function is run.',
-			'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.': $this->shop_id ),
-			'product_id' => ( empty( $this->product_id ) ? 'instance variable needs to be set.': $this->product_id ),
-			'variant_id' => ( empty( $this->variant_id ) ? 'instance variable needs to be set.': $this->variant_id ),
-		);
+		if ( ! empty( $this->shop_id ) && ! empty( $this->product_id ) && ! empty( $this->variant_id ) ) {
+			return array(
+				'error'      => 'Variables must be before this function is run.',
+				'shop_id'    => ( empty( $this->shop_id ) ? 'instance variable needs to be set.' : $this->shop_id ),
+				'product_id' => ( empty( $this->product_id ) ? 'instance variable needs to be set.' : $this->product_id ),
+				'variant_id' => ( empty( $this->variant_id ) ? 'instance variable needs to be set.' : $this->variant_id ),
+			);
+		}
 
-		$shop_id = $this->shop_id;
+		$shop_id    = $this->shop_id;
 		$product_id = $this->product_id;
 		$variant_id = $this->variant_id;
-		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id";
+		$url        = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id";
 
 		return $this->wonkasoft_gr_make_call( $url, 'DELETE' );
 	}
@@ -1311,11 +1349,11 @@ class Wonkasoft_GetResponse_Api {
 	/**
 	 *
 	 * Shops
-	 *
 	 */
 
 	/**
 	 * Get a single shop by ID
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
@@ -1324,57 +1362,64 @@ class Wonkasoft_GetResponse_Api {
 			$current_query = $passed_query;
 		} else {
 			$current_query = array(
-				'fields'  => null,
+				'fields' => null,
 			);
 		}
 
-		$shop_id = $this->shop_id;
+		$shop_id       = $this->shop_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . "/shops/$shop_id?$current_query";
+		$url           = $this->getresponse_url . "/shops/$shop_id?$current_query";
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
 	 * Update shop
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function update_shop( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
 		$payload = array(
-			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
-			'locale'   => ( ! empty( $passed_query['locale'] ) ? $passed_query['locale']: null ),
-			'currency'   => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency']: null ),
+			'name'     => ( ! empty( $passed_query['name'] ) ? $passed_query['name'] : null ),
+			'locale'   => ( ! empty( $passed_query['locale'] ) ? $passed_query['locale'] : null ),
+			'currency' => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency'] : null ),
 		);
 		$shop_id = $this->shop_id;
 		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops/$shop_id";
+		$url     = $this->getresponse_url . "/shops/$shop_id";
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
 	 * Delete shop
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function delete_shop( $passed_query = null ) {
-		if ( ! empty( $this->shop_id ) ) return array( 
-			'error' => 'Variables must be before this function is run.',
-			'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.': $this->shop_id ),
-		);
+		if ( ! empty( $this->shop_id ) ) {
+			return array(
+				'error'   => 'Variables must be before this function is run.',
+				'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.' : $this->shop_id ),
+			);
+		}
 
 		$shop_id = $this->shop_id;
-		$url = $this->getresponse_url . "/shops/$shop_id";
+		$url     = $this->getresponse_url . "/shops/$shop_id";
 
 		return $this->wonkasoft_gr_make_call( $url, 'DELETE' );
 	}
 
 	/**
 	 * Get a list of shops
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
@@ -1384,41 +1429,44 @@ class Wonkasoft_GetResponse_Api {
 		} else {
 			$current_query = array(
 				'query'   => array(
-					'name' => ( ! empty( $passed_query['query']['name'] ) ? $passed_query['query']['name']: null ),
+					'name' => ( ! empty( $passed_query['query']['name'] ) ? $passed_query['query']['name'] : null ),
 				),
-				'sort'   => array(
-					'name' => ( ! empty( $passed_query['sort']['name'] ) ? $passed_query['sort']['name']: 'ASC' ),
-					'createdOn' => ( ! empty( $passed_query['sort']['createdOn'] ) ? $passed_query['sort']['createdOn']: 'ASC' ),
+				'sort'    => array(
+					'name'      => ( ! empty( $passed_query['sort']['name'] ) ? $passed_query['sort']['name'] : 'ASC' ),
+					'createdOn' => ( ! empty( $passed_query['sort']['createdOn'] ) ? $passed_query['sort']['createdOn'] : 'ASC' ),
 				),
-				'fields'  => ( ! empty( $passed_query['fields'] ) ? $passed_query['fields']: null ),
-				'perPage'  => ( ! empty( $passed_query['perPage'] ) ? $passed_query['perPage']: null ),
-				'page'  => ( ! empty( $passed_query['page'] ) ? $passed_query['page']: null ),
+				'fields'  => ( ! empty( $passed_query['fields'] ) ? $passed_query['fields'] : null ),
+				'perPage' => ( ! empty( $passed_query['perPage'] ) ? $passed_query['perPage'] : null ),
+				'page'    => ( ! empty( $passed_query['page'] ) ? $passed_query['page'] : null ),
 			);
 		}
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . "/shops?$current_query";
+		$url           = $this->getresponse_url . "/shops?$current_query";
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
 	 * Create shop
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function create_shop( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
 		$payload = array(
-			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
-			'locale'   => ( ! empty( $passed_query['locale'] ) ? $passed_query['locale']: null ),
-			'currency'   => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency']: null ),
+			'name'     => ( ! empty( $passed_query['name'] ) ? $passed_query['name'] : null ),
+			'locale'   => ( ! empty( $passed_query['locale'] ) ? $passed_query['locale'] : null ),
+			'currency' => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency'] : null ),
 		);
 
 		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops";
+		$url     = $this->getresponse_url . '/shops';
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
@@ -1426,11 +1474,11 @@ class Wonkasoft_GetResponse_Api {
 	/**
 	 *
 	 * Taxes
-	 *
 	 */
-	
+
 	/**
 	 * Get a list of taxes
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
@@ -1440,51 +1488,55 @@ class Wonkasoft_GetResponse_Api {
 		} else {
 			$current_query = array(
 				'query'   => array(
-					'name' => ( ! empty( $passed_query['query']['name'] ) ? $passed_query['query']['name']: null ),
-					'createdOn' => array( 
-						'from' => ( ! empty( $passed_query['query']['createdOn']['from'] ) ? $passed_query['query']['createdOn']['from']: null ),
-						'to' => ( ! empty( $passed_query['query']['createdOn']['to'] ) ? $passed_query['query']['createdOn']['to']: null ),
+					'name'      => ( ! empty( $passed_query['query']['name'] ) ? $passed_query['query']['name'] : null ),
+					'createdOn' => array(
+						'from' => ( ! empty( $passed_query['query']['createdOn']['from'] ) ? $passed_query['query']['createdOn']['from'] : null ),
+						'to'   => ( ! empty( $passed_query['query']['createdOn']['to'] ) ? $passed_query['query']['createdOn']['to'] : null ),
 					),
 				),
-				'sort'   => array(
-					'createdOn' => ( ! empty( $passed_query['sort']['createdOn'] ) ? $passed_query['sort']['createdOn']: 'ASC' ),
+				'sort'    => array(
+					'createdOn' => ( ! empty( $passed_query['sort']['createdOn'] ) ? $passed_query['sort']['createdOn'] : 'ASC' ),
 				),
-				'fields'  => ( ! empty( $passed_query['fields'] ) ? $passed_query['fields']: null ),
-				'perPage'  => ( ! empty( $passed_query['perPage'] ) ? $passed_query['perPage']: null ),
-				'page'  => ( ! empty( $passed_query['page'] ) ? $passed_query['page']: null ),
+				'fields'  => ( ! empty( $passed_query['fields'] ) ? $passed_query['fields'] : null ),
+				'perPage' => ( ! empty( $passed_query['perPage'] ) ? $passed_query['perPage'] : null ),
+				'page'    => ( ! empty( $passed_query['page'] ) ? $passed_query['page'] : null ),
 			);
 		}
 
-		$shop_id = $this->shop_id;
+		$shop_id       = $this->shop_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . "/shops/$shop_id/taxes?$current_query";
+		$url           = $this->getresponse_url . "/shops/$shop_id/taxes?$current_query";
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
-	
+
 	/**
 	 * Create tax
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function create_tax( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
 		$payload = array(
-			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
-			'rate'   => ( ! empty( $passed_query['rate'] ) ? $passed_query['rate']: null ),
+			'name' => ( ! empty( $passed_query['name'] ) ? $passed_query['name'] : null ),
+			'rate' => ( ! empty( $passed_query['rate'] ) ? $passed_query['rate'] : null ),
 		);
 
 		$shop_id = $this->shop_id;
 		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops/$shop_id/taxes";
+		$url     = $this->getresponse_url . "/shops/$shop_id/taxes";
 
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
 	 * Get a single tax by ID
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
@@ -1493,58 +1545,64 @@ class Wonkasoft_GetResponse_Api {
 			$current_query = $passed_query;
 		} else {
 			$current_query = array(
-				'fields'  => ( ! empty( $passed_query['fields'] ) ? $passed_query['fields']: null ),
+				'fields' => ( ! empty( $passed_query['fields'] ) ? $passed_query['fields'] : null ),
 			);
 		}
 
-		$shop_id = $this->shop_id;
-		$tax_id = $this->tax_id;
+		$shop_id       = $this->shop_id;
+		$tax_id        = $this->tax_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-		$url = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id?$current_query";
+		$url           = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id?$current_query";
 
 		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
 	 * Update tax
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function update_tax( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
 		$payload = array(
-			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
-			'rate'   => ( ! empty( $passed_query['rate'] ) ? $passed_query['rate']: null ),
+			'name' => ( ! empty( $passed_query['name'] ) ? $passed_query['name'] : null ),
+			'rate' => ( ! empty( $passed_query['rate'] ) ? $passed_query['rate'] : null ),
 		);
 
 		$shop_id = $this->shop_id;
-		$tax_id = $passed_query['tax_id'];
+		$tax_id  = $passed_query['tax_id'];
 		$payload = json_encode( $payload );
-		$url = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id";
-		
+		$url     = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id";
+
 		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
 	 * Delete tax by ID
+	 *
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
 	public function delete_tax_by_ID( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( empty( $passed_query ) ) {
+			return array( 'error' => 'An array query must be passed into this function.' );
+		}
 
 		$shop_id = $this->shop_id;
-		$tax_id = $passed_query['tax_id'];
-		$url = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id";
-		
+		$tax_id  = $passed_query['tax_id'];
+		$url     = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id";
+
 		return $this->wonkasoft_gr_make_call( $url, 'DELETE' );
 	}
 
 	private function wonkasoft_gr_make_call( $url, $type = 'GET', $payload = null ) {
 
-		$ch  = curl_init();
+		$ch = curl_init();
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
