@@ -18,7 +18,7 @@ function theme_options_ajax_post() {
 	$data = ( isset( $_POST['data'] ) ) ? wp_kses_post( wp_unslash( $_POST['data'] ) ) : null;
 	if ( empty( $data ) ) :
 		return false;
-	endif;
+  endif;
 
 	// Pattern for option name sanitize.
 	$pattern = '/([ -])/';
@@ -31,62 +31,62 @@ function theme_options_ajax_post() {
 		foreach ( $current_options as $key => $current_option ) :
 			if ( $data->option_id === $current_option['id'] ) :
 				unset( $current_options[ $key ] );
-			endif;
-		endforeach;
+		  endif;
+	  endforeach;
 		delete_option( $data->option_id );
 		unregister_setting( 'aperabags-theme-options-group', $data->option_id );
 		$data->current_options = $current_options;
 		update_option( 'custom_options_added', $current_options );
 		$data->msg = $data->option_id . ' option was deleted, unregistered as a setting, and the database has been updated.';
 		wp_send_json_success( $data );
-		else :
-			$data->option_label = $data->option_name;
-			$data->option_name  = preg_replace( $pattern, '_', strtolower( $data->option_name ) );
+	else :
+		$data->option_label = $data->option_name;
+		$data->option_name  = preg_replace( $pattern, '_', strtolower( $data->option_name ) );
 
-			if ( ! in_array( $data->option_name, $current_options ) ) :
-				array_push(
-					$current_options,
-					array(
-						'id'          => $data->option_name,
-						'label'       => $data->option_label,
-						'description' => $data->option_description,
-						'api'         => $data->option_api,
-					)
-				);
-				$set_args = array(
-					'type'              => 'string',
-					'description'       => $data->option_description,
-					'sanitize_callback' => 'aperabags_options_sanitize',
-					'show_in_rest'      => false,
-				);
-				register_setting( 'aperabags-theme-options-group', $data->option_name, $set_args );
-				update_option( 'custom_options_added', $current_options );
-				$data->current_options = $current_options;
+		if ( ! in_array( $data->option_name, $current_options ) ) :
+			array_push(
+				$current_options,
+				array(
+					'id'          => $data->option_name,
+					'label'       => $data->option_label,
+					'description' => $data->option_description,
+					'api'         => $data->option_api,
+				)
+			);
+			$set_args = array(
+				'type'              => 'string',
+				'description'       => $data->option_description,
+				'sanitize_callback' => 'aperabags_options_sanitize',
+				'show_in_rest'      => false,
+			);
+			register_setting( 'aperabags-theme-options-group', $data->option_name, $set_args );
+			update_option( 'custom_options_added', $current_options );
+			$data->current_options = $current_options;
 
-				ob_start();
-				wonkasoft_theme_option_parse(
-					array(
-						'id'            => $data->option_name,
-						'label'         => $data->option_label,
-						'value'         => '',
-						'desc_tip'      => true,
-						'description'   => $data->option_description,
-						'wrapper_class' => 'form-row form-row-full form-group',
-						'class'         => 'form-control',
-						'api'           => $data->option_api,
-					)
-				);
+			ob_start();
+			wonkasoft_theme_option_parse(
+				array(
+					'id'            => $data->option_name,
+					'label'         => $data->option_label,
+					'value'         => '',
+					'desc_tip'      => true,
+					'description'   => $data->option_description,
+					'wrapper_class' => 'form-row form-row-full form-group',
+					'class'         => 'form-control',
+					'api'           => $data->option_api,
+				)
+			);
 
-				$data->new_elements = ob_get_clean();
+			$data->new_elements = ob_get_clean();
 
-				$data->msg = 'Current options have been updated';
-				wp_send_json_success( $data );
-			else :
-				$data->current_options = $current_options;
-				$data->msg             = $data->option_name . ' is already a current option.';
-				wp_send_json_success( $data );
-			endif;
-	endif;
+			$data->msg = 'Current options have been updated';
+			wp_send_json_success( $data );
+	  else :
+		  $data->current_options = $current_options;
+		  $data->msg             = $data->option_name . ' is already a current option.';
+		  wp_send_json_success( $data );
+	  endif;
+  endif;
 
 }
 add_action( 'wp_ajax_theme_options_ajax_post', 'theme_options_ajax_post', 10 );
@@ -110,11 +110,11 @@ function wonkasoft_dismiss_popup() {
 	if ( isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
 		unset( $_COOKIE['wonkasoft_newsletter_popup'] );
 		setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * get_theme_mod( 'newsletter_popup_message_session_length' ), '/' );
-	endif;
+  endif;
 
 	if ( ! isset( $_COOKIE['wonkasoft_newsletter_popup'] ) ) :
 		setcookie( 'wonkasoft_newsletter_popup', $wonkasoft_popup_cookie, time() + 60 * 60 * get_theme_mod( 'newsletter_popup_message_session_length' ), '/' );
-	endif;
+  endif;
 
 	wp_send_json_success( $wonkasoft_popup_cookie );
 }
@@ -129,18 +129,18 @@ function wonkasoft_add_youtube_source() {
 	check_ajax_referer( 'ws-request-nonce', 'security' );
 
 	$source  = array();
-	$section = ( isset( $_GET['section'] ) ) ? esc_html( $_GET['section'] ) : '';
+	$section = ( isset( $_GET['section'] ) ) ? esc_html( wp_unslash( $_GET['section'] ) ) : '';
 
-	switch ( $section ):
+	switch ( $section ) :
 		case 'cause':
-			$cause_video = ( get_theme_mod( 'cause_modal_video' ) ) ? get_theme_mod( 'cause_modal_video' ) : '';
+			$cause_video   = ( get_theme_mod( 'cause_modal_video' ) ) ? get_theme_mod( 'cause_modal_video' ) : '';
 			$source['src'] = '<iframe width="780" height="442" src="https://www.youtube.com/embed/' . wp_kses_data( $cause_video ) . '?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>';
 			break;
 		case 'about':
-			$videocode = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
+			$videocode     = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
 			$source['src'] = '<iframe width="780" height="442" src="https://www.youtube.com/embed/' . wp_kses_data( $videocode ) . '?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>';
 
-	endswitch;
+  endswitch;
 
 	wp_send_json_success( $source );
 }
@@ -170,12 +170,12 @@ function wonkasoft_upgrade_account_perks() {
 				$user->add_role( $role, $role_display );
 				$output['msg'] = 'role added';
 				RSActionRewardModule::award_points_for_account_signup( $user_id );
-			endif;
+		  endif;
 
 			if ( ! in_array( $role2, $user->roles ) ) :
 				$user->add_role( $role2, $role_display2 );
 				$output['msg'] = 'roles added';
-			endif;
+		  endif;
 		}
 		$output['user_id']    = $user->ID;
 		$output['user_roles'] = $user->roles;
@@ -311,7 +311,7 @@ function apply_all_aperacash() {
 		update_option( 'rs_enable_disable_auto_redeem_points', 'no' );
 		update_option( 'rs_enable_disable_auto_redeem_checkout', 'no' );
 		WC()->session->set( 'auto_redeemcoupon', 'no' );
-	endif;
+  endif;
 
 	if ( 'false' === $add_discount ) :
 		foreach ( WC()->cart->get_coupons() as $code => $coupon ) :
@@ -322,9 +322,9 @@ function apply_all_aperacash() {
 				endif;
 				WC()->cart->remove_coupon( $code );
 				$data['coupon_removed'] = $code;
-			endif;
-		endforeach;
-	endif;
+		  endif;
+	  endforeach;
+  endif;
 
 	wp_send_json_success( $data, null );
 }
@@ -332,6 +332,7 @@ add_action( 'wp_ajax_apply_all_aperacash', 'apply_all_aperacash' );
 
 /**
  * Setting Cart Response for the abandon carts
+ *
  * @return object returns the getresponse response.
  */
 function wonkasoft_set_cart_response() {
@@ -356,25 +357,29 @@ function wonkasoft_set_cart_response() {
 	$getresponse_api = new Wonkasoft_GetResponse_Api( $data );
 
 	foreach ( $getresponse_api->campaign_list as $campaign ) {
-		if ( 'abandon_cart' === $campaign->name ) :
+		if ( 'apera_195932' === $campaign->name ) :
 			$getresponse_api->campaign_id   = $campaign->campaignId; // phpcs:ignore WordPress for camelcase.
 			$getresponse_api->campaign_name = $campaign->name;
 			break;
-		endif;
+	  endif;
 	}
 
 	$contact_list_query = array(
-		'query' => array(
+		'query'           => array(
 			'email'      => $email,
 			'name'       => $name,
 			'campaignId' => $getresponse_api->campaign_id,
+			'origin'     => 'api',
 		),
+		'additionalFlags' => 'exactMatch',
 	);
+
+	$getresponse_api->contact_list = $getresponse_api->get_contact_list( $contact_list_query );
 
 	if ( 0 == sizeOf( $getresponse_api->contact_list ) ) :
 		$getresponse_api->create_a_new_contact();
 		$getresponse_api->contact_list = $getresponse_api->get_contact_list( $contact_list_query );
-	endif;
+  endif;
 
 	foreach ( $getresponse_api->contact_list as $contact ) {
 		$getresponse_api->contact_id   = $contact->contactId; // phpcs:ignore WordPress for camelcase.
@@ -407,7 +412,7 @@ function wonkasoft_set_cart_response() {
 	if ( empty( $cart_id ) ) :
 		$cart_id             = md5( time() + rand( 0, 99999 ) );
 		$_SESSION['gr_cart'] = $cart_id;
-	endif;
+  endif;
 
 	$cart_hash         = $_SESSION['gr_cart_hash'];
 	$cart_data         = WC()->cart->get_cart();
@@ -492,7 +497,7 @@ function wonkasoft_set_cart_response() {
 		);
 
 		$getresponse_api->new_cart = $getresponse_api->create_cart( $new_cart );
-	endif;
+  endif;
 
 	$output = array(
 		'api' => $getresponse_api,
