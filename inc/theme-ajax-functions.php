@@ -382,7 +382,8 @@ function wonkasoft_set_cart_response() {
   endif;
 
 	foreach ( $getresponse_api->contact_list as $contact ) {
-		$getresponse_api->contact_id   = $contact->contactId; // phpcs:ignore WordPress for camelcase.
+		// phpcs:ignore WordPress for camelcase.
+		$getresponse_api->contact_id   = $contact->contactId;
 		$getresponse_api->contact_name = $contact->name;
 	}
 
