@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'WC_Priority_Mail_under_25_Method' ) ) {
+if ( ! class_exists( 'WC_Priority_Mail_Under_25_Method' ) ) {
 	/**
 	 * Begin class
 	 */
