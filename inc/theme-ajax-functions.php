@@ -366,10 +366,8 @@ function wonkasoft_set_cart_response() {
 
 	$contact_list_query = array(
 		'query' => array(
-			'email'      => $email,
-			'name'       => $name,
-			'campaignId' => $getresponse_api->campaign_id,
-			'origin'     => 'api',
+			'email' => $email,
+			'name'  => $name,
 		),
 	);
 
