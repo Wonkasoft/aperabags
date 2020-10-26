@@ -5,9 +5,9 @@
  * @category   GetResponse API
  * @package    GetResponse
  * @author     Wonkasoft <Support@Wonkasoft.com>
- * @copyright  2019 Wonkasoft
- * @version    1.0.0
- * @since      1.0.0
+ * @copyright  2020 Wonkasoft
+ * @version    1.1.0
+ * @since      1.1.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -65,17 +65,31 @@ class Wonkasoft_GetResponse_Api {
 
 	public $note = null; // Will be set to the note.
 
-	public $shop_id = null; // Will be set to the shop ID.
+	public $shop_carts = array(); // Will be list of shop's carts.
+
+	public $cart_id = null; // Will be set to the getResponse cart ID.
+
+	public $new_cart = null; // Will be set to the new getResponse cart.
+
+	public $order_list = null; // Will be list of orders.
+
+	public $order_id = null; // Will be set to the getResponse order ID.
+
+	public $new_order = null; // Will be set to the new getResponse order.
+
+	public $shop_id = null; // Will be set to the getResponse shop ID.
 
 	public $shop_list = array(); // Will be list of shops.
 
 	public $product_list = array(); // Will be list of products.
 
-	public $product_id = null; // Will be product ID.
+	public $product_id = null; // Will be getResponse product ID.
 
 	public $product_variant_list = array(); // Will be list of variant products.
 
-	public $shop_carts = array(); // Will be list of shop's carts.
+	public $variant_id = null; // Will be getResponse variant product ID.
+
+	public $tax_id = null; // Will be getResponse tax ID.
 
 	/**
 	 * Class Init constructor.
@@ -147,39 +161,15 @@ class Wonkasoft_GetResponse_Api {
 			'dayOfCycle'        => $this->day_of_cycle,
 			'scoring'           => $this->scoring,
 			'ipAddress'         => $this->ip_address,
-			'note'              => $this->note,
+			'note'           	=> $this->note,
 			'tags'              => $this->tags_to_update,
 			'customFieldValues' => $this->custom_fields_to_update,
 		);
 
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . '/contacts/' . $this->contact_id;
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-			curl_close( $ch );
-			$error_obj = json_decode( json_encode( $error_obj ) );
-			return $error_obj;
-	  else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-	  endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -204,33 +194,9 @@ class Wonkasoft_GetResponse_Api {
 		);
 
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . '/contacts';
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-			curl_close( $ch );
-			$error_obj = json_decode( json_encode( $error_obj ) );
-			return $error_obj;
-	  else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-	  endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -256,36 +222,9 @@ class Wonkasoft_GetResponse_Api {
 		endif;
 
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . '/contacts/' . $this->contact_id . '/tags';
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -319,34 +258,9 @@ class Wonkasoft_GetResponse_Api {
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . '/tags?' . $current_query;
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-	  else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-	  endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -416,34 +330,9 @@ class Wonkasoft_GetResponse_Api {
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-			
-		$ch  = curl_init();
 		$url = $this->getresponse_url . '/contacts?' . $current_query;
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
-
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-	  else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-		  	
-		  return $response;
-		endif;
+			
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -489,34 +378,9 @@ class Wonkasoft_GetResponse_Api {
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . '/campaigns?' . $current_query;
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -557,34 +421,9 @@ class Wonkasoft_GetResponse_Api {
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . '/custom-fields?' . $current_query;
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-	  else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-	  endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -600,36 +439,9 @@ class Wonkasoft_GetResponse_Api {
 		);
 
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . '/contacts/' . $this->contact_id . '/custom-fields';
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -641,37 +453,11 @@ class Wonkasoft_GetResponse_Api {
 	public function get_contact_details_by_contact_id( $passed_id = null ) {
 
 		if ( empty( $passed_id ) ) {
-			$msg = 'No contact ID passed in to function.';
-			return $msg;
+			return 'No contact ID passed in to function.';
 		}
 
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/contacts/$passed_id";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
-
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-	  else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-	  endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -738,34 +524,9 @@ class Wonkasoft_GetResponse_Api {
 			$shop_id = $this->shop_id;
 			$current_query = json_decode( json_encode( $current_query ) );
 			$current_query = http_build_query( $current_query );
-
-			$ch  = curl_init();
 			$url = $this->getresponse_url . "/shops/$shop_id/carts?$current_query";
-			curl_setopt( $ch, CURLOPT_URL, $url );
-			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-			curl_setopt( $ch, CURLOPT_HEADER, false );
-			curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-			curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-			$response = curl_exec( $ch );
-
-			if ( false === $response ) :
-				$error_obj = array(
-					'error'  => curl_error( $ch ),
-					'status' => 'failed',
-				);
-
-				curl_close( $ch );
-
-				$error_obj = json_decode( json_encode( $error_obj ) );
-
-				return $error_obj;
-		  else :
-			  curl_close( $ch );
-			  $response = json_decode( $response );
-
-			  return $response;
-		  endif;
+			return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -788,36 +549,9 @@ class Wonkasoft_GetResponse_Api {
 		);
 		$shop_id = $this->shop_id;
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/carts";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -838,34 +572,9 @@ class Wonkasoft_GetResponse_Api {
 		$cart_id = $this->cart_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/carts/$cart_id?$current_query";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-	  else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-	  endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -890,39 +599,12 @@ class Wonkasoft_GetResponse_Api {
 			'externalId'   => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id']: null ),
 			'cartUrl'   => ( ! empty( $passed_query['cart_url'] ) ? $passed_query['cart_url']: null ),
 		);
-		$shop_id = $passed_query['shop_id'];
-		$cart_id = $passed_query['cart_id'];
+		$shop_id = $this->shop_id;
+		$cart_id = $this->cart_id;
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/carts/$cart_id";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -931,39 +613,161 @@ class Wonkasoft_GetResponse_Api {
 	 * @return object              returns response object.
 	 */
 	public function delete_cart( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( ! empty( $this->shop_id ) && ! empty( $this->cart_id ) ) return array( 
+			'error' => 'Variables must be before this function is run.',
+			'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.': $this->shop_id ),
+			'cart_id' => ( empty( $this->cart_id ) ? 'instance variable needs to be set.': $this->cart_id ),
+		);
 
 		$shop_id = $this->shop_id;
-		$cart_id = $passed_query['cart_id'];
-
-		$ch  = curl_init();
+		$cart_id = $this->cart_id;
 		$url = $this->getresponse_url . "/shops/$shop_id/carts/$cart_id";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
+		return $this->wonkasoft_gr_make_call( $url, 'DELETE' );
+	}
 
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
+	/**
+	 *
+	 * Orders
+	 *
+	 */
+	
+	/**
+	 * Get the list of orders
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function get_order_list( $passed_query = null ) {
+		if ( ! empty( $passed_query ) ) {
+			$current_query = $passed_query;
+		} else {
+			$current_query = array(
+				'query'  => array( 
+					'description' => ( ( ! empty( $passed_query['query']['description'] ) ) ? $passed_query['query']['description']: null ),
+					'status' => ( ( ! empty( $passed_query['query']['status'] ) ) ? $passed_query['query']['status']: null ),
+					'category' => ( ( ! empty( $passed_query['query']['category'] ) ) ? $passed_query['query']['category']: null ),
+					'externalId' => ( ( ! empty( $passed_query['query']['external_id'] ) ) ? $passed_query['query']['external_id']: null ),
+					'processedAt' => array( 
+						'from' => ( ( ! empty( $passed_query['query']['processed_at']['from'] ) ) ? $passed_query['query']['processed_at']['from']: null ),
+						'to' => ( ( ! empty( $passed_query['query']['processed_at']['to'] ) ) ? $passed_query['query']['processed_at']['to']: null ),
+					),
+				),
+				'sort'  => array( 
+					'createdOn' => ( ( ! empty( $passed_query['sort']['created_on'] ) ) ? $passed_query['sort']['created_on']: 'ASC' ),
+				),
+				'fields'  => ( ( ! empty( $passed_query['fields'] ) ) ? $passed_query['fields']: null ),
+				'perPage'  => ( ( ! empty( $passed_query['perPage'] ) ) ? $passed_query['perPage']: null ),
+				'page'  => ( ( ! empty( $passed_query['page'] ) ) ? $passed_query['page']: null ),
 			);
+		}
 
-			curl_close( $ch );
+		$shop_id = $this->shop_id;
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
+		$url = $this->getresponse_url . "/shops/$shop_id/orders?$current_query";
 
-			$error_obj = json_decode( json_encode( $error_obj ) );
+		return $this->wonkasoft_gr_make_call( $url );
+	}
 
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
+	/**
+	 * Create order
+	 * $payload = array(
+	 *   'additionalFlags'   => string, ex. 'skipAutomation'
+	 *   'selectedVariants'   => array(
+	 *		'variantId' => string,
+	 *		'price' => number,
+	 *		'priceTax' => number,
+	 *		'quantity' => int,
+	 *		'taxes' => array(
+	 *			'name' => string,
+	 *			'rate' => number,
+	 *		),
+	 *	 ),
+	 *   'contactId'   => string,
+	 *   'orderUrl'   => string,
+	 *   'externalId'   => string,
+	 *   'totalPrice'   => number,
+	 *   'totalPriceTax'   => number,
+	 *   'currency'   => string,
+	 *   'status'   => string,
+	 *   'cartId'   => string,
+	 *   'description'   => string,
+	 *   'shippingPrice'   => number,
+	 *   'shippingAddress'   => array(
+	 *   	'countryCode'   => string,
+	 *    	'name'   => string,
+	 *     	'firstName'   => string,
+	 *     	'lastName'   => string,
+	 *      'address1'   => string,
+	 *      'address2'   => string,
+	 *      'city'   => string,
+	 *      'zip'   => string,
+	 *      'province'   => string,
+	 *      'provinceCode'   => string,
+	 *      'phone'   => string,
+	 *      'company'   => string,
+	 *   ),
+	 *   'billingStatus'   => string,
+	 *   'billingAddress'   => array(
+	 *   	'countryCode'   => string,
+	 *    	'name'   => string,
+	 *     	'firstName'   => string,
+	 *     	'lastName'   => string,
+	 *      'address1'   => string,
+	 *      'address2'   => string,
+	 *      'city'   => string,
+	 *      'zip'   => string,
+	 *      'province'   => string,
+	 *      'provinceCode'   => string,
+	 *      'phone'   => string,
+	 *      'company'   => string,
+	 *   ),
+	 *   'processedAt'   => string,
+	 *   'metaFields'   => array(
+	 *   	array(
+	 *   		'name'   => string,
+	 *   	 	'value'   => string,
+	 *   	  	'valueType'   => "string" or "integer",
+	 *   	   	'description'   => string,
+	 *    	),
+	 *    ),
+	 * );
+	 * @param  array $passed_query Contains passed in params.
+	 * @return object              returns response object.
+	 */
+	public function create_order( $passed_query = null ) {
+		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
 
-			return $response;
-		endif;
+		$current_query = array(
+	 	  'additionalFlags'   => ( ( ! empty( $passed_query['additional_flags'] ) ) ? $passed_query['additional_flags']: null ),
+		);
+
+		$payload = array(
+	 	  'selectedVariants'   => ( ( ! empty( $passed_query['selected_variants'] ) ) ? $passed_query['selected_variants']: null ),
+	 	  'contactId'   => ( ( ! empty( $passed_query['contact_id'] ) ) ? $passed_query['contact_id']: null ),
+	 	  'orderUrl'   => ( ( ! empty( $passed_query['order_url'] ) ) ? $passed_query['order_url']: null ),
+	 	  'externalId'   => ( ( ! empty( $passed_query['external_id'] ) ) ? $passed_query['external_id']: null ),
+	 	  'totalPrice'   => ( ( ! empty( $passed_query['total_price'] ) ) ? $passed_query['total_price']: null ),
+	 	  'totalPriceTax'   => ( ( ! empty( $passed_query['total_price_tax'] ) ) ? $passed_query['total_price_tax']: null ),
+	 	  'currency'   => ( ( ! empty( $passed_query['currency'] ) ) ? $passed_query['currency']: null ),
+	 	  'status'   => ( ( ! empty( $passed_query['status'] ) ) ? $passed_query['status']: null ),
+	 	  'cartId'   => ( ( ! empty( $passed_query['cart_id'] ) ) ? $passed_query['cart_id']: null ),
+	 	  'description'   => ( ( ! empty( $passed_query['description'] ) ) ? $passed_query['description']: null ),
+	 	  'shippingPrice'   => ( ( ! empty( $passed_query['shipping_price'] ) ) ? $passed_query['shipping_price']: null ),
+	 	  'shippingAddress'   => ( ( ! empty( $passed_query['shipping_address'] ) ) ? $passed_query['shipping_address']: null ),
+	 	  'billingStatus'   => ( ( ! empty( $passed_query['billing_status'] ) ) ? $passed_query['billing_status']: null ),
+	 	  'billingAddress'   => ( ( ! empty( $passed_query['billing_address'] ) ) ? $passed_query['billing_address']: null ),
+	 	  'processedAt'   => ( ( ! empty( $passed_query['processed_at'] ) ) ? $passed_query['processed_at']: null ),
+	 	  'metaFields'   => ( ( ! empty( $passed_query['meta_fields'] ) ) ? $passed_query['meta_fields']: null ),
+	 	);
+
+		$shop_id = $this->shop_id;
+		$current_query = json_decode( json_encode( $current_query ) );
+		$current_query = http_build_query( $current_query );
+		$payload = json_encode( $payload );
+		$url = $this->getresponse_url . "/shops/$shop_id/products?$current_query";
+
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -1009,34 +813,9 @@ class Wonkasoft_GetResponse_Api {
 		$shop_id = $this->shop_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/products?$current_query";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -1119,36 +898,9 @@ class Wonkasoft_GetResponse_Api {
 		);
 		$shop_id = $this->shop_id;
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/products";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -1166,37 +918,12 @@ class Wonkasoft_GetResponse_Api {
 		}
 
 		$shop_id = $this->shop_id;
-		$product_id = $passed_query['product_id'];
+		$product_id = $this->product_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -1280,36 +1007,9 @@ class Wonkasoft_GetResponse_Api {
 		$shop_id = $this->shop_id;
 		$product_id = $passed_query['product_id'];
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -1317,40 +1017,18 @@ class Wonkasoft_GetResponse_Api {
 	 * @param  array $passed_query Contains passed in params.
 	 * @return object              returns response object.
 	 */
-	public function delete_product( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+	public function delete_product() {
+		if ( ! empty( $this->shop_id ) && ! empty( $this->product_id ) ) return array( 
+			'error' => 'Variables must be before this function is run.',
+			'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.': $this->shop_id ),
+			'product_id' => ( empty( $this->product_id ) ? 'instance variable needs to be set.': $this->product_id ),
+		);
 
 		$shop_id = $this->shop_id;
-		$product_id = $passed_query['product_id'];
-
-		$ch  = curl_init();
+		$product_id = $this->product_id;
 		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'DELETE' );
 	}
 
 	/**
@@ -1375,36 +1053,9 @@ class Wonkasoft_GetResponse_Api {
 		$shop_id = $this->shop_id;
 		$product_id = $passed_query['product_id'];
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/categories";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -1428,36 +1079,9 @@ class Wonkasoft_GetResponse_Api {
 		$shop_id = $this->shop_id;
 		$product_id = $passed_query['product_id'];
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/meta-fields";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -1499,34 +1123,9 @@ class Wonkasoft_GetResponse_Api {
 		$product_id = $this->product_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants?$current_query";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -1571,7 +1170,6 @@ class Wonkasoft_GetResponse_Api {
 	public function create_product_variant( $passed_query = null ) {
 		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
 
-		
 		$payload = array(
 		  'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
 		  'url'   => ( ! empty( $passed_query['url'] ) ? $passed_query['url']: null ),
@@ -1592,36 +1190,9 @@ class Wonkasoft_GetResponse_Api {
 		$shop_id = $this->shop_id;
 		$product_id = $this->product_id;
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -1639,38 +1210,13 @@ class Wonkasoft_GetResponse_Api {
 		}
 
 		$shop_id = $this->shop_id;
-		$product_id = $passed_query['product_id'];
-		$variant_id = $passed_query['variant_id'];
+		$product_id = $this->product_id;
+		$variant_id = $this->variant_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
+		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id?$current_query";
 
-		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
-
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -1714,7 +1260,6 @@ class Wonkasoft_GetResponse_Api {
 	 */
 	public function update_product_variant( $passed_query = null ) {
 		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
-
 		
 		$payload = array(
 		  'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
@@ -1734,39 +1279,12 @@ class Wonkasoft_GetResponse_Api {
 		  'taxes'   => ( ! empty( $passed_query['taxes'] ) ? $passed_query['taxes']: null ),
 		);
 		$shop_id = $this->shop_id;
-		$product_id = $passed_query['product_id'];
-		$variant_id = $passed_query['variant_id'];
+		$product_id = $this->product_id;
+		$variant_id = $this->variant_id;
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -1775,40 +1293,19 @@ class Wonkasoft_GetResponse_Api {
 	 * @return object              returns response object.
 	 */
 	public function delete_product_variant( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( ! empty( $this->shop_id ) && ! empty( $this->product_id ) && ! empty( $this->variant_id ) ) return array( 
+			'error' => 'Variables must be before this function is run.',
+			'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.': $this->shop_id ),
+			'product_id' => ( empty( $this->product_id ) ? 'instance variable needs to be set.': $this->product_id ),
+			'variant_id' => ( empty( $this->variant_id ) ? 'instance variable needs to be set.': $this->variant_id ),
+		);
 
 		$shop_id = $this->shop_id;
-		$product_id = $passed_query['product_id'];
-		$variant_id = $passed_query['variant_id'];
-
-		$ch  = curl_init();
+		$product_id = $this->product_id;
+		$variant_id = $this->variant_id;
 		$url = $this->getresponse_url . "/shops/$shop_id/products/$product_id/variants/$variant_id";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'DELETE' );
 	}
 
 	/**
@@ -1831,37 +1328,12 @@ class Wonkasoft_GetResponse_Api {
 			);
 		}
 
-		$shop_id = $passed_query['shop_id'];
+		$shop_id = $this->shop_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
+		$url = $this->getresponse_url . "/shops/$shop_id?$current_query";
 
-		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops/$shop_id?" . $current_query;
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
-
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-	  else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-	  endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -1873,43 +1345,15 @@ class Wonkasoft_GetResponse_Api {
 		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
 
 		$payload = array(
-			'shopId'   => ( ! empty( $passed_query['shop_id'] ) ? $passed_query['shop_id']: null ),
 			'name'   => ( ! empty( $passed_query['name'] ) ? $passed_query['name']: null ),
 			'locale'   => ( ! empty( $passed_query['locale'] ) ? $passed_query['locale']: null ),
 			'currency'   => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency']: null ),
 		);
-		$shop_id = $passed_query['shop_id'];
+		$shop_id = $this->shop_id;
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -1918,38 +1362,15 @@ class Wonkasoft_GetResponse_Api {
 	 * @return object              returns response object.
 	 */
 	public function delete_shop( $passed_query = null ) {
-		if ( empty( $passed_query ) ) return array( 'error' => 'An array query must be passed into this function.' );
+		if ( ! empty( $this->shop_id ) ) return array( 
+			'error' => 'Variables must be before this function is run.',
+			'shop_id' => ( empty( $this->shop_id ) ? 'instance variable needs to be set.': $this->shop_id ),
+		);
 
-		$shop_id = $passed_query['shop_id'];
-
-		$ch  = curl_init();
+		$shop_id = $this->shop_id;
 		$url = $this->getresponse_url . "/shops/$shop_id";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'DELETE' );
 	}
 
 	/**
@@ -1977,34 +1398,9 @@ class Wonkasoft_GetResponse_Api {
 
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops?$current_query";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-	  else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-	  endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -2022,36 +1418,9 @@ class Wonkasoft_GetResponse_Api {
 		);
 
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -2089,34 +1458,9 @@ class Wonkasoft_GetResponse_Api {
 		$shop_id = $this->shop_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/taxes?$current_query";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-	  else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-	  endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 	
 	/**
@@ -2134,36 +1478,9 @@ class Wonkasoft_GetResponse_Api {
 
 		$shop_id = $this->shop_id;
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/taxes";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -2181,37 +1498,12 @@ class Wonkasoft_GetResponse_Api {
 		}
 
 		$shop_id = $this->shop_id;
-		$tax_id = $passed_query['tax_id'];
+		$tax_id = $this->tax_id;
 		$current_query = json_decode( json_encode( $current_query ) );
 		$current_query = http_build_query( $current_query );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id?$current_query";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->get_header );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
 
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-	  else :
-		  curl_close( $ch );
-		  $response = json_decode( $response );
-
-		  return $response;
-	  endif;
+		return $this->wonkasoft_gr_make_call( $url );
 	}
 
 	/**
@@ -2230,36 +1522,9 @@ class Wonkasoft_GetResponse_Api {
 		$shop_id = $this->shop_id;
 		$tax_id = $passed_query['tax_id'];
 		$payload = json_encode( $payload );
-
-		$ch  = curl_init();
 		$url = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id";
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $ch, CURLOPT_HEADER, false );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_POST, true );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLPROTO_HTTPS, true );
-
-		$response = curl_exec( $ch );
-
-		if ( false === $response ) :
-			$error_obj = array(
-				'error'  => curl_error( $ch ),
-				'status' => 'failed',
-			);
-
-			curl_close( $ch );
-
-			$error_obj = json_decode( json_encode( $error_obj ) );
-
-			return $error_obj;
-		else :
-			curl_close( $ch );
-			$response = json_decode( $response );
-
-			return $response;
-		endif;
+		
+		return $this->wonkasoft_gr_make_call( $url, 'POST', $payload );
 	}
 
 	/**
@@ -2272,15 +1537,28 @@ class Wonkasoft_GetResponse_Api {
 
 		$shop_id = $this->shop_id;
 		$tax_id = $passed_query['tax_id'];
+		$url = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id";
+		
+		return $this->wonkasoft_gr_make_call( $url, 'DELETE' );
+	}
+
+	private function wonkasoft_gr_make_call( $url, $type = 'GET', $payload = null ) {
 
 		$ch  = curl_init();
-		$url = $this->getresponse_url . "/shops/$shop_id/taxes/$tax_id";
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $ch, CURLOPT_HEADER, false );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, $this->post_header );
-		curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
 		curl_setopt( $ch, CURLPROTO_HTTPS, true );
+		switch ( $type ) :
+			case 'DELETE':
+				curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'DELETE' );
+				break;
+			case 'POST':
+				curl_setopt( $ch, CURLOPT_POST, true );
+				curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+
+		endswitch;
 
 		$response = curl_exec( $ch );
 
@@ -2301,5 +1579,6 @@ class Wonkasoft_GetResponse_Api {
 
 			return $response;
 		endif;
+
 	}
 }

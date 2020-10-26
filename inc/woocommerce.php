@@ -48,8 +48,6 @@ function apera_bags_woocommerce_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'apera_bags_woocommerce_scripts', 9 );
 
-// require_once get_stylesheet_directory() . '/inc/class-wonkasoft-wc-meta-box-coupon-data.php';
-
 /**
 * Disable the default WooCommerce stylesheet.
 *
@@ -861,16 +859,21 @@ function wonka_woocommerce_form_field( $field, $key, $args, $value ) {
 }
 add_filter( 'woocommerce_form_field', 'wonka_woocommerce_form_field', 10, 4 );
 
-function wonkasoft_woocommerce_init( $array ) { 
-    if ( is_user_logged_in() || is_admin() ) :
-    	return;
-    endif; 
+/**
+ * Wonkasoft woocommerce init sets a session if user not logged in.
+ *
+ * @param  array $array passed parameters.
+ */
+function wonkasoft_woocommerce_init( $array ) {
+	if ( is_user_logged_in() || is_admin() ) :
+		return;
+	endif;
 
-    if ( ! WC()->session->has_session() ) :
-    	WC()->session->set_customer_session_cookie(true);
-    endif;
-}; 
-add_action( 'woocommerce_init', 'wonkasoft_woocommerce_init', 10, 1 ); 
+	if ( ! WC()->session->has_session() ) :
+		WC()->session->set_customer_session_cookie( true );
+	endif;
+};
+add_action( 'woocommerce_init', 'wonkasoft_woocommerce_init', 10, 1 );
 
 /**
  * This builds a custom table of order details on the checkout page.
@@ -1163,7 +1166,7 @@ add_filter( 'woocommerce_cart_totals_coupon_html', 'wonkasoft_woocommerce_cart_t
  */
 function wonka_woocommerce_update_order_review_fragments( $fragments ) {
 	$current_method = WC()->session->get( 'chosen_shipping_methods' )[0];
-	$chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->session->chosen_shipping_methods[0] : '';
+	$chosen_method  = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->session->chosen_shipping_methods[0] : '';
 
 	foreach ( WC()->session->get( 'shipping_for_package_0' )['rates'] as $method_id => $rate ) :
 		if ( $current_method === $method_id ) :
@@ -2373,7 +2376,6 @@ add_action( 'woocommerce_review_order_before_submit', 'wonka_woocommerce_review_
  * Styles and Code for compare plugin
  *
  * @author Carlos
- * @return    [return description]
  */
 function add_theme_style_to_compare() {
 	 wp_enqueue_style( 'apera-bags-style', get_stylesheet_uri(), array(), time() );
@@ -2503,7 +2505,7 @@ add_filter( 'yith_woocompare_filter_table_fields', 'wonkasoft_filter_yith_woocom
 /**
  * This is to add images to the new order email template
  *
- * @param  string $output filtered out.
+ * @param  string $table filtered out.
  * @param  object $order  Order information.
  * @return filter         filtered content
  * @since 1.0.1 New requests
@@ -2586,7 +2588,7 @@ function ws_restrict_usps_priority_mail_under_25( $is_available, $package ) {
 	}
 	return $is_available;
 }
-add_filter( 'woocommerce_shipping_USPS_Priority_Mail_under_25_is_available', 'ws_restrict_usps_priority_mail_under_25', 10, 2 );
+add_filter( 'woocommerce_shipping_USPS_Priority_Mail_Under_25_is_available', 'ws_restrict_usps_priority_mail_under_25', 10, 2 );
 
 /**
  * This sets the availability of this shipping message.
@@ -2671,206 +2673,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 This initiates added shipping options.
 	 */
 	function ws_shipping_method_init() {
-
-		if ( ! class_exists( 'WC_Priority_Mail_Shipping_NP_Method' ) ) {
-			class WC_Priority_Mail_Shipping_NP_Method extends WC_Shipping_Method {
-
-				/**
-				 Constructor for your shipping class
-
-				 @access public
-				 @return void
-				 */
-				public function __construct() {
-						$this->id                 = 'USPS_Priority_Mail_NP'; // Id for your shipping method. Should be uunique.
-						$this->method_title       = __( 'USPS Priority Mail Non-Perks Members' );  // Title shown in admin
-						$this->method_description = __( 'USPS Priority Mail Flat Rate for Non-perks Members' ); // Description shown in admin
-						$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled
-						$this->title              = 'Priority 1-3 business days'; // This can be added as an setting but for this example its forced.
-						$this->init();
-				}
-				/**
-				 Init your settings
-
-				 @access public
-				 @return void
-				 */
-				public function init() {
-					// Load the settings API.
-					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
-					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings.
-					// Save settings in admin if you have any defined.
-					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-				}
-				/**
-				 Calculate_shipping function.
-
-				 @access public
-				 @param mixed $package contains the packages.
-				 @return void
-				 */
-				public function calculate_shipping( $package = array() ) {
-					$rate = array(
-						'id'       => $this->id,
-						'label'    => $this->title,
-						'cost'     => '10.00',
-						'calc_tax' => 'per_item',
-					);
-					// Register the rate.
-					$this->add_rate( $rate );
-				}
-			}
-		}
-
-		if ( ! class_exists( 'WC_Priority_Mail_Express_Shipping_Method' ) ) {
-			class WC_Priority_Mail_Express_Shipping_Method extends WC_Shipping_Method {
-
-				/**
-				 Constructor for your shipping class
-
-				 @access public
-				 @return void
-				 */
-				public function __construct() {
-					$this->id                 = 'USPS_Priority_Mail_Express'; // Id for your shipping method. Should be uunique.
-					$this->method_title       = __( 'USPS Priority Mail Express' );  // Title shown in admin.
-					$this->method_description = __( 'USPS Priority Mail Express Flat Rate' ); // Description shown in admin.
-					$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-					$this->title              = 'Overnight 1 business day'; // This can be added as an setting but for this example its forced.
-					$this->init();
-				}
-				/**
-				 Init your settings
-
-				 @access public
-				 @return void
-				 */
-				public function init() {
-					// Load the settings API.
-					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
-					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings.
-					// Save settings in admin if you have any defined.
-					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-				}
-				/**
-				 Calculate_shipping function.
-
-				 @access public
-				 @param mixed $package contains the packages.
-				 @return void
-				 */
-				public function calculate_shipping( $package = array() ) {
-					$rate = array(
-						'id'       => $this->id,
-						'label'    => $this->title,
-						'cost'     => '30.00',
-						'calc_tax' => 'per_item',
-					);
-					// Register the rate.
-					$this->add_rate( $rate );
-				}
-			}
-		}
-
-		if ( ! class_exists( 'WC_Priority_Mail_Express_Shipping_NP_Method' ) ) {
-			class WC_Priority_Mail_Express_Shipping_NP_Method extends WC_Shipping_Method {
-
-				/**
-				 Constructor for your shipping class
-
-				 @access public
-				 @return void
-				 */
-				public function __construct() {
-						$this->id                 = 'USPS_Priority_Mail_Express_NP'; // Id for your shipping method. Should be uunique.
-						$this->method_title       = __( 'USPS Priority Mail Express Non-Perks Members' );  // Title shown in admin.
-						$this->method_description = __( 'USPS Priority Mail Express Flat Rate for Non-Perks Members' ); // Description shown in admin.
-						$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-						$this->title              = 'Overnight 1 business day'; // This can be added as an setting but for this example its forced.
-						$this->init();
-				}
-				/**
-				 Init your settings
-
-				 @access public
-				 @return void
-				 */
-				public function init() {
-					// Load the settings API.
-					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
-					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings.
-					// Save settings in admin if you have any defined.
-					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-				}
-				/**
-				 calculate_shipping function.
-
-				 @access public
-				 @param mixed $package
-				 @return void
-				 */
-				public function calculate_shipping( $package = array() ) {
-					$rate = array(
-						'id'       => $this->id,
-						'label'    => $this->title,
-						'cost'     => '50.00',
-						'calc_tax' => 'per_item',
-					);
-					// Register the rate.
-					$this->add_rate( $rate );
-				}
-			}
-		}
-
-		if ( ! class_exists( 'WC_Priority_Mail_under_25_Method' ) ) {
-			class WC_Priority_Mail_under_25_Method extends WC_Shipping_Method {
-
-				/**
-				 Constructor for your shipping class
-
-				 @access public
-				 @return void
-				 */
-				public function __construct() {
-						$this->id                 = 'USPS_Priority_Mail_under_25'; // Id for your shipping method. Should be uunique.
-						$this->method_title       = __( 'USPS Priority Mail' );  // Title shown in admin.
-						$this->method_description = __( 'USPS Priority Mail Flate Rate for orders under $25' ); // Description shown in admin.
-						$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-						$this->title              = 'Priority 1-3 business days'; // This can be added as an setting but for this example its forced.
-						$this->init();
-				}
-				/**
-				 Init your settings
-
-				 @access public
-				 @return void
-				 */
-				public function init() {
-					// Load the settings API.
-					$this->init_settings(); // This is part of the settings API. Loads settings you previously init.
-					$this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings.
-					// Save settings in admin if you have any defined.
-					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-				}
-				/**
-				 calculate_shipping function.
-
-				 @access public
-				 @param mixed $package
-				 @return void
-				 */
-				public function calculate_shipping( $package = array() ) {
-					$rate = array(
-						'id'       => $this->id,
-						'label'    => $this->title,
-						'cost'     => '10.00',
-						'calc_tax' => 'per_item',
-					);
-					// Register the rate.
-					$this->add_rate( $rate );
-				}
-			}
-		}
+		require_once get_stylesheet_directory() . '/inc/class-wc-priority-mail-shipping-np-method.php';
+		require_once get_stylesheet_directory() . '/inc/class-wc-priority-mail-express-shipping-np-method.php';
+		require_once get_stylesheet_directory() . '/inc/class-wc-priority-mail-under-25-method.php';
+		require_once get_stylesheet_directory() . '/inc/class-wc-priority-mail-express-shipping-method.php';
 	}
 
 	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
@@ -2882,7 +2688,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	function add_ws_shipping_methods( $methods ) {
 
-		$methods['USPS_Priority_Mail']            = 'WC_Priority_Mail_under_25_Method';
+		$methods['USPS_Priority_Mail']            = 'WC_Priority_Mail_Under_25_Method';
 		$methods['USPS_Priority_Mail_NP']         = 'WC_Priority_Mail_Shipping_NP_Method';
 		$methods['USPS_Priority_Mail_Express']    = 'WC_Priority_Mail_Express_Shipping_Method';
 		$methods['USPS_Priority_Mail_Express_NP'] = 'WC_Priority_Mail_Express_Shipping_NP_Method';
@@ -3562,6 +3368,7 @@ add_action( 'save_post', 'wonkasoft_featured_product_img_save_post', 10 );
 
 /**
  * This changed due to not using cart page.
+ *
  * @param  string $url Contains the currently set page permalink.
  * @return string      Returns filtered page permalink.
  */

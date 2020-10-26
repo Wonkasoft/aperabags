@@ -131,20 +131,16 @@ function wonkasoft_add_youtube_source() {
 	$source  = array();
 	$section = ( isset( $_GET['section'] ) ) ? esc_html( $_GET['section'] ) : '';
 
-	if ( 'cause' === $section ) {
+	switch ( $section ):
+		case 'cause':
+			$cause_video = ( get_theme_mod( 'cause_modal_video' ) ) ? get_theme_mod( 'cause_modal_video' ) : '';
+			$source['src'] = '<iframe width="780" height="442" src="https://www.youtube.com/embed/' . wp_kses_data( $cause_video ) . '?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>';
+			break;
+		case 'about':
+			$videocode = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
+			$source['src'] = '<iframe width="780" height="442" src="https://www.youtube.com/embed/' . wp_kses_data( $videocode ) . '?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>';
 
-		$cause_video = ( get_theme_mod( 'cause_modal_video' ) ) ? get_theme_mod( 'cause_modal_video' ) : '';
-
-		$source['src'] = '<iframe width="780" height="442" src="https://www.youtube.com/embed/' . wp_kses_data( $cause_video ) . '?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>';
-
-	}
-
-	if ( 'about' === $section ) {
-
-		$videocode = ( get_theme_mod( 'about_the_brand_video' ) ) ? get_theme_mod( 'about_the_brand_video' ) : '';
-
-		$source['src'] = '<iframe width="780" height="442" src="https://www.youtube.com/embed/' . wp_kses_data( $videocode ) . '?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allow="accelerometer; autoplay; gyroscope;" allowfullscreen></iframe>';
-	}
+	endswitch;
 
 	wp_send_json_success( $source );
 }
@@ -281,19 +277,19 @@ function apply_all_aperacash() {
 			return;
 		}
 
-		$UserId     = get_current_user_id();
-		$PointsData = new RS_Points_Data( $UserId );
-		$Points     = $PointsData->total_available_points();
+		$user_id     = get_current_user_id();
+		$points_data = new RS_Points_Data( $user_id );
+		$points      = $points_data->total_available_points();
 
-		if ( empty( $Points ) ) {
+		if ( empty( $points ) ) {
 			return;
 		}
 
-		if ( $Points < get_option( 'rs_first_time_minimum_user_points' ) ) {
+		if ( $points < get_option( 'rs_first_time_minimum_user_points' ) ) {
 			return;
 		}
 
-		if ( $Points < get_option( 'rs_minimum_user_points_to_redeem' ) ) {
+		if ( $points < get_option( 'rs_minimum_user_points_to_redeem' ) ) {
 			return;
 		}
 
@@ -305,12 +301,12 @@ function apply_all_aperacash() {
 			return;
 		}
 
-		$CartSubtotal = srp_cart_subtotal();
+		$cart_subtotal = srp_cart_subtotal();
 
-		$MinCartTotal = get_option( 'rs_minimum_cart_total_points' );
-		$MaxCartTotal = get_option( 'rs_maximum_cart_total_points' );
+		$min_cart_total = get_option( 'rs_minimum_cart_total_points' );
+		$max_cart_total = get_option( 'rs_maximum_cart_total_points' );
 
-		$capture = RSRedeemingFrontend::auto_redeeming_in_checkout( $UserId, $Points, $CartSubtotal, $MaxCartTotal, $MinCartTotal );
+		$capture = RSRedeemingFrontend::auto_redeeming_in_checkout( $user_id, $points, $cart_subtotal, $max_cart_total, $min_cart_total );
 
 		update_option( 'rs_enable_disable_auto_redeem_points', 'no' );
 		update_option( 'rs_enable_disable_auto_redeem_checkout', 'no' );
@@ -343,7 +339,7 @@ function wonkasoft_set_cart_response() {
 	wp_verify_nonce( $nonce, 'ws-request-nonce' ) || die( 'nonce failed' );
 
 	$email = ( isset( $_REQUEST['email'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['email'] ) ) : null;
-	$name = ( isset( $_REQUEST['first_name'] ) && isset( $_REQUEST['last_name'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['first_name'] . ' ' . $_REQUEST['last_name'] ) ) : null;
+	$name  = ( isset( $_REQUEST['first_name'] ) && isset( $_REQUEST['last_name'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['first_name'] . ' ' . $_REQUEST['last_name'] ) ) : null;
 	if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
 		$ip = $_SERVER['HTTP_CLIENT_IP'];
 	} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
@@ -352,36 +348,36 @@ function wonkasoft_set_cart_response() {
 		$ip = $_SERVER['REMOTE_ADDR'];
 	}
 	$data = array(
-		'email' => $email,
+		'email'        => $email,
 		'contact_name' => $name,
-		'ip_address' => $ip,
+		'ip_address'   => $ip,
 	);
-	
+
 	$getresponse_api = new Wonkasoft_GetResponse_Api( $data );
-	
-	foreach( $getresponse_api->campaign_list as $campaign ) {
+
+	foreach ( $getresponse_api->campaign_list as $campaign ) {
 		if ( 'abandon_cart' === $campaign->name ) :
-			$getresponse_api->campaign_id = $campaign->campaignId;
+			$getresponse_api->campaign_id   = $campaign->campaignId; // phpcs:ignore WordPress for camelcase.
 			$getresponse_api->campaign_name = $campaign->name;
 			break;
-		endif; 
+		endif;
 	}
 
 	$contact_list_query = array(
 		'query' => array(
-			'email' => $email,
-			'name' => $name,
+			'email'      => $email,
+			'name'       => $name,
 			'campaignId' => $getresponse_api->campaign_id,
 		),
 	);
-		
+
 	if ( 0 == sizeOf( $getresponse_api->contact_list ) ) :
 		$getresponse_api->create_a_new_contact();
 		$getresponse_api->contact_list = $getresponse_api->get_contact_list( $contact_list_query );
 	endif;
 
-	foreach( $getresponse_api->contact_list as $contact ) {
-		$getresponse_api->contact_id = $contact->contactId;
+	foreach ( $getresponse_api->contact_list as $contact ) {
+		$getresponse_api->contact_id   = $contact->contactId; // phpcs:ignore WordPress for camelcase.
 		$getresponse_api->contact_name = $contact->name;
 	}
 
@@ -389,45 +385,43 @@ function wonkasoft_set_cart_response() {
 		'query'   => array(
 			'name' => 'Aperabags.com',
 		),
-		'sort'   => array(
+		'sort'    => array(
 			'name' => 'ASC',
 		),
-		'sort'   => array(
+		'sort'    => array(
 			'createdOn' => 'ASC',
 		),
 		'fields'  => null,
-		'perPage'  => null,
-		'page'  => null,
+		'perPage' => null,
+		'page'    => null,
 	);
 
 	$getresponse_api->shop_list = $getresponse_api->get_list_of_shops( $shop_query );
 
-	foreach( $getresponse_api->shop_list as $shop ) {
+	foreach ( $getresponse_api->shop_list as $shop ) {
 		$getresponse_api->shop_id = $shop->shopId;
 	}
-	
 
 	$cart_id = $_SESSION['gr_cart'];
 
 	if ( empty( $cart_id ) ) :
-		$cart_id = md5( time() + rand( 0, 99999 ) );
+		$cart_id             = md5( time() + rand( 0, 99999 ) );
 		$_SESSION['gr_cart'] = $cart_id;
 	endif;
 
-
-	$cart_hash = $_SESSION['gr_cart_hash'];
-	$cart_data = WC()->cart->get_cart();
+	$cart_hash         = $_SESSION['gr_cart_hash'];
+	$cart_data         = WC()->cart->get_cart();
 	$selected_variants = array();
 
 	$data = array();
 	foreach ( $cart_data as $row ) {
-		$data[] = array(
+		$data[]      = array(
 			'product_id'    => $row['product_id'],
 			'variation_id'  => $row['variation_id'],
 			'quantity'      => $row['quantity'],
 			'line_total'    => $row['line_total'],
 			'line_tax'      => $row['line_tax'],
-			'line_subtotal' => $row['line_subtotal']
+			'line_subtotal' => $row['line_subtotal'],
 		);
 		$get_product = array(
 			'query' => array(
@@ -436,7 +430,7 @@ function wonkasoft_set_cart_response() {
 		);
 
 		$getresponse_api->product_list = $getresponse_api->get_product_list( $get_product );
-		$getresponse_api->product_id = $getresponse_api->product_list[0]->productId;
+		$getresponse_api->product_id   = $getresponse_api->product_list[0]->productId;
 
 		$get_variant = array(
 			'query' => array(
@@ -450,29 +444,30 @@ function wonkasoft_set_cart_response() {
 	$cc_hash = md5( serialize( $data ) );
 
 	if ( empty( $cart_id ) ) {
-		$cart_id = md5( time() + rand( 0, 99999 ) );
+		$cart_id             = md5( time() + rand( 0, 99999 ) );
 		$_SESSION['gr_cart'] = $cart_id;
-	} else if ( $cc_hash !== $cart_hash && empty( $cart_data ) ) {
+	} elseif ( $cc_hash !== $cart_hash && empty( $cart_data ) ) {
 		$cart_to_remove = array(
-			'cart_id' => $_SESSION['gr_cart']
+			'cart_id' => $cart_id,
 		);
 		$getresponse_api->delete_cart( $cart_to_remove );
 		$_SESSION['gr_cart_hash'] = $cc_hash;
 
 		return;
-	} else if ( $cc_hash === $cart_hash ) {
+	} elseif ( $cc_hash === $cart_hash ) {
 		return;
 	}
-	
+
+	$getresponse_api->cart_id = $cart_id;
 	$_SESSION['gr_cart_hash'] = $cc_hash;
 
 	$cart_query = array(
 		'query'   => array(
-			'createdOn' => array(
+			'createdOn'  => array(
 				'from' => null,
-				'to' => null,
+				'to'   => null,
 			),
-			'externalId' => $cart_id,
+			'externalId' => $getresponse_api->cart_id,
 		),
 		'sort'    => array(
 			'createdOn' => 'DESC',
@@ -481,30 +476,26 @@ function wonkasoft_set_cart_response() {
 		'perPage' => null,
 		'page'    => null,
 	);
-		
+
 	$getresponse_api->shop_carts = $getresponse_api->get_shop_carts( $cart_query );
 
-	if (  0 == sizeOf( $getresponse_api->shop_carts ) ) :
+	if ( 0 == sizeOf( $getresponse_api->shop_carts ) ) :
 		$new_cart = array(
-			'shop_id'   => $getresponse_api->shop_id,
-			'contact_id'   => $getresponse_api->contact_id,
-			'total_price'   => number_format( intval( json_decode( json_encode( WC()->cart->get_totals() ) )->subtotal ), 2 ),
+			'shop_id'           => $getresponse_api->shop_id,
+			'contact_id'        => $getresponse_api->contact_id,
+			'total_price'       => number_format( intval( json_decode( json_encode( WC()->cart->get_totals() ) )->subtotal ), 2 ),
 			'total_tax_price'   => number_format( intval( json_decode( json_encode( WC()->cart->get_totals() ) )->total ), 2 ),
-			'currency'   => 'USD',
-			'selected_variants'   => $selected_variants,
-			'external_id'   => $cart_id,
-			'cart_url'   => wc_get_checkout_url(),
+			'currency'          => 'USD',
+			'selected_variants' => $selected_variants,
+			'external_id'       => $getresponse_api->cart_id,
+			'cart_url'          => wc_get_checkout_url(),
 		);
 
-		$new_created_cart = $getresponse_api->create_cart( $new_cart );
-	endif; 
-
+		$getresponse_api->new_cart = $getresponse_api->create_cart( $new_cart );
+	endif;
 
 	$output = array(
 		'api' => $getresponse_api,
-		'totals' => json_decode( json_encode( WC()->cart->get_totals() ) )->subtotal,
-		'total_price'   => number_format( intval( json_decode( json_encode( WC()->cart->get_totals() ) )->subtotal ), 2 ),
-		'total_tax_price'   => number_format( intval( json_decode( json_encode( WC()->cart->get_totals() ) )->total ), 2 ),
 	);
 
 	wp_send_json_success( $output, 200 );

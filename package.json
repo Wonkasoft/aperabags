@@ -11,7 +11,7 @@
     "build": "gulp build"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.12",
+    "browser-sync": "^2.26.13",
     "check-node-version": "^4.0.3",
     "debug": "^4.2.0",
     "fs-extra": "^9.0.1",
