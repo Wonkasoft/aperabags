@@ -4,7 +4,8 @@
 .topbar-notice {
 	position: relative;
 	color: #ffffff;
-	height: 40px;
+	padding: 15px 0;
+	height: auto;
 	width: calc(100% + 30px);
 	z-index: 150;
 	@include prefix( box-shadow, $box_shadow_6, o moz webkit );
@@ -16,8 +17,14 @@
 		text-align: center;
 
 		span.topbar-message-text {
+			display: flex;
+			flex-flow: column wrap;
 			letter-spacing: 3px;
 			@include font-size( .7 );
+
+			.wonka-btn {
+				margin-top: 8px;
+			}
 		}
 	}
 

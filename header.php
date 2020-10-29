@@ -35,7 +35,13 @@
 			?>
 			<div class="row topbar-notice" style="background:<?php echo esc_html( get_theme_mod( 'topbar_color', '#000' ) ); ?>;">
 				<div class="col col-12">
-					<span class="topbar-message-text"><?php echo esc_html( get_theme_mod( 'topbar_message', 'Please set notice in customizer.' ) ); ?> </span>
+					<span class="topbar-message-text"><?php echo wp_kses( get_theme_mod( 'topbar_message', 'Please set notice in customizer.' ), array(
+						'a' => array(
+							'class' => array(),
+							'href' => array(),
+							'target' => array(),
+						),
+						) ); ?> </span>
 				</div><!-- col col-12 -->
 			</div><!-- topbar-notice -->
 		<?php endif; ?>
