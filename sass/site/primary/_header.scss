@@ -29,10 +29,12 @@
 	}
 
 	@include media-breakpoint( md ) {
+		> div {
 
-		span.topbar-message-text {
-			letter-spacing: 4px;
-			@include font-size( .9 );
+			span.topbar-message-text {
+				letter-spacing: 4px;
+				@include font-size( 1 );
+			}
 		}
 	}
 }

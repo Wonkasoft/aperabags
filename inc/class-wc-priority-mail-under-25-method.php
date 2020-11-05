@@ -16,10 +16,10 @@ if ( ! class_exists( 'WC_Priority_Mail_Under_25_Method' ) ) {
 	class WC_Priority_Mail_Under_25_Method extends WC_Shipping_Method {
 
 		/**
-		 Constructor for your shipping class
-
-		 @access public
-		 @return void
+		 * Constructor for your shipping class
+		 *
+		 * @access public
+		 * @return void
 		 */
 		public function __construct() {
 				$this->id                 = 'USPS_Priority_Mail_Under_25'; // Id for your shipping method. Should be uunique.
