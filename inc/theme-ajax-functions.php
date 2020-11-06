@@ -503,9 +503,7 @@ function wonkasoft_set_cart_response() {
   endif;
 
 	$output = array(
-		'api'        => $getresponse_api,
-		'first_list' => $first_list,
-		'sec_list'   => $sec_list,
+		'api' => $getresponse_api,
 	);
 
 	wp_send_json_success( $output, 200 );

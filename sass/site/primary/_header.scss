@@ -50,11 +50,15 @@
 	@include prefix( transition, all .3s ease-in-out, o moz webkit );
 
 	&.transparent-header {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-wrap: wrap;
 		background: #646371;
 	}
 
 	.brand-nav-bar {
-		height: 100%;
+		height: auto;
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;

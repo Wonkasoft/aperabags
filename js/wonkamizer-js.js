@@ -1823,6 +1823,9 @@ var componentForm;
 		{
 			header_el = document.querySelector( '#masthead' );
 			header_height = header_el.offsetHeight;
+			if ( document.querySelector( '.topbar-notice' ) ) {
+				header_height = document.querySelector( '.brand-nav-bar' ).offsetHeight + document.querySelector( '.topbar-notice' ).offsetHeight + 15;
+			}
 			add_fixed_header( window.pageYOffset, header_el, header_height );
 
 			window.onscroll = function() 

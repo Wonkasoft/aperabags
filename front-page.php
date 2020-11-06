@@ -295,6 +295,7 @@ if ( is_home() ) :
 				<?php
 				/**
 				 * This array will set the order to display cats in.
+				 *
 				 * @var array
 				 */
 				$mapped_cats_order = array(
@@ -303,11 +304,14 @@ if ( is_home() ) :
 					'Accessories',
 					'Totes',
 				);
-				$terms = $cats->get_terms();
-				usort( $terms, function( $a, $b ) use ( $mapped_cats_order ) {
-					return array_search( $a->name, $mapped_cats_order ) > array_search( $b->name, $mapped_cats_order );
-				});
-					
+				$terms             = $cats->get_terms();
+				usort(
+					$terms,
+					function( $a, $b ) use ( $mapped_cats_order ) {
+						return array_search( $a->name, $mapped_cats_order ) > array_search( $b->name, $mapped_cats_order );
+					}
+				);
+
 				foreach ( $terms as $cur_cat ) :
 					if ( in_array( $cur_cat->name, $mapped_cats_order ) ) :
 						?>
@@ -357,6 +361,7 @@ if ( is_home() ) :
 			</div>
 		</div>
 	</section>
+
 <?php endif; ?>
 <?php else : ?>
 	<div id="primary" class="content-area row">
