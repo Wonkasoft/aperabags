@@ -354,9 +354,7 @@ function wonkasoft_set_cart_response() {
 
 	foreach ( $getresponse_api->campaign_list as $campaign ) {
 		if ( 'apera_195932' === $campaign->name ) :
-
-			// phpcs:ignore WordPress for camelcase.
-			$getresponse_api->campaign_id   = $campaign->campaignId;
+			$getresponse_api->campaign_id   = $campaign->campaignId;// phpcs:ignore.
 			$getresponse_api->campaign_name = $campaign->name;
 			break;
 		endif;
@@ -368,16 +366,11 @@ function wonkasoft_set_cart_response() {
 		),
 	);
 
-	if ( 0 == count( $getresponse_api->contact_list ) ) :
-		$getresponse_api->create_a_new_contact();
-		$getresponse_api->contact_list = $getresponse_api->get_contact_list( $contact_list_query );
-	endif;
-
 	foreach ( $getresponse_api->contact_list as $contact ) {
-
-		// phpcs:ignore WordPress for camelcase.
-		$getresponse_api->contact_id   = $contact->contactId;
-		$getresponse_api->contact_name = $contact->name;
+		if ( $contact->campaign->campaignId == $getresponse_api->campaign_id ) :
+			$getresponse_api->contact_id   = $contact->contactId;// phpcs:ignore.
+			$getresponse_api->contact_name = $contact->name;
+		endif;
 	}
 
 	$shop_query = array(
