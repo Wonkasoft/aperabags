@@ -129,7 +129,7 @@ function wonkasoft_add_youtube_source() {
 	check_ajax_referer( 'ws-request-nonce', 'security' );
 
 	$source  = array();
-	$section = ( isset( $_GET['section'] ) ) ? esc_html( wp_unslash( $_GET['section'] ) ) : '';
+	$section = ( isset( $_GET['section'] ) ) ? wp_kses_post( wp_unslash( $_GET['section'] ) ) : '';
 
 	switch ( $section ) :
 		case 'cause':
@@ -155,8 +155,9 @@ function wonkasoft_upgrade_account_perks() {
 	( wp_verify_nonce( $nonce, 'ws-request-nonce' ) ) || die( 'die' );
 
 	if ( isset( $_POST ) ) {
-		$user_id = wp_get_current_user()->ID;
-		$user    = new WP_User( $user_id );
+		$passed_id = ( isset( $_POST['user_id'] ) ) ? wp_kses_post( wp_unslash( $_POST['user_id'] ) ) : null;
+		$user_id   = wp_get_current_user()->ID;
+		$user      = new WP_User( $user_id );
 
 		$role         = 'apera_perks_partner';
 		$role_display = 'Apera Perks Partner';
@@ -165,17 +166,17 @@ function wonkasoft_upgrade_account_perks() {
 		$role_display2 = 'Customer';
 
 		$output = array();
-		if ( $_POST['user_id'] == $user_id ) {
+		if ( $passed_id == $user_id ) {
 			if ( ! in_array( $role, $user->roles ) ) :
 				$user->add_role( $role, $role_display );
 				$output['msg'] = 'role added';
 				RSActionRewardModule::award_points_for_account_signup( $user_id );
-		  endif;
+			endif;
 
 			if ( ! in_array( $role2, $user->roles ) ) :
 				$user->add_role( $role2, $role_display2 );
 				$output['msg'] = 'roles added';
-		  endif;
+			endif;
 		}
 		$output['user_id']    = $user->ID;
 		$output['user_roles'] = $user->roles;
@@ -188,8 +189,6 @@ add_action( 'wp_ajax_nopriv_wonkasoft_upgrade_account_perks', 'wonkasoft_upgrade
 
 /**
  * This ajax request handles account logo parsing and logo conversion fees.
- *
- * @return [type] [description]
  */
 function wonkasoft_parse_account_logo_or_process_fees() {
 	$nonce = ( isset( $_GET['security'] ) ) ? wp_kses_post( wp_unslash( $_GET['security'] ) ) : '';
@@ -247,9 +246,6 @@ add_action( 'wp_ajax_nopriv_wonkasoft_parse_account_logo_or_process_fees', 'wonk
 
 /**
  * Ajax request for AperaCash apply on checkout.
- *
- * @param  [type] $params [description]
- * @return [type]         [description]
  */
 function apply_all_aperacash() {
 	$nonce = ( isset( $_REQUEST['security'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['security'] ) ) : false;
@@ -342,11 +338,11 @@ function wonkasoft_set_cart_response() {
 	$email = ( isset( $_REQUEST['email'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['email'] ) ) : null;
 	$name  = ( isset( $_REQUEST['first_name'] ) && isset( $_REQUEST['last_name'] ) ) ? wp_kses_post( wp_unslash( $_REQUEST['first_name'] . ' ' . $_REQUEST['last_name'] ) ) : null;
 	if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
-		$ip = $_SERVER['HTTP_CLIENT_IP'];
+		$ip = wp_kses_post( wp_unslash( $_SERVER['HTTP_CLIENT_IP'] ) );
 	} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		$ip = wp_kses_post( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) );
 	} else {
-		$ip = $_SERVER['REMOTE_ADDR'];
+		$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? wp_kses_post( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : null;
 	}
 	$data = array(
 		'email'        => $email,
@@ -358,32 +354,27 @@ function wonkasoft_set_cart_response() {
 
 	foreach ( $getresponse_api->campaign_list as $campaign ) {
 		if ( 'apera_195932' === $campaign->name ) :
-			$getresponse_api->campaign_id   = $campaign->campaignId; // phpcs:ignore WordPress for camelcase.
+
+			// phpcs:ignore WordPress for camelcase.
+			$getresponse_api->campaign_id   = $campaign->campaignId;
 			$getresponse_api->campaign_name = $campaign->name;
 			break;
-	  endif;
+		endif;
 	}
 
 	$contact_list_query = array(
 		'query' => array(
 			'email' => $email,
-			'name'  => $name,
 		),
 	);
 
-	$first_list = $getresponse_api->contact_list;
-	if ( 'V4hZgjT' === $first_list[0]->contactId ) :
-		$getresponse_api->delete_contact_by_contact_ID();
-	endif;
-	$getresponse_api->contact_list = $getresponse_api->get_contact_list( $contact_list_query );
-	$sec_list                      = $getresponse_api->contact_list;
-
-	if ( 0 == sizeOf( $getresponse_api->contact_list ) ) :
+	if ( 0 == count( $getresponse_api->contact_list ) ) :
 		$getresponse_api->create_a_new_contact();
 		$getresponse_api->contact_list = $getresponse_api->get_contact_list( $contact_list_query );
-  endif;
+	endif;
 
 	foreach ( $getresponse_api->contact_list as $contact ) {
+
 		// phpcs:ignore WordPress for camelcase.
 		$getresponse_api->contact_id   = $contact->contactId;
 		$getresponse_api->contact_name = $contact->name;
@@ -407,7 +398,7 @@ function wonkasoft_set_cart_response() {
 	$getresponse_api->shop_list = $getresponse_api->get_list_of_shops( $shop_query );
 
 	foreach ( $getresponse_api->shop_list as $shop ) {
-		$getresponse_api->shop_id = $shop->shopId;
+		$getresponse_api->shop_id = $shop->shopId;//phpcs:ignore.
 	}
 
 	$cart_id = $_SESSION['gr_cart'];
@@ -487,7 +478,7 @@ function wonkasoft_set_cart_response() {
 
 	$getresponse_api->shop_carts = $getresponse_api->get_shop_carts( $cart_query );
 
-	if ( 0 == sizeOf( $getresponse_api->shop_carts ) ) :
+	if ( 0 == count( $getresponse_api->shop_carts ) && ! empty( $getresponse_api->contact_id ) ) :
 		$new_cart = array(
 			'shop_id'           => $getresponse_api->shop_id,
 			'contact_id'        => $getresponse_api->contact_id,

@@ -361,7 +361,7 @@ if ( is_home() ) :
 			</div>
 		</div>
 	</section>
-
+		
 <?php endif; ?>
 <?php else : ?>
 	<div id="primary" class="content-area row">
