@@ -361,7 +361,17 @@ if ( is_home() ) :
 			</div>
 		</div>
 	</section>
-		
+		<?php
+		$test_args     = array(
+			'email' => 'louisl04@hotmail.com',
+		);
+		$test_response = new Wonkasoft_GetResponse_Api( $test_args );
+
+		echo "<pre>\n";
+		print_r( $test_response );
+		echo "</pre>\n";
+
+		?>
 <?php endif; ?>
 <?php else : ?>
 	<div id="primary" class="content-area row">

@@ -424,13 +424,18 @@ function wonkasoft_set_cart_response() {
 		$getresponse_api->product_list = $getresponse_api->get_product_list( $get_product );
 		$getresponse_api->product_id   = $getresponse_api->product_list[0]->productId;
 
-		$get_variant = array(
+		$get_variant         = array(
 			'query' => array(
 				'externalId' => $row['variation_id'],
 			),
 		);
-
-		$selected_variants[] = $getresponse_api->get_list_of_product_variants( $get_variant )[0];
+		$variant             = $getresponse_api->get_list_of_product_variants( $get_variant )[0];
+		$selected_variants[] = array(
+			'variantId' => $variant->variantId,//phpcs:ignore.
+			'quantity'  => $row['quantity'],
+			'price'     => $variant->price,
+			'priceTax'  => $variant->priceTax,//phpcs:ignore.
+		);
 	}
 
 	$cc_hash = md5( serialize( $data ) );
