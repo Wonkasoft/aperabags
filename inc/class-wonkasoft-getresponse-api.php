@@ -633,12 +633,7 @@ class Wonkasoft_GetResponse_Api {
 			'totalPrice'       => ( ! empty( $passed_query['total_price'] ) ? $passed_query['total_price'] : null ),
 			'totalTaxPrice'    => ( ! empty( $passed_query['total_tax_price'] ) ? $passed_query['total_tax_price'] : null ),
 			'currency'         => ( ! empty( $passed_query['currency'] ) ? $passed_query['currency'] : null ),
-			'selectedVariants' => array(
-				'variantId' => ( ! empty( $passed_query['variant_id'] ) ? $passed_query['variant_id'] : null ),
-				'quantity'  => ( ! empty( $passed_query['quantity'] ) ? $passed_query['quantity'] : null ),
-				'price'     => ( ! empty( $passed_query['price'] ) ? $passed_query['price'] : null ),
-				'priceTax'  => ( ! empty( $passed_query['priceTax'] ) ? $passed_query['priceTax'] : null ),
-			),
+			'selectedVariants' => ( ! empty( $passed_query['selected_variants'] ) ? $passed_query['selected_variants'] : null ),
 			'externalId'       => ( ! empty( $passed_query['external_id'] ) ? $passed_query['external_id'] : null ),
 			'cartUrl'          => ( ! empty( $passed_query['cart_url'] ) ? $passed_query['cart_url'] : null ),
 		);

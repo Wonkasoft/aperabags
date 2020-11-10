@@ -489,6 +489,9 @@ function wonkasoft_set_cart_response() {
 		);
 
 		$getresponse_api->new_cart = $getresponse_api->create_cart( $new_cart );
+		if ( empty( $getresponse_api->shop_carts ) ) :
+			$getresponse_api->shop_carts = $getresponse_api->get_shop_carts( $cart_query );
+		endif;
   endif;
 
 	$output = array(
