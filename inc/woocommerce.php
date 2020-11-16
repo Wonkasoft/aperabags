@@ -869,9 +869,11 @@ function wonkasoft_woocommerce_init( $array ) {
 		return;
 	endif;
 
-	if ( ! WC()->session->has_session() ) :
-		WC()->session->set_customer_session_cookie( true );
-	endif;
+	if ( isset( WC()->session ) ) {
+		if ( ! WC()->session->has_session() ) :
+			WC()->session->set_customer_session_cookie( true );
+		endif;
+	}
 };
 add_action( 'woocommerce_init', 'wonkasoft_woocommerce_init', 10, 1 );
 

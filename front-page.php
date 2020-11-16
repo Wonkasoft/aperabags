@@ -361,7 +361,22 @@ if ( is_home() ) :
 			</div>
 		</div>
 	</section>
-		
+		<?php
+		// $test_args              = array(
+		// 'email' => 'rlister@wonkasoft.com',
+		// );
+		// $test_response          = new Wonkasoft_GetResponse_Api( $test_args );
+		// $test_response->shop_id = 'VrM4e';
+		// $cart_query             = array(
+		// 'query' => array(
+		// 'externalId' => '45501034f7c75a31b63689baf0a4ec03',
+		// ),
+		// );
+		// echo "<pre>\n";
+		// print_r( $test_response->get_shop_carts( $cart_query ) );
+		// echo "</pre>\n";
+
+		?>
 <?php endif; ?>
 <?php else : ?>
 	<div id="primary" class="content-area row">
