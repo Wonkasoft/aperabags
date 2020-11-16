@@ -787,6 +787,8 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		'User Birthday',
 		'Tracking Post',
 		'Apera Customer Engagement Program Update Member',
+		'Get $10 & FREE Shipping Now',
+		'Get $10 & FREE Shipping Now Popup',
 	);
 
 	if ( ! in_array( $form['title'], $forms_to_process, true ) ) {
