@@ -833,6 +833,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		'Occupational Years',
 		'Occupational Note',
 		'Tracking Number',
+		'Shipping Vendor',
 		'Order Id',
 	);
 	$custom_fields                 = array();
@@ -869,6 +870,7 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 			$order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
 		endif;
 		$tracking_number = $entry_fields['tracking_number'];
+		$shipping_vendor = $entry_fields['shipping_vendor'];
 
 		if ( ! $order_id ) :
 			$order_id     = wc_seq_order_number_pro()->find_order_by_order_number( $entry_fields['order_id'] );
@@ -876,9 +878,9 @@ function wonkasoft_after_perks_registration_entry( $confirmation, $form, $entry,
 		endif;
 
 		if ( ! empty( $order_id ) && ! empty( $tracking_number ) ) :
-			$confirmation = tracking_post_processing( $order_id, $order_number, $tracking_number, true );
+			$confirmation = tracking_post_processing( $order_id, $order_number, $tracking_number, $shipping_vendor, true );
 		else :
-			$confirmation = tracking_post_processing( $entry_fields['order_id'], $order_number, null, false );
+			$confirmation = tracking_post_processing( $entry_fields['order_id'], $order_number, null, $shipping_vendor, false );
 		endif;
 
 		return $confirmation;
@@ -994,7 +996,7 @@ add_filter( 'gform_confirmation', 'wonkasoft_after_perks_registration_entry', 10
  * @param  boolean $process         true to process or false to update user.
  * @return string                   returns html confirmation for the form.
  */
-function tracking_post_processing( $order_id, $order_number, $tracking_number, $process = false ) {
+function tracking_post_processing( $order_id, $order_number, $tracking_number, $shipping_vendor = 'usps', $process = false ) {
 	if ( ! $process ) :
 		$output       = '';
 		$output      .= '<p>Order Number: ' . $order_id . ' does not seem to be a valid order number. Please recheck the order number and try again by clicking the link below.</p>';
@@ -1028,6 +1030,7 @@ function tracking_post_processing( $order_id, $order_number, $tracking_number, $
 				$order->add_order_note( $note );
 
 				update_post_meta( $order_id, '_added_tracking_number', $tracking_number, '' );
+				update_post_meta( $order_id, '_added_shipping_vendor', $shipping_vendor, '' );
 
 				$order->update_status( 'completed' );
 
@@ -1054,18 +1057,51 @@ function tracking_post_processing( $order_id, $order_number, $tracking_number, $
 function wonkasoft_woocommerce_admin_order_data_after_shipping_address( $order ) {
 	$order_id        = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
 	$tracking_number = get_post_meta( $order_id, '_added_tracking_number', true );
+	$shipping_vendor = get_post_meta( $order_id, '_added_shipping_vendor', true );
 	if ( ! empty( $tracking_number ) ) :
-		echo wp_kses(
-			'<p><strong>' . __( 'Tracking Number' ) . ': </strong> <br /><a href="https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=' . $tracking_number . '" target="_blank">' . $tracking_number . '</a></p>',
-			array(
-				'p'      => array(),
-				'strong' => array(),
-				'a'      => array(
-					'href'   => array(),
-					'target' => array(),
-				),
-			)
-		);
+		if ( ! empty( $shipping_vendor ) ) :
+			switch ( $shipping_vendor ) :
+				case 'usps':
+					echo wp_kses(
+						'<p><strong>' . __( 'Tracking Number' ) . ': </strong> <br /><a href="https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=' . $tracking_number . '" target="_blank">' . $tracking_number . '</a></p><br /><p><strong>' . __( 'Shipping Vendor' ) . ': </strong><span>' . strtoupper( $shipping_vendor ) . '</span>',
+						array(
+							'p'      => array(),
+							'strong' => array(),
+							'a'      => array(
+								'href'   => array(),
+								'target' => array(),
+							),
+						)
+					);
+					break;
+
+				case 'fedex':
+					echo wp_kses(
+						'<p><strong>' . __( 'Tracking Number' ) . ': </strong> <br /><a href="https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=' . $tracking_number . '&cntry_code=us" target="_blank">' . $tracking_number . '</a></p><br /><p><strong>' . __( 'Shipping Vendor' ) . ': </strong><span>' . strtoupper( $shipping_vendor ) . '</span>',
+						array(
+							'p'      => array(),
+							'strong' => array(),
+							'a'      => array(
+								'href'   => array(),
+								'target' => array(),
+							),
+						)
+					);
+
+			endswitch;
+		else :
+			echo wp_kses(
+				'<p><strong>' . __( 'Tracking Number' ) . ': </strong> <br /><a href="https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=' . $tracking_number . '" target="_blank">' . $tracking_number . '</a></p>',
+				array(
+					'p'      => array(),
+					'strong' => array(),
+					'a'      => array(
+						'href'   => array(),
+						'target' => array(),
+					),
+				)
+			);
+		endif;
 	endif;
 }
 add_action( 'woocommerce_admin_order_data_after_shipping_address', 'wonkasoft_woocommerce_admin_order_data_after_shipping_address', 10, 1 );
