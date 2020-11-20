@@ -2623,7 +2623,7 @@ add_filter( 'woocommerce_shipping_USPS_Priority_Mail_NP_is_available', 'ws_restr
  * @param  array $package      contains array of current package.
  * @return bool               returns if shipping package is available.
  */
-function ws_restrict_USPS_Priority_Mail_Express( $is_available, $package ) {
+function ws_restrict_FedEx_Express( $is_available, $package ) {
 	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
 	$user       = wp_get_current_user();
 
@@ -2634,7 +2634,7 @@ function ws_restrict_USPS_Priority_Mail_Express( $is_available, $package ) {
 	}
 	return $is_available;
 }
-add_filter( 'woocommerce_shipping_USPS_Priority_Mail_Express_is_available', 'ws_restrict_USPS_Priority_Mail_Express', 10, 2 );
+add_filter( 'woocommerce_shipping_FedEx_Express_is_available', 'ws_restrict_FedEx_Express', 10, 2 );
 
 /**
  * This sets the availability of this shipping message.
@@ -2643,7 +2643,7 @@ add_filter( 'woocommerce_shipping_USPS_Priority_Mail_Express_is_available', 'ws_
  * @param  array $package      contains array of current package.
  * @return bool               returns if shipping package is available.
  */
-function ws_restrict_USPS_Priority_Mail_Express_NP( $is_available, $package ) {
+function ws_restrict_FedEx_Express_NP( $is_available, $package ) {
 	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
 	$user       = wp_get_current_user();
 
@@ -2658,7 +2658,7 @@ function ws_restrict_USPS_Priority_Mail_Express_NP( $is_available, $package ) {
 	}
 	return $is_available;
 }
-add_filter( 'woocommerce_shipping_USPS_Priority_Mail_Express_NP_is_available', 'ws_restrict_USPS_Priority_Mail_Express_NP', 10, 2 );
+add_filter( 'woocommerce_shipping_FedEx_Express_NP_is_available', 'ws_restrict_FedEx_Express_NP', 10, 2 );
 
 /**
 * Add new custom shipping methods
@@ -2676,9 +2676,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	function ws_shipping_method_init() {
 		require_once get_stylesheet_directory() . '/inc/class-wc-priority-mail-shipping-np-method.php';
-		require_once get_stylesheet_directory() . '/inc/class-wc-priority-mail-express-shipping-np-method.php';
 		require_once get_stylesheet_directory() . '/inc/class-wc-priority-mail-under-25-method.php';
-		require_once get_stylesheet_directory() . '/inc/class-wc-priority-mail-express-shipping-method.php';
+		require_once get_stylesheet_directory() . '/inc/class-wc-fedex-express-shipping-np-method.php';
+		require_once get_stylesheet_directory() . '/inc/class-wc-fedex-express-shipping-method.php';
 	}
 
 	add_action( 'woocommerce_shipping_init', 'ws_shipping_method_init' );
@@ -2690,10 +2690,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	 */
 	function add_ws_shipping_methods( $methods ) {
 
-		$methods['USPS_Priority_Mail']            = 'WC_Priority_Mail_Under_25_Method';
-		$methods['USPS_Priority_Mail_NP']         = 'WC_Priority_Mail_Shipping_NP_Method';
-		$methods['USPS_Priority_Mail_Express']    = 'WC_Priority_Mail_Express_Shipping_Method';
-		$methods['USPS_Priority_Mail_Express_NP'] = 'WC_Priority_Mail_Express_Shipping_NP_Method';
+		$methods['USPS_Priority_Mail']    = 'WC_Priority_Mail_Under_25_Method';
+		$methods['USPS_Priority_Mail_NP'] = 'WC_Priority_Mail_Shipping_NP_Method';
+		$methods['FedEx_Express']         = 'WC_FedEx_Express_Shipping_Method';
+		$methods['FedEx_Express_NP']      = 'WC_FedEx_Express_Shipping_NP_Method';
 
 		return $methods;
 	}
@@ -2931,7 +2931,6 @@ add_filter( 'woocommerce_get_query_vars', 'wonkasoft_add_endpoint_query_vars' );
  * This is for the redirect after save address in the myaccount area.
  *
  * @param  number $user_id      contains user ID.
- * @param  string $load_address contains the load address.
  */
 function wonkasoft_action_woocommerce_save_account_details( $user_id ) {
 	wp_safe_redirect( wc_get_endpoint_url( 'edit-account' ) );
@@ -2949,7 +2948,7 @@ function wonkasoft_my_account_nav_menu_items( $menu_links ) {
 
 	$user = wp_get_current_user();
 
-	// Edits My Account Menu titles
+	// Edits My Account Menu titles.
 	$menu_links = array(
 		'dashboard'          => __( 'Dashboard', 'woocommerce' ),
 		'earn-aperacash'     => __( 'Earn AperaCash', 'woocommerce' ),
@@ -2980,7 +2979,7 @@ function wonkasoft_add_dashboard_extention() {
 add_action( 'woocommerce_account_dashboard', 'wonkasoft_add_dashboard_extention' );
 
 /**
- * This is the earn AperaCash endpoint page
+ * This is the earn AperaCash endpoint page.
  */
 function wonkasoft_my_account_earn_aperacash_endpoint_content() {
 	include get_stylesheet_directory() . '/woocommerce/myaccount/earn-aperacash.php';
@@ -2989,8 +2988,6 @@ add_action( 'woocommerce_account_earn-aperacash_endpoint', 'wonkasoft_my_account
 
 /**
  * This is the earn ZIP Program endpoint page
- *
- * @return echo parse the earn ZIP Program end-point content.
  */
 function wonkasoft_my_account_zip_program_endpoint_content() {
 	include get_stylesheet_directory() . '/woocommerce/myaccount/zip-program.php';

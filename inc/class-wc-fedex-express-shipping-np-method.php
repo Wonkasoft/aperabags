@@ -1,6 +1,6 @@
 <?php
 /**
- * Class WC_Priority_Mail_Express_Shipping_NP_Method
+ * Class WC_FedEx_Express_Shipping_NP_Method
  *
  * @author Wonkasoft,LLC <support@wonkasoft.com>
  * @package aperabags
@@ -9,11 +9,11 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'WC_Priority_Mail_Express_Shipping_NP_Method' ) ) {
+if ( ! class_exists( 'WC_FedEx_Express_Shipping_NP_Method' ) ) {
 	/**
 	 * Begin class.
 	 */
-	class WC_Priority_Mail_Express_Shipping_NP_Method extends WC_Shipping_Method {
+	class WC_FedEx_Express_Shipping_NP_Method extends WC_Shipping_Method {
 
 		/**
 		 * Constructor for your shipping class
@@ -21,11 +21,11 @@ if ( ! class_exists( 'WC_Priority_Mail_Express_Shipping_NP_Method' ) ) {
 		 * @access public
 		 */
 		public function __construct() {
-				$this->id                 = 'USPS_Priority_Mail_Express_NP'; // Id for your shipping method. Should be uunique.
-				$this->method_title       = __( 'USPS Priority Mail Express Non-Perks Members' );  // Title shown in admin.
-				$this->method_description = __( 'USPS Priority Mail Express Flat Rate for Non-Perks Members' ); // Description shown in admin.
+				$this->id                 = 'FedEx_Express_NP'; // Id for your shipping method. Should be uunique.
+				$this->method_title       = __( 'FedEx Express Non-Perks Members' );  // Title shown in admin.
+				$this->method_description = __( 'FedEx Express Flat Rate for Non-Perks Members' ); // Description shown in admin.
 				$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-				$this->title              = 'Overnight 1 business day'; // This can be added as an setting but for this example its forced.
+				$this->title              = '1-2 business day'; // This can be added as an setting but for this example its forced.
 				$this->init();
 		}
 

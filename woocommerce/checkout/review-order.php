@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="wonka checkout-form-section-title"><h5 class="wonka wonka-h5">2. Delivery Options <span>(US only)</span></h5></div>
 <?php
 $available_methods = WC()->session->get( 'shipping_for_package_0' )['rates'];
-$chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->session->chosen_shipping_methods[0] : '';
+$chosen_method     = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->session->chosen_shipping_methods[0] : '';
 ?>
 
 <?php if ( ! is_user_logged_in() ) : ?>
@@ -32,44 +32,44 @@ $chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->sess
 		<ul id="shipping_ad" class="woocommerce-shipping-ads list-group list-group-flush checkout-signup-pop">
 			<li class="list-group-item card-title"><h6>Perks Members</h6></li>
 			<?php
-				foreach ( $available_methods as $index => $method ) :
-					if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal || 'USPS_Priority_Mail_Under_25' === $method->method_id && 25 > WC()->cart->subtotal || 'USPS_Priority_Mail_Express' === $method->method_id ) :
-						?>
+			foreach ( $available_methods as $index => $method ) :
+				if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal || 'USPS_Priority_Mail_Under_25' === $method->method_id && 25 > WC()->cart->subtotal || 'FedEx_Express' === $method->method_id ) :
+					?>
 						<li class="list-group-item">
-						<?php
+					<?php
 					endif;
 
-					if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal ) :
-						if ( 1 < count( $available_methods ) ) {
-							printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" disabled class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
-						} else {
-							printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
-						}
+				if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal ) :
+					if ( 1 < count( $available_methods ) ) {
+						printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" disabled class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+					} else {
+						printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
+					}
 
-						printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
+					printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
 					endif;
 
-					if ( 'USPS_Priority_Mail_Under_25' === $method->method_id && 25 > WC()->cart->subtotal ) :
-						if ( 1 < count( $available_methods ) ) {
-							printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" disabled class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
-						} else {
-							printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
-						}
+				if ( 'USPS_Priority_Mail_Under_25' === $method->method_id && 25 > WC()->cart->subtotal ) :
+					if ( 1 < count( $available_methods ) ) {
+						printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" disabled class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+					} else {
+						printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
+					}
 
-						printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
+					printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
 					endif;
 
-					if ( 'USPS_Priority_Mail_Express' === $method->method_id ) :
-						if ( 1 < count( $available_methods ) ) {
-							printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" disabled class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
-						} else {
-							printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
-						}
+				if ( 'FedEx_Express' === $method->method_id ) :
+					if ( 1 < count( $available_methods ) ) {
+						printf( '<input type="radio" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" disabled class="shipping_method" %4$s />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ), checked( $method->id, $chosen_method, false ) ); // WPCS: XSS ok.
+					} else {
+						printf( '<input type="hidden" name="shipping_method[%1$d]" data-index="%1$d" id="shipping_method_%1$d_%2$s" value="%3$s" class="shipping_method" />', $index, esc_attr( sanitize_title( $method->id ) ), esc_attr( $method->id ) ); // WPCS: XSS ok.
+					}
 
-						printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
+					printf( '<label for="shipping_method_%1$s_%2$s" data-label="%1$d">%3$s</label>', $index, esc_attr( sanitize_title( $method->id ) ), wc_cart_totals_shipping_method_label( $method ) ); // WPCS: XSS ok.
 					endif;
-					if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal || 'USPS_Priority_Mail_Under_25' === $method->method_id && 25 > WC()->cart->subtotal || 'USPS_Priority_Mail_Express' === $method->method_id ) :
-						?>
+				if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal || 'USPS_Priority_Mail_Under_25' === $method->method_id && 25 > WC()->cart->subtotal || 'FedEx_Express' === $method->method_id ) :
+					?>
 						</li>
 				<?php endif; ?>
 			<?php endforeach; ?>
@@ -87,7 +87,7 @@ $chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->sess
 				<?php
 				foreach ( $available_methods as $index => $method ) :
 
-					if ( 'free_shipping' !== $method->method_id && 'USPS_Priority_Mail_Under_25' !== $method->method_id && 'USPS_Priority_Mail_Express' !== $method->method_id ) :
+					if ( 'free_shipping' !== $method->method_id && 'USPS_Priority_Mail_Under_25' !== $method->method_id && 'FedEx_Express' !== $method->method_id ) :
 						?>
 						<li class="list-group-item">
 							<?php
@@ -109,7 +109,7 @@ $chosen_method = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->sess
 				<li class="list-group-item card-title"><h6>Perks Members</h6></li>
 				<?php
 				foreach ( $available_methods as $index => $method ) :
-					if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal || 'USPS_Priority_Mail_Under_25' === $method->method_id && 25 > WC()->cart->subtotal || 'USPS_Priority_Mail_Express' === $method->method_id ) :
+					if ( 'free_shipping' === $method->method_id && 25 < WC()->cart->subtotal || 'USPS_Priority_Mail_Under_25' === $method->method_id && 25 > WC()->cart->subtotal || 'FedEx_Express' === $method->method_id ) :
 						?>
 						<li class="list-group-item">
 							<?php
