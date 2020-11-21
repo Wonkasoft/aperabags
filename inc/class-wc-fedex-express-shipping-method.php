@@ -26,7 +26,7 @@ if ( ! class_exists( 'WC_FedEx_Express_Shipping_Method' ) ) {
 			$this->method_title       = __( 'FedEx Express' );  // Title shown in admin.
 			$this->method_description = __( 'FedEx Express Flat Rate' ); // Description shown in admin.
 			$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-			$this->title              = 'FedEx 1-2 business day'; // This can be added as an setting but for this example its forced.
+			$this->title              = 'FedEx Standard Overnight®'; // This can be added as an setting but for this example its forced.
 			$this->init();
 		}
 
