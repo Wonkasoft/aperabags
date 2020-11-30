@@ -21,7 +21,7 @@
 	}
 	?>
 	<?php do_action( 'wonkasoft_action_mods_before_footer_section', 'footer_section', $footer_section ); ?>
-	<div id="get-10-sidebar"><a href="<?php _e( get_permalink( get_page_by_path( 'perks' ) ) ); ?>">Get $10</a></div>
+	<div id="get-5-sidebar"><a href="<?php _e( get_permalink( get_page_by_path( 'perks' ) ) ); ?>">Get $5</a></div>
 	<div id="give-feedback"><a href="javascript:void(zE('webWidget', 'open'))">Questions</a></div>
 	<div id="footer-spacer"></div>
 	<footer id="colophon" class="site-footer">
