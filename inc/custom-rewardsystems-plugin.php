@@ -8,9 +8,10 @@
 defined( 'ABSPATH' ) or exit;
 
 if ( class_exists( 'RSFunctionForReferralSystem' ) ) {
-	
+
 	/**
 	 * Display the list of generated link
+	 *
 	 * @param  [type] $referralperson [description]
 	 * @return [type]                 [description]
 	 */

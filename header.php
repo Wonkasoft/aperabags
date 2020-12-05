@@ -45,6 +45,9 @@
 								'href'   => array(),
 								'target' => array(),
 							),
+							'span'  => array(
+								'class' => array(),
+							),
 							'small' => array(
 								'class' => array(),
 							),
