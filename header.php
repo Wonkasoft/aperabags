@@ -36,6 +36,12 @@
 			<div class="row topbar-notice" style="background:<?php echo esc_html( get_theme_mod( 'topbar_color', '#000' ) ); ?>;">
 				<div class="col col-12">
 					<span class="topbar-message-text">
+						<span class="top-banner-header">
+							Buy More, Save More
+						</span> 
+						<br />
+						50% OFF orders of $125+ <span class="med-dot">&#xb7;</span> 40% OFF order of $100+ <span class="med-dot">&#xb7;</span> 30% OFF orders of $75+
+						<a href="https://aperabags.com/shop/" class="btn wonka-btn">Shop Now</a>
 					<?php
 					echo wp_kses(
 						get_theme_mod( 'topbar_message', 'Please set notice in customizer.' ),
