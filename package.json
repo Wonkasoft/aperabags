@@ -1,7 +1,7 @@
 {
   "name": "aperabags",
   "version": "1.0.0",
-  "description": "This is for the aperabags them for aperabags.com",
+  "description": "This is for the aperabags theme for aperabags.com",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

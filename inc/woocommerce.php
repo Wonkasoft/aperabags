@@ -2599,6 +2599,26 @@ add_filter( 'woocommerce_shipping_USPS_Priority_Mail_Under_25_is_available', 'ws
  * @param  array $package      contains array of current package.
  * @return bool               returns if shipping package is available.
  */
+function ws_restrict_fedex_ground_under_25( $is_available, $package ) {
+	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
+	$user       = wp_get_current_user();
+
+	foreach ( WC()->cart->get_shipping_packages() as $package ) {
+		if ( in_array( $package['destination']['state'], $restricted, true ) ) {
+			return false;
+		}
+	}
+	return $is_available;
+}
+add_filter( 'woocommerce_shipping_FedEx_Ground_Under_25_is_available', 'ws_restrict_fedex_ground_under_25', 10, 2 );
+
+/**
+ * This sets the availability of this shipping message.
+ *
+ * @param  bool  $is_available contains true or false.
+ * @param  array $package      contains array of current package.
+ * @return bool               returns if shipping package is available.
+ */
 function ws_restrict_USPS_Priority_Mail_NP( $is_available, $package ) {
 	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
 	$user       = wp_get_current_user();
@@ -2623,6 +2643,46 @@ add_filter( 'woocommerce_shipping_USPS_Priority_Mail_NP_is_available', 'ws_restr
  * @param  array $package      contains array of current package.
  * @return bool               returns if shipping package is available.
  */
+function ws_restrict_FedEx_Ground( $is_available, $package ) {
+	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
+	$user       = wp_get_current_user();
+
+	foreach ( WC()->cart->get_shipping_packages() as $package ) {
+		if ( in_array( $package['destination']['state'], $restricted, true ) ) {
+			return false;
+		}
+	}
+	return $is_available;
+}
+add_filter( 'woocommerce_shipping_FedEx_Ground_is_available', 'ws_restrict_FedEx_Ground', 10, 2 );
+
+/**
+ * This sets the availability of this shipping message.
+ *
+ * @param  bool  $is_available contains true or false.
+ * @param  array $package      contains array of current package.
+ * @return bool               returns if shipping package is available.
+ */
+function ws_restrict_FedEx_2day( $is_available, $package ) {
+	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
+	$user       = wp_get_current_user();
+
+	foreach ( WC()->cart->get_shipping_packages() as $package ) {
+		if ( in_array( $package['destination']['state'], $restricted, true ) ) {
+			return false;
+		}
+	}
+	return $is_available;
+}
+add_filter( 'woocommerce_shipping_FedEx_2day_is_available', 'ws_restrict_FedEx_2day', 11, 2 );
+
+/**
+ * This sets the availability of this shipping message.
+ *
+ * @param  bool  $is_available contains true or false.
+ * @param  array $package      contains array of current package.
+ * @return bool               returns if shipping package is available.
+ */
 function ws_restrict_FedEx_Express( $is_available, $package ) {
 	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
 	$user       = wp_get_current_user();
@@ -2634,7 +2694,55 @@ function ws_restrict_FedEx_Express( $is_available, $package ) {
 	}
 	return $is_available;
 }
-add_filter( 'woocommerce_shipping_FedEx_Express_is_available', 'ws_restrict_FedEx_Express', 10, 2 );
+add_filter( 'woocommerce_shipping_FedEx_Express_is_available', 'ws_restrict_FedEx_Express', 13, 2 );
+
+/**
+ * This sets the availability of this shipping message.
+ *
+ * @param  bool  $is_available contains true or false.
+ * @param  array $package      contains array of current package.
+ * @return bool               returns if shipping package is available.
+ */
+function ws_restrict_FedEx_Ground_NP( $is_available, $package ) {
+	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
+	$user       = wp_get_current_user();
+
+	foreach ( WC()->cart->get_shipping_packages() as $package ) {
+		if ( in_array( $package['destination']['state'], $restricted, true ) ) {
+			return false;
+		}
+
+		if ( in_array( 'apera_perks_partner', (array) $user->roles, true ) ) {
+			return false;
+		}
+	}
+	return $is_available;
+}
+add_filter( 'woocommerce_shipping_FedEx_Ground_NP_is_available', 'ws_restrict_FedEx_Ground_NP', 10, 2 );
+
+/**
+ * This sets the availability of this shipping message.
+ *
+ * @param  bool  $is_available contains true or false.
+ * @param  array $package      contains array of current package.
+ * @return bool               returns if shipping package is available.
+ */
+function ws_restrict_FedEx_2day_NP( $is_available, $package ) {
+	$restricted = array( 'AS', 'GU', 'MP', 'PR', 'UM', 'VI' );
+	$user       = wp_get_current_user();
+
+	foreach ( WC()->cart->get_shipping_packages() as $package ) {
+		if ( in_array( $package['destination']['state'], $restricted, true ) ) {
+			return false;
+		}
+
+		if ( in_array( 'apera_perks_partner', (array) $user->roles, true ) ) {
+			return false;
+		}
+	}
+	return $is_available;
+}
+add_filter( 'woocommerce_shipping_FedEx_2day_NP_is_available', 'ws_restrict_FedEx_2day_NP', 10, 2 );
 
 /**
  * This sets the availability of this shipping message.
@@ -2658,7 +2766,7 @@ function ws_restrict_FedEx_Express_NP( $is_available, $package ) {
 	}
 	return $is_available;
 }
-add_filter( 'woocommerce_shipping_FedEx_Express_NP_is_available', 'ws_restrict_FedEx_Express_NP', 10, 2 );
+add_filter( 'woocommerce_shipping_FedEx_Express_NP_is_available', 'ws_restrict_FedEx_Express_NP', 11, 2 );
 
 /**
 * Add new custom shipping methods
@@ -2677,6 +2785,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 	function ws_shipping_method_init() {
 		require_once get_stylesheet_directory() . '/inc/class-wc-priority-mail-shipping-np-method.php';
 		require_once get_stylesheet_directory() . '/inc/class-wc-priority-mail-under-25-method.php';
+		require_once get_stylesheet_directory() . '/inc/class-wc-fedex-ground-shipping-method.php';
+		require_once get_stylesheet_directory() . '/inc/class-wc-fedex-ground-under-25-method.php';
+		require_once get_stylesheet_directory() . '/inc/class-wc-fedex-ground-shipping-np-method.php';
+		require_once get_stylesheet_directory() . '/inc/class-wc-fedex-2day-shipping-np-method.php';
+		require_once get_stylesheet_directory() . '/inc/class-wc-fedex-2day-shipping-method.php';
 		require_once get_stylesheet_directory() . '/inc/class-wc-fedex-express-shipping-np-method.php';
 		require_once get_stylesheet_directory() . '/inc/class-wc-fedex-express-shipping-method.php';
 	}
@@ -2692,6 +2805,11 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 		$methods['USPS_Priority_Mail']    = 'WC_Priority_Mail_Under_25_Method';
 		$methods['USPS_Priority_Mail_NP'] = 'WC_Priority_Mail_Shipping_NP_Method';
+		$methods['FedEx_Ground']          = 'WC_FedEx_Ground_Shipping_Method';
+		$methods['FedEx_Ground_Under_25'] = 'WC_FedEx_Ground_Under_25_Method';
+		$methods['FedEx_Ground_NP']       = 'WC_FedEx_Ground_Shipping_NP_Method';
+		$methods['FedEx_2day']            = 'WC_FedEx_2day_Shipping_Method';
+		$methods['FedEx_2day_NP']         = 'WC_FedEx_2day_Shipping_NP_Method';
 		$methods['FedEx_Express']         = 'WC_FedEx_Express_Shipping_Method';
 		$methods['FedEx_Express_NP']      = 'WC_FedEx_Express_Shipping_NP_Method';
 
