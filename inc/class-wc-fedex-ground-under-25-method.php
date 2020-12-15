@@ -23,7 +23,7 @@ if ( ! class_exists( 'WC_FedEx_Ground_Under_25_Method' ) ) {
 		 */
 		public function __construct() {
 				$this->id                 = 'FedEx_Ground_Under_25'; // Id for your shipping method. Should be uunique.
-				$this->method_title       = __( 'FedEx Ground' );  // Title shown in admin.
+				$this->method_title       = __( 'FedEx Ground Under 25' );  // Title shown in admin.
 				$this->method_description = __( 'FedEx Ground Flate Rate for orders under $25' ); // Description shown in admin.
 				$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
 				$this->title              = 'FedEx Ground® 1-5 business days'; // This can be added as an setting but for this example its forced.
