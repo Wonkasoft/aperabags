@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 $count = WC()->cart->cart_contents_count;
 
-if ( 0 < $count ) :
+if ( 1 <= $count ) :
 	header( 'Location:' . esc_url( wc_get_checkout_url() ) );
 endif;
 

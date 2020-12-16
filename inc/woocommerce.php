@@ -3490,5 +3490,40 @@ add_action( 'save_post', 'wonkasoft_featured_product_img_save_post', 10 );
  * @return string      Returns filtered page permalink.
  */
 function wonkasoft_woocommerce_get_cart_url( $url ) {
-	return wc_get_page_permalink( 'checkout' );
+	$count = WC()->cart->cart_contents_count;
+
+	if ( 0 < $count ) :
+		return wc_get_page_permalink( 'checkout' );
+	endif;
+
+	return wc_get_page_permalink( 'cart' );
 }
+
+/**
+ * This filters the prices of products for show only.
+ *
+ * @param  string $price   contains the price html.
+ * @param  object $product contains the product object.
+ * @return string          returns the price html.
+ */
+function wonkasoft_price_html( $price, $product ) {
+	$skip_pro = array(
+		'performance-duffel-large-powerberry',
+		'performance-duffel-large',
+		'performance-duffel-large-black',
+		'studio-tote-powerberry',
+		'fit-pocket-x3-assorted',
+		'fit-pocket-x2-large',
+		'fit-pocket-x2-medium',
+		'fit-pocket-x2-small',
+	);
+
+	if ( in_array( $product->get_slug(), $skip_pro ) ) :
+		return $price;
+	endif;
+
+	$price = wc_format_sale_price( wc_price( $product->get_price() ), wc_price( $product->get_price() * .50 ) );
+
+	return $price;
+}
+add_filter( 'woocommerce_get_price_html', 'wonkasoft_price_html', 100, 2 );
