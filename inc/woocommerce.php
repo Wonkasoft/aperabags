@@ -3526,4 +3526,4 @@ function wonkasoft_price_html( $price, $product ) {
 
 	return $price;
 }
-add_filter( 'woocommerce_get_price_html', 'wonkasoft_price_html', 100, 2 );
+// add_filter( 'woocommerce_get_price_html', 'wonkasoft_price_html', 100, 2 );
