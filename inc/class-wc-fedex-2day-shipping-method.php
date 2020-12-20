@@ -26,7 +26,7 @@ if ( ! class_exists( 'WC_FedEx_2day_Shipping_Method' ) ) {
 			$this->method_title       = __( 'FedEx 2 Day' );  // Title shown in admin.
 			$this->method_description = __( 'FedEx 2 Day Flat Rate' ); // Description shown in admin.
 			$this->enabled            = 'yes'; // This can be added as an setting but for this example its forced enabled.
-			$this->title              = 'FedEx 2 Day®'; // This can be added as an setting but for this example its forced.
+			$this->title              = 'FedEx 2 Day® Free'; // This can be added as an setting but for this example its forced.
 			$this->init();
 		}
 
