@@ -115,6 +115,6 @@ $chosen_method     = isset( WC()->session->chosen_shipping_methods[0] ) ? WC()->
 <p class="shipping-message">
 	<b>FedEx Last days to ship for delivery by December 25</b><br />
 	<span style="color:red;">FedEx Ground | Tuesday, December 15 10am<br />
-	FedEx 2Day | Tuesday, December 22 10am // Free December 19th and 20th<br />
-	FedEx Standard Overnight | Wednesday, December 23 10am // Free December 21st<br /></span>
+	FedEx 2Day | Tuesday, December 22 10am<br />
+	FedEx Standard Overnight | Wednesday, December 23 10am<br /></span>
 </p>
