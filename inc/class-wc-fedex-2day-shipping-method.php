@@ -55,7 +55,7 @@ if ( ! class_exists( 'WC_FedEx_2day_Shipping_Method' ) ) {
 			$rate = array(
 				'id'       => $this->id,
 				'label'    => $this->title,
-				'cost'     => '15.00',
+				'cost'     => '0.00',
 				'calc_tax' => 'per_item',
 			);
 			// Register the rate.
