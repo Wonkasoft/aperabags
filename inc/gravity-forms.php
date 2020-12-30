@@ -1050,63 +1050,6 @@ function tracking_post_processing( $order_id, $order_number, $tracking_number, $
 }
 
 /**
- * This makes the added tracking number visible on the order edit page.
- *
- * @param  object $order Contains the order object.
- */
-function wonkasoft_woocommerce_admin_order_data_after_shipping_address( $order ) {
-	$order_id        = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
-	$tracking_number = get_post_meta( $order_id, '_added_tracking_number', true );
-	$shipping_vendor = get_post_meta( $order_id, '_added_shipping_vendor', true );
-	if ( ! empty( $tracking_number ) ) :
-		if ( ! empty( $shipping_vendor ) ) :
-			switch ( $shipping_vendor ) :
-				case 'usps':
-					echo wp_kses(
-						'<p><strong>' . __( 'Tracking Number' ) . ': </strong> <br /><a href="https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=' . $tracking_number . '" target="_blank">' . $tracking_number . '</a></p><br /><p><strong>' . __( 'Shipping Vendor' ) . ': </strong><span>' . strtoupper( $shipping_vendor ) . '</span>',
-						array(
-							'p'      => array(),
-							'strong' => array(),
-							'a'      => array(
-								'href'   => array(),
-								'target' => array(),
-							),
-						)
-					);
-					break;
-
-				case 'fedex':
-					echo wp_kses(
-						'<p><strong>' . __( 'Tracking Number' ) . ': </strong> <br /><a href="https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=' . $tracking_number . '&cntry_code=us" target="_blank">' . $tracking_number . '</a></p><br /><p><strong>' . __( 'Shipping Vendor' ) . ': </strong><span>' . strtoupper( $shipping_vendor ) . '</span>',
-						array(
-							'p'      => array(),
-							'strong' => array(),
-							'a'      => array(
-								'href'   => array(),
-								'target' => array(),
-							),
-						)
-					);
-
-			endswitch;
-		else :
-			echo wp_kses(
-				'<p><strong>' . __( 'Tracking Number' ) . ': </strong> <br /><a href="https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=' . $tracking_number . '" target="_blank">' . $tracking_number . '</a></p>',
-				array(
-					'p'      => array(),
-					'strong' => array(),
-					'a'      => array(
-						'href'   => array(),
-						'target' => array(),
-					),
-				)
-			);
-		endif;
-	endif;
-}
-add_action( 'woocommerce_admin_order_data_after_shipping_address', 'wonkasoft_woocommerce_admin_order_data_after_shipping_address', 10, 1 );
-
-/**
  * This either creates new Perks Member or updates current member.
  *
  * @param  object $entry Contains an object of the form entries.

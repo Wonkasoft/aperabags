@@ -3499,6 +3499,125 @@ function wonkasoft_woocommerce_get_cart_url( $url ) {
 	return wc_get_page_permalink( 'cart' );
 }
 
+
+/**
+ * This makes the added tracking number visible on the order edit page.
+ *
+ * @param  object $order Contains the order object.
+ */
+function wonkasoft_woocommerce_admin_order_data_after_shipping_address( $order ) {
+	$order_id        = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+	$tracking_number = get_post_meta( $order_id, '_added_tracking_number', true );
+	$shipping_vendor = get_post_meta( $order_id, '_added_shipping_vendor', true );
+	if ( ! empty( $tracking_number ) ) :
+		if ( ! empty( $shipping_vendor ) ) :
+			switch ( $shipping_vendor ) :
+				case 'usps':
+					echo wp_kses(
+						'<p><strong>' . __( 'Tracking Number' ) . ': </strong> <br /><a href="https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=' . $tracking_number . '" target="_blank">' . $tracking_number . '</a></p><br /><p><strong>' . __( 'Shipping Vendor' ) . ': </strong><span>' . strtoupper( $shipping_vendor ) . '</span>',
+						array(
+							'p'      => array(),
+							'strong' => array(),
+							'a'      => array(
+								'href'   => array(),
+								'target' => array(),
+							),
+						)
+					);
+					break;
+
+				case 'fedex':
+					echo wp_kses(
+						'<p><strong>' . __( 'Tracking Number' ) . ': </strong> <br /><a href="https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=' . $tracking_number . '&cntry_code=us" target="_blank">' . $tracking_number . '</a></p><br /><p><strong>' . __( 'Shipping Vendor' ) . ': </strong><span>' . strtoupper( $shipping_vendor ) . '</span>',
+						array(
+							'p'      => array(),
+							'strong' => array(),
+							'a'      => array(
+								'href'   => array(),
+								'target' => array(),
+							),
+						)
+					);
+
+			endswitch;
+		else :
+			echo wp_kses(
+				'<p><strong>' . __( 'Tracking Number' ) . ': </strong> <br /><a href="https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=' . $tracking_number . '" target="_blank">' . $tracking_number . '</a></p>',
+				array(
+					'p'      => array(),
+					'strong' => array(),
+					'a'      => array(
+						'href'   => array(),
+						'target' => array(),
+					),
+				)
+			);
+		endif;
+	else :
+		echo wp_kses(
+			'<select name="_added_shipping_vendor" class="shipper-select" id="_added_shipping_vendor"><option>' . __( 'Select Shipper' ) . '</option><option value="usps">' . __( 'USPS' ) . '</option><option value="fedex">' . __( 'FedEx' ) . '</option></select><br /><input type="text" name="_added_tracking_number" id="_added_tracking_number" placeholder="Tracking Number..." /><input type="hidden" name="tracking_field_nonce" value="' . wp_create_nonce() . '" />',
+			array(
+				'select' => array(
+					'name'  => array(),
+					'class' => array(),
+					'id'    => array(),
+					'value' => array(),
+				),
+				'option' => array(
+					'value' => array(),
+				),
+				'br'     => array(),
+				'input'  => array(
+					'type'        => array(),
+					'class'       => array(),
+					'name'        => array(),
+					'id'          => array(),
+					'value'       => array(),
+					'placeholder' => array(),
+				),
+			)
+		);
+	endif;
+}
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'wonkasoft_woocommerce_admin_order_data_after_shipping_address', 10, 1 );
+
+/**
+ * This is to save added tracking number without email, tracking portal which sends an email
+ */
+function wonkasoft_tracking_save_post( $post_id ) {
+	if ( ! isset( $_POST['tracking_field_nonce'] ) ) {
+		return $post_id;
+	}
+	$nonce = $_REQUEST['tracking_field_nonce'];
+	// Verify that the nonce is valid.
+	if ( ! wp_verify_nonce( $nonce ) ) {
+		return $post_id;
+	}
+
+	// If this is an autosave, our form has not been submitted, so we don't want to do anything.
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return $post_id;
+	}
+
+	// Check the user's permissions.
+	if ( 'page' == $_POST['post_type'] ) {
+
+		if ( ! current_user_can( 'edit_page', $post_id ) ) {
+			return $post_id;
+		}
+	} else {
+
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return $post_id;
+		}
+	}
+
+	// Update the meta field in the database.
+	update_post_meta( $post_id, '_added_tracking_number', $_POST['_added_tracking_number'], '' );
+	update_post_meta( $post_id, '_added_shipping_vendor', $_POST['_added_shipping_vendor'], '' );
+}
+add_action( 'save_post', 'wonkasoft_tracking_save_post', 10 );
+
 /**
  * This filters the prices of products for show only.
  *
